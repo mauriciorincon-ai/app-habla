@@ -19,14 +19,29 @@ export default defineConfig({
       provider: "v8",
       // Solo *.ts: un include de directorio hace que v8 intente parsear .gitkeep y truene
       // con PARSE_ERROR (K8, ds S1).
-      include: ["src/lib/**/*.ts", "src/engine/**/*.ts"],
+      // K-habla-1: el kit traía src/engine/** pero esta app usa src/lib/** (CLAUDE.md).
+      include: ["src/lib/**/*.ts"],
+      // observability.ts es cableado del kit (inerte sin DSN), no motor de esta app.
+      exclude: ["src/lib/observability.ts"],
       thresholds: {
         lines: 70,
         functions: 70,
         branches: 70,
         statements: 70,
         // Los motores puros exigen más (regla 2 del CLAUDE.md; K6, ds S1):
-        "src/engine/**/*.ts": {
+        "src/lib/voice/**/*.ts": {
+          lines: 80,
+          functions: 80,
+          branches: 80,
+          statements: 80,
+        },
+        "src/lib/coach/**/*.ts": {
+          lines: 80,
+          functions: 80,
+          branches: 80,
+          statements: 80,
+        },
+        "src/lib/session-flow.ts": {
           lines: 80,
           functions: 80,
           branches: 80,

@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "pnpm build:worklet && next dev",
+    "build": "pnpm build:worklet && next build",
+    "build:worklet": "tsc -p tsconfig.worklet.json",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
