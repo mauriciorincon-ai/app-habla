@@ -23,10 +23,12 @@ provocar palabras de a una (intentos y gestos también cuentan y se responden no
 determinista por **fecha local**: la cápsula no cambia al recargar ni al completarla, no se repite
 hasta agotar la biblioteca, y al agotarla arranca un ciclo nuevo sin borrar el historial.
 Completarla persiste sin conexión. Historial **sin rachas punitivas** ("lo que cuenta es volver,
-no la racha"). Onboarding local mínimo (apodo opcional + temas), sin cuentas. **Además, hallazgo
-del primer uso real:** el juego ahora tiene puerta permanente desde "Hoy" (antes solo aparecía los
-días de actividad con pantalla y quedaba invisible el resto). **Roadmap S2+ derivado del gate:**
-niveles por etapa del habla, con "palabras sueltas" como default permanente.
+no la racha"). Onboarding local mínimo (apodo opcional + temas), sin cuentas; **el apodo y los
+temas se ven y se cambian desde Ajustes sin borrar nada** (hallazgo del gate: el onboarding es de
+una sola vez y no había camino de vuelta). **Además, hallazgo del primer uso real:** el juego
+ahora tiene puerta permanente desde "Hoy" (antes solo aparecía los días de actividad con pantalla
+y quedaba invisible el resto). **Roadmap S2+ derivado del gate:** niveles por etapa del habla,
+con "palabras sueltas" como default permanente.
 
 **Outcome 2 — Su voz mueve el mundo (el primer juego):** ✅
 Guion del padre → permiso de micrófono con explicación honesta → calibración lúdica de 2 s →
