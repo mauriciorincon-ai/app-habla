@@ -1,3 +1,4 @@
+import path from "node:path";
 import { defineConfig, devices } from "@playwright/test";
 
 // Config que el ci.yml del kit ya asume (job e2e: "pnpm test:e2e").
@@ -11,6 +12,19 @@ export default defineConfig({
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
+    // Micrófono falso para los e2e del juego de voz: Chromium "captura" el WAV sintético
+    // (silencio → voz sostenida → silencio; ver scripts/gen-voz-sintetica.mjs) y lo loopea.
+    permissions: ["microphone"],
+    launchOptions: {
+      args: [
+        "--use-fake-ui-for-media-stream",
+        "--use-fake-device-for-media-stream",
+        `--use-file-for-fake-audio-capture=${path.resolve(
+          __dirname,
+          "tests/e2e/fixtures/voz-sintetica.wav",
+        )}`,
+      ],
+    },
   },
   projects: [
     {
