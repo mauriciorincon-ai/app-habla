@@ -6,10 +6,10 @@
 
 ## Las dos casas (regla dura)
 
-| Casa | Path | Escritor único | Qué vive ahí |
-|---|---|---|---|
+| Casa           | Path                           | Escritor único   | Qué vive ahí                                                                     |
+| -------------- | ------------------------------ | ---------------- | -------------------------------------------------------------------------------- |
 | **Planeadora** | `~/Code/hr01-develop-ai-apps/` | su propia sesión | brief, VISION, sprints (plan+retro), órdenes de construcción, método, estándares |
-| **Esta app** | este repo | **tú** | código, tests, ADRs de implementación, bitácora y summary del sprint |
+| **Esta app**   | este repo                      | **tú**           | código, tests, ADRs de implementación, bitácora y summary del sprint             |
 
 - ✅ Puedes **leer** la planeadora (agregada como `additionalDirectories`, o por path absoluto).
 - ❌ **Nunca escribes** en la planeadora. Si el plan necesita cambio, lo anotas en tu
@@ -18,7 +18,7 @@
 
 ## Qué es esta app
 
-**Hablemos San** — *"Su voz mueve el mundo."* App web (PWA) que ayuda a **estimular el habla de un
+**Hablemos San** — _"Su voz mueve el mundo."_ App web (PWA) que ayuda a **estimular el habla de un
 niño de 4–6 años** (hispanohablante, perfil de neurodivergencia) mediante **práctica diaria
 estructurada en casa, dirigida por el padre**. Complementaria — **jamás sustituta** — de la
 fonoaudiología real del niño. Contrato de alcance: `portafolio/habla/VISION.md` (planeadora,
@@ -43,13 +43,18 @@ pantalla es utilería del juego compartido, nunca la niñera.
    padre** (co-uso), nunca un elogio automático vacío. Prohibido el "¡muy bien!" que felicita diga
    lo que diga el niño (es el error de la competencia). Cualquier reconocimiento de voz futuro se
    muestra como "quizás", jamás como veredicto.
-4. **No es terapia; no promete plazos.** Posicionamiento: *práctica/estimulación complementaria*.
+4. **No es terapia; no promete plazos.** Posicionamiento: _práctica/estimulación complementaria_.
    Prohibido en el microcopy: "terapia", "diagnóstico", "resultados en X semanas", puntajes
    clínicos. Sin biometría, sin deepfakes, sin clonación de voz.
 5. **Co-uso siempre.** No existe "modo niño solo" en el MVP. Cada actividad se diseña para
    adulto+niño; el guion del padre precede al juego.
 6. **Diseño para 4–6 años neurodivergentes.** Sin límite de tiempo, sin game-over, sin castigo por
    error; carga sensorial ajustable; **modo calma** de un toque; touch del niño ≥64 px. COGA W3C.
+7. **Palabras sueltas PRIMERO (ADR 005, ratificada por el usuario 2026-07-12).** El niño real
+   dice palabras de a una: TODO contenido y feature nace calibrado a esa etapa — asociación
+   palabra↔objeto, palabras sueltas, intentos y gestos que cuentan. Ningún juego exige palabras
+   (miden voz, no vocabulario). Un nivel "frases" futuro será opt-in en ajustes, jamás el
+   default: **"palabras sueltas" es el nivel por defecto permanente de esta app.**
 
 ## Stack
 

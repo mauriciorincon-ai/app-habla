@@ -53,12 +53,13 @@ celebración automática). Sin límite de tiempo, sin game-over.
 
 ## ADRs
 
-| #   | Tema                                                                                        |
-| --- | ------------------------------------------------------------------------------------------- |
-| 001 | Solo español (es-CO), sin i18n bilingüe                                                     |
-| 002 | Persistencia local-first, sin cuentas ni backend (privacidad de menor)                      |
-| 003 | Matriz de audio: AudioWorklet + fallback AnalyserNode — **propuesto**, cierra con la tablet |
-| 004 | Carga del AudioWorklet en Next 16 / Turbopack (compilación aparte a `public/worklets/`)     |
+| #   | Tema                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 001 | Solo español (es-CO), sin i18n bilingüe                                                                                                                                                                                                                                                                                                                                                                               |
+| 002 | Persistencia local-first, sin cuentas ni backend (privacidad de menor)                                                                                                                                                                                                                                                                                                                                                |
+| 003 | Matriz de audio: AudioWorklet + fallback AnalyserNode — **propuesto**, cierra con la tablet                                                                                                                                                                                                                                                                                                                           |
+| 004 | Carga del AudioWorklet en Next 16 / Turbopack (compilación aparte a `public/worklets/`)                                                                                                                                                                                                                                                                                                                               |
+| 005 | **Palabras sueltas PRIMERO** — regla de producto ratificada por el usuario en el gate (2026-07-12): todo contenido y feature nace al nivel palabras sueltas / asociación palabra↔objeto; los juegos jamás exigen palabras; el nivel "frases" futuro será opt-in, nunca el default. **La planeadora debe llevar esta regla a toda orden futura de esta app** (también quedó como regla dura 7 del CLAUDE.md del repo). |
 
 ## Deuda técnica explícita
 
