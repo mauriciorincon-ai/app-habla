@@ -9,7 +9,10 @@ import { defineConfig } from "vitest/config";
 // `--coverage` al script `test` de package.json — es parte del setup del sprint, no una sorpresa.
 export default defineConfig({
   resolve: {
-    alias: { "@": path.resolve(__dirname, "src") },
+    alias: {
+      "@content": path.resolve(__dirname, "content"),
+      "@": path.resolve(__dirname, "src"),
+    },
   },
   test: {
     environment: "jsdom",
@@ -21,8 +24,17 @@ export default defineConfig({
       // con PARSE_ERROR (K8, ds S1).
       // K-habla-1: el kit traía src/engine/** pero esta app usa src/lib/** (CLAUDE.md).
       include: ["src/lib/**/*.ts"],
-      // observability.ts es cableado del kit (inerte sin DSN), no motor de esta app.
-      exclude: ["src/lib/observability.ts"],
+      exclude: [
+        // Cableado del kit (inerte sin DSN), no motor de esta app.
+        "src/lib/observability.ts",
+        // Adaptadores de Web Audio: no son unit-testeables en jsdom (no hay AudioContext ni
+        // getUserMedia). Se cubren con e2e de micrófono falso (tests/e2e/spike-audio.spec.ts y
+        // el happy path), y su privacidad la vigila tests/unit/privacidad-voice.test.ts.
+        "src/lib/voice/mic-session.ts",
+        "src/lib/voice/analyser-source.ts",
+        // Solo tipos y constantes.
+        "src/lib/voice/types.ts",
+      ],
       thresholds: {
         lines: 70,
         functions: 70,
