@@ -54,6 +54,30 @@
   tono plano no cuenta inversiones, temblor <50 cents tampoco, ruido no mueve NI hace caer el
   cohete, salto de octava rechazado, F0 fuera de rango ignorado, olvido tras silencio largo.
 
+## Candados de privacidad extendidos al pitch — verificados con FUGA INYECTADA (2026-07-12)
+
+El `pitch-tracker` vive en `src/lib/voice/`, así que cae **dentro** del scope de los dos candados
+del S1 sin tocar su configuración. Pero "debería estar cubierto" no es evidencia: se repitió el
+patrón del S1 e **se inyectó una fuga real** en `pitch-tracker.ts` (`localStorage.setItem` con el
+pitch del niño + `fetch` a un endpoint de analytics). Resultado:
+
+- **Candado 1 (ESLint scoped):** 2 errores, citando la regla dura 2 por nombre
+  (`no-restricted-globals` sobre `localStorage` y `fetch`).
+- **Candado 2 (test de escaneo):** `× src/lib/voice/pitch-tracker.ts no toca storage, red ni logs`
+  — "usa fetch (red)".
+
+La fuga se revirtió; ambos candados quedan verdes. **El pitch es dato derivado de la voz del niño
+y se trata con la misma regla que el audio.**
+
 ## Decisiones tomadas durante la construcción
 
-- (se registran aquí conforme aparezcan)
+- **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se
+  extrajeron a `src/lib/storage/temas.ts` porque ahora los comparten dos mundos — el perfil y la
+  **curaduría de pictogramas** (el juego palabra↔objeto filtra por los temas que el padre eligió).
+- **Las palabras de los pictogramas son NUESTRAS, en es-CO** (ADR 001): el dibujo de ARASAAC
+  `coche.png` se muestra como **"carro"**, y `autobus.png` como **"bus"**. La curaduría humana
+  incluye la palabra, no solo la selección del dibujo; hay un unit que lo verifica.
+- **Lote ARASAAC: 42 pictogramas** (≥5 por cada uno de los 6 temas), descargados una vez con
+  `scripts/descargar-pictos.mjs`, commiteados con `LICENCIA.md` (CC BY-NC-SA, atribución a Sergio
+  Palao / ARASAAC / Gobierno de Aragón) y `lote.json` (trazabilidad del id original). Verificados
+  visualmente durante la construcción. En runtime **no hay ninguna llamada a ARASAAC**.

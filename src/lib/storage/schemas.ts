@@ -1,28 +1,13 @@
 import { z } from "zod";
 import { ETAPA_DEFECTO, ETAPAS, type Etapa } from "@content/schema";
+import { TEMAS } from "./temas";
 
 // Lo ÚNICO que esta app guarda: progreso de cápsulas, ajustes y el onboarding local.
 // Jamás audio del niño, jamás nada que lo identifique más allá del apodo que el padre elija
 // (opcional, local, borrable en un toque) — ADR 002.
 
-export const TEMAS = [
-  "animales",
-  "carros",
-  "espacio",
-  "dinosaurios",
-  "musica",
-  "mar",
-] as const;
-export type Tema = (typeof TEMAS)[number];
-
-export const NOMBRE_TEMA: Record<Tema, string> = {
-  animales: "Animales",
-  carros: "Carros",
-  espacio: "El espacio",
-  dinosaurios: "Dinosaurios",
-  musica: "Música",
-  mar: "El mar",
-};
+// Los temas viven en ./temas (los comparten el perfil y la curaduría de pictogramas).
+export { NOMBRE_TEMA, TEMAS, type Tema } from "./temas";
 
 export const PerfilSchema = z.object({
   /** Como el niño quiere que le digan. Opcional a propósito: la app funciona igual sin él. */

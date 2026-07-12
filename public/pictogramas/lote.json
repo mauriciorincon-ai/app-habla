@@ -1,0 +1,296 @@
+[
+  {
+    "id": "animales-perro",
+    "palabra": "perro",
+    "tema": "animales",
+    "archivo": "perro.png",
+    "arasaacId": 2517
+  },
+  {
+    "id": "animales-gato",
+    "palabra": "gato",
+    "tema": "animales",
+    "archivo": "gato.png",
+    "arasaacId": 2406
+  },
+  {
+    "id": "animales-pajaro",
+    "palabra": "pájaro",
+    "tema": "animales",
+    "archivo": "pajaro.png",
+    "arasaacId": 2490
+  },
+  {
+    "id": "animales-caballo",
+    "palabra": "caballo",
+    "tema": "animales",
+    "archivo": "caballo.png",
+    "arasaacId": 2294
+  },
+  {
+    "id": "animales-vaca",
+    "palabra": "vaca",
+    "tema": "animales",
+    "archivo": "vaca.png",
+    "arasaacId": 2609
+  },
+  {
+    "id": "animales-pato",
+    "palabra": "pato",
+    "tema": "animales",
+    "archivo": "pato.png",
+    "arasaacId": 2563
+  },
+  {
+    "id": "animales-conejo",
+    "palabra": "conejo",
+    "tema": "animales",
+    "archivo": "conejo.png",
+    "arasaacId": 2351
+  },
+  {
+    "id": "animales-elefante",
+    "palabra": "elefante",
+    "tema": "animales",
+    "archivo": "elefante.png",
+    "arasaacId": 2372
+  },
+  {
+    "id": "carros-coche",
+    "palabra": "coche",
+    "tema": "carros",
+    "archivo": "coche.png",
+    "arasaacId": 2339
+  },
+  {
+    "id": "carros-camion",
+    "palabra": "camión",
+    "tema": "carros",
+    "archivo": "camion.png",
+    "arasaacId": 2306
+  },
+  {
+    "id": "carros-autobus",
+    "palabra": "autobús",
+    "tema": "carros",
+    "archivo": "autobus.png",
+    "arasaacId": 2262
+  },
+  {
+    "id": "carros-moto",
+    "palabra": "moto",
+    "tema": "carros",
+    "archivo": "moto.png",
+    "arasaacId": 2480
+  },
+  {
+    "id": "carros-tren",
+    "palabra": "tren",
+    "tema": "carros",
+    "archivo": "tren.png",
+    "arasaacId": 2603
+  },
+  {
+    "id": "carros-avion",
+    "palabra": "avión",
+    "tema": "carros",
+    "archivo": "avion.png",
+    "arasaacId": 2264
+  },
+  {
+    "id": "carros-bicicleta",
+    "palabra": "bicicleta",
+    "tema": "carros",
+    "archivo": "bicicleta.png",
+    "arasaacId": 2277
+  },
+  {
+    "id": "carros-barco",
+    "palabra": "barco",
+    "tema": "carros",
+    "archivo": "barco.png",
+    "arasaacId": 2273
+  },
+  {
+    "id": "espacio-sol",
+    "palabra": "sol",
+    "tema": "espacio",
+    "archivo": "sol.png",
+    "arasaacId": 2798
+  },
+  {
+    "id": "espacio-luna",
+    "palabra": "luna",
+    "tema": "espacio",
+    "archivo": "luna.png",
+    "arasaacId": 2933
+  },
+  {
+    "id": "espacio-estrella",
+    "palabra": "estrella",
+    "tema": "espacio",
+    "archivo": "estrella.png",
+    "arasaacId": 2752
+  },
+  {
+    "id": "espacio-cohete",
+    "palabra": "cohete",
+    "tema": "espacio",
+    "archivo": "cohete.png",
+    "arasaacId": 2344
+  },
+  {
+    "id": "espacio-planeta",
+    "palabra": "planeta",
+    "tema": "espacio",
+    "archivo": "planeta.png",
+    "arasaacId": 2829
+  },
+  {
+    "id": "espacio-nube",
+    "palabra": "nube",
+    "tema": "espacio",
+    "archivo": "nube.png",
+    "arasaacId": 2883
+  },
+  {
+    "id": "espacio-cielo",
+    "palabra": "cielo",
+    "tema": "espacio",
+    "archivo": "cielo.png",
+    "arasaacId": 6978
+  },
+  {
+    "id": "dinosaurios-dinosaurio",
+    "palabra": "dinosaurio",
+    "tema": "dinosaurios",
+    "archivo": "dinosaurio.png",
+    "arasaacId": 2738
+  },
+  {
+    "id": "dinosaurios-huevo",
+    "palabra": "huevo",
+    "tema": "dinosaurios",
+    "archivo": "huevo.png",
+    "arasaacId": 2427
+  },
+  {
+    "id": "dinosaurios-hueso",
+    "palabra": "hueso",
+    "tema": "dinosaurios",
+    "archivo": "hueso.png",
+    "arasaacId": 2972
+  },
+  {
+    "id": "dinosaurios-volcan",
+    "palabra": "volcán",
+    "tema": "dinosaurios",
+    "archivo": "volcan.png",
+    "arasaacId": 6247
+  },
+  {
+    "id": "dinosaurios-arbol",
+    "palabra": "árbol",
+    "tema": "dinosaurios",
+    "archivo": "arbol.png",
+    "arasaacId": 2256
+  },
+  {
+    "id": "dinosaurios-roca",
+    "palabra": "roca",
+    "tema": "dinosaurios",
+    "archivo": "roca.png",
+    "arasaacId": 6594
+  },
+  {
+    "id": "musica-tambor",
+    "palabra": "tambor",
+    "tema": "musica",
+    "archivo": "tambor.png",
+    "arasaacId": 2578
+  },
+  {
+    "id": "musica-guitarra",
+    "palabra": "guitarra",
+    "tema": "musica",
+    "archivo": "guitarra.png",
+    "arasaacId": 2417
+  },
+  {
+    "id": "musica-piano",
+    "palabra": "piano",
+    "tema": "musica",
+    "archivo": "piano.png",
+    "arasaacId": 2521
+  },
+  {
+    "id": "musica-flauta",
+    "palabra": "flauta",
+    "tema": "musica",
+    "archivo": "flauta.png",
+    "arasaacId": 2396
+  },
+  {
+    "id": "musica-campana",
+    "palabra": "campana",
+    "tema": "musica",
+    "archivo": "campana.png",
+    "arasaacId": 5938
+  },
+  {
+    "id": "musica-cantar",
+    "palabra": "cantar",
+    "tema": "musica",
+    "archivo": "cantar.png",
+    "arasaacId": 2315
+  },
+  {
+    "id": "mar-pez",
+    "palabra": "pez",
+    "tema": "mar",
+    "archivo": "pez.png",
+    "arasaacId": 2520
+  },
+  {
+    "id": "mar-agua",
+    "palabra": "agua",
+    "tema": "mar",
+    "archivo": "agua.png",
+    "arasaacId": 2248
+  },
+  {
+    "id": "mar-barco",
+    "palabra": "barco",
+    "tema": "mar",
+    "archivo": "barco.png",
+    "arasaacId": 2273
+  },
+  {
+    "id": "mar-concha",
+    "palabra": "concha",
+    "tema": "mar",
+    "archivo": "concha.png",
+    "arasaacId": 34625
+  },
+  {
+    "id": "mar-playa",
+    "palabra": "playa",
+    "tema": "mar",
+    "archivo": "playa.png",
+    "arasaacId": 2826
+  },
+  {
+    "id": "mar-pulpo",
+    "palabra": "pulpo",
+    "tema": "mar",
+    "archivo": "pulpo.png",
+    "arasaacId": 3379
+  },
+  {
+    "id": "mar-tortuga",
+    "palabra": "tortuga",
+    "tema": "mar",
+    "archivo": "tortuga.png",
+    "arasaacId": 2596
+  }
+]
