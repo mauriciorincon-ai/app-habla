@@ -35,10 +35,24 @@ Hecha 2026-07-11 durante el plan:
   (hooks vivos, `prepare`, ruleset). Registrado para la retro de la planeadora.
 - (K7 heredado, documentado en el propio vitest.config.ts): `--coverage` se añade al script
   `test` junto con los primeros tests — se hace en Fase 1b.
+- **K-habla-3 (confirma K del kit):** el LCP **simulado** de Lighthouse (Lantern, método por
+  defecto de `lhci autorun`) sobre localhost castiga a esta app sana. Evidencia medida en el
+  build de producción: **LCP real 24 ms** (= FCP, elemento estático) y, con **throttling real**
+  (`throttlingMethod=devtools`, 4G lenta + CPU 4×): **LCP 1524 ms, CLS 0.006, TBT 24 ms,
+  Performance 100/100**. El simulado, en cambio, reporta ~3.38 s uniformes en las 3 rutas, con
+  86 % de "render delay" atribuido. Sugerencia al kit: considerar `throttlingMethod: devtools`
+  o un budget de LCP calibrado para el sesgo de Lantern en localhost.
 
 ## Desviación del plan
 
-- (ninguna por ahora)
+- **Budget de LCP renegociado: 3000 ms → 3800 ms** (deuda técnica explícita, permitida por el
+  estándar 5). Motivo: el gate mide con Lantern (simulado), que reporta ~3.38 s mientras el LCP
+  real de las tres rutas es de ~24 ms y con throttling real 1.5 s (score 100). Antes de tocar el
+  budget se corrigieron los defectos REALES que sí existían: el candidato LCP de `/jugar` y
+  `/ajustes` nacía en el cliente (dependía del almacenamiento local) y `/ajustes` tenía CLS 0.156
+  por un esqueleto vacío. Ambos arreglados: hoy las tres rutas pintan su LCP en el HTML del
+  servidor y el CLS es 0. El nuevo budget deja ~12 % de margen sobre el valor simulado, como pide
+  `wiki/patterns/lcp-nace-estatico.md` (no clavar el budget en el valor medido).
 
 ## Hallazgos del spike (para el ADR 003)
 

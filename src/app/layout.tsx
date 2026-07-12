@@ -11,6 +11,9 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  // No se usa en el contenido principal (solo en etiquetas y métricas): no compite por ancho de
+  // banda con la pintura del texto grande.
+  preload: false,
 });
 
 const instrumentSerif = Instrument_Serif({

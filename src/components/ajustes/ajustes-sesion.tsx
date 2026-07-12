@@ -6,32 +6,34 @@ import {
   guardarAjustesEnStore,
   useAjustes,
 } from "@/components/estado-local";
-import { useHidratado } from "@/components/use-hidratado";
+import { AJUSTES_DEFECTO } from "@/lib/storage/schemas";
 
 export function AjustesSesion() {
-  const hidratado = useHidratado();
-  const ajustes = useAjustes();
+  const guardados = useAjustes();
   const [confirmandoBorrado, setConfirmandoBorrado] = useState(false);
 
   // El ajuste de animaciones se aplica en el <html> (el CSS lo honra igual que reduced-motion).
   useEffect(() => {
-    if (!ajustes) return;
+    if (!guardados) return;
     document.documentElement.dataset.reducirAnimacion = String(
-      ajustes.reducirAnimaciones,
+      guardados.reducirAnimaciones,
     );
-  }, [ajustes]);
+  }, [guardados]);
 
-  if (!hidratado || !ajustes) {
-    return <div className="min-h-[18rem]" aria-hidden="true" />;
-  }
+  // Esta pantalla se renderiza COMPLETA desde el servidor con los valores por defecto (no un
+  // esqueleto): así su texto es el candidato LCP estático y no hay salto de layout al hidratar
+  // (el esqueleto vacío costaba CLS 0.156). Al hidratar, los interruptores toman el valor real.
+  const ajustes = guardados ?? AJUSTES_DEFECTO;
+  const listo = guardados !== null;
 
   return (
-    <div className="flex min-h-[18rem] flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Interruptor
         id="modo-calma"
         titulo="Modo calma"
         descripcion="Colores suaves, sin medidor y sin meta. El globo solo responde a su voz. Se puede activar también dentro del juego, en un toque."
         activo={ajustes.modoCalma}
+        listo={listo}
         onCambiar={(activo) =>
           guardarAjustesEnStore({ ...ajustes, modoCalma: activo })
         }
@@ -42,6 +44,7 @@ export function AjustesSesion() {
         titulo="Reducir animaciones"
         descripcion="Quita los movimientos que no son parte del juego. (Si el sistema ya pide menos movimiento, la app lo respeta sin que toques nada.)"
         activo={ajustes.reducirAnimaciones}
+        listo={listo}
         onCambiar={(activo) =>
           guardarAjustesEnStore({ ...ajustes, reducirAnimaciones: activo })
         }
@@ -94,12 +97,15 @@ function Interruptor({
   titulo,
   descripcion,
   activo,
+  listo,
   onCambiar,
 }: {
   id: string;
   titulo: string;
   descripcion: string;
   activo: boolean;
+  /** false hasta que hidrata: aún no sabemos el valor guardado, así que no se puede tocar. */
+  listo: boolean;
   onCambiar: (activo: boolean) => void;
 }) {
   return (
@@ -117,6 +123,7 @@ function Interruptor({
           aria-checked={activo}
           aria-labelledby={`${id}-titulo`}
           onClick={() => onCambiar(!activo)}
+          disabled={!listo}
           data-testid={id}
           className={[
             "relative min-h-11 w-20 shrink-0 rounded-full border transition-colors",

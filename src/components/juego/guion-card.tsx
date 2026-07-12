@@ -28,9 +28,8 @@ export function GuionCard({ capsula, onEmpezar, listo }: Props) {
         </blockquote>
 
         <p className="text-tinta-suave mt-5 text-sm">
-          Siéntate a su lado. Muéstrale cómo suena tú primero: el personaje
-          vuela mientras la voz se sostiene. Si él prefiere solo mirar hoy,
-          también está bien.
+          Muéstrale cómo suena tú primero. Si hoy prefiere solo mirar, también
+          está bien.
         </p>
       </div>
 
