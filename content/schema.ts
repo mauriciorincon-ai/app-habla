@@ -22,9 +22,42 @@ export const NOMBRE_TECNICA: Record<Tecnica, string> = {
   "estimulacion-focalizada": "Repetir una palabra clave",
 };
 
+/**
+ * Etapas del habla (ADR 006, extiende ADR 005). Descritas por comportamiento observable,
+ * jamás por jerga clínica. "palabras-sueltas" es el DEFAULT PERMANENTE de esta app;
+ * "primeras-frases" solo se activa por elección explícita del padre.
+ */
+export const ETAPAS = [
+  "sonidos-e-intentos",
+  "palabras-sueltas",
+  "primeras-frases",
+] as const;
+
+export type Etapa = (typeof ETAPAS)[number];
+
+export const ETAPA_DEFECTO: Etapa = "palabras-sueltas";
+
+export const NOMBRE_ETAPA: Record<Etapa, string> = {
+  "sonidos-e-intentos": "Sonidos e intentos",
+  "palabras-sueltas": "Palabras sueltas",
+  "primeras-frases": "Primeras frases",
+};
+
+/** Cómo se ve cada etapa en la vida real — es lo que el padre reconoce, no un diagnóstico. */
+export const DESCRIPCION_ETAPA: Record<Etapa, string> = {
+  "sonidos-e-intentos":
+    "Todavía explora: hace sonidos, señala, lleva de la mano. Los intentos y los gestos son su forma de hablar.",
+  "palabras-sueltas":
+    "Dice palabras de a una: “agua”, “mamá”, “carro”. Todavía no las junta — y no hace falta apurarlo.",
+  "primeras-frases":
+    "A veces junta dos palabras: “más agua”, “carro grande”. Sigue diciendo mucho de a una, y está bien.",
+};
+
 export const CapsulaSchema = z.object({
   id: z.string().min(1),
   tecnica: z.enum(TECNICAS),
+  /** Etapa del habla a la que sirve la cápsula (ADR 006). */
+  etapa: z.enum(ETAPAS),
   /** Titular corto y cálido, en es-CO. */
   titulo: z.string().min(1).max(70),
   /** La técnica explicada para leerse en ~30 segundos. */

@@ -10,6 +10,7 @@
 
 import { useSyncExternalStore } from "react";
 import { CAPSULAS } from "@content/capsulas";
+import type { Etapa } from "@content/schema";
 import {
   claveFechaLocal,
   marcarCompletada,
@@ -108,28 +109,37 @@ export function ajustesActuales(): AjustesGuardados {
 
 /**
  * La cápsula de hoy — función PURA, apta para usarse en el render (no escribe nada).
- * Es determinista: con el mismo progreso y la misma fecha devuelve siempre la misma cápsula.
+ * Es determinista: con el mismo progreso, la misma fecha y la misma etapa devuelve siempre
+ * la misma cápsula (ADR 006: el selector filtra por la etapa activa).
  */
-export function capsulaDeHoy(progreso: Progreso) {
+export function capsulaDeHoy(progreso: Progreso, etapa: Etapa) {
   const fecha = claveFechaLocal(new Date());
-  return { ...seleccionarCapsula(fecha, progreso, CAPSULAS), fecha };
+  return { ...seleccionarCapsula(fecha, progreso, CAPSULAS, etapa), fecha };
 }
 
 /**
  * Fija la asignación del día en el almacenamiento (efecto, nunca en el render). A partir de aquí
  * la cápsula de hoy no cambia: ni al recargar, ni al completarla, ni al volver por la noche.
+ * (Sí cambia si el padre cambia de etapa — y vuelve si regresa a la etapa el mismo día.)
  */
 export function asegurarAsignacionDeHoy(): void {
   const progreso = storeProgreso.snapshot();
-  const { progreso: siguiente } = capsulaDeHoy(progreso);
+  const { progreso: siguiente } = capsulaDeHoy(
+    progreso,
+    storeAjustes.snapshot().etapa,
+  );
   if (siguiente !== progreso) {
     storeProgreso.set(siguiente);
   }
 }
 
-export function marcarCapsulaHecha(fecha: string, capsulaId: string): void {
+export function marcarCapsulaHecha(
+  fecha: string,
+  capsulaId: string,
+  etapa: Etapa,
+): void {
   storeProgreso.set(
-    marcarCompletada(fecha, capsulaId, storeProgreso.snapshot()),
+    marcarCompletada(fecha, capsulaId, etapa, storeProgreso.snapshot()),
   );
 }
 

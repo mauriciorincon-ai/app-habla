@@ -12,6 +12,7 @@ import {
   asegurarAsignacionDeHoy,
   capsulaDeHoy,
   marcarCapsulaHecha,
+  useAjustes,
   usePerfil,
   useProgreso,
 } from "@/components/estado-local";
@@ -22,13 +23,16 @@ export function HoyCliente() {
   const hidratado = useHidratado();
   const progreso = useProgreso();
   const perfil = usePerfil();
+  const ajustes = useAjustes();
+  const etapa = ajustes?.etapa;
 
+  // Corre también cuando el padre cambia de etapa en Ajustes (la cápsula de hoy se re-hace).
   useEffect(() => {
     asegurarAsignacionDeHoy();
-  }, []);
+  }, [etapa]);
 
   // Altura reservada: el contenido llega tras hidratar, pero el layout no salta (CLS).
-  if (!hidratado || !progreso) {
+  if (!hidratado || !progreso || !ajustes) {
     return <div className="min-h-[22rem]" aria-hidden="true" />;
   }
 
@@ -40,7 +44,7 @@ export function HoyCliente() {
     );
   }
 
-  const { capsula, completada, fecha } = capsulaDeHoy(progreso);
+  const { capsula, completada, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
   const diasAcompañados = progreso.historial.length;
 
   return (
@@ -108,7 +112,9 @@ export function HoyCliente() {
           ) : (
             <button
               type="button"
-              onClick={() => marcarCapsulaHecha(fecha, capsula.id)}
+              onClick={() =>
+                marcarCapsulaHecha(fecha, capsula.id, capsula.etapa)
+              }
               className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-6 font-medium"
               data-testid="marcar-hecha"
             >

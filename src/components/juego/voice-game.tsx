@@ -43,7 +43,7 @@ export function VoiceGame() {
     return <div className="min-h-[28rem]" aria-hidden="true" />;
   }
 
-  const { capsula, fecha } = capsulaDeHoy(progreso);
+  const { capsula, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
   return (
     <JuegoListo
       capsula={capsula}
@@ -86,7 +86,7 @@ function JuegoListo({
   }
 
   function terminarYMarcar() {
-    marcarCapsulaHecha(fecha, capsula.id);
+    marcarCapsulaHecha(fecha, capsula.id, capsula.etapa);
     router.push("/");
   }
 
