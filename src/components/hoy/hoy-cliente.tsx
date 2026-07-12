@@ -9,13 +9,15 @@ import { useEffect } from "react";
 import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
 import { Cohete, Globo, IconoHecho } from "@/components/iconos";
 import {
-  asegurarAsignacionDeHoy,
-  capsulaDeHoy,
-  marcarCapsulaHecha,
   useAjustes,
   usePerfil,
   useProgreso,
 } from "@/components/estado-local";
+import {
+  asegurarAsignacionDeHoy,
+  capsulaDeHoy,
+  marcarCapsulaHecha,
+} from "@/components/estado-capsulas";
 import { useHidratado } from "@/components/use-hidratado";
 import { Onboarding } from "./onboarding";
 

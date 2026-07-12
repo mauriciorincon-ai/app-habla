@@ -69,6 +69,38 @@ pitch del niño + `fetch` a un endpoint de analytics). Resultado:
 La fuga se revirtió; ambos candados quedan verdes. **El pitch es dato derivado de la voz del niño
 y se trata con la misma regla que el audio.**
 
+## Gate de diseño (checklist del skill `diseno-ui`, corrido de verdad sobre el código y la preview)
+
+- ✅ Cero emojis como iconografía · cero valores mágicos de color · cero inglés residual · los 5
+  estados existen en los tres juegos · responsive real (móvil + desktop) · `prefers-reduced-motion`
+  cubre las transiciones nuevas.
+- ❌→✅ **Dos incumplimientos propios cazados por el checklist** (como en el S1: correrlo en serio
+  paga): `rounded-[2rem]` y `duration-300` en el escenario de pictogramas — ambos **fuera de la
+  escala del design-system** (radios 8/12/16/24; duraciones 120/220/380). Corregidos a
+  `rounded-3xl` + `duration-[--dur-lenta] ease-suave`. El `design-system.md` se amplió con los
+  patrones del sprint (personajes vs iconos vs pictogramas-contenido; el vuelo interpolado; la
+  regla de "el selector es la pantalla más predecible de la app").
+
+## Gate de performance — defectos REALES corregidos, budgets intactos
+
+El gate de Lighthouse falló primero: **script 408 KB** (budget 350) y **LCP hasta 4.5 s**. A
+diferencia del S1, esta vez **no se renegoció ningún budget**: los dos eran defectos de verdad.
+
+1. **El selector descargaba los TRES juegos de golpe** (prefetch por defecto de `next/link`): el
+   niño abre uno, no tres. → `prefetch={false}` en las tarjetas.
+2. **El cohete y palabra↔objeto arrastraban la biblioteca ENTERA de cápsulas** (50 cápsulas ≈
+   65 KB de JS) solo por importar `estado-local` (que importaba `@content/capsulas` para la cápsula
+   del día). Ninguno de los dos muestra cápsulas. → La cápsula del día se extrajo a
+   `src/components/estado-capsulas.ts`; `estado-local` se queda con los stores. Ahora la biblioteca
+   la cargan únicamente "Hoy" y el globo (que marca el día como hecho).
+
+**Resultado:** JS de 408 KB → **281 KB** (−127 KB) y LCP máximo 4.5 s → 3.7 s. Los 5 URLs pasan el
+budget sin tocarlo: **Perf 90–95 · A11y 100 · Best Practices 100 · SEO 100.**
+
+_(Fricción menor de herramienta, no del kit: `npx lhci` resuelve a un paquete impostor del registry
+que imprime "Hello, this is AnupamAS01!". El correcto es `npx @lhci/cli`. El CI del kit ya usa el
+paquete bueno; queda anotado por si alguien lo corre a mano.)_
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se

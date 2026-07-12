@@ -120,8 +120,25 @@ nuevos sin derivarlos de la paleta.
   line (stroke 1.5, viewBox 24, `currentColor`), `aria-hidden` salvo que el icono sea el
   contenido. Los emojis están prohibidos como iconos: es la firma del "look de IA con prisa" y,
   peor, cada sistema operativo los dibuja distinto — para un niño con perfil neurodivergente, un
-  símbolo que cambia de forma entre dispositivos es ruido, no señal. **El globo es la única
-  excepción**: no es un icono, es el personaje, y por eso lleva la paleta del niño.
+  símbolo que cambia de forma entre dispositivos es ruido, no señal. **Los PERSONAJES son la
+  excepción**: el globo y el cohete no son iconos —son los protagonistas del juego— y por eso
+  llevan la paleta del niño en vez de `currentColor`.
+- **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
+  grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
+  cambia de color al encenderse — el estado nunca se comunica solo con color: el texto
+  ("¡Le salió la voz!") lo dice también. Atribución CC BY-NC-SA obligatoria en Ajustes.
+- **Selector de juegos (COGA):** exactamente 3 tarjetas, siempre en el mismo orden. La
+  predictibilidad manda sobre la variedad. Cada tarjeta dice, en mono pequeña, **qué mide** ese
+  juego — incluida la promesa incómoda: "mide que hubo voz, nunca qué palabra dijo".
+
+## Patrones de movimiento del juego (Sprint 2)
+
+- **El personaje nunca se congela ni cae por silencio.** Su posición se interpola hacia un
+  objetivo (τ ≈ 120–140 ms) en píxeles del escenario, mutando `transform` en un rAF — jamás con
+  estado de React (60 fps aunque el medidor emita a ~31/s). El globo viaja hacia la meta; el
+  cohete mapea el TONO (escala musical); en modo calma los dos flotan sin meta.
+- **Duraciones y curvas:** solo la escala del token (`--dur-rapida/media/lenta` + `ease-suave`).
+  Nada de `duration-300` suelto (se coló en el S2 y se corrigió en el gate de diseño).
 
 ## Los 5 estados (cada pantalla los tiene diseñados)
 
@@ -131,4 +148,7 @@ nuevos sin derivarlos de la paleta.
 | **Cargando**            | Espacio reservado con la altura final (sin salto de layout)             | Igual; la calibración tiene su propia barra                                                                                                          |
 | **Error**               | —                                                                       | Mic denegado: pasos concretos + salida sin culpa ("la actividad también se puede hacer sin pantalla") · Ruido alto: lo dice de frente y deja decidir |
 | **Éxito**               | Cápsula marcada: "Hecho hoy. Mañana hay otra" (sobrio, sin fanfarria)   | Celebración honesta con la métrica real; si no hubo voz, se dice sin drama                                                                           |
-| **Contenido**           | La cápsula del día                                                      | El globo volando con la voz                                                                                                                          |
+| **Contenido**           | La cápsula del día                                                      | El personaje respondiendo a la voz (globo/cohete) o el pictograma encendido                                                                          |
+
+**El selector de juegos** no tiene estado vacío ni de error: siempre hay tres juegos, siempre los
+mismos. Es, a propósito, la pantalla más aburrida y más predecible de la app.

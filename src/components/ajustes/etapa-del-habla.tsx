@@ -54,7 +54,7 @@ export function EtapaDelHabla() {
                 aria-pressed={activa}
                 data-testid={`etapa-${etapa}`}
                 className={[
-                  "min-h-16 rounded-2xl border p-4 text-left transition-colors",
+                  "min-h-16 rounded-2xl border p-4 text-left transition-colors duration-[--dur-media] ease-suave",
                   activa
                     ? "border-acento bg-acento-suave/50"
                     : "border-borde bg-fondo",

@@ -9,13 +9,6 @@
 //      para el que existe este hook.
 
 import { useSyncExternalStore } from "react";
-import { CAPSULAS } from "@content/capsulas";
-import type { Etapa } from "@content/schema";
-import {
-  claveFechaLocal,
-  marcarCompletada,
-  seleccionarCapsula,
-} from "@/lib/coach/daily";
 import {
   guardarAjustes,
   guardarPerfil,
@@ -107,40 +100,13 @@ export function ajustesActuales(): AjustesGuardados {
   return storeAjustes.snapshot();
 }
 
-/**
- * La cápsula de hoy — función PURA, apta para usarse en el render (no escribe nada).
- * Es determinista: con el mismo progreso, la misma fecha y la misma etapa devuelve siempre
- * la misma cápsula (ADR 006: el selector filtra por la etapa activa).
- */
-export function capsulaDeHoy(progreso: Progreso, etapa: Etapa) {
-  const fecha = claveFechaLocal(new Date());
-  return { ...seleccionarCapsula(fecha, progreso, CAPSULAS, etapa), fecha };
+/** El progreso guardado, fuera de React (lo usa el módulo de cápsulas). */
+export function progresoActual(): Progreso {
+  return storeProgreso.snapshot();
 }
 
-/**
- * Fija la asignación del día en el almacenamiento (efecto, nunca en el render). A partir de aquí
- * la cápsula de hoy no cambia: ni al recargar, ni al completarla, ni al volver por la noche.
- * (Sí cambia si el padre cambia de etapa — y vuelve si regresa a la etapa el mismo día.)
- */
-export function asegurarAsignacionDeHoy(): void {
-  const progreso = storeProgreso.snapshot();
-  const { progreso: siguiente } = capsulaDeHoy(
-    progreso,
-    storeAjustes.snapshot().etapa,
-  );
-  if (siguiente !== progreso) {
-    storeProgreso.set(siguiente);
-  }
-}
-
-export function marcarCapsulaHecha(
-  fecha: string,
-  capsulaId: string,
-  etapa: Etapa,
-): void {
-  storeProgreso.set(
-    marcarCompletada(fecha, capsulaId, etapa, storeProgreso.snapshot()),
-  );
+export function guardarProgresoEnStore(progreso: Progreso): void {
+  storeProgreso.set(progreso);
 }
 
 export function borrarTodoYRecargar(): void {

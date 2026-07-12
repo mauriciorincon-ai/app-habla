@@ -67,7 +67,7 @@ export function EscenarioPalabra({
         <div
           ref={auraRef}
           className={[
-            "absolute inset-0 rounded-[2rem] transition-colors duration-300",
+            "absolute inset-0 rounded-3xl transition-colors duration-[--dur-lenta] ease-suave",
             encendido ? "bg-celebracion/40" : "bg-acento-suave/60",
           ].join(" ")}
           aria-hidden="true"

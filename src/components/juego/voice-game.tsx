@@ -11,13 +11,15 @@ import { useCallback, useEffect } from "react";
 import { NOMBRE_TECNICA, type Capsula } from "@content/schema";
 import {
   ajustesActuales,
-  asegurarAsignacionDeHoy,
-  capsulaDeHoy,
   guardarAjustesEnStore,
-  marcarCapsulaHecha,
   useAjustes,
   useProgreso,
 } from "@/components/estado-local";
+import {
+  asegurarAsignacionDeHoy,
+  capsulaDeHoy,
+  marcarCapsulaHecha,
+} from "@/components/estado-capsulas";
 import { useHidratado } from "@/components/use-hidratado";
 import {
   META_MS_DEFECTO,
