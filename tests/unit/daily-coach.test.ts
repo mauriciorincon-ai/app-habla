@@ -3,6 +3,7 @@ import { CAPSULAS } from "@content/capsulas";
 import {
   BibliotecaSchema,
   ETAPAS,
+  MINIMOS_POR_ETAPA,
   TECNICAS,
   type Capsula,
   type Etapa,
@@ -19,9 +20,33 @@ const PS: Etapa = "palabras-sueltas";
 const capsulasDe = (etapa: Etapa) => CAPSULAS.filter((c) => c.etapa === etapa);
 
 describe("biblioteca de cápsulas: la estrella", () => {
-  it("cumple el esquema completo", () => {
+  it("cumple el esquema completo (incluidos los mínimos por etapa)", () => {
     const parsed = BibliotecaSchema.safeParse(CAPSULAS);
     expect(parsed.success).toBe(true);
+  });
+
+  it("tiene ≥45 cápsulas y cada etapa alcanza su mínimo (ningún día sin respuesta)", () => {
+    expect(CAPSULAS.length).toBeGreaterThanOrEqual(45);
+    for (const etapa of ETAPAS) {
+      expect(capsulasDe(etapa).length).toBeGreaterThanOrEqual(
+        MINIMOS_POR_ETAPA[etapa],
+      );
+    }
+  });
+
+  it("palabras sueltas es la etapa MÁS grande: es el default permanente (ADR 005)", () => {
+    const palabras = capsulasDe("palabras-sueltas").length;
+    for (const etapa of ETAPAS) {
+      if (etapa === "palabras-sueltas") continue;
+      expect(palabras).toBeGreaterThan(capsulasDe(etapa).length);
+    }
+  });
+
+  it("cada etapa cubre varias técnicas (ninguna es monótona)", () => {
+    for (const etapa of ETAPAS) {
+      const tecnicas = new Set(capsulasDe(etapa).map((c) => c.tecnica));
+      expect(tecnicas.size).toBeGreaterThanOrEqual(3);
+    }
   });
 
   it("no repite ids", () => {

@@ -75,4 +75,25 @@ export const CapsulaSchema = z.object({
 
 export type Capsula = z.infer<typeof CapsulaSchema>;
 
-export const BibliotecaSchema = z.array(CapsulaSchema).min(14);
+/** Mínimos por etapa (Sprint 002). El motor exige que ninguna etapa se quede sin días. */
+export const MINIMOS_POR_ETAPA: Record<Etapa, number> = {
+  "sonidos-e-intentos": 8,
+  "palabras-sueltas": 30,
+  "primeras-frases": 7,
+};
+
+export const BibliotecaSchema = z
+  .array(CapsulaSchema)
+  .min(45)
+  .refine(
+    (capsulas) =>
+      ETAPAS.every(
+        (etapa) =>
+          capsulas.filter((c) => c.etapa === etapa).length >=
+          MINIMOS_POR_ETAPA[etapa],
+      ),
+    {
+      message:
+        "Cada etapa necesita su mínimo de cápsulas: ningún día puede quedarse sin respuesta, sea cual sea la etapa activa.",
+    },
+  );
