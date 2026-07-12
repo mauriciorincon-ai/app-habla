@@ -135,7 +135,13 @@ decisions/NNN-titulo.md   (ADRs de implementación)
     (nació en este sprint) · `Mejorado en SN` (venía de antes y este sprint la cambió) · `SN`
     (heredada sin cambios ⇒ es regresión). El filtro por origen y el historial del pie son parte
     del entregable. Una prueba **solo se elimina** cuando la feature que probaba dejó de existir, y
-    se declara en el historial. Sirve para el gate del usuario y como entregable a usuarios finales.
+    se declara en el historial. **Tres preguntas por prueba:** qué probar, cómo probarlo y **qué
+    esperar** — el resultado correcto explícito (con el microcopy LITERAL de la app, no una
+    paráfrasis) y la señal de defecto ("Mal") cuando exista una forma clara de fallar. **Gate
+    mínimo (⭐):** la guía marca el camino crítico — lo que ninguna automatización puede verificar
+    (voz y micrófono reales, juicio del usuario sobre el contenido, aprobación visual) — para
+    cuando el tiempo no alcanza; el resto queda respaldado por la CI. Sirve para el gate del
+    usuario y como entregable a usuarios finales.
 11. **PROHIBIDO entregar por artifacts de Claude o cualquier plataforma externa** (regla del
     usuario, re-ratificada 2026-07-12). Todo entregable —guías, reportes, documentos visuales—
     es un ARCHIVO DEL REPO (HTML autocontenido o Markdown) que el usuario pueda abrir, versionar

@@ -134,8 +134,21 @@ elimina cuando su feature deja de existir, y se declara en el historial del pie.
   **no comunican solo con color** (llevan el texto del sprint).
 - Prefijo de localStorage nuevo (`guia-habla-v2:`): las casillas del S1 no se heredan marcadas —
   una regresión sin probar no puede aparecer como hecha.
-- **Nota a la planeadora:** esta regla es de método y aplica a TODO el pipeline (la guía viva es
-  entregable estándar de todas las apps). El usuario lleva la instrucción; aquí solo se registra.
+- **Ampliación 1 (mismo día): las tres preguntas.** Toda prueba responde qué/cómo/**QUÉ ESPERAR**
+  — el resultado correcto explícito con el microcopy LITERAL de la app, y la señal de defecto
+  ("Mal") cuando hay una forma clara de fallar. Las 78 pruebas lo cumplen (36 con "Mal").
+- **Ampliación 2 (mismo día): el ⭐ gate mínimo.** El usuario no siempre puede correr 78 pruebas.
+  La guía marca 14 (~25 min) elegidas por un criterio, no por gusto: **lo que ninguna máquina
+  puede verificar** — su voz real en su micrófono, su juicio de padre sobre el contenido, la
+  aprobación visual. El resto está respaldado por los 104 unit + 69 e2e verdes.
+- **Al marcar el gate mínimo se cazó una expectativa ERRADA de la propia guía:** decía que la voz
+  de hombre adulto (90–160 Hz) daría un F0 en el spike — falso: el oído del tono es infantil a
+  propósito (worklet 150–500 Hz, cohete 200–450), así que la voz grave de un adulto muestra "—"
+  y eso es lo correcto. Sin la corrección, el usuario habría medido la cobertura con su voz de
+  pecho y el dato que decide el ADR 007 habría salido contaminado (falso negativo → fallback RMS
+  sin necesidad). La guía ahora ordena medir la cobertura CON VOZ AGUDA, dentro del oído infantil.
+- **Nota a la planeadora:** estas reglas son de método y aplican a TODO el pipeline (la guía viva
+  es entregable estándar de todas las apps). El usuario lleva la instrucción; aquí solo se registra.
 
 ## Decisiones tomadas durante la construcción
 

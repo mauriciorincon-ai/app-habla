@@ -65,6 +65,7 @@
   .o-s1 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s2 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
+  .o-clave { color: var(--pendiente); border-color: var(--pendiente); background: var(--pendiente-suave); font-weight: 700; }
 
   .leyenda { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px;
     padding: 14px 16px; margin: 16px 0; font-size: 0.875rem; }
@@ -169,8 +170,10 @@
         <li><span class="origen o-mejora">Mejorado en S2</span> Venía del Sprint 1 y <strong>este sprint lo cambió</strong>. <span class="suave">Hay que volver a mirarlo.</span></li>
         <li><span class="origen o-s1">S1</span> Del Sprint 1, sin cambios. <span class="suave">Se re-prueba para confirmar que no se rompió (regresión).</span></li>
       </ul>
+      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son 14, unos 25 minutos. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día.</p>
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
+        <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
         <button type="button" data-filtro="s2" aria-pressed="false">Solo lo nuevo del S2</button>
         <button type="button" data-filtro="mejora" aria-pressed="false">Solo lo mejorado</button>
         <button type="button" data-filtro="s1" aria-pressed="false">Solo regresión del S1</button>
@@ -189,7 +192,7 @@
     <p class="meta-bloque chica suave">~12 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. El S1 validó la <strong>energía</strong> (qué tan fuerte suena la voz); el S2 le suma el <strong>tono</strong> (qué tan aguda es), que es el motor del cohete. <strong>Es el bloque más importante del sprint.</strong></p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-a1"><div>
-        <label for="v2-a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. <span class="origen o-s1">S1</span></label>
+        <label for="v2-a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. <span class="origen o-s1">S1</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> La línea de estado dice <strong>estado: activo · motor: worklet</strong>.</p>
         <p class="mal"><span class="et">Mal</span> Dice <em>motor: analyser</em> (es el plan B, no rompe nada, pero necesito saberlo) · no arranca del todo.</p>
       </div></li>
@@ -219,14 +222,14 @@
         <p class="mal"><span class="et">Mal</span> Nada aquí es “defecto”: es el dato que necesito para calibrar bien. Solo anótalo.</p>
       </div></li>
       <li data-origen="mejora"><input type="checkbox" id="v2-a7"><div>
-        <label for="v2-a7">El mismo panel ahora trae <strong>“tono (F0)”</strong>. Míralo con la casa en <strong>silencio</strong>, sin hablar. <span class="origen o-mejora">Mejorado en S2</span></label>
+        <label for="v2-a7">El mismo panel ahora trae <strong>“tono (F0)”</strong>. Míralo con la casa en <strong>silencio</strong>, sin hablar. <span class="origen o-mejora">Mejorado en S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Se queda en <strong>“—”</strong>, siempre. El ruido no tiene tono.</p>
         <p class="mal"><span class="et">Mal</span> Aparece un número en Hz sin que nadie hable: <strong>defecto grave</strong>, el cohete se movería solo. Repórtalo enseguida.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-a8"><div>
-        <label for="v2-a8">Di <strong>“aaaah” sostenido</strong> y mira el tono. <strong>Anota el rango de Hz</strong> que te sale. <span class="origen o-s2">Nuevo · S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Un número <strong>estable</strong> mientras sostienes (voz de hombre adulto: suele caer entre 90 y 160 Hz; de mujer, 180–250) y la barra de tono se llena.</p>
-        <p class="mal"><span class="et">Mal</span> El número brinca sin control (200 → 400 → 150) aunque tu voz esté quieta.</p>
+        <label for="v2-a8">Di <strong>“aaaah” sostenido</strong> y mira el tono. Si sale “—”, <strong>sube el tono</strong> (una “aaaah” aguda cómoda, o falsete) hasta que aparezca un número. <strong>Anota el rango de Hz</strong> que logras. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <strong>Ojo: el oído del tono es infantil a propósito</strong> — solo escucha de 150 a 500 Hz, donde vive la voz de él. Tu voz normal de hombre adulto (~100–140 Hz) queda <strong>por debajo</strong> y mostrará “—”: eso <strong>NO es un defecto</strong>. Con la voz un poco más aguda aparece un número <strong>estable</strong> y la barra de tono se llena.</p>
+        <p class="mal"><span class="et">Mal</span> Incluso con voz claramente aguda no aparece nada · el número brinca sin control (250 → 450 → 200) con la voz quieta.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-a9"><div>
         <label for="v2-a9">Haz la <strong>voz de sirena</strong>: “aaaAAAaaa”, subiendo y bajando el tono sin cortar el sonido. <span class="origen o-s2">Nuevo · S2</span></label>
@@ -234,9 +237,9 @@
         <p class="mal"><span class="et">Mal</span> La barra va a saltos, se queda pegada, o sube cuando gritas más fuerte (eso sería volumen, no tono).</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-a10"><div>
-        <label for="v2-a10">Mira <strong>“cobertura”</strong> mientras hablas sostenido: es el % de tu voz en el que la app <em>entendió</em> el tono. <strong>Anótalo — es el dato más importante del sprint.</strong> <span class="origen o-s2">Nuevo · S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <strong>Más de 70 %.</strong> Con eso, el cohete se queda como está.</p>
-        <p class="mal"><span class="et">Mal</span> Por debajo de ~50 %: el tono no es confiable con micrófonos reales y le cambio la mecánica al cohete (pasaría a “voz fuerte / voz suave”, dicho honestamente). No es un desastre: es justo la decisión que este número existe para tomar.</p>
+        <label for="v2-a10">Mira <strong>“cobertura”</strong> mientras sostienes la voz <strong>AGUDA</strong> (dentro del rango que encontraste en la prueba anterior): es el % de tu voz en el que la app <em>entendió</em> el tono. <strong>Anótalo — es el dato más importante del sprint.</strong> <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <strong>Más de 70 %, medido con voz aguda.</strong> Con eso, el cohete se queda como está. <em>Con tu voz grave normal saldrá baja — esa medición no cuenta: estás por fuera del oído infantil.</em></p>
+        <p class="mal"><span class="et">Mal</span> Por debajo de ~50 % <strong>con voz aguda sostenida</strong>: el tono no es confiable con micrófonos reales y le cambio la mecánica al cohete (pasaría a “voz fuerte / voz suave”, dicho honestamente). No es un desastre: es justo la decisión que este número existe para tomar.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-a11"><div>
         <label for="v2-a11">Mira <strong>“inversiones”</strong> mientras haces la sirena. Luego prueba a <strong>temblar</strong> la voz sin cambiar de sentido. <span class="origen o-s2">Nuevo · S2</span></label>
@@ -244,8 +247,8 @@
         <p class="mal"><span class="et">Mal</span> Se dispara sola (cuenta 10 cuando hiciste 3): el contador estaría inflando el logro del niño, y eso rompe la honestidad de la app.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-a12"><div>
-        <label for="v2-a12">Ahora <strong>imita la voz de él</strong>: aguda y suave, no la tuya de adulto. <span class="origen o-s2">Nuevo · S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Sigue detectando tono y la cobertura se mantiene alta. La app está afinada para voz infantil (200–450 Hz).</p>
+        <label for="v2-a12">Ahora <strong>imita la voz de él</strong>: aguda y suave, no la tuya de adulto. <strong>Este es el número más representativo</strong> — su voz vive en ese rango. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Sigue detectando tono y la cobertura se mantiene alta incluso con voz suave (bajita). La app está afinada para voz infantil (200–450 Hz).</p>
         <p class="mal"><span class="et">Mal</span> Con voz aguda deja de detectar o la cobertura se desploma: habría que mover el rango. <em>La prueba de verdad es con SU voz, en la tablet (lista diferida).</em></p>
       </div></li>
     </ul>
@@ -309,12 +312,12 @@
         <p class="mal"><span class="et">Mal</span> Jerga clínica, niveles con puntaje, o algo que suene a que él “va atrasado”.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-c2"><div>
-        <label for="v2-c2"><strong>La prueba clave.</strong> 1) Marca la cápsula de hoy como hecha. 2) Cambia a <strong>“Sonidos e intentos”</strong>. 3) Vuelve a “Hoy”. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-c2"><strong>La prueba clave.</strong> 1) Marca la cápsula de hoy como hecha. 2) Cambia a <strong>“Sonidos e intentos”</strong>. 3) Vuelve a “Hoy”. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sale <strong>otra</strong> cápsula (de esa etapa, sin hacer) y el <strong>contador de días NO se perdió</strong>.</p>
         <p class="mal"><span class="et">Mal</span> El contador se fue a cero, o la app se comporta como si fuera tu primer día.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-c3"><div>
-        <label for="v2-c3">Ahora <strong>vuelve a “Palabras sueltas”</strong> y mira “Hoy”. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-c3">Ahora <strong>vuelve a “Palabras sueltas”</strong> y mira “Hoy”. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Reaparece <strong>LA MISMA cápsula de antes, todavía marcada como hecha</strong>. Cada etapa recuerda su propio día.</p>
         <p class="mal"><span class="et">Mal</span> Sale una cápsula distinta y tu “hecho” de hoy desapareció. <em>(Esto pasaba de verdad: lo cazó un test durante el sprint. Por eso está aquí.)</em></p>
       </div></li>
@@ -363,7 +366,7 @@
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“Shhh… un momentico de silencio”</strong> mientras mide el ruido de tu casa, la barra se llena sola y pasa a <strong>“Haz sonar tu voz: aaaaah”</strong> sin que toques nada.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-e3"><div>
-        <label for="v2-e3">Haz <strong>“aaaah”</strong> sostenido. <span class="origen o-s1">S1</span></label>
+        <label for="v2-e3">Haz <strong>“aaaah”</strong> sostenido. <span class="origen o-s1">S1</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> El globo <strong>despega de inmediato</strong> y avanza <strong>solo mientras suenas</strong>; el medidor lateral se llena. El título cambia a “¡El globo está volando!”.</p>
         <p class="mal"><span class="et">Mal</span> Avanza sin que suenes · tarda en reaccionar · va a tirones.</p>
       </div></li>
@@ -378,7 +381,7 @@
         <p class="mal"><span class="et">Mal</span> El globo se frena y arranca en cada respiro, parpadeando.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-e6"><div>
-        <label for="v2-e6">Sostén la voz unos <strong>3 segundos</strong> seguidos. <span class="origen o-s1">S1</span></label>
+        <label for="v2-e6">Sostén la voz unos <strong>3 segundos</strong> seguidos. <span class="origen o-s1">S1</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> El globo <strong>llega hasta la meta</strong> y viene la celebración: <strong>“¡La sostuviste 3,2 segundos!”</strong> con el número real, y explica que eso es lo que el medidor escuchó — y que <strong>si además dijo la palabra, el que lo sabe eres tú</strong>.</p>
         <p class="mal"><span class="et">Mal</span> Un “¡muy bien!” genérico que te felicita pase lo que pase, o un número que no cuadra con lo que hiciste.</p>
       </div></li>
@@ -426,12 +429,12 @@
         <p class="esperar"><span class="et">Esperado</span> El guion te dice <strong>tu papel</strong>: “Hazlo tú primero, exagerado y riéndote…”, y aclara que el cohete responde al TONO, no a las palabras. Luego: <strong>“Haz la voz de sirena: aaaAAAaaa”</strong>.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-f2"><div>
-        <label for="v2-f2"><strong>La prueba de fondo:</strong> haz voz <strong>aguda</strong> (“iiii”, falsete) y luego <strong>grave</strong> (“ooooh”). Después <strong>grita grave</strong>, bien fuerte. <span class="origen o-s2">Nuevo · S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Con la aguda <strong>sube</strong>; con la grave <strong>baja</strong>. Al gritar grave <strong>NO sube</strong> (el volumen no lo mueve — si subiera, no estaría midiendo tono).</p>
-        <p class="mal"><span class="et">Mal</span> Sube cuando gritas: el cohete estaría respondiendo al volumen y el juego sería una mentira. Repórtalo.</p>
+        <label for="v2-f2"><strong>La prueba de fondo:</strong> haz la sirena <strong>en tu registro agudo</strong> — sube hacia “iiii” (falsete) y baja sin llegar a tu voz grave de pecho. Después <strong>grita grave</strong>, bien fuerte. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Cuando el tono sube, el cohete <strong>sube</strong>; cuando baja, <strong>baja</strong>. Al gritar grave <strong>NO sube</strong>: el volumen no lo mueve. <em>Tu voz grave normal el cohete ni la oye (solo escucha 200–450 Hz, el rango de él) — quedarse quieto con ella es lo correcto, no un defecto.</em></p>
+        <p class="mal"><span class="et">Mal</span> Sube cuando gritas fuerte: estaría respondiendo al volumen y el juego sería una mentira. Repórtalo · con voz aguda no responde.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-f3"><div>
-        <label for="v2-f3">Haz la <strong>sirena completa</strong>: sube y baja la voz <strong>3 veces</strong>, contándolas. Deja que llegue la celebración. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-f3">Haz la <strong>sirena completa</strong> (en tu registro agudo): sube y baja la voz <strong>3 veces</strong>, contándolas. Deja que llegue la celebración. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>“¡Tu voz subió y bajó 3 veces!”</strong> — el número <strong>coincide con lo que hiciste</strong>, y explica que eso es lo que el medidor escuchó.</p>
         <p class="mal"><span class="et">Mal</span> El número está inflado (dice 8 cuando hiciste 3) o se queda corto. Dime cuántas hiciste y cuántas contó.</p>
       </div></li>
@@ -440,7 +443,7 @@
         <p class="esperar"><span class="et">Esperado</span> El cohete <strong>se queda quieto y espera</strong>. <strong>No cae, no explota, no hay derrota</strong> — igual que el globo.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-f5"><div>
-        <label for="v2-f5">Con <strong>música o TV de fondo</strong>, sin hablar, mira el cohete un rato. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-f5">Con <strong>música o TV de fondo</strong>, sin hablar, mira el cohete un rato. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>No se mueve solo.</strong> El ruido no tiene tono, y la app no lo inventa.</p>
         <p class="mal"><span class="et">Mal</span> El cohete flota o cuenta inversiones sin que nadie hable: <strong>defecto grave</strong> (el niño creería que su voz hizo algo que no hizo).</p>
       </div></li>
@@ -475,7 +478,7 @@
         <p class="mal"><span class="et">Mal</span> Aparece una palabra de España, o un dibujo que ni tú reconoces. Dime cuál.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-g3"><div>
-        <label for="v2-g3"><strong>LA PRUEBA IMPORTANTE:</strong> di algo que <strong>NO</strong> sea la palabra — un “mmm”, un “aaah”, un “pe”. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-g3"><strong>LA PRUEBA IMPORTANTE:</strong> di algo que <strong>NO</strong> sea la palabra — un “mmm”, un “aaah”, un “pe”. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> El dibujo <strong>igual se enciende</strong>. Cualquier intento cuenta: él dice palabras de a una y muchas veces solo le sale un pedacito. <strong>Eso también es hablar.</strong></p>
         <p class="mal"><span class="et">Mal</span> Si alguna vez te <strong>exige decir la palabra bien</strong> para avanzar: <strong>defecto gravísimo</strong>. Repórtalo de inmediato — rompe la regla fundacional de la app.</p>
       </div></li>
@@ -485,7 +488,7 @@
         <p class="mal"><span class="et">Mal</span> Cualquier frase que dé por hecho que dijo la palabra.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-g5"><div>
-        <label for="v2-g5">Toca <strong>“Otro dibujo”</strong> y recorre 5 o 6. <span class="origen o-s2">Nuevo · S2</span></label>
+        <label for="v2-g5">Toca <strong>“Otro dibujo”</strong> y recorre 5 o 6. <span class="origen o-s2">Nuevo · S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Son de <strong>los temas que elegiste</strong> en el onboarding (bloque B2). Ahí se ve que los temas por fin sirven para algo.</p>
         <p class="mal"><span class="et">Mal</span> Salen dibujos de temas que no elegiste, o siempre los mismos dos.</p>
       </div></li>
@@ -627,11 +630,11 @@
 
   <footer>
     <p class="eyebrow">Cómo funciona esta guía</p>
-    <p class="chica suave"><strong>Las tres preguntas</strong> (2026-07-12): toda prueba dice <strong>qué</strong> probar, <strong>cómo</strong> y <strong>qué esperar</strong> — el resultado correcto explícito, y la señal de defecto cuando la hay. Sin el “esperado”, quien prueba no sabe si lo que vio está bien.</p>
+    <p class="chica suave"><strong>Las tres preguntas</strong> (2026-07-12): toda prueba dice <strong>qué</strong> probar, <strong>cómo</strong> y <strong>qué esperar</strong> — el resultado correcto explícito, y la señal de defecto cuando la hay. Sin el “esperado”, quien prueba no sabe si lo que vio está bien. Y cuando el tiempo no alcanza, el <strong>⭐ gate mínimo</strong> marca el camino crítico: lo que ninguna automatización puede verificar.</p>
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
-    <p class="chica suave"><strong>Sprint 002 (2026-07-12):</strong> se recupera el temario completo del S1 (que la primera versión de esta guía había resumido), se etiqueta cada prueba con su origen y <strong>cada prueba gana su “Esperado”</strong> explícito. <strong>Nuevo:</strong> tono en el spike, etapas del habla, selector, cohete, palabra↔objeto, atribución ARASAAC. <strong>Mejorado:</strong> los temas del onboarding ya sirven; la cápsula muestra su etapa; la puerta del juego abre tres; la celebración es compartida; el modo calma vive en los tres juegos. <strong>Eliminado:</strong> el listado de las 14 cápsulas una por una (ya son 50: se revisan por bloques; las 14 originales siguen dentro de la app y se confirman en I8).<br>
+    <p class="chica suave"><strong>Sprint 002 (2026-07-12):</strong> se recupera el temario completo del S1 (que la primera versión de esta guía había resumido), se etiqueta cada prueba con su origen y <strong>cada prueba gana su “Esperado”</strong> explícito. Se marca el <strong>⭐ gate mínimo</strong> (14 pruebas: lo que ninguna máquina puede verificar) con su filtro, y se corrige la expectativa de tono para voz adulta: el oído es infantil (150–500 Hz) y la voz grave de un adulto queda por fuera <em>a propósito</em>. <strong>Nuevo:</strong> tono en el spike, etapas del habla, selector, cohete, palabra↔objeto, atribución ARASAAC. <strong>Mejorado:</strong> los temas del onboarding ya sirven; la cápsula muestra su etapa; la puerta del juego abre tres; la celebración es compartida; el modo calma vive en los tres juegos. <strong>Eliminado:</strong> el listado de las 14 cápsulas una por una (ya son 50: se revisan por bloques; las 14 originales siguen dentro de la app y se confirman en I8).<br>
     <strong>Sprint 001 (2026-07-12):</strong> primera versión — spike de audio, pantalla Hoy, juego del globo, modo calma, veredicto de las 14 cápsulas. Gate de escritorio aprobado; PWA y offline diferidos a la tablet por decisión del usuario.</p>
   </footer>
 </div>
@@ -660,7 +663,10 @@
 
     function filtrar(filtro) {
       document.querySelectorAll("li[data-origen]").forEach(function (li) {
-        li.hidden = filtro !== "todo" && li.dataset.origen !== filtro;
+        li.hidden =
+          filtro === "clave"
+            ? !li.querySelector(".o-clave")
+            : filtro !== "todo" && li.dataset.origen !== filtro;
       });
       // Un bloque sin pruebas visibles se esconde entero: la guía filtrada se lee sin huecos.
       document.querySelectorAll("section.bloque").forEach(function (sec) {
