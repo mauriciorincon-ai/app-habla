@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de prueba — Hablemos San</title>
+<!--
+  GUÍA DE PRUEBA VIVA — entregable estándar de cada sprint (regla del pipeline, 2026-07-12).
+  Se actualiza en cada sprint: se agrega lo nuevo, se complementa y se elimina lo que ya no va.
+  Autocontenida a propósito (cero CDNs, cero dependencias): se abre con doble clic desde el repo
+  o desde cualquier lugar donde se copie. Las casillas se guardan en el navegador (localStorage).
+-->
+<style>
+  :root {
+    --fondo: #fbf8f2; --superficie: #f5f0e5; --borde: #e3d9c4;
+    --tinta: #1f2420; --tinta-suave: #5a615c;
+    --acento: #2e4628; --acento-suave: #dce6d8;
+    --alerta: #a95239; --alerta-suave: #fbe3da;
+    --ok: #527947; --pendiente: #8c6113; --pendiente-suave: #f8e9c8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #14171a; --superficie: #1b1f22; --borde: #2c333d;
+      --tinta: #f2efe8; --tinta-suave: #9a9e98;
+      --acento: #b5d5ab; --acento-suave: #233022;
+      --alerta: #f5b4a0; --alerta-suave: #3a2620;
+      --ok: #8fbf82; --pendiente: #ecc56f; --pendiente-suave: #33290f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--tinta);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.55; }
+  .pagina { max-width: 680px; margin: 0 auto; padding: 24px 18px 80px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 2rem; line-height: 1.15; margin: 8px 0 4px; text-wrap: balance; }
+  h2 { font-family: Georgia, serif; font-weight: 400; font-size: 1.35rem; margin: 0; text-wrap: balance; }
+  .eyebrow { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.68rem;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--tinta-suave); }
+  p { margin: 0.5em 0; }
+  .suave { color: var(--tinta-suave); }
+  .chica { font-size: 0.875rem; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; }
+
+  .progreso { position: sticky; top: 0; z-index: 5; background: var(--fondo);
+    padding: 10px 0 8px; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--borde); margin-bottom: 18px; }
+  .progreso .num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; font-size: 0.85rem; white-space: nowrap; }
+  .barra { flex: 1; height: 6px; background: var(--acento-suave); border-radius: 99px; overflow: hidden; }
+  .barra > div { height: 100%; width: 0%; background: var(--acento); border-radius: 99px; transition: width 200ms ease; }
+  @media (prefers-reduced-motion: reduce) { .barra > div { transition: none; } }
+
+  .url-caja { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: 14px 16px; margin: 16px 0; }
+  .url-caja code { word-break: break-all; color: var(--acento); font-weight: 600; font-size: 0.82rem; }
+
+  section.bloque { background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: 16px; padding: 20px 18px; margin: 22px 0; }
+  .bloque-cabeza { display: flex; gap: 14px; align-items: baseline; margin-bottom: 4px; }
+  .letra { font-family: Georgia, serif; font-size: 1.6rem; color: var(--acento); min-width: 1.4rem; line-height: 1; }
+  .meta-bloque { margin: 2px 0 14px; }
+
+  ul.pasos { list-style: none; margin: 12px 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  ul.pasos li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+  ul.pasos input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--acento); cursor: pointer; }
+  ul.pasos label { cursor: pointer; }
+  ul.pasos input:checked + label { color: var(--tinta-suave); }
+
+  .esperado, .reportame { border-radius: 12px; padding: 12px 14px; margin: 12px 0; font-size: 0.9rem; }
+  .esperado { background: var(--acento-suave); }
+  .esperado strong:first-child { color: var(--ok); }
+  .reportame { background: var(--alerta-suave); }
+  .reportame strong:first-child { color: var(--alerta); }
+  .esperado p, .reportame p { margin: 0.35em 0; }
+
+  .tabla-scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.875rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  th { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 600; }
+  td.valor { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .capsula { border: 1px solid var(--borde); border-radius: 12px; padding: 12px 14px; margin: 10px 0;
+    display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; background: var(--fondo); }
+  .capsula input[type="checkbox"] { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--acento); cursor: pointer; }
+  .capsula .titulo { font-weight: 600; }
+  .capsula .guion { font-family: Georgia, serif; font-style: italic; color: var(--tinta-suave); font-size: 0.95rem; margin-top: 2px; }
+  .capsula .pantalla { font-family: ui-monospace, Menlo, monospace; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--acento); }
+
+  .diferida { border: 1.5px dashed var(--pendiente); background: var(--pendiente-suave); }
+  .diferida .letra { color: var(--pendiente); }
+  .pill-diferida { display: inline-block; font-family: ui-monospace, Menlo, monospace; font-size: 0.65rem;
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--pendiente);
+    border: 1px solid var(--pendiente); border-radius: 99px; padding: 2px 10px; margin-bottom: 8px; }
+
+  .aviso-final { border: 1.5px solid var(--alerta); border-radius: 14px; padding: 14px 16px; margin: 20px 0; background: var(--alerta-suave); font-size: 0.9rem; }
+  ol.reporte { padding-left: 22px; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; }
+  a { color: var(--acento); }
+  input[type="checkbox"]:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  footer { margin-top: 40px; border-top: 1px solid var(--borde); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <header>
+    <p class="eyebrow">Hablemos San · Guía de prueba viva · Sprint 001 · 2026-07-12</p>
+    <h1>Guía de prueba</h1>
+    <p class="suave">Qué probar, cómo probarlo y qué esperar como resultado correcto. Los bloques A–E se hacen ahora <strong>en el computador</strong> (Chrome, con micrófono); el bloque F son las cápsulas (solo leer). Al final está lo <strong>diferido para cuando regrese la tablet</strong>. Las casillas se guardan solas en este navegador.</p>
+    <div class="url-caja">
+      <p class="eyebrow" style="margin:0 0 6px">URL de prueba (Chrome del computador)</p>
+      <code>https://app-habla-git-sprint-001-hoy-hablamos-mauricio-rincon.vercel.app</code>
+      <p class="chica suave" style="margin:8px 0 0">Dirección estable de la rama del sprint: no cambia aunque suban correcciones. La de producción seguirá vacía hasta el merge. Si pide login de Vercel: Settings → Deployment Protection → Vercel Authentication → Disabled.</p>
+    </div>
+  </header>
+
+  <div class="progreso">
+    <div class="barra"><div id="barra-avance"></div></div>
+    <span class="num" id="contador">0/0</span>
+  </div>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">A</span><h2>El spike de audio</h2></div>
+    <p class="meta-bloque chica suave">~10 min. Única página sin enlace visible: agrega <code>/spike/audio</code> a la URL. Valida el oído de la app con TU micrófono y TU casa.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="a1"><label for="a1">Abre <code>/spike/audio</code>, toca <strong>Empezar</strong> y acepta el micrófono.</label></li>
+      <li><input type="checkbox" id="a2"><label for="a2">La línea de estado debe decir <strong>estado: activo · motor: worklet</strong>. Si dice <em>analyser</em>, anótalo (es el plan B).</label></li>
+      <li><input type="checkbox" id="a3"><label for="a3">Con la casa en silencio normal, <strong>anota el "piso (mín. sesión)"</strong> — el ruido de fondo real.</label></li>
+      <li><input type="checkbox" id="a4"><label for="a4">Haz un <strong>"aaaah" sostenido</strong> a ~50 cm: la barra sube <strong>de inmediato</strong>, sin retraso que se sienta.</label></li>
+      <li><input type="checkbox" id="a5"><label for="a5">Déjalo corriendo <strong>2–3 minutos</strong> hablando de a ratos: "frames/s" estable (~30), nada se congela.</label></li>
+      <li><input type="checkbox" id="a6"><label for="a6"><strong>Copia o fotografía el bloque gris de datos</strong> (sampleRate, baseLatency, settings) y mándalo. Es el dato que más se necesita.</label></li>
+      <li><input type="checkbox" id="a7"><label for="a7">Con música o TV de fondo: ¿el piso sube? ¿la barra se mueve sola? Anota qué tanto.</label></li>
+    </ul>
+    <div class="tabla-scroll"><table>
+      <tr><th>Dato del bloque gris</th><th>Valor correcto</th></tr>
+      <tr><td><code>echoCancellation / noiseSuppression / autoGainControl</code></td><td class="valor">los tres en <strong>false</strong></td></tr>
+      <tr><td><code>sampleRate</code></td><td class="valor">44100 o 48000 (ambos bien)</td></tr>
+      <tr><td><code>baseLatency</code></td><td class="valor">idealmente &lt; 0.05</td></tr>
+      <tr><td>piso en silencio</td><td class="valor">típico 0.001–0.03</td></tr>
+      <tr><td>rms con "aaaah" cerca</td><td class="valor">~0.1–0.5</td></tr>
+    </table></div>
+    <div class="reportame"><p><strong>Repórtame sí o sí:</strong> algún setting en <strong>true</strong> · motor "analyser" · retraso perceptible · congelamientos o cortes.</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">B</span><h2>La pantalla "Hoy"</h2></div>
+    <p class="meta-bloque chica suave">~10 min. La estrella del sprint: la respuesta diaria.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="b1"><label for="b1">Primera vez (o tras borrar datos): pasa el <strong>onboarding</strong>. Prueba dejar el apodo <strong>vacío</strong> (debe funcionar igual) y elige 1–3 temas.</label></li>
+      <li><input type="checkbox" id="b2"><label for="b2">Lee <strong>la cápsula de hoy</strong>: ¿nivel palabras sueltas? ¿la "línea de hoy" la dirías tal cual? ¿la actividad se puede hacer hoy?</label></li>
+      <li><input type="checkbox" id="b3"><label for="b3"><strong>"¿De dónde sale esto?"</strong> cita el estudio de respaldo.</label></li>
+      <li><input type="checkbox" id="b4"><label for="b4">La tarjeta <strong>"El juego de voz"</strong> está siempre visible debajo de la cápsula.</label></li>
+      <li><input type="checkbox" id="b5"><label for="b5"><strong>"Ya lo hicimos"</strong> → "Hecho hoy. Mañana hay otra." + contador de días sin rachas.</label></li>
+      <li><input type="checkbox" id="b6"><label for="b6"><strong>Recarga</strong> → sigue hecha y es LA MISMA cápsula. Cierra el navegador y vuelve → igual.</label></li>
+      <li><input type="checkbox" id="b7"><label for="b7">Mañana: aparece <strong>otra cápsula distinta</strong>.</label></li>
+    </ul>
+    <div class="esperado"><p><strong>Correcto:</strong> ningún día sin respuesta; la cápsula del día es estable; el contador jamás regaña por faltar.</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">C</span><h2>El juego de voz</h2></div>
+    <p class="meta-bloque chica suave">~10 min, con tu micrófono. El globo vuela con cualquier sonido sostenido — no exige palabras.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="c1"><label for="c1">Desde "Hoy" → <strong>"El juego de voz"</strong> → tu guion → <strong>"Estamos listos"</strong> → acepta el micrófono.</label></li>
+      <li><input type="checkbox" id="c2"><label for="c2"><strong>Calibración "Shhh"</strong>: 2 segundos callado → pasa sola a "Haz sonar tu voz".</label></li>
+      <li><input type="checkbox" id="c3"><label for="c3"><strong>"Aaaah"</strong>: el globo despega de inmediato, sube con el volumen, el medidor lateral se llena.</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4"><strong>Cállate a mitad</strong>: el globo se detiene y espera. No cae, no hay derrota.</label></li>
+      <li><input type="checkbox" id="c5"><label for="c5">"Aaah — <em>pausa cortica de respirar</em> — aaah": la pausa corta <strong>NO</strong> frena el globo (histéresis).</label></li>
+      <li><input type="checkbox" id="c6"><label for="c6">Sostén ~3 segundos: <strong>celebración con el número real</strong>. ¿Te suena creíble contra lo que sostuviste?</label></li>
+      <li><input type="checkbox" id="c7"><label for="c7"><strong>"Otra vez"</strong> → recalibra y se juega de nuevo sin re-pedir permiso.</label></li>
+      <li><input type="checkbox" id="c8"><label for="c8"><strong>"Ya jugamos"</strong> temprano: la celebración dice lo que hubo; si no hubo voz, lo dice amable, sin culpa.</label></li>
+      <li><input type="checkbox" id="c9"><label for="c9"><strong>Fluidez:</strong> ¿el globo va suave o a saltos?</label></li>
+      <li><input type="checkbox" id="c10"><label for="c10">Con <strong>música/TV de fondo</strong>, entra de nuevo: la calibración puede avisar "Hay bastante ruido" y deja elegir "Volver a medir" o "Jugar así".</label></li>
+      <li><input type="checkbox" id="c11"><label for="c11"><strong>Micrófono negado:</strong> candado de la barra → Permisos → Micrófono → Bloquear → recarga → intenta jugar: pantalla honesta con pasos, nada roto. Luego vuelve a permitir.</label></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame:</strong> globo a saltos · retraso voz→movimiento · el globo moviéndose solo con ruido tras calibrar · pantalla rota o botón muerto.</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">D</span><h2>Modo calma y ajustes</h2></div>
+    <p class="meta-bloque chica suave">~5 min.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="d1"><label for="d1">Dentro del juego, <strong>"Modo calma"</strong>: colores suaves, sin medidor, sin meta ni celebración automática — el globo solo responde a la voz.</label></li>
+      <li><input type="checkbox" id="d2"><label for="d2">Sal y vuelve a entrar: el modo calma <strong>se recordó</strong>. Apágalo para seguir.</label></li>
+      <li><input type="checkbox" id="d3"><label for="d3">En <strong>Ajustes</strong>: los interruptores responden y quedan guardados.</label></li>
+      <li><input type="checkbox" id="d4"><label for="d4">Lee <strong>"Qué mide y qué NO mide esta app"</strong>: ¿honesto, claro, en tu idioma?</label></li>
+      <li><input type="checkbox" id="d5"><label for="d5">Prueba el <strong>modo oscuro</strong> (cambia el tema del sistema): la pantalla del padre se adapta; el juego del niño sigue claro SIEMPRE (a propósito).</label></li>
+    </ul>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">E</span><h2>Instalar como app y probar sin internet</h2></div>
+    <p class="meta-bloque chica suave">~5 min, en Chrome de escritorio.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="e1"><label for="e1">En la barra de direcciones aparece el <strong>icono de instalar</strong> (o menú ⋮ → "Instalar app"). Instálala: icono del globo sobre verde, abre en su propia ventana.</label></li>
+      <li><input type="checkbox" id="e2"><label for="e2">Navega una vez por Hoy, el Juego y Ajustes (se guardan para el modo sin conexión).</label></li>
+      <li><input type="checkbox" id="e3"><label for="e3"><strong>Apaga el wifi</strong> → abre la app instalada: "Hoy" abre con su cápsula y el juego funciona (el micrófono no necesita internet). Prende el wifi al terminar.</label></li>
+      <li><input type="checkbox" id="e4"><label for="e4">DE ÚLTIMO, cuando termines todo: Ajustes → <strong>"Borrar mis datos"</strong> → confirma → vuelve al onboarding como el primer día.</label></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame:</strong> qué no abrió sin internet (el offline es "mejor esfuerzo" declarado — hay que saber qué quedó por fuera).</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">F</span><h2>Las 14 cápsulas — tu veredicto</h2></div>
+    <p class="meta-bloque chica suave">Solo leer, cuando quieras. Marca = me sirve tal cual. Sin marcar = dime cuál y por qué (se reemplaza antes del merge). Todas están al nivel de palabras sueltas.</p>
+
+    <div class="capsula"><input type="checkbox" id="g1"><div><span class="titulo">1 · Ponle nombre a lo que él está mirando</span><p class="guion">"Cuando él mire o agarre algo, di su nombre, una sola palabra: '¡pelota!'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g2"><div><span class="titulo">2 · Las mismas palabras, en los mismos momentos</span><p class="guion">"En el baño, las mismas dos palabras de siempre: 'agua… jabón'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g3"><div><span class="titulo">3 · Háblale a su tamaño</span><p class="guion">"Cambia 'mira ese carro tan bonito que va por ahí' por: '¡carro!… carro rojo'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g4"><div><span class="titulo">4 · Devuélvele la palabra, completa y celebrada</span><p class="guion">"Él dice 'aba'; tú: '¡Agua! Sí, agua'. Y se la das."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g5"><div><span class="titulo">5 · Su palabra + una tuya</span><p class="guion">"Él dice 'agua'; tú: 'agua fría' — y se la pasas."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g6"><div><span class="titulo">6 · Cuenta hasta cinco por dentro</span><p class="guion">"Míralo, sonríe y espera cinco segundos antes de hablar tú. Lo que salga, nómbralo."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g7"><div><span class="titulo">7 · Deja el hueco en la canción</span><p class="guion">"Canta 'los pollitos dicen…' y quédate callado, esperando con cara de juego."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g8"><div><span class="titulo">8 · No adivines tan rápido</span><p class="guion">"Sostén el juguete, míralo y espera. Pida como pida, dáselo y di: '¡pelota!'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g9"><div><span class="titulo">9 · Habla de lo que él está mirando</span><p class="guion">"Siéntate a su altura, mira lo que él mira, y nombra ESO: '¡rueda!'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g10"><div><span class="titulo">10 · Su voz mueve el mundo <span class="pantalla">· con pantalla</span></span><p class="guion">"Mira: cuando haces aaaah, el globo vuela. Yo primero… ¡ahora tú!"</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g11"><div><span class="titulo">11 · La pantalla solo sirve si estás al lado <span class="pantalla">· con pantalla</span></span><p class="guion">"Al lado de él, nombra lo que pasa, en palabras de a una: '¡globo!… ¡sube!… ¿más?'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g12"><div><span class="titulo">12 · Una sola palabra, muchas veces</span><p class="guion">"Elige 'más' y úsala en cada oportunidad: '¿más?', '¡más agua!', 'más carro'."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g13"><div><span class="titulo">13 · El nombre vive en la cosa</span><p class="guion">"Cada vez que agarre su carro, tú: '¡carro!'. Cada vez. Siempre la misma palabra."</p></div></div>
+    <div class="capsula"><input type="checkbox" id="g14"><div><span class="titulo">14 · No lo pongas a examen</span><p class="guion">"Cambia '¿qué es esto?' por la respuesta regalada: '¡un perro!'."</p></div></div>
+  </section>
+
+  <section class="bloque diferida">
+    <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
+    <div class="bloque-cabeza"><span class="letra">→</span><h2>Validaciones pendientes en la tablet Android</h2></div>
+    <p class="meta-bloque chica suave">El niño y la tablet están de viaje. Estas pruebas quedan registradas aquí para retomarlas al regreso — bloquean el cierre definitivo del tema de audio (ADR 003), no el resto del sprint.</p>
+    <ul class="pasos">
+      <li><input type="checkbox" id="t1"><label for="t1"><code>/spike/audio</code> EN LA TABLET: motor, settings reales de Android, piso de la casa, latencia percibida, estabilidad 2–3 min.</label></li>
+      <li><input type="checkbox" id="t2"><label for="t2">Fluidez del globo (60 fps) en la tablet real.</label></li>
+      <li><input type="checkbox" id="t3"><label for="t3">Instalar la PWA en Android + probar sin internet.</label></li>
+      <li><input type="checkbox" id="t4"><label for="t4"><strong>La sesión con él</strong> (5–10 min máx., observación sin examen): ¿se interesa? ¿capta que su voz mueve el globo? ¿intenta sonidos? Y la pregunta técnica clave: <strong>¿el globo responde a SU voz</strong> (más aguda y suave que la tuya)? Si no, se ajustan los umbrales con ese dato.</label></li>
+      <li><input type="checkbox" id="t5"><label for="t5">Gate visual final en la pantalla de la tablet (colores, tamaños de toque, legibilidad).</label></li>
+    </ul>
+  </section>
+
+  <div class="aviso-final">
+    <p style="margin:0"><strong>Qué mandar al terminar los bloques A–F</strong>:</p>
+    <ol class="reporte">
+      <li><strong>El bloque de datos del spike</strong> (foto o texto) — lo más crítico.</li>
+      <li>El "piso" en silencio y con ruido de fondo.</li>
+      <li>Motor (worklet/analyser) · ¿retraso perceptible? · ¿globo fluido?</li>
+      <li>Cápsulas sin marcar del bloque F, con el porqué.</li>
+      <li>Cualquier cosa rara: pantalla rota, texto confuso, botón muerto.</li>
+      <li>Veredicto de diseño: ¿aprobado visualmente, o qué cambiar?</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p class="eyebrow">Historial de esta guía</p>
+    <p class="chica suave" style="margin:6px 0 0">Sprint 001 (2026-07-12): primera versión — spike de audio, pantalla Hoy, juego de voz, modo calma, PWA/offline, veredicto de las 14 cápsulas, y la lista diferida de tablet. Esta guía es un entregable vivo: cada sprint la actualiza (agrega, complementa y elimina lo que ya no aplica).</p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var casillas = document.querySelectorAll('input[type="checkbox"]');
+    var barra = document.getElementById("barra-avance");
+    var contador = document.getElementById("contador");
+    function actualizar() {
+      var total = casillas.length, hechas = 0;
+      casillas.forEach(function (c) { if (c.checked) hechas++; });
+      barra.style.width = (total ? (hechas / total) * 100 : 0) + "%";
+      contador.textContent = hechas + "/" + total;
+    }
+    casillas.forEach(function (c) {
+      try { c.checked = localStorage.getItem("guia-habla:" + c.id) === "1"; } catch (e) {}
+      c.addEventListener("change", function () {
+        try { localStorage.setItem("guia-habla:" + c.id, c.checked ? "1" : "0"); } catch (e) {}
+        actualizar();
+      });
+    });
+    actualizar();
+  })();
+</script>
+</body>
+</html>

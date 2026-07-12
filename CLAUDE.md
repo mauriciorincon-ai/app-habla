@@ -126,6 +126,15 @@ decisions/NNN-titulo.md   (ADRs de implementación)
    sage/cream) — pero **sus 9 pantallas funcionales están ANULADAS** (concepto viejo): no heredes
    flujos ni features de ahí. Cada sprint con UI cierra con checklist `diseno-ui` + aprobación
    visual del usuario sobre la preview (idealmente con el niño observando).
+10. **Guía de prueba viva (`docs/GUIA-DE-PRUEBA.html`, obligatoria — regla del usuario
+    2026-07-12).** HTML visual y AUTOCONTENIDO (cero CDNs, checkboxes con localStorage): qué
+    probar, cómo y qué esperar como resultado correcto, por bloques. Cada sprint la actualiza:
+    agrega lo nuevo, complementa y elimina lo que ya no aplica. Sirve para el gate del usuario y
+    como entregable a usuarios finales.
+11. **PROHIBIDO entregar por artifacts de Claude o cualquier plataforma externa** (regla del
+    usuario, re-ratificada 2026-07-12). Todo entregable —guías, reportes, documentos visuales—
+    es un ARCHIVO DEL REPO (HTML autocontenido o Markdown) que el usuario pueda abrir, versionar
+    y llevarse. Sin excepciones, ni "para verlo rápido".
 
 ## Estándares (los 6+1, gates en CI)
 
