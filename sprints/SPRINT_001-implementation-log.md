@@ -143,6 +143,17 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
   desviación menor del plan.
 - Confirmación de paso: el modo oscuro del operador se ve correcto en uso real, y "Ya lo
   hicimos" persistió como se esperaba.
+- **2026-07-12 (bloque B del gate):** el usuario no encontró dónde elegir los temas — porque el
+  onboarding es de una sola vez y él ya lo había pasado (su primer "Empezar" del día anterior).
+  No es bug, pero sí dos mejoras anotadas: (a) la guía ahora aclara probar el onboarding en
+  incógnito; (b) **S2 candidato:** poder editar apodo/temas desde Ajustes sin borrar todo.
+  Nota honesta relacionada: en S1 los temas se GUARDAN pero aún no cambian nada visible (el
+  motor de intereses y los temas visuales del juego llegan en S2 — el plan del sprint los
+  definía como "2–3 temas fijos del onboarding"; el juego de S1 tiene una sola escena, el globo).
+- **Confirmado en el gate:** la reasignación automática funcionó — la cápsula completada ayer
+  era de la biblioteca vieja (id ya inexistente) y hoy la app asignó limpiamente una cápsula
+  nueva del nivel palabras sueltas, en estado pendiente. La puerta permanente al juego se ve
+  al pie de "Hoy", como se diseñó.
 
 ## Cambios de contexto y reglas nuevas (2026-07-12)
 
