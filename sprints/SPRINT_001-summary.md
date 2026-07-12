@@ -2,7 +2,7 @@
 sprint: 001
 app: habla
 feature: hoy-hablamos
-estado: listo-para-merge (pendiente validación del usuario en la tablet real)
+estado: gate-de-escritorio-aprobado — listo para merge (validaciones de tablet diferidas)
 fecha: 2026-07-11
 ---
 
@@ -36,8 +36,13 @@ Guion del padre → permiso de micrófono con explicación honesta → calibraci
 real** ("¡la sostuviste 3,1 segundos!"). RMS por AudioWorklet, umbral relativo al ruido de la casa
 con **histéresis + tiempo de gracia** (sobrevive el micro-silencio de respirar sin parpadear).
 Estados completos: mic denegado (pasos honestos), ruido alto (avisa y deja decidir), silencio largo
-(invitación amable, jamás castigo), **modo calma en 1 toque** (sin medidor, sin meta, sin
-celebración automática). Sin límite de tiempo, sin game-over.
+(invitación amable, jamás castigo), **modo calma en 1 toque** (paleta "atardecer" perceptible, sin
+medidor, sin meta ni celebración automática — y el globo **flota** con la voz: sube con voz real y
+baja despacio en el silencio, jamás se congela; los dos defectos originales de calma los encontró
+el usuario en el gate y quedaron corregidos bajo test). Sin límite de tiempo, sin game-over.
+**Veredicto del usuario en el gate (2026-07-12): juego aprobado** ("brillante… espectacular") y
+fixes de calma verificados en la preview; **las 14 cápsulas aprobadas**, con deseo explícito para
+S2+: biblioteca más grande y más novedosa (siempre palabras sueltas + técnica citada).
 
 ## Definition of Done — los 6+1
 
@@ -72,11 +77,17 @@ celebración automática). Sin límite de tiempo, sin game-over.
    `/jugar` y `/ajustes` nacía en el cliente, y `/ajustes` tenía CLS 0.156 por un esqueleto vacío.
    Ambos arreglados. **Propuesta al kit:** evaluar `throttlingMethod: devtools` en el job de
    Lighthouse, o calibrar el budget para el sesgo conocido de Lantern en localhost.
-2. **`/spike/audio` sigue en el repo** (a propósito): el usuario la necesita en la preview para
-   validar el audio en la tablet Android real. **Se elimina antes del merge final**, junto con
-   cerrar el ADR 003.
+2. **`/spike/audio` sigue en el repo y SOBREVIVE al merge** (decisión del cierre del gate,
+   2026-07-12; el plan pedía eliminarla antes): es la herramienta para la validación diferida en
+   la tablet. Página diagnóstica sin enlaces desde la UI, sin persistencia, cubierta por los
+   candados de privacidad. Se elimina cuando el ADR 003 cierre su pata Android.
 3. **Iconos de la PWA son un placeholder generado** (globo crema sobre sage). Se refinan en el
-   gate visual.
+   gate visual de la tablet.
+4. **Budget de script renegociado (300 → 350 KB).** Solo el framework (Next 16 + React 19) pesa
+   ~246 KB gz de los 300 del budget del kit: el gate se rompió con los primeros ~1,1 KB de
+   feature real (editar perfil desde Ajustes). El nuevo budget deja ~42 KB para el código propio;
+   TBT/LCP/CLS siguen intactos como guardias reales. Candidato S2 de reducción: `zod/mini` en el
+   cliente (~10–15 KB gz).
 
 ## Fricción del kit (para la retro — separada del producto)
 
@@ -87,6 +98,9 @@ celebración automática). Sin límite de tiempo, sin game-over.
   (v1.4.0 trae lo que la orden verificaba), pero conviene alinear el texto de las órdenes.
 - **K-habla-3:** el sesgo de Lantern en el gate de Lighthouse (ver deuda 1). Ya visto en otras
   apps del pipeline; aquí queda medido con números.
+- **K-habla-4:** el budget `script: 300 KB` del `perf-budget.json` del kit nace sin margen en
+  Next 16 + React 19 (el framework solo pesa ~246 KB gz). Sugerencia: calibrar ese budget contra
+  el baseline real del stack estampado (ver deuda 4).
 - **K12 validado:** hooks **ejecutables y activos** desde el commit 1 (`githooks/pre-commit` 100755,
   `core.hooksPath=githooks`, script `prepare`). gitleaks corrió en los 4 commits. ✅
 
@@ -129,19 +143,23 @@ celebración automática). Sin límite de tiempo, sin game-over.
 > sección final de esa guía; el ADR 003 permanece "propuesto" hasta el regreso.
 
 1. ~~Importar el repo en Vercel~~ ✅ hecho (preview activa en la URL estable de la rama).
-2. **Correr la guía de prueba en el computador** (`docs/GUIA-DE-PRUEBA.html`, bloques A–F):
-   spike con micrófono real, pantalla Hoy, juego completo, modo calma, PWA/offline y el
-   veredicto de las 14 cápsulas.
-3. **Gate visual sobre la preview en desktop** + reporte del spike (el bloque de datos).
+2. ~~Correr la guía de prueba en el computador~~ ✅ **GATE DE ESCRITORIO COMPLETADO Y APROBADO
+   (2026-07-12):** A (spike, con datos reales) · B (Hoy) · C (juego: "brillante", fixes de calma
+   verificados) · D (calma/ajustes/apodo-temas/borrar datos) · F (las 14 cápsulas aprobadas).
+   E (PWA/offline) **diferido a la tablet por decisión del usuario**.
+3. ~~Gate visual sobre la preview en desktop~~ ✅ incluido en el punto anterior.
 4. Sentry: defer aceptado (no hace falta nada).
-5. **Al regreso de la tablet:** la lista diferida de la guía (spike en dispositivo, 60 fps, PWA
-   Android, sesión con el niño, gate visual en tablet) → cierra el ADR 003 definitivamente.
+5. **Mergear el PR #1** (ya está listo para revisión) y correr `/cierre-sprint habla` en la
+   planeadora.
+6. **Al regreso de la tablet:** la lista diferida de la guía (spike en dispositivo, 60 fps, PWA
+   Android + offline, sesión con el niño, gate visual en tablet) → cierra el ADR 003
+   definitivamente.
 
 ## Aprovisionamiento
 
 | Servicio                          | Estado                                 |
 | --------------------------------- | -------------------------------------- |
 | GitHub repo `app-habla` + ruleset | ✅ (estampado)                         |
-| Vercel                            | ⏳ **pendiente: importar el repo**     |
+| Vercel                            | ✅ importado (preview activa por rama) |
 | Sentry                            | ⏳ defer aceptado (kit inerte sin DSN) |
 | API LLM                           | N/A — cero IA en este sprint           |
