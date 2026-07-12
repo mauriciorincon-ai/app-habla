@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { NOMBRE_TECNICA } from "@content/schema";
-import { IconoHecho } from "@/components/iconos";
+import { Globo, IconoHecho } from "@/components/iconos";
 import {
   asegurarAsignacionDeHoy,
   capsulaDeHoy,
@@ -117,6 +117,24 @@ export function HoyCliente() {
           )}
         </div>
       </article>
+
+      {/* El juego SIEMPRE está a un toque, sea cual sea la cápsula del día. Hallazgo del primer
+          uso real (2026-07-12): la entrada al juego solo existía los días de actividad con
+          pantalla — el resto de días era invisible. La predictibilidad importa (COGA): la misma
+          puerta, en el mismo lugar, todos los días. */}
+      <Link
+        href="/jugar"
+        className="bg-superficie shadow-tarjeta flex min-h-16 items-center justify-between gap-4 rounded-2xl p-5"
+        data-testid="ir-al-juego"
+      >
+        <span>
+          <span className="block font-medium">El juego de voz</span>
+          <span className="text-tinta-suave block text-sm">
+            Su voz mueve el globo. Para jugar juntos — hoy o cualquier día.
+          </span>
+        </span>
+        <Globo className="h-14 w-9 shrink-0" />
+      </Link>
 
       {diasAcompañados > 0 ? (
         <p

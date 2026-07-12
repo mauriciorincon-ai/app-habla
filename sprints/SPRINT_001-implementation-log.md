@@ -105,6 +105,19 @@ compilador de Tailwind v4— descarta esa regla en silencio** (estaba en `global
 CSS servido). Se detectó verificando en el navegador, no confiando en el código. Sustituida por un
 `data-attribute` en el `<html>`.
 
+## Hallazgos del primer uso real (usuario, 2026-07-12, preview en desktop)
+
+- **El juego era invisible la mayoría de los días.** El botón "Jugar ahora, juntos" solo aparecía
+  cuando la cápsula del día tenía actividad con pantalla (2 de 14); al usuario le tocó una
+  cápsula sin pantalla, marcó "Ya lo hicimos" y no encontró cómo llegar al juego de voz. El plan
+  decía "CTA jugar ahora **si aplica**" — cumplido al pie de la letra, y aun así insuficiente:
+  Outcome 2 exige que el juego exista como feature, no como apéndice de algunas cápsulas.
+  **Fix:** entrada permanente al juego desde "Hoy" (misma puerta, mismo lugar, todos los días —
+  predictibilidad COGA); el e2e del happy path ahora navega por esa puerta. Registrado como
+  desviación menor del plan.
+- Confirmación de paso: el modo oscuro del operador se ve correcto en uso real, y "Ya lo
+  hicimos" persistió como se esperaba.
+
 ## Decisiones tomadas durante la construcción
 
 - 2026-07-11 — Carga del AudioWorklet: compilación separada con `tsc` a `public/worklets/`
