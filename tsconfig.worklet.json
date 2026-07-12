@@ -1,0 +1,18 @@
+{
+  // Compila el AudioWorkletProcessor a estático servible (public/worklets/) — Turbopack no
+  // soporta el patrón new URL(...) para worklets (ADR 004). El scope del worklet no tiene DOM:
+  // lib ES2022 + globals declarados en src/worklets/audio-worklet.d.ts.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022"],
+    "types": [],
+    "rootDir": "src/worklets",
+    "outDir": "public/worklets",
+    "incremental": false,
+    "plugins": []
+  },
+  "include": ["src/worklets/**/*.ts"]
+}
