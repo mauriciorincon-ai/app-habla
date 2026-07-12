@@ -147,6 +147,17 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
   onboarding es de una sola vez y él ya lo había pasado (su primer "Empezar" del día anterior).
   No es bug, pero sí dos mejoras anotadas: (a) la guía ahora aclara probar el onboarding en
   incógnito; (b) **S2 candidato:** poder editar apodo/temas desde Ajustes sin borrar todo.
+- **2026-07-12 (bloque B, continuación) — el S2 candidato entró a S1 por decisión del usuario.**
+  El truco del incógnito resultó inservible en la práctica: la preview tiene Deployment
+  Protection de Vercel, así que en incógnito (sin la cookie de sesión de Vercel) obliga a
+  loguearse. El usuario pidió "un botón que me envíe directo a esa pantalla inicial" y ratificó
+  la decisión. **Fix (mejor que un reset):** sección **"Apodo y temas"** en Ajustes — muestra los
+  valores actuales (primera vez que el perfil es VISIBLE en la app) y "Cambiar apodo y temas"
+  abre el mismo formulario del onboarding, prellenado, **sin tocar progreso ni ajustes**. El
+  formulario se extrajo a `src/components/perfil-form.tsx` (compartido onboarding/Ajustes).
+  Cubierto por e2e nuevo (`tests/e2e/ajustes-perfil.spec.ts`): editar persiste tras recarga, el
+  progreso queda intacto, cancelar no guarda. Guía (B1 sin incógnito + paso D6) y manual
+  actualizados. La Deployment Protection puede quedarse activa: ya no se necesita el incógnito.
   Nota honesta relacionada: en S1 los temas se GUARDAN pero aún no cambian nada visible (el
   motor de intereses y los temas visuales del juego llegan en S2 — el plan del sprint los
   definía como "2–3 temas fijos del onboarding"; el juego de S1 tiene una sola escena, el globo).

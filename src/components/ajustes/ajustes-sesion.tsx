@@ -1,12 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   borrarTodoYRecargar,
   guardarAjustesEnStore,
+  guardarPerfilEnStore,
   useAjustes,
+  usePerfil,
 } from "@/components/estado-local";
-import { AJUSTES_DEFECTO } from "@/lib/storage/schemas";
+import { PerfilForm } from "@/components/perfil-form";
+import { useHidratado } from "@/components/use-hidratado";
+import {
+  AJUSTES_DEFECTO,
+  NOMBRE_TEMA,
+  type Perfil,
+} from "@/lib/storage/schemas";
 
 export function AjustesSesion() {
   const guardados = useAjustes();
@@ -28,6 +37,8 @@ export function AjustesSesion() {
 
   return (
     <div className="flex flex-col gap-4">
+      <SeccionPerfil />
+
       <Interruptor
         id="modo-calma"
         titulo="Modo calma"
@@ -89,6 +100,74 @@ export function AjustesSesion() {
         )}
       </section>
     </div>
+  );
+}
+
+// Apodo y temas viven aquí desde el gate del 2026-07-12: el onboarding solo aparece la primera
+// vez, y la única forma de volver a esa pantalla era borrar todos los datos. Cambiarlos no toca
+// ni el progreso ni los ajustes.
+function SeccionPerfil() {
+  const hidratado = useHidratado();
+  const perfil = usePerfil();
+  const [editando, setEditando] = useState(false);
+
+  function guardar(nuevo: Perfil) {
+    guardarPerfilEnStore(nuevo);
+    setEditando(false);
+  }
+
+  return (
+    <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+      <h2 className="font-medium">Apodo y temas</h2>
+
+      {!hidratado ? (
+        <div className="mt-2 min-h-11" aria-hidden="true" />
+      ) : !perfil ? (
+        <p className="text-tinta-suave mt-2 text-sm">
+          Aún no han empezado en este dispositivo. El apodo y los temas se
+          eligen{" "}
+          <Link href="/" className="underline underline-offset-4">
+            en la pantalla de Hoy
+          </Link>
+          , la primera vez.
+        </p>
+      ) : editando ? (
+        <PerfilForm
+          inicial={perfil}
+          textoGuardar="Guardar cambios"
+          testIdGuardar="guardar-perfil"
+          onGuardar={guardar}
+          onCancelar={() => setEditando(false)}
+        />
+      ) : (
+        <>
+          <dl className="mt-2 space-y-2 text-sm">
+            <div className="flex gap-2">
+              <dt className="text-tinta-suave">Apodo:</dt>
+              <dd data-testid="perfil-apodo">{perfil.apodo ?? "sin apodo"}</dd>
+            </div>
+            <div className="flex gap-2">
+              <dt className="text-tinta-suave">Temas:</dt>
+              <dd data-testid="perfil-temas">
+                {perfil.temas.map((tema) => NOMBRE_TEMA[tema]).join(" · ")}
+              </dd>
+            </div>
+          </dl>
+          <p className="text-tinta-suave mt-3 text-sm">
+            Cambiarlos no borra nada: el progreso y los días practicados se
+            quedan como están.
+          </p>
+          <button
+            type="button"
+            onClick={() => setEditando(true)}
+            className="border-borde text-tinta mt-4 min-h-12 rounded-xl border px-6 font-medium"
+            data-testid="editar-perfil"
+          >
+            Cambiar apodo y temas
+          </button>
+        </>
+      )}
+    </section>
   );
 }
 

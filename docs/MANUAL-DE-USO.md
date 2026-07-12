@@ -22,6 +22,8 @@ interacción con usted; la pantalla es apenas la excusa para jugar juntos.
    pantalla de inicio". Así abre a pantalla completa y funciona sin conexión.
 3. La primera vez le pregunta dos cosas: cómo le dicen a su hijo en casa (opcional) y hasta tres
    temas que le gusten. **Todo eso se queda en el dispositivo**, no hay cuentas ni registro.
+4. ¿Quiere cambiar el apodo o los temas después? En **Ajustes → "Apodo y temas" → "Cambiar apodo
+   y temas"**. Cambiarlos no borra nada: el progreso se queda como está.
 
 ## Cómo se usa
 
