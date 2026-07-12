@@ -6,7 +6,11 @@
 <title>Guía de prueba — Hablemos San</title>
 <!--
   GUÍA DE PRUEBA VIVA — entregable estándar de cada sprint (regla del pipeline, 2026-07-12).
-  Se actualiza en cada sprint: se agrega lo nuevo, se complementa y se elimina lo que ya no va.
+  REGLA DE LA BOLA DE NIEVE (regla del usuario, 2026-07-12): esta guía es ACUMULATIVA. La última
+  versión contiene TODAS las pruebas vigentes de la app hasta la fecha, no solo las del sprint
+  nuevo. Cada prueba lleva su ORIGEN visible: de qué sprint nació y si un sprint posterior la
+  cambió. Solo se elimina una prueba cuando la feature que probaba dejó de existir (y se dice en
+  el historial del pie).
   Autocontenida a propósito (cero CDNs, cero dependencias): se abre con doble clic desde el repo
   o desde cualquier lugar donde se copie. Las casillas se guardan en el navegador (localStorage).
 -->
@@ -17,6 +21,9 @@
     --acento: #2e4628; --acento-suave: #dce6d8;
     --alerta: #a95239; --alerta-suave: #fbe3da;
     --ok: #527947; --pendiente: #8c6113; --pendiente-suave: #f8e9c8;
+    --nuevo: #2e4628; --nuevo-suave: #dce6d8;
+    --mejora: #7a4e86; --mejora-suave: #ece0f0;
+    --viejo-suave: #eae4d6;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -25,6 +32,9 @@
       --acento: #b5d5ab; --acento-suave: #233022;
       --alerta: #f5b4a0; --alerta-suave: #3a2620;
       --ok: #8fbf82; --pendiente: #ecc56f; --pendiente-suave: #33290f;
+      --nuevo: #b5d5ab; --nuevo-suave: #233022;
+      --mejora: #d6b3e0; --mejora-suave: #2e2434;
+      --viejo-suave: #23282c;
     }
   }
   * { box-sizing: border-box; }
@@ -40,12 +50,36 @@
   .chica { font-size: 0.875rem; }
   code { font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; }
 
+  /* Origen de cada prueba — la regla de la bola de nieve, visible en cada línea.
+     El texto de la etiqueta lleva el significado; el color solo acompaña (nada comunica solo con color). */
+  .origen { display: inline-block; font-family: ui-monospace, Menlo, monospace; font-size: 0.6rem;
+    letter-spacing: 0.07em; text-transform: uppercase; border-radius: 99px; padding: 1px 7px;
+    border: 1px solid; white-space: nowrap; margin-left: 6px; vertical-align: 1px; }
+  .o-s1 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s2 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
+  .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
+
+  .leyenda { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px;
+    padding: 14px 16px; margin: 16px 0; font-size: 0.875rem; }
+  .leyenda p { margin: 0 0 8px; }
+  .leyenda ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+
+  .filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+  .filtros button { font: inherit; font-size: 0.8rem; cursor: pointer; border-radius: 99px;
+    border: 1px solid var(--borde); background: var(--fondo); color: var(--tinta-suave);
+    padding: 6px 14px; min-height: 36px; }
+  .filtros button[aria-pressed="true"] { background: var(--acento); color: var(--fondo);
+    border-color: var(--acento); font-weight: 600; }
+  .filtros button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
   .progreso { position: sticky; top: 0; z-index: 5; background: var(--fondo);
     padding: 10px 0 8px; display: flex; align-items: center; gap: 12px;
     border-bottom: 1px solid var(--borde); margin-bottom: 18px; }
   .progreso .num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; font-size: 0.85rem; white-space: nowrap; }
   .barra { flex: 1; height: 6px; background: var(--acento-suave); border-radius: 99px; overflow: hidden; }
   .barra > div { height: 100%; width: 0%; background: var(--acento); border-radius: 99px; transition: width 200ms ease; }
+  .reiniciar { font: inherit; font-size: 0.72rem; cursor: pointer; background: none; border: none;
+    color: var(--tinta-suave); text-decoration: underline; padding: 4px; }
   @media (prefers-reduced-motion: reduce) { .barra > div { transition: none; } }
 
   .url-caja { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: 14px 16px; margin: 16px 0; }
@@ -53,12 +87,14 @@
 
   section.bloque { background: var(--superficie); border: 1px solid var(--borde);
     border-radius: 16px; padding: 20px 18px; margin: 22px 0; }
+  section.bloque[hidden] { display: none; }
   .bloque-cabeza { display: flex; gap: 14px; align-items: baseline; margin-bottom: 4px; }
   .letra { font-family: Georgia, serif; font-size: 1.6rem; color: var(--acento); min-width: 1.4rem; line-height: 1; }
   .meta-bloque { margin: 2px 0 14px; }
 
   ul.pasos { list-style: none; margin: 12px 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
   ul.pasos li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+  ul.pasos li[hidden] { display: none; }
   ul.pasos input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--acento); cursor: pointer; }
   ul.pasos label { cursor: pointer; }
   ul.pasos input:checked + label { color: var(--tinta-suave); }
@@ -75,13 +111,7 @@
   th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
   th { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 600; }
   td.valor { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-  .capsula { border: 1px solid var(--borde); border-radius: 12px; padding: 12px 14px; margin: 10px 0;
-    display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; background: var(--fondo); }
-  .capsula input[type="checkbox"] { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--acento); cursor: pointer; }
-  .capsula .titulo { font-weight: 600; }
-  .capsula .guion { font-family: Georgia, serif; font-style: italic; color: var(--tinta-suave); font-size: 0.95rem; margin-top: 2px; }
-  .capsula .pantalla { font-family: ui-monospace, Menlo, monospace; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--acento); }
+  caption { text-align: left; font-size: 0.8rem; color: var(--tinta-suave); padding-bottom: 4px; }
 
   .diferida { border: 1.5px dashed var(--pendiente); background: var(--pendiente-suave); }
   .diferida .letra { color: var(--pendiente); }
@@ -94,185 +124,302 @@
   a { color: var(--acento); }
   input[type="checkbox"]:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
   footer { margin-top: 40px; border-top: 1px solid var(--borde); padding-top: 14px; }
+  footer p + p { margin-top: 10px; }
 </style>
 </head>
 <body>
 <div class="pagina">
   <header>
-    <p class="eyebrow">Hablemos San · Guía de prueba viva · Sprint 002 · 2026-07-12</p>
+    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 002 · 2026-07-12</p>
     <h1>Guía de prueba</h1>
-    <p class="suave">Qué probar, cómo probarlo y qué esperar como resultado correcto. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono) — la tablet sigue de viaje. Al final está la lista <strong>diferida</strong>, que ya acumula lo del Sprint 1 y lo del 2. Las casillas se guardan solas en este navegador.</p>
+    <p class="suave">Esta guía es <strong>acumulativa</strong>: contiene <strong>todas</strong> las pruebas vigentes de la app, no solo las del sprint nuevo. Cada línea dice <strong>de qué sprint viene</strong>, para que puedas probar todo de corrido o solo lo que cambió. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono) — la tablet sigue de viaje; lo que la necesita está al final, en la lista diferida.</p>
+
     <div class="url-caja">
       <p class="eyebrow" style="margin:0 0 6px">URL de prueba (Chrome del computador)</p>
       <code>https://app-habla-git-sprint-002-cada-dia-mas-mauricio-rincon.vercel.app</code>
       <p class="chica suave" style="margin:8px 0 0">Dirección estable de la rama del sprint: no cambia aunque suban correcciones. Ojo: es OTRA rama, así que empiezas como la primera vez (verás el onboarding). Si pide login de Vercel, es la protección de despliegues: entra con tu cuenta.</p>
     </div>
-    <p class="chica suave"><strong>Novedades de este sprint:</strong> la biblioteca pasó de 14 a <strong>50 cápsulas por etapa del habla</strong> · <strong>el cohete del tono</strong> (juego nuevo) · <strong>palabra↔objeto con pictogramas</strong> (juego nuevo) · <strong>selector de juegos</strong> · elegir la <strong>etapa</strong> en Ajustes.</p>
+
+    <div class="leyenda">
+      <p><strong>Cómo leer las etiquetas de cada prueba:</strong></p>
+      <ul>
+        <li><span class="origen o-s2">Nuevo · S2</span> Nació en este sprint. <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-mejora">Mejorado en S2</span> Existía desde el Sprint 1, pero <strong>este sprint lo cambió</strong>. <span class="suave">Hay que volver a mirarlo.</span></li>
+        <li><span class="origen o-s1">S1</span> Del Sprint 1, sin cambios. <span class="suave">Se re-prueba para confirmar que no se rompió (regresión).</span></li>
+      </ul>
+      <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
+        <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
+        <button type="button" data-filtro="s2" aria-pressed="false">Solo lo nuevo del S2</button>
+        <button type="button" data-filtro="mejora" aria-pressed="false">Solo lo mejorado</button>
+        <button type="button" data-filtro="s1" aria-pressed="false">Solo regresión del S1</button>
+      </div>
+    </div>
+
+    <p class="chica suave"><strong>Novedades de este sprint:</strong> la biblioteca pasó de 14 a <strong>50 cápsulas por etapa del habla</strong> · <strong>el cohete del tono</strong> (juego nuevo) · <strong>palabra↔objeto con pictogramas</strong> (juego nuevo) · <strong>selector de juegos</strong> · elegir la <strong>etapa</strong> en Ajustes · los temas del onboarding <strong>por fin sirven para algo</strong>.</p>
   </header>
 
   <div class="progreso">
     <div class="barra"><div id="barra-avance"></div></div>
     <span class="num" id="contador">0/0</span>
+    <button type="button" class="reiniciar" id="reiniciar">Empezar de cero</button>
   </div>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">A</span><h2>El oído de la app: energía y TONO</h2></div>
-    <p class="meta-bloque chica suave">~10 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. En el S1 validaste la energía (RMS); ahora se agrega el <strong>tono</strong> (F0), que es el motor del cohete. <strong>Este bloque es el más importante del sprint.</strong></p>
+    <div class="bloque-cabeza"><span class="letra">A</span><h2>El oído de la app: energía y tono</h2></div>
+    <p class="meta-bloque chica suave">~12 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. El S1 validó la <strong>energía</strong> (qué tan fuerte suena la voz); el S2 le suma el <strong>tono</strong> (qué tan aguda es), que es el motor del cohete. <strong>Es el bloque más importante del sprint.</strong></p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2a1"><label for="s2a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. Debe decir <strong>motor: worklet</strong>.</label></li>
-      <li><input type="checkbox" id="s2a2"><label for="s2a2">Con la casa en silencio, mira el panel <strong>“tono (F0)”</strong>: debe quedarse en <strong>“—”</strong>. <em>El ruido de fondo JAMÁS puede inventar un tono.</em></label></li>
-      <li><input type="checkbox" id="s2a3"><label for="s2a3">Di <strong>“aaaah” sostenido</strong>: aparece un F0 en Hz y la barra de tono se llena. Anota el rango que te sale.</label></li>
-      <li><input type="checkbox" id="s2a4"><label for="s2a4">Haz la <strong>voz de sirena</strong> (aaaAAAaaa, subiendo y bajando): la barra de tono debe <strong>seguirte</strong> hacia arriba y hacia abajo.</label></li>
-      <li><input type="checkbox" id="s2a5"><label for="s2a5">Mira <strong>“cobertura”</strong> mientras hablas sostenido: es el % de tu voz en el que la app entendió el tono. <strong>Anótalo</strong> — es el número que decide si el cohete va por tono o cambia de mecánica.</label></li>
-      <li><input type="checkbox" id="s2a6"><label for="s2a6">Mira <strong>“inversiones”</strong>: debe subir <strong>una</strong> por cada vez que cambias de sentido (subir→bajar o bajar→subir). Si tiemblas la voz sin cambiar de sentido, NO debe subir.</label></li>
-      <li><input type="checkbox" id="s2a7"><label for="s2a7">Prueba con voz aguda tipo niño (imítalo): ¿sigue detectando tono? ¿la cobertura se mantiene?</label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a1"><label for="v2-a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. La línea de estado debe decir <strong>estado: activo · motor: worklet</strong>. Si dice <em>analyser</em>, anótalo (es el plan B). <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a2"><label for="v2-a2">Con la casa en silencio normal, <strong>anota el “piso (mín. sesión)”</strong> — el ruido de fondo real de tu casa. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a3"><label for="v2-a3">Haz un <strong>“aaaah” sostenido</strong> a ~50 cm: la barra sube <strong>de inmediato</strong>, sin retraso que se sienta. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a4"><label for="v2-a4">Déjalo corriendo <strong>2–3 minutos</strong> hablando de a ratos: “frames/s” estable (~30), nada se congela. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a5"><label for="v2-a5"><strong>Copia o fotografía el bloque gris de datos</strong> (sampleRate, baseLatency, settings) y mándamelo. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-a6"><label for="v2-a6">Con música o TV de fondo: ¿el piso sube? ¿la barra se mueve sola? Anota qué tanto. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-a7"><label for="v2-a7">El mismo panel ahora trae <strong>“tono (F0)”</strong>. Con la casa en silencio debe quedarse en <strong>“—”</strong>. <em>El ruido de fondo JAMÁS puede inventar un tono.</em> <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-a8"><label for="v2-a8">Di <strong>“aaaah” sostenido</strong>: aparece un F0 en Hz y la barra de tono se llena. <strong>Anota el rango</strong> que te sale. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-a9"><label for="v2-a9">Haz la <strong>voz de sirena</strong> (aaaAAAaaa, subiendo y bajando): la barra de tono debe <strong>seguirte</strong> hacia arriba y hacia abajo. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-a10"><label for="v2-a10">Mira <strong>“cobertura”</strong> mientras hablas sostenido: es el % de tu voz en el que la app entendió el tono. <strong>Anótalo</strong> — es el número que decide si el cohete va por tono o cambia de mecánica. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-a11"><label for="v2-a11">Mira <strong>“inversiones”</strong>: debe subir <strong>una</strong> por cada vez que cambias de sentido (subir→bajar o bajar→subir). Si tiemblas la voz sin cambiar de sentido, NO debe subir. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-a12"><label for="v2-a12">Prueba con <strong>voz aguda tipo niño</strong> (imítalo): ¿sigue detectando tono? ¿la cobertura se mantiene? <span class="origen o-s2">Nuevo · S2</span></label></li>
     </ul>
     <div class="tabla-scroll"><table>
+      <caption>Del Sprint 1 — el motor de audio</caption>
+      <tr><th>Dato del bloque gris</th><th>Valor correcto</th></tr>
+      <tr><td><code>echoCancellation / noiseSuppression / autoGainControl</code></td><td class="valor">los tres en <strong>false</strong></td></tr>
+      <tr><td><code>sampleRate</code></td><td class="valor">44100 o 48000 (ambos bien)</td></tr>
+      <tr><td><code>baseLatency</code></td><td class="valor">idealmente &lt; 0.05</td></tr>
+      <tr><td>piso en silencio</td><td class="valor">típico 0.001–0.03</td></tr>
+      <tr><td>rms con “aaaah” cerca</td><td class="valor">~0.1–0.5</td></tr>
+    </table></div>
+    <div class="tabla-scroll"><table>
+      <caption>Nuevo del Sprint 2 — el tono</caption>
       <tr><th>Dato</th><th>Valor correcto</th></tr>
       <tr><td>tono con ruido de fondo (sin hablar)</td><td class="valor"><strong>“—”</strong> (nunca un número)</td></tr>
       <tr><td>F0 con tu voz sostenida</td><td class="valor">un número estable, sin brincos locos</td></tr>
       <tr><td>cobertura hablando sostenido</td><td class="valor">cuanto más alta, mejor (&gt;70% es bueno)</td></tr>
       <tr><td>inversiones al hacer sirena</td><td class="valor">1 por cada cambio de sentido</td></tr>
     </table></div>
-    <div class="reportame"><p><strong>Repórtame:</strong> la <strong>cobertura</strong> y el <strong>rango de F0</strong> que te salen · si el tono aparece con SOLO ruido (eso sería un defecto grave) · si la barra de tono va a saltos.</p></div>
+    <div class="reportame"><p><strong>Repórtame:</strong> la <strong>cobertura</strong> y el <strong>rango de F0</strong> (lo más crítico del sprint) · el bloque gris de datos · si el tono aparece con SOLO ruido (defecto grave) · si la barra de tono va a saltos.</p></div>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">B</span><h2>“Hoy” y la etapa del habla</h2></div>
-    <p class="meta-bloque chica suave">~10 min. La estrella creció: 50 cápsulas organizadas por etapa.</p>
+    <div class="bloque-cabeza"><span class="letra">B</span><h2>“Hoy”: la respuesta del día</h2></div>
+    <p class="meta-bloque chica suave">~10 min. La estrella del S1, que este sprint creció: la misma pantalla, pero con 50 cápsulas organizadas por etapa detrás.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2b1"><label for="s2b1">Primera vez: onboarding (apodo + temas). <strong>Elige temas de verdad</strong> — este sprint SÍ los usa (deciden los dibujos del juego de palabras).</label></li>
-      <li><input type="checkbox" id="s2b2"><label for="s2b2">La cápsula del día ahora dice su <strong>etapa</strong> arriba (junto a la técnica). De entrada debe decir <strong>“Palabras sueltas”</strong> — sin que hayas elegido nada.</label></li>
-      <li><input type="checkbox" id="s2b3"><label for="s2b3">Ve a <strong>Ajustes → “¿Cómo habla su hijo hoy?”</strong>: tres etapas descritas por lo que se ve en casa. “Palabras sueltas” marcada como <strong>Elegida</strong> y recomendada.</label></li>
-      <li><input type="checkbox" id="s2b4"><label for="s2b4"><strong>La prueba clave:</strong> marca la cápsula de hoy como hecha → cambia a <strong>“Sonidos e intentos”</strong> → vuelve a Hoy: sale <strong>otra</strong> cápsula (de esa etapa, pendiente) y el contador de días <strong>NO se perdió</strong>.</label></li>
-      <li><input type="checkbox" id="s2b5"><label for="s2b5">Ahora <strong>vuelve a “Palabras sueltas”</strong>: debe reaparecer <strong>LA MISMA cápsula de antes, todavía marcada como hecha</strong>. (Tu trabajo del día no se pierde por curiosear.)</label></li>
-      <li><input type="checkbox" id="s2b6"><label for="s2b6">Prueba <strong>“Primeras frases”</strong>: existe, pero fíjate que <strong>nunca se activó sola</strong> — tuviste que elegirla a mano. Vuelve a palabras sueltas al terminar.</label></li>
-      <li><input type="checkbox" id="s2b7"><label for="s2b7">Recarga: la etapa elegida y la cápsula del día siguen igual.</label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b1"><label for="v2-b1"><strong>Onboarding</strong> (apodo + temas), solo la primera vez. Prueba dejar el apodo <strong>vacío</strong> (debe funcionar igual) y elige 1–3 temas. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-b2"><label for="v2-b2"><strong>Los temas ya sirven para algo.</strong> En el S1 los elegías y no hacían nada (deuda declarada). Ahora <strong>deciden los dibujos</strong> del juego de palabras — elígelos de verdad, los vas a reconocer en el bloque G. <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b3"><label for="v2-b3">Lee <strong>la cápsula de hoy</strong>: ¿nivel palabras sueltas? ¿la “línea de hoy” la dirías tal cual? ¿la actividad se puede hacer hoy? <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b4"><label for="v2-b4"><strong>“¿De dónde sale esto?”</strong> abre y cita el estudio de respaldo. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-b5"><label for="v2-b5">La cápsula ahora dice su <strong>etapa</strong> arriba, junto a la técnica. De entrada debe decir <strong>“Palabras sueltas”</strong> — sin que hayas elegido nada. <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b6"><label for="v2-b6"><strong>“Ya lo hicimos”</strong> → “Hecho hoy. Mañana hay otra.” + contador de días <strong>sin rachas que regañen</strong>. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b7"><label for="v2-b7"><strong>Recarga</strong> → sigue hecha y es LA MISMA cápsula. Cierra el navegador y vuelve → igual. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-b8"><label for="v2-b8">Mañana: aparece <strong>otra cápsula distinta</strong> (si alcanzas a probarlo dos días). <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-b9"><label for="v2-b9">La tarjeta del juego sigue <strong>siempre visible</strong> bajo la cápsula (arreglo del S1), pero ahora dice <strong>“Los juegos de voz”</strong> y abre el selector de tres. <span class="origen o-mejora">Mejorado en S2</span></label></li>
+    </ul>
+    <div class="esperado"><p><strong>Correcto:</strong> ningún día sin respuesta; la cápsula del día es estable; el contador jamás regaña por faltar.</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">C</span><h2>La etapa del habla</h2></div>
+    <p class="meta-bloque chica suave">~8 min. Todo este bloque es nuevo: la app ahora sabe en qué etapa está tu hijo y le da las cápsulas de esa etapa.</p>
+    <ul class="pasos">
+      <li data-origen="s2"><input type="checkbox" id="v2-c1"><label for="v2-c1">Ve a <strong>Ajustes → “¿Cómo habla su hijo hoy?”</strong>: tres etapas descritas por lo que se ve en casa, sin jerga. “Palabras sueltas” marcada como <strong>Elegida</strong> y recomendada. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-c2"><label for="v2-c2"><strong>La prueba clave:</strong> marca la cápsula de hoy como hecha → cambia a <strong>“Sonidos e intentos”</strong> → vuelve a Hoy: sale <strong>otra</strong> cápsula (de esa etapa, pendiente) y el contador de días <strong>NO se perdió</strong>. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-c3"><label for="v2-c3">Ahora <strong>vuelve a “Palabras sueltas”</strong>: debe reaparecer <strong>LA MISMA cápsula de antes, todavía marcada como hecha</strong>. <em>Tu trabajo del día no se pierde por curiosear.</em> <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-c4"><label for="v2-c4">Prueba <strong>“Primeras frases”</strong>: existe, pero fíjate que <strong>nunca se activó sola</strong> — tuviste que elegirla a mano. Vuelve a palabras sueltas al terminar. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-c5"><label for="v2-c5">Recarga: la etapa elegida y la cápsula del día siguen igual. <span class="origen o-s2">Nuevo · S2</span></label></li>
     </ul>
     <div class="esperado"><p><strong>Correcto:</strong> cambiar de etapa cambia la cápsula del día y <strong>no borra nada</strong>. Cada etapa recuerda su propia cápsula del día.</p></div>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">C</span><h2>El selector de juegos</h2></div>
-    <p class="meta-bloque chica suave">~3 min. La puerta de “Hoy” ahora abre tres juegos.</p>
+    <div class="bloque-cabeza"><span class="letra">D</span><h2>El selector de juegos</h2></div>
+    <p class="meta-bloque chica suave">~3 min. En el S1 la puerta llevaba directo al globo; ahora abre tres juegos.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2c1"><label for="s2c1">Desde “Hoy” → tarjeta <strong>“Los juegos de voz”</strong> → aparecen <strong>exactamente 3</strong>: globo, cohete, palabra y dibujo.</label></li>
-      <li><input type="checkbox" id="s2c2"><label for="s2c2">Cada tarjeta dice <strong>qué mide</strong>. Lee la del tercero: <em>“Mide que hubo voz — nunca qué palabra dijo”</em>. ¿Te parece honesto y claro?</label></li>
-      <li><input type="checkbox" id="s2c3"><label for="s2c3">Son grandes (un niño las toca sin apuntar) y están <strong>siempre en el mismo orden</strong>.</label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-d1"><label for="v2-d1">Desde “Hoy” → tarjeta <strong>“Los juegos de voz”</strong> → aparecen <strong>exactamente 3</strong>: el globo, el cohete, palabra y dibujo. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-d2"><label for="v2-d2">Cada tarjeta dice <strong>qué mide</strong>. Lee la del tercero: <em>“Mide que hubo voz — nunca qué palabra dijo”</em>. ¿Te parece honesto y claro? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-d3"><label for="v2-d3">Son grandes (un niño las toca sin apuntar) y están <strong>siempre en el mismo orden</strong> (predictibilidad). <span class="origen o-s2">Nuevo · S2</span></label></li>
     </ul>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">D</span><h2>El cohete del tono <span class="chica suave">(juego NUEVO)</span></h2></div>
+    <div class="bloque-cabeza"><span class="letra">E</span><h2>El globo <span class="chica suave">(el juego del S1)</span></h2></div>
+    <p class="meta-bloque chica suave">~12 min, con micrófono. Ya lo aprobaste, pero este sprint le cambió el motor por dentro (lo comparte con los otros dos juegos): <strong>hay que volver a probarlo entero</strong>. Vuela con cualquier sonido sostenido — nunca exige palabras.</p>
+    <ul class="pasos">
+      <li data-origen="s1"><input type="checkbox" id="v2-e1"><label for="v2-e1">Selector → <strong>El globo</strong> → tu guion → <strong>“Estamos listos”</strong> → acepta el micrófono. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e2"><label for="v2-e2"><strong>Calibración “Shhh”</strong>: 2 segundos callado → pasa sola a “Haz sonar tu voz”. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e3"><label for="v2-e3"><strong>“Aaaah”</strong>: el globo despega de inmediato, avanza mientras sostienes, el medidor lateral se llena. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e4"><label for="v2-e4"><strong>Cállate a mitad</strong>: el globo se detiene y espera. No cae, no hay derrota. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e5"><label for="v2-e5">“Aaah — <em>pausa cortica de respirar</em> — aaah”: la pausa corta <strong>NO</strong> frena el globo (histéresis). <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e6"><label for="v2-e6">Sostén ~3 segundos: el globo <strong>llega a la meta</strong> y viene la <strong>celebración con el número real</strong>. ¿Te suena creíble contra lo que sostuviste? <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-e7"><label for="v2-e7">Esa celebración ahora la comparten los tres juegos. Comprueba que <strong>la del globo sigue hablando de SEGUNDOS</strong> (no de inversiones ni de dibujos). <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e8"><label for="v2-e8"><strong>“Otra vez”</strong> → recalibra y se juega de nuevo sin volver a pedir permiso. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e9"><label for="v2-e9"><strong>“Ya jugamos”</strong> temprano: la celebración dice lo que hubo; si no hubo voz, lo dice amable, <strong>sin culpa</strong>. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e10"><label for="v2-e10"><strong>Fluidez:</strong> ¿el globo va suave o a saltos? <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e11"><label for="v2-e11">Con <strong>música/TV de fondo</strong>, entra de nuevo: la calibración avisa “Hay bastante ruido” y deja elegir <strong>“Volver a medir”</strong> o <strong>“Jugar así”</strong>. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e12"><label for="v2-e12"><strong>Micrófono negado:</strong> candado de la barra → Permisos → Micrófono → Bloquear → recarga → intenta jugar: pantalla honesta con pasos, nada roto. Luego vuelve a permitir. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-e13"><label for="v2-e13"><strong>Modo calma</strong> en el globo: colores de atardecer (el cambio se NOTA en todo el escenario), sin medidor y sin meta; el globo <strong>no se pausa</strong> — sube mientras la voz suena y baja despacio en el silencio. Sal y vuelve: <strong>se recordó</strong>. <span class="origen o-s1">S1</span></label></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame:</strong> globo a saltos · retraso entre voz y movimiento · el globo moviéndose solo con ruido tras calibrar · cualquier cosa que se sienta distinta a como lo aprobaste en el S1.</p></div>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">F</span><h2>El cohete del tono <span class="chica suave">(juego nuevo)</span></h2></div>
     <p class="meta-bloque chica suave">~10 min, con micrófono. Sube cuando tu voz sube de tono. No hay que decir ninguna palabra.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2d1"><label for="s2d1">Selector → <strong>El cohete</strong> → lee tu guion → <strong>“Estamos listos”</strong> → micrófono → calibración de 2 s.</label></li>
-      <li><input type="checkbox" id="s2d2"><label for="s2d2"><strong>Voz aguda</strong> (“iiii” o falsete): el cohete <strong>sube</strong>. <strong>Voz grave</strong> (“ooooh”): <strong>baja</strong>. ¿Responde al tono y no al volumen? <em>Prueba a gritar grave: NO debería subir.</em></label></li>
-      <li><input type="checkbox" id="s2d3"><label for="s2d3">Haz la <strong>sirena</strong> subiendo y bajando 3 veces: llega la <strong>celebración</strong> y dice el número real (<em>“tu voz subió y bajó 3 veces”</em>). ¿El número coincide con lo que hiciste?</label></li>
-      <li><input type="checkbox" id="s2d4"><label for="s2d4"><strong>Cállate a mitad</strong>: el cohete se queda quieto y espera. <strong>No cae</strong>, no hay derrota.</label></li>
-      <li><input type="checkbox" id="s2d5"><label for="s2d5">Con <strong>ruido de fondo</strong> (música/TV), sin hablar: el cohete <strong>no debe moverse solo</strong>.</label></li>
-      <li><input type="checkbox" id="s2d6"><label for="s2d6"><strong>Modo calma</strong> dentro del cohete: colores de atardecer, sin medidor, sin meta — y el cohete <strong>sigue flotando con tu voz</strong>.</label></li>
-      <li><input type="checkbox" id="s2d7"><label for="s2d7"><strong>Fluidez:</strong> ¿el cohete va suave o a saltos?</label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f1"><label for="v2-f1">Selector → <strong>El cohete</strong> → lee tu guion → <strong>“Estamos listos”</strong> → micrófono → calibración de 2 s. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f2"><label for="v2-f2"><strong>Voz aguda</strong> (“iiii” o falsete): el cohete <strong>sube</strong>. <strong>Voz grave</strong> (“ooooh”): <strong>baja</strong>. ¿Responde al tono y no al volumen? <em>Prueba a gritar grave: NO debería subir.</em> <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f3"><label for="v2-f3">Haz la <strong>sirena</strong> subiendo y bajando 3 veces: llega la <strong>celebración</strong> y dice el número real (<em>“tu voz subió y bajó 3 veces”</em>). ¿El número coincide con lo que hiciste? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f4"><label for="v2-f4"><strong>Cállate a mitad</strong>: el cohete se queda quieto y espera. <strong>No cae</strong>, no hay derrota. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f5"><label for="v2-f5">Con <strong>ruido de fondo</strong> (música/TV), sin hablar: el cohete <strong>no debe moverse solo</strong>. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f6"><label for="v2-f6"><strong>Modo calma</strong> dentro del cohete: colores de atardecer, sin medidor, sin meta — y el cohete <strong>sigue flotando con tu voz</strong>. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f7"><label for="v2-f7"><strong>Micrófono negado</strong> también aquí: la misma pantalla honesta con pasos, nada roto. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-f8"><label for="v2-f8"><strong>Fluidez:</strong> ¿el cohete va suave o a saltos? <span class="origen o-s2">Nuevo · S2</span></label></li>
     </ul>
     <div class="reportame"><p><strong>Repórtame:</strong> si el cohete responde más al volumen que al tono · si va a saltos · si se mueve con ruido · si el número de la celebración no cuadra con lo que hiciste.</p></div>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">E</span><h2>Palabra y dibujo <span class="chica suave">(juego NUEVO)</span></h2></div>
+    <div class="bloque-cabeza"><span class="letra">G</span><h2>Palabra y dibujo <span class="chica suave">(juego nuevo)</span></h2></div>
     <p class="meta-bloque chica suave">~8 min. El andamio visual: el dibujo invita, pero la app JAMÁS exige la palabra.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2e1"><label for="s2e1">Selector → <strong>Palabra y dibujo</strong> → tu guion (“nómbralo una vez y espera 3 segundos”) → micrófono → calibración.</label></li>
-      <li><input type="checkbox" id="s2e2"><label for="s2e2">Sale un <strong>dibujo grande con su palabra escrita</strong>. ¿El dibujo se entiende? ¿La palabra está en <strong>nuestro español</strong> (debe decir “carro”, no “coche”)?</label></li>
-      <li><input type="checkbox" id="s2e3"><label for="s2e3"><strong>LA PRUEBA IMPORTANTE:</strong> di algo que NO sea la palabra —un “mmm”, un “aaah”, un “pe”— y el dibujo <strong>igual se enciende</strong>. <em>Así debe ser: cualquier intento cuenta.</em></label></li>
-      <li><input type="checkbox" id="s2e4"><label for="s2e4">Fíjate en lo que dice al encenderse: <em>“¡Le salió la voz! Lo intentó.”</em> — <strong>nunca</strong> dice “¡dijiste perro!”. ¿Te parece bien esa honestidad?</label></li>
-      <li><input type="checkbox" id="s2e5"><label for="s2e5"><strong>“Otro dibujo”</strong> pasa al siguiente. Recorre 5 o 6: ¿son de <strong>los temas que elegiste</strong> en el onboarding?</label></li>
-      <li><input type="checkbox" id="s2e6"><label for="s2e6"><strong>“Ya jugamos”</strong> → la celebración cuenta cuántos dibujos encendió su voz. ¿El número coincide?</label></li>
-      <li><input type="checkbox" id="s2e7"><label for="s2e7">Modo calma aquí también: sin contador y sin presión.</label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g1"><label for="v2-g1">Selector → <strong>Palabra y dibujo</strong> → tu guion (“nómbralo una vez y espera 3 segundos”) → micrófono → calibración. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g2"><label for="v2-g2">Sale un <strong>dibujo grande con su palabra escrita</strong>. ¿El dibujo se entiende? ¿La palabra está en <strong>nuestro español</strong> (debe decir “carro”, no “coche”)? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g3"><label for="v2-g3"><strong>LA PRUEBA IMPORTANTE:</strong> di algo que NO sea la palabra —un “mmm”, un “aaah”, un “pe”— y el dibujo <strong>igual se enciende</strong>. <em>Así debe ser: cualquier intento cuenta.</em> <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g4"><label for="v2-g4">Fíjate en lo que dice al encenderse: <em>“¡Le salió la voz! Lo intentó.”</em> — <strong>nunca</strong> dice “¡dijiste perro!”. ¿Te parece bien esa honestidad? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g5"><label for="v2-g5"><strong>“Otro dibujo”</strong> pasa al siguiente. Recorre 5 o 6: ¿son de <strong>los temas que elegiste</strong> en el onboarding? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g6"><label for="v2-g6"><strong>“Ya jugamos”</strong> → la celebración cuenta cuántos dibujos encendió su voz. ¿El número coincide? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-g7"><label for="v2-g7">Modo calma aquí también: sin contador y sin presión. <span class="origen o-s2">Nuevo · S2</span></label></li>
     </ul>
     <div class="esperado"><p><strong>Correcto:</strong> el juego se mueve con CUALQUIER sonido. Si alguna vez te exige decir la palabra bien, eso es un <strong>defecto grave</strong> — repórtalo enseguida.</p></div>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">F</span><h2>El globo, calma, ajustes y borrar datos</h2></div>
-    <p class="meta-bloque chica suave">~7 min. El globo ya lo aprobaste en el S1: aquí solo se comprueba que <strong>sigue igual de bien</strong> tras los cambios.</p>
+    <div class="bloque-cabeza"><span class="letra">H</span><h2>Ajustes, honestidad y borrar datos</h2></div>
+    <p class="meta-bloque chica suave">~7 min. El cuarto del padre: lo que se puede cambiar y lo que la app promete.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2f1"><label for="s2f1">Selector → <strong>El globo</strong>: sostén la voz, el globo vuela y llega a la meta; celebración con los segundos reales. Todo como antes.</label></li>
-      <li><input type="checkbox" id="s2f2"><label for="s2f2">En <strong>Ajustes</strong>: los interruptores (modo calma, reducir animaciones) responden y se recuerdan.</label></li>
-      <li><input type="checkbox" id="s2f3"><label for="s2f3"><strong>Apodo y temas</strong>: cámbialos → el resumen se actualiza → el progreso sigue intacto.</label></li>
-      <li><input type="checkbox" id="s2f4"><label for="s2f4">Lee <strong>“Qué mide y qué NO mide esta app”</strong> y <strong>“Acerca de los dibujos”</strong> (atribución a ARASAAC). ¿Honesto y claro?</label></li>
-      <li><input type="checkbox" id="s2f5"><label for="s2f5"><strong>Modo oscuro</strong> (cambia el tema del sistema): la pantalla del padre se adapta; los juegos del niño siguen claros SIEMPRE.</label></li>
-      <li><input type="checkbox" id="s2f6"><label for="s2f6">DE ÚLTIMO: <strong>“Borrar mis datos”</strong> → confirma → vuelve al onboarding como el primer día.</label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-h1"><label for="v2-h1">Los <strong>interruptores</strong> (modo calma, reducir animaciones) responden y quedan guardados al recargar. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-h2"><label for="v2-h2">El <strong>modo calma</strong> ya no es solo del globo: compruébalo en <strong>los tres juegos</strong> (era del S1, ahora es de toda la app). <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-h3"><label for="v2-h3"><strong>“Apodo y temas”</strong>: se ven los actuales → cámbialos → el resumen se actualiza → vuelve a “Hoy”: <strong>el progreso sigue intacto</strong> (no vuelve el onboarding, la cápsula hecha sigue hecha). <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-h4"><label for="v2-h4">Lee <strong>“Qué mide y qué NO mide esta app”</strong>: ¿honesto, claro, en tu idioma? <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-h5"><label for="v2-h5">Lee <strong>“Acerca de los dibujos”</strong>: los pictogramas son de ARASAAC y hay que darles el crédito. ¿Se entiende? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-h6"><label for="v2-h6"><strong>Modo oscuro</strong> (cambia el tema del sistema): la pantalla del padre se adapta; los juegos del niño siguen claros <strong>SIEMPRE</strong> (a propósito). <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-h7"><label for="v2-h7">DE ÚLTIMO, cuando termines todo: <strong>“Borrar mis datos”</strong> → confirma → vuelve al onboarding como el primer día. <span class="origen o-s1">S1</span></label></li>
     </ul>
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">G</span><h2>La biblioteca — tu veredicto POR BLOQUES</h2></div>
-    <p class="meta-bloque chica suave">Solo leer, cuando quieras. Ahora son <strong>50 cápsulas</strong>: no las revises de corrido. Léelas <strong>en la app</strong>, un bloque por vez, y marca aquí el bloque cuando te sirva. Si una cápsula concreta no te sirve, dime cuál y por qué — se reemplaza.</p>
+    <div class="bloque-cabeza"><span class="letra">I</span><h2>La biblioteca — tu veredicto por bloques</h2></div>
+    <p class="meta-bloque chica suave">Solo leer, cuando quieras. En el S1 aprobaste las 14 cápsulas una por una; <strong>esas 14 siguen adentro</strong>, ahora acompañadas por 36 más (50 en total). Por eso la revisión ya no es de a una: se hace <strong>por bloques</strong>. Si una cápsula concreta no te sirve, dime cuál y por qué — se reemplaza. <span class="origen o-mejora">Mejorado en S2</span></p>
     <p class="chica suave">Para ver las de una etapa: elige esa etapa en Ajustes y mira la cápsula del día (cambia cada día). También puedes juzgar el bloque por lo que ya conoces de la app.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="s2g1"><label for="s2g1"><strong>Sonidos e intentos (8)</strong> — para cuando explora sin palabras: poner sonido al mundo, imitar SUS sonidos, esperar con cara de pregunta, responder al gesto nombrando, turnos de sonidos. <em>¿Te sirven si algún día retrocede o para sus días difíciles?</em></label></li>
-      <li><input type="checkbox" id="s2g2"><label for="s2g2"><strong>Palabras sueltas · rutinas (6)</strong> — el carro, vestirse, el mercado, el parque, la calle, la hora de dormir. <em>¿Reconoces tu día en ellas?</em></label></li>
-      <li><input type="checkbox" id="s2g3"><label for="s2g3"><strong>Palabras sueltas · esperar (4)</strong> — el frasco que no abre solo, dar de a poquitos, dejar el hueco, esperar 3 segundos más de los que aguantas.</label></li>
-      <li><input type="checkbox" id="s2g4"><label for="s2g4"><strong>Palabras sueltas · devolver su palabra (4)</strong> — repetirla bien SIN corregir, ponerle nombre a lo que siente, su palabra + una tuya.</label></li>
-      <li><input type="checkbox" id="s2g5"><label for="s2g5"><strong>Palabras sueltas · seguir su interés (5)</strong> — sentarte en el piso, el juguete que ÉL eligió, narrar lo que hace, el cohete, palabra↔objeto.</label></li>
-      <li><input type="checkbox" id="s2g6"><label for="s2g6"><strong>Palabras sueltas · repetir una palabra clave (5)</strong> — “abre”, la misma palabra en 5 lugares, cambiar preguntas por regalos, el nombre vive en la cosa.</label></li>
-      <li><input type="checkbox" id="s2g7"><label for="s2g7"><strong>Primeras frases (7)</strong> — <em>para más adelante.</em> ¿Te parecen bien guardadas para cuando llegue el momento?</label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i1"><label for="v2-i1"><strong>Sonidos e intentos (8)</strong> — para cuando explora sin palabras: poner sonido al mundo, imitar SUS sonidos, esperar con cara de pregunta, responder al gesto nombrando, turnos de sonidos. <em>¿Te sirven si algún día retrocede, o para sus días difíciles?</em> <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i2"><label for="v2-i2"><strong>Palabras sueltas · rutinas (6)</strong> — el carro, vestirse, el mercado, el parque, la calle, la hora de dormir. <em>¿Reconoces tu día en ellas?</em> <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i3"><label for="v2-i3"><strong>Palabras sueltas · esperar (4)</strong> — el frasco que no abre solo, dar de a poquitos, dejar el hueco, esperar 3 segundos más de los que aguantas. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i4"><label for="v2-i4"><strong>Palabras sueltas · devolver su palabra (4)</strong> — repetirla bien SIN corregir, ponerle nombre a lo que siente, su palabra + una tuya. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i5"><label for="v2-i5"><strong>Palabras sueltas · seguir su interés (5)</strong> — sentarte en el piso, el juguete que ÉL eligió, narrar lo que hace, el cohete, palabra↔objeto. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i6"><label for="v2-i6"><strong>Palabras sueltas · repetir una palabra clave (5)</strong> — “abre”, la misma palabra en 5 lugares, cambiar preguntas por regalos, el nombre vive en la cosa. <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-i7"><label for="v2-i7"><strong>Primeras frases (7)</strong> — <em>para más adelante.</em> ¿Te parecen bien guardadas para cuando llegue el momento? <span class="origen o-s2">Nuevo · S2</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-i8"><label for="v2-i8"><strong>Las 14 originales (S1)</strong> — aprobadas el 2026-07-12. Confirma que siguen apareciendo (nombrar lo que mira, devolverle la palabra, contar hasta cinco, el hueco en la canción, no ponerlo a examen…). <span class="origen o-s1">S1</span></label></li>
     </ul>
     <div class="reportame"><p><strong>Repórtame:</strong> qué bloque te sirve tal cual · qué cápsula concreta cambiarías · qué rutina de TU casa falta (mejor 50 buenas que 60 de relleno).</p></div>
   </section>
 
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
-    <div class="bloque-cabeza"><span class="letra">→</span><h2>Validaciones pendientes en la tablet Android (S1 + S2)</h2></div>
-    <p class="meta-bloque chica suave">El niño y la tablet están de viaje. Esta lista se ACUMULA sprint a sprint y se paga completa al regreso. Bloquea el cierre definitivo del tema de audio (ADR 003) y del tono (ADR 007), no el resto.</p>
+    <div class="bloque-cabeza"><span class="letra">→</span><h2>Validaciones pendientes en la tablet Android</h2></div>
+    <p class="meta-bloque chica suave">El niño y la tablet están de viaje. Esta lista <strong>se acumula sprint a sprint</strong> y se paga completa al regreso. Bloquea el cierre definitivo del tema de audio (ADR 003) y del tono (ADR 007), no el resto.</p>
     <ul class="pasos">
-      <li><input type="checkbox" id="t1"><label for="t1"><code>/spike/audio</code> EN LA TABLET: motor, settings reales de Android, piso de la casa, latencia percibida, estabilidad 2–3 min. <span class="chica suave">(S1)</span></label></li>
-      <li><input type="checkbox" id="t2"><label for="t2">Fluidez a 60 fps de <strong>los tres juegos</strong> en la tablet real. <span class="chica suave">(S1+S2)</span></label></li>
-      <li><input type="checkbox" id="t3"><label for="t3">Instalar la PWA en Android + probar sin internet (Hoy abre con su cápsula; los juegos funcionan; los dibujos cargan del propio dispositivo). <span class="chica suave">(S1)</span></label></li>
-      <li><input type="checkbox" id="t6"><label for="t6"><strong>El tono con SU voz</strong> (aguda y suave): ¿el cohete responde? ¿la cobertura de tono es alta? Si no, se ajusta el rango con ese dato. <span class="chica suave">(S2 — cierra el ADR del pitch)</span></label></li>
-      <li><input type="checkbox" id="t4"><label for="t4"><strong>La sesión con él</strong> (5–10 min, observación sin examen): ¿elige juego solo en el selector? ¿capta que su voz mueve las cosas? ¿los dibujos lo invitan a intentar la palabra? <span class="chica suave">(S1+S2)</span></label></li>
-      <li><input type="checkbox" id="t5"><label for="t5">Gate visual final en la pantalla de la tablet (colores, tamaños de toque, legibilidad). <span class="chica suave">(S1+S2)</span></label></li>
+      <li data-origen="s1"><input type="checkbox" id="v2-t1"><label for="v2-t1"><code>/spike/audio</code> EN LA TABLET: motor, settings reales de Android, piso de la casa, latencia percibida, estabilidad 2–3 min. <span class="origen o-s1">S1</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-t2"><label for="v2-t2">Fluidez a 60 fps de <strong>los tres juegos</strong> en la tablet real (en el S1 era solo el globo). <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-t3"><label for="v2-t3">Instalar la <strong>PWA</strong> en Android + probar sin internet: Hoy abre con su cápsula, los tres juegos funcionan y <strong>los dibujos cargan del propio dispositivo</strong>. <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="s2"><input type="checkbox" id="v2-t4"><label for="v2-t4"><strong>El tono con SU voz</strong> (aguda y suave): ¿el cohete responde? ¿la cobertura de tono es alta? Si no, se ajusta el rango con ese dato. <span class="origen o-s2">Nuevo · S2 — cierra el ADR del pitch</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-t5"><label for="v2-t5"><strong>La sesión con él</strong> (5–10 min, observación sin examen): ¿elige juego solo en el selector? ¿capta que su voz mueve las cosas? ¿los dibujos lo invitan a intentar la palabra? <span class="origen o-mejora">Mejorado en S2</span></label></li>
+      <li data-origen="mejora"><input type="checkbox" id="v2-t6"><label for="v2-t6">Gate visual final en la pantalla de la tablet (colores, tamaños de toque, legibilidad) — ahora sobre las seis pantallas. <span class="origen o-mejora">Mejorado en S2</span></label></li>
     </ul>
   </section>
 
   <div class="aviso-final">
-    <p style="margin:0"><strong>Qué mandar al terminar</strong>:</p>
+    <p style="margin:0"><strong>Qué mandarme al terminar</strong>:</p>
     <ol class="reporte">
       <li><strong>Del bloque A: la cobertura de tono y el rango de F0</strong> — es el dato más crítico del sprint.</li>
       <li>¿El cohete responde al TONO (no al volumen)? ¿Va fluido?</li>
       <li>¿El juego de dibujos se enciende con cualquier sonido, sin exigir la palabra?</li>
       <li>¿Cambiar de etapa conservó tu progreso?</li>
-      <li>Veredicto de la biblioteca <strong>por bloques</strong> (bloque G): qué sirve, qué cambiarías, qué rutina falta.</li>
+      <li><strong>Regresión del S1:</strong> ¿el globo y “Hoy” siguen tan bien como los aprobaste?</li>
+      <li>Veredicto de la biblioteca <strong>por bloques</strong> (bloque I): qué sirve, qué cambiarías, qué rutina falta.</li>
       <li>Cualquier cosa rara: pantalla rota, texto confuso, botón muerto.</li>
       <li>Veredicto de diseño: ¿aprobado visualmente, o qué cambiar?</li>
     </ol>
   </div>
 
   <footer>
-    <p class="eyebrow">Historial de esta guía</p>
-    <p class="chica suave" style="margin:6px 0 0"><strong>Sprint 002 (2026-07-12):</strong> se agregan el tono en el spike, las etapas del habla, el selector, el cohete y palabra↔objeto; la revisión de la biblioteca pasa a ser <strong>por bloques</strong> (ya son 50 cápsulas: listarlas de corrido dejó de tener sentido) y se elimina el listado de las 14; la lista de tablet ahora ACUMULA S1+S2.<br><strong>Sprint 001 (2026-07-12):</strong> primera versión — spike de audio, pantalla Hoy, juego del globo, modo calma, veredicto de las 14 cápsulas. Gate de escritorio aprobado.</p>
-    <p class="chica suave" style="margin:6px 0 0">Esta guía es un entregable vivo: cada sprint la actualiza (agrega, complementa y elimina lo que ya no aplica).</p>
+    <p class="eyebrow">Cómo funciona esta guía</p>
+    <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació, y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
+
+    <p class="eyebrow" style="margin-top:16px">Historial</p>
+    <p class="chica suave"><strong>Sprint 002 (2026-07-12):</strong> se recupera el temario completo del S1 (que la versión anterior había resumido) y se etiqueta cada prueba con su origen. <strong>Nuevo:</strong> tono en el spike, etapas del habla, selector, cohete, palabra↔objeto, atribución ARASAAC. <strong>Mejorado:</strong> los temas del onboarding ya sirven; la cápsula muestra su etapa; la puerta del juego abre tres; la celebración es compartida; el modo calma vive en los tres juegos. <strong>Eliminado:</strong> el listado de las 14 cápsulas una por una (ya son 50: se revisan por bloques; las 14 originales siguen dentro de la app y se confirman en I8).<br>
+    <strong>Sprint 001 (2026-07-12):</strong> primera versión — spike de audio, pantalla Hoy, juego del globo, modo calma, veredicto de las 14 cápsulas. Gate de escritorio aprobado; PWA y offline diferidos a la tablet por decisión del usuario.</p>
   </footer>
 </div>
 
 <script>
   (function () {
-    var casillas = document.querySelectorAll('input[type="checkbox"]');
+    var casillas = Array.prototype.slice.call(document.querySelectorAll('input[type="checkbox"]'));
     var barra = document.getElementById("barra-avance");
     var contador = document.getElementById("contador");
-    function actualizar() {
-      var total = casillas.length, hechas = 0;
-      casillas.forEach(function (c) { if (c.checked) hechas++; });
-      barra.style.width = (total ? (hechas / total) * 100 : 0) + "%";
-      contador.textContent = hechas + "/" + total;
+    var botones = Array.prototype.slice.call(document.querySelectorAll(".filtros button"));
+    var CLAVE = "guia-habla-v2:";
+
+    function visibles() {
+      return casillas.filter(function (c) {
+        return c.closest("li") && !c.closest("li").hidden && !c.closest("section").hidden;
+      });
     }
+
+    function actualizar() {
+      var v = visibles(), hechas = 0;
+      v.forEach(function (c) { if (c.checked) hechas++; });
+      barra.style.width = (v.length ? (hechas / v.length) * 100 : 0) + "%";
+      contador.textContent = hechas + "/" + v.length;
+    }
+
+    function filtrar(filtro) {
+      document.querySelectorAll("li[data-origen]").forEach(function (li) {
+        li.hidden = filtro !== "todo" && li.dataset.origen !== filtro;
+      });
+      // Un bloque sin pruebas visibles se esconde entero: la guía filtrada se lee sin huecos.
+      document.querySelectorAll("section.bloque").forEach(function (sec) {
+        var lis = sec.querySelectorAll("li[data-origen]");
+        var algunaVisible = Array.prototype.some.call(lis, function (li) { return !li.hidden; });
+        sec.hidden = lis.length > 0 && !algunaVisible;
+      });
+      botones.forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.filtro === filtro));
+      });
+      actualizar();
+    }
+
+    botones.forEach(function (b) {
+      b.addEventListener("click", function () { filtrar(b.dataset.filtro); });
+    });
+
     casillas.forEach(function (c) {
-      try { c.checked = localStorage.getItem("guia-habla:" + c.id) === "1"; } catch (e) {}
+      try { c.checked = localStorage.getItem(CLAVE + c.id) === "1"; } catch (e) {}
       c.addEventListener("change", function () {
-        try { localStorage.setItem("guia-habla:" + c.id, c.checked ? "1" : "0"); } catch (e) {}
+        try { localStorage.setItem(CLAVE + c.id, c.checked ? "1" : "0"); } catch (e) {}
         actualizar();
       });
     });
+
+    document.getElementById("reiniciar").addEventListener("click", function () {
+      if (!window.confirm("¿Desmarcar todas las casillas de esta guía?")) return;
+      casillas.forEach(function (c) {
+        c.checked = false;
+        try { localStorage.removeItem(CLAVE + c.id); } catch (e) {}
+      });
+      actualizar();
+    });
+
     actualizar();
   })();
 </script>

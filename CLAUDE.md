@@ -126,11 +126,16 @@ decisions/NNN-titulo.md   (ADRs de implementación)
    sage/cream) — pero **sus 9 pantallas funcionales están ANULADAS** (concepto viejo): no heredes
    flujos ni features de ahí. Cada sprint con UI cierra con checklist `diseno-ui` + aprobación
    visual del usuario sobre la preview (idealmente con el niño observando).
-10. **Guía de prueba viva (`docs/GUIA-DE-PRUEBA.html`, obligatoria — regla del usuario
-    2026-07-12).** HTML visual y AUTOCONTENIDO (cero CDNs, checkboxes con localStorage): qué
-    probar, cómo y qué esperar como resultado correcto, por bloques. Cada sprint la actualiza:
-    agrega lo nuevo, complementa y elimina lo que ya no aplica. Sirve para el gate del usuario y
-    como entregable a usuarios finales.
+10. **Guía de prueba viva y ACUMULATIVA (`docs/GUIA-DE-PRUEBA.html`, obligatoria — regla del
+    usuario 2026-07-12, ampliada por él el 2026-07-12).** HTML visual y AUTOCONTENIDO (cero CDNs,
+    checkboxes con localStorage): qué probar, cómo y qué esperar como resultado correcto, por
+    bloques. **Regla de la bola de nieve:** la última versión contiene **TODAS las pruebas vigentes
+    de la app**, no solo las del sprint nuevo — el sprint N no resume ni comprime las pruebas del
+    N-1, las **hereda enteras**. Cada prueba lleva su **origen visible** en la línea: `Nuevo · SN`
+    (nació en este sprint) · `Mejorado en SN` (venía de antes y este sprint la cambió) · `SN`
+    (heredada sin cambios ⇒ es regresión). El filtro por origen y el historial del pie son parte
+    del entregable. Una prueba **solo se elimina** cuando la feature que probaba dejó de existir, y
+    se declara en el historial. Sirve para el gate del usuario y como entregable a usuarios finales.
 11. **PROHIBIDO entregar por artifacts de Claude o cualquier plataforma externa** (regla del
     usuario, re-ratificada 2026-07-12). Todo entregable —guías, reportes, documentos visuales—
     es un ARCHIVO DEL REPO (HTML autocontenido o Markdown) que el usuario pueda abrir, versionar

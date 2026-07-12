@@ -114,6 +114,29 @@ _(Fricción menor de herramienta, no del kit: `npx lhci` resuelve a un paquete i
 que imprime "Hello, this is AnupamAS01!". El correcto es `npx @lhci/cli`. El CI del kit ya usa el
 paquete bueno; queda anotado por si alguien lo corre a mano.)_
 
+## Regla nueva del usuario: la guía de prueba es ACUMULATIVA (bola de nieve) — 2026-07-12
+
+Antes del gate, el usuario preguntó si la guía se construye como bola de nieve. **No lo era**: la
+primera versión del S2 traía lo nuevo y **resumía** el S1 (el globo entero —calibración, histéresis
+de la pausa al respirar, micrófono negado, ruido alto, "ya jugamos" sin culpa— quedó en una línea
+que decía "todo como antes"; del spike se cayeron los settings del motor, el piso de ruido y la
+estabilidad de 2–3 min). Comprimir la guía **borra la regresión**: si el S2 rompe algo del S1, nadie
+lo prueba.
+
+**Regla adoptada (ya en el CLAUDE.md, regla 9→10):** la última guía contiene **todas** las pruebas
+vigentes de la app; el sprint N **hereda enteras** las del N-1. Cada línea lleva su **origen
+visible**: `Nuevo · SN` · `Mejorado en SN` · `SN` (heredada ⇒ regresión). Una prueba solo se
+elimina cuando su feature deja de existir, y se declara en el historial del pie.
+
+- Guía reconstruida: **78 pruebas** — 31 heredadas del S1, 37 nuevas del S2, 10 mejoradas.
+- Se agregó **filtro por origen** (Ver todo / Solo lo nuevo / Solo lo mejorado / Solo regresión) y
+  botón "Empezar de cero"; el contador y la barra se ajustan al filtro. Las etiquetas de origen
+  **no comunican solo con color** (llevan el texto del sprint).
+- Prefijo de localStorage nuevo (`guia-habla-v2:`): las casillas del S1 no se heredan marcadas —
+  una regresión sin probar no puede aparecer como hecha.
+- **Nota a la planeadora:** esta regla es de método y aplica a TODO el pipeline (la guía viva es
+  entregable estándar de todas las apps). El usuario lleva la instrucción; aquí solo se registra.
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se
