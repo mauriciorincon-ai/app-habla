@@ -21,8 +21,9 @@ test("de la cápsula de hoy al juego: la voz mueve el globo y la celebración di
   const tituloDeHoy = await page.getByTestId("capsula-titulo").innerText();
   await expect(page.getByTestId("capsula-guion")).not.toBeEmpty();
 
-  // 3. Al juego (el guion del padre va PRIMERO: la app orquesta al adulto).
-  await page.goto("/jugar");
+  // 3. Al juego por la puerta PERMANENTE de "Hoy" (existe sea cual sea la cápsula del día —
+  //    hallazgo del primer uso real) — y el guion del padre va PRIMERO.
+  await page.getByTestId("ir-al-juego").click();
   await expect(page.getByTestId("empezar-juego")).toBeEnabled();
   await page.getByTestId("empezar-juego").click();
 
