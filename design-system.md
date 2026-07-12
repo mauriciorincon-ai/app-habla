@@ -61,7 +61,9 @@ nuevos sin derivarlos de la paleta.
 
 ## Tipografía
 
-- **Geist** (UI, 400/500/600) · **Geist Mono** (datos/métricas medidas) · **Instrument Serif**
+- **Geist** (UI, 400/500/600) · **Geist Mono** (etiquetas, eyebrows y datos en bloque —
+  **no** para cifras dentro de una frase: la coma decimal monoespaciada se lee como "3 , 1";
+  ahí va Geist con `tabular-nums`) · **Instrument Serif**
   (display, la "voz humana": el saludo del día, la pregunta del juego; itálica para palabras del
   niño o conceptos citados). Utilidades: `font-sans`, `font-mono`, `font-display`. Nunca
   Inter/Roboto.
