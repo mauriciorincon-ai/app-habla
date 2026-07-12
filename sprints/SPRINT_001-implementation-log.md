@@ -80,6 +80,31 @@ Hecha 2026-07-11 durante el plan:
   foco visible en todos los elementos, y los interruptores se operan con Enter.
 - Lighthouse (móvil, las 3 rutas): Performance 90–93 · A11y 100 · Best Practices 100 · SEO 100.
 
+## Gate de revisión de diseño (checklist del skill `diseno-ui`)
+
+Corrido por el builder sobre la app real (móvil 412 px + desktop 1280 px, con micrófono falso).
+**La aprobación visual del usuario sigue PENDIENTE** — se hace sobre la preview, en la tablet.
+
+| Ítem                                            | Estado                                                                                                                                                                   |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Fiel a `design-system.md`, cero valores mágicos | ✅ toda la UI consume tokens semánticos                                                                                                                                  |
+| Jerarquía clara en <3 s                         | ✅ Hoy: la cápsula · Juego: el globo                                                                                                                                     |
+| Los 5 estados diseñados                         | ✅ documentados en `design-system.md` (vacío = onboarding, no un placeholder gris)                                                                                       |
+| Densidad y ritmo de espaciado                   | ✅ escala base 4; vista del niño aireada                                                                                                                                 |
+| Motion sutil y desactivable                     | ✅ el único movimiento es el globo (que ES el feedback); `prefers-reduced-motion` + ajuste propio                                                                        |
+| Microcopy es-CO, sin inglés residual            | ✅                                                                                                                                                                       |
+| **Cero anti-patrones**                          | ❌→✅ **incumplía "emojis como iconografía"** (🎤🔇📢🤫🎈). Corregido: iconos SVG propios (`src/components/iconos.tsx`) y el globo como personaje con la paleta del niño |
+| Responsive 360–420 y ≥1024 revisados a mano     | ✅ ambos capturados y revisados                                                                                                                                          |
+| Aprobación visual del usuario                   | ⏳ **pendiente (en la tablet)**                                                                                                                                          |
+
+**Otro hallazgo del gate:** el texto dirigido al padre se filtraba a la vista del niño durante el
+juego, contra la regla "la vista del niño es soberana". Se retira al arrancar el juego, sin tocar
+el LCP (el párrafo sigue naciendo visible en el HTML).
+**Lección técnica:** la primera versión usaba `main:has([data-fase]…)`; **Lightning CSS —el
+compilador de Tailwind v4— descarta esa regla en silencio** (estaba en `globals.css` pero no en el
+CSS servido). Se detectó verificando en el navegador, no confiando en el código. Sustituida por un
+`data-attribute` en el `<html>`.
+
 ## Decisiones tomadas durante la construcción
 
 - 2026-07-11 — Carga del AudioWorklet: compilación separada con `tsc` a `public/worklets/`
