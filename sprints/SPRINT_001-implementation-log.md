@@ -86,6 +86,13 @@ Hecha 2026-07-11 durante el plan:
   habilitados). Aplicar el mismo patrón en la UI del juego.
 - Pendiente en la tablet real: latencia percibida, estabilidad, `getSettings()` (¿Android
   respeta echoCancellation/noiseSuppression/autoGainControl en false?), piso de ruido de casa.
+- **Spike en desktop con micrófono REAL (usuario, 2026-07-12) — pata desktop VALIDADA:** motor
+  worklet · sampleRate 48000 · **baseLatency 2.7 ms** · echoCancellation false respetado
+  (macOS no reporta noiseSuppression/autoGainControl en getSettings para ese dispositivo —
+  ausencia esperable, no fallo) · sesión estable (923 frames ≈ 30/s) · sin fricción de permisos.
+  **Separación voz/fondo medida por el usuario: voz 30–70 % de la barra (RMS ≈ 0.04–0.09) vs
+  fondo máx. 5 % (RMS ≈ 0.006) → 6–14× — muy por encima del umbral de entrada (3.5× piso).**
+  El diseño de umbral relativo + histéresis queda respaldado con datos reales.
 
 ## Hallazgos del `/deploy-check`
 

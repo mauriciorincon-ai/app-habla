@@ -34,10 +34,23 @@ and ≈ 0.0008 during its noise floor — a ~350× separation, so a relative thr
 calibrated floor is comfortably discriminative. The spike e2e passes on both mobile-chromium and
 desktop-chromium.
 
-**Pending — real Android tablet (Chrome), on the Vercel preview of `/spike/audio`:**
-perceived latency while sustaining a vowel · worklet stability over minutes · `track.getSettings()`
-(does Android actually honour the three constraints set to `false`?) · the home's real noise
-floor · 60 fps of the character. These results complete this ADR and may promote the fallback.
+**Desktop Chrome + real microphone (user's machine, Vercel preview) — confirmed 2026-07-12:**
+mic permission granted with no friction; engine ran as **worklet**; session stable across a
+~30 s run (923 frames ≈ 30 frames/s sustained). Reported by the device:
+`sampleRate: 48000`, **`baseLatency: 0.0027 s (~2.7 ms)`** — far below the 200 ms ceiling —
+and `echoCancellation: false` honoured. Note: this device's `getSettings()` **omits**
+`noiseSuppression`/`autoGainControl` (Chrome on macOS does not report them for every device);
+behavioural evidence says the signal is clean. **Voice/background separation measured by the
+user:** sustained speech drove the meter bar to 30–70 % (RMS ≈ 0.04–0.09) while background
+audio peaked at ~5 % (RMS ≈ 0.006) — a 6–14× separation, comfortably above the entry threshold
+(3.5× the calibrated floor). The user reported no perceptible lag. The desktop leg of this ADR
+is **validated**.
+
+**Pending — real Android tablet (Chrome), deferred (device travelling with the family; list
+lives in `docs/GUIA-DE-PRUEBA.html` § Diferido):** perceived latency on the tablet · worklet
+stability over minutes · Android's real `getSettings()` (does it honour the constraints?) ·
+the home's noise floor on the tablet mic · 60 fps of the character · the child's own voice
+moving the balloon. These results close this ADR definitively.
 
 ## Consequences
 
