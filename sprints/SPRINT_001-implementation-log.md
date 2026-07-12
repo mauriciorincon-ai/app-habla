@@ -137,6 +137,24 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
 - Confirmación de paso: el modo oscuro del operador se ve correcto en uso real, y "Ya lo
   hicimos" persistió como se esperaba.
 
+## Cambios de contexto y reglas nuevas (2026-07-12)
+
+- **Regla re-ratificada por el usuario: NADA de artifacts de Claude.** La guía de prueba se había
+  entregado como artifact (error mío — la regla existía); el usuario la re-ratificó con énfasis:
+  todo entregable es un ARCHIVO DEL REPO, portable y suyo. Corregido: la guía ahora es
+  `docs/GUIA-DE-PRUEBA.html` (autocontenida, checkboxes con localStorage). Regla añadida al
+  CLAUDE.md (regla 11) y a mi memoria persistente. El usuario la llevará a la planeadora como
+  regla dura del pipeline.
+- **Entregable estándar nuevo: guía de prueba viva** (`docs/GUIA-DE-PRUEBA.html`) — se actualiza
+  cada sprint (agrega/complementa/elimina). Regla 10 del CLAUDE.md. El usuario la llevará a la
+  planeadora para que toda app del pipeline nazca con esa condición.
+- **La tablet Android no está disponible** (el niño viajó con la mamá y se la llevaron). TODAS
+  las pruebas del gate serán en computador/navegador. Impacto: las validaciones de tablet
+  (spike en dispositivo, 60 fps, PWA Android, sesión con el niño, gate visual en tablet) quedan
+  DIFERIDAS — listadas en la sección "Diferido" de la guía de prueba. El ADR 003 permanece en
+  "propuesto" hasta el regreso; el cierre del sprint con esta deuda declarada es decisión del
+  usuario (la DoD pedía preview probada en la tablet real).
+
 ## Decisiones tomadas durante la construcción
 
 - 2026-07-11 — Carga del AudioWorklet: compilación separada con `tsc` a `public/worklets/`

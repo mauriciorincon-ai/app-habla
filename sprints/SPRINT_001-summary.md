@@ -121,13 +121,19 @@ celebración automática). Sin límite de tiempo, sin game-over.
 
 ## Lo que falta para cerrar (acciones del usuario)
 
-1. **Importar el repo en Vercel** (~3 min) → preview del PR.
-2. **Probar `/spike/audio` en la tablet Android real**: latencia, estabilidad, `getSettings()`
-   (¿Android respeta las constraints?), piso de ruido de la casa, 60 fps → cierra el **ADR 003**.
-3. **Gate visual sobre la preview, en la tablet** (idealmente con el niño observando) y
-   **validación de las 14 cápsulas**: si alguna no le sirve a ESTA familia, se reemplaza antes del
-   merge.
+> **Cambio de contexto (2026-07-12):** la tablet Android viajó con el niño y la mamá — no está
+> disponible. El gate se hace en **computador/navegador** siguiendo `docs/GUIA-DE-PRUEBA.html`
+> (entregable nuevo del sprint). Las validaciones de tablet quedan **DIFERIDAS y listadas** en la
+> sección final de esa guía; el ADR 003 permanece "propuesto" hasta el regreso.
+
+1. ~~Importar el repo en Vercel~~ ✅ hecho (preview activa en la URL estable de la rama).
+2. **Correr la guía de prueba en el computador** (`docs/GUIA-DE-PRUEBA.html`, bloques A–F):
+   spike con micrófono real, pantalla Hoy, juego completo, modo calma, PWA/offline y el
+   veredicto de las 14 cápsulas.
+3. **Gate visual sobre la preview en desktop** + reporte del spike (el bloque de datos).
 4. Sentry: defer aceptado (no hace falta nada).
+5. **Al regreso de la tablet:** la lista diferida de la guía (spike en dispositivo, 60 fps, PWA
+   Android, sesión con el niño, gate visual en tablet) → cierra el ADR 003 definitivamente.
 
 ## Aprovisionamiento
 
