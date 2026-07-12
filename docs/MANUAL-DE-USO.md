@@ -66,8 +66,9 @@ Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obliga
 
 ### Modo calma
 
-Un toque —en el juego o en Ajustes— y la pantalla baja de intensidad: colores suaves, **sin
-medidor, sin meta y sin celebración automática**. El globo simplemente responde a su voz. Sirve
+Un toque —en el juego o en Ajustes— y la pantalla baja a colores de atardecer: **sin medidor,
+sin meta y sin celebración automática**. El globo no se detiene: **sube mientras su voz suena y
+baja despacito cuando hay silencio**, como un globo de verdad — sin carrera y sin llegada. Sirve
 cuando el niño está sobreestimulado o cuando el juego con meta le resulta demasiado.
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la

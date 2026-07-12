@@ -42,7 +42,7 @@ export function AjustesSesion() {
       <Interruptor
         id="modo-calma"
         titulo="Modo calma"
-        descripcion="Colores suaves, sin medidor y sin meta. El globo solo responde a su voz. Se puede activar también dentro del juego, en un toque."
+        descripcion="Colores de atardecer, sin medidor y sin meta. El globo sube mientras suena su voz y baja despacio en el silencio. Se puede activar también dentro del juego, en un toque."
         activo={ajustes.modoCalma}
         listo={listo}
         onCambiar={(activo) =>

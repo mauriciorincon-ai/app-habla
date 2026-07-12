@@ -50,9 +50,14 @@ La UI usa utilidades semánticas (`bg-fondo`, `bg-superficie`, `text-tinta`, `te
 | `celebracion`                          | coral-500 `#DD7B5E`                           | coral-500     | kid-peach `#FFC7B0` |
 | `exito` / `aviso` / `peligro` / `info` | `#527947` / `#C99432` / `#B14B3D` / `#4A6E84` | =             | =                   |
 
-**Modo calma** (`.tema-nino--calma`): acentos desaturados (sage-200 `#B8CDB1`), celebración en
-crema — la paleta baja de intensidad; además el componente oculta medidor y meta (eso es lógica,
-no CSS).
+**Modo calma** (`.tema-nino--calma`): "atardecer" — el cambio debe ser PERCEPTIBLE en todo el
+escenario, no solo en los acentos (hallazgo del gate 2026-07-12). Fondo baja a cream-200,
+superficie a cream-100, borde a cream-300, acentos desaturados (sage-200 `#B8CDB1`), celebración
+en crema, y los primitivos del niño se atenúan: kid-peach → `#E8CBBD`, kid-sage → `#B3C2AD`,
+kid-sky → `#CCD8DB`, kid-yellow → `#ECDFBE` (el globo y el suelo los leen en vivo vía `var()`).
+La tinta se queda oscura: el contraste AA no se negocia. Además el componente oculta medidor y
+meta (eso es lógica, no CSS), y el globo pasa de "viajar hacia la meta" a "flotar": sube mientras
+hay voz real y baja despacio en el silencio — jamás se congela.
 
 ### Primitivos (solo para construir la capa semántica)
 

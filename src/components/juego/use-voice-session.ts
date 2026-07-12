@@ -27,6 +27,8 @@ export type MedidasVivas = {
   nivel: () => number;
   /** ms de voz REAL sostenida en el intento actual. */
   sostenidoMs: () => number;
+  /** El veredicto del meter (histéresis + gracia): hay voz por encima del piso calibrado. */
+  vozActiva: () => boolean;
   /** 0..1 — avance de la calibración. */
   progresoCalibracion: () => number;
 };
@@ -194,6 +196,7 @@ export function useVoiceSession(modoCalmaInicial: boolean): VoiceSession {
     medidas: {
       nivel: () => nivelRef.current,
       sostenidoMs: () => sostenidoRef.current,
+      vozActiva: () => vozActivaRef.current,
       progresoCalibracion: () => progresoCalibracionRef.current,
     },
     empezar,

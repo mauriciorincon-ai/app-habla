@@ -139,13 +139,24 @@ html[data-en-juego="true"] [data-intro-padre] {
   display: none;
 }
 
-/* Modo calma: paleta tenue (acentos desaturados hacia sage claro; sin cambios de layout aquí —
-   ocultar medidor/meta es responsabilidad del componente). */
+/* Modo calma: "atardecer" — baja el brillo y la saturación de TODO el escenario, no solo de los
+   acentos (hallazgo del gate 2026-07-12: el cambio anterior era imperceptible). La tinta se
+   queda oscura: el contraste AA no se negocia (axe lo verifica dentro del juego en e2e).
+   Sin cambios de layout aquí — ocultar medidor/meta es responsabilidad del componente. */
 .tema-nino--calma {
+  --fondo: var(--color-cream-200);
+  --superficie: var(--color-cream-100);
+  --borde: var(--color-cream-300);
   --acento: var(--color-sage-200);
   --acento-hover: var(--color-sage-200);
+  --acento-suave: var(--color-sage-50);
   --celebracion: var(--color-cream-200);
   --celebracion-fuerte: var(--color-sage-400);
+  /* Los primitivos del niño también se atenúan: el globo y el suelo los leen en vivo. */
+  --color-kid-peach: #e8cbbd;
+  --color-kid-sage: #b3c2ad;
+  --color-kid-sky: #ccd8db;
+  --color-kid-yellow: #ecdfbe;
 }
 
 /* Utilidades semánticas: @theme inline referencia las vars vivas (cambian por contexto). */
