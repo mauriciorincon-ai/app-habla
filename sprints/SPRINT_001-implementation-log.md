@@ -68,6 +68,18 @@ Hecha 2026-07-11 durante el plan:
 - Pendiente en la tablet real: latencia percibida, estabilidad, `getSettings()` (¿Android
   respeta echoCancellation/noiseSuppression/autoGainControl en false?), piso de ruido de casa.
 
+## Hallazgos del `/deploy-check`
+
+- **Contraste en modo OSCURO (defecto real, encontrado por Lighthouse, no por axe):** el botón
+  "Borrar mis datos" usaba el rojo del tema claro (`#B14B3D`) sobre la superficie oscura →
+  **3.11:1**, falla AA. La causa de fondo: el e2e de axe solo auditaba el tema claro. Arreglado
+  en dos frentes: (a) los colores de estado (éxito/aviso/peligro/info) tienen ahora variante
+  clara para el tema oscuro; (b) **el e2e de axe corre las 3 rutas en `light` Y `dark`** — el
+  gate ahora sí puede cazar esto. Scores finales: A11y **100** en las 3 rutas.
+- **Navegación por teclado verificada** (no solo axe): las 3 rutas se recorren con Tab con el
+  foco visible en todos los elementos, y los interruptores se operan con Enter.
+- Lighthouse (móvil, las 3 rutas): Performance 90–93 · A11y 100 · Best Practices 100 · SEO 100.
+
 ## Decisiones tomadas durante la construcción
 
 - 2026-07-11 — Carga del AudioWorklet: compilación separada con `tsc` a `public/worklets/`
