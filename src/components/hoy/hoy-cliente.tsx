@@ -7,6 +7,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { NOMBRE_TECNICA } from "@content/schema";
+import { IconoHecho } from "@/components/iconos";
 import {
   asegurarAsignacionDeHoy,
   capsulaDeHoy,
@@ -101,7 +102,8 @@ export function HoyCliente() {
               className="text-exito flex min-h-12 flex-1 items-center justify-center gap-2 text-sm font-medium"
               data-testid="capsula-completada"
             >
-              <span aria-hidden="true">✓</span> Hecho hoy. Mañana hay otra.
+              <IconoHecho className="h-5 w-5 shrink-0" /> Hecho hoy. Mañana hay
+              otra.
             </p>
           ) : (
             <button

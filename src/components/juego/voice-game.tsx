@@ -7,6 +7,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import type { Capsula } from "@content/schema";
+import {
+  IconoMicrofono,
+  IconoMicrofonoApagado,
+  IconoRuido,
+} from "@/components/iconos";
 import { invitacionAmable, muestraMedidor } from "@/lib/session-flow";
 import {
   ajustesActuales,
@@ -88,6 +93,15 @@ function JuegoListo({
   // El guion es del padre (paleta operador). El juego es del niño (paleta clara, siempre).
   const esPantallaDelNino = actual.fase !== "guion";
 
+  // La vista del niño es soberana: mientras el juego corre, el texto dirigido al padre se retira
+  // de la pantalla (el CSS lo esconde con este atributo).
+  useEffect(() => {
+    document.documentElement.dataset.enJuego = String(esPantallaDelNino);
+    return () => {
+      delete document.documentElement.dataset.enJuego;
+    };
+  }, [esPantallaDelNino]);
+
   return (
     <div
       className={[
@@ -131,9 +145,7 @@ function JuegoListo({
           className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
           data-testid="pidiendo-mic"
         >
-          <p className="text-6xl" aria-hidden="true">
-            🎤
-          </p>
+          <IconoMicrofono className="text-acento h-16 w-16" />
           <h2 className="font-display text-3xl">Necesito escuchar su voz</h2>
           <p className="text-tinta-suave">
             El navegador va a preguntar si puede usar el micrófono. El sonido se
@@ -151,9 +163,7 @@ function JuegoListo({
           className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
           data-testid="mic-denegado"
         >
-          <p className="text-6xl" aria-hidden="true">
-            🔇
-          </p>
+          <IconoMicrofonoApagado className="text-tinta-suave h-16 w-16" />
           <h2 className="font-display text-3xl">No pude abrir el micrófono</h2>
           <div className="text-tinta-suave space-y-2 text-left text-sm">
             <p>
@@ -202,9 +212,7 @@ function JuegoListo({
           className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
           data-testid="ruido-alto"
         >
-          <p className="text-6xl" aria-hidden="true">
-            📢
-          </p>
+          <IconoRuido className="text-aviso h-16 w-16" />
           <h2 className="font-display text-3xl">Hay bastante ruido por ahí</h2>
           <p className="text-tinta-suave">
             Con este ruido de fondo me cuesta distinguir su voz. Si pueden,

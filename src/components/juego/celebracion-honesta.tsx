@@ -8,6 +8,8 @@
 //
 // Quien juzga si la PALABRA estuvo bien es el padre, nunca la app.
 
+import { Globo, IconoBrote } from "@/components/iconos";
+
 type Props = {
   sostenidoMs: number;
   onOtraVez: () => void;
@@ -36,9 +38,7 @@ export function CelebracionHonesta({
     >
       {huboVoz ? (
         <>
-          <p className="text-6xl" aria-hidden="true">
-            🎈
-          </p>
+          <Globo className="h-24 w-16" />
           <h2 className="font-display text-4xl">
             ¡La sostuviste{" "}
             {/* La métrica va en sans con cifras tabulares, no en mono: la coma decimal
@@ -59,9 +59,7 @@ export function CelebracionHonesta({
         </>
       ) : (
         <>
-          <p className="text-6xl" aria-hidden="true">
-            🌱
-          </p>
+          <IconoBrote className="text-acento h-16 w-16" />
           <h2 className="font-display text-3xl">Hoy el globo casi no voló</h2>
           <p className="text-tinta-suave">
             El micrófono no alcanzó a escuchar voz sostenida. No pasa nada y no

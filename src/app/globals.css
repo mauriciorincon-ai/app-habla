@@ -127,6 +127,18 @@
   color: var(--tinta);
 }
 
+/*
+ * La vista del niño es soberana: en cuanto el juego pasa del guion, el texto dirigido al padre
+ * desaparece de la pantalla. El párrafo nace visible en el HTML (es el candidato LCP) y solo se
+ * retira tras una interacción del usuario, así que no cuesta ni LCP ni CLS.
+ *
+ * El juego marca `data-en-juego` en el <html>. (Un selector `main:has(...)` sería más elegante,
+ * pero Lightning CSS —el compilador de Tailwind v4— descarta la regla en silencio.)
+ */
+html[data-en-juego="true"] [data-intro-padre] {
+  display: none;
+}
+
 /* Modo calma: paleta tenue (acentos desaturados hacia sage claro; sin cambios de layout aquí —
    ocultar medidor/meta es responsabilidad del componente). */
 .tema-nino--calma {

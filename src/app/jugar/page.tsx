@@ -16,7 +16,13 @@ export default function JugarPage() {
       <h1 className="font-display text-center text-4xl sm:text-5xl">
         Su voz mueve el mundo
       </h1>
-      <p className="text-tinta-suave mx-auto max-w-prose text-center">
+      {/* Nace visible en el HTML (es el candidato LCP), pero se retira en cuanto el juego
+          arranca: la vista del niño es soberana — ningún texto del padre se filtra al escenario.
+          Se hace con CSS (`:has`) para no tocar el LCP ni meter JS en el camino. */}
+      <p
+        data-intro-padre
+        className="text-tinta-suave mx-auto max-w-prose text-center"
+      >
         Siéntese al lado de su hijo: usted dirige el juego. Le vamos a mostrar
         la línea que puede decirle, después medimos el ruido de la casa y
         entonces el globo empieza a volar mientras él sostiene la voz. Nada de

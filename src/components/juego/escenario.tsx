@@ -6,6 +6,7 @@
 // Modo calma: sin medidor, sin meta, sin línea de llegada — el globo solo flota con su voz.
 
 import { useEffect, useRef } from "react";
+import { Globo } from "@/components/iconos";
 import type { MedidasVivas } from "./use-voice-session";
 
 type Props = {
@@ -60,11 +61,9 @@ export function Escenario({ medidas, metaMs, modoCalma, invitando }: Props) {
           aria-hidden="true"
         />
 
-        <div className="absolute bottom-10 left-[6%] h-32 w-32">
+        <div className="absolute bottom-10 left-[6%] h-32 w-24">
           <div ref={globoRef} className="h-full w-full will-change-transform">
-            <span className="text-7xl" role="img" aria-label="globo">
-              🎈
-            </span>
+            <Globo className="h-full w-full" />
           </div>
         </div>
 
