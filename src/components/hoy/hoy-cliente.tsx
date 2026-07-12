@@ -6,8 +6,8 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { NOMBRE_TECNICA } from "@content/schema";
-import { Globo, IconoHecho } from "@/components/iconos";
+import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
+import { Cohete, Globo, IconoHecho } from "@/components/iconos";
 import {
   asegurarAsignacionDeHoy,
   capsulaDeHoy,
@@ -54,8 +54,14 @@ export function HoyCliente() {
         data-testid="capsula"
         data-completada={completada}
       >
-        <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-          Hoy practicamos · {NOMBRE_TECNICA[capsula.tecnica]}
+        <p
+          className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
+          data-testid="etiqueta-capsula"
+        >
+          Hoy practicamos · {NOMBRE_TECNICA[capsula.tecnica]} ·{" "}
+          <span data-testid="etiqueta-etapa">
+            {NOMBRE_ETAPA[capsula.etapa]}
+          </span>
         </p>
 
         <h2 className="mt-3 text-2xl font-medium" data-testid="capsula-titulo">
@@ -134,12 +140,16 @@ export function HoyCliente() {
         data-testid="ir-al-juego"
       >
         <span>
-          <span className="block font-medium">El juego de voz</span>
+          <span className="block font-medium">Los juegos de voz</span>
           <span className="text-tinta-suave block text-sm">
-            Su voz mueve el globo. Para jugar juntos — hoy o cualquier día.
+            El globo, el cohete y los dibujos. Para jugar juntos — hoy o
+            cualquier día.
           </span>
         </span>
-        <Globo className="h-14 w-9 shrink-0" />
+        <span className="flex shrink-0 items-center gap-1">
+          <Globo className="h-14 w-9" />
+          <Cohete className="h-14 w-9" />
+        </span>
       </Link>
 
       {diasAcompañados > 0 ? (

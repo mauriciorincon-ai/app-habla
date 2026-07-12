@@ -218,10 +218,14 @@ describe("daily-coach: la cápsula de hoy (dentro de la etapa activa)", () => {
   it("si la cápsula asignada desaparece de la biblioteca, reasigna sin romperse", () => {
     const progreso: Progreso = {
       ...PROGRESO_INICIAL,
-      asignacionHoy: {
-        fecha: HOY,
-        capsulaId: "cápsula-que-ya-no-existe",
-        etapa: PS,
+      porEtapa: {
+        ...PROGRESO_INICIAL.porEtapa,
+        [PS]: {
+          ciclo: 0,
+          cicloCompletadas: [],
+          asignacionHoy: { fecha: HOY, capsulaId: "cápsula-que-ya-no-existe" },
+          asignacionAyer: null,
+        },
       },
     };
     const seleccion = seleccionarCapsula(HOY, progreso, CAPSULAS, PS);
@@ -287,6 +291,53 @@ describe("etapas como motor (ADR 006)", () => {
     );
     const deVuelta = seleccionarCapsula(HOY, enOtra.progreso, BIBLIOTECA, PS);
     expect(deVuelta.capsula.id).toBe(primera.capsula.id);
+  });
+
+  it("volver a la etapa el mismo día devuelve la cápsula YA COMPLETADA (no una nueva)", () => {
+    // El defecto que cazó el e2e: la asignación del día era global, no por etapa. Si el padre
+    // completaba la cápsula, cambiaba de etapa y volvía, la app le daba OTRA cápsula — y su
+    // trabajo del día desaparecía de la pantalla.
+    const primera = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIBLIOTECA, PS);
+    const completado = marcarCompletada(
+      HOY,
+      primera.capsula.id,
+      PS,
+      primera.progreso,
+    );
+
+    const enOtra = seleccionarCapsula(
+      HOY,
+      completado,
+      BIBLIOTECA,
+      "sonidos-e-intentos",
+    );
+    const deVuelta = seleccionarCapsula(HOY, enOtra.progreso, BIBLIOTECA, PS);
+
+    expect(deVuelta.capsula.id).toBe(primera.capsula.id);
+    expect(deVuelta.completada).toBe(true);
+  });
+
+  it("cada etapa mantiene SU cápsula del día (cambiar de etapa no pisa la otra)", () => {
+    const enPalabras = seleccionarCapsula(
+      HOY,
+      PROGRESO_INICIAL,
+      BIBLIOTECA,
+      PS,
+    );
+    const enSonidos = seleccionarCapsula(
+      HOY,
+      enPalabras.progreso,
+      BIBLIOTECA,
+      "sonidos-e-intentos",
+    );
+
+    expect(enSonidos.progreso.porEtapa[PS]?.asignacionHoy?.capsulaId).toBe(
+      enPalabras.capsula.id,
+    );
+    expect(
+      enSonidos.progreso.porEtapa["sonidos-e-intentos"]?.asignacionHoy
+        ?.capsulaId,
+    ).toBe(enSonidos.capsula.id);
   });
 
   it("el historial y lo completado sobreviven al cambio de etapa", () => {

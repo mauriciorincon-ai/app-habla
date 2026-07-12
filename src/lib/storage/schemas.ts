@@ -40,30 +40,40 @@ const FechaSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const AsignacionSchema = z.object({
   fecha: FechaSchema,
   capsulaId: z.string().min(1),
-  /** Etapa a la que pertenecía la asignación: cambiar de etapa re-hace la cápsula de hoy. */
-  etapa: z.enum(ETAPAS),
 });
 
+/**
+ * El progreso de UNA etapa. La asignación del día vive AQUÍ, no fuera: cada etapa tiene su
+ * cápsula de hoy. Así, si el padre cambia de etapa y vuelve el mismo día, se reencuentra con la
+ * cápsula que ya tenía (completada o no) — su trabajo del día no desaparece. (Este defecto lo
+ * cazó el e2e de etapas: la asignación global se perdía al cambiar y volver.)
+ */
 const ProgresoDeEtapaSchema = z.object({
   /** Vuelta a la etapa: sube cuando se agotan sus cápsulas y se vuelve a empezar. */
   ciclo: z.number().int().min(0),
   /** Ids completadas en el ciclo actual DE ESTA ETAPA (agotar una etapa no toca las otras). */
   cicloCompletadas: z.array(z.string()),
+  asignacionHoy: AsignacionSchema.nullable(),
+  asignacionAyer: AsignacionSchema.nullable(),
 });
+export type ProgresoDeEtapa = z.infer<typeof ProgresoDeEtapaSchema>;
 
-/** Progreso v2 (ADR 006): ciclos POR ETAPA. El historial global jamás se borra. */
+/** Progreso v2 (ADR 006): ciclos y asignación POR ETAPA. El historial global jamás se borra. */
 export const ProgresoSchema = z.object({
   porEtapa: z.record(z.enum(ETAPAS), ProgresoDeEtapaSchema),
   /** Registro completo, nunca se borra: es el "historial simple" (sin rachas punitivas). */
   historial: z.array(
     z.object({ capsulaId: z.string().min(1), fecha: FechaSchema }),
   ),
-  asignacionHoy: AsignacionSchema.nullable(),
-  asignacionAyer: AsignacionSchema.nullable(),
 });
 export type Progreso = z.infer<typeof ProgresoSchema>;
 
-const ETAPA_VACIA = { ciclo: 0, cicloCompletadas: [] as string[] };
+export const ETAPA_VACIA: ProgresoDeEtapa = {
+  ciclo: 0,
+  cicloCompletadas: [],
+  asignacionHoy: null,
+  asignacionAyer: null,
+};
 
 export const PROGRESO_INICIAL: Progreso = {
   porEtapa: {
@@ -72,8 +82,6 @@ export const PROGRESO_INICIAL: Progreso = {
     "primeras-frases": { ...ETAPA_VACIA },
   },
   historial: [],
-  asignacionHoy: null,
-  asignacionAyer: null,
 };
 
 // --- Migración v1 → v2 -------------------------------------------------------------------
@@ -99,22 +107,18 @@ export const ProgresoV1Schema = z.object({
 export type ProgresoV1 = z.infer<typeof ProgresoV1Schema>;
 
 export function migrarProgresoV1(v1: ProgresoV1): Progreso {
-  const conEtapa = (
-    asignacion: ProgresoV1["asignacionHoy"],
-  ): Progreso["asignacionHoy"] =>
-    asignacion ? { ...asignacion, etapa: "palabras-sueltas" as Etapa } : null;
-
   return {
     porEtapa: {
       "sonidos-e-intentos": { ...ETAPA_VACIA },
+      // Todo lo que existía en el S1 era de esta etapa (era la única — ADR 005).
       "palabras-sueltas": {
         ciclo: v1.ciclo,
         cicloCompletadas: v1.cicloCompletadas,
+        asignacionHoy: v1.asignacionHoy,
+        asignacionAyer: v1.asignacionAyer,
       },
       "primeras-frases": { ...ETAPA_VACIA },
     },
     historial: v1.historial,
-    asignacionHoy: conEtapa(v1.asignacionHoy),
-    asignacionAyer: conEtapa(v1.asignacionAyer),
   };
 }

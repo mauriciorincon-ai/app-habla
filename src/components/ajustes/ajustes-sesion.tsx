@@ -11,6 +11,7 @@ import {
 } from "@/components/estado-local";
 import { PerfilForm } from "@/components/perfil-form";
 import { useHidratado } from "@/components/use-hidratado";
+import { EtapaDelHabla } from "./etapa-del-habla";
 import {
   AJUSTES_DEFECTO,
   NOMBRE_TEMA,
@@ -37,6 +38,8 @@ export function AjustesSesion() {
 
   return (
     <div className="flex flex-col gap-4">
+      <EtapaDelHabla />
+
       <SeccionPerfil />
 
       <Interruptor

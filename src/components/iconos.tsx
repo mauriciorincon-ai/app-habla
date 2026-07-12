@@ -145,3 +145,81 @@ export function Globo({ className }: IconoProps) {
     </svg>
   );
 }
+
+/**
+ * EL COHETE — el segundo personaje: sube cuando la voz del niño sube de tono.
+ * Como el globo, no es un icono: lleva la paleta del niño.
+ */
+export function Cohete({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 64 96"
+      className={className}
+      role="img"
+      aria-label="cohete"
+      focusable="false"
+    >
+      {/* Llama (abajo: el cohete "mira" hacia arriba) */}
+      <path
+        d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z"
+        fill="var(--color-kid-yellow)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Aletas */}
+      <path
+        d="M20 68c-6 2-8 6-8 10 5 0 9-2 12-5zM44 68c6 2 8 6 8 10-5 0-9-2-12-5z"
+        fill="var(--color-kid-sage)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Cuerpo */}
+      <path
+        d="M32 6c9 9 13 22 13 36v28H19V42C19 28 23 15 32 6z"
+        fill="var(--color-kid-peach)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Ventana */}
+      <circle
+        cx="32"
+        cy="36"
+        r="8"
+        fill="var(--color-kid-sky)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M28 32a5 5 0 0 1 4-2"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+    </svg>
+  );
+}
+
+/** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
+export function IconoPictograma({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      role="img"
+      aria-label="dibujo con su palabra"
+      focusable="false"
+    >
+      <rect x="3" y="3" width="18" height="14" rx="2.5" {...trazo} />
+      {/* El "dibujo" de adentro: una colina y un sol. */}
+      <path d="M6 14l3.5-4 3 3.4L15 11l3 3" {...trazo} />
+      <circle cx="9" cy="7.5" r="1.4" {...trazo} />
+      {/* La palabra escrita debajo (dos renglones): el picto siempre viene con su nombre. */}
+      <path d="M6 20h12" {...trazo} />
+    </svg>
+  );
+}

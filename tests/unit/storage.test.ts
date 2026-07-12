@@ -122,10 +122,10 @@ describe("migración de progreso v1 → v2 (ADR 006): el progreso real jamás se
     expect(migrado.porEtapa["sonidos-e-intentos"]?.cicloCompletadas).toEqual(
       [],
     );
-    expect(migrado.asignacionHoy).toEqual({
-      ...PROGRESO_V1.asignacionHoy,
-      etapa: "palabras-sueltas",
-    });
+    // La asignación del día viaja DENTRO de su etapa (la única que existía en el S1).
+    expect(migrado.porEtapa["palabras-sueltas"]?.asignacionHoy).toEqual(
+      PROGRESO_V1.asignacionHoy,
+    );
   });
 
   it("la migración se persiste: la segunda lectura ya es v2 directa", () => {

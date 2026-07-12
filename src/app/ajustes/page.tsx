@@ -59,6 +59,31 @@ export default function AjustesPage() {
         </dl>
       </section>
 
+      {/* Atribución obligatoria de los pictogramas (CC BY-NC-SA — ADR 008). */}
+      <section
+        className="bg-superficie shadow-tarjeta rounded-2xl p-5"
+        data-testid="acerca-de"
+      >
+        <h2 className="font-medium">Acerca de los dibujos</h2>
+        <p className="text-tinta-suave mt-2 text-sm">
+          Los pictogramas del juego “Palabra y dibujo” son obra de{" "}
+          <strong>Sergio Palao</strong> para{" "}
+          <a
+            href="https://arasaac.org"
+            className="underline underline-offset-4"
+            rel="noreferrer"
+            target="_blank"
+          >
+            ARASAAC
+          </a>
+          , que los distribuye bajo licencia{" "}
+          <strong>Creative Commons BY-NC-SA</strong>. Son propiedad del{" "}
+          <strong>Gobierno de Aragón</strong> (España). Esta app es personal y
+          sin fines comerciales. Los dibujos viven dentro de la app: no se
+          descargan de internet mientras juegan.
+        </p>
+      </section>
+
       <nav className="text-tinta-suave text-center text-sm">
         <Link href="/" className="min-h-11 underline-offset-4 hover:underline">
           Volver a Hoy

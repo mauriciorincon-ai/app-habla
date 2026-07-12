@@ -1,0 +1,34 @@
+import type { Metadata } from "next";
+import { VoiceGame } from "@/components/juego/voice-game";
+
+export const metadata: Metadata = {
+  title: "El globo de la voz · Hablemos San",
+};
+
+// LCP estático (patrón lcp-nace-estatico): el titular Y el bloque de texto grande de la mitad
+// superior —el rol del padre— se sirven en el HTML del servidor. Si el candidato LCP fuera el
+// guion (que nace en el cliente, depende del progreso guardado), el LCP se iría hasta después
+// de la hidratación.
+
+export default function JugarGloboPage() {
+  return (
+    <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
+      <h1 className="font-display text-center text-4xl sm:text-5xl">
+        Su voz mueve el mundo
+      </h1>
+      {/* Nace visible en el HTML (es el candidato LCP), pero se retira en cuanto el juego
+          arranca: la vista del niño es soberana — ningún texto del padre se filtra al escenario.
+          Lo esconde el CSS con `html[data-en-juego]` (Lightning CSS descarta `:has()`). */}
+      <p
+        data-intro-padre
+        className="text-tinta-suave mx-auto max-w-prose text-center"
+      >
+        Siéntese al lado de su hijo: usted dirige el juego. Le vamos a mostrar
+        la línea que puede decirle, después medimos el ruido de la casa y
+        entonces el globo empieza a volar mientras él sostiene la voz. Nada de
+        lo que él diga se graba ni sale de este dispositivo.
+      </p>
+      <VoiceGame />
+    </main>
+  );
+}

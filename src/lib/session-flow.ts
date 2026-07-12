@@ -12,6 +12,30 @@ export type Ajustes = {
   modoCalma: boolean;
 };
 
+/**
+ * Lo que el juego MIDIÓ de verdad (Sprint 2: el flujo es compartido por los tres juegos, y lo
+ * único que cambia entre ellos es la métrica). La celebración solo puede afirmar esto — jamás
+ * un elogio desacoplado de lo medido (regla dura 3).
+ */
+export type Metrica =
+  /** Globo: milisegundos de voz sostenida de verdad. */
+  | { tipo: "sostenido"; ms: number }
+  /** Cohete: veces que la voz cambió de dirección (subió y bajó). */
+  | { tipo: "inversiones"; veces: number }
+  /** Palabra↔objeto: dibujos que su voz activó (cualquier vocalización cuenta — ADR 005). */
+  | { tipo: "activaciones"; veces: number };
+
+/** El número que la métrica lleva dentro — con eso se compara contra la meta. */
+export function valorDeMetrica(metrica: Metrica): number {
+  return metrica.tipo === "sostenido" ? metrica.ms : metrica.veces;
+}
+
+export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
+  sostenido: { tipo: "sostenido", ms: 0 },
+  inversiones: { tipo: "inversiones", veces: 0 },
+  activaciones: { tipo: "activaciones", veces: 0 },
+};
+
 export type Fase =
   | { fase: "guion" }
   | { fase: "pidiendo-mic" }
@@ -19,11 +43,19 @@ export type Fase =
   | { fase: "calibrando"; msTranscurridos: number }
   | { fase: "ruido-alto"; pisoRuido: number }
   | { fase: "esperando-voz"; pisoRuido: number; msSinVoz: number }
-  | { fase: "jugando"; pisoRuido: number; sostenidoMs: number; metaMs: number }
-  | { fase: "celebracion"; sostenidoMs: number };
+  | { fase: "jugando"; pisoRuido: number; metrica: Metrica }
+  | { fase: "celebracion"; metrica: Metrica };
 
 export type Sesion = {
   ajustes: Ajustes;
+  /**
+   * El valor de métrica que cierra el intento con celebración (3000 ms del globo, 3 inversiones
+   * del cohete). `null` = sin meta: el juego dura lo que el padre quiera (palabra↔objeto, y
+   * cualquier juego en modo calma). Nunca hay castigo por no llegar.
+   */
+  meta: number | null;
+  /** Qué mide este juego. Fija el tipo de métrica de toda la sesión. */
+  tipoMetrica: Metrica["tipo"];
   actual: Fase;
 };
 
@@ -37,19 +69,30 @@ export type Evento =
   | { tipo: "CALIBRACION_RUIDOSA"; pisoRuido: number }
   | { tipo: "CONTINUAR_ASI" }
   | { tipo: "RECALIBRAR" }
-  | { tipo: "TICK"; deltaMs: number; vozActiva: boolean; sostenidoMs: number }
-  | { tipo: "TERMINAR" }
+  | { tipo: "TICK"; deltaMs: number; vozActiva: boolean; metrica: Metrica }
+  /**
+   * "Ya jugamos" (lo toca el padre). Lleva la métrica REAL del intento: terminar desde el
+   * silencio no puede borrar lo que el niño ya logró — la celebración cuenta la verdad.
+   */
+  | { tipo: "TERMINAR"; metrica: Metrica }
   | { tipo: "OTRA_VEZ" }
   | { tipo: "CAMBIAR_CALMA"; activo: boolean };
 
-/** Meta del juego: sostener la voz este tiempo. Sin castigo si no se llega — solo se sigue. */
+/** Meta del globo: sostener la voz este tiempo. Sin castigo si no se llega — solo se sigue. */
 export const META_MS_DEFECTO = 3000;
+
+/** Meta del cohete: subir y bajar la voz estas veces (§B.1: exploración vocal, no palabras). */
+export const META_INVERSIONES_DEFECTO = 3;
 
 /** Tras este silencio en "esperando-voz", la UI invita amablemente (jamás regaña). */
 export const MS_PARA_INVITAR = 20_000;
 
-export function sesionInicial(ajustes: Ajustes = { modoCalma: false }): Sesion {
-  return { ajustes, actual: { fase: "guion" } };
+export function sesionInicial(
+  ajustes: Ajustes = { modoCalma: false },
+  tipoMetrica: Metrica["tipo"] = "sostenido",
+  meta: number | null = META_MS_DEFECTO,
+): Sesion {
+  return { ajustes, meta, tipoMetrica, actual: { fase: "guion" } };
 }
 
 export function reducir(sesion: Sesion, evento: Evento): Sesion {
@@ -134,8 +177,7 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
           return avanzar(sesion, {
             fase: "jugando",
             pisoRuido: actual.pisoRuido,
-            sostenidoMs: evento.sostenidoMs,
-            metaMs: META_MS_DEFECTO,
+            metrica: evento.metrica,
           });
         }
         return avanzar(sesion, {
@@ -145,31 +187,38 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
         });
       }
       if (evento.tipo === "TERMINAR") {
-        return avanzar(sesion, { fase: "celebracion", sostenidoMs: 0 });
+        return avanzar(sesion, {
+          fase: "celebracion",
+          metrica: evento.metrica,
+        });
       }
       return sesion;
 
     case "jugando":
       if (evento.tipo === "TICK") {
-        const sostenidoMs = evento.sostenidoMs;
-        // La meta cierra el intento solo fuera del modo calma (en calma no hay meta).
-        if (!sesion.ajustes.modoCalma && sostenidoMs >= actual.metaMs) {
-          return avanzar(sesion, { fase: "celebracion", sostenidoMs });
+        const metrica = evento.metrica;
+        // La meta cierra el intento solo si existe y fuera del modo calma (en calma no hay meta).
+        if (
+          !sesion.ajustes.modoCalma &&
+          sesion.meta !== null &&
+          valorDeMetrica(metrica) >= sesion.meta
+        ) {
+          return avanzar(sesion, { fase: "celebracion", metrica });
         }
         if (!evento.vozActiva) {
-          // Se calló: vuelve a esperar, sin castigo y sin perder lo sostenido del intento.
+          // Se calló: vuelve a esperar, sin castigo y sin perder lo logrado del intento.
           return avanzar(sesion, {
             fase: "esperando-voz",
             pisoRuido: actual.pisoRuido,
             msSinVoz: 0,
           });
         }
-        return avanzar(sesion, { ...actual, sostenidoMs });
+        return avanzar(sesion, { ...actual, metrica });
       }
       if (evento.tipo === "TERMINAR") {
         return avanzar(sesion, {
           fase: "celebracion",
-          sostenidoMs: actual.sostenidoMs,
+          metrica: evento.metrica,
         });
       }
       return sesion;

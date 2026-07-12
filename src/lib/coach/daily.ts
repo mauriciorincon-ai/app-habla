@@ -10,7 +10,7 @@
 //     fecha+etapa+ciclo, no por orden de eventos).
 
 import type { Capsula, Etapa } from "@content/schema";
-import type { Progreso } from "@/lib/storage/schemas";
+import { ETAPA_VACIA, type Progreso } from "@/lib/storage/schemas";
 
 /** Fecha LOCAL del dispositivo como YYYY-MM-DD (con UTC, en Colombia el día cambiaría a las 7 p. m.). */
 export function claveFechaLocal(fecha: Date): string {
@@ -50,14 +50,12 @@ export function seleccionarCapsula(
     );
   }
 
-  const estadoEtapa = progreso.porEtapa[etapa] ?? {
-    ciclo: 0,
-    cicloCompletadas: [],
-  };
+  const estadoEtapa = progreso.porEtapa[etapa] ?? ETAPA_VACIA;
 
-  // 1. Ya hay cápsula asignada para hoy EN ESTA ETAPA: es intocable (aunque esté completada).
-  const asignada = progreso.asignacionHoy;
-  if (asignada?.fecha === fecha && asignada.etapa === etapa) {
+  // 1. Esta etapa ya tiene cápsula asignada para hoy: es intocable (aunque esté completada, y
+  //    aunque el padre se haya ido a otra etapa y haya vuelto — su trabajo del día no se pierde).
+  const asignada = estadoEtapa.asignacionHoy;
+  if (asignada?.fecha === fecha) {
     const capsula = deEtapa.find((c) => c.id === asignada.capsulaId);
     if (capsula) {
       return {
@@ -81,11 +79,8 @@ export function seleccionarCapsula(
     pendientes = [...deEtapa];
   }
 
-  // Evita repetir la de AYER cuando quedó sin completar (habiendo alternativas). Solo cuenta si
-  // de verdad es de otro día: una asignación de HOY desplazada por un cambio de etapa no debe
-  // excluirse — así, volver a la etapa original el mismo día devuelve la misma cápsula.
-  const ayer = progreso.asignacionAyer;
-  const idAyer = ayer && ayer.fecha !== fecha ? ayer.capsulaId : undefined;
+  // Evita repetir la de ayer de ESTA etapa cuando quedó sin completar (habiendo alternativas).
+  const idAyer = estadoEtapa.asignacionAyer?.capsulaId;
   if (pendientes.length > 1 && idAyer) {
     const sinAyer = pendientes.filter((c) => c.id !== idAyer);
     if (sinAyer.length > 0) pendientes = sinAyer;
@@ -101,10 +96,13 @@ export function seleccionarCapsula(
       ...progreso,
       porEtapa: {
         ...progreso.porEtapa,
-        [etapa]: { ciclo, cicloCompletadas },
+        [etapa]: {
+          ciclo,
+          cicloCompletadas,
+          asignacionAyer: estadoEtapa.asignacionHoy,
+          asignacionHoy: { fecha, capsulaId: capsula.id },
+        },
       },
-      asignacionAyer: progreso.asignacionHoy,
-      asignacionHoy: { fecha, capsulaId: capsula.id, etapa },
     },
   };
 }
@@ -121,10 +119,7 @@ export function marcarCompletada(
   );
   if (yaCompletada) return progreso;
 
-  const estadoEtapa = progreso.porEtapa[etapa] ?? {
-    ciclo: 0,
-    cicloCompletadas: [],
-  };
+  const estadoEtapa = progreso.porEtapa[etapa] ?? ETAPA_VACIA;
 
   return {
     ...progreso,

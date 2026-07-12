@@ -1,77 +1,51 @@
 "use client";
 
-// EL GLOBO — el primer juego (Sprint 1, aprobado por el usuario): el globo avanza SOLO mientras
-// el niño sostiene la voz. Co-uso siempre: el padre dirige; la pantalla es utilería.
+// EL COHETE DEL TONO (Outcome 2 del Sprint 2): el cohete sube cuando la voz del niño sube de
+// tono y baja cuando baja. Es exploración vocal pura — NO exige ninguna palabra (ADR 005): una
+// vocal estirada como una sirena es exactamente lo que el juego quiere.
 //
-// El flujo (permiso, calibración, ruido, calma, salir) vive en MarcoJuego, compartido con los
-// otros dos juegos. Aquí queda lo que es del globo: su guion, su escenario y su meta.
+// Celebración honesta: cuenta las veces REALES que su voz cambió de dirección (inversiones).
+// Si el tono no fue confiable, el cohete no se mueve y la app lo dice sin drama.
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
-import { NOMBRE_TECNICA, type Capsula } from "@content/schema";
+import { useCallback } from "react";
 import {
   ajustesActuales,
-  asegurarAsignacionDeHoy,
-  capsulaDeHoy,
   guardarAjustesEnStore,
-  marcarCapsulaHecha,
   useAjustes,
-  useProgreso,
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import {
-  META_MS_DEFECTO,
+  META_INVERSIONES_DEFECTO,
   invitacionAmable,
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
 import { CelebracionHonesta } from "./celebracion-honesta";
-import { Escenario } from "./escenario";
+import { EscenarioCohete } from "./escenario-cohete";
 import { GuionCard } from "./guion-card";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession, type MedidasVivas } from "./use-voice-session";
 
-export function VoiceGame() {
+export function CoheteTono() {
   const hidratado = useHidratado();
-  const progreso = useProgreso();
   const ajustes = useAjustes();
-  const etapa = ajustes?.etapa;
 
-  useEffect(() => {
-    asegurarAsignacionDeHoy();
-  }, [etapa]);
-
-  if (!hidratado || !progreso || !ajustes) {
-    // Esqueleto con la misma altura: sin salto de layout al hidratar.
+  if (!hidratado || !ajustes) {
     return <div className="min-h-[28rem]" aria-hidden="true" />;
   }
 
-  const { capsula, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
-  return (
-    <JuegoListo
-      capsula={capsula}
-      fecha={fecha}
-      modoCalmaInicial={ajustes.modoCalma}
-    />
-  );
+  return <JuegoListo modoCalmaInicial={ajustes.modoCalma} />;
 }
 
-function JuegoListo({
-  capsula,
-  fecha,
-  modoCalmaInicial,
-}: {
-  capsula: Capsula;
-  fecha: string;
-  modoCalmaInicial: boolean;
-}) {
+function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
   const router = useRouter();
 
-  // Lo que mide el globo: milisegundos de voz REALMENTE sostenida.
+  // Lo que mide el cohete: cuántas veces la voz subió y bajó DE VERDAD.
   const metricaActual = useCallback(
     (medidas: MedidasVivas): Metrica => ({
-      tipo: "sostenido",
-      ms: medidas.sostenidoMs(),
+      tipo: "inversiones",
+      veces: medidas.inversiones(),
     }),
     [],
   );
@@ -88,8 +62,8 @@ function JuegoListo({
     cambiarCalma,
   } = useVoiceSession({
     modoCalmaInicial,
-    tipoMetrica: "sostenido",
-    meta: META_MS_DEFECTO,
+    tipoMetrica: "inversiones",
+    meta: META_INVERSIONES_DEFECTO,
     metricaActual,
   });
 
@@ -99,20 +73,17 @@ function JuegoListo({
   function alternarCalma() {
     const activo = !modoCalma;
     cambiarCalma(activo);
-    // El modo calma es un ajuste del niño: se recuerda para la próxima sesión.
     guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
   }
 
-  function terminarYMarcar() {
-    marcarCapsulaHecha(fecha, capsula.id, capsula.etapa);
-    router.push("/");
-  }
+  // En calma no hay meta: el cohete solo flota con la voz, sin carrera y sin llegada.
+  const meta = modoCalma ? null : META_INVERSIONES_DEFECTO;
 
   return (
     <MarcoJuego
       sesion={sesion}
       medidas={medidas}
-      nombre="globo"
+      nombre="cohete"
       onAlternarCalma={alternarCalma}
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
@@ -120,9 +91,9 @@ function JuegoListo({
     >
       {actual.fase === "guion" ? (
         <GuionCard
-          etiqueta={NOMBRE_TECNICA[capsula.tecnica]}
-          guion={capsula.guion}
-          nota="Muéstrale cómo suena tú primero. Si hoy prefiere solo mirar, también está bien."
+          etiqueta="El cohete del tono"
+          guion="“Haz la voz como una sirena: aaaAAAaaa… ¡mira cómo sube el cohete!”"
+          nota="Hazlo tú primero, exagerado y riéndote: sube la voz y bájala. El cohete responde al TONO, no a las palabras — cualquier sonido estirado sirve. Si hoy solo quiere mirar, también está bien."
           onEmpezar={empezar}
           listo
         />
@@ -132,13 +103,13 @@ function JuegoListo({
         <section className="flex flex-col gap-5">
           <h2 className="font-display text-center text-3xl sm:text-4xl">
             {actual.fase === "jugando"
-              ? "¡El globo está volando!"
-              : "Haz sonar tu voz: aaaaah"}
+              ? "¡El cohete está volando!"
+              : "Haz la voz de sirena: aaaAAAaaa"}
           </h2>
 
-          <Escenario
+          <EscenarioCohete
             medidas={medidas}
-            metaMs={META_MS_DEFECTO}
+            meta={meta}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
           />
@@ -168,8 +139,8 @@ function JuegoListo({
         <CelebracionHonesta
           metrica={actual.metrica}
           onOtraVez={otraVez}
-          onTerminar={terminarYMarcar}
-          etiquetaTerminar="Marcar el día como hecho"
+          onTerminar={() => router.push("/jugar")}
+          etiquetaTerminar="Elegir otro juego"
         />
       ) : null}
     </MarcoJuego>
