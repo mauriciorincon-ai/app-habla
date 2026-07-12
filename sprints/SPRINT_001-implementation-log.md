@@ -42,6 +42,14 @@ Hecha 2026-07-11 durante el plan:
   Performance 100/100**. El simulado, en cambio, reporta ~3.38 s uniformes en las 3 rutas, con
   86 % de "render delay" atribuido. Sugerencia al kit: considerar `throttlingMethod: devtools`
   o un budget de LCP calibrado para el sesgo de Lantern en localhost.
+- **K-habla-4:** el budget `script: 300` KB del `perf-budget.json` del kit nace sin margen para
+  el código de la app en Next 16 + React 19: medido con gzip, SOLO el framework (chunks
+  compartidos de Next/React) pesa ~246 KB de los 307.200 bytes del budget. El primer feature
+  que agregó ~1,1 KB de JS propio (editar perfil desde Ajustes) rompió el gate de Lighthouse
+  (308.348 vs 307.200). Se sube a **350 KB** (deja ~42 KB para el código de la app; TBT/LCP/CLS
+  quedan intactos como guardias reales). Sugerencia al kit: calibrar el budget de script contra
+  el baseline real del framework del stack estampado. Candidato S2 de reducción real:
+  `zod/mini` en el cliente (~10-15 KB gz).
 
 ## Desviación del plan
 
@@ -165,6 +173,27 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
   era de la biblioteca vieja (id ya inexistente) y hoy la app asignó limpiamente una cápsula
   nueva del nivel palabras sueltas, en estado pendiente. La puerta permanente al juego se ve
   al pie de "Hoy", como se diseñó.
+- **2026-07-12 (bloque C del gate): el juego de voz APROBADO por el usuario** ("brillante…
+  espectacular"; pide más contenido a futuro, esperado para S1). Dos hallazgos del modo calma,
+  ambos confirmados en el código:
+  1. **El globo se congelaba en calma** — `escenario.tsx` forzaba el avance a 0 y solo dejaba
+     una flotada vertical de ~48 px siguiendo el nivel instantáneo: activar calma se sentía
+     como PAUSAR el juego (lo contrario del diseño: "el globo responde a su voz").
+     **Fix:** en calma el globo **flota**: sube mientras hay voz real (el mismo veredicto con
+     histéresis del meter, ahora expuesto como `medidas.vozActiva()`) y baja despacio en el
+     silencio (subida ~3,5 s, bajada ~9 s — constantes nombradas). Bajo test e2e (el globo debe
+     subir >20 px con el WAV sonando en calma).
+  2. **La paleta calma era imperceptible** — solo cambiaba los acentos (botones); fondo,
+     escenario, suelo y globo quedaban idénticos. **Fix:** "atardecer": fondo→cream-200,
+     superficie→cream-100, borde→cream-300 y primitivos del niño atenuados (el globo y el suelo
+     los leen en vivo vía `var()`); la tinta se queda oscura (AA verificado por axe en calma).
+     Documentado en `design-system.md`.
+  - **Defecto encontrado de paso (modo normal):** el `translate` del globo usaba `%`, que es
+    relativo al TAMAÑO DEL GLOBO (96 px), no al escenario — el "78% del escenario" del
+    comentario eran en realidad ~75 px de viaje: el globo nunca llegaba visualmente a la línea
+    de meta. Ahora el vuelo se calcula en píxeles del escenario (con avance completo el globo
+    alcanza la línea) y la posición se interpola (τ≈140 ms): sin saltos al alternar calma ni al
+    reiniciar, y vuelo continuo a 60 fps aunque el meter emita a ~31/s.
 
 ## Cambios de contexto y reglas nuevas (2026-07-12)
 

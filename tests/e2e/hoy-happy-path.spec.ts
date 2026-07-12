@@ -98,6 +98,22 @@ test("modo calma en un toque: sin medidor y sin meta", async ({ page }) => {
 
   await expect(juego).toHaveAttribute("data-calma", "true");
   await expect(page.getByTestId("medidor")).toHaveCount(0);
+
+  // El globo NO se congela en calma: mientras el WAV suena, sube (translateY negativo).
+  // (Hallazgo del gate 2026-07-12: la versión anterior lo dejaba clavado en el piso.)
+  await expect
+    .poll(
+      async () => {
+        const transform = await page
+          .getByTestId("globo")
+          .evaluate((el) => el.style.transform);
+        const y = /,\s*(-?[\d.]+)px\)/.exec(transform)?.[1];
+        return y ? parseFloat(y) : 0;
+      },
+      { timeout: 15_000 },
+    )
+    .toBeLessThan(-20);
+
   // Sin meta: aunque la voz siga sonando, no salta la celebración automática.
   await page.waitForTimeout(4000);
   await expect(page.getByTestId("celebracion")).toHaveCount(0);
