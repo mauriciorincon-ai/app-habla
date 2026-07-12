@@ -33,4 +33,22 @@ in the browser).
 
 ## Evidence
 
-- (pending — desktop spike with the user's real voice, Fase 1b)
+**CI / headless Chromium with a fake mic that SINGS (2026-07-12):** a dedicated Playwright
+project (`desktop-chromium-tono`) feeds a synthetic WAV whose voiced window is a continuous
+phase-integrated sweep between 230 Hz and 420 Hz (up·down·up·down = 3 inversions), with two weak
+harmonics so YIN sees a signal shaped like a real voice rather than a pure sine. The full
+pipeline (getUserMedia → AudioWorklet/YIN → pitch-tracker → screen) reports: smoothed F0 inside
+the 200–450 Hz product range, **>70 % pitch coverage over voiced frames** (the stability measure
+this ADR hinges on), and the inversions counted correctly. The 32 Sprint-1 e2e tests stayed green
+with the grown meter contract. The pure tracker passes 12 unit tests on synthetic signals: rising
+sweep raises, falling sweep lowers, flat tone counts zero inversions, tremor below 50 cents counts
+zero, noise/`null` frames never move the rocket (and never make it fall), octave jumps rejected,
+out-of-range F0 ignored.
+
+**Pending — real desktop microphone (the user's voice):** does the meter follow a real "aaah"
+sirena? Is coverage high with a real (noisy) room? This is what decides pitch vs. the honest RMS
+fallback. Page: `/spike/audio` (pitch panel).
+
+**Pending — the child's real voice on the Android tablet (deferred with the device):** his F0 is
+higher and breathier than an adult's; the range and the confidence threshold may need tuning with
+his data. Listed in the deferred section of `docs/GUIA-DE-PRUEBA.html`.

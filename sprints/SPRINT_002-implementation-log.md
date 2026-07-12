@@ -36,7 +36,23 @@
 
 ## Hallazgos del spike de pitch (para el ADR 007)
 
-- (pendiente F1b)
+- **YIN en el worklet funciona de punta a punta en CI (2026-07-12).** Implementado como CMND con
+  interpolación parabólica, ventana de 2048 muestras (~43 ms), búsqueda acotada a 150–500 Hz y
+  **gating por energía** (bajo RMS 0.01 no se calcula pitch: el ruido no produce F0 fantasma).
+  El contrato del meter **creció** a `{rms, pitchHz|null, tMs}` — uno solo para los tres juegos.
+- **Fixture nuevo que CANTA:** `barrido-tono.wav` (fase integrada, 230↔420 Hz, sube·baja·sube·baja
+  = 3 inversiones, con 2 armónicos débiles para que YIN vea una señal con forma de voz). Va en un
+  **proyecto Playwright dedicado** (`desktop-chromium-tono`) para no tocar el WAV compartido: los
+  32 e2e del S1 siguen verdes sin cambios (33/33 con el spike nuevo).
+- **Medida clave de estabilidad:** cobertura de pitch (frames con voz que traen F0 confiable)
+  **>70 %** en CI. Es el número que decide tono vs. fallback por energía. El panel de pitch del
+  `/spike/audio` la muestra en vivo para la prueba con voz real.
+- El **fallback honesto** (AnalyserSource) emite `pitchHz: null` siempre: correr YIN en el hilo
+  principal a 60 fps castigaría la fluidez. Si el dispositivo no tiene worklet, el cohete degrada
+  a energía — documentado, no silencioso.
+- **12 unit del `pitch-tracker`** con señales sintéticas, verdes a la primera: sweeps suben/bajan,
+  tono plano no cuenta inversiones, temblor <50 cents tampoco, ruido no mueve NI hace caer el
+  cohete, salto de octava rechazado, F0 fuera de rango ignorado, olvido tras silencio largo.
 
 ## Decisiones tomadas durante la construcción
 

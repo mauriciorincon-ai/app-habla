@@ -19,6 +19,8 @@ function señal(
     const variacion = jitter === 0 ? 0 : Math.sin(i / 2) * jitter;
     frames.push({
       rms: Math.max(0, rms + variacion),
+      // El pitch no interviene en el medidor de energía (ADR 007): estos motores solo leen rms.
+      pitchHz: null,
       tMs: desdeMs + i * MS_POR_FRAME,
     });
   }
@@ -176,8 +178,8 @@ describe("calibración: el piso de ruido de la casa real", () => {
   it("un ruido puntual (una tos) no infla el piso: manda el ruido estable", () => {
     const calibracion = crearCalibracion();
     const frames = señal(0.01, 2100);
-    frames[10] = { rms: 0.9, tMs: frames[10].tMs }; // portazo
-    frames[11] = { rms: 0.8, tMs: frames[11].tMs };
+    frames[10] = { rms: 0.9, pitchHz: null, tMs: frames[10].tMs }; // portazo
+    frames[11] = { rms: 0.8, pitchHz: null, tMs: frames[11].tMs };
 
     let estado = calibracion.estado();
     for (const frame of frames) estado = calibracion.empujar(frame);
