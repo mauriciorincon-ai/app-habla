@@ -97,6 +97,12 @@
     --acento-suave: #233022;
     /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
     --sobre-acento: #14171a;
+    /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
+       3.1:1 como texto): en oscuro se aclaran. */
+    --exito: #8fbf82;
+    --aviso: #ecc56f;
+    --peligro: #e8927f;
+    --info: #8fb6cc;
   }
 }
 

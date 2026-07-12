@@ -7,18 +7,26 @@ import { expect, test } from "@playwright/test";
 
 const RUTAS = ["/", "/jugar", "/ajustes"];
 
+// Los dos esquemas: la paleta del padre tiene modo oscuro, y sus colores de estado NO son los
+// mismos que en claro. Auditar solo el claro dejaba pasar violaciones reales (el botón de
+// "Borrar mis datos" daba 3.1:1 sobre fondo oscuro).
+const ESQUEMAS = ["light", "dark"] as const;
+
 for (const ruta of RUTAS) {
-  test(`axe limpio en ${ruta}`, async ({ page }) => {
-    await page.goto(ruta);
-    // Espera a que hidrate: el contenido real llega tras leer el almacenamiento local.
-    await page.waitForFunction(() => document.readyState === "complete");
+  for (const esquema of ESQUEMAS) {
+    test(`axe limpio en ${ruta} (tema ${esquema})`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: esquema });
+      await page.goto(ruta);
+      // Espera a que hidrate: el contenido real llega tras leer el almacenamiento local.
+      await page.waitForFunction(() => document.readyState === "complete");
 
-    const { violations } = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
+      const { violations } = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
 
-    expect(violations).toEqual([]);
-  });
+      expect(violations).toEqual([]);
+    });
+  }
 }
 
 test("axe limpio dentro del juego (paleta del niño y modo calma)", async ({
