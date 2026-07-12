@@ -72,6 +72,12 @@ Hecha 2026-07-11 durante el plan:
   futura. (También aprobó el resultado general del sprint: "para un primer sprint me parece
   maravilloso".)
 
+- **`/spike/audio` NO se elimina antes del merge** (el plan lo pedía; decisión del cierre del
+  gate 2026-07-12). Razón: la validación de la tablet quedó diferida y esa página es exactamente
+  la herramienta para hacerla cuando regrese (guía § Diferido, t1). Es una página diagnóstica
+  sin enlaces desde la UI, sin persistencia y con el mismo pipeline efímero del juego (cubierta
+  por los candados de privacidad). Se elimina cuando el ADR 003 cierre su pata Android.
+
 - **Budget de LCP renegociado: 3000 ms → 3800 ms** (deuda técnica explícita, permitida por el
   estándar 5). Motivo: el gate mide con Lantern (simulado), que reporta ~3.38 s mientras el LCP
   real de las tres rutas es de ~24 ms y con throttling real 1.5 s (score 100). Antes de tocar el
@@ -194,6 +200,27 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
     de meta. Ahora el vuelo se calcula en píxeles del escenario (con avance completo el globo
     alcanza la línea) y la posición se interpola (τ≈140 ms): sin saltos al alternar calma ni al
     reiniciar, y vuelo continuo a 60 fps aunque el meter emita a ~31/s.
+- **2026-07-12 — GATE DE ESCRITORIO COMPLETADO Y APROBADO por el usuario.** Cierre bloque a
+  bloque:
+  - **A (spike):** ✅ validado con datos reales (ya registrado; ADR 003 pata desktop).
+  - **B (Hoy):** ✅ cápsula estable, reasignación limpia, puerta permanente al juego.
+  - **C (juego):** ✅ "brillante… espectacular". Los fixes del modo calma **verificados por el
+    usuario en la preview**: "funciona perfecto… ralentiza el globo muy chévere, ahora sí los
+    cambios de color son evidentes y de funcionalidad".
+  - **D (calma/ajustes):** ✅ encontró la sección "Apodo y temas", probó borrar datos (volvió
+    al onboarding como el primer día) y rehízo apodo+temas sin fricción.
+  - **E (PWA/offline):** **DIFERIDO por decisión del usuario** ("va para sprints más
+    avanzados, ahorita no va a lugar") — se une a la lista de la tablet (la PWA en Android era
+    de todos modos la validación que importa). La guía quedó reorganizada: E ahora es solo
+    "borrar datos"; PWA/offline vive en la sección Diferido.
+  - **F (cápsulas):** ✅ **las 14 aprobadas** ("me parecen muy buenas cápsulas"). Deseo
+    explícito para adelante: **"muchas más y más novedosas"** → candidato S2: crecer la
+    biblioteca (manteniendo las dos reglas: nivel palabras sueltas + técnica citada, nunca
+    contenido genérico); la vía "novedosas a escala" es el sprint del cuentero por lotes
+    (IA offline + revisión parental) que ya está en el roadmap de la planeadora.
+  - Pregunta del usuario respondida (otra vez, para el registro): **los temas del onboarding
+    hoy NO acotan nada** — se guardan y se muestran en Ajustes, pero el motor de intereses
+    (escenas/vocabulario del juego por tema) es S2. No es bug: es la frontera declarada del S1.
 
 ## Cambios de contexto y reglas nuevas (2026-07-12)
 
