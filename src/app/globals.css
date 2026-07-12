@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Tokens de Hablemos San — fuente de verdad: design-system.md (raíz del repo).
+ * Paleta dual "Clínica cálida": operador (padre, light+dark) / niño (SIEMPRE clara).
+ * Primitivos abajo; la UI consume SOLO la capa semántica (bg-fondo, text-tinta, ...).
+ */
+@theme {
+  /* Sage — acción/terapia */
+  --color-sage-50: #eef2ec;
+  --color-sage-100: #dce6d8;
+  --color-sage-200: #b8cdb1;
+  --color-sage-400: #7aa070;
+  --color-sage-500: #527947;
+  --color-sage-600: #3f5f37;
+  --color-sage-700: #2e4628;
+
+  /* Coral — logros/celebración */
+  --color-coral-100: #fbe3da;
+  --color-coral-300: #f5b4a0;
+  --color-coral-500: #dd7b5e;
+  --color-coral-700: #a95239;
+
+  /* Ámbar — voz parental/avisos */
+  --color-ambar-100: #f8e9c8;
+  --color-ambar-300: #ecc56f;
+  --color-ambar-500: #c99432;
+  --color-ambar-700: #8c6113;
+
+  /* Cream — neutros cálidos */
+  --color-cream-50: #fbf8f2;
+  --color-cream-100: #f5f0e5;
+  --color-cream-200: #ece4d2;
+  --color-cream-300: #ddd2bb;
+
+  /* Ink — texto */
+  --color-ink-900: #1f2420;
+  --color-ink-700: #353b36;
+  --color-ink-500: #5a615c;
+  --color-ink-400: #7a8079;
+  --color-ink-300: #9ca29c;
+
+  /* Vista del niño — SIEMPRE clara */
+  --color-kid-bg: #fff9ee;
+  --color-kid-sage: #a8c9a0;
+  --color-kid-peach: #ffc7b0;
+  --color-kid-sky: #bcd9e2;
+  --color-kid-yellow: #ffe08a;
+  --color-kid-ink: #2b3530;
+
+  /* Sombras */
+  --shadow-suave: 0 1px 2px rgba(31, 36, 32, 0.04);
+  --shadow-tarjeta: 0 0 0 1px rgba(31, 36, 32, 0.06);
+  --shadow-flotante: 0 2px 8px rgba(31, 36, 32, 0.06);
+  --shadow-modal: 0 12px 28px rgba(31, 36, 32, 0.1);
+
+  /* Movimiento (curva "out-soft" del design system) */
+  --ease-suave: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Capa semántica — operador (padre). Light por defecto, dark por preferencia del sistema. */
+:root {
+  --fondo: var(--color-cream-50);
+  --superficie: var(--color-cream-100);
+  --borde: var(--color-cream-200);
+  --tinta: var(--color-ink-900);
+  --tinta-suave: var(--color-ink-500);
+  --acento: var(--color-sage-700);
+  --acento-hover: var(--color-sage-600);
+  --acento-suave: var(--color-sage-100);
+  /* Texto sobre superficies de acento/peligro: se declara aparte porque el acento cambia de
+     luminosidad entre paletas (sage oscuro en operador, sage claro en la del niño) y el mismo
+     color de texto rompería el contraste AA en una de las dos. */
+  --sobre-acento: var(--color-cream-50);
+  --sobre-peligro: var(--color-cream-50);
+  --celebracion: var(--color-coral-500);
+  --celebracion-fuerte: var(--color-coral-700);
+  --exito: #527947;
+  --aviso: #c99432;
+  --peligro: #b14b3d;
+  --info: #4a6e84;
+
+  --dur-rapida: 120ms;
+  --dur-media: 220ms;
+  --dur-lenta: 380ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --fondo: #14171a;
+    --superficie: #1b1f22;
+    --borde: #232830;
+    --tinta: #f2efe8;
+    --tinta-suave: #969994;
+    --acento: #b5d5ab;
+    --acento-hover: #94bb89;
+    --acento-suave: #233022;
+    /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
+    --sobre-acento: #14171a;
+    /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
+       3.1:1 como texto): en oscuro se aclaran. */
+    --exito: #8fbf82;
+    --aviso: #ecc56f;
+    --peligro: #e8927f;
+    --info: #8fb6cc;
   }
 }
 
+/*
+ * Vista del niño: redeclara la capa semántica sobre su subtree y por cascada le gana al
+ * override dark de :root — la pantalla del niño es clara SIEMPRE, sin importar el sistema.
+ */
+.tema-nino {
+  --fondo: var(--color-kid-bg);
+  --superficie: var(--color-cream-50);
+  --borde: var(--color-cream-200);
+  --tinta: var(--color-kid-ink);
+  --tinta-suave: var(--color-ink-500);
+  --acento: var(--color-kid-sage);
+  --acento-hover: var(--color-sage-400);
+  --acento-suave: var(--color-sage-50);
+  /* El sage del niño es claro: el texto encima va en tinta oscura (contraste ~7:1). */
+  --sobre-acento: var(--color-kid-ink);
+  --celebracion: var(--color-kid-peach);
+  --celebracion-fuerte: var(--color-coral-500);
+  background: var(--fondo);
+  color: var(--tinta);
+}
+
+/*
+ * La vista del niño es soberana: en cuanto el juego pasa del guion, el texto dirigido al padre
+ * desaparece de la pantalla. El párrafo nace visible en el HTML (es el candidato LCP) y solo se
+ * retira tras una interacción del usuario, así que no cuesta ni LCP ni CLS.
+ *
+ * El juego marca `data-en-juego` en el <html>. (Un selector `main:has(...)` sería más elegante,
+ * pero Lightning CSS —el compilador de Tailwind v4— descarta la regla en silencio.)
+ */
+html[data-en-juego="true"] [data-intro-padre] {
+  display: none;
+}
+
+/* Modo calma: "atardecer" — baja el brillo y la saturación de TODO el escenario, no solo de los
+   acentos (hallazgo del gate 2026-07-12: el cambio anterior era imperceptible). La tinta se
+   queda oscura: el contraste AA no se negocia (axe lo verifica dentro del juego en e2e).
+   Sin cambios de layout aquí — ocultar medidor/meta es responsabilidad del componente. */
+.tema-nino--calma {
+  --fondo: var(--color-cream-200);
+  --superficie: var(--color-cream-100);
+  --borde: var(--color-cream-300);
+  --acento: var(--color-sage-200);
+  --acento-hover: var(--color-sage-200);
+  --acento-suave: var(--color-sage-50);
+  --celebracion: var(--color-cream-200);
+  --celebracion-fuerte: var(--color-sage-400);
+  /* Los primitivos del niño también se atenúan: el globo y el suelo los leen en vivo. */
+  --color-kid-peach: #e8cbbd;
+  --color-kid-sage: #b3c2ad;
+  --color-kid-sky: #ccd8db;
+  --color-kid-yellow: #ecdfbe;
+}
+
+/* Utilidades semánticas: @theme inline referencia las vars vivas (cambian por contexto). */
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-borde: var(--borde);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --color-acento: var(--acento);
+  --color-acento-hover: var(--acento-hover);
+  --color-acento-suave: var(--acento-suave);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-sobre-peligro: var(--sobre-peligro);
+  --color-celebracion: var(--celebracion);
+  --color-celebracion-fuerte: var(--celebracion-fuerte);
+  --color-exito: var(--exito);
+  --color-aviso: var(--aviso);
+  --color-peligro: var(--peligro);
+  --color-info: var(--info);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument-serif);
+}
+
+/* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-reducir-animacion="true"] *,
+html[data-reducir-animacion="true"] *::before,
+html[data-reducir-animacion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
