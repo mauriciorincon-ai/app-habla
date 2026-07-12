@@ -41,8 +41,10 @@ export function CelebracionHonesta({
           </p>
           <h2 className="font-display text-4xl">
             ¡La sostuviste{" "}
+            {/* La métrica va en sans con cifras tabulares, no en mono: la coma decimal
+                monoespaciada se lee como "3 , 1". Mono queda para etiquetas y datos en bloque. */}
             <span
-              className="text-celebracion-fuerte font-mono"
+              className="text-celebracion-fuerte font-sans font-semibold tabular-nums"
               data-testid="metrica-real"
             >
               {segundos(sostenidoMs)} segundos
