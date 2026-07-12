@@ -145,7 +145,7 @@ export default function SpikeAudioPage() {
           type="button"
           onClick={estado === "activo" ? detener : empezar}
           disabled={!listo}
-          className="bg-acento text-fondo min-h-11 rounded-xl px-6 font-medium disabled:opacity-50"
+          className="bg-acento text-sobre-acento min-h-11 rounded-xl px-6 font-medium disabled:opacity-50"
           data-testid="spike-toggle"
         >
           {estado === "activo" ? "Detener" : "Empezar"}

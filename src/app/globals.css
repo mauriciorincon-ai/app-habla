@@ -68,6 +68,11 @@
   --acento: var(--color-sage-700);
   --acento-hover: var(--color-sage-600);
   --acento-suave: var(--color-sage-100);
+  /* Texto sobre superficies de acento/peligro: se declara aparte porque el acento cambia de
+     luminosidad entre paletas (sage oscuro en operador, sage claro en la del niño) y el mismo
+     color de texto rompería el contraste AA en una de las dos. */
+  --sobre-acento: var(--color-cream-50);
+  --sobre-peligro: var(--color-cream-50);
   --celebracion: var(--color-coral-500);
   --celebracion-fuerte: var(--color-coral-700);
   --exito: #527947;
@@ -90,6 +95,8 @@
     --acento: #b5d5ab;
     --acento-hover: #94bb89;
     --acento-suave: #233022;
+    /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
+    --sobre-acento: #14171a;
   }
 }
 
@@ -106,6 +113,8 @@
   --acento: var(--color-kid-sage);
   --acento-hover: var(--color-sage-400);
   --acento-suave: var(--color-sage-50);
+  /* El sage del niño es claro: el texto encima va en tinta oscura (contraste ~7:1). */
+  --sobre-acento: var(--color-kid-ink);
   --celebracion: var(--color-kid-peach);
   --celebracion-fuerte: var(--color-coral-500);
   background: var(--fondo);
@@ -131,6 +140,8 @@
   --color-acento: var(--acento);
   --color-acento-hover: var(--acento-hover);
   --color-acento-suave: var(--acento-suave);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-sobre-peligro: var(--sobre-peligro);
   --color-celebracion: var(--celebracion);
   --color-celebracion-fuerte: var(--celebracion-fuerte);
   --color-exito: var(--exito);
