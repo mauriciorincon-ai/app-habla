@@ -5,6 +5,7 @@
 // personaje. La barra se pinta desde un ref a 60 fps (sin re-render).
 
 import { useEffect, useRef } from "react";
+import { IconoSilencio } from "@/components/iconos";
 import type { MedidasVivas } from "./use-voice-session";
 
 type Props = {
@@ -32,9 +33,7 @@ export function CalibracionStep({ medidas }: Props) {
       data-testid="calibrando"
       aria-live="polite"
     >
-      <p className="text-6xl" aria-hidden="true">
-        🤫
-      </p>
+      <IconoSilencio className="text-acento h-16 w-16" />
       <h2 className="font-display text-4xl">Shhh… un momentico de silencio</h2>
       <p className="text-tinta-suave max-w-sm">
         Estoy escuchando cómo suena su casa (el ventilador, la tele, la calle)

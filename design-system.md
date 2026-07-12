@@ -6,6 +6,16 @@
 > se hereda ningún flujo, layout ni feature; solo el lenguaje visual.
 > Implementación: `src/app/globals.css` (Tailwind v4, `@theme` + capa semántica).
 
+## Personalidad
+
+**Es:** cálida · honesta · serena.
+**Jamás será:** clínica (nada de batas blancas ni puntajes) · infantiloide (el niño no es tonto:
+nada de colores chillones ni premios falsos) · ansiosa (sin rachas, sin cuentas atrás, sin nada
+que apure a un padre que ya carga bastante).
+
+La prueba de fuego de cada pantalla: _¿esto trataría con respeto a un padre cansado a las 8 de la
+noche, y a un niño que ese día no quiere hablar?_
+
 ## Filosofía — "Clínica cálida"
 
 Dos audiencias, una paleta dual:
@@ -101,5 +111,19 @@ nuevos sin derivarlos de la paleta.
   se mide y que **nada se guarda ni sale del dispositivo**. Es contrato, no decoración.
 - Lenguaje empático: jamás "déficit", "diagnóstico", "terapia" ni plazos; microcopy es-CO
   cálido, directo, sin culpa.
-- Iconos estilo line (stroke 1.5, viewBox 24, `currentColor`), `aria-hidden` + `aria-label` en
-  icon-only.
+- **Iconografía propia, cero emojis.** Los iconos viven en `src/components/iconos.tsx`: trazo
+  line (stroke 1.5, viewBox 24, `currentColor`), `aria-hidden` salvo que el icono sea el
+  contenido. Los emojis están prohibidos como iconos: es la firma del "look de IA con prisa" y,
+  peor, cada sistema operativo los dibuja distinto — para un niño con perfil neurodivergente, un
+  símbolo que cambia de forma entre dispositivos es ruido, no señal. **El globo es la única
+  excepción**: no es un icono, es el personaje, y por eso lleva la paleta del niño.
+
+## Los 5 estados (cada pantalla los tiene diseñados)
+
+| Estado                  | Hoy                                                                     | Juego                                                                                                                                                |
+| ----------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vacío** (primera vez) | Onboarding cálido: apodo + temas + la promesa de privacidad en 2 líneas | Guion del padre — nunca se entra al juego sin él                                                                                                     |
+| **Cargando**            | Espacio reservado con la altura final (sin salto de layout)             | Igual; la calibración tiene su propia barra                                                                                                          |
+| **Error**               | —                                                                       | Mic denegado: pasos concretos + salida sin culpa ("la actividad también se puede hacer sin pantalla") · Ruido alto: lo dice de frente y deja decidir |
+| **Éxito**               | Cápsula marcada: "Hecho hoy. Mañana hay otra" (sobrio, sin fanfarria)   | Celebración honesta con la métrica real; si no hubo voz, se dice sin drama                                                                           |
+| **Contenido**           | La cápsula del día                                                      | El globo volando con la voz                                                                                                                          |

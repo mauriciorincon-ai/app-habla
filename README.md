@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hablemos San (`app-habla`)
 
-## Getting Started
+> _"Su voz mueve el mundo."_
 
-First, run the development server:
+App web (PWA) que ayuda a **estimular el habla de un niño de 4–6 años** mediante práctica diaria
+en casa, **dirigida por el padre**. Complementaria — jamás sustituta — de la fonoaudiología real
+del niño.
+
+**Para el usuario final, el manual es [`docs/MANUAL-DE-USO.md`](docs/MANUAL-DE-USO.md).**
+Este README es para quien toca el código.
+
+## Las tres reglas que mandan sobre todo lo demás
+
+1. **El audio del niño jamás se persiste ni sale del dispositivo.** Vive en el buffer de análisis y
+   muere ahí: ni storage, ni red, ni logs, ni Sentry. La cámara no se usa. Esto no es una promesa
+   de documentación — es un gate: hay una regla de ESLint que sella `src/lib/voice/` y
+   `src/worklets/`, un test que escanea esas carpetas (y prohíbe el `eslint-disable`), y un e2e que
+   verifica cero peticiones de red durante el juego.
+2. **Determinista primero.** El núcleo es DSP local + lógica pura + contenido estructurado. **No
+   hay IA en la app** (ni SDK instalado).
+3. **Honestidad como mecánica.** La app solo afirma lo que su medidor midió de verdad (hubo voz,
+   duró N segundos). El acierto de la palabra lo juzga el padre, nunca la app.
+
+Detalle completo en [`CLAUDE.md`](CLAUDE.md) y en [`decisions/`](decisions/).
+
+## Arranque
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install          # instala y activa el hook de gitleaks (script `prepare`)
+pnpm dev              # compila el AudioWorklet y levanta el server en :3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+El micrófono requiere contexto seguro: `localhost` sirve, y en la tablet se prueba con la preview
+de Vercel (HTTPS).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Comandos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando                        | Qué hace                                                         |
+| ------------------------------ | ---------------------------------------------------------------- |
+| `pnpm dev` / `pnpm build`      | Compilan primero el worklet (`build:worklet`) y luego Next       |
+| `pnpm build:worklet`           | `src/worklets/*.ts` → `public/worklets/` (artefacto, gitignored) |
+| `pnpm test`                    | Vitest con cobertura (motores puros ≥80 %)                       |
+| `pnpm test:e2e`                | Playwright: happy path con **micrófono falso**, cero-red y axe   |
+| `pnpm typecheck` · `pnpm lint` | TS strict · ESLint (incluye la guardia de privacidad)            |
 
-## Learn More
+Regenerar fixtures (rara vez): `node scripts/gen-voz-sintetica.mjs` (el WAV que "habla" en los
+e2e) y `node scripts/gen-iconos.mjs` (iconos de la PWA).
 
-To learn more about Next.js, take a look at the following resources:
+## Cómo está armado
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/lib/voice/     meter.ts (histéresis) · calibration.ts (piso de ruido)   ← motores PUROS
+src/lib/coach/     daily.ts — la cápsula del día, determinista por fecha     ← motor PURO
+src/lib/session-flow.ts   guion → mic → calibración → juego → celebración    ← reducer PURO
+src/lib/storage/   localStorage validado con zod (jamás audio)
+src/worklets/      rms-processor.ts — corre en el hilo de audio, sin imports
+content/capsulas.ts  las 14 cápsulas (técnica + guion + actividad + fuente)
+src/components/    UI sin lógica de negocio
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Los motores no saben qué es un navegador: consumen `MeterFrame {rms, tMs}` y devuelven estado. Por
+eso se testean con señales sintéticas (voz sostenida, silencio, ruido) sin abrir un micrófono.
 
-## Deploy on Vercel
+## Detalles que muerden
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **El AudioWorklet se compila aparte** (`tsconfig.worklet.json` → `public/worklets/`) porque
+  Turbopack no soporta el patrón `new URL(...)` para worklets. Si cambias `rms-processor.ts`,
+  **sube el sufijo `?v=N`** en `src/lib/voice/mic-session.ts` (el archivo se cachea por URL).
+  Ver [ADR 004](decisions/004-carga-audioworklet-next16-turbopack.md).
+- **Nada de emojis como iconografía** (anti-patrón del pipeline): los iconos viven en
+  `src/components/iconos.tsx`.
+- **Los botones que abren el micrófono nacen `disabled`** hasta hidratar (`useHidratado`): un clic
+  antes de la hidratación se pierde en silencio.
+- **El estado local entra por `useSyncExternalStore`**, no por `useState` + `useEffect` (evita el
+  mismatch de hidratación y el lint de React 19).
+- **Repo público:** aquí no entra jamás nada personal del niño ni de la familia — solo código y
+  contenido genérico.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Flujo de trabajo
+
+Rama `sprint-NNN/<tema>`, PR con CI verde (quality + e2e + lighthouse), **nunca push directo a
+`main`**. Cada sprint cierra con su bitácora y su summary en [`sprints/`](sprints/), y el manual de
+uso al día.
