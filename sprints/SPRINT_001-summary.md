@@ -16,11 +16,17 @@ fecha: 2026-07-11
 La pantalla "Hoy" abre con **la cápsula del día**: técnica con evidencia explicada en 30 s + **el
 guion de una línea** + la actividad concreta + la fuente citada. Biblioteca de **14 cápsulas es-CO**
 (`content/capsulas.ts`) cubriendo las 5 técnicas (§A.3): modelado, expansion-recast,
-espera-estructurada, seguir-interés, estimulación-focalizada. Selector determinista por **fecha
-local**: la cápsula no cambia al recargar ni al completarla, no se repite hasta agotar la
-biblioteca, y al agotarla arranca un ciclo nuevo sin borrar el historial. Completarla persiste sin
-conexión. Historial **sin rachas punitivas** ("lo que cuenta es volver, no la racha").
-Onboarding local mínimo (apodo opcional + temas), sin cuentas.
+espera-estructurada, seguir-interés, estimulación-focalizada — **recalibrada completa al nivel
+"palabras sueltas"** tras el feedback del padre en el gate (2026-07-12): el niño real no combina
+palabras todavía; el foco de TODAS las cápsulas es despertar la asociación palabra↔objeto y
+provocar palabras de a una (intentos y gestos también cuentan y se responden nombrando). Selector
+determinista por **fecha local**: la cápsula no cambia al recargar ni al completarla, no se repite
+hasta agotar la biblioteca, y al agotarla arranca un ciclo nuevo sin borrar el historial.
+Completarla persiste sin conexión. Historial **sin rachas punitivas** ("lo que cuenta es volver,
+no la racha"). Onboarding local mínimo (apodo opcional + temas), sin cuentas. **Además, hallazgo
+del primer uso real:** el juego ahora tiene puerta permanente desde "Hoy" (antes solo aparecía los
+días de actividad con pantalla y quedaba invisible el resto). **Roadmap S2+ derivado del gate:**
+niveles por etapa del habla, con "palabras sueltas" como default permanente.
 
 **Outcome 2 — Su voz mueve el mundo (el primer juego):** ✅
 Guion del padre → permiso de micrófono con explicación honesta → calibración lúdica de 2 s →

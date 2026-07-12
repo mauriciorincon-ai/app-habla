@@ -45,6 +45,20 @@ Hecha 2026-07-11 durante el plan:
 
 ## Desviación del plan
 
+- **La biblioteca completa se recalibró al nivel "palabras sueltas" (2026-07-12, feedback del
+  padre en el gate).** El hallazgo más valioso del sprint: el niño real dice palabras de a una
+  — no combina todavía — y lo que la familia necesita es despertar la **asociación
+  palabra↔objeto/actividad**. Varias cápsulas (sobre todo las de expansión/recast) asumían un
+  niño que ya arma frases ("perro come" → "el perro está comiendo"): ejemplos inalcanzables
+  HOY para esta familia. Se reescribieron las 14 cápsulas al nivel real: mismas 5 técnicas,
+  mismas fuentes (la evidencia de parent-implemented/modelado/focalizada es incluso más
+  directa en primeras palabras), ejemplos con palabras sueltas, intentos ("aba"→"¡agua!") y
+  gestos que también cuentan. El juego de voz no necesitó cambios: nunca exigió palabras
+  (mide energía sostenida, no vocabulario).
+- **Roadmap derivado (S2+):** niveles por etapa del habla ("palabras sueltas" ← default
+  PERMANENTE de esta app · "frases cortas" como nivel posterior, activable en ajustes). Pedido
+  explícito del usuario: la app se centra en palabras únicamente por ahora.
+
 - **Budget de LCP renegociado: 3000 ms → 3800 ms** (deuda técnica explícita, permitida por el
   estándar 5). Motivo: el gate mide con Lantern (simulado), que reporta ~3.38 s mientras el LCP
   real de las tres rutas es de ~24 ms y con throttling real 1.5 s (score 100). Antes de tocar el
