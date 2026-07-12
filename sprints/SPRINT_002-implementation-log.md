@@ -7,13 +7,26 @@
 ## Estado por fase
 
 - [x] F0 — Setup (branch, kit-check, bitácora, ADRs propuestos)
-- [ ] F1a — Motor de etapas (schema + storage v2 + migración + filtro) con units
-- [ ] F1b — Spike pitch (YIN worklet + pitch-tracker + WAV barrido + /spike/audio) → PR draft
-- [ ] F1c — Biblioteca ≥45 cápsulas por etapa
-- [ ] F1d — Lote ARASAAC + manifest con units
-- [ ] F2 — UI (selector, cohete, palabra↔objeto, etapa en Ajustes/Hoy, atribución)
-- [ ] F3 — Integración + e2e
-- [ ] F4 — Calidad y cierre (manual, guía viva, /deploy-check, summary)
+- [x] F1a — Motor de etapas (schema + storage v2 + migración + filtro) con units
+- [x] F1b — Spike pitch (YIN worklet + pitch-tracker + WAV barrido + /spike/audio) → PR draft
+- [x] F1c — Biblioteca **50 cápsulas** por etapa (8 sonidos · 35 palabras sueltas · 7 frases)
+- [x] F1d — Lote ARASAAC (42 pictos) + manifest con units
+- [x] F2 — UI (selector, cohete, palabra↔objeto, etapa en Ajustes/Hoy, atribución)
+- [x] F3 — Integración + e2e (**104 unit + 69 e2e**)
+- [x] F4 — Calidad y cierre (diseño, performance, manual, guía viva, summary)
+- [ ] **Gate del usuario** (escritorio) → merge → `/cierre-sprint habla`
+
+## Desviación del plan (cierre)
+
+- **La biblioteca quedó en 50 cápsulas, no 45** (8/35/7 vs. los mínimos 8/30/7). No fue por
+  rellenar: al escribir las rutinas reales (carro, mercado, parque, calle, vestirse, dormir)
+  salieron 5 cápsulas más que valían la pena. La regla "mejor 45 buenas que 60 de relleno" se
+  respetó — cada una tiene su técnica citada y su guion accionable.
+- **`session-flow` SÍ se tocó** (el plan decía "el globo no se toca"): las fases se generalizaron a
+  una **métrica de unión discriminada** para que los tres juegos compartan un solo flujo y una sola
+  celebración honesta. El comportamiento del globo no cambió (sus e2e siguen verdes sin tocarlos);
+  lo que cambió es el tipo que viaja por el reducer. Se declara aquí porque es un refactor
+  compartido, no un rediseño del juego aprobado.
 
 ## Verificación de supuestos del kit (orden: v1.5.1 vigente)
 
