@@ -58,6 +58,11 @@ Hecha 2026-07-11 durante el plan:
 - **Roadmap derivado (S2+):** niveles por etapa del habla ("palabras sueltas" ← default
   PERMANENTE de esta app · "frases cortas" como nivel posterior, activable en ajustes). Pedido
   explícito del usuario: la app se centra en palabras únicamente por ahora.
+- **2026-07-12 — El usuario RATIFICÓ la recalibración y la elevó a regla de producto:** "todo lo
+  que desarrollemos inicie con palabras sueltas". Blindada como **ADR 005** + **regla dura 7 del
+  CLAUDE.md** del repo, y señalada en el summary para que la planeadora la lleve a toda orden
+  futura. (También aprobó el resultado general del sprint: "para un primer sprint me parece
+  maravilloso".)
 
 - **Budget de LCP renegociado: 3000 ms → 3800 ms** (deuda técnica explícita, permitida por el
   estándar 5). Motivo: el gate mide con Lantern (simulado), que reporta ~3.38 s mientras el LCP
