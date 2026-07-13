@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  PITCH_MAX_HZ,
-  PITCH_MIN_HZ,
-  crearPitchTracker,
-} from "@/lib/voice/pitch-tracker";
+import { crearPitchTracker } from "@/lib/voice/pitch-tracker";
 import type { MeterFrame } from "@/lib/voice/types";
 
 // Señales sintéticas: el motor del cohete se prueba SIN navegador ni micrófono (ADR 007).
@@ -54,11 +50,42 @@ describe("pitch-tracker: el cohete sigue el TONO de la voz", () => {
     expect(estado.altura).toBeLessThan(0.3);
   });
 
-  it("la altura es 0..1 y usa escala musical dentro del rango infantil", () => {
-    const grave = correr(Array(12).fill(PITCH_MIN_HZ)).estado;
-    const agudo = correr(Array(12).fill(PITCH_MAX_HZ)).estado;
-    expect(grave.altura).toBeCloseTo(0, 1);
-    expect(agudo.altura).toBeCloseTo(1, 1);
+  it("la altura es 0..1: se despega desde la voz con la que se empieza", () => {
+    // Un tono plano deja el cohete abajo (no ha subido NADA respecto de su propia voz)...
+    const plano = correr(Array(12).fill(300)).estado;
+    expect(plano.altura).toBeCloseTo(0, 1);
+
+    // ...y subir el vuelo completo (0,7 octavas: 300 → 486 Hz) y SOSTENER la nota lo pone arriba.
+    // El techo es ALCANZABLE: 486 Hz cae dentro de lo que el oído escucha (500), así que un niño
+    // que empieza en 300 puede de verdad llegar hasta el final. Nada de metas imposibles.
+    const arriba = correr([
+      ...barrido(300, 486, 24),
+      ...Array(12).fill(486),
+    ]).estado;
+    expect(arriba.altura).toBeCloseTo(1, 1);
+  });
+
+  // EL HALLAZGO DEL GATE (usuario, 2026-07-12): con el rango fijo "infantil" (200–450 Hz), el
+  // falsete del padre (~165 Hz) quedaba DEBAJO del piso y el cohete no se movía — pero el guion
+  // del juego le pide justamente a él que lo haga primero. El vuelo es relativo a quien canta.
+  it("el cohete vuela con la voz del PADRE igual que con la del niño (co-uso: él demuestra primero)", () => {
+    const papa = correr(barrido(150, 250, 30)).estado; // falsete de hombre adulto
+    const nino = correr(barrido(260, 430, 30)).estado; // voz de niño de 4–6
+
+    expect(papa.direccion).toBe("sube");
+    expect(nino.direccion).toBe("sube");
+    // Ninguno de los dos se queda pegado al piso: ambos ven volar el cohete de verdad.
+    expect(papa.altura).toBeGreaterThan(0.5);
+    expect(nino.altura).toBeGreaterThan(0.5);
+  });
+
+  it("bajar por debajo de donde se empezó no rompe nada: la base se re-ancla y el cohete aterriza", () => {
+    const { estado } = correr([
+      ...barrido(300, 380, 12), // arranca en 300 y sube
+      ...barrido(380, 200, 20), // luego baja MUY por debajo de donde empezó
+    ]);
+    expect(estado.direccion).toBe("baja");
+    expect(estado.altura).toBeCloseTo(0, 1);
   });
 
   it("cuenta las inversiones REALES: subir y bajar tres veces son tres inversiones", () => {
@@ -131,7 +158,7 @@ describe("pitch-tracker: lo que NO debe mover el cohete", () => {
     expect(Math.abs(despues - antes)).toBeLessThan(20);
   });
 
-  it("un pitch fuera del rango de una voz infantil se ignora", () => {
+  it("un pitch que no puede ser voz (zumbido grave) se ignora", () => {
     const tracker = crearPitchTracker();
     Array(10)
       .fill(300)

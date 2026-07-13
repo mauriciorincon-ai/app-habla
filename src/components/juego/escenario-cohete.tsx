@@ -43,7 +43,7 @@ export function EscenarioCohete({
       const cohete = coheteRef.current;
       if (cielo && cohete) {
         const alto = cielo.clientHeight;
-        // La altura del cohete ES el tono (escala musical, 0..1 dentro del rango infantil).
+        // La altura del cohete ES el tono (escala musical, 0..1 desde la voz de quien juega).
         const objetivo = -medidas.alturaPitch() * (alto - cohete.offsetHeight);
         // Interpolación: el vuelo es continuo a 60 fps aunque el tono llegue a ~31 frames/s.
         const suavizado = 1 - Math.exp(-deltaMs / 120);

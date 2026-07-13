@@ -12,8 +12,8 @@ import { useHidratado } from "@/components/use-hidratado";
 import { AnalyserSource } from "@/lib/voice/analyser-source";
 import { MicSession } from "@/lib/voice/mic-session";
 import {
-  PITCH_MAX_HZ,
-  PITCH_MIN_HZ,
+  VOZ_MAX_HZ,
+  VOZ_MIN_HZ,
   crearPitchTracker,
   type PitchTracker,
 } from "@/lib/voice/pitch-tracker";
@@ -265,7 +265,8 @@ export default function SpikeAudioPage() {
         data-testid="spike-pitch"
       >
         <p className="mb-2 font-mono text-xs">
-          tono (F0) · rango del juego: {PITCH_MIN_HZ}–{PITCH_MAX_HZ} Hz
+          tono (F0) · oído: {VOZ_MIN_HZ}–{VOZ_MAX_HZ} Hz · el cohete se ancla a
+          la voz que juega
         </p>
         <div className="bg-acento-suave h-6 overflow-hidden rounded-full">
           <div

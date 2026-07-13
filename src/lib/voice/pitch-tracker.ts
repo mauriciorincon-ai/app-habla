@@ -12,9 +12,30 @@
 
 import type { MeterFrame } from "./types";
 
-/** Rango de producto para voz infantil (§B.1: F0 de 4–6 años ≈ 250–400 Hz, con margen). */
-export const PITCH_MIN_HZ = 200;
-export const PITCH_MAX_HZ = 450;
+/**
+ * Ventana de plausibilidad humana — la misma que oye el worklet. NO es "el rango del niño":
+ * fuera de aquí lo que hay es un zumbido, un armónico o el detector equivocándose.
+ */
+export const VOZ_MIN_HZ = 150;
+export const VOZ_MAX_HZ = 500;
+
+/**
+ * De cuántas octavas es el vuelo, contadas DESDE la voz de quien está jugando.
+ *
+ * Antes el vuelo iba de 200 a 450 Hz fijos ("voz infantil de manual") y eso tenía dos defectos,
+ * el primero cazado por el usuario en el gate del S2 (2026-07-12):
+ *   1. El guion del cohete le pide al PADRE que lo haga primero ("hazlo tú primero, exagerado").
+ *      Con un piso de 200 Hz, la demostración del padre no movía nada: su falsete llega a ~165 Hz.
+ *      Co-uso roto (regla dura 5) — la app le pedía algo que ella misma ignoraba.
+ *   2. Asumía el F0 del niño. No lo conocemos: su voz es la que decide, y todavía no la medimos.
+ * Ahora la base se ancla a la primera voz confiable de la sesión y baja si esa voz baja: el vuelo
+ * es SIEMPRE relativo a quien canta. Padre e hijo despegan igual, sin suponer nada de ninguno.
+ *
+ * 0,7 octavas (≈ una quinta y algo) porque el techo tiene que ser ALCANZABLE: un niño que empieza
+ * en 300 Hz llega arriba en 486 Hz — dentro de lo que el oído escucha (500). Con un vuelo más
+ * largo, el cohete tendría un techo al que su voz no puede llegar, y eso es una promesa falsa.
+ */
+const SPAN_OCTAVAS = 0.7;
 
 /** Un salto mayor a esto respecto del tono suavizado se considera error de octava y se ignora. */
 const SALTO_MAXIMO = 0.45;
@@ -66,6 +87,8 @@ const ESTADO_INICIAL: EstadoPitch = {
 export function crearPitchTracker(): PitchTracker {
   let suavizado: number | null = null;
   let ultimos: number[] = [];
+  /** El tono desde el que despega el cohete: la voz de quien está jugando hoy. */
+  let base: number | null = null;
   let direccion: Direccion = "quieto";
   /** El tono desde el que se mide el próximo cambio de dirección (el último pico o valle). */
   let extremo: number | null = null;
@@ -96,8 +119,8 @@ export function crearPitchTracker(): PitchTracker {
       }
       ultimoConVozMs = frame.tMs;
 
-      // Fuera del rango de una voz infantil: no es su voz (o es un armónico). Se ignora.
-      if (crudo < PITCH_MIN_HZ || crudo > PITCH_MAX_HZ) return instantanea();
+      // Fuera de lo que puede ser una voz: zumbido, armónico o error del detector. Se ignora.
+      if (crudo < VOZ_MIN_HZ || crudo > VOZ_MAX_HZ) return instantanea();
 
       // Salto de octava: el error clásico de YIN. Un niño no duplica su tono en 32 ms.
       if (suavizado !== null) {
@@ -117,10 +140,12 @@ export function crearPitchTracker(): PitchTracker {
           ? filtrado
           : suavizado + ALFA_EMA * (filtrado - suavizado);
 
+      // El cohete despega desde la voz de quien juega: la base es su primer tono confiable, y
+      // baja si él baja (así "ir más grave" siempre tiene a dónde ir, en vez de topar en el piso).
+      base = base === null ? suavizado : Math.min(base, suavizado);
+
       // Altura en escala MUSICAL (log): así una octava se ve igual de grande en toda la pantalla.
-      const proporcion =
-        Math.log2(suavizado / PITCH_MIN_HZ) /
-        Math.log2(PITCH_MAX_HZ / PITCH_MIN_HZ);
+      const proporcion = Math.log2(suavizado / base) / SPAN_OCTAVAS;
       altura = Math.min(1, Math.max(0, proporcion));
 
       // Histéresis direccional: la dirección solo cambia si la voz se movió de verdad.
@@ -151,6 +176,8 @@ export function crearPitchTracker(): PitchTracker {
     reiniciar() {
       suavizado = null;
       ultimos = [];
+      // La base se re-ancla en el próximo intento: si ahora juega el otro, el cohete es suyo.
+      base = null;
       direccion = ESTADO_INICIAL.direccion;
       extremo = null;
       inversiones = 0;

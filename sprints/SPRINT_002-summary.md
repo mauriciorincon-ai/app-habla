@@ -31,8 +31,9 @@ solo. El progreso del S1 se **migra** (v1→v2), no se descarta.
 Segunda mecánica de voz, **100 % determinista y local**: **YIN** (CMND + interpolación parabólica)
 dentro del AudioWorklet existente, con **gating por energía** — el ruido de la casa no produce F0
 fantasma. El contrato del meter **creció** (`{rms, pitchHz|null, tMs}`) en vez de duplicarse: los
-tres juegos leen el mismo frame. El motor puro `pitch-tracker` (rango infantil 200–450 Hz, rechazo
-de saltos de octava, mediana+EMA, histéresis direccional de 50 cents) cuenta **inversiones**: la
+tres juegos leen el mismo frame. El motor puro `pitch-tracker` (**vuelo anclado a la voz que
+juega** — 0,7 octavas desde su propio tono, tras el hallazgo del gate; rechazo de saltos de
+octava, mediana+EMA, histéresis direccional de 50 cents) cuenta **inversiones**: la
 métrica honesta de la celebración ("¡tu voz subió y bajó 3 veces!"). Sin palabras, sin meta en modo
 calma, sin game-over.
 

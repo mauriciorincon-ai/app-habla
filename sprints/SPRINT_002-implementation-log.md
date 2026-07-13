@@ -150,6 +150,37 @@ elimina cuando su feature deja de existir, y se declara en el historial del pie.
 - **Nota a la planeadora:** estas reglas son de método y aplican a TODO el pipeline (la guía viva
   es entregable estándar de todas las apps). El usuario lleva la instrucción; aquí solo se registra.
 
+## Hallazgo del gate del usuario: el "rango infantil" fijo era un DEFECTO (2026-07-12)
+
+Corriendo el bloque A en su computador, el usuario reportó que su falsete llega a **160–170 Hz**
+(cobertura >70 %, todo lo demás en orden). El `pitch-tracker` clamaba a **200–450 Hz fijos** ("F0
+de 4–6 años ≈ 250–400, §B.1"). Dos defectos, y el segundo es el grave:
+
+1. **Co-uso roto (regla dura 5):** el guion del cohete le pide al PADRE que demuestre primero
+   ("hazlo tú primero, exagerado y riéndote") — y con piso de 200 Hz su demostración **no movía
+   nada**. La app le pedía algo que ella misma ignoraba.
+2. **Afirmábamos un número que nunca medimos:** el F0 real del niño no lo conocemos (la tablet
+   está de viaje). Hard-codear el rango de un paper, para un niño neurodivergente concreto, es
+   justo el tipo de afirmación sin verificar que esta app prohíbe en todo lo demás.
+
+**Arreglo (no ensanchar el supuesto, sino eliminarlo):** el vuelo es **relativo a la voz que está
+jugando**. La base se ancla al primer tono confiable del intento y baja si esa voz baja; la altura
+es `log2(f/base)/0.7` octavas. Padre (base ~165 Hz) e hijo (base ~280 Hz) vuelan igual. Las
+**inversiones** —la métrica que celebramos— ya eran relativas (histéresis de 50 cents): no
+cambiaron. `SPAN_OCTAVAS = 0.7` no es gusto sino techo duro: el oído llega a 500 Hz, así que un
+niño que empieza en 300 solo puede subir 0,74 octavas — un vuelo más largo le pondría al cohete
+**un techo al que su voz no puede llegar**, y una meta inalcanzable es una mentira.
+
+- **2 unit nuevos que blindan el hallazgo** (106 unit verdes): el falsete del padre vuela tan alto
+  como la voz del niño; bajar por debajo del tono inicial re-ancla en vez de quedarse pegado al
+  piso. Los 3 e2e del cohete/spike siguen verdes sin tocarlos.
+- ADR 007 enmendado (sección _Amendment_). El spike ahora muestra "oído: 150–500 Hz · el cohete se
+  ancla a la voz que juega".
+- **Fricción de la guía, no del producto:** el filtro ⭐ escondía la prueba C1 (la que dice DÓNDE
+  está el selector de etapa: Ajustes, primera sección) y dejaba C2 pidiendo "cambia a Sonidos e
+  intentos" sin decir dónde. El usuario se perdió ahí. Corregido: **cada prueba del gate mínimo es
+  autosuficiente** — no depende de una prueba que el filtro pueda ocultar.
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se
