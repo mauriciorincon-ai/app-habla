@@ -37,8 +37,10 @@ const MS_POR_TICK = 100;
 export type MedidasVivas = {
   /** 0..1 — para la barra del medidor. */
   nivel: () => number;
-  /** ms de voz REAL sostenida en el intento actual. */
+  /** ms TOTALES de voz real en el intento (mueven al globo). */
   sostenidoMs: () => number;
+  /** ms de la racha continua más larga: lo único que autoriza a decir "la sostuviste". */
+  mejorRachaMs: () => number;
   /** El veredicto del meter (histéresis + gracia): hay voz por encima del piso calibrado. */
   vozActiva: () => boolean;
   /** 0..1 — altura del cohete según el TONO de la voz (null-safe: sin voz, no se mueve). */
@@ -98,6 +100,7 @@ export function useVoiceSession({
   // Valores vivos que la UI pinta a 60 fps sin re-render.
   const nivelRef = useRef(0);
   const sostenidoRef = useRef(0);
+  const mejorRachaRef = useRef(0);
   const vozActivaRef = useRef(false);
   const alturaPitchRef = useRef(0);
   const direccionRef = useRef<Direccion>("quieto");
@@ -115,6 +118,7 @@ export function useVoiceSession({
     () => ({
       nivel: () => nivelRef.current,
       sostenidoMs: () => sostenidoRef.current,
+      mejorRachaMs: () => mejorRachaRef.current,
       vozActiva: () => vozActivaRef.current,
       alturaPitch: () => alturaPitchRef.current,
       direccionPitch: () => direccionRef.current,
@@ -171,6 +175,7 @@ export function useVoiceSession({
       const estado = meter.empujar(frame);
       nivelRef.current = estado.nivel;
       sostenidoRef.current = estado.sostenidoMs;
+      mejorRachaRef.current = estado.mejorRachaMs;
       vozActivaRef.current = estado.vozActiva;
 
       // El pitch se alimenta del MISMO frame y del veredicto de energía del meter: el ruido de

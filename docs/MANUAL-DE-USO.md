@@ -57,9 +57,18 @@ Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obliga
 
 #### 1. El globo — la voz que se sostiene
 
-El globo **avanza solo mientras el niño sostiene la voz** ("aaaaah"). Si se calla, el globo se
-detiene y espera: nunca se pierde. Al terminar, la app dice exactamente lo que midió: _"¡la
-sostuviste 3,1 segundos!"_.
+El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo se
+detiene y espera: nunca se pierde lo ya avanzado. Al terminar, la app dice exactamente lo que
+midió, y son **dos cosas distintas**:
+
+- _"¡Su voz sonó 7,3 segundos!"_ — el **total** del intento, sumando todos los ratos en que sonó.
+  Es lo que hizo volar al globo.
+- _"Y la vez más larga la sostuvo 2,4 segundos seguidos"_ — la **racha continua** más larga. Es lo
+  único que autoriza a decir que la _sostuvo_, y es la habilidad que de verdad se está entrenando.
+
+La respiración no le quita la racha: una pausa cortita para tomar aire no cuenta como cortarse.
+**La app nunca dice que sostuvo un tiempo que no sostuvo**, aunque sumar los ratos daría un número
+más bonito.
 
 #### 2. El cohete — la voz que sube y baja (nuevo)
 
@@ -95,7 +104,7 @@ a lo que su hijo hace HOY, no a lo que quisiéramos que hiciera:
   se activa sola**: hay que elegirla a mano, a propósito.
 
 **Cambiar de etapa no borra nada.** El progreso de cada etapa se guarda por separado y los días
-practicados no se pierden. Si duda, quédese en *palabras sueltas*.
+practicados no se pierden. Si duda, quédese en _palabras sueltas_.
 
 ### Qué mide y qué NO mide la app (importante)
 

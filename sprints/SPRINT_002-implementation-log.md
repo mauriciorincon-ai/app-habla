@@ -198,6 +198,34 @@ Y ahí adentro vive ahora la **etapa del habla**, un outcome entero del S2.
 - Regla que queda: **toda feature nueva necesita un e2e que llegue a ella como llega un humano**,
   no por su ruta. Si no se puede, es que no es alcanzable.
 
+## Tercer hallazgo del gate: la celebración del globo MENTÍA (2026-07-12) — regla dura 3
+
+El usuario jugó en modo calma, sostuvo la voz, cambió a modo normal y la celebración le contó
+**7,3 segundos sumando los dos modos**. Preguntó si eso era adecuado. Al revisar el motor apareció
+algo peor que el cruce de modos: **`sostenidoMs` es el TOTAL de voz del intento y nunca se
+reinicia con el silencio** — pero la celebración decía _"¡La **sostuviste** 7,3 segundos!"_.
+
+Un niño que dice "aaah" 1 s, se distrae 10 s y vuelve a decir "aaah" 2 s recibía un
+**"la sostuviste 3 segundos"**. Nunca sostuvo 3 segundos. Es exactamente el elogio desacoplado del
+desempeño que el brief le reprocha a la competencia, y estaba dentro de nuestra propia app.
+
+**Arreglo — dos números, porque son dos cosas distintas:**
+
+- `sostenidoMs` (total de voz del intento): **mueve al globo**. No se reinicia con el silencio —
+  eso sería castigo, y el globo nunca castiga (regla del S1: se detiene y espera, no cae).
+- `mejorRachaMs` (**racha continua más larga**): es lo ÚNICO que autoriza a afirmar continuidad.
+  La pausa de respirar (gracia de 300 ms) NO la parte — respirar no es dejar de sostener.
+
+**Microcopy:** el titular pasa de _"¡La sostuviste X segundos!"_ a _"**¡Su voz sonó X segundos!**"_
+(total, verdadero) y debajo, solo si la racha llega a 1 s: _"Y la vez más larga la sostuvo N
+segundos seguidos, sin cortarse."_ Ahora cada número dice lo que de verdad se midió.
+
+- **3 unit nuevos** (109 verdes): tres soplidos sueltos suman en el total pero la racha es la del
+  más largo · la pausa de respirar no parte la racha · la racha en curso ya cuenta (no hay que
+  callarse para que la app la reconozca).
+- **El modo calma no era el defecto** (funciona como se diseñó: sin meta, sin presión, se cierra
+  con "Ya jugamos"): fue el síntoma que destapó la mentira del contador.
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se

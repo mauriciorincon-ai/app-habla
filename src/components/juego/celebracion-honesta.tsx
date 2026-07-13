@@ -53,11 +53,23 @@ function Logro({ metrica }: { metrica: Metrica }) {
         <>
           <Globo className="h-24 w-16" />
           <h2 className="font-display text-4xl">
-            {/* La métrica va en sans con cifras tabulares, no en mono: la coma decimal
+            {/* "Sonó" (total), NO "la sostuviste" (continuidad): el medidor suma todos los ratos
+                de voz del intento, y decir "sostuviste" de tres soplidos sueltos sería mentir.
+                La continuidad —lo que de verdad se está entrenando— va abajo, con su número real.
+                La métrica va en sans con cifras tabulares, no en mono: la coma decimal
                 monoespaciada se lee como "3 , 1". Mono queda para etiquetas y datos en bloque. */}
-            ¡La sostuviste {cifra(`${segundos(metrica.ms)} segundos`)}!
+            ¡Su voz sonó {cifra(`${segundos(metrica.ms)} segundos`)}!
           </h2>
           <p className="text-tinta-suave">
+            {metrica.rachaMs >= 1000 ? (
+              <>
+                Y la vez más larga la sostuvo{" "}
+                <strong className="text-tinta">
+                  {segundos(metrica.rachaMs)} segundos
+                </strong>{" "}
+                seguidos, sin cortarse.{" "}
+              </>
+            ) : null}
             Eso es lo que el medidor escuchó: hubo voz y duró ese tiempo. Si
             además dijo la palabra, el que lo sabe eres tú — celébraselo con tus
             propias palabras.

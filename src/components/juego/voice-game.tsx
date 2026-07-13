@@ -69,11 +69,13 @@ function JuegoListo({
 }) {
   const router = useRouter();
 
-  // Lo que mide el globo: milisegundos de voz REALMENTE sostenida.
+  // Lo que mide el globo: el total de voz del intento (lo que lo hace volar) y, aparte, la racha
+  // continua más larga — el único número con el que la app puede decir "la sostuviste".
   const metricaActual = useCallback(
     (medidas: MedidasVivas): Metrica => ({
       tipo: "sostenido",
       ms: medidas.sostenidoMs(),
+      rachaMs: medidas.mejorRachaMs(),
     }),
     [],
   );

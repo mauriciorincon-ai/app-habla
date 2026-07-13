@@ -33,6 +33,54 @@ function meterCalibrado() {
   return crearMeter({ pisoRuido: PISO_CASA, ...CONFIG_METER_DEFECTO });
 }
 
+// EL HALLAZGO DEL GATE (usuario, 2026-07-12): la celebración decía "¡la sostuviste 7,3 segundos!"
+// sumando ratos de voz separados por silencios largos. Un niño que dice "aaah" un segundo, se
+// distrae diez y vuelve a decir "aaah" dos segundos NO sostuvo tres segundos — y afirmarlo es el
+// elogio vacío que esta app le reprocha a la competencia (regla dura 3).
+describe("voice-meter: honestidad — el total y la racha continua NO son lo mismo", () => {
+  it("tres soplidos sueltos suman en el total, pero la RACHA es solo la del más largo", () => {
+    const meter = meterCalibrado();
+    // 1 s de voz · 2 s de silencio real (muy por encima de la gracia) · 2 s de voz · silencio · 1 s
+    const guion = [
+      ...señal(0.2, 1000, 0),
+      ...señal(PISO_CASA, 2000, 1000),
+      ...señal(0.2, 2000, 3000),
+      ...señal(PISO_CASA, 2000, 5000),
+      ...señal(0.2, 1000, 7000),
+    ];
+    for (const frame of guion) meter.empujar(frame);
+    const { sostenidoMs, mejorRachaMs } = meter.estado();
+
+    // El total sí suma los tres (es lo que hace volar al globo: nada de lo logrado se pierde).
+    expect(sostenidoMs).toBeGreaterThan(3700);
+    // Pero la racha más larga es la de 2 s: es lo ÚNICO que autoriza a decir "la sostuviste".
+    expect(mejorRachaMs).toBeGreaterThan(1900);
+    expect(mejorRachaMs).toBeLessThan(2200);
+    // La app JAMÁS puede afirmar continuidad con el número del total.
+    expect(mejorRachaMs).toBeLessThan(sostenidoMs);
+  });
+
+  it("la pausa de respirar NO parte la racha (respirar no es dejar de sostener)", () => {
+    const meter = meterCalibrado();
+    const guion = [
+      ...señal(0.2, 1500, 0),
+      // Pausa por debajo de la gracia (300 ms): el niño respira y sigue.
+      ...señal(PISO_CASA, 200, 1500),
+      ...señal(0.2, 1500, 1700),
+    ];
+    for (const frame of guion) meter.empujar(frame);
+
+    // Una sola racha de ~3 s: la respiración no lo castiga.
+    expect(meter.estado().mejorRachaMs).toBeGreaterThan(2900);
+  });
+
+  it("una racha en curso ya cuenta: no hay que callarse para que la app la reconozca", () => {
+    const meter = meterCalibrado();
+    for (const frame of señal(0.2, 2000)) meter.empujar(frame);
+    expect(meter.estado().mejorRachaMs).toBeGreaterThan(1900);
+  });
+});
+
 describe("voice-meter: la garantía del juego", () => {
   it("la voz sostenida hace avanzar al personaje y acumula el tiempo real", () => {
     const meter = meterCalibrado();
@@ -134,6 +182,7 @@ describe("voice-meter: la garantía del juego", () => {
     expect(meter.estado()).toEqual({
       vozActiva: false,
       sostenidoMs: 0,
+      mejorRachaMs: 0,
       nivel: 0,
     });
   });

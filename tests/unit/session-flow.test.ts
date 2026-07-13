@@ -16,8 +16,12 @@ import {
 const correr = (sesion: Sesion, eventos: Evento[]): Sesion =>
   eventos.reduce(reducir, sesion);
 
-/** Atajos: la métrica del globo (ms sostenidos) y la del cohete (inversiones). */
-const sostenido = (ms: number): Metrica => ({ tipo: "sostenido", ms });
+/** Atajos: la métrica del globo (ms de voz + mejor racha) y la del cohete (inversiones). */
+const sostenido = (ms: number, rachaMs = ms): Metrica => ({
+  tipo: "sostenido",
+  ms,
+  rachaMs,
+});
 const inversiones = (veces: number): Metrica => ({
   tipo: "inversiones",
   veces,

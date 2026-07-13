@@ -18,8 +18,12 @@ export type Ajustes = {
  * un elogio desacoplado de lo medido (regla dura 3).
  */
 export type Metrica =
-  /** Globo: milisegundos de voz sostenida de verdad. */
-  | { tipo: "sostenido"; ms: number }
+  /**
+   * Globo. Dos números que NO son lo mismo (hallazgo del gate, 2026-07-12):
+   *   - `ms`: total de voz en el intento (lo que hizo volar al globo).
+   *   - `rachaMs`: la vez más larga sin cortarse — lo único que autoriza a decir "la sostuviste".
+   */
+  | { tipo: "sostenido"; ms: number; rachaMs: number }
   /** Cohete: veces que la voz cambió de dirección (subió y bajó). */
   | { tipo: "inversiones"; veces: number }
   /** Palabra↔objeto: dibujos que su voz activó (cualquier vocalización cuenta — ADR 005). */
@@ -31,7 +35,7 @@ export function valorDeMetrica(metrica: Metrica): number {
 }
 
 export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
-  sostenido: { tipo: "sostenido", ms: 0 },
+  sostenido: { tipo: "sostenido", ms: 0, rachaMs: 0 },
   inversiones: { tipo: "inversiones", veces: 0 },
   activaciones: { tipo: "activaciones", veces: 0 },
 };
