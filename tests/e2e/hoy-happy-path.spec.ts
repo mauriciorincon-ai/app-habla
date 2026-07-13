@@ -22,8 +22,10 @@ test("de la cápsula de hoy al juego: la voz mueve el globo y la celebración di
   await expect(page.getByTestId("capsula-guion")).not.toBeEmpty();
 
   // 3. Al juego por la puerta PERMANENTE de "Hoy" (existe sea cual sea la cápsula del día —
-  //    hallazgo del primer uso real) — y el guion del padre va PRIMERO.
+  //    hallazgo del primer uso real). Desde el S2 esa puerta abre el SELECTOR de juegos, y de
+  //    ahí se elige el globo; el guion del padre va PRIMERO.
   await page.getByTestId("ir-al-juego").click();
+  await page.getByTestId("juego-globo").click();
   await expect(page.getByTestId("empezar-juego")).toBeEnabled();
   await page.getByTestId("empezar-juego").click();
 
@@ -73,7 +75,7 @@ test("sin micrófono no hay pantalla rota: explica cómo habilitarlo", async ({
       Promise.reject(new DOMException("Permission denied", "NotAllowedError"));
   });
 
-  await page.goto("/jugar");
+  await page.goto("/jugar/globo");
   await page.getByTestId("empezar-juego").click();
 
   const denegado = page.getByTestId("mic-denegado");
@@ -85,7 +87,7 @@ test("sin micrófono no hay pantalla rota: explica cómo habilitarlo", async ({
 });
 
 test("modo calma en un toque: sin medidor y sin meta", async ({ page }) => {
-  await page.goto("/jugar");
+  await page.goto("/jugar/globo");
   await page.getByTestId("empezar-juego").click();
 
   const juego = page.getByTestId("juego");
@@ -122,7 +124,7 @@ test("modo calma en un toque: sin medidor y sin meta", async ({ page }) => {
 test("los toques del niño son grandes (≥64 px) y no hay límite de tiempo", async ({
   page,
 }) => {
-  await page.goto("/jugar");
+  await page.goto("/jugar/globo");
   await page.getByTestId("empezar-juego").click();
   await expect(page.getByTestId("juego")).toHaveAttribute(
     "data-fase",

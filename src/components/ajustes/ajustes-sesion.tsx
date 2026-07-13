@@ -11,9 +11,11 @@ import {
 } from "@/components/estado-local";
 import { PerfilForm } from "@/components/perfil-form";
 import { useHidratado } from "@/components/use-hidratado";
+import { EtapaDelHabla } from "./etapa-del-habla";
 import {
   AJUSTES_DEFECTO,
   NOMBRE_TEMA,
+  type Apariencia,
   type Perfil,
 } from "@/lib/storage/schemas";
 
@@ -37,6 +39,8 @@ export function AjustesSesion() {
 
   return (
     <div className="flex flex-col gap-4">
+      <EtapaDelHabla />
+
       <SeccionPerfil />
 
       <Interruptor
@@ -47,6 +51,14 @@ export function AjustesSesion() {
         listo={listo}
         onCambiar={(activo) =>
           guardarAjustesEnStore({ ...ajustes, modoCalma: activo })
+        }
+      />
+
+      <SelectorApariencia
+        apariencia={ajustes.apariencia}
+        listo={listo}
+        onCambiar={(apariencia) =>
+          guardarAjustesEnStore({ ...ajustes, apariencia })
         }
       />
 
@@ -167,6 +179,77 @@ function SeccionPerfil() {
           </button>
         </>
       )}
+    </section>
+  );
+}
+
+/**
+ * Claro / oscuro / el del sistema — solo para la pantalla del padre.
+ * El niño ve SIEMPRE la paleta clara (regla del design-system): su mundo no cambia con la hora.
+ */
+const APARIENCIAS: { valor: Apariencia; nombre: string; nota: string }[] = [
+  { valor: "sistema", nombre: "El del sistema", nota: "Como tu computador" },
+  { valor: "claro", nombre: "Claro", nota: "Siempre claro" },
+  { valor: "oscuro", nombre: "Oscuro", nota: "Siempre oscuro" },
+];
+
+function SelectorApariencia({
+  apariencia,
+  listo,
+  onCambiar,
+}: {
+  apariencia: Apariencia;
+  listo: boolean;
+  onCambiar: (apariencia: Apariencia) => void;
+}) {
+  // El tema se aplica al documento, no solo al estado: el <html> es quien lleva la paleta.
+  useEffect(() => {
+    if (!listo) return;
+    if (apariencia === "sistema") delete document.documentElement.dataset.tema;
+    else document.documentElement.dataset.tema = apariencia;
+  }, [apariencia, listo]);
+
+  return (
+    <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+      <h2 className="font-medium" id="apariencia-titulo">
+        Claro u oscuro
+      </h2>
+      <p className="text-tinta-suave mt-2 text-sm">
+        Cómo se ve <strong>esta</strong> pantalla, la tuya. La del niño es clara
+        siempre — su juego no cambia de color según la hora.
+      </p>
+
+      <div
+        className="mt-4 flex flex-col gap-2 sm:flex-row"
+        role="group"
+        aria-labelledby="apariencia-titulo"
+      >
+        {APARIENCIAS.map((opcion) => {
+          const elegida = apariencia === opcion.valor;
+          return (
+            <button
+              key={opcion.valor}
+              type="button"
+              aria-pressed={elegida}
+              disabled={!listo}
+              onClick={() => onCambiar(opcion.valor)}
+              data-testid={`apariencia-${opcion.valor}`}
+              className={[
+                "min-h-11 flex-1 rounded-xl border px-4 py-2 text-left text-sm",
+                elegida
+                  ? "border-acento bg-acento-suave"
+                  : "border-borde bg-fondo",
+              ].join(" ")}
+            >
+              {/* El estado NO se comunica solo con color: la elegida lo dice con palabras. */}
+              <span className="block font-medium">{opcion.nombre}</span>
+              <span className="text-tinta-suave block text-xs">
+                {elegida ? "Elegida" : opcion.nota}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 }

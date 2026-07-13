@@ -1,13 +1,22 @@
 "use client";
 
-// Página TEMPORAL del spike de audio (riesgo #1) — se elimina antes del merge final.
-// Objetivo: validar en la tablet Android real: latencia percibida, estabilidad del worklet,
-// constraints reales del track (getSettings) y piso de ruido de la casa. Resultado → ADR 003.
+// Página de diagnóstico del audio — sobrevive hasta cerrar el ADR 003 (gate de tablet).
+// Objetivo S1 (riesgo #1): latencia percibida, estabilidad del worklet, constraints reales del
+// track (getSettings) y piso de ruido de la casa.
+// Objetivo S2 (riesgo #1 del sprint, ADR 007): ¿el PITCH es estable con voz real? La página
+// muestra F0 en vivo + el rango medido — es el dato que decide si el cohete va por tono o
+// degrada honesto a energía. Nada se graba: RMS y F0 son escalares que mueren en pantalla.
 
 import { useEffect, useRef, useState } from "react";
 import { useHidratado } from "@/components/use-hidratado";
 import { AnalyserSource } from "@/lib/voice/analyser-source";
 import { MicSession } from "@/lib/voice/mic-session";
+import {
+  VOZ_MAX_HZ,
+  VOZ_MIN_HZ,
+  crearPitchTracker,
+  type PitchTracker,
+} from "@/lib/voice/pitch-tracker";
 import type { MeterFrame, MeterSource } from "@/lib/voice/types";
 
 type Motor = "worklet" | "analyser";
@@ -17,6 +26,14 @@ type Stats = {
   piso: number;
   framesPorSegundo: number;
   totalFrames: number;
+  /** F0 crudo del worklet (lo que YIN vio) y F0 suavizado (lo que el cohete usaría). */
+  pitchCrudo: number | null;
+  pitchSuave: number | null;
+  pitchMin: number | null;
+  pitchMax: number | null;
+  /** % de frames CON voz que trajeron un pitch confiable: la medida de estabilidad del ADR 007. */
+  cobertura: number;
+  inversiones: number;
 };
 
 export default function SpikeAudioPage() {
@@ -31,6 +48,12 @@ export default function SpikeAudioPage() {
     piso: 1,
     framesPorSegundo: 0,
     totalFrames: 0,
+    pitchCrudo: null,
+    pitchSuave: null,
+    pitchMin: null,
+    pitchMax: null,
+    cobertura: 0,
+    inversiones: 0,
   });
 
   // El botón nace deshabilitado hasta que React hidrata: un clic pre-hidratación se perdería
@@ -43,15 +66,30 @@ export default function SpikeAudioPage() {
   const totalRef = useRef(0);
   const ventanaRef = useRef(0);
   const barRef = useRef<HTMLDivElement | null>(null);
+  const barPitchRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number>(0);
 
+  // Pitch (ADR 007): el tracker puro corre aquí igual que correría en el juego.
+  const trackerRef = useRef<PitchTracker | null>(null);
+  const pitchMinRef = useRef<number | null>(null);
+  const pitchMaxRef = useRef<number | null>(null);
+  const framesConVozRef = useRef(0);
+  const framesConPitchRef = useRef(0);
+
+  /** Umbral simple de "hay voz" para el spike (el juego usa el piso calibrado de verdad). */
+  const RMS_VOZ = 0.02;
+
   useEffect(() => {
-    // Barra a 60 fps: muta el DOM directamente desde el último frame (sin re-render).
+    // Barras a 60 fps: mutan el DOM directamente desde el último frame (sin re-render).
     const pintar = () => {
       const frame = frameRef.current;
       if (frame && barRef.current) {
         const escala = Math.min(1, frame.rms * 8);
         barRef.current.style.transform = `scaleX(${escala})`;
+      }
+      if (barPitchRef.current) {
+        const altura = trackerRef.current?.estado().altura ?? 0;
+        barPitchRef.current.style.transform = `scaleX(${altura})`;
       }
       rafRef.current = requestAnimationFrame(pintar);
     };
@@ -60,11 +98,22 @@ export default function SpikeAudioPage() {
     // Números a 4 fps (legibles).
     const intervalo = setInterval(() => {
       const frame = frameRef.current;
+      const pitch = trackerRef.current?.estado();
+      const conVoz = framesConVozRef.current;
       setStats({
         rms: frame?.rms ?? 0,
         piso: pisoRef.current === 1 ? 0 : pisoRef.current,
         framesPorSegundo: ventanaRef.current * 4,
         totalFrames: totalRef.current,
+        pitchCrudo: frame?.pitchHz ?? null,
+        pitchSuave: pitch?.pitchHz ?? null,
+        pitchMin: pitchMinRef.current,
+        pitchMax: pitchMaxRef.current,
+        cobertura:
+          conVoz === 0
+            ? 0
+            : Math.round((framesConPitchRef.current / conVoz) * 100),
+        inversiones: pitch?.inversiones ?? 0,
       });
       ventanaRef.current = 0;
     }, 250);
@@ -83,6 +132,23 @@ export default function SpikeAudioPage() {
     if (frame.rms > 0 && frame.rms < pisoRef.current) {
       pisoRef.current = frame.rms;
     }
+
+    // Pitch: mismo camino que en el juego (gating por energía → tracker puro).
+    const hayVoz = frame.rms >= RMS_VOZ;
+    if (hayVoz) {
+      framesConVozRef.current += 1;
+      if (frame.pitchHz !== null) framesConPitchRef.current += 1;
+    }
+    const estado = trackerRef.current?.empujar(frame, hayVoz);
+    if (estado?.pitchHz != null) {
+      const hz = estado.pitchHz;
+      if (pitchMinRef.current === null || hz < pitchMinRef.current) {
+        pitchMinRef.current = hz;
+      }
+      if (pitchMaxRef.current === null || hz > pitchMaxRef.current) {
+        pitchMaxRef.current = hz;
+      }
+    }
   };
 
   async function empezar() {
@@ -90,6 +156,11 @@ export default function SpikeAudioPage() {
     setInfo(null);
     pisoRef.current = 1;
     totalRef.current = 0;
+    trackerRef.current = crearPitchTracker();
+    pitchMinRef.current = null;
+    pitchMaxRef.current = null;
+    framesConVozRef.current = 0;
+    framesConPitchRef.current = 0;
 
     const mic = new MicSession();
     mic.subscribe(onFrame);
@@ -128,6 +199,7 @@ export default function SpikeAudioPage() {
     sourceRef.current?.stop();
     sourceRef.current = null;
     frameRef.current = null;
+    trackerRef.current = null;
     setEstado("inactivo");
     setMotor(null);
   }
@@ -136,8 +208,9 @@ export default function SpikeAudioPage() {
     <main className="mx-auto flex min-h-screen max-w-xl flex-col gap-6 p-6">
       <h1 className="font-display text-3xl">Spike de audio</h1>
       <p className="text-tinta-suave text-sm">
-        Página temporal para validar el medidor en la tablet real. Nada se graba
-        ni sale del dispositivo: solo se calcula un número (RMS) en vivo.
+        Página de diagnóstico: valida el medidor (RMS) y el seguidor de tono
+        (F0) con un micrófono real. Nada se graba ni sale del dispositivo: son
+        dos números que se calculan en vivo y mueren en pantalla.
       </p>
 
       <div className="flex gap-3">
@@ -183,6 +256,55 @@ export default function SpikeAudioPage() {
           <dt>frames totales</dt>
           <dd>{stats.totalFrames}</dd>
         </dl>
+      </section>
+
+      {/* Panel de PITCH (ADR 007): lo que decide si el cohete va por tono. */}
+      <section
+        className="bg-superficie shadow-tarjeta rounded-2xl p-4"
+        aria-live="polite"
+        data-testid="spike-pitch"
+      >
+        <p className="mb-2 font-mono text-xs">
+          tono (F0) · oído: {VOZ_MIN_HZ}–{VOZ_MAX_HZ} Hz · el cohete se ancla a
+          la voz que juega
+        </p>
+        <div className="bg-acento-suave h-6 overflow-hidden rounded-full">
+          <div
+            ref={barPitchRef}
+            className="bg-celebracion h-full w-full origin-left rounded-full"
+            style={{ transform: "scaleX(0)" }}
+          />
+        </div>
+        <dl className="mt-3 grid grid-cols-2 gap-1 font-mono text-xs">
+          <dt>F0 crudo (YIN)</dt>
+          <dd data-testid="spike-pitch-crudo">
+            {stats.pitchCrudo === null
+              ? "—"
+              : `${stats.pitchCrudo.toFixed(1)} Hz`}
+          </dd>
+          <dt>F0 suavizado</dt>
+          <dd data-testid="spike-pitch-suave">
+            {stats.pitchSuave === null
+              ? "—"
+              : `${stats.pitchSuave.toFixed(1)} Hz`}
+          </dd>
+          <dt>rango medido</dt>
+          <dd>
+            {stats.pitchMin === null || stats.pitchMax === null
+              ? "—"
+              : `${stats.pitchMin.toFixed(0)}–${stats.pitchMax.toFixed(0)} Hz`}
+          </dd>
+          <dt>cobertura (frames con voz)</dt>
+          <dd data-testid="spike-cobertura">{stats.cobertura}%</dd>
+          <dt>inversiones (subió y bajó)</dt>
+          <dd data-testid="spike-inversiones">{stats.inversiones}</dd>
+        </dl>
+        <p className="text-tinta-suave mt-3 text-xs">
+          Prueba a decir “aaaah” subiendo y bajando la voz como una sirena: la
+          barra de tono debe seguirte, y las inversiones deben contar cada vez
+          que cambias de sentido. Con ruido de fondo (sin hablar), el F0 debe
+          quedarse en “—”.
+        </p>
       </section>
 
       {info ? (

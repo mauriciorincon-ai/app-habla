@@ -6,15 +6,18 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { NOMBRE_TECNICA } from "@content/schema";
-import { Globo, IconoHecho } from "@/components/iconos";
+import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
+import { Cohete, Globo, IconoHecho } from "@/components/iconos";
+import {
+  useAjustes,
+  usePerfil,
+  useProgreso,
+} from "@/components/estado-local";
 import {
   asegurarAsignacionDeHoy,
   capsulaDeHoy,
   marcarCapsulaHecha,
-  usePerfil,
-  useProgreso,
-} from "@/components/estado-local";
+} from "@/components/estado-capsulas";
 import { useHidratado } from "@/components/use-hidratado";
 import { Onboarding } from "./onboarding";
 
@@ -22,13 +25,16 @@ export function HoyCliente() {
   const hidratado = useHidratado();
   const progreso = useProgreso();
   const perfil = usePerfil();
+  const ajustes = useAjustes();
+  const etapa = ajustes?.etapa;
 
+  // Corre también cuando el padre cambia de etapa en Ajustes (la cápsula de hoy se re-hace).
   useEffect(() => {
     asegurarAsignacionDeHoy();
-  }, []);
+  }, [etapa]);
 
   // Altura reservada: el contenido llega tras hidratar, pero el layout no salta (CLS).
-  if (!hidratado || !progreso) {
+  if (!hidratado || !progreso || !ajustes) {
     return <div className="min-h-[22rem]" aria-hidden="true" />;
   }
 
@@ -40,7 +46,7 @@ export function HoyCliente() {
     );
   }
 
-  const { capsula, completada, fecha } = capsulaDeHoy(progreso);
+  const { capsula, completada, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
   const diasAcompañados = progreso.historial.length;
 
   return (
@@ -50,8 +56,14 @@ export function HoyCliente() {
         data-testid="capsula"
         data-completada={completada}
       >
-        <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-          Hoy practicamos · {NOMBRE_TECNICA[capsula.tecnica]}
+        <p
+          className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
+          data-testid="etiqueta-capsula"
+        >
+          Hoy practicamos · {NOMBRE_TECNICA[capsula.tecnica]} ·{" "}
+          <span data-testid="etiqueta-etapa">
+            {NOMBRE_ETAPA[capsula.etapa]}
+          </span>
         </p>
 
         <h2 className="mt-3 text-2xl font-medium" data-testid="capsula-titulo">
@@ -108,7 +120,9 @@ export function HoyCliente() {
           ) : (
             <button
               type="button"
-              onClick={() => marcarCapsulaHecha(fecha, capsula.id)}
+              onClick={() =>
+                marcarCapsulaHecha(fecha, capsula.id, capsula.etapa)
+              }
               className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-6 font-medium"
               data-testid="marcar-hecha"
             >
@@ -128,12 +142,16 @@ export function HoyCliente() {
         data-testid="ir-al-juego"
       >
         <span>
-          <span className="block font-medium">El juego de voz</span>
+          <span className="block font-medium">Los juegos de voz</span>
           <span className="text-tinta-suave block text-sm">
-            Su voz mueve el globo. Para jugar juntos — hoy o cualquier día.
+            El globo, el cohete y los dibujos. Para jugar juntos — hoy o
+            cualquier día.
           </span>
         </span>
-        <Globo className="h-14 w-9 shrink-0" />
+        <span className="flex shrink-0 items-center gap-1">
+          <Globo className="h-14 w-9" />
+          <Cohete className="h-14 w-9" />
+        </span>
       </Link>
 
       {diasAcompañados > 0 ? (

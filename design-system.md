@@ -22,13 +22,25 @@ Dos audiencias, una paleta dual:
 
 - **Operador (el padre):** calidez informativa sin estética de dashboard. Verde salvia como
   primario (regulación, restauración), crema en vez de blanco puro (menos fatiga), coral y ámbar
-  solo para celebrar hitos y la voz parental. Soporta light y dark (uso nocturno).
+  solo para celebrar hitos y la voz parental. Soporta light y dark (uso nocturno): sigue al
+  sistema por defecto, **y desde el S2 el padre puede fijarlo** en Ajustes (`data-tema` en el
+  `<html>` le gana a `prefers-color-scheme`; se aplica antes de la primera pintura, sin parpadeo).
+  Los valores de la paleta oscura se declaran **una sola vez** (`--oscuro-*`); los dos caminos que
+  la encienden solo mapean.
 - **Niño (4–6, perfil neurodivergente):** calma y cero ruido visual. Paleta propia, **SIEMPRE
   clara** (sin dark mode — la pantalla del juego no cambia con el sistema), áreas táctiles
   grandes, contraste alto solo en lo accionable.
 
 Regla de oro: **la vista del niño es soberana** — ningún elemento del operador se filtra al
 escenario del juego (solo un botón de salir, pequeño y discreto, para el padre).
+
+### Globos de fiesta (celebración de la palabra — ADR 009)
+
+`--color-fiesta-*` (coral · verde · cielo · sol · uva): los primos **saturados** de la paleta del
+niño. La paleta del niño es pastel a propósito —es la pantalla donde él vive, y tiene que ser
+calmada—; estos colores existen **solo** para el instante en que el padre dice que dijo la palabra.
+Regla: se usan en algo que **sube una vez y se va**, nunca en superficie fija. El sosiego se cuida
+por la duración, no por la saturación.
 
 ## Paleta
 
@@ -120,8 +132,25 @@ nuevos sin derivarlos de la paleta.
   line (stroke 1.5, viewBox 24, `currentColor`), `aria-hidden` salvo que el icono sea el
   contenido. Los emojis están prohibidos como iconos: es la firma del "look de IA con prisa" y,
   peor, cada sistema operativo los dibuja distinto — para un niño con perfil neurodivergente, un
-  símbolo que cambia de forma entre dispositivos es ruido, no señal. **El globo es la única
-  excepción**: no es un icono, es el personaje, y por eso lleva la paleta del niño.
+  símbolo que cambia de forma entre dispositivos es ruido, no señal. **Los PERSONAJES son la
+  excepción**: el globo y el cohete no son iconos —son los protagonistas del juego— y por eso
+  llevan la paleta del niño en vez de `currentColor`.
+- **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
+  grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
+  cambia de color al encenderse — el estado nunca se comunica solo con color: el texto
+  ("¡Le salió la voz!") lo dice también. Atribución CC BY-NC-SA obligatoria en Ajustes.
+- **Selector de juegos (COGA):** exactamente 3 tarjetas, siempre en el mismo orden. La
+  predictibilidad manda sobre la variedad. Cada tarjeta dice, en mono pequeña, **qué mide** ese
+  juego — incluida la promesa incómoda: "mide que hubo voz, nunca qué palabra dijo".
+
+## Patrones de movimiento del juego (Sprint 2)
+
+- **El personaje nunca se congela ni cae por silencio.** Su posición se interpola hacia un
+  objetivo (τ ≈ 120–140 ms) en píxeles del escenario, mutando `transform` en un rAF — jamás con
+  estado de React (60 fps aunque el medidor emita a ~31/s). El globo viaja hacia la meta; el
+  cohete mapea el TONO (escala musical); en modo calma los dos flotan sin meta.
+- **Duraciones y curvas:** solo la escala del token (`--dur-rapida/media/lenta` + `ease-suave`).
+  Nada de `duration-300` suelto (se coló en el S2 y se corrigió en el gate de diseño).
 
 ## Los 5 estados (cada pantalla los tiene diseñados)
 
@@ -131,4 +160,7 @@ nuevos sin derivarlos de la paleta.
 | **Cargando**            | Espacio reservado con la altura final (sin salto de layout)             | Igual; la calibración tiene su propia barra                                                                                                          |
 | **Error**               | —                                                                       | Mic denegado: pasos concretos + salida sin culpa ("la actividad también se puede hacer sin pantalla") · Ruido alto: lo dice de frente y deja decidir |
 | **Éxito**               | Cápsula marcada: "Hecho hoy. Mañana hay otra" (sobrio, sin fanfarria)   | Celebración honesta con la métrica real; si no hubo voz, se dice sin drama                                                                           |
-| **Contenido**           | La cápsula del día                                                      | El globo volando con la voz                                                                                                                          |
+| **Contenido**           | La cápsula del día                                                      | El personaje respondiendo a la voz (globo/cohete) o el pictograma encendido                                                                          |
+
+**El selector de juegos** no tiene estado vacío ni de error: siempre hay tres juegos, siempre los
+mismos. Es, a propósito, la pantalla más aburrida y más predecible de la app.

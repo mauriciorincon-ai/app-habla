@@ -34,6 +34,9 @@ export class AnalyserSource implements MeterSource {
       }
       const frame: MeterFrame = {
         rms: Math.sqrt(sum / this.buffer.length),
+        // El fallback NO calcula pitch (ADR 007): correr YIN en el hilo principal a 60 fps
+        // castigaría la fluidez del juego. Honesto: el cohete degrada a su modo por energía.
+        pitchHz: null,
         tMs: this.audioContext.currentTime * 1000,
       };
       for (const cb of this.subscribers) {

@@ -9,6 +9,8 @@ import {
   PROGRESO_INICIAL,
   PerfilSchema,
   ProgresoSchema,
+  ProgresoV1Schema,
+  migrarProgresoV1,
   type AjustesGuardados,
   type Perfil,
   type Progreso,
@@ -67,8 +69,31 @@ export const leerAjustes = (): AjustesGuardados =>
 export const guardarAjustes = (ajustes: AjustesGuardados): void =>
   guardar(CLAVES.ajustes, AjustesSchema, ajustes);
 
-export const leerProgreso = (): Progreso =>
-  leer(CLAVES.progreso, ProgresoSchema) ?? PROGRESO_INICIAL;
+/**
+ * El progreso es la ÚNICA clave con migración (ADR 006): antes de descartar un valor que no
+ * pasa el schema v2, se intenta la forma exacta del S1 y se transforma — el progreso real del
+ * dispositivo no se pierde por actualizar la app. Solo si tampoco es v1 se trata como corrupto.
+ */
+export const leerProgreso = (): Progreso => {
+  if (!disponible()) return PROGRESO_INICIAL;
+  const crudo = window.localStorage.getItem(CLAVES.progreso);
+  if (crudo === null) return PROGRESO_INICIAL;
+  try {
+    const json: unknown = JSON.parse(crudo);
+    const v2 = ProgresoSchema.safeParse(json);
+    if (v2.success) return v2.data;
+    const v1 = ProgresoV1Schema.safeParse(json);
+    if (v1.success) {
+      const migrado = migrarProgresoV1(v1.data);
+      guardar(CLAVES.progreso, ProgresoSchema, migrado);
+      return migrado;
+    }
+  } catch {
+    // JSON inválido: mismo tratamiento que un valor que no pasa ningún esquema.
+  }
+  window.localStorage.removeItem(CLAVES.progreso);
+  return PROGRESO_INICIAL;
+};
 export const guardarProgreso = (progreso: Progreso): void =>
   guardar(CLAVES.progreso, ProgresoSchema, progreso);
 

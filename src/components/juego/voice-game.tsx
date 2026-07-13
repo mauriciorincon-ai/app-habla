@@ -1,49 +1,54 @@
 "use client";
 
-// El juego de voz completo: guion del padre → permiso → calibración → jugar → celebración.
-// Co-uso siempre: no existe "modo niño solo". El padre dirige; la pantalla es utilería.
+// EL GLOBO — el primer juego (Sprint 1, aprobado por el usuario): el globo avanza SOLO mientras
+// el niño sostiene la voz. Co-uso siempre: el padre dirige; la pantalla es utilería.
+//
+// El flujo (permiso, calibración, ruido, calma, salir) vive en MarcoJuego, compartido con los
+// otros dos juegos. Aquí queda lo que es del globo: su guion, su escenario y su meta.
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import type { Capsula } from "@content/schema";
-import {
-  IconoMicrofono,
-  IconoMicrofonoApagado,
-  IconoRuido,
-} from "@/components/iconos";
-import { invitacionAmable, muestraMedidor } from "@/lib/session-flow";
+import { useCallback, useEffect } from "react";
+import { NOMBRE_TECNICA, type Capsula } from "@content/schema";
 import {
   ajustesActuales,
-  asegurarAsignacionDeHoy,
-  capsulaDeHoy,
   guardarAjustesEnStore,
-  marcarCapsulaHecha,
   useAjustes,
   useProgreso,
 } from "@/components/estado-local";
+import {
+  asegurarAsignacionDeHoy,
+  capsulaDeHoy,
+  marcarCapsulaHecha,
+} from "@/components/estado-capsulas";
 import { useHidratado } from "@/components/use-hidratado";
-import { CalibracionStep } from "./calibracion-step";
+import {
+  META_MS_DEFECTO,
+  invitacionAmable,
+  muestraMedidor,
+  type Metrica,
+} from "@/lib/session-flow";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { Escenario } from "./escenario";
 import { GuionCard } from "./guion-card";
-import { useVoiceSession } from "./use-voice-session";
+import { MarcoJuego } from "./marco-juego";
+import { useVoiceSession, type MedidasVivas } from "./use-voice-session";
 
 export function VoiceGame() {
   const hidratado = useHidratado();
   const progreso = useProgreso();
   const ajustes = useAjustes();
+  const etapa = ajustes?.etapa;
 
   useEffect(() => {
     asegurarAsignacionDeHoy();
-  }, []);
+  }, [etapa]);
 
   if (!hidratado || !progreso || !ajustes) {
     // Esqueleto con la misma altura: sin salto de layout al hidratar.
     return <div className="min-h-[28rem]" aria-hidden="true" />;
   }
 
-  const { capsula, fecha } = capsulaDeHoy(progreso);
+  const { capsula, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
   return (
     <JuegoListo
       capsula={capsula}
@@ -63,6 +68,18 @@ function JuegoListo({
   modoCalmaInicial: boolean;
 }) {
   const router = useRouter();
+
+  // Lo que mide el globo: el total de voz del intento (lo que lo hace volar) y, aparte, la racha
+  // continua más larga — el único número con el que la app puede decir "la sostuviste".
+  const metricaActual = useCallback(
+    (medidas: MedidasVivas): Metrica => ({
+      tipo: "sostenido",
+      ms: medidas.sostenidoMs(),
+      rachaMs: medidas.mejorRachaMs(),
+    }),
+    [],
+  );
+
   const {
     sesion,
     medidas,
@@ -73,7 +90,12 @@ function JuegoListo({
     terminar,
     otraVez,
     cambiarCalma,
-  } = useVoiceSession(modoCalmaInicial);
+  } = useVoiceSession({
+    modoCalmaInicial,
+    tipoMetrica: "sostenido",
+    meta: META_MS_DEFECTO,
+    metricaActual,
+  });
 
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
@@ -86,158 +108,28 @@ function JuegoListo({
   }
 
   function terminarYMarcar() {
-    marcarCapsulaHecha(fecha, capsula.id);
+    marcarCapsulaHecha(fecha, capsula.id, capsula.etapa);
     router.push("/");
   }
 
-  // El guion es del padre (paleta operador). El juego es del niño (paleta clara, siempre).
-  const esPantallaDelNino = actual.fase !== "guion";
-
-  // La vista del niño es soberana: mientras el juego corre, el texto dirigido al padre se retira
-  // de la pantalla (el CSS lo esconde con este atributo).
-  useEffect(() => {
-    document.documentElement.dataset.enJuego = String(esPantallaDelNino);
-    return () => {
-      delete document.documentElement.dataset.enJuego;
-    };
-  }, [esPantallaDelNino]);
-
   return (
-    <div
-      className={[
-        "flex min-h-[28rem] flex-col gap-6 rounded-3xl p-4 sm:p-6",
-        esPantallaDelNino ? "tema-nino" : "",
-        esPantallaDelNino && modoCalma ? "tema-nino--calma" : "",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      data-testid="juego"
-      data-fase={actual.fase}
-      data-calma={modoCalma}
+    <MarcoJuego
+      sesion={sesion}
+      medidas={medidas}
+      nombre="globo"
+      onAlternarCalma={alternarCalma}
+      onReintentarMic={reintentarMic}
+      onRecalibrar={recalibrar}
+      onContinuarConRuido={continuarConRuido}
     >
-      {esPantallaDelNino ? (
-        <div className="flex items-center justify-between gap-3">
-          <Link
-            href="/"
-            prefetch={false}
-            className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
-          >
-            Salir
-          </Link>
-          <button
-            type="button"
-            onClick={alternarCalma}
-            aria-pressed={modoCalma}
-            className="border-borde text-tinta min-h-11 rounded-full border px-4 text-sm"
-            data-testid="modo-calma"
-          >
-            {modoCalma ? "Modo calma activado" : "Modo calma"}
-          </button>
-        </div>
-      ) : null}
-
       {actual.fase === "guion" ? (
-        <GuionCard capsula={capsula} onEmpezar={empezar} listo />
-      ) : null}
-
-      {actual.fase === "pidiendo-mic" ? (
-        <section
-          className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
-          data-testid="pidiendo-mic"
-        >
-          <IconoMicrofono className="text-acento h-16 w-16" />
-          <h2 className="font-display text-3xl">Necesito escuchar su voz</h2>
-          <p className="text-tinta-suave">
-            El navegador va a preguntar si puede usar el micrófono. El sonido se
-            analiza aquí mismo, en este dispositivo, para saber si hay voz y
-            cuánto dura.{" "}
-            <strong>
-              No se graba nada, no se guarda nada y nada sale de aquí.
-            </strong>
-          </p>
-        </section>
-      ) : null}
-
-      {actual.fase === "mic-denegado" ? (
-        <section
-          className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
-          data-testid="mic-denegado"
-        >
-          <IconoMicrofonoApagado className="text-tinta-suave h-16 w-16" />
-          <h2 className="font-display text-3xl">No pude abrir el micrófono</h2>
-          <div className="text-tinta-suave space-y-2 text-left text-sm">
-            <p>
-              Sin micrófono, este juego no puede escuchar su voz. Para
-              habilitarlo:
-            </p>
-            <ol className="list-decimal space-y-1 pl-5">
-              <li>
-                Toca el candado (o el ícono de la izquierda) en la barra de
-                direcciones.
-              </li>
-              <li>Busca “Micrófono” y elige “Permitir”.</li>
-              <li>Vuelve aquí y toca “Intentar de nuevo”.</li>
-            </ol>
-            <p>
-              Si prefieres no dar el micrófono, no pasa nada: la actividad de
-              hoy también se puede hacer sin pantalla.
-            </p>
-          </div>
-          <div className="flex w-full flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={reintentarMic}
-              className="bg-acento text-sobre-acento min-h-14 flex-1 rounded-xl px-6 font-medium"
-              data-testid="reintentar-mic"
-            >
-              Intentar de nuevo
-            </button>
-            <Link
-              href="/"
-              prefetch={false}
-              className="border-borde text-tinta flex min-h-14 flex-1 items-center justify-center rounded-xl border px-6 font-medium"
-            >
-              Volver a Hoy
-            </Link>
-          </div>
-        </section>
-      ) : null}
-
-      {actual.fase === "calibrando" ? (
-        <CalibracionStep medidas={medidas} />
-      ) : null}
-
-      {actual.fase === "ruido-alto" ? (
-        <section
-          className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
-          data-testid="ruido-alto"
-        >
-          <IconoRuido className="text-aviso h-16 w-16" />
-          <h2 className="font-display text-3xl">Hay bastante ruido por ahí</h2>
-          <p className="text-tinta-suave">
-            Con este ruido de fondo me cuesta distinguir su voz. Si pueden,
-            apaguen la tele o acérquense un poco al dispositivo. Igual podemos
-            jugar así: solo tendrá que hablar más fuerte.
-          </p>
-          <div className="flex w-full flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={recalibrar}
-              className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
-              data-testid="recalibrar"
-            >
-              Volver a medir
-            </button>
-            <button
-              type="button"
-              onClick={continuarConRuido}
-              className="border-borde text-tinta min-h-16 flex-1 rounded-2xl border px-6 text-lg font-medium"
-              data-testid="continuar-asi"
-            >
-              Jugar así
-            </button>
-          </div>
-        </section>
+        <GuionCard
+          etiqueta={NOMBRE_TECNICA[capsula.tecnica]}
+          guion={capsula.guion}
+          nota="Muéstrale cómo suena tú primero. Si hoy prefiere solo mirar, también está bien."
+          onEmpezar={empezar}
+          listo
+        />
       ) : null}
 
       {actual.fase === "esperando-voz" || actual.fase === "jugando" ? (
@@ -250,7 +142,7 @@ function JuegoListo({
 
           <Escenario
             medidas={medidas}
-            metaMs={actual.fase === "jugando" ? actual.metaMs : 3000}
+            metaMs={META_MS_DEFECTO}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
           />
@@ -278,12 +170,12 @@ function JuegoListo({
 
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
-          sostenidoMs={actual.sostenidoMs}
+          metrica={actual.metrica}
           onOtraVez={otraVez}
           onTerminar={terminarYMarcar}
           etiquetaTerminar="Marcar el día como hecho"
         />
       ) : null}
-    </div>
+    </MarcoJuego>
   );
 }

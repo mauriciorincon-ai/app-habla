@@ -7,6 +7,7 @@
 
 type IconoProps = {
   className?: string;
+  style?: React.CSSProperties;
 };
 
 const trazo = {
@@ -106,15 +107,39 @@ export function IconoBrote({ className }: IconoProps) {
   );
 }
 
+/** Ajustes — el cuarto del padre (etapa, apodo, privacidad, borrar datos). */
+export function IconoAjustes({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="3" {...trazo} />
+      <path
+        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
 /**
  * EL GLOBO — el personaje que la voz del niño mueve.
  * No es un icono: lleva color propio (paleta del niño) y por eso no usa `currentColor`.
  */
-export function Globo({ className }: IconoProps) {
+/** El globo acepta color y tamaño: en la celebración de la palabra vuela toda una bandada. */
+export function Globo({
+  className,
+  style,
+  relleno = "var(--color-kid-peach)",
+}: IconoProps & { relleno?: string }) {
   return (
     <svg
       viewBox="0 0 64 96"
       className={className}
+      style={style}
       role="img"
       aria-label="globo"
       focusable="false"
@@ -136,12 +161,90 @@ export function Globo({ className }: IconoProps) {
         cy="32"
         rx="25"
         ry="31"
-        fill="var(--color-kid-peach)"
+        fill={relleno}
         stroke="var(--color-kid-ink)"
         strokeWidth="1.5"
       />
       {/* Brillo */}
       <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity="0.4" />
+    </svg>
+  );
+}
+
+/**
+ * EL COHETE — el segundo personaje: sube cuando la voz del niño sube de tono.
+ * Como el globo, no es un icono: lleva la paleta del niño.
+ */
+export function Cohete({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 64 96"
+      className={className}
+      role="img"
+      aria-label="cohete"
+      focusable="false"
+    >
+      {/* Llama (abajo: el cohete "mira" hacia arriba) */}
+      <path
+        d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z"
+        fill="var(--color-kid-yellow)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Aletas */}
+      <path
+        d="M20 68c-6 2-8 6-8 10 5 0 9-2 12-5zM44 68c6 2 8 6 8 10-5 0-9-2-12-5z"
+        fill="var(--color-kid-sage)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Cuerpo */}
+      <path
+        d="M32 6c9 9 13 22 13 36v28H19V42C19 28 23 15 32 6z"
+        fill="var(--color-kid-peach)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Ventana */}
+      <circle
+        cx="32"
+        cy="36"
+        r="8"
+        fill="var(--color-kid-sky)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M28 32a5 5 0 0 1 4-2"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+    </svg>
+  );
+}
+
+/** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
+export function IconoPictograma({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      role="img"
+      aria-label="dibujo con su palabra"
+      focusable="false"
+    >
+      <rect x="3" y="3" width="18" height="14" rx="2.5" {...trazo} />
+      {/* El "dibujo" de adentro: una colina y un sol. */}
+      <path d="M6 14l3.5-4 3 3.4L15 11l3 3" {...trazo} />
+      <circle cx="9" cy="7.5" r="1.4" {...trazo} />
+      {/* La palabra escrita debajo (dos renglones): el picto siempre viene con su nombre. */}
+      <path d="M6 20h12" {...trazo} />
     </svg>
   );
 }

@@ -1,36 +1,36 @@
 "use client";
 
 // La carta del padre ANTES del juego: la app orquesta al adulto, no lo reemplaza.
-// Esta pantalla es del padre (paleta operador), no del niño.
-
-import type { Capsula } from "@content/schema";
-import { NOMBRE_TECNICA } from "@content/schema";
+// Esta pantalla es del padre (paleta operador), no del niño — por eso el guion vive aquí y no
+// dentro del juego (regla del design-system: la vista del niño es soberana).
 
 type Props = {
-  capsula: Capsula;
+  /** Etiqueta pequeña de contexto (la técnica del día, o el nombre del juego). */
+  etiqueta: string;
+  /** La línea que el padre puede decir tal cual. */
+  guion: string;
+  /** La instrucción de co-uso: cómo dirigir este juego concreto. */
+  nota: string;
   onEmpezar: () => void;
   listo: boolean;
 };
 
-export function GuionCard({ capsula, onEmpezar, listo }: Props) {
+export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
   return (
     <section className="mx-auto flex w-full max-w-xl flex-col gap-6">
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6">
         <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-          Antes de jugar · {NOMBRE_TECNICA[capsula.tecnica]}
+          Antes de jugar · {etiqueta}
         </p>
 
         <h2 className="mt-3 text-xl font-medium">Tu línea de hoy</h2>
 
         {/* La voz humana: lo único que el padre necesita leer para dirigir el juego. */}
         <blockquote className="font-display border-acento mt-4 border-l-4 pl-4 text-2xl italic">
-          {capsula.guion}
+          {guion}
         </blockquote>
 
-        <p className="text-tinta-suave mt-5 text-sm">
-          Muéstrale cómo suena tú primero. Si hoy prefiere solo mirar, también
-          está bien.
-        </p>
+        <p className="text-tinta-suave mt-5 text-sm">{nota}</p>
       </div>
 
       <button
