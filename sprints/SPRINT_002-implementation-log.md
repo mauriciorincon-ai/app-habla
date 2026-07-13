@@ -181,6 +181,23 @@ niño que empieza en 300 solo puede subir 0,74 octavas — un vuelo más largo l
   intentos" sin decir dónde. El usuario se perdió ahí. Corregido: **cada prueba del gate mínimo es
   autosuficiente** — no depende de una prueba que el filtro pueda ocultar.
 
+## Segundo hallazgo del gate: Ajustes era INENCONTRABLE (2026-07-12)
+
+El usuario no halló el selector de etapa. No era la guía: **era la app**. La única puerta a
+`/ajustes` era un texto gris al **pie** de "Hoy", debajo de la tarjeta de juegos — fuera de
+pantalla sin scroll. **No lo encontró en dos sprints seguidos** (ya le había pasado en el S1, y
+entonces lo despaché como un deploy viejo). Dos veces no es casualidad: es un defecto de diseño.
+Y ahí adentro vive ahora la **etapa del habla**, un outcome entero del S2.
+
+- **Arreglo:** entrada visible en el encabezado de "Hoy" (icono + "Ajustes", ≥44 px, contra el
+  borde), sin quitar el enlace del pie. La sección de etapa ya era la primera de Ajustes.
+- **Por qué ningún test lo cazó (la lección):** los **e2e entraban por URL** (`goto("/ajustes")`),
+  saltándose justo el camino que le falló al humano. Un test que navega por URL prueba la página,
+  **no la manera de llegar a ella**. Test nuevo: desde "Hoy", `toBeInViewport()` + clic real hasta
+  el encabezado de la etapa — sin saberse la URL y sin bajar la página.
+- Regla que queda: **toda feature nueva necesita un e2e que llegue a ella como llega un humano**,
+  no por su ruta. Si no se puede, es que no es alcanzable.
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se
