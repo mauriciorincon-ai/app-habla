@@ -110,6 +110,18 @@ function Logro({ metrica }: { metrica: Metrica }) {
             dibujos. Si dijo la palabra o se acercó a ella, el que lo sabe eres
             tú — la app no juzga eso, y no va a fingir que sí.
           </p>
+
+          {/* Lo que dijo el PADRE, dicho como suyo. La app no se cuelga esta medalla. */}
+          {metrica.reconocidas > 0 ? (
+            <p className="text-exito font-medium" data-testid="reconocidas">
+              Y tú oíste{" "}
+              {metrica.reconocidas === 1
+                ? "1 palabra"
+                : `${metrica.reconocidas} palabras`}
+              . Eso lo sabes tú, que estabas ahí — celébraselo con tus propias
+              palabras.
+            </p>
+          ) : null}
         </>
       );
   }

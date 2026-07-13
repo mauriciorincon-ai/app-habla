@@ -82,16 +82,25 @@ function JuegoListo({
   const [encendido, setEncendido] = useState(false);
   const activacionesRef = useRef(0);
   const [activaciones, setActivaciones] = useState(0);
+  /**
+   * "El PADRE oyó la palabra". La app NUNCA pone esto en true por su cuenta: no reconoce palabras
+   * y no va a fingir que sí (regla dura 3). Solo lo enciende un toque suyo — él es el juez.
+   */
+  const reconocidasRef = useRef(0);
+  const [reconocidas, setReconocidas] = useState(0);
+  const [reconocidaAhora, setReconocidaAhora] = useState(false);
   /** Evita que una misma vocalización encienda el mismo dibujo dos veces. */
   const yaContadoRef = useRef(false);
 
   const picto = mazo[indice % mazo.length];
 
-  // Lo que mide este juego: cuántos dibujos encendió su voz. Nada más.
+  // Lo que mide este juego: cuántos dibujos encendió su voz (eso lo midió la app) y cuántas
+  // palabras reconoció el PADRE (eso lo dijo él). Dos números con dos dueños: nunca se mezclan.
   const metricaActual = useCallback(
     (): Metrica => ({
       tipo: "activaciones",
       veces: activacionesRef.current,
+      reconocidas: reconocidasRef.current,
     }),
     [],
   );
@@ -135,15 +144,34 @@ function JuegoListo({
     setEncendido(true);
   }, []);
 
+  /** El padre oyó la palabra y lo dice. Es el ÚNICO camino a este estado. */
+  function marcarPalabra() {
+    if (reconocidaAhora) return;
+    reconocidasRef.current += 1;
+    setReconocidas(reconocidasRef.current);
+    setReconocidaAhora(true);
+    // Si el dibujo aún no estaba encendido (p. ej. dijo la palabra muy bajito), la voz igual pasó.
+    if (!yaContadoRef.current) {
+      yaContadoRef.current = true;
+      activacionesRef.current += 1;
+      setActivaciones(activacionesRef.current);
+      setEncendido(true);
+    }
+  }
+
   function siguiente() {
     yaContadoRef.current = false;
     setEncendido(false);
+    setReconocidaAhora(false);
     setIndice((i) => (i + 1) % mazo.length);
   }
 
   function reiniciarSesion() {
     activacionesRef.current = 0;
     setActivaciones(0);
+    reconocidasRef.current = 0;
+    setReconocidas(0);
+    setReconocidaAhora(false);
     yaContadoRef.current = false;
     setEncendido(false);
     setIndice(0);
@@ -176,9 +204,25 @@ function JuegoListo({
             picto={picto}
             medidas={medidas}
             encendido={encendido}
+            reconocida={reconocidaAhora}
             invitando={invitacionAmable(sesion)}
             onVocalizar={alVocalizar}
           />
+
+          {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.
+              Botón de adulto (44 px, discreto): el niño no tiene por qué tocarlo ni entenderlo. */}
+          <button
+            type="button"
+            onClick={marcarPalabra}
+            disabled={reconocidaAhora}
+            aria-pressed={reconocidaAhora}
+            className="border-exito text-tinta mx-auto min-h-11 rounded-full border px-5 text-sm font-medium disabled:opacity-60"
+            data-testid="dijo-la-palabra"
+          >
+            {reconocidaAhora
+              ? `Dijiste que dijo “${picto.palabra}”`
+              : `¿Dijo “${picto.palabra}”? Tócalo tú`}
+          </button>
 
           {!modoCalma ? (
             <p
@@ -190,6 +234,14 @@ function JuegoListo({
               <span className="font-sans font-semibold tabular-nums">
                 {activaciones}
               </span>
+              {reconocidas > 0 ? (
+                <>
+                  {" · "}Palabras que TÚ oíste:{" "}
+                  <span className="text-exito font-sans font-semibold tabular-nums">
+                    {reconocidas}
+                  </span>
+                </>
+              ) : null}
             </p>
           ) : null}
 

@@ -81,3 +81,44 @@ test("el padre puede pasar al siguiente dibujo cuando quiera (sin meta, sin carr
   const caja = await page.getByTestId("siguiente-picto").boundingBox();
   expect(caja?.height ?? 0).toBeGreaterThanOrEqual(64);
 });
+
+// EL JUEZ ES EL PADRE (petición del usuario en el gate, 2026-07-12; regla dura 3).
+// La app NO reconoce palabras y no va a fingir que sí: "dijo la palabra" solo puede encenderlo un
+// toque del padre. Este test se cae si alguien mete un reconocedor automático — que además sacaría
+// el audio del dispositivo (regla dura 2) o castigaría al niño con un falso "no".
+test("“dijo la palabra” lo decide el PADRE: la app jamás lo enciende sola", async ({
+  page,
+}) => {
+  await page.goto("/jugar/palabras");
+  await page.getByTestId("empezar-juego").click();
+
+  const juego = page.getByTestId("juego");
+  await expect(juego).toHaveAttribute("data-fase", "jugando", {
+    timeout: 20_000,
+  });
+
+  // El micrófono falso lleva rato "hablando" (voz genérica, ninguna palabra) y el dibujo YA se
+  // encendió por su voz. Aun así, la app NO se atreve a decir que dijo la palabra.
+  await expect(page.getByTestId("escenario")).toHaveAttribute(
+    "data-encendido",
+    "true",
+  );
+  await expect(page.getByTestId("picto")).toHaveAttribute(
+    "data-reconocida",
+    "false",
+  );
+
+  // Solo el toque del padre lo enciende — y es un control de adulto (≥44 px), no del niño.
+  const boton = page.getByTestId("dijo-la-palabra");
+  const caja = await boton.boundingBox();
+  expect(caja?.height ?? 0).toBeGreaterThanOrEqual(44);
+  await boton.click();
+  await expect(page.getByTestId("picto")).toHaveAttribute(
+    "data-reconocida",
+    "true",
+  );
+
+  // Y la celebración se lo atribuye a ÉL, no a la app.
+  await page.getByTestId("terminar").click();
+  await expect(page.getByTestId("reconocidas")).toContainText("tú oíste");
+});

@@ -26,9 +26,10 @@ const inversiones = (veces: number): Metrica => ({
   tipo: "inversiones",
   veces,
 });
-const activaciones = (veces: number): Metrica => ({
+const activaciones = (veces: number, reconocidas = 0): Metrica => ({
   tipo: "activaciones",
   veces,
+  reconocidas,
 });
 
 const tick = (vozActiva: boolean, metrica: Metrica): Evento => ({

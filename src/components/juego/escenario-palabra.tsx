@@ -21,6 +21,11 @@ type Props = {
   picto: Pictograma;
   medidas: MedidasVivas;
   encendido: boolean;
+  /**
+   * El PADRE oyó la palabra y lo dijo (no la app: la app no oye palabras — regla dura 3).
+   * Solo llega true por un toque suyo; ningún camino automático la enciende.
+   */
+  reconocida: boolean;
   invitando: boolean;
   onVocalizar: () => void;
 };
@@ -29,6 +34,7 @@ export function EscenarioPalabra({
   picto,
   medidas,
   encendido,
+  reconocida,
   invitando,
   onVocalizar,
 }: Props) {
@@ -74,10 +80,16 @@ export function EscenarioPalabra({
         />
         <div
           className={[
-            "bg-superficie relative rounded-[2rem] border-4 p-4 transition-colors duration-300 sm:p-6",
-            encendido ? "border-celebracion-fuerte" : "border-borde",
+            "bg-superficie ease-suave relative rounded-3xl border-4 p-4 transition-colors duration-[--dur-lenta] sm:p-6",
+            // Tres estados, tres bordes: apagado · su voz lo encendió · el PADRE oyó la palabra.
+            reconocida
+              ? "border-exito animar-palabra"
+              : encendido
+                ? "border-celebracion-fuerte"
+                : "border-borde",
           ].join(" ")}
           data-testid="picto"
+          data-reconocida={reconocida}
         >
           <Image
             src={rutaPictograma(picto)}
@@ -98,7 +110,11 @@ export function EscenarioPalabra({
         {picto.palabra}
       </p>
 
-      {encendido ? (
+      {reconocida ? (
+        <p className="text-exito text-lg font-medium" role="status">
+          ¡Dijo la palabra! Lo oíste tú.
+        </p>
+      ) : encendido ? (
         <p
           className="text-celebracion-fuerte text-lg font-medium"
           role="status"

@@ -90,6 +90,17 @@ segundos en silencio**. El dibujo se enciende con **cualquier sonido** que el ni
 intento, un "pe", un balbuceo. **La app no le exige la palabra y no juzga si la dijo bien**: solo
 sabe —y solo afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
 
+**¿Y si sí dijo la palabra? Usted lo dice.** Debajo del dibujo hay un botón pequeño —_"¿Dijo
+«perro»? Tócalo tú"_— y al tocarlo el dibujo hace una **celebración distinta** (se pone verde y
+late), porque decir la palabra merece más que un sonido cualquiera.
+
+Ese botón es **suyo, no del niño**, y es la única forma de encender esa celebración: **la app no
+reconoce palabras y no va a fingir que sí.** No es que no sepamos hacerlo: es que hacerlo bien
+exigiría mandar la voz de su hijo a un servidor (jamás), y hacerlo mal significaría decirle "no"
+cuando él **sí** dijo la palabra — el reconocimiento automático se equivoca justo con los niños
+que están aprendiendo a hablar. Usted estaba ahí y usted sabe. Al final, la celebración lo dice
+tal cual: _"Y **tú** oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
+
 ### La etapa del habla — cómo elegirla (nuevo)
 
 En **Ajustes → "¿Cómo habla su hijo hoy?"** usted elige la etapa. Las cápsulas del día se ajustan

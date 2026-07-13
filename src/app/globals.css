@@ -226,6 +226,27 @@ html[data-en-juego="true"] [data-intro-padre] {
   --font-display: var(--font-instrument-serif);
 }
 
+/*
+ * "¡Dijo la palabra!" — la celebración que dispara EL PADRE (nunca la app: no oye palabras).
+ * Es distinta de la de "hubo voz" a propósito: un latido corto y contenido, sin estridencia
+ * (COGA: sin sobrecarga sensorial). Con movimiento reducido, el borde verde sigue diciéndolo todo.
+ */
+@keyframes latido-palabra {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animar-palabra {
+  animation: latido-palabra var(--dur-lenta) ease-out 2;
+}
+
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -26,8 +26,12 @@ export type Metrica =
   | { tipo: "sostenido"; ms: number; rachaMs: number }
   /** Cohete: veces que la voz cambió de dirección (subió y bajó). */
   | { tipo: "inversiones"; veces: number }
-  /** Palabra↔objeto: dibujos que su voz activó (cualquier vocalización cuenta — ADR 005). */
-  | { tipo: "activaciones"; veces: number };
+  /**
+   * Palabra↔objeto. Dos números con DOS DUEÑOS, y no se mezclan:
+   *   - `veces`: dibujos que su voz activó (lo midió la app; cualquier vocalización cuenta, ADR 005).
+   *   - `reconocidas`: palabras que el PADRE dijo haber oído (lo juzgó él; la app no oye palabras).
+   */
+  | { tipo: "activaciones"; veces: number; reconocidas: number };
 
 /** El número que la métrica lleva dentro — con eso se compara contra la meta. */
 export function valorDeMetrica(metrica: Metrica): number {
@@ -37,7 +41,7 @@ export function valorDeMetrica(metrica: Metrica): number {
 export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
   sostenido: { tipo: "sostenido", ms: 0, rachaMs: 0 },
   inversiones: { tipo: "inversiones", veces: 0 },
-  activaciones: { tipo: "activaciones", veces: 0 },
+  activaciones: { tipo: "activaciones", veces: 0, reconocidas: 0 },
 };
 
 export type Fase =
