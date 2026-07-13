@@ -48,6 +48,17 @@
   --color-kid-yellow: #ffe08a;
   --color-kid-ink: #2b3530;
 
+  /*
+   * Globos de FIESTA — solo para la celebración de la palabra (ADR 009). Son los primos saturados
+   * de la paleta del niño: la de arriba es pastel a propósito (la pantalla donde él vive, calmada),
+   * y estos existen para el momento en que sí hay algo grande que celebrar. Sube una vez y se van.
+   */
+  --color-fiesta-coral: #f4714c;
+  --color-fiesta-verde: #5aa74a;
+  --color-fiesta-cielo: #3f9dc4;
+  --color-fiesta-sol: #ffc233;
+  --color-fiesta-uva: #9a6bbf;
+
   /* Sombras */
   --shadow-suave: 0 1px 2px rgba(31, 36, 32, 0.04);
   --shadow-tarjeta: 0 0 0 1px rgba(31, 36, 32, 0.06);
@@ -56,6 +67,29 @@
 
   /* Movimiento (curva "out-soft" del design system) */
   --ease-suave: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/*
+ * Paleta OSCURA del padre: los valores viven aquí una sola vez, sin aplicarse. Los dos caminos
+ * que la encienden (la preferencia del sistema y la elección explícita en Ajustes) solo mapean.
+ */
+:root {
+  --oscuro-fondo: #14171a;
+  --oscuro-superficie: #1b1f22;
+  --oscuro-borde: #232830;
+  --oscuro-tinta: #f2efe8;
+  --oscuro-tinta-suave: #969994;
+  --oscuro-acento: #b5d5ab;
+  --oscuro-acento-hover: #94bb89;
+  --oscuro-acento-suave: #233022;
+  /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
+  --oscuro-sobre-acento: #14171a;
+  /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
+     3.1:1 como texto): en oscuro se aclaran. */
+  --oscuro-exito: #8fbf82;
+  --oscuro-aviso: #ecc56f;
+  --oscuro-peligro: #e8927f;
+  --oscuro-info: #8fb6cc;
 }
 
 /* Capa semántica — operador (padre). Light por defecto, dark por preferencia del sistema. */
@@ -85,25 +119,45 @@
   --dur-lenta: 380ms;
 }
 
+/*
+ * Dos caminos al tema oscuro, un solo juego de valores:
+ *   1. El sistema lo pide — salvo que el padre haya elegido "claro" a mano.
+ *   2. El padre lo eligió en Ajustes (gana sobre el sistema).
+ * El tema del NIÑO no depende de nada de esto: `.tema-nino` redeclara la capa sobre su subtree
+ * y, por herencia de custom properties, gana siempre en su rama. Su pantalla es clara SIEMPRE.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --fondo: #14171a;
-    --superficie: #1b1f22;
-    --borde: #232830;
-    --tinta: #f2efe8;
-    --tinta-suave: #969994;
-    --acento: #b5d5ab;
-    --acento-hover: #94bb89;
-    --acento-suave: #233022;
-    /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
-    --sobre-acento: #14171a;
-    /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
-       3.1:1 como texto): en oscuro se aclaran. */
-    --exito: #8fbf82;
-    --aviso: #ecc56f;
-    --peligro: #e8927f;
-    --info: #8fb6cc;
+  :root:not([data-tema="claro"]) {
+    --fondo: var(--oscuro-fondo);
+    --superficie: var(--oscuro-superficie);
+    --borde: var(--oscuro-borde);
+    --tinta: var(--oscuro-tinta);
+    --tinta-suave: var(--oscuro-tinta-suave);
+    --acento: var(--oscuro-acento);
+    --acento-hover: var(--oscuro-acento-hover);
+    --acento-suave: var(--oscuro-acento-suave);
+    --sobre-acento: var(--oscuro-sobre-acento);
+    --exito: var(--oscuro-exito);
+    --aviso: var(--oscuro-aviso);
+    --peligro: var(--oscuro-peligro);
+    --info: var(--oscuro-info);
   }
+}
+
+:root[data-tema="oscuro"] {
+  --fondo: var(--oscuro-fondo);
+  --superficie: var(--oscuro-superficie);
+  --borde: var(--oscuro-borde);
+  --tinta: var(--oscuro-tinta);
+  --tinta-suave: var(--oscuro-tinta-suave);
+  --acento: var(--oscuro-acento);
+  --acento-hover: var(--oscuro-acento-hover);
+  --acento-suave: var(--oscuro-acento-suave);
+  --sobre-acento: var(--oscuro-sobre-acento);
+  --exito: var(--oscuro-exito);
+  --aviso: var(--oscuro-aviso);
+  --peligro: var(--oscuro-peligro);
+  --info: var(--oscuro-info);
 }
 
 /*
@@ -181,6 +235,46 @@ html[data-en-juego="true"] [data-intro-padre] {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-instrument-serif);
+}
+
+/*
+ * "¡Dijo la palabra!" — la celebración que dispara EL PADRE (nunca la app: no oye palabras).
+ * Globos que suben: el globo es el personaje de la casa, y decir la palabra merece verlo volar.
+ * Suben y se van (una sola vez, ~1,6 s): fiesta, no discoteca. Nada parpadea ni se repite en
+ * bucle — COGA, sin sobrecarga sensorial.
+ */
+@keyframes subir-globo {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    /* Se van de la pantalla: con globos grandes, un vuelo corto los deja "muriendo" a la vista. */
+    transform: translate(var(--deriva), -340px) rotate(var(--giro));
+    opacity: 0;
+  }
+}
+
+.globo-sube {
+  animation: subir-globo var(--vuelo) ease-out var(--espera) 1 both;
+}
+
+/*
+ * Con movimiento reducido los globos NO se muestran (la regla global de arriba los dejaría en un
+ * parpadeo de 0,01 ms, que es peor que nada). El borde verde y el texto siguen diciéndolo todo:
+ * la celebración jamás depende del movimiento.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .globos-celebracion {
+    display: none;
+  }
+}
+
+html[data-reducir-animacion="true"] .globos-celebracion {
+  display: none;
 }
 
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */

@@ -7,7 +7,7 @@ import { MIC_CONSTRAINTS, type MeterFrame, type MeterSource } from "./types";
 
 // Sufijo de versión manual: el archivo estático no lleva hash de contenido (ADR 004).
 // Súbelo si cambia src/worklets/rms-processor.ts.
-const WORKLET_URL = "/worklets/rms-processor.js?v=1";
+const WORKLET_URL = "/worklets/rms-processor.js?v=2";
 
 export class MicSession implements MeterSource {
   private audioContext: AudioContext | null = null;

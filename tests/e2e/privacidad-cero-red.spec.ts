@@ -2,86 +2,107 @@ import { expect, test } from "@playwright/test";
 
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.
+// Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los TRES juegos.
 //
 // Doble candado:
 //   A) Ninguna petición cross-origin en toda la sesión (si algún día Sentry despertara con DSN,
-//      o alguien añadiera una fuente/analítica externa, este candado lo caza).
-//   B) Cero peticiones de red durante la ventana de juego (desde que el globo vuela hasta antes
-//      de la celebración).
+//      o alguien añadiera una fuente/analítica externa —o una llamada a la API de ARASAAC—,
+//      este candado lo caza).
+//   B) Cero peticiones de red durante la ventana de juego.
 //
 // El service worker se bloquea en el contexto: así toda petición observada es de la app, no del
 // precache — y el test no puede "pasar" por accidente porque el SW sirvió algo de caché.
 
-test("cero red durante el juego, y nada cross-origin en toda la sesión", async ({
-  browser,
-}) => {
-  const context = await browser.newContext({
-    permissions: ["microphone"],
-    serviceWorkers: "block",
-  });
+const JUEGOS = [
+  { ruta: "/jugar/globo", nombre: "el globo" },
+  { ruta: "/jugar/cohete", nombre: "el cohete" },
+  { ruta: "/jugar/palabras", nombre: "palabra↔objeto" },
+] as const;
 
-  const violacionesCrossOrigin: string[] = [];
-  await context.route("**/*", async (route) => {
-    const url = route.request().url();
-    if (!url.startsWith("http://localhost:3000")) {
-      violacionesCrossOrigin.push(url);
-      await route.abort();
-      return;
+for (const juego of JUEGOS) {
+  test(`cero red durante ${juego.nombre}, y nada cross-origin en toda la sesión`, async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({
+      permissions: ["microphone"],
+      serviceWorkers: "block",
+    });
+
+    const violacionesCrossOrigin: string[] = [];
+    await context.route("**/*", async (route) => {
+      const url = route.request().url();
+      if (!url.startsWith("http://localhost:3000")) {
+        violacionesCrossOrigin.push(url);
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    });
+
+    const page = await context.newPage();
+
+    // En CI el servidor es `next build && next start` (sin HMR): la aserción es estricta.
+    // En local, el dev server añade ruido propio del entorno de desarrollo.
+    const esDev = !process.env.CI;
+    const ruidoDeDesarrollo = (url: string) =>
+      url.includes("webpack-hmr") ||
+      url.includes("hot-update") ||
+      url.includes("__nextjs") ||
+      url.includes("/_next/static/chunks/") ||
+      url.endsWith("favicon.ico");
+
+    await page.goto(juego.ruta);
+    await page.getByTestId("empezar-juego").click();
+
+    // Ventana de medición: abre cuando el juego ya corre.
+    const escena = page.getByTestId("juego");
+    await expect(escena).toHaveAttribute("data-fase", "jugando", {
+      timeout: 20_000,
+    });
+
+    const peticionesDuranteElJuego: string[] = [];
+    const registrar = (url: string) => {
+      if (esDev && ruidoDeDesarrollo(url)) return;
+      // Los pictogramas son archivos ESTÁTICOS del repo (ADR 008). Que el navegador los pida al
+      // servidor local es legítimo — lo prohibido es que salgan del dispositivo (candado A) o
+      // que se pidan a ARASAAC. Se anotan igual para poder verificarlo abajo.
+      peticionesDuranteElJuego.push(url);
+    };
+    page.on("request", (request) => registrar(request.url()));
+
+    // Deja correr el juego con voz real del micrófono falso.
+    await page.waitForTimeout(3000);
+
+    // Cierra la ventana ANTES de la celebración (que podría navegar/prefetchear).
+    page.removeAllListeners("request");
+
+    const soloPictogramasLocales = peticionesDuranteElJuego.filter(
+      (url) => !url.startsWith("http://localhost:3000/pictogramas/"),
+    );
+
+    expect(
+      soloPictogramasLocales,
+      `Hubo red durante ${juego.nombre}: ${soloPictogramasLocales.join(", ")}`,
+    ).toEqual([]);
+
+    // Y jamás una llamada a ARASAAC en runtime (los dibujos viven en el repo).
+    for (const url of peticionesDuranteElJuego) {
+      expect(url).not.toMatch(/arasaac/i);
     }
-    await route.continue();
+
+    expect(
+      violacionesCrossOrigin,
+      `Salió tráfico del dispositivo: ${violacionesCrossOrigin.join(", ")}`,
+    ).toEqual([]);
+
+    await context.close();
   });
+}
 
-  const page = await context.newPage();
-
-  // En CI el servidor es `next build && next start` (sin HMR): la aserción es estricta.
-  // En local, el dev server añade ruido propio del entorno de desarrollo.
-  const esDev = !process.env.CI;
-  const ruidoDeDesarrollo = (url: string) =>
-    url.includes("webpack-hmr") ||
-    url.includes("hot-update") ||
-    url.includes("__nextjs") ||
-    url.includes("/_next/static/chunks/") ||
-    url.endsWith("favicon.ico");
-
-  await page.goto("/jugar");
-  await page.getByTestId("empezar-juego").click();
-
-  // Ventana de medición: abre cuando el globo ya vuela.
-  const juego = page.getByTestId("juego");
-  await expect(juego).toHaveAttribute("data-fase", "jugando", {
-    timeout: 20_000,
-  });
-
-  const peticionesDuranteElJuego: string[] = [];
-  const registrar = (url: string) => {
-    if (esDev && ruidoDeDesarrollo(url)) return;
-    peticionesDuranteElJuego.push(url);
-  };
-  page.on("request", (request) => registrar(request.url()));
-
-  // Deja correr el juego con voz real del micrófono falso.
-  await page.waitForTimeout(3000);
-
-  // Cierra la ventana ANTES de la celebración (que podría navegar/prefetchear).
-  page.removeAllListeners("request");
-
-  expect(
-    peticionesDuranteElJuego,
-    `Hubo red durante el juego: ${peticionesDuranteElJuego.join(", ")}`,
-  ).toEqual([]);
-
-  expect(
-    violacionesCrossOrigin,
-    `Salió tráfico del dispositivo: ${violacionesCrossOrigin.join(", ")}`,
-  ).toEqual([]);
-
-  await context.close();
-});
-
-test("el audio del niño no deja rastro en el almacenamiento", async ({
+test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async ({
   page,
 }) => {
-  await page.goto("/jugar");
+  await page.goto("/jugar/cohete");
   await page.getByTestId("empezar-juego").click();
   await expect(page.getByTestId("juego")).toHaveAttribute(
     "data-fase",
@@ -92,7 +113,7 @@ test("el audio del niño no deja rastro en el almacenamiento", async ({
   );
   await page.waitForTimeout(2000);
 
-  // Lo único que la app puede guardar: perfil, ajustes y progreso. Nada de audio, en ningún lado.
+  // Lo único que la app puede guardar: perfil, ajustes y progreso. Nada de audio ni de tono.
   const almacenamiento = await page.evaluate(async () => {
     const local = Object.fromEntries(
       Object.entries(localStorage).map(([clave, valor]) => [
@@ -123,12 +144,12 @@ test("el audio del niño no deja rastro en el almacenamiento", async ({
   }
   expect(almacenamiento.sessionStorage).toEqual([]);
   expect(almacenamiento.basesDeDatos).toEqual([]);
-  // Ni en el sessionStorage ajeno puede haber rastro de audio.
+  // Ni en el sessionStorage ajeno puede haber rastro de audio ni de tono.
   expect(almacenamiento.sessionStorageContenido).not.toMatch(
-    /audio|rms|pcm|wav|data:audio/i,
+    /audio|rms|pcm|wav|pitch|data:audio/i,
   );
-  // Ni rastros de audio en lo que sí se guarda.
+  // Ni rastros de audio/pitch en lo que sí se guarda.
   expect(almacenamiento.contenido).not.toMatch(
-    /audio|rms|pcm|wav|blob:|data:audio/i,
+    /audio|rms|pcm|wav|pitch|hz|blob:|data:audio/i,
   );
 });

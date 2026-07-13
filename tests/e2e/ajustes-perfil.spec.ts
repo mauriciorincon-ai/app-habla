@@ -58,3 +58,43 @@ test("cancelar la edición no guarda nada", async ({ page }) => {
 
   await expect(page.getByTestId("perfil-apodo")).toHaveText("Peque");
 });
+
+// HALLAZGO DEL GATE (usuario, 2026-07-12): la app seguía SOLO al sistema operativo, así que un
+// padre con el computador en oscuro no tenía forma de ver la pantalla clara sin cambiarle el tema
+// a toda su máquina. Ahora elige. Lo que este test blinda: que su elección le gane al sistema, y
+// que la pantalla del NIÑO siga clara de todas formas (el design-system no se negocia).
+test("el padre elige claro u oscuro, y su elección le gana al sistema", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "dark" }); // el computador, en oscuro
+  await page.goto("/");
+  await page.getByRole("textbox", { name: /cómo le dicen/i }).fill("Peque");
+  await page.getByRole("button", { name: "Animales" }).click();
+  await page.getByTestId("terminar-onboarding").click();
+
+  const fondoDe = () =>
+    page.evaluate(() =>
+      getComputedStyle(document.documentElement).getPropertyValue("--fondo"),
+    );
+
+  await page.getByTestId("ir-a-ajustes").click();
+  const enOscuro = await fondoDe();
+
+  await page.getByTestId("apariencia-claro").click();
+  const enClaro = await fondoDe();
+  expect(enClaro).not.toBe(enOscuro);
+
+  // Sobrevive a la recarga y se aplica ANTES de pintar (sin parpadeo del tema del sistema).
+  await page.reload();
+  expect(await page.locator("html").getAttribute("data-tema")).toBe("claro");
+  expect(await fondoDe()).toBe(enClaro);
+
+  // Y la pantalla del niño: clara SIEMPRE, elija el padre lo que elija.
+  await page.getByTestId("apariencia-oscuro").click();
+  await page.goto("/jugar/globo");
+  await page.getByTestId("empezar-juego").click();
+  const fondoDelNino = await page
+    .getByTestId("juego")
+    .evaluate((el) => getComputedStyle(el).getPropertyValue("--fondo"));
+  expect(fondoDelNino).not.toBe(enOscuro);
+});

@@ -16,3 +16,6 @@ test-results/
 .vercel/
 .DS_Store
 Thumbs.db
+
+# Informes de Lighthouse: se generan al correr el gate, no se versionan.
+.lighthouseci/

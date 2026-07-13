@@ -34,6 +34,14 @@ export const viewport: Viewport = {
   themeColor: "#FBF8F2",
 };
 
+/**
+ * El tema elegido por el padre se aplica ANTES de la primera pintura: si esperáramos a que React
+ * hidrate, la pantalla parpadearía del tema del sistema al elegido. Va inline a propósito (un
+ * archivo aparte llegaría tarde). Si no hay elección guardada, no hace nada y manda el sistema.
+ * Solo lee su propia clave de ajustes; nada de audio, nada de red (regla dura 2).
+ */
+const APLICAR_TEMA = `try{var a=localStorage.getItem("habla:v1:ajustes");if(a){var t=JSON.parse(a).apariencia;if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t;}}catch(e){}`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,7 +51,11 @@ export default function RootLayout({
     <html
       lang="es-CO"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: APLICAR_TEMA }} />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <RegistrarSW />
