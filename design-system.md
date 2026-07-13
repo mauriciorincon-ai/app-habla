@@ -22,7 +22,11 @@ Dos audiencias, una paleta dual:
 
 - **Operador (el padre):** calidez informativa sin estética de dashboard. Verde salvia como
   primario (regulación, restauración), crema en vez de blanco puro (menos fatiga), coral y ámbar
-  solo para celebrar hitos y la voz parental. Soporta light y dark (uso nocturno).
+  solo para celebrar hitos y la voz parental. Soporta light y dark (uso nocturno): sigue al
+  sistema por defecto, **y desde el S2 el padre puede fijarlo** en Ajustes (`data-tema` en el
+  `<html>` le gana a `prefers-color-scheme`; se aplica antes de la primera pintura, sin parpadeo).
+  Los valores de la paleta oscura se declaran **una sola vez** (`--oscuro-*`); los dos caminos que
+  la encienden solo mapean.
 - **Niño (4–6, perfil neurodivergente):** calma y cero ruido visual. Paleta propia, **SIEMPRE
   clara** (sin dark mode — la pantalla del juego no cambia con el sistema), áreas táctiles
   grandes, contraste alto solo en lo accionable.

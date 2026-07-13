@@ -58,6 +58,29 @@
   --ease-suave: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
+/*
+ * Paleta OSCURA del padre: los valores viven aquí una sola vez, sin aplicarse. Los dos caminos
+ * que la encienden (la preferencia del sistema y la elección explícita en Ajustes) solo mapean.
+ */
+:root {
+  --oscuro-fondo: #14171a;
+  --oscuro-superficie: #1b1f22;
+  --oscuro-borde: #232830;
+  --oscuro-tinta: #f2efe8;
+  --oscuro-tinta-suave: #969994;
+  --oscuro-acento: #b5d5ab;
+  --oscuro-acento-hover: #94bb89;
+  --oscuro-acento-suave: #233022;
+  /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
+  --oscuro-sobre-acento: #14171a;
+  /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
+     3.1:1 como texto): en oscuro se aclaran. */
+  --oscuro-exito: #8fbf82;
+  --oscuro-aviso: #ecc56f;
+  --oscuro-peligro: #e8927f;
+  --oscuro-info: #8fb6cc;
+}
+
 /* Capa semántica — operador (padre). Light por defecto, dark por preferencia del sistema. */
 :root {
   --fondo: var(--color-cream-50);
@@ -85,25 +108,45 @@
   --dur-lenta: 380ms;
 }
 
+/*
+ * Dos caminos al tema oscuro, un solo juego de valores:
+ *   1. El sistema lo pide — salvo que el padre haya elegido "claro" a mano.
+ *   2. El padre lo eligió en Ajustes (gana sobre el sistema).
+ * El tema del NIÑO no depende de nada de esto: `.tema-nino` redeclara la capa sobre su subtree
+ * y, por herencia de custom properties, gana siempre en su rama. Su pantalla es clara SIEMPRE.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --fondo: #14171a;
-    --superficie: #1b1f22;
-    --borde: #232830;
-    --tinta: #f2efe8;
-    --tinta-suave: #969994;
-    --acento: #b5d5ab;
-    --acento-hover: #94bb89;
-    --acento-suave: #233022;
-    /* En oscuro el acento es claro: el texto encima debe ser oscuro. */
-    --sobre-acento: #14171a;
-    /* Los colores de estado del tema claro no alcanzan AA sobre fondo oscuro (el peligro daba
-       3.1:1 como texto): en oscuro se aclaran. */
-    --exito: #8fbf82;
-    --aviso: #ecc56f;
-    --peligro: #e8927f;
-    --info: #8fb6cc;
+  :root:not([data-tema="claro"]) {
+    --fondo: var(--oscuro-fondo);
+    --superficie: var(--oscuro-superficie);
+    --borde: var(--oscuro-borde);
+    --tinta: var(--oscuro-tinta);
+    --tinta-suave: var(--oscuro-tinta-suave);
+    --acento: var(--oscuro-acento);
+    --acento-hover: var(--oscuro-acento-hover);
+    --acento-suave: var(--oscuro-acento-suave);
+    --sobre-acento: var(--oscuro-sobre-acento);
+    --exito: var(--oscuro-exito);
+    --aviso: var(--oscuro-aviso);
+    --peligro: var(--oscuro-peligro);
+    --info: var(--oscuro-info);
   }
+}
+
+:root[data-tema="oscuro"] {
+  --fondo: var(--oscuro-fondo);
+  --superficie: var(--oscuro-superficie);
+  --borde: var(--oscuro-borde);
+  --tinta: var(--oscuro-tinta);
+  --tinta-suave: var(--oscuro-tinta-suave);
+  --acento: var(--oscuro-acento);
+  --acento-hover: var(--oscuro-acento-hover);
+  --acento-suave: var(--oscuro-acento-suave);
+  --sobre-acento: var(--oscuro-sobre-acento);
+  --exito: var(--oscuro-exito);
+  --aviso: var(--oscuro-aviso);
+  --peligro: var(--oscuro-peligro);
+  --info: var(--oscuro-info);
 }
 
 /*

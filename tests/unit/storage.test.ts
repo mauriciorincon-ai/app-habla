@@ -62,6 +62,7 @@ describe("persistencia local (ADR 002)", () => {
       modoCalma: true,
       reducirAnimaciones: true,
       etapa: "palabras-sueltas",
+      apariencia: "oscuro",
     });
     guardarProgreso({
       ...PROGRESO_INICIAL,
@@ -75,6 +76,24 @@ describe("persistencia local (ADR 002)", () => {
     expect(leerAjustes()).toEqual(AJUSTES_DEFECTO);
     expect(leerProgreso()).toEqual(PROGRESO_INICIAL);
     expect(window.localStorage.getItem("otra-app:algo")).toBe("no es mío");
+  });
+
+  // Los ajustes guardados en el dispositivo real del usuario NO traen "apariencia" (es del S2):
+  // leerlos no puede tirarlos a la basura ni dejar la app sin tema.
+  it("unos ajustes viejos (sin apariencia) se leen igual y caen en 'sistema'", () => {
+    window.localStorage.setItem(
+      CLAVES.ajustes,
+      JSON.stringify({
+        modoCalma: true,
+        reducirAnimaciones: false,
+        etapa: "palabras-sueltas",
+      }),
+    );
+
+    const ajustes = leerAjustes();
+    expect(ajustes.apariencia).toBe("sistema");
+    // Y lo que el padre ya había elegido sigue intacto.
+    expect(ajustes.modoCalma).toBe(true);
   });
 
   it("las claves están versionadas (para migrar sin romper al niño)", () => {

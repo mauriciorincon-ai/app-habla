@@ -25,13 +25,23 @@ export const AjustesSchema = z.object({
    * (ADR 005) — "primeras-frases" solo existe aquí si el padre la eligió explícitamente.
    */
   etapa: z.enum(ETAPAS).catch(ETAPA_DEFECTO),
+  /**
+   * Claro u oscuro en la pantalla del PADRE. Se llama "apariencia" y no "tema" porque en esta app
+   * `tema` ya es otra cosa: los temas de interés del niño (animales, carros…). "sistema" (default)
+   * sigue al sistema operativo; el padre puede forzarlo sin tener que cambiarle el tema a todo el
+   * computador (hallazgo del gate, 2026-07-12). La pantalla del NIÑO es clara SIEMPRE, elija lo
+   * que elija: no depende de esto.
+   */
+  apariencia: z.enum(["sistema", "claro", "oscuro"]).catch("sistema"),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
+export type Apariencia = AjustesGuardados["apariencia"];
 
 export const AJUSTES_DEFECTO: AjustesGuardados = {
   modoCalma: false,
   reducirAnimaciones: false,
   etapa: ETAPA_DEFECTO,
+  apariencia: "sistema",
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

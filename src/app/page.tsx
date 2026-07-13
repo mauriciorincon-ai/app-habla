@@ -38,17 +38,8 @@ export default function HoyPage() {
       </header>
 
       <HoyCliente />
-
-      {/* El pie sigue enlazando, pero ya no es la ÚNICA puerta: el que baja hasta aquí también la
-          encuentra, y el que no baja la tiene arriba. */}
-      <nav className="text-tinta-suave text-center text-sm">
-        <Link
-          href="/ajustes"
-          className="min-h-11 underline-offset-4 hover:underline"
-        >
-          Ajustes y privacidad
-        </Link>
-      </nav>
+      {/* Sin enlace repetido al pie: la puerta a Ajustes es una sola, arriba y visible. Dos
+          entradas a lo mismo en la misma pantalla es ruido (gate del usuario, 2026-07-12). */}
     </main>
   );
 }

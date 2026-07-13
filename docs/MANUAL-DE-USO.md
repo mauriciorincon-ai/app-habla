@@ -129,6 +129,16 @@ cuando el juego con meta le resulta demasiado. Está disponible en los tres jueg
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
 app lo respeta sin que usted toque nada).
 
+### Claro u oscuro
+
+En Ajustes, **"Claro u oscuro"** decide cómo se ve **su** pantalla: puede seguir al computador o
+al teléfono ("El del sistema", lo normal), o fijarla en claro u oscuro aunque el aparato esté al
+revés. Es útil de noche, al lado del niño.
+
+**La pantalla del niño no cambia nunca: es clara siempre.** No depende de la hora, del sistema ni
+de lo que usted elija — su juego se ve igual todos los días, y esa previsibilidad es parte del
+diseño.
+
 ## Privacidad: qué pasa con la voz de su hijo
 
 Esta es la promesa más importante de la app:

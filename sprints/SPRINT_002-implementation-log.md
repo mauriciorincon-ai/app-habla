@@ -226,6 +226,33 @@ segundos seguidos, sin cortarse."_ Ahora cada número dice lo que de verdad se m
 - **El modo calma no era el defecto** (funciona como se diseñó: sin meta, sin presión, se cierra
   con "Ya jugamos"): fue el síntoma que destapó la mentira del contador.
 
+## Cuarto hallazgo del gate: el tema solo lo decidía el sistema (2026-07-12)
+
+El usuario buscó el modo claro y no lo encontró: la app seguía **únicamente** a
+`prefers-color-scheme`, y con su Mac en oscuro no tenía forma de ver la pantalla clara sin cambiar
+el tema de **todo el computador**. No era un defecto (era el diseño del S1), pero sí una carencia.
+
+- **Ajuste nuevo `apariencia`** (`sistema` | `claro` | `oscuro`, default `sistema` con `.catch`, así
+  los ajustes del S1 migran solos). Se llama **apariencia y no "tema"** a propósito: en esta app
+  `tema` ya significa _tema de interés_ del niño (animales, carros) — dos cosas distintas con el
+  mismo nombre es una bomba de tiempo.
+- **CSS sin duplicar valores:** la paleta oscura vive una sola vez en `--oscuro-*`; los dos caminos
+  que la encienden (`@media (prefers-color-scheme: dark) :root:not([data-tema="claro"])` y
+  `:root[data-tema="oscuro"]`) solo mapean.
+- **Sin parpadeo:** un script inline en `<head>` aplica `data-tema` **antes de la primera pintura**
+  (esperar a que React hidrate haría que la pantalla saltara del tema del sistema al elegido). Solo
+  lee su propia clave de ajustes — nada de audio, nada de red.
+- **La pantalla del niño NO se toca:** `.tema-nino` redeclara la capa semántica sobre su subtree y,
+  por herencia de custom properties, gana siempre en su rama. Su juego es claro elija el padre lo
+  que elija. **Bajo e2e** (con el sistema en oscuro + apariencia oscura, el escenario del niño
+  sigue claro) y bajo axe en los dos temas.
+- **Enlace duplicado, fuera:** "Hoy" tenía la puerta a Ajustes arriba (el arreglo anterior) **y**
+  al pie. Dos entradas a lo mismo en una pantalla es ruido; queda la de arriba.
+- **El engranaje NO va en las pantallas del niño** (lo preguntó el usuario): el selector y los
+  juegos son su vista, y ahí un engranaje es una invitación a entrar donde vive "Borrar mis datos".
+  La vista del niño es soberana (design-system). El camino del padre existe y es corto:
+  Salir → Volver a Hoy → Ajustes.
+
 ## Decisiones tomadas durante la construcción
 
 - **Los temas del onboarding por fin HACEN algo** (deuda honesta declarada en el S1): se
