@@ -228,23 +228,41 @@ html[data-en-juego="true"] [data-intro-padre] {
 
 /*
  * "¡Dijo la palabra!" — la celebración que dispara EL PADRE (nunca la app: no oye palabras).
- * Es distinta de la de "hubo voz" a propósito: un latido corto y contenido, sin estridencia
- * (COGA: sin sobrecarga sensorial). Con movimiento reducido, el borde verde sigue diciéndolo todo.
+ * Globos que suben: el globo es el personaje de la casa, y decir la palabra merece verlo volar.
+ * Suben y se van (una sola vez, ~1,6 s): fiesta, no discoteca. Nada parpadea ni se repite en
+ * bucle — COGA, sin sobrecarga sensorial.
  */
-@keyframes latido-palabra {
+@keyframes subir-globo {
   0% {
-    transform: scale(1);
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
   }
-  40% {
-    transform: scale(1.06);
+  15% {
+    opacity: 1;
   }
   100% {
-    transform: scale(1);
+    transform: translate(var(--deriva), -220px) rotate(var(--giro));
+    opacity: 0;
   }
 }
 
-.animar-palabra {
-  animation: latido-palabra var(--dur-lenta) ease-out 2;
+.globo-sube {
+  animation: subir-globo var(--vuelo) ease-out var(--espera) 1 both;
+}
+
+/*
+ * Con movimiento reducido los globos NO se muestran (la regla global de arriba los dejaría en un
+ * parpadeo de 0,01 ms, que es peor que nada). El borde verde y el texto siguen diciéndolo todo:
+ * la celebración jamás depende del movimiento.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .globos-celebracion {
+    display: none;
+  }
+}
+
+html[data-reducir-animacion="true"] .globos-celebracion {
+  display: none;
 }
 
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */

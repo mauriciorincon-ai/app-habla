@@ -112,13 +112,42 @@ test("“dijo la palabra” lo decide el PADRE: la app jamás lo enciende sola",
   const boton = page.getByTestId("dijo-la-palabra");
   const caja = await boton.boundingBox();
   expect(caja?.height ?? 0).toBeGreaterThanOrEqual(44);
+  // Antes del toque no hay fiesta: la app no celebra una palabra que no sabe si existió.
+  await expect(page.getByTestId("globos-celebracion")).toHaveCount(0);
+
   await boton.click();
   await expect(page.getByTestId("picto")).toHaveAttribute(
     "data-reconocida",
     "true",
   );
+  // Y ahí sí: la bandada de globos (la celebración que pidió el usuario en el gate).
+  await expect(page.getByTestId("globos-celebracion")).toBeVisible();
 
   // Y la celebración se lo atribuye a ÉL, no a la app.
   await page.getByTestId("terminar").click();
   await expect(page.getByTestId("reconocidas")).toContainText("tú oíste");
+});
+
+// La celebración NUNCA depende del movimiento: con animaciones reducidas los globos no vuelan
+// (un parpadeo de 0,01 ms sería peor que nada), pero el borde verde y el texto siguen ahí.
+test("con movimiento reducido no hay globos, pero la buena noticia se sigue viendo", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/jugar/palabras");
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("juego")).toHaveAttribute(
+    "data-fase",
+    "jugando",
+    { timeout: 20_000 },
+  );
+
+  await page.getByTestId("dijo-la-palabra").click();
+
+  await expect(page.getByTestId("globos-celebracion")).toBeHidden();
+  await expect(page.getByTestId("picto")).toHaveAttribute(
+    "data-reconocida",
+    "true",
+  );
+  await expect(page.getByText("¡Dijo la palabra! Lo oíste tú.")).toBeVisible();
 });

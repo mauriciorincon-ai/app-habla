@@ -91,8 +91,9 @@ intento, un "pe", un balbuceo. **La app no le exige la palabra y no juzga si la 
 sabe —y solo afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
 
 **¿Y si sí dijo la palabra? Usted lo dice.** Debajo del dibujo hay un botón pequeño —_"¿Dijo
-«perro»? Tócalo tú"_— y al tocarlo el dibujo hace una **celebración distinta** (se pone verde y
-late), porque decir la palabra merece más que un sonido cualquiera.
+«perro»? Tócalo tú"_— y al tocarlo sube una **bandada de globos** por encima del dibujo, porque decir la
+palabra merece más que un sonido cualquiera. (Si activó "reducir animaciones", los globos no
+vuelan pero la celebración se sigue viendo: el dibujo se pone verde y lo dice con palabras.)
 
 Ese botón es **suyo, no del niño**, y es la única forma de encender esa celebración: **la app no
 reconoce palabras y no va a fingir que sí.** No es que no sepamos hacerlo: es que hacerlo bien

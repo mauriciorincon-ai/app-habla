@@ -12,6 +12,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { rutaPictograma, type Pictograma } from "@content/pictogramas";
+import { GlobosCelebracion } from "./globos-celebracion";
 import type { MedidasVivas } from "./use-voice-session";
 
 /** Voz sostenida mínima para encender el dibujo. Corto a propósito: un intento basta. */
@@ -69,6 +70,9 @@ export function EscenarioPalabra({
       data-encendido={encendido}
     >
       <div className="relative flex items-center justify-center">
+        {/* La bandada sube POR ENCIMA del dibujo cuando el padre dice que sí dijo la palabra. */}
+        {reconocida ? <GlobosCelebracion /> : null}
+
         {/* El aura responde a su voz en tiempo real (y se queda encendida al lograrlo). */}
         <div
           ref={auraRef}
@@ -83,7 +87,7 @@ export function EscenarioPalabra({
             "bg-superficie ease-suave relative rounded-3xl border-4 p-4 transition-colors duration-[--dur-lenta] sm:p-6",
             // Tres estados, tres bordes: apagado · su voz lo encendió · el PADRE oyó la palabra.
             reconocida
-              ? "border-exito animar-palabra"
+              ? "border-exito"
               : encendido
                 ? "border-celebracion-fuerte"
                 : "border-borde",

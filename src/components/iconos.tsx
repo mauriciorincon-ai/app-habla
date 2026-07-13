@@ -7,6 +7,7 @@
 
 type IconoProps = {
   className?: string;
+  style?: React.CSSProperties;
 };
 
 const trazo = {
@@ -128,11 +129,17 @@ export function IconoAjustes({ className }: IconoProps) {
  * EL GLOBO — el personaje que la voz del niño mueve.
  * No es un icono: lleva color propio (paleta del niño) y por eso no usa `currentColor`.
  */
-export function Globo({ className }: IconoProps) {
+/** El globo acepta color y tamaño: en la celebración de la palabra vuela toda una bandada. */
+export function Globo({
+  className,
+  style,
+  relleno = "var(--color-kid-peach)",
+}: IconoProps & { relleno?: string }) {
   return (
     <svg
       viewBox="0 0 64 96"
       className={className}
+      style={style}
       role="img"
       aria-label="globo"
       focusable="false"
@@ -154,7 +161,7 @@ export function Globo({ className }: IconoProps) {
         cy="32"
         rx="25"
         ry="31"
-        fill="var(--color-kid-peach)"
+        fill={relleno}
         stroke="var(--color-kid-ink)"
         strokeWidth="1.5"
       />
