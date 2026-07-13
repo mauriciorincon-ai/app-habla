@@ -9,21 +9,26 @@
 
 import { Globo } from "@/components/iconos";
 
-/** Bandada determinista: mismos globos siempre. Nada de aleatorio (el azar no se puede testear). */
+/**
+ * Bandada determinista: mismos globos siempre. Nada de aleatorio (el azar no se puede testear).
+ * Grandes y saturados por pedido del usuario en el gate (2026-07-12): la celebración de la palabra
+ * tiene que SENTIRSE, no insinuarse. El sosiego se cuida por otro lado — sube una sola vez y se va.
+ */
 const GLOBOS = [
-  { izquierda: 6, deriva: -18, giro: -8, vuelo: 1500, espera: 0, alto: 44 },
-  { izquierda: 22, deriva: 14, giro: 6, vuelo: 1700, espera: 120, alto: 56 },
-  { izquierda: 38, deriva: -10, giro: -5, vuelo: 1400, espera: 60, alto: 38 },
-  { izquierda: 54, deriva: 20, giro: 9, vuelo: 1800, espera: 200, alto: 52 },
-  { izquierda: 70, deriva: -14, giro: -7, vuelo: 1550, espera: 90, alto: 42 },
-  { izquierda: 86, deriva: 12, giro: 5, vuelo: 1650, espera: 30, alto: 48 },
+  { izquierda: -4, deriva: -26, giro: -9, vuelo: 1700, espera: 0, alto: 96 },
+  { izquierda: 16, deriva: 18, giro: 7, vuelo: 2000, espera: 140, alto: 118 },
+  { izquierda: 36, deriva: -14, giro: -6, vuelo: 1600, espera: 60, alto: 84 },
+  { izquierda: 56, deriva: 26, giro: 10, vuelo: 2100, espera: 220, alto: 110 },
+  { izquierda: 74, deriva: -20, giro: -8, vuelo: 1800, espera: 100, alto: 92 },
+  { izquierda: 90, deriva: 16, giro: 6, vuelo: 1900, espera: 40, alto: 104 },
 ] as const;
 
 const COLORES = [
-  "var(--color-kid-peach)",
-  "var(--color-kid-sage)",
-  "var(--color-kid-sky)",
-  "var(--color-kid-yellow)",
+  "var(--color-fiesta-coral)",
+  "var(--color-fiesta-verde)",
+  "var(--color-fiesta-cielo)",
+  "var(--color-fiesta-sol)",
+  "var(--color-fiesta-uva)",
 ];
 
 export function GlobosCelebracion() {

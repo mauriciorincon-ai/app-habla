@@ -34,6 +34,14 @@ Dos audiencias, una paleta dual:
 Regla de oro: **la vista del niño es soberana** — ningún elemento del operador se filtra al
 escenario del juego (solo un botón de salir, pequeño y discreto, para el padre).
 
+### Globos de fiesta (celebración de la palabra — ADR 009)
+
+`--color-fiesta-*` (coral · verde · cielo · sol · uva): los primos **saturados** de la paleta del
+niño. La paleta del niño es pastel a propósito —es la pantalla donde él vive, y tiene que ser
+calmada—; estos colores existen **solo** para el instante en que el padre dice que dijo la palabra.
+Regla: se usan en algo que **sube una vez y se va**, nunca en superficie fija. El sosiego se cuida
+por la duración, no por la saturación.
+
 ## Paleta
 
 ### Capa semántica (lo ÚNICO que consume la UI)
