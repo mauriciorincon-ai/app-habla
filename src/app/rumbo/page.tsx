@@ -22,8 +22,8 @@ export default function RumboPage() {
         </h1>
         <p className="text-tinta-suave mt-3 max-w-prose">
           Cómo van, contado con lo que de verdad pasó: los días que jugaron, las
-          palabras que practicaron, lo que su voz hizo. Sin notas, sin puntajes,
-          sin comparar con nadie. Volver es lo que cuenta — no la racha.
+          palabras que practicaron, lo que su voz hizo. Sin comparar con nadie y
+          sin apuros: volver es lo que cuenta, no la racha.
         </p>
       </header>
 

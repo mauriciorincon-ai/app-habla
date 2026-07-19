@@ -186,8 +186,13 @@ test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async
     };
   });
 
+  // Lista blanca CONSCIENTE de claves locales (ADR-002). El S4 le suma `sesiones` (números del
+  // Rumbo) y `objetivo` (texto del padre) a las del S1/S3; el candado de CONTENIDO de abajo sigue
+  // vetando cualquier rastro de audio o de tono, sea cual sea la clave.
   for (const clave of almacenamiento.claves) {
-    expect(clave).toMatch(/^habla:v1:(perfil|ajustes|progreso)$/);
+    expect(clave).toMatch(
+      /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo)$/,
+    );
   }
   expect(almacenamiento.sessionStorage).toEqual([]);
   expect(almacenamiento.basesDeDatos).toEqual([]);
