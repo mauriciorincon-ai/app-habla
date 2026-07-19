@@ -10,7 +10,7 @@
 - [x] F0 — Setup (branch, deltas kit ×5, ítem 0, ADR-010 esqueleto, verificación de supuestos)
 - [x] F1 — Motores puros + candados + gemelas + banco de voz (139 unit verdes)
 - [x] F2 — UI (estudio, Ajustes, gemelas, integración de voz) — a: selector+gemelas · b: estudio · c: voz en los juegos
-- [ ] F3 — Integración + e2e (mic fake, cero-red, axe)
+- [x] F3 — Integración + e2e (mic fake, cero-red, axe) — 103 e2e verdes en todos los proyectos
 - [ ] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check, PR)
 - [ ] **Gate del usuario** (escritorio) → merge → `/cierre-sprint habla` (o difiere según F0 #6)
 
@@ -134,3 +134,31 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   - Limpieza: eliminado el import `type Etapa` sin usar en `schemas.ts` → **lint 0 warnings**.
   - 139 unit verdes intactos; typecheck y build limpios. La integración (que el picto suene, que
     la voz NO encienda el dibujo) se prueba POR LA UI en F3 (e2e `voz-familiar.spec.ts`).
+
+## Hallazgos de F3 (integración + e2e) — 103 e2e verdes (de 89)
+
+- **`estudio.spec.ts` (2):** grabar con el mic falso → escuchar → aceptar → la cobertura sube y lo
+  grabado aparece en "lo que ya grabaste" (aserción al resultado OBSERVABLE, regla 8). Estado
+  mic-denegado forzado sobrescribiendo `getUserMedia` (con `--use-fake-ui-for-media-stream` no hay
+  diálogo real que rechazar → único camino honesto).
+- **`voz-familiar.spec.ts` (3):** el picto ofrece y dispara la voz (autoplay + altavoz ≥64 px,
+  `data-fuente-voz=familiar`, evento `voz-familiar:sono`) · el toggle de Ajustes la silencia POR LA
+  UI · sin grabación, fallback limpio (sin altavoz). Se inyecta la grabación directo en IndexedDB
+  con la forma real (`{datos:ArrayBuffer, mimeType, duracionMs, fecha}`) y se apoya en que el mazo
+  de pictos es DETERMINISTA por semilla (misma palabra tras recargar — se asevera). **El eco
+  parlante→mic sigue sin ser medible con el mic falso** (ítem de gate de tablet): el e2e prueba el
+  CABLEADO, no el eco.
+- **`gemelas.spec.ts` (2):** partida completa (padre marca 6 rondas → celebración honesta "6
+  rondas" → registro `habla:v1:gemelas` con 6 juicios) y saltar sin castigo. **Sonda de
+  `getUserMedia` = 0**: gemelas jamás abre el micrófono (regla dura 2).
+- **`privacidad-cero-red` (+1):** grabar Y reproducir en el estudio = cero tráfico cross-origin
+  (banco 100 % local, regla dura 2-bis).
+- **`a11y` (+2 rutas × 2 temas):** `/estudio` y `/jugar/gemelas` con axe limpio en claro y oscuro.
+- **Regresión cazada (lección):** `selector-juegos.spec.ts` seguía aseverando "exactamente 3
+  juegos" — F2a metió la 4ª tarjeta (gemelas) pero NO corrió la suite entera, así que el e2e quedó
+  mintiendo hasta F3. Corregido a 4 (+ que gemelas dice "no usa micrófono"). **Lección: toda UI que
+  toca una pantalla ya cubierta por e2e corre la suite ENTERA en su fase, no al cierre.**
+- **Reglas 6-8 de testing aplicadas:** sin `import.meta.url` en specs · sondas de eventos/estado
+  vía `page.evaluate`/`addInitScript` (no `getByRole("alert")` desnudo) · el interruptor
+  `toggle-voz-familiar` se opera con `.click()` y la aserción va al resultado (el altavoz que
+  desaparece), no al `aria-checked`.

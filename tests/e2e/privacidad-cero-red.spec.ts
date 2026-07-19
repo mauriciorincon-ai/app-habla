@@ -99,6 +99,53 @@ for (const juego of JUEGOS) {
   });
 }
 
+// EL BANCO DE VOZ FAMILIAR ES 100 % LOCAL (regla dura 2-bis, S3): grabar Y reproducir la voz de
+// la familia no dispara UNA sola llamada de red. Si alguien subiera el banco a la nube (o metiera
+// una analítica en el estudio), este candado lo caza.
+test("cero red al grabar y reproducir en el estudio (banco 100 % local)", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    permissions: ["microphone"],
+    serviceWorkers: "block",
+  });
+
+  const violacionesCrossOrigin: string[] = [];
+  await context.route("**/*", async (route) => {
+    const url = route.request().url();
+    if (!url.startsWith("http://localhost:3000")) {
+      violacionesCrossOrigin.push(url);
+      await route.abort();
+      return;
+    }
+    await route.continue();
+  });
+
+  const page = await context.newPage();
+  await page.goto("/estudio");
+
+  // Grabar un ítem con el micrófono falso…
+  await page.getByTestId("ir-al-lote").click();
+  await page.getByTestId("grabar").click();
+  await expect(page.getByTestId("detener")).toBeVisible();
+  await page.waitForTimeout(600);
+  await page.getByTestId("detener").click();
+
+  // …escucharlo (reproduce la voz familiar, blob local)…
+  await expect(page.getByTestId("escuchar-captura")).toBeVisible();
+  await page.getByTestId("escuchar-captura").click();
+  // …y guardarlo en el banco (IndexedDB local).
+  await page.getByTestId("aceptar").click();
+  await expect(page.getByTestId("progreso-lote")).toContainText("2 de");
+
+  expect(
+    violacionesCrossOrigin,
+    `Salió tráfico del dispositivo al grabar/reproducir: ${violacionesCrossOrigin.join(", ")}`,
+  ).toEqual([]);
+
+  await context.close();
+});
+
 test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async ({
   page,
 }) => {
