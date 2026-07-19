@@ -13,6 +13,7 @@ import {
   Cohete,
   Globo,
   IconoBrote,
+  IconoGemelas,
   IconoPictograma,
 } from "@/components/iconos";
 import { valorDeMetrica, type Metrica } from "@/lib/session-flow";
@@ -31,9 +32,10 @@ function segundos(ms: number): string {
 
 /** ¿El medidor alcanzó a escuchar algo de verdad? Es lo único que decide qué se puede afirmar. */
 function huboAlgoQueContar(metrica: Metrica): boolean {
-  return metrica.tipo === "sostenido"
-    ? metrica.ms >= 300
-    : valorDeMetrica(metrica) >= 1;
+  if (metrica.tipo === "sostenido") return metrica.ms >= 300;
+  // Gemelas no tiene micrófono: "hubo algo" es que se jugó al menos una ronda.
+  if (metrica.tipo === "gemelas") return metrica.rondas >= 1;
+  return valorDeMetrica(metrica) >= 1;
 }
 
 /** Lo que SÍ pasó, dicho con el número real. Nada más — y nada menos. */
@@ -122,6 +124,35 @@ function Logro({ metrica }: { metrica: Metrica }) {
               palabras.
             </p>
           ) : null}
+        </>
+      );
+
+    case "gemelas":
+      return (
+        <>
+          <IconoGemelas className="text-acento h-20 w-24" />
+          <h2 className="font-display text-4xl">
+            ¡Jugaron{" "}
+            {cifra(
+              `${metrica.rondas} ${metrica.rondas === 1 ? "ronda" : "rondas"}`,
+            )}{" "}
+            de gemelas!
+          </h2>
+          <p className="text-tinta-suave">
+            {metrica.participadas > 0 ? (
+              <>
+                Tú marcaste lo que oíste en{" "}
+                <strong className="text-exito">{metrica.participadas}</strong>.
+                Eso lo sabes tú, que estabas ahí — la app no juzga qué palabra
+                dijo, y no va a fingir que sí.
+              </>
+            ) : (
+              <>
+                Estar juntos frente al juego ya cuenta. Cuando quiera intentar
+                una palabra, tú marcas la que oigas — sin apuros.
+              </>
+            )}
+          </p>
         </>
       );
   }

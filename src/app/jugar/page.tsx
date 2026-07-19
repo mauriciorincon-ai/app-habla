@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Cohete, Globo, IconoPictograma } from "@/components/iconos";
+import {
+  Cohete,
+  Globo,
+  IconoGemelas,
+  IconoPictograma,
+} from "@/components/iconos";
 
 export const metadata: Metadata = {
   title: "A jugar con tu voz · Hablemos San",
 };
 
-// EL SELECTOR DE JUEGOS (COGA §C): exactamente 3 opciones, grandes, con iconografía propia y
-// SIEMPRE en el mismo orden — la predictibilidad importa más que la variedad. El niño puede
-// elegir por el dibujo, sin leer nada; el texto pequeño es para el padre.
+// EL SELECTOR DE JUEGOS (COGA §C): opciones grandes, con iconografía propia y SIEMPRE en el mismo
+// orden — la predictibilidad importa más que la variedad. El niño puede elegir por el dibujo, sin
+// leer nada; el texto pequeño es para el padre. En el S3 pasa de 3 a 4 juegos (llega gemelas): el
+// orden de los tres primeros NO cambia — el niño encuentra su juego donde siempre estuvo.
 //
 // LCP estático (patrón lcp-nace-estatico): esta página es 100% servidor. Nada nace en el cliente.
 
@@ -37,6 +43,14 @@ const JUEGOS = [
     mide: "Mide que hubo voz — nunca qué palabra dijo.",
     icono: <IconoPictograma className="text-acento h-20 w-20" />,
   },
+  {
+    href: "/jugar/gemelas",
+    testid: "juego-gemelas",
+    nombre: "Palabras gemelas",
+    que: "Dos dibujos que suenan casi igual: él dice, tú marcas.",
+    mide: "No usa micrófono — el que oye la palabra eres tú.",
+    icono: <IconoGemelas className="text-acento h-20 w-24" />,
+  },
 ];
 
 export default function JugarPage() {
@@ -47,14 +61,13 @@ export default function JugarPage() {
           ¿A qué jugamos hoy?
         </h1>
         <p className="text-tinta-suave mx-auto max-w-prose text-center">
-          Los tres juegos se juegan <strong>juntos</strong>: usted dirige, la
-          pantalla es la utilería. Ninguno le exige palabras al niño — miden su
-          voz, no su vocabulario. Nada de lo que él diga se graba ni sale de
-          este dispositivo.
+          Todos se juegan <strong>juntos</strong>: usted dirige, la pantalla es
+          la utilería. Ninguno le exige palabras al niño — y nada de lo que él
+          diga se graba ni sale de este dispositivo.
         </p>
       </header>
 
-      <ul className="grid gap-4 sm:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2">
         {JUEGOS.map((juego) => (
           <li key={juego.href}>
             <Link
