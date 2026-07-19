@@ -65,12 +65,13 @@ export function hitosAlcanzados(
     });
   }
 
-  // Su voz sostenida más de 5 segundos seguidos (racha del globo).
+  // Su voz sostenida 5 segundos seguidos (racha del globo). El título dice "5 segundos", no
+  // "más de 5": en el borde exacto (5000 ms) el "más de" sería mentira (auditoría de cierre).
   const vozLarga = orden.find((s) => s.juego === "globo" && s.rachaMs >= 5000);
   if (vozLarga) {
     hitos.push({
       id: "voz-larga",
-      titulo: "Su voz sonó más de 5 segundos seguidos",
+      titulo: "Su voz sonó 5 segundos seguidos",
       fecha: vozLarga.fecha,
     });
   }

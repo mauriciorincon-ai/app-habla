@@ -36,4 +36,14 @@ describe("lunesDeLaSemana: agrupa por semana (lunes a domingo)", () => {
     octavo.setDate(base.getDate() + 7);
     expect(lunesDeLaSemana(claveFechaLocal(octavo))).not.toBe(lunes);
   });
+
+  it("una semana que cruza el fin de mes retrocede al lunes del mes anterior", () => {
+    // Auditoría de cierre: todos los casos vivían dentro de julio; el borde real es el cruce.
+    expect(lunesDeLaSemana("2026-08-01")).toBe("2026-07-27");
+  });
+
+  it("una semana que cruza el AÑO retrocede al lunes de diciembre", () => {
+    // 2027-01-01 es viernes: su semana empezó el lunes 2026-12-28.
+    expect(lunesDeLaSemana("2027-01-01")).toBe("2026-12-28");
+  });
 });

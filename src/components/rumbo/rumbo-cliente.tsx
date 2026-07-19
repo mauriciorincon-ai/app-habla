@@ -23,15 +23,31 @@ function segundos(ms: number): string {
   return (s >= 10 ? s.toFixed(0) : s.toFixed(1)).replace(".", ",");
 }
 
-/** Un dato de la semana, solo si tiene algo que decir (los ceros no se muestran: no hay "malo"). */
-function Dato({ n, children }: { n: number; children: React.ReactNode }) {
+/**
+ * Un dato de la semana, solo si tiene algo que decir (los ceros no se muestran: no hay "malo").
+ * Lleva singular Y plural (auditoría de cierre: "1 palabras distintas" era un descuido en la
+ * pantalla insignia del microcopy) y un testid propio, para que el e2e ate el número a SU frase.
+ */
+function Dato({
+  n,
+  id,
+  singular,
+  plural,
+}: {
+  n: number;
+  id: string;
+  singular: string;
+  plural: string;
+}) {
   if (n <= 0) return null;
   return (
-    <li className="flex items-baseline gap-2">
+    <li className="flex items-baseline gap-2" data-testid={`dato-${id}`}>
       <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
         {n}
       </span>
-      <span className="text-tinta-suave text-sm">{children}</span>
+      <span className="text-tinta-suave text-sm">
+        {n === 1 ? singular : plural}
+      </span>
     </li>
   );
 }
@@ -52,22 +68,44 @@ function Semana({
         {esActual ? "Esta semana" : `Semana del ${fechaLarga(semana.semana)}`}
       </p>
       <ul className="mt-3 flex flex-col gap-2">
-        <Dato n={semana.diasConPractica}>
-          {semana.diasConPractica === 1
-            ? "día que practicaron juntos"
-            : "días que practicaron juntos"}
-        </Dato>
-        <Dato n={semana.palabrasDistintas}>
-          palabras distintas que practicaron
-        </Dato>
-        <Dato n={semana.dibujosEncendidos}>
-          dibujos que encendió con su voz
-        </Dato>
-        <Dato n={semana.subidasYBajadas}>veces que su voz subió y bajó</Dato>
-        <Dato n={semana.rondasGemelas}>rondas de gemelas</Dato>
-        <Dato n={semana.marcadasPorTi}>palabras que TÚ le oíste</Dato>
+        <Dato
+          n={semana.diasConPractica}
+          id="dias"
+          singular="día que practicaron juntos"
+          plural="días que practicaron juntos"
+        />
+        <Dato
+          n={semana.palabrasDistintas}
+          id="palabras"
+          singular="palabra distinta que practicaron"
+          plural="palabras distintas que practicaron"
+        />
+        <Dato
+          n={semana.dibujosEncendidos}
+          id="dibujos"
+          singular="dibujo que encendió con su voz"
+          plural="dibujos que encendió con su voz"
+        />
+        <Dato
+          n={semana.subidasYBajadas}
+          id="inversiones"
+          singular="vez que su voz subió y bajó"
+          plural="veces que su voz subió y bajó"
+        />
+        <Dato
+          n={semana.rondasGemelas}
+          id="rondas"
+          singular="ronda de gemelas"
+          plural="rondas de gemelas"
+        />
+        <Dato
+          n={semana.marcadasPorTi}
+          id="marcadas"
+          singular="palabra que TÚ le oíste"
+          plural="palabras que TÚ le oíste"
+        />
         {semana.vozMsMax >= 1000 ? (
-          <li className="flex items-baseline gap-2">
+          <li className="flex items-baseline gap-2" data-testid="dato-voz-max">
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
               {segundos(semana.vozMsMax)}
             </span>
