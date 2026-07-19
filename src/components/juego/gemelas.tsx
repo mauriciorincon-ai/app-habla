@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { IconoAltavoz } from "@/components/iconos";
+import { fechaHoy } from "@/lib/fecha";
 import { agregarJuiciosGemelas } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { NOMBRE_ETAPA, type Etapa } from "@content/schema";
@@ -194,12 +195,4 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
       </button>
     </section>
   );
-}
-
-/** Fecha local YYYY-MM-DD (no UTC: el día en Colombia cambiaría a las 7 p. m.). */
-function fechaHoy(): string {
-  const d = new Date();
-  const mes = String(d.getMonth() + 1).padStart(2, "0");
-  const dia = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${mes}-${dia}`;
 }

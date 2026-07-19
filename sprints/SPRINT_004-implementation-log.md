@@ -8,8 +8,8 @@
 
 ## Estado por fase
 
-- [ ] F0 — Setup (branch, deltas kit v1.7.3 ×3, verificación de supuestos + riesgos de integración R1-R9)
-- [ ] F1 — Motores puros (sesiones · rumbo · etiquetas · objetivo · daily con objetivo · lote-por-etapa · dedup)
+- [x] F0 — Setup (branch, deltas kit v1.7.3 ×3, verificación de supuestos + riesgos de integración R1-R9)
+- [x] F1 — Motores puros (sesiones · rumbo · etiquetas · objetivo · daily con objetivo · lote-por-etapa · dedup) — 193 unit verdes, cobertura 92 %/86 %
 - [ ] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
 - [ ] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe · lighthouse)
 - [ ] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011)
@@ -109,5 +109,26 @@ La sección que la orden exige que estrene el plan. Cada riesgo se verificó con
   (paleta del design system + variante maskable con zona segura) en vez de añadir Playwright —
   cero dependencias nuevas, determinista, más en el espíritu de la app. (Anotado aquí al construir,
   no después — método v1.9.1.)
+
+## F1 — Motores puros (hecho)
+
+- **Sesiones (`habla:v1:sesiones`):** `SesionSchema` unión discriminada por juego + `registrarSesion`
+  (cap 500). `lib/rumbo/sesion.ts` mapea Metrica→Sesion (puente puro testeable). Unit: cap,
+  versionado, y candado "sin audio/pitch" sobre lo guardado.
+- **Rumbo:** `lib/rumbo/tendencias.ts` (agrega por semana: días con práctica —juego o cápsula—,
+  palabras distintas, dibujos, inversiones, racha máx, marcadas por el padre; más reciente primero,
+  semana floja = número sin adjetivo) + `lib/rumbo/hitos.ts` (primer día, primera palabra que TÚ
+  oíste, voz > 5 s, 10/25 palabras distintas, constancia 3/5 días). Cero clínica.
+- **Objetivo:** `lib/objetivo/alinear.ts` (`normalizar` + predicados + `contarAlineacion` con el
+  caso honesto `vacio`) + `lib/objetivo/prioridad.ts` (`priorizarEstable`, identidad sin objetivo).
+- **Etiquetas (R8):** `ETIQUETAS_CAPSULA` (vocabulario controlado, sin colores) + `etiquetas` en
+  `CapsulaSchema` (≥1) + curaduría de las 50 en `ETIQUETAS_POR_CAPSULA` (mapa al final de
+  capsulas.ts, no inline). Unit: cobertura total, cero huérfanas, "animales" alinea, "colores" vacío.
+- **daily con objetivo (R4):** `seleccionarCapsula` gana predicado opcional `coincide` (sin él =
+  identidad); `realinearObjetivo` re-evalúa HOY solo si NO está completada (unit doble).
+- **Lote por etapa (R5):** `siguienteLote` gana `objetivo` + `etapa` (sin objetivo = orden idéntico;
+  en sonidos-e-intentos las palabras solo-de-gemelas bajan). Paga la deuda lote-por-etapa dentro de O2.
+- **Dedup (deudas del remate):** `barajar` (copia local de palabra-objeto → `@/lib/barajar`),
+  `fechaHoy` (copias de gemelas + estudio → `@/lib/fecha`, que además trae `lunesDeLaSemana`).
 
 _(Se irá completando por fase.)_

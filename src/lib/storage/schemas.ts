@@ -160,3 +160,68 @@ export const RegistroGemelasSchema = z.object({
 export type RegistroGemelas = z.infer<typeof RegistroGemelasSchema>;
 
 export const REGISTRO_GEMELAS_VACIO: RegistroGemelas = { juicios: [] };
+
+// ─── Sesiones de juego (S4) — el insumo del Rumbo ───────────────────────────────────────────────
+// El supuesto ROTO que cazó el plan (riesgo R1): los juegos de voz NO persistían nada. Este
+// registro lo arregla. Guarda SOLO los números que la CELEBRACIÓN ya le muestra al padre —los
+// mismos "intentos y logros" que VISION § 5 sanciona— NUNCA el audio ni el tono (Hz) del niño: el
+// sello de la regla dura 2 sigue intacto. Se escribe UNA vez por intento, en un solo punto
+// (CelebracionHonesta, compartida por los 4 juegos). Discriminado por juego: cada juego mide algo
+// distinto y no se mezclan (mismo principio que la Metrica de session-flow).
+
+export const JUEGOS = ["globo", "cohete", "palabras", "gemelas"] as const;
+export type Juego = (typeof JUEGOS)[number];
+
+export const SesionSchema = z.discriminatedUnion("juego", [
+  // Globo: total de voz del intento y la racha más larga sin cortarse (lo que ya muestra).
+  z.object({
+    juego: z.literal("globo"),
+    fecha: FechaSchema,
+    vozMs: z.number().int().min(0),
+    rachaMs: z.number().int().min(0),
+  }),
+  // Cohete: veces que la voz subió y bajó.
+  z.object({
+    juego: z.literal("cohete"),
+    fecha: FechaSchema,
+    inversiones: z.number().int().min(0),
+  }),
+  // Palabra↔objeto: dibujos que su voz encendió (medido), palabras que el PADRE marcó (juzgado
+  // por él), y CUÁLES dibujos se encendieron —solo la palabra escrita del picto, contenido de la
+  // app, jamás su voz— para poder contar "palabras distintas practicadas" en el Rumbo.
+  z.object({
+    juego: z.literal("palabras"),
+    fecha: FechaSchema,
+    encendidos: z.number().int().min(0),
+    reconocidas: z.number().int().min(0),
+    palabras: z.array(z.string().min(1).max(20)).max(200),
+  }),
+  // Gemelas: rondas jugadas y en cuántas el padre marcó lo que oyó (participación).
+  z.object({
+    juego: z.literal("gemelas"),
+    fecha: FechaSchema,
+    rondas: z.number().int().min(0),
+    participadas: z.number().int().min(0),
+  }),
+]);
+export type Sesion = z.infer<typeof SesionSchema>;
+
+/** Las últimas N sesiones (cap 500, mismo patrón que gemelas: basta para el Rumbo, no crece sin fin). */
+export const RegistroSesionesSchema = z.object({
+  sesiones: z.array(SesionSchema).max(500),
+});
+export type RegistroSesiones = z.infer<typeof RegistroSesionesSchema>;
+
+export const REGISTRO_SESIONES_VACIO: RegistroSesiones = { sesiones: [] };
+
+// ─── Objetivo de la semana (S4) — la sintonía con la fonoaudióloga ───────────────────────────────
+// Texto libre y corto que el padre escribe ("animales", "el baño", "más agua"). Alinea contenido
+// de forma determinista (ver lib/objetivo). SIN expiración automática (predictibilidad COGA: solo
+// el padre lo cambia o lo borra); `desde` es la fecha en que lo escribió, para mostrar "activo
+// desde…", no para caducarlo.
+
+export const ObjetivoSchema = z.object({
+  texto: z.string().trim().min(1).max(80),
+  desde: FechaSchema,
+});
+export type Objetivo = z.infer<typeof ObjetivoSchema>;

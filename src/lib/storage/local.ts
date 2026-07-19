@@ -12,14 +12,21 @@ import {
   ProgresoSchema,
   ProgresoV1Schema,
   REGISTRO_GEMELAS_VACIO,
+  REGISTRO_SESIONES_VACIO,
   RegistroGemelasSchema,
+  RegistroSesionesSchema,
+  ObjetivoSchema,
   migrarProgresoV1,
   type AjustesGuardados,
   type JuicioGemelo,
+  type Objetivo,
   type Perfil,
   type Progreso,
   type RegistroGemelas,
+  type RegistroSesiones,
+  type Sesion,
 } from "./schemas";
+import { fechaHoy } from "@/lib/fecha";
 
 const PREFIJO = "habla:";
 
@@ -28,6 +35,8 @@ export const CLAVES = {
   ajustes: `${PREFIJO}v1:ajustes`,
   progreso: `${PREFIJO}v1:progreso`,
   gemelas: `${PREFIJO}v1:gemelas`,
+  sesiones: `${PREFIJO}v1:sesiones`,
+  objetivo: `${PREFIJO}v1:objetivo`,
 } as const;
 
 function disponible(): boolean {
@@ -111,6 +120,44 @@ export const agregarJuiciosGemelas = (nuevos: JuicioGemelo[]): void => {
   const previo = leerRegistroGemelas();
   const juicios = [...previo.juicios, ...nuevos].slice(-500);
   guardar(CLAVES.gemelas, RegistroGemelasSchema, { juicios });
+};
+
+// ─── Sesiones de juego (S4) ──────────────────────────────────────────────────────────────────────
+
+export const leerSesiones = (): RegistroSesiones =>
+  leer(CLAVES.sesiones, RegistroSesionesSchema) ?? REGISTRO_SESIONES_VACIO;
+
+/**
+ * Registra un intento de juego (insumo del Rumbo). Se llama UNA vez por intento, en la celebración.
+ * Cap 500: nunca crece sin fin. Nada de audio ni de tono — solo los números del intento.
+ */
+export const registrarSesion = (sesion: Sesion): void => {
+  const previo = leerSesiones();
+  const sesiones = [...previo.sesiones, sesion].slice(-500);
+  guardar(CLAVES.sesiones, RegistroSesionesSchema, { sesiones });
+};
+
+// ─── Objetivo de la semana (S4) ──────────────────────────────────────────────────────────────────
+
+export const leerObjetivo = (): Objetivo | null =>
+  leer(CLAVES.objetivo, ObjetivoSchema);
+
+/** Escribe el objetivo con la fecha de hoy como `desde`. Texto vacío = borrar (no se guarda basura). */
+export const guardarObjetivo = (texto: string): void => {
+  const limpio = texto.trim();
+  if (!limpio) {
+    borrarObjetivo();
+    return;
+  }
+  guardar(CLAVES.objetivo, ObjetivoSchema, {
+    texto: limpio,
+    desde: fechaHoy(),
+  });
+};
+
+export const borrarObjetivo = (): void => {
+  if (!disponible()) return;
+  window.localStorage.removeItem(CLAVES.objetivo);
 };
 
 /**
