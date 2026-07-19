@@ -142,6 +142,14 @@ test("usuario crea un dashboard desde CSV y lo exporta", async ({ page }) => {
 8. **Checkbox controlado con estado async → `.click()`, no `.check()`** (K9-bis): `.check()`
    hace flip-flop con el estado del servidor ("did not change its state"). Y la aserción va al
    **resultado observable** (el score que sube, la fila que aparece), no al atributo checked.
+9. **Pantalla ya cubierta por e2e ⇒ su suite ENTERA corre en la MISMA fase que la toca** (kit
+   v1.7.3, origen: G-Método del cierre habla S3). Si el sprint modifica una pantalla que ya tiene
+   e2e (Hoy, estudio, un juego), su spec completo se ejecuta en la fase que introduce el cambio —
+   no se difiere a la fase de integración. Un cambio de contenido/orden/persistencia puede romper
+   un e2e que asumía el comportamiento anterior (mazos por semilla, listas de claves de storage),
+   y esas roturas se cazan mejor pegadas al cambio que las causó. Corolario de aislamiento
+   (regla 4): si un spec depende del orden determinista por semilla, el sprint que toca ese orden
+   PRUEBA que sin la feature nueva el orden queda idéntico (test de identidad) antes de alinear.
 
 ## e2e con base de datos real (Supabase) en CI (kit v1.6.4, inmobiliaria S1)
 

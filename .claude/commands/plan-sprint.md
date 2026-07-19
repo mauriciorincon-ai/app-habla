@@ -22,9 +22,17 @@ indique (o la más reciente en `portafolio/<slug>/ordenes/` de la planeadora,
    - **Fase 3 — Integración + e2e:** tests end-to-end + axe.
    - **Fase 4 — Calidad:** gates de los 6+1 estándares (`/deploy-check`).
 6. Para cada fase: archivos a crear/modificar, tests a escribir, criterio observable de "fase completa".
-7. Presenta el plan y espera su aprobación (plan mode). **La aprobación del plan significa SOLO
+7. **Sección obligatoria «Riesgos de integración con lo existente» (kit v1.7.3, origen: cierre
+   habla S3).** Antes de presentar el plan, EXAMINA EN EL CÓDIGO (con archivo:línea, no en
+   teoría) dónde la feature nueva choca con lo ya construido: supuestos de la orden que el código
+   contradice (p. ej. "los insumos ya existen" cuando no se persisten), esquemas de storage
+   versionados que hay que extender sin romper la migración, mazos/órdenes deterministas por
+   semilla que los e2e existentes asumen, invariantes de diseño previos (asignaciones congeladas,
+   puntos de escritura compartidos). Enumera cada riesgo con su mitigación. Es la sección que
+   distingue un plan que "parece completo" de uno que sobrevive al primer `pnpm test`.
+8. Presenta el plan y espera su aprobación (plan mode). **La aprobación del plan significa SOLO
    "el plan es correcto" — NO es la orden de arranque.**
-8. **Gate de arranque (obligatorio, kit v1.6.2):** tras la aprobación del plan, NO escribas
+9. **Gate de arranque (obligatorio, kit v1.6.2):** tras la aprobación del plan, NO escribas
    código. Emite el **bloque de arranque**:
    - (a) Tu **recomendación de modelo y esfuerzo para ESTE sprint**, con su razón — por fase si
      difiere (motor puro vs. UI/motion vs. integración). Tú recomiendas; **el usuario decide**
