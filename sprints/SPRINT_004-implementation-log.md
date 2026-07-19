@@ -13,8 +13,8 @@
 - [x] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
 - [x] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe) — **127 e2e verdes** (lighthouse en F5)
 - [x] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011) — 200 unit verdes
-- [ ] F5 — CIERRE DE CICLO (BLUEPRINT.html · /design-sync · guía v4 · manual · summary · PR)
-- [ ] **Gate ⭐ ACUMULADO S1+S2+S3+S4 del usuario** (desktop + teléfono) → merge → `/cierre-sprint habla` (H1 COMPLETO)
+- [x] F5 — CIERRE DE CICLO (BLUEPRINT.html · guía v4 · manual · design-system · summary · deploy-check · PR) — 200 unit · 127 e2e · build verdes
+- [ ] **Gate ⭐ ACUMULADO S1+S2+S3+S4 del usuario** (desktop + teléfono) + `/design-sync` push → merge → `/cierre-sprint habla` (H1 COMPLETO)
 
 ## Los tres outcomes
 
