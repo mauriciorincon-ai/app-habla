@@ -5,7 +5,16 @@ import { expect, test } from "@playwright/test";
 // El juego además se audita EN VIVO (paleta del niño y modo calma tienen sus propios colores:
 // auditar solo la pantalla del padre dejaría el contraste del niño sin vigilancia).
 
-const RUTAS = ["/", "/jugar", "/jugar/globo", "/jugar/cohete", "/jugar/palabras", "/ajustes"];
+const RUTAS = [
+  "/",
+  "/jugar",
+  "/jugar/globo",
+  "/jugar/cohete",
+  "/jugar/palabras",
+  "/jugar/gemelas",
+  "/estudio",
+  "/ajustes",
+];
 
 // Los dos esquemas: la paleta del padre tiene modo oscuro, y sus colores de estado NO son los
 // mismos que en claro. Auditar solo el claro dejaba pasar violaciones reales (el botón de

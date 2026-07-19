@@ -31,17 +31,32 @@ export type Metrica =
    *   - `veces`: dibujos que su voz activó (lo midió la app; cualquier vocalización cuenta, ADR 005).
    *   - `reconocidas`: palabras que el PADRE dijo haber oído (lo juzgó él; la app no oye palabras).
    */
-  | { tipo: "activaciones"; veces: number; reconocidas: number };
+  | { tipo: "activaciones"; veces: number; reconocidas: number }
+  /**
+   * Palabras gemelas (sin micrófono — el niño dice, el PADRE marca; ADR-009). No hay
+   * "correcto/incorrecto" para el niño: solo se cuenta la participación.
+   *   - `rondas`: pares que se jugaron.
+   *   - `participadas`: rondas donde el padre marcó lo que oyó (el niño intentó una palabra).
+   */
+  | { tipo: "gemelas"; rondas: number; participadas: number };
 
 /** El número que la métrica lleva dentro — con eso se compara contra la meta. */
 export function valorDeMetrica(metrica: Metrica): number {
-  return metrica.tipo === "sostenido" ? metrica.ms : metrica.veces;
+  switch (metrica.tipo) {
+    case "sostenido":
+      return metrica.ms;
+    case "gemelas":
+      return metrica.participadas;
+    default:
+      return metrica.veces;
+  }
 }
 
 export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
   sostenido: { tipo: "sostenido", ms: 0, rachaMs: 0 },
   inversiones: { tipo: "inversiones", veces: 0 },
   activaciones: { tipo: "activaciones", veces: 0, reconocidas: 0 },
+  gemelas: { tipo: "gemelas", rondas: 0, participadas: 0 },
 };
 
 export type Fase =

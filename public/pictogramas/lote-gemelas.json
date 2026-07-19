@@ -1,0 +1,47 @@
+[
+  {
+    "palabra": "mano",
+    "archivo": "mano.png",
+    "arasaacId": 2928
+  },
+  {
+    "palabra": "mono",
+    "archivo": "mono.png",
+    "arasaacId": 2477
+  },
+  {
+    "palabra": "foca",
+    "archivo": "foca.png",
+    "arasaacId": 2397
+  },
+  {
+    "palabra": "boca",
+    "archivo": "boca.png",
+    "arasaacId": 2663
+  },
+  {
+    "palabra": "casa",
+    "archivo": "casa.png",
+    "arasaacId": 2317
+  },
+  {
+    "palabra": "taza",
+    "archivo": "taza.png",
+    "arasaacId": 2582
+  },
+  {
+    "palabra": "cuna",
+    "archivo": "cuna.png",
+    "arasaacId": 5980
+  },
+  {
+    "palabra": "gota",
+    "archivo": "gota.png",
+    "arasaacId": 8592
+  },
+  {
+    "palabra": "bota",
+    "archivo": "bota.png",
+    "arasaacId": 5401
+  }
+]

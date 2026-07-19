@@ -63,6 +63,7 @@ describe("persistencia local (ADR 002)", () => {
       reducirAnimaciones: true,
       etapa: "palabras-sueltas",
       apariencia: "oscuro",
+      vozFamiliar: true,
     });
     guardarProgreso({
       ...PROGRESO_INICIAL,

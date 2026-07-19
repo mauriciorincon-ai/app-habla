@@ -22,7 +22,18 @@ indique (o la más reciente en `portafolio/<slug>/ordenes/` de la planeadora,
    - **Fase 3 — Integración + e2e:** tests end-to-end + axe.
    - **Fase 4 — Calidad:** gates de los 6+1 estándares (`/deploy-check`).
 6. Para cada fase: archivos a crear/modificar, tests a escribir, criterio observable de "fase completa".
-7. **Detente y espera aprobación del usuario** antes de escribir código.
+7. Presenta el plan y espera su aprobación (plan mode). **La aprobación del plan significa SOLO
+   "el plan es correcto" — NO es la orden de arranque.**
+8. **Gate de arranque (obligatorio, kit v1.6.2):** tras la aprobación del plan, NO escribas
+   código. Emite el **bloque de arranque**:
+   - (a) Tu **recomendación de modelo y esfuerzo para ESTE sprint**, con su razón — por fase si
+     difiere (motor puro vs. UI/motion vs. integración). Tú recomiendas; **el usuario decide**
+     (modelo y esfuerzo son comandos suyos: `/model`).
+   - (b) El recordatorio operativo: _"fija modelo y esfuerzo con `/model` y dime cualquier
+     ajuste al plan"_.
+   - (c) Espera la palabra explícita **«construye»** del usuario. Si responde con ajustes,
+     incorpóralos y vuelve a esperar.
+     **Prohibido crear o editar archivos antes del «construye».**
 
 ## Output esperado
 

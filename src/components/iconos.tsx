@@ -229,6 +229,40 @@ export function Cohete({ className }: IconoProps) {
   );
 }
 
+/** Dos pictos gemelos: la puerta al juego de palabras gemelas (pares mínimos). */
+export function IconoGemelas({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 32 24"
+      className={className}
+      role="img"
+      aria-label="dos dibujos parecidos"
+      focusable="false"
+    >
+      <rect x="2" y="4" width="13" height="16" rx="2.5" {...trazo} />
+      <rect x="17" y="4" width="13" height="16" rx="2.5" {...trazo} />
+      {/* Un dibujito distinto en cada marco: casi iguales, no idénticos (la gracia del par). */}
+      <circle cx="8.5" cy="11" r="2.2" {...trazo} />
+      <path d="M23.5 9v4M21.5 11h4" {...trazo} />
+    </svg>
+  );
+}
+
+/** Altavoz: tócalo para oír la palabra en la voz de la familia (voz grabada, banco local). */
+export function IconoAltavoz({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" {...trazo} />
+      <path d="M16 9a3.5 3.5 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11" {...trazo} />
+    </svg>
+  );
+}
+
 /** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
 export function IconoPictograma({ className }: IconoProps) {
   return (

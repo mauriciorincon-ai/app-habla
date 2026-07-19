@@ -74,7 +74,14 @@ eso se testean con señales sintéticas (voz sostenida, silencio, ruido) sin abr
 - **El estado local entra por `useSyncExternalStore`**, no por `useState` + `useEffect` (evita el
   mismatch de hidratación y el lint de React 19).
 - **Repo público:** aquí no entra jamás nada personal del niño ni de la familia — solo código y
-  contenido genérico.
+  contenido genérico. **Esto incluye el banco de voz familiar (S3): las grabaciones viven SOLO en
+  el storage local del navegador — nunca al repo, nunca a la red.**
+- **La auditoría Lighthouse de CI cubre SOLO páginas públicas** (kit v1.7.2): las privadas /
+  `noindex` / hidratadas en cliente se EXCLUYEN documentadamente (Lighthouse las mide en un estado
+  que ningún usuario ve) y su LCP real se valida en el gate ⭐ en dispositivo. `budgetsFile` NO
+  permite umbral por-path. Hoy **todas las rutas de `lighthouse-urls.json` son públicas** (incluidas
+  las nuevas `/estudio` y `/jugar/gemelas`), así que no se excluye ninguna; si alguna futura ruta
+  fuese privada/hidratada, se saca de la lista con esta nota.
 
 ## Flujo de trabajo
 

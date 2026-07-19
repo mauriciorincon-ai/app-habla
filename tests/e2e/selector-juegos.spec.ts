@@ -1,14 +1,20 @@
 import { expect, test } from "@playwright/test";
 
-// EL SELECTOR DE JUEGOS (COGA §C): tres opciones, siempre las mismas y en el mismo orden.
+// EL SELECTOR DE JUEGOS (COGA §C): opciones grandes, siempre las mismas y en el mismo orden.
 // La predictibilidad importa más que la variedad — y el niño elige por el dibujo, sin leer.
+// En el S3 pasa de 3 a 4 juegos (llega "palabras gemelas"): decisión de producto de la orden.
 
-test("hay exactamente 3 juegos, grandes, y cada uno lleva al suyo", async ({
+test("hay exactamente 4 juegos, grandes, y cada uno lleva al suyo", async ({
   page,
 }) => {
   await page.goto("/jugar");
 
-  const juegos = ["juego-globo", "juego-cohete", "juego-palabras"];
+  const juegos = [
+    "juego-globo",
+    "juego-cohete",
+    "juego-palabras",
+    "juego-gemelas",
+  ];
   for (const testid of juegos) {
     const tarjeta = page.getByTestId(testid);
     await expect(tarjeta).toBeVisible();
@@ -17,11 +23,11 @@ test("hay exactamente 3 juegos, grandes, y cada uno lleva al suyo", async ({
     expect(caja?.height ?? 0).toBeGreaterThanOrEqual(64);
   }
 
-  // Ni un juego más: tres opciones es el techo (carga cognitiva).
-  await expect(page.locator("[data-testid^='juego-']")).toHaveCount(3);
+  // Cuatro y no más: el techo de carga cognitiva subió a 4 con gemelas (sigue siendo poco).
+  await expect(page.locator("[data-testid^='juego-']")).toHaveCount(4);
 
-  await page.getByTestId("juego-cohete").click();
-  await expect(page).toHaveURL(/\/jugar\/cohete$/);
+  await page.getByTestId("juego-gemelas").click();
+  await expect(page).toHaveURL(/\/jugar\/gemelas$/);
 });
 
 test("el selector se opera con teclado", async ({ page }) => {
@@ -42,5 +48,9 @@ test("cada juego dice honestamente qué mide (y qué no)", async ({ page }) => {
   // La promesa más delicada: la app nunca afirma qué palabra dijo el niño.
   await expect(page.getByTestId("juego-palabras")).toContainText(
     /nunca qué palabra/i,
+  );
+  // Gemelas es co-uso puro: lo dice de frente, no usa micrófono.
+  await expect(page.getByTestId("juego-gemelas")).toContainText(
+    /no usa micrófono/i,
   );
 });

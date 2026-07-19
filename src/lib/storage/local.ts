@@ -3,6 +3,7 @@
 // (regla dura 2, vigilada por ESLint y por tests/unit/privacidad-voice.test.ts).
 
 import type { z } from "zod";
+import { eliminarBanco } from "@/lib/banco-voz/almacen";
 import {
   AJUSTES_DEFECTO,
   AjustesSchema,
@@ -10,10 +11,14 @@ import {
   PerfilSchema,
   ProgresoSchema,
   ProgresoV1Schema,
+  REGISTRO_GEMELAS_VACIO,
+  RegistroGemelasSchema,
   migrarProgresoV1,
   type AjustesGuardados,
+  type JuicioGemelo,
   type Perfil,
   type Progreso,
+  type RegistroGemelas,
 } from "./schemas";
 
 const PREFIJO = "habla:";
@@ -22,6 +27,7 @@ export const CLAVES = {
   perfil: `${PREFIJO}v1:perfil`,
   ajustes: `${PREFIJO}v1:ajustes`,
   progreso: `${PREFIJO}v1:progreso`,
+  gemelas: `${PREFIJO}v1:gemelas`,
 } as const;
 
 function disponible(): boolean {
@@ -97,6 +103,16 @@ export const leerProgreso = (): Progreso => {
 export const guardarProgreso = (progreso: Progreso): void =>
   guardar(CLAVES.progreso, ProgresoSchema, progreso);
 
+export const leerRegistroGemelas = (): RegistroGemelas =>
+  leer(CLAVES.gemelas, RegistroGemelasSchema) ?? REGISTRO_GEMELAS_VACIO;
+
+/** Añade los juicios de una sesión, conservando solo los últimos 500 (insumo del S4). */
+export const agregarJuiciosGemelas = (nuevos: JuicioGemelo[]): void => {
+  const previo = leerRegistroGemelas();
+  const juicios = [...previo.juicios, ...nuevos].slice(-500);
+  guardar(CLAVES.gemelas, RegistroGemelasSchema, { juicios });
+};
+
 /**
  * "Borrar todos mis datos" del panel de ajustes: total y honesto. Quita todo lo de la app y,
  * de paso, el caché del shell (que solo contiene archivos públicos, pero el botón promete todo).
@@ -109,6 +125,10 @@ export function borrarTodo(): void {
     if (clave?.startsWith(PREFIJO)) aBorrar.push(clave);
   }
   aBorrar.forEach((clave) => window.localStorage.removeItem(clave));
+
+  // El banco de voz familiar vive en IndexedDB, no en localStorage: sin esto, "borrar mis datos"
+  // dejaría atrás las grabaciones y el botón mentiría (S3).
+  eliminarBanco();
 
   if (typeof caches !== "undefined") {
     void caches
