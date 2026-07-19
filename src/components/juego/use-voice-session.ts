@@ -63,6 +63,12 @@ export type VoiceSession = {
   terminar: () => void;
   otraVez: () => void;
   cambiarCalma: (activo: boolean) => void;
+  /**
+   * Silencia el medidor por `ms` (+ cola): mientras la app REPRODUCE la voz familiar por los
+   * parlantes, sus frames no deben contar como voz del niño (regla dura 3 — el juego mentiría).
+   * Guarda del bucle de retroalimentación (ADR-010).
+   */
+  silenciar: (ms: number) => void;
 };
 
 export type OpcionesSesion = {
@@ -128,6 +134,13 @@ export function useVoiceSession({
     [],
   );
 
+  // Guarda del bucle: hasta este instante (performance.now()) el medidor ignora los frames —
+  // porque está sonando la voz familiar por los parlantes y no es el niño.
+  const silenciarHastaRef = useRef(0);
+  const silenciar = useCallback((ms: number) => {
+    silenciarHastaRef.current = performance.now() + ms + 300; // +300 ms de cola por el eco.
+  }, []);
+
   // La métrica actual, siempre fresca, sin re-suscribir el reloj de ticks.
   const metricaRef = useRef(metricaActual);
   useEffect(() => {
@@ -172,6 +185,8 @@ export function useVoiceSession({
     if (fase === "esperando-voz" || fase === "jugando") {
       const meter = meterRef.current;
       if (!meter) return;
+      // Suena la voz familiar: se ignoran los frames para que su eco no cuente como voz del niño.
+      if (performance.now() < silenciarHastaRef.current) return;
       const estado = meter.empujar(frame);
       nivelRef.current = estado.nivel;
       sostenidoRef.current = estado.sostenidoMs;
@@ -299,5 +314,6 @@ export function useVoiceSession({
       (activo: boolean) => despachar({ tipo: "CAMBIAR_CALMA", activo }),
       [],
     ),
+    silenciar,
   };
 }

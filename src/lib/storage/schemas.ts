@@ -33,6 +33,12 @@ export const AjustesSchema = z.object({
    * que elija: no depende de esto.
    */
   apariencia: z.enum(["sistema", "claro", "oscuro"]).catch("sistema"),
+  /**
+   * "Usar la voz de la familia" (S3). Cuando hay grabaciones y esto está activo, los juegos suenan
+   * con la voz grabada; si no, el fallback silencioso de siempre. Default `true`: si el padre se
+   * tomó el trabajo de grabar, que se oiga. Se puede apagar sin borrar el banco.
+   */
+  vozFamiliar: z.boolean().catch(true),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -42,6 +48,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   reducirAnimaciones: false,
   etapa: ETAPA_DEFECTO,
   apariencia: "sistema",
+  vozFamiliar: true,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */
