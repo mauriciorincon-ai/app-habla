@@ -164,3 +164,19 @@ nuevos sin derivarlos de la paleta.
 
 **El selector de juegos** no tiene estado vacío ni de error: siempre hay tres juegos, siempre los
 mismos. Es, a propósito, la pantalla más aburrida y más predecible de la app.
+
+## Pantallas del padre (Sprint 4)
+
+Dos cuartos nuevos del **operador** (paleta operador, LCP estático, jamás se filtran a la vista del
+niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos propios de trazo
+(`IconoBrujula`, `IconoDiana`; stroke 1.5, viewBox 24, `currentColor`):
+
+- **El rumbo** (`/rumbo`) — progreso honesto. **Vacío:** "Todavía no hay nada que contar" + puerta
+  a los juegos. **Contenido:** tendencias por semana (números medidos en Geist `tabular-nums`, nunca
+  Mono dentro de frase) + hitos funcionales. **Regla de contenido dura:** cero vocabulario clínico
+  —ni "puntaje", ni "diagnóstico", ni "nivel", ni "%", ni siquiera negado—; una semana floja es un
+  número sin adjetivo (sin rachas que castiguen). Es la mecánica de honestidad hecha pantalla.
+- **Objetivo de la semana** (`/objetivo`) — texto libre → alineación determinista. Los 5 estados:
+  **vacío** (sin objetivo, campo con placeholder), **escribiendo** (preview honesto en vivo),
+  **activo** (tarjeta con "desde…" + quitar), **sin coincidencias** (dice honesto que no encontró
+  nada — el caso "colores"), **guardado** (confirmación sobria). Toques del adulto ≥44 px.

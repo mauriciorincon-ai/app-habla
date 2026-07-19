@@ -181,6 +181,32 @@ a lo que su hijo hace HOY, no a lo que quisiéramos que hiciera:
 **Cambiar de etapa no borra nada.** El progreso de cada etapa se guarda por separado y los días
 practicados no se pierden. Si duda, quédese en _palabras sueltas_.
 
+### El rumbo — cómo van, sin notas (nuevo)
+
+En el encabezado de "Hoy" hay un acceso, **"El rumbo"**. Es la respuesta honesta a "¿cómo vamos?".
+Muestra, **semana a semana**, solo lo que de verdad pasó: los días que practicaron juntos, las
+palabras distintas que practicaron, cuántos dibujos encendió con su voz, los segundos que sostuvo
+la voz sin cortarse. Y una sección de **hitos** celebrables: "su primer rato de práctica juntos",
+"la primera palabra que USTED le oyó".
+
+Lo que el rumbo **nunca** va a hacer: ponerle una nota, un puntaje, un porcentaje o un plazo; ni
+compararlo con otro niño; ni castigarlo por una semana floja (una semana con pocos días es
+simplemente un número pequeño, sin drama). No es un diagnóstico ni un boletín — es el registro
+cálido de lo que hicieron juntos. Al principio estará vacío: jueguen unos días y cobra vida.
+
+### El objetivo de la semana — la sintonía con la fonoaudióloga (nuevo)
+
+¿La fonoaudióloga de su hijo le pidió trabajar algo esta semana —los animales, la comida, el baño?
+En el encabezado de "Hoy", **"Objetivo"** le deja escribirlo. La app entonces **pone eso primero**:
+la cápsula del día, los dibujos del juego "palabra y dibujo" y lo que le toca grabar en el Estudio
+se alinean con su objetivo. Es opcional: sin objetivo, todo sigue igual que siempre.
+
+Mientras escribe, la app le dice **con honestidad** cuánto encuentra ("con «animales», se priorizan
+N dibujos y M cápsulas"). Si escribe algo que no está en el contenido de la app —por ejemplo,
+"colores", que a propósito no existe—, se lo dice de frente en vez de fingir que alineó algo. El
+objetivo **no caduca solo**: se queda hasta que usted lo cambie o lo quite (y quitarlo deja todo
+como estaba). Siempre trabaja **dentro de la etapa** que eligió: nunca la salta.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -279,8 +305,9 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 
 ## Historial
 
-| Sprint | Features añadidas a este manual                                                                                                                                                                                                                                             |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión.                                                                                                     |
-| 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                            |
-| 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz. |
+| Sprint | Features añadidas a este manual                                                                                                                                                                                                                                                                                       |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión.                                                                                                                                               |
+| 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                                                                      |
+| 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
+| 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
