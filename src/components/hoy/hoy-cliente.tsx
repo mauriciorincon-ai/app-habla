@@ -7,9 +7,10 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
-import { Cohete, Globo, IconoHecho } from "@/components/iconos";
+import { Cohete, Globo, IconoDiana, IconoHecho } from "@/components/iconos";
 import {
   useAjustes,
+  useObjetivo,
   usePerfil,
   useProgreso,
 } from "@/components/estado-local";
@@ -26,6 +27,7 @@ export function HoyCliente() {
   const progreso = useProgreso();
   const perfil = usePerfil();
   const ajustes = useAjustes();
+  const objetivo = useObjetivo();
   const etapa = ajustes?.etapa;
 
   // Corre también cuando el padre cambia de etapa en Ajustes (la cápsula de hoy se re-hace).
@@ -51,6 +53,19 @@ export function HoyCliente() {
 
   return (
     <div className="flex min-h-[22rem] flex-col gap-6">
+      {objetivo ? (
+        <Link
+          href="/objetivo"
+          className="text-tinta-suave bg-superficie shadow-tarjeta flex items-center gap-2 rounded-xl px-4 py-3 text-sm"
+          data-testid="objetivo-activo-hoy"
+        >
+          <IconoDiana className="text-acento h-4 w-4 shrink-0" />
+          <span>
+            Objetivo de la semana:{" "}
+            <strong className="text-tinta">«{objetivo.texto}»</strong>
+          </span>
+        </Link>
+      ) : null}
       <article
         className="bg-superficie shadow-tarjeta rounded-2xl p-6"
         data-testid="capsula"

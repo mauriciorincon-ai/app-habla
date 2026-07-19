@@ -16,6 +16,27 @@ export function fechaHoy(): string {
   return claveFechaLocal(new Date());
 }
 
+const MESES = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+];
+
+/** "2026-07-14" → "14 de julio" (es-CO, para mostrarle fechas al padre sin jerga). */
+export function fechaLarga(clave: string): string {
+  const [, mes, dia] = clave.split("-").map(Number);
+  return `${dia} de ${MESES[mes - 1]}`;
+}
+
 /**
  * El lunes de la semana de una fecha, como clave YYYY-MM-DD. Agrupa las sesiones por semana para
  * el Rumbo. Puro y determinista: misma fecha → mismo lunes. La semana empieza en lunes (es-CO).
