@@ -10,8 +10,8 @@
 
 - [x] F0 — Setup (branch, deltas kit v1.7.3 ×3, verificación de supuestos + riesgos de integración R1-R9)
 - [x] F1 — Motores puros (sesiones · rumbo · etiquetas · objetivo · daily con objetivo · lote-por-etapa · dedup) — 193 unit verdes, cobertura 92 %/86 %
-- [ ] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
-- [ ] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe · lighthouse)
+- [x] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
+- [x] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe) — **127 e2e verdes** (lighthouse en F5)
 - [ ] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011)
 - [ ] F5 — CIERRE DE CICLO (BLUEPRINT.html · /design-sync · guía v4 · manual · summary · PR)
 - [ ] **Gate ⭐ ACUMULADO S1+S2+S3+S4 del usuario** (desktop + teléfono) → merge → `/cierre-sprint habla` (H1 COMPLETO)
@@ -130,5 +130,27 @@ La sección que la orden exige que estrene el plan. Cada riesgo se verificó con
   en sonidos-e-intentos las palabras solo-de-gemelas bajan). Paga la deuda lote-por-etapa dentro de O2.
 - **Dedup (deudas del remate):** `barajar` (copia local de palabra-objeto → `@/lib/barajar`),
   `fechaHoy` (copias de gemelas + estudio → `@/lib/fecha`, que además trae `lunesDeLaSemana`).
+
+## F2 + F3 — UI y e2e (hecho)
+
+- **Registro de sesiones (R1):** `CelebracionHonesta` escribe la sesión al montar (ref-guard vs.
+  doble-efecto de StrictMode); palabra↔objeto aporta las palabras encendidas por **estado** (no
+  ref-en-render, que el linter de React 19 prohíbe).
+- **`/rumbo`:** tendencias por semana + hitos + vacío honesto. Microcopy SIN vocabulario clínico
+  (ni negado: el design system dice "jamás diagnóstico/puntaje" — se quitó "sin puntajes/notas").
+- **`/objetivo`:** editor con preview honesto + caso sin-matches + guardar/quitar; store reactivo
+  `useObjetivo` (idiomático `useSyncExternalStore`, sin `setState`-en-efecto).
+- **Alineaciones:** mazo palabra↔objeto, rondas de gemelas y lote del estudio priorizan el objetivo
+  (identidad sin objetivo). Header de Hoy + línea del objetivo activo. Iconos brújula + diana.
+- **e2e nuevos:** `rumbo.spec` (vacío · frase-vs-métrica con números inyectados · write-path por la
+  UI · grep anti-clínico) · `objetivo.spec` (animales alinea Hoy+mazo+lote · colores honesto ·
+  quitar restaura identidad).
+- **Regla 9 (kit v1.7.3, estrenada):** corrida la suite e2e ENTERA de las pantallas tocadas en esta
+  fase. Un solo rojo real: `etapas.spec` — el header más alto (2 filas) empujó el botón del
+  onboarding bajo el pliegue y el auto-scroll del tap dejó Ajustes fuera de vista; se corrigió
+  mirando desde el tope (sigue cazando "enterrado al pie"). **127 e2e verdes en todos los proyectos.**
+- **Privacidad (R2):** lista blanca de claves ampliada conscientemente (`sesiones`, `objetivo`,
+  `gemelas`) con el candado de contenido (audio/pitch) intacto. axe + lighthouse ganan `/rumbo` y
+  `/objetivo`.
 
 _(Se irá completando por fase.)_

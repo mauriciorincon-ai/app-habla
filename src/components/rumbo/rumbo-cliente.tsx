@@ -110,8 +110,8 @@ export function RumboCliente() {
         </h2>
         <p className="text-tinta-suave max-w-prose">
           Jueguen unos días —el globo, el cohete, los dibujos— o marquen la
-          cápsula de hoy, y aquí va a aparecer cómo van. Sin puntajes ni notas:
-          solo lo que de verdad pasó.
+          cápsula de hoy, y aquí va a aparecer cómo van: solo lo que de verdad
+          pasó, sin comparar con nadie.
         </p>
         <Link
           href="/jugar"
@@ -161,8 +161,8 @@ export function RumboCliente() {
       </section>
 
       <p className="text-tinta-suave text-center text-sm">
-        Esto no es una nota ni un diagnóstico: es el registro de lo que hicieron
-        juntos. Lo que mueve el habla es volver, sin prisa.
+        Es el registro de lo que hicieron juntos: lo que mueve el habla es
+        volver, sin prisa.
       </p>
     </div>
   );
