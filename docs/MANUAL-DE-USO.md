@@ -201,11 +201,15 @@ En el encabezado de "Hoy", **"Objetivo"** le deja escribirlo. La app entonces **
 la cápsula del día, los dibujos del juego "palabra y dibujo" y lo que le toca grabar en el Estudio
 se alinean con su objetivo. Es opcional: sin objetivo, todo sigue igual que siempre.
 
-Mientras escribe, la app le dice **con honestidad** cuánto encuentra ("con «animales», se priorizan
-N dibujos y M cápsulas"). Si escribe algo que no está en el contenido de la app —por ejemplo,
-"colores", que a propósito no existe—, se lo dice de frente en vez de fingir que alineó algo. El
-objetivo **no caduca solo**: se queda hasta que usted lo cambie o lo quite (y quitarlo deja todo
-como estaba). Siempre trabaja **dentro de la etapa** que eligió: nunca la salta.
+Mientras escribe, la app le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
+hijo de verdad va a ver**: las cápsulas de su etapa y los dibujos de los temas que eligieron ("con
+«animales», la app pone primero N cápsulas · M dibujos"). Si escribe algo que no está en el
+contenido de la app —por ejemplo, "colores", que a propósito no existe—, se lo dice de frente en
+vez de fingir que alineó algo. Y si escribe algo que sí existe pero **fuera de lo que él ve hoy**
+(un tema que no eligieron en el onboarding), también se lo dice claro: los juegos no cambian,
+aunque el Estudio sí le propondrá grabar esas palabras primero. El objetivo **no caduca solo**: se
+queda hasta que usted lo cambie o lo quite (y quitarlo deja todo como estaba). Siempre trabaja
+**dentro de la etapa** que eligió: nunca la salta.
 
 ### Qué mide y qué NO mide la app (importante)
 
