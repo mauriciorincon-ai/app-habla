@@ -27,6 +27,7 @@ import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession } from "./use-voice-session";
+import { useVozFamiliar } from "./use-voz-familiar";
 import { EscenarioPalabra } from "./escenario-palabra";
 
 /** Baraja determinista por semilla: sin Math.random en el render (y estable entre renders). */
@@ -115,6 +116,7 @@ function JuegoListo({
     terminar,
     otraVez,
     cambiarCalma,
+    silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "activaciones",
@@ -122,6 +124,10 @@ function JuegoListo({
     meta: null,
     metricaActual,
   });
+
+  // La voz de la familia (O2): al sonar, pausa el medidor con `silenciar` para que su eco por los
+  // parlantes no cuente como voz del niño (guarda del bucle, ADR-010).
+  const voz = useVozFamiliar({ alSonar: silenciar });
 
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
@@ -207,6 +213,7 @@ function JuegoListo({
             reconocida={reconocidaAhora}
             invitando={invitacionAmable(sesion)}
             onVocalizar={alVocalizar}
+            voz={voz}
           />
 
           {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.

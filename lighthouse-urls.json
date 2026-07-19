@@ -1,1 +1,10 @@
-["/", "/jugar", "/jugar/globo", "/jugar/cohete", "/jugar/palabras", "/ajustes"]
+[
+  "/",
+  "/jugar",
+  "/jugar/globo",
+  "/jugar/cohete",
+  "/jugar/palabras",
+  "/jugar/gemelas",
+  "/estudio",
+  "/ajustes"
+]

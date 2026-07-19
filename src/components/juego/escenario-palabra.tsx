@@ -12,8 +12,11 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { rutaPictograma, type Pictograma } from "@content/pictogramas";
+import { IconoAltavoz } from "@/components/iconos";
+import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { GlobosCelebracion } from "./globos-celebracion";
 import type { MedidasVivas } from "./use-voice-session";
+import type { VozFamiliar } from "./use-voz-familiar";
 
 /** Voz sostenida mínima para encender el dibujo. Corto a propósito: un intento basta. */
 const MS_PARA_ENCENDER = 250;
@@ -29,6 +32,8 @@ type Props = {
   reconocida: boolean;
   invitando: boolean;
   onVocalizar: () => void;
+  /** La voz de la familia (O2): modela el nombre y la frase honesta si están grabados. */
+  voz: VozFamiliar;
 };
 
 export function EscenarioPalabra({
@@ -38,12 +43,41 @@ export function EscenarioPalabra({
   reconocida,
   invitando,
   onVocalizar,
+  voz,
 }: Props) {
   const auraRef = useRef<HTMLDivElement | null>(null);
   const avisarRef = useRef(onVocalizar);
   useEffect(() => {
     avisarRef.current = onVocalizar;
   }, [onVocalizar]);
+
+  const idNombre = idPalabra(picto.palabra);
+  const nombreDisponible = voz.disponible(idNombre);
+
+  // La voz se lee de un ref en los efectos: su identidad cambia al cargar el banco, y no queremos
+  // re-disparar el autoplay por eso (solo por un dibujo nuevo).
+  const vozRef = useRef(voz);
+  useEffect(() => {
+    vozRef.current = voz;
+  }, [voz]);
+
+  // Autoplay: al aparecer un dibujo nuevo, suena su palabra en la voz de la familia (si está
+  // grabada). Modela el nombre para el niño; el altavoz lo repite cuando él quiera ("el nombre
+  // vive en la cosa"). No-op silencioso si no hay grabación.
+  useEffect(() => {
+    void vozRef.current.reproducir(idPalabra(picto.palabra));
+  }, [picto.palabra]);
+
+  // La frase honesta que ya se muestra en pantalla, dicha con la voz de la familia si está grabada.
+  // Son EXACTAMENTE las celebraciones del catálogo (le-salio / dijo-palabra): la app solo dice en
+  // voz alta lo que de verdad pasó (regla dura 3).
+  useEffect(() => {
+    if (reconocida) void vozRef.current.reproducir("celebracion:dijo-palabra");
+  }, [reconocida]);
+  useEffect(() => {
+    if (encendido && !reconocida)
+      void vozRef.current.reproducir("celebracion:le-salio");
+  }, [encendido, reconocida]);
 
   useEffect(() => {
     let id = 0;
@@ -113,6 +147,21 @@ export function EscenarioPalabra({
       >
         {picto.palabra}
       </p>
+
+      {/* Altavoz de la voz familiar: el niño puede tocarlo para volver a oír el nombre (≥64 px).
+          Solo aparece si esa palabra está grabada — si no, la app suena como antes (sin voz). */}
+      {nombreDisponible ? (
+        <button
+          type="button"
+          onClick={() => void voz.reproducir(idNombre)}
+          className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
+          data-testid="altavoz-palabra"
+          data-fuente-voz="familiar"
+          aria-label={`Oír “${picto.palabra}”`}
+        >
+          <IconoAltavoz className="h-8 w-8" />
+        </button>
+      ) : null}
 
       {reconocida ? (
         <p className="text-exito text-lg font-medium" role="status">

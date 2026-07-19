@@ -40,10 +40,11 @@ actividad. Cuando la hagan, toque **"Ya lo hicimos"**.
 
 ### Los juegos de voz — "su voz mueve el mundo"
 
-En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **tres juegos**.
-Ninguno le exige palabras al niño: los tres miden su voz, no su vocabulario.
+En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **cuatro
+juegos**. Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
 
-**Antes de cualquiera de los tres, pasa siempre lo mismo:**
+**Tres de ellos escuchan el micrófono** (el globo, el cohete y "palabra y dibujo"). Antes de
+cualquiera de esos tres pasa siempre lo mismo:
 
 1. **Su guion primero.** La app le muestra la línea que usted va a decir. Usted dirige el juego;
    el niño no juega solo (no existe un "modo niño solo", y es a propósito).
@@ -51,6 +52,8 @@ Ninguno le exige palabras al niño: los tres miden su voz, no su vocabulario.
 3. **Dos segundos de silencio ("shhh…").** La app mide cómo suena su casa —el ventilador, la
    tele— para no confundir ese ruido con la voz del niño. Si hay mucho ruido, se lo dice de frente
    y ustedes deciden si siguen o vuelven a medir.
+
+**El cuarto, "palabras gemelas", NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
 "game over".
@@ -101,6 +104,62 @@ exigiría mandar la voz de su hijo a un servidor (jamás), y hacerlo mal signifi
 cuando él **sí** dijo la palabra — el reconocimiento automático se equivoca justo con los niños
 que están aprendiendo a hablar. Usted estaba ahí y usted sabe. Al final, la celebración lo dice
 tal cual: _"Y **tú** oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
+
+#### 4. Palabras gemelas — dos dibujos que suenan casi igual (nuevo)
+
+Aparecen **dos dibujos a la vez** cuyas palabras se diferencian por un solo sonido: _pato_ y
+_gato_, _mano_ y _mono_, _foca_ y _boca_. Son las llamadas **parejas mínimas**: practicar ese
+contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga UNO**, y luego
+**toque usted el dibujo que oyó**.
+
+Este juego es **distinto a los otros tres**:
+
+- **No usa micrófono. No graba ni analiza nada.** La app no oye la palabra: **el que la oye es
+  usted**, y por eso las teclas de marcar son suyas. Es co-uso puro.
+- **No hay respuesta correcta ni incorrecta para el niño.** Cualquier intento vale; si hoy solo
+  quiere mirar, toque **"Hoy solo miramos esta"** y sigan sin apuro.
+- La celebración es honesta: cuenta **cuántas rondas jugaron** y en cuántas **usted** marcó algo —
+  nunca dice que "acertó".
+- **Necesita que el niño ya diga palabras sueltas.** Si su etapa es _"sonidos e intentos"_, el
+  juego se lo dice con cariño y lo invita a volver más adelante. Se cambia en Ajustes.
+
+Si grabó su voz (más abajo), cada dibujo trae un **botón de altavoz** para que el niño oiga la
+palabra en la voz de la familia antes de intentarla.
+
+### La voz de la familia — grabar tu voz para los juegos (nuevo)
+
+Los juegos pueden **sonar con la voz de mamá o papá** en vez de estar mudos. Es opcional, y lo
+maneja usted desde **Ajustes → "La voz de la familia" → "Grabar mi voz"** (o directamente en la
+pantalla del **Estudio**).
+
+**Cómo funciona:**
+
+- El Estudio le va mostrando, de a una, las **palabras y frases** que puede grabar (las palabras de
+  los dibujos, algunas consignas del juego y las celebraciones honestas). Toca **"Grabar"**, dice
+  la palabra, la **escucha cómo quedó** y la **guarda** o la **regraba**. Una barra le muestra
+  cuánto lleva grabado.
+- Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
+  altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
+  el nombre "vive en la cosa" con una voz que el niño conoce.
+- Puede **apagar** la voz de la familia con el interruptor _"Usar la voz de la familia"_ **sin
+  borrar nada**, y volver a encenderla cuando quiera.
+
+**Lo más importante — qué se graba y qué JAMÁS:**
+
+- **Se graba SU voz** —la de los adultos—. La pantalla lo dice claro: _"La voz de tu hijo nunca se
+  graba."_ El Estudio es para el adulto.
+- **La voz de su hijo nunca se graba**, ni siquiera aquí. Los juegos que escuchan el micrófono
+  siguen sin guardar nada de su voz (ver Privacidad).
+- **El banco de voz vive SOLO en este dispositivo.** No se sube a internet, no se copia a ningún
+  servidor y no queda en el repositorio del proyecto. Si cambia de aparato, las grabaciones **no
+  viajan**: se vuelven a grabar donde se van a usar.
+- Puede borrar **solo el banco de voz** (sin tocar lo demás) con _"Borrar solo el banco de voz"_,
+  o borrarlo todo desde _"Borrar mis datos"_.
+
+> Detalle honesto: la app graba **frases fijas**. La celebración final que dice un número —"¡Su voz
+> sonó 7,3 segundos!"— **no** se puede grabar con su voz, porque el número cambia cada vez; esas se
+> quedan en texto. Su voz suena en lo que siempre dice lo mismo (los nombres, "¡Le salió la voz!",
+> "¡Dijo la palabra!").
 
 ### La etapa del habla — cómo elegirla (nuevo)
 
@@ -163,8 +222,14 @@ Esta es la promesa más importante de la app:
   a internet. Hay pruebas automáticas que lo verifican en cada cambio del código: si alguien
   intentara guardar o enviar audio, esas pruebas fallan y el cambio no entra.
 - **La cámara no se usa nunca.**
-- Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes y qué
-  cápsulas completó. Puede borrarlo todo en **Ajustes → Borrar mis datos**.
+- **La voz de la familia (la SUYA) sí se guarda —solo aquí.** Si usted graba su voz en el Estudio,
+  esas grabaciones viven en este dispositivo y **nunca salen de él**: no van a internet ni al
+  proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
+  sola llamada de red**. Y aun con el Estudio, **la voz de su hijo nunca se graba.**
+- Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes, qué
+  cápsulas completó, lo que marcó en "palabras gemelas" y —si las grabó— **sus** voces. Puede
+  borrarlo todo en **Ajustes → Borrar mis datos**, o solo el banco de voz con **"Borrar solo el
+  banco de voz"**.
 
 ## Preguntas frecuentes
 
@@ -192,6 +257,15 @@ internet.
 **¿Reemplaza a la fonoaudióloga?**
 No, y nunca lo va a hacer. Es práctica en casa para acompañar lo que ella ya está haciendo.
 
+**¿Por qué grabo MI voz y no la de mi hijo?**
+Porque la voz que ayuda a un niño a aprender una palabra es la de alguien que quiere: la suya. Y
+porque la voz de su hijo es un dato delicado que esta app se comprometió a **nunca** guardar. Su
+voz, en cambio, la controla usted: la graba, la escucha, la apaga o la borra cuando quiera.
+
+**¿La voz que grabo se sube a algún lado?**
+No. Vive solo en este dispositivo. Si le presta la tablet a otra persona o cambia de aparato, esas
+grabaciones no viajan con usted — se vuelven a grabar donde se van a usar.
+
 ## Créditos de los dibujos
 
 Los pictogramas del juego "Palabra y dibujo" son obra de **Sergio Palao** para
@@ -201,6 +275,8 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 
 ## Historial
 
-| Sprint | Features añadidas a este manual                                                                                                                                         |
-| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión. |
+| Sprint | Features añadidas a este manual                                                                                                                                                                                                                                             |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión.                                                                                                     |
+| 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                            |
+| 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz. |
