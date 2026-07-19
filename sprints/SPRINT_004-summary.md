@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — CI verde local (200 unit · 127 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (209 unit · 129 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -21,7 +21,7 @@ Una pantalla nueva `/rumbo` (cuarto del padre, acceso en el encabezado de "Hoy")
 **SOLO lo medido o lo marcado**: tendencias **por semana** (días con práctica, palabras distintas
 practicadas, dibujos encendidos, inversiones, la racha de voz más larga, lo que el padre marcó
 haber oído) + **hitos funcionales** ("su primer rato juntos", "la primera palabra que TÚ le oíste",
-"su voz sonó más de 5 s"). **Cero puntajes clínicos, cero %, cero plazos, cero culpa** — una semana
+"su voz sonó 5 segundos seguidos"). **Cero puntajes clínicos, cero %, cero plazos, cero culpa** — una semana
 floja es un número pequeño sin adjetivo; no hay rachas que castiguen. El microcopy se blindó contra
 TODO vocabulario clínico, ni siquiera negado (el design system dice "jamás diagnóstico/puntaje"),
 verificado por e2e (grep) y revisión. Vacío honesto: "todavía no hay nada que contar".
@@ -35,10 +35,14 @@ logros") — **jamás audio ni pitch crudo**; el sello de la regla dura 2 sigue 
 Una pantalla `/objetivo` donde el padre escribe en **texto libre** qué trabajar; la app lo alinea de
 forma **DETERMINISTA** (sin IA) sobre tres bancos de contenido: la **cápsula de hoy** (por
 etiquetas), el **mazo de palabra↔objeto** y las **rondas de gemelas** (por palabra/tema), y el
-**lote del estudio** (que además **paga la deuda lote-por-etapa**). Preview honesto en vivo ("con
-«animales», se priorizan N dibujos y M cápsulas"); **caso sin coincidencias honesto** ("colores" no
-existe en el contenido → lo dice de frente, no finge). Sin expiración automática (predictibilidad
-COGA: solo el padre lo cambia/quita). Alinea **dentro de la etapa** (ADR-005), jamás la salta.
+**lote del estudio** (que además **paga la deuda lote-por-etapa**). Preview honesto en vivo que
+cuenta **contra lo que el niño DE VERDAD verá** —su etapa y sus temas, espejando el mazo real
+(ajuste de la auditoría de cierre)—: "con «animales», la app pone primero N cápsulas · M dibujos".
+**Dos casos honestos:** "colores" no existe en el contenido → lo dice de frente, no finge; y
+"existe pero fuera de su alcance" (un tema no elegido) → lo dice claro, sin prometer dibujos que
+el mazo no trae (la línea del estudio solo aparece cuando es verdad). Sin expiración automática
+(predictibilidad COGA: solo el padre lo cambia/quita). Alinea **dentro de la etapa** (ADR-005),
+jamás la salta.
 **Sin objetivo, el orden del contenido es IDÉNTICO al de antes** (partición estable) — así los e2e
 por semilla del S3 no se movieron. La re-alineación de "Hoy" respeta el trabajo ya hecho: solo
 re-evalúa la cápsula del día si **no** está completada (R4, invariante congelada del S2 intacta).
@@ -50,20 +54,20 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 
 ## Definition of Done — los 6+1
 
-| Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **1. Testing**          | ✅               | **200 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,5 % stmts / 86,2 % branches**. **127 e2e** (rumbo frase-vs-métrica, objetivo animales/colores/borrar, + suites enteras de las pantallas tocadas, regla 9). Todo en CI. |
-| **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                      |
-| **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                   |
-| **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                          |
-| **5. Performance**      | ✅               | `/rumbo` y `/objetivo` son **estáticas** (prerender) y viven en sus rutas: **"/" no se toca**. Budgets 350 KB/3800 ms verificados por CI Lighthouse en **10 rutas** (se agregaron `/rumbo` y `/objetivo`). Reproducir audio unificado en `reproducirBlob` con revoke (dedup + fuga cerrada); cero dependencia runtime nueva.                                                                                                   |
-| **6. UX/A11y**          | ✅               | axe limpio en **10 rutas × 2 temas × 2 dispositivos** (+`/rumbo` +`/objetivo`) · toques del padre ≥44 px · sin límite de tiempo, sin game-over · microcopy 100 % es-CO, sin jerga clínica · el objetivo alinea dentro de la etapa (COGA: predecible, no salta).                                                                                                                                                                |
-| **7. IA embebida**      | **N/A**          | Cero LLM, cero SDK — **quinta vez consecutiva**. La alineación objetivo→contenido es **mapeo determinista**, no un modelo.                                                                                                                                                                                                                                                                                                     |
-| **Manual de uso**       | ✅               | Secciones nuevas "El rumbo — cómo van, sin notas" y "Objetivo de la semana — la sintonía con la fonoaudióloga"; historial 004.                                                                                                                                                                                                                                                                                                 |
-| **Guía de prueba viva** | ✅               | `docs/GUIA-DE-PRUEBA.html` **v4 acumulativa**: hereda las v3 ENTERAS (S3 pasa a regresión), agrega bloques N (rumbo) y O (objetivo) + 2 ítems de tablet, **recorrido del gate ⭐ ACUMULADO con tiempos**. Gate ⭐ = **25** (~40 min). Elimina: nada.                                                                                                                                                                           |
-| **Revisión de diseño**  | ⏳               | Checklist `diseno-ui` auto-corrido sobre `/rumbo` y `/objetivo` (paleta operador, 5 estados del objetivo, sin jerga). **Aprobación visual del usuario = parte del gate ⭐ ACUMULADO** (abajo).                                                                                                                                                                                                                                 |
-| **BLUEPRINT (ciclo)**   | ✅               | `docs/BLUEPRINT.html` — as-built autocontenido con SVG embebido. Topología local-first honesta: sin BD, costo **US$0**, punto único de falla = **el dispositivo**.                                                                                                                                                                                                                                                             |
-| **design-sync (ciclo)** | ✅               | Publicado en Claude Design → **"Hablemos San — Design System"** (`915209fb…`). El repo es una app, no una librería de componentes → se autoró una **referencia de marca** (decisión del usuario): `styles.css` con los tokens + 8 tarjetas de preview (paleta, tipografía, personajes, Hoy/Rumbo/Objetivo, escenario, celebración honesta) + README de convenciones. Pin en `.design-sync/config.json`.                        |
+| Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Testing**          | ✅               | **209 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,6 % stmts / 86,6 % branches**. **129 e2e** (rumbo frase-vs-métrica ATADA por testid, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, + suites enteras de las pantallas tocadas, regla 9). Todo en CI.                                                 |
+| **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                         |
+| **5. Performance**      | ✅ (tras ajuste) | `/rumbo` y `/objetivo` son **estáticas** (prerender): **"/" no se toca**. **El gate de Lighthouse del PR cazó a `/objetivo` sobre el budget** (383 KB > 350 KB: el preview y `aplicarObjetivoAHoy` arrastraban los 3 bancos de contenido al bundle — la trampa que el S2 ya había cazado en los juegos). Corregido en la auditoría de cierre: contenido por `import()` dinámico al primer teclazo → **331 KB gzip** medido en prod local (~27 KB bajo el budget, al nivel de `/rumbo`). Budgets en **10 rutas**; `reproducirBlob` con revoke; cero dependencia runtime nueva. |
+| **6. UX/A11y**          | ✅               | axe limpio en **10 rutas × 2 temas × 2 dispositivos** (+`/rumbo` +`/objetivo`) · toques del padre ≥44 px · sin límite de tiempo, sin game-over · microcopy 100 % es-CO, sin jerga clínica · el objetivo alinea dentro de la etapa (COGA: predecible, no salta).                                                                                                                                                                                                                                                                                                               |
+| **7. IA embebida**      | **N/A**          | Cero LLM, cero SDK — **quinta vez consecutiva**. La alineación objetivo→contenido es **mapeo determinista**, no un modelo.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Manual de uso**       | ✅               | Secciones nuevas "El rumbo — cómo van, sin notas" y "Objetivo de la semana — la sintonía con la fonoaudióloga"; historial 004.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Guía de prueba viva** | ✅               | `docs/GUIA-DE-PRUEBA.html` **v4 acumulativa**: hereda las v3 ENTERAS (S3 pasa a regresión), agrega bloques N (rumbo) y O (objetivo) + 2 ítems de tablet, **recorrido del gate ⭐ ACUMULADO con tiempos**. Gate ⭐ = **25** (~40 min). Elimina: nada.                                                                                                                                                                                                                                                                                                                          |
+| **Revisión de diseño**  | ⏳               | Checklist `diseno-ui` auto-corrido sobre `/rumbo` y `/objetivo` (paleta operador, 5 estados del objetivo, sin jerga). **Aprobación visual del usuario = parte del gate ⭐ ACUMULADO** (abajo).                                                                                                                                                                                                                                                                                                                                                                                |
+| **BLUEPRINT (ciclo)**   | ✅               | `docs/BLUEPRINT.html` — as-built autocontenido con SVG embebido. Topología local-first honesta: sin BD, costo **US$0**, punto único de falla = **el dispositivo**.                                                                                                                                                                                                                                                                                                                                                                                                            |
+| **design-sync (ciclo)** | ✅               | Publicado en Claude Design → **"Hablemos San — Design System"** (`915209fb…`). El repo es una app, no una librería de componentes → se autoró una **referencia de marca** (decisión del usuario): `styles.css` con los tokens + 8 tarjetas de preview (paleta, tipografía, personajes, Hoy/Rumbo/Objetivo, escenario, celebración honesta) + README de convenciones. Pin en `.design-sync/config.json`.                                                                                                                                                                       |
 
 ## ADRs de este sprint
 
@@ -98,6 +102,20 @@ Hoy congelada) → `realinearObjetivo` solo si no está completada, unit doble �
 etiquetas) → vocabulario controlado sin colores + curaduría de las 50 · R9 (iconos) → mismos
 nombres, `sw.js` no fija hashes. **Todos verificados en el código y anotados en la bitácora.**
 
+## Auditoría final de cierre (2 fases, 2026-07-19 — pedida por el usuario antes del gate)
+
+**Fase 1 (solo lectura):** alcance ítem a ítem vs. la orden + 3 revisores paralelos (tests ·
+privacidad · UI) con cada hallazgo verificado en código. **0 Críticos · 2 Altos · 6 Medios · 11
+Bajos.** La privacidad salió **blindada** (cero fugas; flujo Metrica→Sesion, sellos de lib/voice,
+XSS/ReDoS, revoke de ObjectURLs y secretos, todos verificados). **Fase 2 (aprobada con alcance
+completo):** los 2 Altos —`/objetivo` rompía el budget de script (el gate de Lighthouse del PR lo
+cazó: los bancos de contenido iban en el bundle; ahora cargan por `import()` al primer teclazo,
+383→331 KB) y el preview contaba contra los bancos completos (ahora cuenta **lo que el niño verá**
+con `lib/objetivo/alcance.ts` + tercer estado honesto "fuera de su alcance", prueba O6)— y los 6
+Medios (privacidad e2e post-escritura, número↔frase atado por testid, grep anti-clínico ampliado,
+singular/plural del rumbo, foco+aria-live al guardar, units de pares/orden-de-hitos/cruce-de-año).
+Detalle completo con archivo:línea en la bitácora.
+
 ## Deuda técnica explícita
 
 - **Portabilidad cross-device del banco de voz:** consciente (ADR-010/011). Sin backup por ahora.
@@ -106,6 +124,12 @@ nombres, `sw.js` no fija hashes. **Todos verificados en el código y anotados en
 - **Nivel "frases" del objetivo:** el objetivo alinea por palabra/etiqueta; combinaciones de dos
   palabras (etapa primeras-frases) alinean por sus palabras sueltas — suficiente para H1.
 - **Tablet:** toda la lista de tablet sigue diferida (ADRs 003/007/010) — **NO gatea el cierre**.
+- **Bajos de la auditoría de cierre (declarados, no corregidos):** `lib/audio` fuera de las
+  carpetas selladas del test de privacidad (la prohibición de red ahí depende solo de ESLint) ·
+  candado de contenido por substring (posible falso positivo si el padre escribe "audio") ·
+  umbrales 25-palabras/5-días solo probados en ausencia · `toBe(8)` acoplado al conteo de pictos ·
+  borde 79/80/81 del objetivo y cap-200 de palabras sin test · `segundos()` duplicado
+  (rumbo/celebración) · el test "Escuchar" no verifica que el blob reproducido sea el devuelto.
 
 ## Fricción del kit (para la retro)
 

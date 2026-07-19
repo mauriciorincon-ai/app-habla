@@ -181,4 +181,55 @@ Más los cierres de deuda del sprint:
   restaurar en otro dispositivo es una promesa falsa; el costo de re-grabar es <10 min; ensancha la
   superficie de privacidad). Validado por el usuario en el gate del plan; reabrible.
 
-_(Se irá completando por fase.)_
+## F5 — Cierre de ciclo (hecho)
+
+- **`docs/BLUEPRINT.html`** — as-built del ciclo H1: SVG embebido (cero CDNs), tabla por pieza,
+  costo real US$0, punto único de falla = el dispositivo (ADR-011 citado), historial iniciado.
+- **Guía v4 acumulativa** — hereda ENTERAS las v3 (S3 pasa a regresión), bloques N (rumbo) y O
+  (objetivo), 2 ítems de tablet, recorrido del gate ⭐ ACUMULADO con tiempos (25 pruebas, ~40 min).
+- **Manual** — secciones "El rumbo" y "El objetivo de la semana"; **design-system.md** — sección
+  "Pantallas del padre (Sprint 4)".
+- **`/design-sync`** — el repo es una app (sin Storybook/dist), así que se publicó una **referencia
+  de marca** (decisión del usuario): tokens + 8 tarjetas de preview + README de convenciones →
+  proyecto "Hablemos San — Design System"; pin en `.design-sync/config.json`.
+- **`/deploy-check`** → MERGE OK local (200 unit · 127 e2e · build · typecheck · lint) → summary →
+  PR #5.
+
+## Auditoría de cierre (2 fases, 2026-07-19) — pedida por el usuario antes del gate
+
+**Fase 1 (solo lectura):** alcance contrastado ítem a ítem contra la orden, motores leídos línea a
+línea, 3 revisores paralelos (tests · privacidad · UI) + verificación en código de cada hallazgo.
+Resultado: **0 Críticos · 2 Altos · 6 Medios · 11 Bajos** → "requiere ajustes". La promesa de
+privacidad salió BLINDADA (cero fugas; flujos, sellos y revokes verificados). **El gate de
+Lighthouse del PR cazó en vivo el Alto A1** — la CI hizo su trabajo.
+
+**Fase 2 (ajustes, aprobados por el usuario — alcance completo: Altos + Medios + doc):**
+
+- **A1 (CI rojo — budget):** `/objetivo` cargaba los 3 bancos de contenido en su bundle inicial
+  (383 KB > 350 KB): los importaba el preview Y `aplicarObjetivoAHoy` (vía estado-capsulas, que
+  arrastra la biblioteca — la MISMA trampa que el S2 cazó en los juegos). Arreglo: los bancos se
+  cargan con `import()` dinámico al primer teclazo y estado-capsulas se importa al guardar/quitar.
+  Medido en prod local: **383,0 → 331,3 KB gzip** (~27 KB bajo el budget, al nivel de /rumbo).
+- **A2 (preview deshonesto):** contaba contra los bancos COMPLETOS, pero la priorización real está
+  acotada (cápsulas por etapa, mazo por temas, pares jugables) — prometía "poner primero" dibujos
+  que el mazo del niño no trae. Arreglo: `lib/objetivo/alcance.ts` (motor puro que ESPEJA el mazo
+  real) + conteo acotado + **tercer estado honesto** "existe pero fuera de su alcance" (con la
+  línea del estudio solo cuando es verdad — predicado compartido `coincideConObjetivo` exportado
+  de lotes.ts, no duplicado). Unit ×5 + e2e nuevo (dinosaurios sin su tema) + prueba O6 en la guía.
+- **M1:** el candado e2e de privacidad corría ANTES de que la app escribiera — ahora corre también
+  tras la celebración y tras guardar un objetivo por la UI, y asevera que `sesiones`/`objetivo`
+  EXISTEN (la lista blanca ya no puede pasar en vacío).
+- **M2:** cada dato del rumbo tiene testid y el e2e ata número↔frase (un intercambio de etiquetas
+  ya no pasa verde). **M3:** grep anti-clínico igualado al vocabulario vetado de las cápsulas
+  (+puntuación, atraso, nivel, déficit, trastorno, "en N semanas"). **M4:** singular/plural en los
+  6 datos del rumbo ("1 palabra distinta", no "1 palabras"). **M5:** al guardar el objetivo el foco
+  vuelve al input y la confirmación vive en una región `aria-live` permanente (el lector la
+  anuncia). **M6:** units de `pares>0`, orden EXACTO de hitos y semanas que cruzan mes/año.
+- **De regalo (Bajos B3/B8/B9):** el hito dice "5 segundos seguidos" (el "más de" mentía en el
+  borde exacto de 5000 ms) · `role="group"` en las sugerencias · esta sección F5 que faltaba.
+- **Bajos restantes → deuda explícita** declarada en el summary (lib/audio fuera del test-sello,
+  candado por substring, umbrales 25/5 solo en ausencia, `toBe(8)` acoplado al contenido, borde
+  80 chars, cap-200 sin test, dedup de `segundos()`, blob del test "Escuchar").
+
+**Tras los ajustes:** typecheck · lint · **209 unit** (90,6 % stmts / 86,6 % branches) · **129
+e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy literal nuevo.
