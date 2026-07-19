@@ -154,7 +154,7 @@ export function EscenarioPalabra({
         <button
           type="button"
           onClick={() => void voz.reproducir(idNombre)}
-          className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95"
+          className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
           data-testid="altavoz-palabra"
           data-fuente-voz="familiar"
           aria-label={`Oír “${picto.palabra}”`}

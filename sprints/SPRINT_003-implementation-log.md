@@ -11,7 +11,7 @@
 - [x] F1 — Motores puros + candados + gemelas + banco de voz (139 unit verdes)
 - [x] F2 — UI (estudio, Ajustes, gemelas, integración de voz) — a: selector+gemelas · b: estudio · c: voz en los juegos
 - [x] F3 — Integración + e2e (mic fake, cero-red, axe) — 103 e2e verdes en todos los proyectos
-- [ ] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check, PR)
+- [x] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check) — falta solo el gate del usuario
 - [ ] **Gate del usuario** (escritorio) → merge → `/cierre-sprint habla` (o difiere según F0 #6)
 
 ## Los tres outcomes
@@ -162,3 +162,27 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   vía `page.evaluate`/`addInitScript` (no `getByRole("alert")` desnudo) · el interruptor
   `toggle-voz-familiar` se opera con `.click()` y la aserción va al resultado (el altavoz que
   desaparece), no al `aria-checked`.
+
+## Hallazgos de F4 (calidad y cierre)
+
+- **Guía v3 (bola de nieve) — transform verificado.** El v2 tenía **79 chips** (la orden decía 81;
+  se hereda lo que existe, entero). Se transformó con un script Python con **aserciones de conteo**
+  (falla ruidoso si un ancla no existe) en vez de ediciones a mano sobre 714 líneas: hereda los 79
+  ENTEROS re-etiquetados como regresión (o-s2 pasa de verde a apagado; ya no "Nuevo · S2"), agrega
+  20 pruebas nuevas (bloques J/K/L/M + 3 de tablet) y marca D1 como "Mejorado en S3" (selector 3→4).
+  Validado: tags balanceados (14 section, 116 li), 0 errores de parseo, **ningún v2 perdido** (diff
+  vacío contra el backup), gate ⭐ = 17. localStorage v2→v3 (arranca en limpio para el gate del S3).
+- **diseno-ui auto-review:** ajuste de cumplimiento — el press del altavoz animaba un `scale`; se
+  guardó con `motion-reduce:transition-none` en los dos altavoces (regla 4). Touch ≥64 px (e2e lo
+  mide), paleta dual, 5 estados del estudio, es-CO. Falta la aprobación visual del usuario.
+- **`/deploy-check` — verdicto MERGE OK (con el gate del usuario pendiente):**
+  - Tests: 139 unit + 103 e2e verdes · cobertura motores 90 %/83 %.
+  - Type safety: `tsc` limpio · sin `@ts-ignore` nuevos.
+  - Lint: **0 warnings** (se quitó el `type Etapa` sin usar heredado del S2).
+  - Build: compila · rutas nuevas `/estudio` y `/jugar/gemelas` estáticas · "/" sin tocar.
+  - Seguridad: `pnpm audit --audit-level high` limpio (1 moderate transitivo `postcss` vía
+    next/sentry — dep de build, bajo el umbral, no explotable aquí) · cero secrets (gitleaks cada
+    commit) · candado triple con fuga inyectada (3.ª vez).
+  - A11y: axe 8 rutas × 2 temas × 2 dispositivos · teclado · reduced-motion.
+  - Docs: manual + guía v3 al día · ADR-010 · bitácora · summary generado.
+  - Lighthouse: lo corre la CI contra `perf-budget.json` (8 rutas) — no bloquea local.

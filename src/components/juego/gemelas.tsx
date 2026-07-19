@@ -165,7 +165,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
                   data-testid={`altavoz-${lado}`}
                   data-fuente-voz="familiar"
                   aria-label={`Oír «${palabra.palabra}»`}
-                  className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95"
+                  className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
                 >
                   <IconoAltavoz className="h-7 w-7" />
                 </button>
