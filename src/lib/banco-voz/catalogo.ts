@@ -36,11 +36,15 @@ function slug(texto: string): string {
 export const idPalabra = (palabra: string): string =>
   `palabra:${slug(palabra)}`;
 
-/** Consignas fijas de juego (el mismo texto siempre → grabable). */
+/**
+ * Consignas fijas de juego (el mismo texto siempre → grabable). Regla del remate S3: SOLO entra
+ * al catálogo lo que tiene un sitio real de reproducción — pedir grabar algo que jamás sonará
+ * es deshonesto con el padre. "Nómbralo tú y espera" se retiró por eso: es una instrucción AL
+ * padre, no una invitación al niño, y no tiene dónde sonar.
+ */
 const CONSIGNAS: { clave: string; texto: string }[] = [
-  { clave: "sirena", texto: "Haz la voz de sirena: aaaAAAaaa" },
-  { clave: "aaah", texto: "Haz sonar tu voz: aaaaah" },
-  { clave: "nombra", texto: "Nómbralo tú y espera" },
+  { clave: "sirena", texto: "Haz la voz de sirena: aaaAAAaaa" }, // suena en el cohete
+  { clave: "aaah", texto: "Haz sonar tu voz: aaaaah" }, // suena en el globo
 ];
 
 /** Celebraciones honestas SIN cifras (las que sí las llevan no son grabables — ADR/​manual). */

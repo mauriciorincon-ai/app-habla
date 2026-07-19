@@ -68,6 +68,19 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
 - **`src/lib/` en vez de `src/engine/`:** la orden lista `src/engine/{banco-voz,gemelas}/…`; el
   repo usa `src/lib/` por convención (CLAUDE.md § Estructura). Se sigue la convención del repo
   (`src/lib/banco-voz/`, `src/lib/gemelas/`, `src/lib/audio/`). Desviación de forma, no de fondo.
+- **(Declaradas en el remate de auditoría, 2026-07-19 — debieron declararse al construir):**
+  - **El catálogo grabable NO incluye los guiones de GuionCard ni las invitaciones** (el plan los
+    listaba): son texto dirigido AL PADRE — grabarlos no le modela nada al niño. La regla que
+    quedó: al catálogo solo entra texto FIJO con un sitio real de reproducción dirigido al niño.
+  - **La "cápsula de Hoy" no tiene altavoz** (el plan lo proponía): la línea del día cambia entre
+    50 cápsulas → texto VARIABLE → no grabable, la misma regla de honestidad que las
+    celebraciones con cifras.
+  - **6 pares gemelos, no ~8-10** (estimación del plan): 6 contrastes con valor fonológico real
+    superan el mínimo del schema (≥6); calidad sobre relleno. El gate de contenido del usuario
+    puede pedir más.
+  - **El lote guiado prioriza por TEMAS pero no filtra por etapa** (el plan decía "por etapa
+    activa"): hoy es cosmético — el catálogo es casi todo palabras y los pares gemelos son todos
+    de "palabras-sueltas" (el default permanente). Se paga en el S4 junto al progreso honesto.
 
 ## Fricción de kit / entorno (K#) — separada del producto
 
@@ -147,8 +160,11 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   UI · sin grabación, fallback limpio (sin altavoz). Se inyecta la grabación directo en IndexedDB
   con la forma real (`{datos:ArrayBuffer, mimeType, duracionMs, fecha}`) y se apoya en que el mazo
   de pictos es DETERMINISTA por semilla (misma palabra tras recargar — se asevera). **El eco
-  parlante→mic sigue sin ser medible con el mic falso** (ítem de gate de tablet): el e2e prueba el
-  CABLEADO, no el eco.
+  parlante→mic sigue sin ser medible con el mic falso** (ítem de gate de tablet). ~~El e2e prueba
+  el CABLEADO~~ — **corrección del remate (2026-07-19): esta línea sobre-afirmaba.** En F3 NINGÚN
+  test tocaba la guarda (ni unit ni e2e); el cableado quedó blindado recién en el remate
+  (`use-voice-session.test.tsx` + e2e del WAV real). Declarar cobertura que no existe es
+  exactamente lo que la auditoría existe para cazar.
 - **`gemelas.spec.ts` (2):** partida completa (padre marca 6 rondas → celebración honesta "6
   rondas" → registro `habla:v1:gemelas` con 6 juicios) y saltar sin castigo. **Sonda de
   `getUserMedia` = 0**: gemelas jamás abre el micrófono (regla dura 2).
@@ -187,3 +203,44 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   - A11y: axe 8 rutas × 2 temas × 2 dispositivos · teclado · reduced-motion.
   - Docs: manual + guía v3 al día · ADR-010 · bitácora · summary generado.
   - Lighthouse: lo corre la CI contra `perf-budget.json` (8 rutas) — no bloquea local.
+
+## Remate de auditoría final (2026-07-19) — branch `fix/s3-remate`
+
+Auditoría de dos fases pedida por el usuario ANTES del cierre formal (Fase 1 solo-lectura →
+aprobada → Fase 2 con plan validado). Hallazgos Alto pagados + Medios aprobados. **150 unit +
+107 e2e verdes** tras el remate.
+
+- **A-1 · Las consignas suenan de verdad (O2 completo y honesto):** altavoz ≥64 px en el globo
+  (`consigna:aaah`) y el cohete (`consigna:sirena`) vía `AltavozConsigna` compartido, SIEMPRE con
+  la guarda (`useVozFamiliar({alSonar: silenciar})`). `consigna:nombra` RETIRADA del catálogo
+  (dirigida al padre, sin sitio de reproducción — pedir grabar lo que jamás sonará es deshonesto).
+  Cortes del plan declarados arriba (§ Desviación).
+- **A-2 · La guarda del bucle, blindada tres veces:** motor puro `lib/voice/guarda-bucle.ts`
+  (solapes acumulan, `silenciar(0)` cancela) + **test de integración** del hook con mic mockeado
+  (se cae si alguien borra la línea que descarta frames) + **e2e con WAV real** (el clip suena al
+  cambiar de dibujo y el dibujo NO se enciende hasta que llega voz NUEVA del micrófono).
+  **ADR-010 → accepted** (su condición era exactamente esto).
+- **A-3 · "Borrar mis datos" garantizado:** `eliminarBanco()` y `borrarTodo()` awaitables; la
+  navegación espera el borrado real (tope de gracia 2 s). Unit: guardar → borrar → el banco
+  reabre VACÍO. Antes, la recarga podía ganarle la carrera al `deleteDatabase` encolado.
+- **A-4 · HALLAZGO NUEVO en la implementación del remate (defecto S2 latente, regla dura 3):**
+  `sostenidoMs` acumula TODO el intento y el escenario lo comparaba crudo contra los 250 ms →
+  tras la primera vocalización, **cada dibujo siguiente se encendía SOLO** (con la voz del
+  anterior) e inflaba el contador de activaciones. Arreglo: **ancla de voz NUEVA por dibujo**
+  (baseline de sostenido al aparecer cada picto, re-anclada si el intento se reinicia). El e2e
+  del WAV real lo cubre; sin este arreglo, el e2e de la guarda era inescribible (el dibujo se
+  encendía por la voz vieja, no por el eco).
+- **El candado del S1 cazó al remate:** montar `useVozFamiliar` en globo/cohete hacía que
+  `listarIds()` CREARA la base `habla-banco-voz` vacía solo por preguntar — y el e2e "cero rastro
+  en el almacenamiento durante el juego" (S1) falló. Arreglo: `bancoExiste()` con
+  `indexedDB.databases()` — las operaciones de lectura jamás crean la base; solo
+  `guardarGrabacion` puede. **El candado viejo protegiendo al código nuevo: así deben funcionar.**
+- **M-1 · Resiliencia IDB:** `.catch` en las tres cargas (`/estudio` ya no se queda en esqueleto
+  eterno si IndexedDB no abre; juega/gestiona como banco vacío) + `abrir()` no cachea promesas
+  rechazadas (unit del reintento).
+- **M-2 · play() fallido cancela la guarda** (`silenciar(0)`): un autoplay bloqueado ya no deja
+  al juego sordo a la voz real del niño.
+- **Deuda que el remate NO paga (declarada, S4):** tests de componente del estudio (Testing
+  Library) — el de integración del hook paga la parte crítica de la DoD; duplicaciones
+  `barajar`/`fechaHoy`/`reproducir`; unit del cap-500 de gemelas; revoke de ObjectURL al navegar
+  a mitad de clip; lote-por-etapa (arriba). El eco ACÚSTICO real sigue siendo ítem de tablet.

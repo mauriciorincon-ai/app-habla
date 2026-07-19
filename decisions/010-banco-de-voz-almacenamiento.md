@@ -1,6 +1,7 @@
 # ADR 010 — Local storage for the family voice bank
 
-- **Status:** proposed (skeleton — completed after the F1 spike)
+- **Status:** accepted (2026-07-19 — its own acceptance condition, unit + e2e for the
+  feedback-loop guard, was paid in the audit remate `fix/s3-remate`)
 - **Sprint:** 003 "La voz de la familia"
 - **Extends:** ADR-002 (local-first, no server), ADR-003 (audio engine matrix). Bound by regla
   dura 2 (child audio never persists) and its S3 sibling regla dura 2-bis (family voice bank lives
@@ -47,5 +48,16 @@ gives (VISION § 3). This is the first time the app both **records** (MediaRecor
 
 ## Consequences
 
-- Still open until F1: the **feedback-loop guard** (meter pause during playback) must be measured
-  and validated with a unit + e2e before this ADR moves to `accepted`.
+- **Feedback-loop guard: paid (2026-07-19, remate).** Pure engine `lib/voice/guarda-bucle.ts`
+  (unit: silences for clip+300 ms tail, overlaps accumulate, `silenciar(0)` cancels on failed
+  play) + integration test of the wiring in `use-voice-session` (frames ignored while active —
+  the test fails if the guard line is removed) + e2e by the UI (a real WAV plays on picto change
+  and the drawing does NOT light until NEW mic voice arrives). The acoustic echo itself is still
+  a tablet-gate item (the fake mic is a file — it cannot hear speakers).
+- **Asking is not creating (remate):** read-only ops (`listarIds`, `obtenerGrabacion`…) check
+  `indexedDB.databases()` first and never CREATE the DB — the S1 privacy e2e ("zero storage trace
+  during a mic game") caught the games creating an empty bank just by mounting. Only
+  `guardarGrabacion` may create it.
+- **`borrarTodo` awaits the real deletion (remate):** `eliminarBanco()` is awaitable (closes the
+  live connection, then awaits `deleteDatabase`); navigation happens only after it resolves (with
+  a 2 s grace cap). Unit: save → `borrarTodo()` → the bank reopens empty.

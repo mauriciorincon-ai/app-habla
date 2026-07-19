@@ -50,10 +50,12 @@ export function EstudioCliente() {
   const [modo, setModo] = useState<"gestion" | "lote">("gestion");
 
   useEffect(() => {
-    void listarIds().then((ids) => {
-      setGrabados(new Set(ids));
-      setCargando(false);
-    });
+    // Si IndexedDB falla al abrir (modo privado viejo, storage roto), el estudio NO se queda en
+    // esqueleto eterno: se muestra como banco vacío (auditoría S3, M-1).
+    listarIds()
+      .then((ids) => setGrabados(new Set(ids)))
+      .catch(() => setGrabados(new Set()))
+      .finally(() => setCargando(false));
   }, []);
 
   if (!hidratado || cargando) {
