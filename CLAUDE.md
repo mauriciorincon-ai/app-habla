@@ -113,8 +113,15 @@ decisions/NNN-titulo.md   (ADRs de implementación)
 5. **Commits convencionales**; branch `sprint-NNN/<tema>`; **jamás push directo a `main`** (hook lo
    bloquea); PR con CI verde + preview probada **en la tablet real**.
 6. **Secrets solo en `.env.local` (gitignored) y Vercel env vars.** Doble protección gitleaks (hook
-   PreToolUse + `githooks/pre-commit` **100755 y activo** — kit v1.3.1). En esta app el gate de
-   privacidad es doble: secrets Y **el audio del niño** (regla dura 2 — nunca a storage, red o logs).
+   PreToolUse + `githooks/pre-commit` **100755 y activo** — kit v1.3.1). **Carnada canónica
+   verificada (kit v1.6.3):** el secreto de prueba para comprobar que el gate está vivo es
+   `AWS_ACCESS_KEY_ID` seguido de `AKIA` + `Q7RTZ4PXKM2WNB3S` (dispara la regla `aws-access-token`;
+   verificado contra gitleaks 8.30.1 el 2026-07-18). **No improvises la carnada:** las reglas
+   modernas exigen alfabeto base32 real tras `AKIA` y entropía, y una carnada floja pasa en silencio
+   dando falsa tranquilidad. Si gitleaks sube de versión mayor, re-verificar en sandbox. En esta app
+   el gate de privacidad es **triple** (S3): secrets · **el audio del niño** (regla dura 2 — nunca a
+   storage, red o logs) · **el banco de voz familiar** (regla dura 2-bis — vive SOLO en storage
+   local, nunca a red ni al repo).
 7. **Presupuesto de esfuerzo:** ~12 pasos por pantalla; si lo excedes, detente y simplifica.
 8. **Manual de uso vivo (`docs/MANUAL-DE-USO.md`, obligatorio).** Español llano, para el padre:
    cómo usar "Hoy", cómo dirigir el juego (su rol), qué mide y qué NO mide la app, la privacidad
@@ -125,7 +132,11 @@ decisions/NNN-titulo.md   (ADRs de implementación)
    `referencias-ui/habla/Habla Santy/design-system.md` (paleta dual operador/niño "Clínica cálida"
    sage/cream) — pero **sus 9 pantallas funcionales están ANULADAS** (concepto viejo): no heredes
    flujos ni features de ahí. Cada sprint con UI cierra con checklist `diseno-ui` + aprobación
-   visual del usuario sobre la preview (idealmente con el niño observando).
+   visual del usuario sobre la preview (idealmente con el niño observando). **Claude Design es BAJO
+   DEMANDA durante el ciclo** (el default validado es `design-system.md` + aprobación sobre la
+   preview); **PERO al CERRAR el ciclo (método v1.8.0) el design system consolidado SE PUBLICA en
+   Claude Design (`/design-sync`)** como activo estable — actividad de cierre junto al blueprint (en
+   habla: S4).
 10. **Guía de prueba viva y ACUMULATIVA (`docs/GUIA-DE-PRUEBA.html`, obligatoria — regla del
     usuario 2026-07-12, ampliada por él el 2026-07-12).** HTML visual y AUTOCONTENIDO (cero CDNs,
     checkboxes con localStorage): qué probar, cómo y qué esperar como resultado correcto, por
@@ -159,7 +170,12 @@ técnica explícita en el summary o el sprint no cierra.
 **Apertura** — el usuario trae la **orden de construcción**
 (`portafolio/habla/ordenes/SPRINT_NNN-orden.md` de la planeadora). Léela entera + sus referencias
 (SPRINT_NNN.md, VISION.md, brief v2, investigación científica — §A.3 técnicas, §B.1 DSP, §C HCI,
-§D anti-claims). **Plan mode primero, siempre.** Branch `sprint-NNN/<tema>`.
+§D anti-claims). **Plan mode primero, siempre.** **La aprobación del plan NO arranca la
+construcción** (gate de arranque, kit v1.6.2): tras aprobarse el plan, emite el **bloque de
+arranque** — tu recomendación de **modelo y esfuerzo** para el sprint (por fase si difiere; tú
+recomiendas, el usuario los fija con `/model`) + espacio para sus ajustes — y **espera su
+«construye» explícito antes de tocar cualquier archivo**. Si responde con ajustes, incorpóralos y
+vuelve a esperar. Branch `sprint-NNN/<tema>`.
 
 **Durante** — construye por fases (setup → spike de audio en la tablet real → motores puros → UI →
 e2e). Mantén viva la bitácora `sprints/SPRINT_NNN-implementation-log.md`. ADRs en `decisions/` para
@@ -170,6 +186,14 @@ bitácora, SEPARADA del trabajo del producto.
 **Cierre — summary OBLIGATORIO.** Con la DoD completa: `/deploy-check` → genera
 `sprints/SPRINT_NNN-summary.md` (misma plantilla que las otras apps del pipeline) → PR → merge con
 CI verde. **Sin summary el sprint NO está cerrado** (es lo que la planeadora lee para la retro).
+
+**Cierre de CICLO (método v1.8.0 — cuando este sprint es el ÚLTIMO de un ciclo H1/fase/MVP; la
+orden lo declara):** además de la DoD, el sprint entrega (1) **`docs/BLUEPRINT.html`** — as-built
+de TODA la infraestructura que soporta la app (HTML autocontenido con diagrama SVG embebido —
+jamás mermaid ni CDNs — + tabla por pieza + costo real + punto único de falla), vivo y acumulativo
+entre ciclos; y (2) el **design system publicado en Claude Design** (`/design-sync`). Todo ciclo
+tiene MÍNIMO 3 sprints (regla dura). **En habla esto llega en el S4** (cierre del ciclo H1); el S3
+deja el bloque listo pero NO produce blueprint ni design-sync.
 
 ## Patrones de dominio de esta app
 
