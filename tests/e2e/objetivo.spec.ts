@@ -78,6 +78,29 @@ test("«colores» no coincide con nada y la app lo dice honesto (sin fingir)", a
   await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
 });
 
+test("lo que existe en la app pero FUERA de su alcance se dice de frente (auditoría de cierre)", async ({
+  page,
+}) => {
+  // Temas SIN dinosaurios: la app tiene dibujos de dinosaurios, pero el mazo del niño no los
+  // trae y ninguna cápsula lleva esa etiqueta → el preview no puede prometer que "se ponen
+  // primero" en los juegos. Sí es verdad en el estudio (el lote matchea el catálogo completo).
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "habla:v1:perfil",
+      JSON.stringify({ temas: ["carros", "musica"] }),
+    );
+  });
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("dinosaurios");
+
+  const fuera = page.getByTestId("objetivo-fuera-de-alcance");
+  await expect(fuera).toBeVisible();
+  await expect(fuera).toContainText("no en lo que él ve hoy");
+  await expect(fuera).toContainText("estudio de grabación");
+  await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
+  await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
+});
+
 test("quitar el objetivo restaura el orden por defecto (identidad)", async ({
   page,
 }) => {
