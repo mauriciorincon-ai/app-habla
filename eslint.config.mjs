@@ -21,6 +21,20 @@ const MENSAJE_PRIVACIDAD =
   "Regla dura 2: el audio del niño jamás se persiste ni sale del dispositivo. " +
   "Si necesitas storage o red, ese código no va en el motor de voz.";
 
+// Regla dura 2-bis (S3): el banco de voz FAMILIAR vive SOLO en storage local. A diferencia del
+// motor de voz, aquí storage SÍ se permite (es su razón de ser) — lo que jamás se permite es la
+// RED: ninguna grabación de la familia sale del dispositivo ni entra al repo.
+const RED_PROHIBIDA = [
+  "fetch",
+  "XMLHttpRequest",
+  "WebSocket",
+  "EventSource",
+];
+
+const MENSAJE_BANCO =
+  "Regla dura 2-bis: el banco de voz familiar vive SOLO en storage local. " +
+  "Nada de red: ninguna grabación sale del dispositivo.";
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -59,6 +73,38 @@ const eslintConfig = defineConfig([
         },
       ],
       "no-console": "error",
+    },
+  },
+  {
+    // El banco de voz y el resolver de audio: red PROHIBIDA, storage permitido.
+    files: ["src/lib/banco-voz/**/*.ts", "src/lib/audio/**/*.ts"],
+    rules: {
+      "no-restricted-globals": [
+        "error",
+        ...RED_PROHIBIDA.map((name) => ({ name, message: MENSAJE_BANCO })),
+      ],
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@sentry/*", "pino", "@/lib/observability"],
+              message: MENSAJE_BANCO,
+            },
+          ],
+        },
+      ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "MemberExpression[property.name='sendBeacon']",
+          message: MENSAJE_BANCO,
+        },
+        {
+          selector: "MemberExpression[property.name='fetch']",
+          message: MENSAJE_BANCO,
+        },
+      ],
     },
   },
   // Override default ignores of eslint-config-next.

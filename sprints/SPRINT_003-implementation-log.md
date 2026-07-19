@@ -8,7 +8,7 @@
 ## Estado por fase
 
 - [ ] F0 — Setup (branch, deltas kit ×5, ítem 0, ADR-010 esqueleto, verificación de supuestos)
-- [ ] F1 — Motores puros + spike del bucle parlante→mic + ADR-010 completo
+- [x] F1 — Motores puros + candados + gemelas + banco de voz (139 unit verdes)
 - [ ] F2 — UI (estudio, Ajustes, gemelas, integración de voz)
 - [ ] F3 — Integración + e2e (mic fake, cero-red, axe)
 - [ ] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check, PR)
@@ -79,6 +79,26 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   del harness tras muchos turnos; verificar en disco. Sin impacto en el producto (todo quedó
   correcto en disco: 5 deltas presentes, gitleaks limpio).
 
-## Hallazgos del spike de audio (para el ADR-010) — pendiente F1
+## Hallazgos de F1 (motores)
 
-- (por correr)
+- **Almacén: se guarda ArrayBuffer, no Blob.** El primer diseño guardaba el `Blob` directo en
+  IndexedDB y fallaba en los tests: el `Blob` de jsdom NO sobrevive el structured-clone de forma
+  portable. Se guarda el `ArrayBuffer` (universal) + el `mimeType`, y el `Blob` se reconstruye al
+  leer. Patrón estándar para audio en IndexedDB; robusto en todo entorno. Conexión IndexedDB
+  cacheada (una viva por sesión): abrir/cerrar por operación carreaba con las transacciones.
+- **El bucle de retroalimentación NO es medible con el mic fake** (hallazgo importante): el
+  micrófono falso de Playwright es un ARCHIVO, no el micrófono del sistema — reproducir audio por
+  los parlantes NO retroalimenta la captura. Por eso el e2e solo puede verificar que la **guarda
+  está cableada** (el meter ignora frames mientras suena el banco), no medir el eco real. La
+  medición real del bucle es **ítem de gate de tablet** (acumulado). La guarda se implementa en
+  `use-voice-session` (F2) y se prueba su cableado en e2e (F3).
+- **Candados de privacidad del banco — fuga inyectada VERIFICADA (3ª vez):** se metió un
+  `fetch("https://analytics…/voz")` real en `almacen.ts`. Candado 1 (ESLint scoped a
+  `banco-voz/**` + `audio/**`): `error Unexpected use of 'fetch'. Regla dura 2-bis…`. Candado 2
+  (`privacidad-banco.test.ts`): `× almacen.ts usa fetch (red)`. Revertida; ambos verdes.
+  **Diferencia con el motor de voz:** aquí storage SÍ se permite (es el banco); lo prohibido es la
+  RED. `borrarTodo` extendido a IndexedDB (o "borrar mis datos" mentiría — unit lo cubrirá en F3).
+- **Gemelas:** 6 pares mínimos es-CO con valor terapéutico (p/g · vocal a/o · f/b · k/t · l/k ·
+  g/b). 9 pictos nuevos ARASAAC bajados con `scripts/descargar-gemelas.mjs` (no destructivo, no
+  toca los 41 del lote principal). **Su calidad visual es parte del gate de contenido del usuario.**
+- **139 unit verdes** (de 110): gemelas (11) + banco-voz (12) + privacidad-banco (6).

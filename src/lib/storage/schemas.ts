@@ -132,3 +132,24 @@ export function migrarProgresoV1(v1: ProgresoV1): Progreso {
     historial: v1.historial,
   };
 }
+
+// ─── Palabras gemelas (S3) ────────────────────────────────────────────────────────────────────
+// Registro LOCAL de lo que el padre marcó, ronda a ronda. Insumo del progreso honesto del S4.
+// No hay "acierto": solo qué palabra del par oyó el padre. Se acota para no crecer sin límite.
+
+export const JuicioGemeloSchema = z.object({
+  fecha: FechaSchema,
+  /** El par jugado (id de content/pares-gemelos). */
+  parId: z.string().min(1),
+  /** Qué palabra marcó el padre haber oído: "a" | "b", o "saltada" si el niño no intentó. */
+  marca: z.enum(["a", "b", "saltada"]),
+});
+export type JuicioGemelo = z.infer<typeof JuicioGemeloSchema>;
+
+/** Los últimos N juicios (cap 500: suficiente para el progreso, nunca crece sin fin). */
+export const RegistroGemelasSchema = z.object({
+  juicios: z.array(JuicioGemeloSchema).max(500),
+});
+export type RegistroGemelas = z.infer<typeof RegistroGemelasSchema>;
+
+export const REGISTRO_GEMELAS_VACIO: RegistroGemelas = { juicios: [] };
