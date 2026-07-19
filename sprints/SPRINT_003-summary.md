@@ -2,9 +2,9 @@
 sprint: 003
 app: habla
 feature: la-voz-de-la-familia
-estado: listo-para-gate-de-escritorio (CI verde; falta el veredicto del usuario)
-fecha: 2026-07-18
-ciclo: H1 (sprint 3 de 4 — el S4 cierra el ciclo: BLUEPRINT + design-sync)
+estado: cerrado — gate ⭐ DIFERIDO al S4 (método v1.9.0, decisión del usuario 2026-07-19); CI verde · deploy-check MERGE OK
+fecha: 2026-07-18 (cierre 2026-07-19)
+ciclo: H1 (sprint 3 de 4 — el S4 cierra el ciclo: BLUEPRINT + design-sync + gate ⭐ ACUMULADO obligatorio)
 ---
 
 # Sprint 003 — "La voz de la familia" · Summary
@@ -68,7 +68,7 @@ tono) y un README, enlazado desde la guía v3 (bloque M).
 | **7. IA embebida**      | **N/A**              | Cero LLM, cero SDK — **cuarta vez consecutiva**. La magia salió del DSP, del contenido y de la voz de la propia familia.                                                                                                                                                                                                                                                                                                                                          |
 | **Manual de uso**       | ✅                   | El 4.º juego (gemelas, sin micrófono); "La voz de la familia" (grabar TU voz, altavoz, toggle, **qué se graba y qué JAMÁS**); privacidad ampliada al banco; FAQ nueva; historial 002 + 003.                                                                                                                                                                                                                                                                       |
 | **Guía de prueba viva** | ✅                   | `docs/GUIA-DE-PRUEBA.html` **v3 acumulativa**: hereda los **79 chips** del v2 ENTEROS, re-etiquetados como regresión de su sprint (ya no "Nuevo · S2"). **Agrega** J (estudio), K (voz en los juegos), L (gemelas), M (kit) + 3 ítems de tablet. **Elimina:** nada. Gate ⭐ = 17.                                                                                                                                                                                 |
-| **Revisión de diseño**  | ⏳ auto-review hecho | Checklist `diseno-ui` corrido por mí sobre las pantallas nuevas (touch ≥64 px, paleta dual, 5 estados del estudio, reduced-motion). **Falta la aprobación visual del usuario sobre la preview** — es parte del gate de escritorio.                                                                                                                                                                                                                                |
+| **Revisión de diseño**  | ⏳ auto-review hecho | Checklist `diseno-ui` corrido por mí sobre las pantallas nuevas (touch ≥64 px, paleta dual, 5 estados del estudio, reduced-motion). **La aprobación visual del usuario está DIFERIDA al gate ⭐ acumulado del S4** (método v1.9.0) — ver el bloque del gate abajo.                                                                                                                                                                                                |
 
 ## ADRs de este sprint
 
@@ -135,22 +135,30 @@ infraestructura y (2) el design system publicado en Claude Design (`/design-sync
 **deja el bloque listo** (CLAUDE.md § Cierre de CICLO + regla 9 con el párrafo de publicación) pero
 **no** los produce. Todo ciclo tiene mínimo 3 sprints; H1 cierra en el S4.
 
+## El gate ⭐ — DIFERIDO al S4 (decisión del usuario, 2026-07-19)
+
+**El usuario decidió, explícitamente, diferir el gate ⭐ de este sprint intermedio al S4** (el
+cierre del ciclo H1), según la figura del método **v1.9.0**. Las **4 condiciones** que la figura
+exige se cumplen todas:
+
+| #   | Condición (método v1.9.0)                                                            | Estado en el S3                                                                                                                                                         |
+| --- | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Registro en el summary**                                                           | ✅ Este bloque + el `estado` del frontmatter.                                                                                                                           |
+| 2   | **CI contra dependencias reales + humo**                                             | ✅ 103 e2e con **micrófono falso real** (grabar/reproducir de verdad), cero-red, axe, Lighthouse — todo verde en el PR #3.                                              |
+| 3   | **La guía acumulativa conserva TODAS las pruebas ⭐ (nada se pierde)**               | ✅ `docs/GUIA-DE-PRUEBA.html` v3 hereda los 79 chips ENTEROS + suma los del S3; **gate ⭐ = 17, ninguno eliminado**. Solo se pospone su ejecución.                      |
+| 4   | **La orden del sprint de CIERRE (S4) declara el gate ⭐ ACUMULADO como OBLIGATORIO** | ⏳ **Requisito para la orden del S4** (la escribe la planeadora): debe cargar el gate ⭐ acumulado S1+S2+S3 como obligatorio — el gate del cierre **jamás** se difiere. |
+
+Lo que se difiere al S4 (gate acumulado, obligatorio allá): grabar la voz real en el estudio y
+oírla en los juegos, la aprobación visual de las pantallas nuevas, y —cuando regrese la tablet— la
+validación de dispositivo (spike, 60 fps, PWA+offline, el tono con la voz DEL NIÑO, **el eco real
+del bucle**, gemelas con el niño) que cierra los ADR 003/007/010.
+
 ## Lo que falta para cerrar (acciones del usuario)
 
-> **Contexto sin cambios:** la tablet sigue de viaje. El gate es de **escritorio**, con
-> `docs/GUIA-DE-PRUEBA.html` v3. La lista diferida ahora **acumula S1 + S2 + S3**.
-
-1. **Gate de escritorio** con la guía v3. El bloque estrella nuevo: **grabar TU voz real en el
-   estudio y oírla dentro de los juegos** (el dato que ninguna CI puede dar) + gemelas + el toggle.
-   Gate mínimo ⭐ = 17 pruebas (~30 min).
-2. **Aprobación visual** de las pantallas nuevas sobre la preview (estudio, gemelas, el altavoz).
-3. **Decidir** si difiere el gate ⭐ profundo de dispositivo al S4 (método v1.9.0): la tablet sigue
-   de viaje, así que la validación real del banco de voz + el eco del bucle + gemelas con el niño se
-   acumulan a la lista diferida.
-4. Mergear el PR (cuando lo pidas) y correr `/cierre-sprint habla` en la planeadora.
-5. **Al regreso de la tablet:** la lista diferida acumulada (spike en dispositivo, 60 fps, PWA +
-   offline, **el tono con la voz DEL NIÑO**, **la voz familiar real + el eco del bucle**, gemelas
-   con él, gate visual) → cierra los ADR 003/007/010 definitivamente.
+1. Mergear el PR #3 (CI verde · deploy-check MERGE OK) y correr **`/cierre-sprint habla`** en la
+   planeadora — es lo que ella lee para la retro y para preparar la orden del S4.
+2. Al planear el **S4**: que la orden **declare el gate ⭐ ACUMULADO (S1+S2+S3) como OBLIGATORIO**
+   (condición 4 de la figura v1.9.0) — el gate del cierre de ciclo no se difiere.
 
 ## Aprovisionamiento
 

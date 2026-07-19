@@ -12,7 +12,8 @@
 - [x] F2 — UI (estudio, Ajustes, gemelas, integración de voz) — a: selector+gemelas · b: estudio · c: voz en los juegos
 - [x] F3 — Integración + e2e (mic fake, cero-red, axe) — 103 e2e verdes en todos los proyectos
 - [x] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check) — falta solo el gate del usuario
-- [ ] **Gate del usuario** (escritorio) → merge → `/cierre-sprint habla` (o difiere según F0 #6)
+- [x] **Gate del usuario** — DIFERIDO al S4 (método v1.9.0, decisión del usuario 2026-07-19; 4
+      condiciones cumplidas, ver summary) → merge a `main` → `/cierre-sprint habla` en la planeadora
 
 ## Los tres outcomes
 
