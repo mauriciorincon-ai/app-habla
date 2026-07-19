@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { alinear, contarAlineacion, normalizar } from "@/lib/objetivo/alinear";
+import { acotarContenido } from "@/lib/objetivo/alcance";
 import { priorizarEstable } from "@/lib/objetivo/prioridad";
 import { CAPSULAS } from "@content/capsulas";
 import { ETIQUETAS_CAPSULA } from "@content/schema";
@@ -77,6 +78,104 @@ describe("contarAlineacion: el preview honesto y el caso sin coincidencias", () 
     const resumen = contarAlineacion(alinear(""), CONTENIDO);
     expect(resumen.activo).toBe(false);
     expect(resumen.vacio).toBe(false);
+  });
+
+  it('"pato" alinea pares de gemelas (el conteo de pares sí funciona en positivo)', () => {
+    // Auditoría de cierre: `pares` solo se aseveraba en 0 — un filtro roto que devolviera
+    // siempre 0 pasaba verde. "pato" vive en el par pato/gato del contenido real.
+    const resumen = contarAlineacion(alinear("pato"), CONTENIDO);
+    expect(resumen.pares).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("acotarContenido: el preview cuenta lo que el niño DE VERDAD verá (auditoría de cierre)", () => {
+  const capsulas = [
+    { id: "c-sue", etapa: "palabras-sueltas" },
+    { id: "c-son", etapa: "sonidos-e-intentos" },
+    { id: "c-fra", etapa: "primeras-frases" },
+  ] as const;
+  const pictos = [
+    { palabra: "perro", tema: "animales" },
+    { palabra: "carro", tema: "carros" },
+    { palabra: "luna", tema: "espacio" },
+  ] as const;
+  const pares = [{ id: "p1" }, { id: "p2" }] as const;
+
+  it("cápsulas: solo las de la etapa activa (el objetivo jamás salta de etapa, ADR-005)", () => {
+    const r = acotarContenido(
+      { capsulas, pictos, pares },
+      { etapa: "palabras-sueltas", temas: null, parJugable: () => true },
+    );
+    expect(r.capsulas.map((c) => c.id)).toEqual(["c-sue"]);
+  });
+
+  it("pictos: espeja el mazo real — con temas filtra, sin perfil baraja completa", () => {
+    const conTemas = acotarContenido(
+      { capsulas, pictos, pares },
+      {
+        etapa: "palabras-sueltas",
+        temas: ["animales"],
+        parJugable: () => true,
+      },
+    );
+    expect(conTemas.pictos.map((p) => p.palabra)).toEqual(["perro"]);
+
+    const sinPerfil = acotarContenido(
+      { capsulas, pictos, pares },
+      { etapa: "palabras-sueltas", temas: null, parJugable: () => true },
+    );
+    expect(sinPerfil.pictos).toHaveLength(3);
+  });
+
+  it("pictos: si los temas elegidos dejan el mazo vacío, cae a la baraja completa (como el juego)", () => {
+    const r = acotarContenido(
+      { capsulas, pictos, pares },
+      {
+        etapa: "palabras-sueltas",
+        temas: ["dinosaurios"],
+        parJugable: () => true,
+      },
+    );
+    expect(r.pictos).toHaveLength(3);
+  });
+
+  it("pares: solo los jugables en la etapa (predicado inyectado)", () => {
+    const r = acotarContenido(
+      { capsulas, pictos, pares },
+      {
+        etapa: "sonidos-e-intentos",
+        temas: null,
+        parJugable: (p) => p.id === "p2",
+      },
+    );
+    expect(r.pares.map((p) => p.id)).toEqual(["p2"]);
+  });
+
+  it("el caso de la auditoría: existe en la app, pero fuera de su alcance → alcance vacío, global no", () => {
+    // Pictos de un tema NO elegido y cápsulas de otra etapa: global cuenta, el alcance no.
+    const soloOtraEtapa = [{ id: "c-fra", etapa: "primeras-frases" }] as const;
+    const alineacion = alinear("espacio");
+    const global = contarAlineacion(alineacion, {
+      capsulas: [],
+      pictos,
+      pares: [],
+    });
+    expect(global.vacio).toBe(false); // "luna" es del tema espacio
+
+    const acotado = acotarContenido(
+      { capsulas: soloOtraEtapa, pictos, pares: [] },
+      {
+        etapa: "palabras-sueltas",
+        temas: ["animales", "carros"],
+        parJugable: () => true,
+      },
+    );
+    const alcance = contarAlineacion(alineacion, {
+      capsulas: acotado.capsulas.map(() => ({ etiquetas: [] })),
+      pictos: acotado.pictos,
+      pares: acotado.pares,
+    });
+    expect(alcance.vacio).toBe(true);
   });
 });
 

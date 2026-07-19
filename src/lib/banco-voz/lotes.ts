@@ -25,6 +25,22 @@ function soloDeGemelas(i: ItemGrabable): boolean {
 }
 
 /**
+ * ¿Este ítem grabable sirve al objetivo de la semana? Es EL predicado del lote (rango -2) y lo
+ * comparte el preview de /objetivo (auditoría de cierre S4): así lo que el preview promete del
+ * estudio y lo que el lote hace de verdad no pueden divergir.
+ */
+export function coincideConObjetivo(
+  objetivo: Alineacion | undefined,
+  i: ItemGrabable,
+): boolean {
+  return (
+    !!objetivo?.activo &&
+    (objetivo.coincidePalabra(i.texto) ||
+      (i.tema ? objetivo.coincideTema(i.tema) : false))
+  );
+}
+
+/**
  * @param temas     los intereses elegidos en el onboarding (sus palabras van arriba).
  * @param grabados  ids ya presentes en el banco (se saltan).
  * @param objetivo  la alineación del objetivo de la semana (S4). Sin objetivo activo, no cambia nada.
@@ -49,13 +65,8 @@ export function siguienteLote(opts: {
   } = opts;
   const elegidos = new Set(temas);
 
-  const coincideObjetivo = (i: ItemGrabable): boolean =>
-    !!objetivo?.activo &&
-    (objetivo.coincidePalabra(i.texto) ||
-      (i.tema ? objetivo.coincideTema(i.tema) : false));
-
   const rango = (i: ItemGrabable): number => {
-    if (coincideObjetivo(i)) return -2; // el objetivo de la semana, lo primero
+    if (coincideConObjetivo(objetivo, i)) return -2; // el objetivo de la semana, lo primero
     if (i.categoria === "palabra" && i.tema && elegidos.has(i.tema)) return -1;
     return PRIORIDAD_CATEGORIA[i.categoria];
   };
