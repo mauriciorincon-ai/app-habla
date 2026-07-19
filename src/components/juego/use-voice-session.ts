@@ -16,6 +16,7 @@ import {
   type Meter,
 } from "@/lib/voice/meter";
 import { AnalyserSource } from "@/lib/voice/analyser-source";
+import { crearGuardaBucle } from "@/lib/voice/guarda-bucle";
 import { MicSession } from "@/lib/voice/mic-session";
 import {
   crearPitchTracker,
@@ -66,7 +67,8 @@ export type VoiceSession = {
   /**
    * Silencia el medidor por `ms` (+ cola): mientras la app REPRODUCE la voz familiar por los
    * parlantes, sus frames no deben contar como voz del niño (regla dura 3 — el juego mentiría).
-   * Guarda del bucle de retroalimentación (ADR-010).
+   * `ms <= 0` cancela la guarda (el play falló: no sonó nada). Motor puro en
+   * lib/voice/guarda-bucle (ADR-010), unit-tested.
    */
   silenciar: (ms: number) => void;
 };
@@ -134,11 +136,11 @@ export function useVoiceSession({
     [],
   );
 
-  // Guarda del bucle: hasta este instante (performance.now()) el medidor ignora los frames —
-  // porque está sonando la voz familiar por los parlantes y no es el niño.
-  const silenciarHastaRef = useRef(0);
+  // Guarda del bucle (motor puro): mientras esté activa, el medidor ignora los frames — porque
+  // está sonando la voz familiar por los parlantes y no es el niño.
+  const guardaRef = useRef(crearGuardaBucle());
   const silenciar = useCallback((ms: number) => {
-    silenciarHastaRef.current = performance.now() + ms + 300; // +300 ms de cola por el eco.
+    guardaRef.current.silenciar(ms, performance.now());
   }, []);
 
   // La métrica actual, siempre fresca, sin re-suscribir el reloj de ticks.
@@ -186,7 +188,7 @@ export function useVoiceSession({
       const meter = meterRef.current;
       if (!meter) return;
       // Suena la voz familiar: se ignoran los frames para que su eco no cuente como voz del niño.
-      if (performance.now() < silenciarHastaRef.current) return;
+      if (guardaRef.current.activa(performance.now())) return;
       const estado = meter.empujar(frame);
       nivelRef.current = estado.nivel;
       sostenidoRef.current = estado.sostenidoMs;

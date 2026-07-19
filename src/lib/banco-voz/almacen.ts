@@ -32,12 +32,30 @@ function disponible(): boolean {
   return typeof indexedDB !== "undefined";
 }
 
+/**
+ * ¿La base ya existe? Preguntar por el banco NO debe crearlo (remate S3): los juegos consultan
+ * `listarIds` al montar, y `indexedDB.open` crea la base solo por abrirla — el e2e de privacidad
+ * del S1 ("cero rastro en el almacenamiento durante el juego") lo cazó. Solo `guardarGrabacion`
+ * tiene derecho a crearla. Sin la API `databases()` (Safari viejo), se abre igual: crear una base
+ * vacía es el costo de saber, y el candado de CI corre en Chromium donde la API existe.
+ */
+async function bancoExiste(): Promise<boolean> {
+  if (conexion) return true;
+  if (typeof indexedDB.databases !== "function") return true;
+  try {
+    const bases = await indexedDB.databases();
+    return bases.some((b) => b.name === DB);
+  } catch {
+    return true;
+  }
+}
+
 // Una sola conexión viva por sesión: abrir/cerrar en cada operación carrea con las transacciones.
 let conexion: Promise<IDBDatabase> | null = null;
 
 function abrir(): Promise<IDBDatabase> {
   if (conexion) return conexion;
-  conexion = new Promise((res, rej) => {
+  const intento = new Promise<IDBDatabase>((res, rej) => {
     const req = indexedDB.open(DB, VERSION);
     req.onupgradeneeded = () => {
       if (!req.result.objectStoreNames.contains(STORE)) {
@@ -47,7 +65,13 @@ function abrir(): Promise<IDBDatabase> {
     req.onsuccess = () => res(req.result);
     req.onerror = () => rej(req.error);
   });
-  return conexion;
+  conexion = intento;
+  // Un fallo al abrir NO se cachea: si fue transitorio, el próximo intento reabre en vez de
+  // quedarse envenenado toda la sesión (hallazgo de la auditoría S3, M-1).
+  intento.catch(() => {
+    if (conexion === intento) conexion = null;
+  });
+  return intento;
 }
 
 function conStore<T>(
@@ -82,6 +106,7 @@ export async function guardarGrabacion(
 
 export async function obtenerGrabacion(id: string): Promise<Grabacion | null> {
   if (!disponible()) return null;
+  if (!(await bancoExiste())) return null;
   const r = await conStore<GrabacionAlmacenada | undefined>("readonly", (s) =>
     s.get(id),
   );
@@ -96,11 +121,13 @@ export async function obtenerGrabacion(id: string): Promise<Grabacion | null> {
 
 export async function borrarGrabacion(id: string): Promise<void> {
   if (!disponible()) return;
+  if (!(await bancoExiste())) return;
   await conStore("readwrite", (s) => s.delete(id));
 }
 
 export async function listarIds(): Promise<string[]> {
   if (!disponible()) return [];
+  if (!(await bancoExiste())) return [];
   const claves = await conStore<IDBValidKey[]>("readonly", (s) =>
     s.getAllKeys(),
   );
@@ -110,25 +137,38 @@ export async function listarIds(): Promise<string[]> {
 /** Borra TODO el banco (lo usa "borrar el banco" de Ajustes). */
 export async function vaciarBanco(): Promise<void> {
   if (!disponible()) return;
+  if (!(await bancoExiste())) return;
   await conStore("readwrite", (s) => s.clear());
 }
 
 /**
- * Elimina la base ENTERA (lo usa "Borrar mis datos"). Fire-and-forget: si algo la tiene abierta,
- * el borrado queda encolado. Sin esto, "borrar mis datos" dejaría la voz de la familia atrás.
+ * Elimina la base ENTERA (lo usa "Borrar mis datos"). AWAITABLE (auditoría S3, A-3): antes era
+ * fire-and-forget y la navegación inmediata podía ganarle la carrera al borrado — "Borrar mis
+ * datos" habría dejado la voz de la familia atrás. Ahora: (1) se espera el cierre real de la
+ * conexión viva, (2) se espera la resolución del deleteDatabase. `onblocked` también resuelve
+ * (el borrado queda encolado por el navegador y esto jamás debe colgar el botón).
  */
-export function eliminarBanco(): void {
+export async function eliminarBanco(): Promise<void> {
   if (!disponible()) return;
-  try {
-    // Cerrar la conexión viva primero, o el deleteDatabase queda bloqueado.
-    if (conexion) {
-      void conexion.then((db) => db.close());
-      conexion = null;
-    }
-    indexedDB.deleteDatabase(DB);
-  } catch {
-    // El desalojo del banco es best-effort; nunca debe romper el "borrar mis datos".
+  // Cerrar la conexión viva primero, o el deleteDatabase queda bloqueado.
+  const viva = conexion;
+  conexion = null;
+  if (viva) {
+    await viva.then(
+      (db) => db.close(),
+      () => undefined, // una conexión que nunca abrió no bloquea nada
+    );
   }
+  await new Promise<void>((res) => {
+    try {
+      const req = indexedDB.deleteDatabase(DB);
+      req.onsuccess = () => res();
+      req.onerror = () => res(); // best-effort: jamás romper el "borrar mis datos"
+      req.onblocked = () => res();
+    } catch {
+      res();
+    }
+  });
 }
 
 /**

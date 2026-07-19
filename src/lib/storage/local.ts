@@ -116,8 +116,10 @@ export const agregarJuiciosGemelas = (nuevos: JuicioGemelo[]): void => {
 /**
  * "Borrar todos mis datos" del panel de ajustes: total y honesto. Quita todo lo de la app y,
  * de paso, el caché del shell (que solo contiene archivos públicos, pero el botón promete todo).
+ * ASYNC (auditoría S3, A-3): quien navega después DEBE esperar esta promesa — si no, la
+ * recarga puede ganarle la carrera al borrado del banco de voz y el botón mentiría.
  */
-export function borrarTodo(): void {
+export async function borrarTodo(): Promise<void> {
   if (!disponible()) return;
   const aBorrar: string[] = [];
   for (let i = 0; i < window.localStorage.length; i++) {
@@ -127,12 +129,13 @@ export function borrarTodo(): void {
   aBorrar.forEach((clave) => window.localStorage.removeItem(clave));
 
   // El banco de voz familiar vive en IndexedDB, no en localStorage: sin esto, "borrar mis datos"
-  // dejaría atrás las grabaciones y el botón mentiría (S3).
-  eliminarBanco();
+  // dejaría atrás las grabaciones y el botón mentiría (S3). Se ESPERA su resolución real.
+  await eliminarBanco();
 
   if (typeof caches !== "undefined") {
-    void caches
+    await caches
       .keys()
-      .then((claves) => claves.forEach((c) => void caches.delete(c)));
+      .then((claves) => Promise.all(claves.map((c) => caches.delete(c))))
+      .catch(() => undefined); // el caché es best-effort: no bloquea el borrado prometido
   }
 }

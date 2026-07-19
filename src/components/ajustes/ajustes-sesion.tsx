@@ -285,7 +285,10 @@ function SeccionVozFamiliar({
       import("@/lib/banco-voz/catalogo"),
     ]).then(([{ listarIds }, { catalogoGrabable }]) => {
       setTotal(catalogoGrabable().length);
-      void listarIds().then((ids) => setGrabados(ids.length));
+      // Banco inaccesible (IndexedDB roto) = banco vacío: la sección no se rompe (M-1).
+      listarIds()
+        .then((ids) => setGrabados(ids.length))
+        .catch(() => setGrabados(0));
     });
   };
   useEffect(cargar, []);

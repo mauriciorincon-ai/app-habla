@@ -21,9 +21,11 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
+import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { EscenarioCohete } from "./escenario-cohete";
 import { GuionCard } from "./guion-card";
+import { useVozFamiliar } from "./use-voz-familiar";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession, type MedidasVivas } from "./use-voice-session";
 
@@ -60,12 +62,17 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     terminar,
     otraVez,
     cambiarCalma,
+    silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "inversiones",
     meta: META_INVERSIONES_DEFECTO,
     metricaActual,
   });
+
+  // La consigna del cohete puede sonar en la voz de la familia; la guarda del bucle pausa el
+  // medidor mientras suena (regla dura 3 — el cohete mide el micrófono en vivo).
+  const voz = useVozFamiliar({ alSonar: silenciar });
 
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
@@ -106,6 +113,13 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               ? "¡El cohete está volando!"
               : "Haz la voz de sirena: aaaAAAaaa"}
           </h2>
+
+          {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
+          <AltavozConsigna
+            voz={voz}
+            id="consigna:sirena"
+            etiqueta="Oír “Haz la voz de sirena: aaaAAAaaa”"
+          />
 
           <EscenarioCohete
             medidas={medidas}
