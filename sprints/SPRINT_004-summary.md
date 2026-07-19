@@ -63,7 +63,7 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 | **Guía de prueba viva** | ✅               | `docs/GUIA-DE-PRUEBA.html` **v4 acumulativa**: hereda las v3 ENTERAS (S3 pasa a regresión), agrega bloques N (rumbo) y O (objetivo) + 2 ítems de tablet, **recorrido del gate ⭐ ACUMULADO con tiempos**. Gate ⭐ = **25** (~40 min). Elimina: nada.                                                                                                                                                                           |
 | **Revisión de diseño**  | ⏳               | Checklist `diseno-ui` auto-corrido sobre `/rumbo` y `/objetivo` (paleta operador, 5 estados del objetivo, sin jerga). **Aprobación visual del usuario = parte del gate ⭐ ACUMULADO** (abajo).                                                                                                                                                                                                                                 |
 | **BLUEPRINT (ciclo)**   | ✅               | `docs/BLUEPRINT.html` — as-built autocontenido con SVG embebido. Topología local-first honesta: sin BD, costo **US$0**, punto único de falla = **el dispositivo**.                                                                                                                                                                                                                                                             |
-| **design-sync (ciclo)** | ✅ / ⏳          | `design-system.md` consolidado (pantallas del padre + iconos nuevos). Publicación en Claude Design = acción externa (login de diseño del usuario); ver acciones del usuario.                                                                                                                                                                                                                                                   |
+| **design-sync (ciclo)** | ✅               | Publicado en Claude Design → **"Hablemos San — Design System"** (`915209fb…`). El repo es una app, no una librería de componentes → se autoró una **referencia de marca** (decisión del usuario): `styles.css` con los tokens + 8 tarjetas de preview (paleta, tipografía, personajes, Hoy/Rumbo/Objetivo, escenario, celebración honesta) + README de convenciones. Pin en `.design-sync/config.json`.                        |
 
 ## ADRs de este sprint
 
@@ -151,21 +151,19 @@ S1+S2+S3+S4** y es la única vía. Se ejecuta con `docs/GUIA-DE-PRUEBA.html` v4:
 ## Lo que falta para cerrar (acciones del usuario)
 
 1. **Ejecutar el gate ⭐ ACUMULADO** (desktop + teléfono, guía v4) — única vía de cierre.
-2. **Publicar el design system en Claude Design** (`/design-sync`): acción externa que usa tu login
-   de diseño; hay acceso y proyectos tuyos, falta crear "Hablemos San — Design System" (como el de
-   Innmobiliaria) y subir el bundle. Lo preparo y lo empujo contigo cuando quieras (el paso de
-   `finalize_plan` te muestra la lista exacta antes de escribir nada).
+2. ~~Publicar el design system~~ ✅ **hecho** — referencia de marca en Claude Design
+   ("Hablemos San — Design System"). Revísalo si quieres (link en el reporte del chat).
 3. **Merge del PR** con CI verde + tu OK del gate.
 4. **Correr `/cierre-sprint habla`** en la planeadora — cierra el sprint **y el ciclo H1** (H1 de
    Hablemos San COMPLETO).
 
 ## Aprovisionamiento
 
-| Servicio                    | Estado                                          |
-| --------------------------- | ----------------------------------------------- |
-| GitHub + Vercel             | ✅ operando (preview por rama)                  |
-| Sentry                      | ⏳ defer aceptado (kit inerte sin DSN)          |
-| ARASAAC                     | ✅ sin cuenta: lote offline con atribución      |
-| Claude Design               | ⏳ acceso ✅; falta el proyecto de habla + push |
-| API LLM                     | N/A — cero IA (**5.ª vez consecutiva**)         |
-| _(hardware)_ Tablet Android | ⏳ de viaje — lista post-ciclo (no gatea)       |
+| Servicio                    | Estado                                               |
+| --------------------------- | ---------------------------------------------------- |
+| GitHub + Vercel             | ✅ operando (preview por rama)                       |
+| Sentry                      | ⏳ defer aceptado (kit inerte sin DSN)               |
+| ARASAAC                     | ✅ sin cuenta: lote offline con atribución           |
+| Claude Design               | ✅ proyecto "Hablemos San — Design System" publicado |
+| API LLM                     | N/A — cero IA (**5.ª vez consecutiva**)              |
+| _(hardware)_ Tablet Android | ⏳ de viaje — lista post-ciclo (no gatea)            |
