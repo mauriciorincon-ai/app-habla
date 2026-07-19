@@ -53,21 +53,26 @@ test("el Rumbo refleja el NÚMERO que de verdad se registró (frase-vs-métrica)
   await page.goto("/rumbo");
   await expect(page.getByTestId("rumbo-contenido")).toBeVisible();
 
-  const contenido = page.getByTestId("rumbo-contenido");
-  // El número viene del DATO, no de una frase fija: 7 dibujos, 3 palabras distintas.
-  await expect(contenido).toContainText("7");
-  await expect(contenido).toContainText("dibujos que encendió con su voz");
-  await expect(contenido).toContainText("3");
-  await expect(contenido).toContainText("palabras distintas");
+  // El número viene del DATO, no de una frase fija — y ATADO a su frase por testid (auditoría de
+  // cierre: aserciones sueltas dejaban pasar un intercambio de etiquetas entre métricas).
+  const dibujos = page.getByTestId("dato-dibujos");
+  await expect(dibujos).toContainText("7");
+  await expect(dibujos).toContainText("dibujos que encendió con su voz");
+  const palabras = page.getByTestId("dato-palabras");
+  await expect(palabras).toContainText("3");
+  await expect(palabras).toContainText("palabras distintas que practicaron");
 
   // Hitos derivados de lo medido/marcado.
   const hitos = page.getByTestId("rumbo-hitos");
   await expect(hitos).toContainText("La primera palabra que TÚ le oíste");
-  await expect(hitos).toContainText("Su voz sonó más de 5 segundos seguidos");
+  await expect(hitos).toContainText("Su voz sonó 5 segundos seguidos");
 
-  // Y JAMÁS lenguaje clínico (anti-claims §D).
+  // Y JAMÁS lenguaje clínico (anti-claims §D) — vocabulario vetado igualado al de las cápsulas
+  // (daily-coach.test.ts) más los sinónimos que el grep viejo dejaba pasar (auditoría de cierre).
   const texto = await page.locator("main").innerText();
-  expect(texto).not.toMatch(/puntaje|diagnóstic|retraso|percentil|%/i);
+  expect(texto).not.toMatch(
+    /puntaje|puntuaci|diagn[oó]stic|terapia|retraso|atraso|percentil|nivel|d[eé]ficit|trastorno|%|en \d+ semanas/i,
+  );
 });
 
 test("jugar por la UI queda registrado y el Rumbo lo muestra (write-path de punta a punta)", async ({

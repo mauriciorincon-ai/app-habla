@@ -185,4 +185,27 @@ describe("hitosAlcanzados: logros funcionales, jamás clínicos", () => {
     expect(ids).toContain("constancia-3");
     expect(ids).not.toContain("constancia-5");
   });
+
+  it("los hitos salen como línea de tiempo: más antiguo primero (orden EXACTO)", () => {
+    // Auditoría de cierre: el orden prometido ("línea de tiempo") no se aseveraba — una
+    // regresión en el sort final pasaba verde. Fechas distintas fuerzan un orden único.
+    const sesiones: Sesion[] = [
+      { juego: "globo", fecha: diaDeLaSemana(2), vozMs: 6000, rachaMs: 5200 },
+      {
+        juego: "palabras",
+        fecha: diaDeLaSemana(1),
+        encendidos: 1,
+        reconocidas: 1,
+        palabras: ["perro"],
+      },
+      { juego: "cohete", fecha: diaDeLaSemana(0), inversiones: 2 },
+    ];
+    const ids = hitosAlcanzados(sesiones).map((h) => h.id);
+    expect(ids).toEqual([
+      "primer-dia", // día 0 (cohete)
+      "constancia-3", // el lunes de la semana que llegó a 3 días
+      "primera-oida", // día 1 (la palabra que TÚ oíste)
+      "voz-larga", // día 2 (racha ≥ 5 s)
+    ]);
+  });
 });
