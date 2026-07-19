@@ -1,0 +1,128 @@
+import { describe, expect, it } from "vitest";
+import { alinear, contarAlineacion, normalizar } from "@/lib/objetivo/alinear";
+import { priorizarEstable } from "@/lib/objetivo/prioridad";
+import { CAPSULAS } from "@content/capsulas";
+import { ETIQUETAS_CAPSULA } from "@content/schema";
+import { PICTOGRAMAS } from "@content/pictogramas";
+import { PARES_GEMELOS } from "@content/pares-gemelos";
+
+const CONTENIDO = {
+  capsulas: CAPSULAS,
+  pictos: PICTOGRAMAS,
+  pares: PARES_GEMELOS,
+};
+
+describe("normalizar: el objetivo libre → palabras significativas", () => {
+  it("quita tildes, mayúsculas, signos y palabras estructurales", () => {
+    expect(normalizar("El Baño de María")).toEqual(["bano", "maria"]);
+    expect(normalizar("¡MÁS agua!")).toEqual(["mas", "agua"]);
+  });
+
+  it("descarta tokens de menos de 3 letras", () => {
+    expect(normalizar("ir a la casa")).toEqual(["casa"]);
+  });
+
+  it("un objetivo solo de palabras estructurales queda vacío", () => {
+    expect(normalizar("de la el los")).toEqual([]);
+  });
+});
+
+describe("alinear: objetivo → predicados de coincidencia", () => {
+  it("sin objetivo (vacío o solo estructural) NO está activo y no coincide con nada", () => {
+    for (const texto of ["", "   ", "de la", null, undefined]) {
+      const a = alinear(texto);
+      expect(a.activo).toBe(false);
+      expect(a.coincidePalabra("perro")).toBe(false);
+      expect(a.coincideTema("animales")).toBe(false);
+      expect(a.coincideEtiquetas(["animales"])).toBe(false);
+    }
+  });
+
+  it('"animales" coincide por tema y por etiqueta, no por una palabra suelta ajena', () => {
+    const a = alinear("animales");
+    expect(a.activo).toBe(true);
+    expect(a.coincideTema("animales")).toBe(true);
+    expect(a.coincideEtiquetas(["animales", "juego"])).toBe(true);
+    expect(a.coincideEtiquetas(["comida"])).toBe(false);
+    // "perro" es un animal, pero el objetivo dice "animales", no "perro": no matchea la palabra suelta.
+    expect(a.coincidePalabra("perro")).toBe(false);
+  });
+
+  it('"perro" coincide con esa palabra pero no con el tema entero', () => {
+    const a = alinear("perro");
+    expect(a.coincidePalabra("perro")).toBe(true);
+    expect(a.coincideTema("animales")).toBe(false);
+  });
+});
+
+describe("contarAlineacion: el preview honesto y el caso sin coincidencias", () => {
+  it('"animales" alinea cápsulas Y pictogramas (Hoy + mazo se mueven)', () => {
+    const resumen = contarAlineacion(alinear("animales"), CONTENIDO);
+    expect(resumen.activo).toBe(true);
+    expect(resumen.vacio).toBe(false);
+    expect(resumen.capsulas).toBeGreaterThan(0);
+    expect(resumen.palabras).toBe(8); // los 8 pictos del tema animales
+  });
+
+  it('"colores" es el caso HONESTO sin coincidencias (no existe color en el contenido)', () => {
+    const resumen = contarAlineacion(alinear("colores"), CONTENIDO);
+    expect(resumen.activo).toBe(true);
+    expect(resumen.vacio).toBe(true);
+    expect(resumen.capsulas).toBe(0);
+    expect(resumen.palabras).toBe(0);
+    expect(resumen.pares).toBe(0);
+  });
+
+  it("sin objetivo, el resumen no está activo ni vacío (no hay nada que alinear)", () => {
+    const resumen = contarAlineacion(alinear(""), CONTENIDO);
+    expect(resumen.activo).toBe(false);
+    expect(resumen.vacio).toBe(false);
+  });
+});
+
+describe("priorizarEstable: los que coinciden primero, orden estable", () => {
+  it("sin coincidencias, el orden es IDÉNTICO (identidad — clava los mazos por semilla del S3)", () => {
+    const items = [1, 2, 3, 4, 5];
+    expect(priorizarEstable(items, () => false)).toEqual(items);
+  });
+
+  it("mueve al frente los que coinciden, conservando el orden relativo de cada grupo", () => {
+    const items = ["a1", "b1", "a2", "b2", "a3"];
+    const r = priorizarEstable(items, (s) => s.startsWith("a"));
+    expect(r).toEqual(["a1", "a2", "a3", "b1", "b2"]);
+  });
+});
+
+describe("etiquetas del contenido (R8): curaduría completa y honesta", () => {
+  it("cada cápsula tiene ≥1 etiqueta del vocabulario controlado", () => {
+    for (const c of CAPSULAS) {
+      expect(c.etiquetas.length).toBeGreaterThanOrEqual(1);
+      for (const e of c.etiquetas) {
+        expect(ETIQUETAS_CAPSULA).toContain(e);
+      }
+    }
+  });
+
+  it("toda etiqueta del vocabulario la usa al menos una cápsula (sin huérfanas)", () => {
+    const usadas = new Set(CAPSULAS.flatMap((c) => c.etiquetas));
+    for (const e of ETIQUETAS_CAPSULA) {
+      expect(usadas).toContain(e);
+    }
+  });
+
+  it("el vocabulario NO contiene ninguna palabra de color (por eso «colores» es honesto)", () => {
+    const colores = [
+      "rojo",
+      "azul",
+      "verde",
+      "amarillo",
+      "colores",
+      "color",
+      "negro",
+      "blanco",
+    ];
+    for (const c of colores) {
+      expect(ETIQUETAS_CAPSULA as readonly string[]).not.toContain(c);
+    }
+  });
+});

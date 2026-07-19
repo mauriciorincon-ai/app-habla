@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
+import { fechaHoy } from "@/lib/fecha";
 import { catalogoGrabable, type ItemGrabable } from "@/lib/banco-voz/catalogo";
 import { calcularCobertura, type Cobertura } from "@/lib/banco-voz/cobertura";
 import { siguienteLote } from "@/lib/banco-voz/lotes";
@@ -26,13 +27,6 @@ const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], string> = {
   consigna: "Consignas del juego",
   celebracion: "Celebraciones",
 };
-
-function fechaHoy(): string {
-  const d = new Date();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const dia = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${m}-${dia}`;
-}
 
 /** Reproduce un Blob una vez y libera la URL. (La voz familiar, para escuchar lo grabado.) */
 function reproducir(blob: Blob): void {

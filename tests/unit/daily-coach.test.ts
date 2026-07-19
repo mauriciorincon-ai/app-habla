@@ -11,6 +11,7 @@ import {
 import {
   claveFechaLocal,
   marcarCompletada,
+  realinearObjetivo,
   seleccionarCapsula,
 } from "@/lib/coach/daily";
 import { PROGRESO_INICIAL, type Progreso } from "@/lib/storage/schemas";
@@ -252,6 +253,7 @@ describe("etapas como motor (ADR 006)", () => {
     guion: "Guion de prueba.",
     actividad: { texto: "Actividad de prueba.", conPantalla: false },
     fuente: "Fuente sintética de prueba (unit).",
+    etiquetas: ["juego"],
   });
   const BIBLIOTECA: Capsula[] = [
     capsula("s1", "sonidos-e-intentos"),
@@ -382,5 +384,102 @@ describe("etapas como motor (ADR 006)", () => {
     expect(progreso.porEtapa["sonidos-e-intentos"]?.ciclo).toBe(1);
     expect(progreso.porEtapa[PS]?.ciclo).toBe(0);
     expect(progreso.porEtapa["primeras-frases"]?.ciclo).toBe(0);
+  });
+});
+
+describe("objetivo de la semana (S4): alinea Hoy DENTRO de la etapa, sin romper el congelamiento", () => {
+  const HOY = "2026-07-11";
+  const capsula = (id: string): Capsula => ({
+    id,
+    etapa: "palabras-sueltas",
+    tecnica: "modelado",
+    titulo: `Cápsula ${id}`,
+    explicacion: "Explicación de prueba con el largo suficiente.",
+    guion: "Guion de prueba.",
+    actividad: { texto: "Actividad de prueba.", conPantalla: false },
+    fuente: "Fuente sintética de prueba (unit).",
+    etiquetas: ["juego"],
+  });
+  const BIB: Capsula[] = [capsula("p1"), capsula("p2"), capsula("p3")];
+
+  it("sin objetivo (predicado ausente) el orden NO cambia — identidad", () => {
+    const sinPredicado = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS);
+    const conFalso = seleccionarCapsula(
+      HOY,
+      PROGRESO_INICIAL,
+      BIB,
+      PS,
+      () => false,
+    );
+    expect(conFalso.capsula.id).toBe(sinPredicado.capsula.id);
+  });
+
+  it("con objetivo, prefiere una pendiente que coincida", () => {
+    const sel = seleccionarCapsula(
+      HOY,
+      PROGRESO_INICIAL,
+      BIB,
+      PS,
+      (c) => c.id === "p3",
+    );
+    expect(sel.capsula.id).toBe("p3");
+  });
+
+  it("nunca salta de etapa: si ninguna pendiente coincide, elige como siempre (ADR-005)", () => {
+    const sinObjetivo = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS);
+    const conObjetivoImposible = seleccionarCapsula(
+      HOY,
+      PROGRESO_INICIAL,
+      BIB,
+      PS,
+      () => false,
+    );
+    expect(conObjetivoImposible.capsula.id).toBe(sinObjetivo.capsula.id);
+    expect(conObjetivoImposible.capsula.etapa).toBe(PS);
+  });
+
+  it("realinear re-evalúa HOY si NO está completada", () => {
+    const base = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS).progreso;
+    const asignada = base.porEtapa[PS]!.asignacionHoy!.capsulaId;
+    const otra = BIB.find((c) => c.id !== asignada)!.id;
+
+    const realineado = realinearObjetivo(
+      HOY,
+      base,
+      BIB,
+      PS,
+      (c) => c.id === otra,
+    );
+    expect(realineado.porEtapa[PS]?.asignacionHoy?.capsulaId).toBe(otra);
+  });
+
+  it("realinear NO toca una cápsula YA completada (el trabajo hecho es intocable)", () => {
+    const base = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS).progreso;
+    const asignada = base.porEtapa[PS]!.asignacionHoy!.capsulaId;
+    const otra = BIB.find((c) => c.id !== asignada)!.id;
+    const completado = marcarCompletada(HOY, asignada, PS, base);
+
+    const realineado = realinearObjetivo(
+      HOY,
+      completado,
+      BIB,
+      PS,
+      (c) => c.id === otra,
+    );
+    // Sigue mostrando la que ya completó; el objetivo aplicará desde mañana.
+    expect(realineado.porEtapa[PS]?.asignacionHoy?.capsulaId).toBe(asignada);
+  });
+
+  it("realinear no genera churn si la cápsula de hoy ya coincide", () => {
+    const base = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS).progreso;
+    const asignada = base.porEtapa[PS]!.asignacionHoy!.capsulaId;
+    const realineado = realinearObjetivo(
+      HOY,
+      base,
+      BIB,
+      PS,
+      (c) => c.id === asignada,
+    );
+    expect(realineado.porEtapa[PS]?.asignacionHoy?.capsulaId).toBe(asignada);
   });
 });

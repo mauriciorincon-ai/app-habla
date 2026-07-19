@@ -21,6 +21,7 @@ import {
   usePerfil,
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
+import { barajar } from "@/lib/barajar";
 import { invitacionAmable, type Metrica } from "@/lib/session-flow";
 import type { Tema } from "@/lib/storage/temas";
 import { CelebracionHonesta } from "./celebracion-honesta";
@@ -29,18 +30,6 @@ import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession } from "./use-voice-session";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { EscenarioPalabra } from "./escenario-palabra";
-
-/** Baraja determinista por semilla: sin Math.random en el render (y estable entre renders). */
-function barajar<T>(items: readonly T[], semilla: number): T[] {
-  const copia = [...items];
-  let estado = semilla || 1;
-  for (let i = copia.length - 1; i > 0; i--) {
-    estado = (estado * 1103515245 + 12345) & 0x7fffffff;
-    const j = estado % (i + 1);
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
-}
 
 export function PalabraObjeto() {
   const hidratado = useHidratado();
