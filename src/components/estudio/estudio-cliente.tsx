@@ -6,12 +6,15 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { usePerfil } from "@/components/estado-local";
+import { useAjustes, usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { fechaHoy } from "@/lib/fecha";
+import { alinear } from "@/lib/objetivo/alinear";
+import { leerObjetivo } from "@/lib/storage/local";
 import { catalogoGrabable, type ItemGrabable } from "@/lib/banco-voz/catalogo";
 import { calcularCobertura, type Cobertura } from "@/lib/banco-voz/cobertura";
 import { siguienteLote } from "@/lib/banco-voz/lotes";
+import type { Etapa } from "@content/schema";
 import type { Tema } from "@/lib/storage/temas";
 import {
   borrarGrabacion,
@@ -39,6 +42,7 @@ function reproducir(blob: Blob): void {
 export function EstudioCliente() {
   const hidratado = useHidratado();
   const perfil = usePerfil();
+  const ajustes = useAjustes();
   const [grabados, setGrabados] = useState<Set<string>>(new Set());
   const [cargando, setCargando] = useState(true);
   const [modo, setModo] = useState<"gestion" | "lote">("gestion");
@@ -76,6 +80,7 @@ export function EstudioCliente() {
   ) : (
     <Lote
       temas={perfil?.temas ?? []}
+      etapa={ajustes?.etapa ?? "palabras-sueltas"}
       grabados={grabados}
       onGrabado={(id) => setGrabados((s) => new Set(s).add(id))}
       onSalir={() => setModo("gestion")}
@@ -207,19 +212,30 @@ function FilaGrabada({
 
 function Lote({
   temas,
+  etapa,
   grabados,
   onGrabado,
   onSalir,
 }: {
   temas: readonly Tema[];
+  etapa: Etapa;
   grabados: Set<string>;
   onGrabado: (id: string) => void;
   onSalir: () => void;
 }) {
   // El lote se fija al entrar (no se re-baraja al grabar cada ítem): useMemo con deps vacías
-  // captura temas/grabados del montaje a propósito (React 19: no leer refs en render).
+  // captura temas/grabados/objetivo del montaje a propósito (React 19: no leer refs en render).
+  // S4: el objetivo de la semana pone sus palabras primero; la etapa baja las de gemelas cuando
+  // aún no son jugables. Un objetivo escrito a mitad de lote aplica al SIGUIENTE lote (R5).
   const lote = useMemo(
-    () => siguienteLote({ temas, grabados, tamano: 20 }),
+    () =>
+      siguienteLote({
+        temas,
+        etapa,
+        grabados,
+        objetivo: alinear(leerObjetivo()?.texto),
+        tamano: 20,
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

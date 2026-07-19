@@ -12,7 +12,7 @@
 // desde el repo: cero llamadas de red durante el juego (ADR 008).
 
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PICTOGRAMAS } from "@content/pictogramas";
 import {
   ajustesActuales,
@@ -22,6 +22,9 @@ import {
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { barajar } from "@/lib/barajar";
+import { alinear } from "@/lib/objetivo/alinear";
+import { priorizarEstable } from "@/lib/objetivo/prioridad";
+import { leerObjetivo } from "@/lib/storage/local";
 import { invitacionAmable, type Metrica } from "@/lib/session-flow";
 import type { Tema } from "@/lib/storage/temas";
 import { CelebracionHonesta } from "./celebracion-honesta";
@@ -58,14 +61,21 @@ function JuegoListo({
 }) {
   const router = useRouter();
 
-  // La baraja del día: los pictos de SUS temas, en orden estable durante toda la sesión.
+  // La baraja del día: los pictos de SUS temas, en orden estable durante toda la sesión. Si hay un
+  // objetivo de la semana, sus dibujos van al frente (partición estable). SIN objetivo, el orden es
+  // idéntico al barajado por semilla (identidad) — lo que mantiene deterministas los e2e del S3.
   const mazo = useMemo(() => {
     const candidatos = temas
       ? PICTOGRAMAS.filter((p) => temas.includes(p.tema))
       : PICTOGRAMAS;
     const base = candidatos.length > 0 ? candidatos : PICTOGRAMAS;
-    // Semilla estable por sesión: el orden no cambia al re-renderizar.
-    return barajar(base, base.length * 7919);
+    const barajado = barajar(base, base.length * 7919);
+    const objetivo = alinear(leerObjetivo()?.texto);
+    return priorizarEstable(
+      barajado,
+      (p) =>
+        objetivo.coincidePalabra(p.palabra) || objetivo.coincideTema(p.tema),
+    );
   }, [temas]);
 
   const [indice, setIndice] = useState(0);
@@ -81,8 +91,17 @@ function JuegoListo({
   const [reconocidaAhora, setReconocidaAhora] = useState(false);
   /** Evita que una misma vocalización encienda el mismo dibujo dos veces. */
   const yaContadoRef = useRef(false);
+  /** Las palabras (dibujos) que se practicaron en el intento — insumo del Rumbo (S4). */
+  const [palabrasEncendidas, setPalabrasEncendidas] = useState<string[]>([]);
 
   const picto = mazo[indice % mazo.length];
+  // Ref al picto actual: `alVocalizar` (useCallback estable) necesita la palabra de HOY sin
+  // recrear el callback ni re-suscribir el escenario. Patrón "última referencia" (se escribe en un
+  // efecto, no en el render: leer/escribir un ref durante el render está prohibido).
+  const pictoRef = useRef(picto);
+  useEffect(() => {
+    pictoRef.current = picto;
+  }, [picto]);
 
   // Lo que mide este juego: cuántos dibujos encendió su voz (eso lo midió la app) y cuántas
   // palabras reconoció el PADRE (eso lo dijo él). Dos números con dos dueños: nunca se mezclan.
@@ -131,13 +150,20 @@ function JuegoListo({
    * CUALQUIER vocalización enciende el dibujo (la llama el escenario cuando el medidor confirma
    * voz real sostenida ~250 ms). No se compara con nada: la app no evalúa la palabra.
    */
+  const recordarPalabra = useCallback((palabra: string) => {
+    setPalabrasEncendidas((prev) =>
+      prev.includes(palabra) ? prev : [...prev, palabra],
+    );
+  }, []);
+
   const alVocalizar = useCallback(() => {
     if (yaContadoRef.current) return;
     yaContadoRef.current = true;
     activacionesRef.current += 1;
     setActivaciones(activacionesRef.current);
+    recordarPalabra(pictoRef.current.palabra);
     setEncendido(true);
-  }, []);
+  }, [recordarPalabra]);
 
   /** El padre oyó la palabra y lo dice. Es el ÚNICO camino a este estado. */
   function marcarPalabra() {
@@ -145,6 +171,7 @@ function JuegoListo({
     reconocidasRef.current += 1;
     setReconocidas(reconocidasRef.current);
     setReconocidaAhora(true);
+    recordarPalabra(pictoRef.current.palabra);
     // Si el dibujo aún no estaba encendido (p. ej. dijo la palabra muy bajito), la voz igual pasó.
     if (!yaContadoRef.current) {
       yaContadoRef.current = true;
@@ -168,6 +195,7 @@ function JuegoListo({
     setReconocidas(0);
     setReconocidaAhora(false);
     yaContadoRef.current = false;
+    setPalabrasEncendidas([]);
     setEncendido(false);
     setIndice(0);
     otraVez();
@@ -265,6 +293,7 @@ function JuegoListo({
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          palabrasEncendidas={palabrasEncendidas}
           onOtraVez={reiniciarSesion}
           onTerminar={() => router.push("/jugar")}
           etiquetaTerminar="Elegir otro juego"

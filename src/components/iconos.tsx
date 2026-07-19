@@ -107,6 +107,37 @@ export function IconoBrote({ className }: IconoProps) {
   );
 }
 
+/** El rumbo — una brújula: hacia dónde van, sin puntajes. */
+export function IconoBrujula({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <path d="M15.5 8.5l-2 5-5 2 2-5 5-2Z" {...trazo} />
+    </svg>
+  );
+}
+
+/** El objetivo de la semana — una diana: hacia qué apuntan juntos. */
+export function IconoDiana({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <circle cx="12" cy="12" r="5" {...trazo} />
+      <circle cx="12" cy="12" r="1.5" {...trazo} />
+    </svg>
+  );
+}
+
 /** Ajustes — el cuarto del padre (etapa, apodo, privacidad, borrar datos). */
 export function IconoAjustes({ className }: IconoProps) {
   return (

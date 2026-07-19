@@ -15,7 +15,8 @@ import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { IconoAltavoz } from "@/components/iconos";
 import { fechaHoy } from "@/lib/fecha";
-import { agregarJuiciosGemelas } from "@/lib/storage/local";
+import { alinear } from "@/lib/objetivo/alinear";
+import { agregarJuiciosGemelas, leerObjetivo } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { NOMBRE_ETAPA, type Etapa } from "@content/schema";
 import {
@@ -42,7 +43,19 @@ export function Gemelas() {
 function GemelasListo({ etapa }: { etapa: Etapa }) {
   const router = useRouter();
   // Semilla estable por montaje: el orden no cambia al re-renderizar (sin Math.random en render).
-  const rondas = useMemo(() => secuenciaDeRondas(etapa, 7919, 6), [etapa]);
+  // Con objetivo de la semana, los pares que coinciden entran primero; sin él, el orden es idéntico.
+  const rondas = useMemo(() => {
+    const objetivo = alinear(leerObjetivo()?.texto);
+    return secuenciaDeRondas(
+      etapa,
+      7919,
+      6,
+      undefined,
+      (par) =>
+        objetivo.coincidePalabra(par.a.palabra) ||
+        objetivo.coincidePalabra(par.b.palabra),
+    );
+  }, [etapa]);
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);

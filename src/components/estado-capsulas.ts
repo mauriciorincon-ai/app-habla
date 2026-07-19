@@ -9,12 +9,15 @@
 // aunque dos de ellos no muestren ni una cápsula.)
 
 import { CAPSULAS } from "@content/capsulas";
-import type { Etapa } from "@content/schema";
+import type { Capsula, Etapa } from "@content/schema";
 import {
   claveFechaLocal,
   marcarCompletada,
+  realinearObjetivo,
   seleccionarCapsula,
 } from "@/lib/coach/daily";
+import { alinear } from "@/lib/objetivo/alinear";
+import { leerObjetivo } from "@/lib/storage/local";
 import type { Progreso } from "@/lib/storage/schemas";
 import {
   ajustesActuales,
@@ -22,14 +25,29 @@ import {
   progresoActual,
 } from "./estado-local";
 
+/** El predicado del objetivo de la semana ACTIVO: ¿esta cápsula sirve al objetivo escrito? */
+function coincideConObjetivo(): (c: Capsula) => boolean {
+  const objetivo = alinear(leerObjetivo()?.texto);
+  return (c) => objetivo.coincideEtiquetas(c.etiquetas);
+}
+
 /**
- * La cápsula de hoy — función PURA, apta para usarse en el render (no escribe nada).
- * Es determinista: con el mismo progreso, la misma fecha y la misma etapa devuelve siempre
- * la misma cápsula (ADR 006: el selector filtra por la etapa activa).
+ * La cápsula de hoy — apta para el render (no escribe nada). Determinista: con el mismo progreso,
+ * fecha y etapa devuelve siempre la misma (ADR 006). Con un objetivo de la semana activo, una
+ * asignación NUEVA del día prefiere una cápsula que le sirva (una ya congelada no se toca aquí).
  */
 export function capsulaDeHoy(progreso: Progreso, etapa: Etapa) {
   const fecha = claveFechaLocal(new Date());
-  return { ...seleccionarCapsula(fecha, progreso, CAPSULAS, etapa), fecha };
+  return {
+    ...seleccionarCapsula(
+      fecha,
+      progreso,
+      CAPSULAS,
+      etapa,
+      coincideConObjetivo(),
+    ),
+    fecha,
+  };
 }
 
 /**
@@ -42,6 +60,27 @@ export function asegurarAsignacionDeHoy(): void {
   const { progreso: siguiente } = capsulaDeHoy(
     progreso,
     ajustesActuales().etapa,
+  );
+  if (siguiente !== progreso) {
+    guardarProgresoEnStore(siguiente);
+  }
+}
+
+/**
+ * Aplica el objetivo de la semana a la cápsula de HOY — se llama al escribir o borrar el objetivo.
+ * Es la ÚNICA vía que re-evalúa una asignación ya congelada, y solo si NO está completada (el
+ * trabajo hecho es intocable, R4). Si no cambia nada, no toca el store.
+ */
+export function aplicarObjetivoAHoy(): void {
+  const fecha = claveFechaLocal(new Date());
+  const progreso = progresoActual();
+  const etapa = ajustesActuales().etapa;
+  const siguiente = realinearObjetivo(
+    fecha,
+    progreso,
+    CAPSULAS,
+    etapa,
+    coincideConObjetivo(),
   );
   if (siguiente !== progreso) {
     guardarProgresoEnStore(siguiente);
