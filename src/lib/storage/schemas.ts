@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ETAPA_DEFECTO, ETAPAS, type Etapa } from "@content/schema";
+import { ETAPA_DEFECTO, ETAPAS } from "@content/schema";
 import { TEMAS } from "./temas";
 
 // Lo ÚNICO que esta app guarda: progreso de cápsulas, ajustes y el onboarding local.

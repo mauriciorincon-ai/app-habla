@@ -248,6 +248,21 @@ export function IconoGemelas({ className }: IconoProps) {
   );
 }
 
+/** Altavoz: tócalo para oír la palabra en la voz de la familia (voz grabada, banco local). */
+export function IconoAltavoz({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" {...trazo} />
+      <path d="M16 9a3.5 3.5 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11" {...trazo} />
+    </svg>
+  );
+}
+
 /** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
 export function IconoPictograma({ className }: IconoProps) {
   return (

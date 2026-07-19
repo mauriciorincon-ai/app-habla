@@ -7,9 +7,9 @@
 
 ## Estado por fase
 
-- [ ] F0 — Setup (branch, deltas kit ×5, ítem 0, ADR-010 esqueleto, verificación de supuestos)
+- [x] F0 — Setup (branch, deltas kit ×5, ítem 0, ADR-010 esqueleto, verificación de supuestos)
 - [x] F1 — Motores puros + candados + gemelas + banco de voz (139 unit verdes)
-- [ ] F2 — UI (estudio, Ajustes, gemelas, integración de voz)
+- [x] F2 — UI (estudio, Ajustes, gemelas, integración de voz) — a: selector+gemelas · b: estudio · c: voz en los juegos
 - [ ] F3 — Integración + e2e (mic fake, cero-red, axe)
 - [ ] F4 — Calidad y cierre (guía v3, manual, summary, deploy-check, PR)
 - [ ] **Gate del usuario** (escritorio) → merge → `/cierre-sprint habla` (o difiere según F0 #6)
@@ -102,3 +102,35 @@ Corrido en desktop-chromium (el mismo motor de la CI), 2026-07-18:
   g/b). 9 pictos nuevos ARASAAC bajados con `scripts/descargar-gemelas.mjs` (no destructivo, no
   toca los 41 del lote principal). **Su calidad visual es parte del gate de contenido del usuario.**
 - **139 unit verdes** (de 110): gemelas (11) + banco-voz (12) + privacidad-banco (6).
+
+## Hallazgos de F2 (UI)
+
+- **F2a — gemelas + selector:** juego sin micrófono (`/jugar/gemelas`), 4ª tarjeta en el selector
+  (grid `sm:grid-cols-2`, comentario COGA 3→4 actualizado), `CelebracionHonesta` extendida con el
+  caso `gemelas`. La cáscara visual NO reusó `MarcoJuego` (asume fases de mic): gemelas es co-uso
+  puro, guion→ronda→celebración propio.
+- **F2b — estudio `/estudio`:** shell server estático + cliente con dos vistas (gestión con
+  cobertura por categoría / lote guiado 5 estados). `useGrabadora` encapsula MediaRecorder
+  (estados inactivo→pidiendo-permiso→grabando→denegado/error). Fix React 19: el lote se fija con
+  `useMemo(…, [])` (no `useRef` leído en render — "Cannot access refs during render"). Copy
+  explícito: **"La voz de tu hijo nunca se graba."**
+- **F2c — la voz de la familia suena en los juegos (O2):**
+  - **Guarda del bucle** cableada en `use-voice-session` (`silenciar(ms)` → el meter descarta
+    frames `performance.now() < silenciarHastaRef` + 300 ms de cola). Dormante hasta que algo la
+    llama; la reproducción de voz familiar la dispara con la duración de la grabación.
+  - **Hook compartido `use-voz-familiar`**: resuelve con el `resolverFuente` PURO
+    (toggle `vozFamiliar` × ¿hay grabación?), reproduce con `new Audio(URL.createObjectURL)` +
+    revoke, avisa a `silenciar` ANTES de sonar, y emite el evento `voz-familiar:sono` (id, sin
+    audio) como sonda para el e2e de F3. Fallback silencioso siempre: sin grabación, no-op.
+  - **palabra↔objeto:** autoplay de la palabra al aparecer un dibujo nuevo + **botón altavoz
+    ≥64 px** (el niño lo puede tocar). Las frases honestas que ya estaban en pantalla ("¡Le salió
+    la voz!" / "¡Dijo la palabra!") ahora TAMBIÉN suenan en la voz familiar — son exactamente las
+    celebraciones del catálogo, así que la app solo dice en voz alta lo que de verdad pasó.
+  - **gemelas:** altavoz ≥64 px en cada picto del par (modela la pareja mínima). Sin micrófono →
+    sin guarda del bucle que hacer.
+  - **Decisión honesta:** la pantalla final de celebración (`CelebracionHonesta`) NO reproduce voz
+    — sus titulares llevan cifras ("¡Su voz sonó 7,3 s!") y NO son grabables (el número cambia). La
+    voz familiar suena solo donde hay una frase FIJA grabable. Se documenta en el manual (F4).
+  - Limpieza: eliminado el import `type Etapa` sin usar en `schemas.ts` → **lint 0 warnings**.
+  - 139 unit verdes intactos; typecheck y build limpios. La integración (que el picto suene, que
+    la voz NO encienda el dibujo) se prueba POR LA UI en F3 (e2e `voz-familiar.spec.ts`).

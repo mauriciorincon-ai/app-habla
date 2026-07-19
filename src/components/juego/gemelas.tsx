@@ -13,7 +13,9 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
+import { IconoAltavoz } from "@/components/iconos";
 import { agregarJuiciosGemelas } from "@/lib/storage/local";
+import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { NOMBRE_ETAPA, type Etapa } from "@content/schema";
 import {
   metricaGemelas,
@@ -22,6 +24,7 @@ import {
 } from "@/lib/gemelas/rondas";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
+import { useVozFamiliar } from "./use-voz-familiar";
 
 type Fase = "guion" | "jugando" | "celebracion";
 
@@ -43,6 +46,8 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);
   const [marcas, setMarcas] = useState<Marca[]>([]);
+  // La voz de la familia modela cada palabra del par. Gemelas no tiene micrófono → sin guarda.
+  const voz = useVozFamiliar();
 
   // Gemelas exige que el niño intente palabras → no hay pares en "sonidos-e-intentos".
   if (rondas.length === 0) {
@@ -149,6 +154,22 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
               <p className="font-display text-3xl sm:text-4xl">
                 {palabra.palabra}
               </p>
+              {/* Altavoz de la voz familiar: modela la palabra para el niño (≥64 px, él lo puede
+                  tocar). Solo aparece si esa palabra está grabada; si no, se juega en silencio. */}
+              {voz.disponible(idPalabra(palabra.palabra)) ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    void voz.reproducir(idPalabra(palabra.palabra))
+                  }
+                  data-testid={`altavoz-${lado}`}
+                  data-fuente-voz="familiar"
+                  aria-label={`Oír «${palabra.palabra}»`}
+                  className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95"
+                >
+                  <IconoAltavoz className="h-7 w-7" />
+                </button>
+              ) : null}
               {/* Tecla del PADRE: marca cuál oyó (≥64 px — pero la maneja el adulto). */}
               <button
                 type="button"
