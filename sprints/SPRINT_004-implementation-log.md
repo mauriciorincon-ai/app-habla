@@ -12,7 +12,7 @@
 - [x] F1 — Motores puros (sesiones · rumbo · etiquetas · objetivo · daily con objetivo · lote-por-etapa · dedup) — 193 unit verdes, cobertura 92 %/86 %
 - [x] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
 - [x] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe) — **127 e2e verdes** (lighthouse en F5)
-- [ ] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011)
+- [x] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011) — 200 unit verdes
 - [ ] F5 — CIERRE DE CICLO (BLUEPRINT.html · /design-sync · guía v4 · manual · summary · PR)
 - [ ] **Gate ⭐ ACUMULADO S1+S2+S3+S4 del usuario** (desktop + teléfono) → merge → `/cierre-sprint habla` (H1 COMPLETO)
 
@@ -152,5 +152,33 @@ La sección que la orden exige que estrene el plan. Cada riesgo se verificó con
 - **Privacidad (R2):** lista blanca de claves ampliada conscientemente (`sesiones`, `objetivo`,
   `gemelas`) con el candado de contenido (audio/pitch) intacto. axe + lighthouse ganan `/rumbo` y
   `/objetivo`.
+
+## F4 — Endurecimiento (lista CERRADA — hecho)
+
+Las 5 deudas del remate S3, pagadas con evidencia:
+
+1. **Tests de componente del estudio:** `tests/unit/estudio-cliente.test.tsx` (Testing Library) —
+   cobertura, lista de grabados, escuchar (reproduce el blob), borrar, banco vacío, IndexedDB roto.
+   De paso arregló un hueco del setup: faltaba `afterEach(cleanup)` de RTL (los renders se
+   acumulaban) — se añadió a `tests/setup.ts` (beneficia a todo test de componente).
+2. **Dedup `reproducir`:** `src/lib/audio/reproducir.ts` (`reproducirBlob`, con cancelación) +
+   `useReproductor` (revoca al desmontar). Sustituye la copia del estudio y la de la voz familiar.
+   (barajar y fechaHoy ya se dedup-earon en F1.)
+3. **Revoke al navegar a mitad de clip:** `reproducirBlob` libera la URL al terminar, al fallar o
+   al cancelar; `useReproductor` y `use-voz-familiar` cancelan en el desmontaje. e2e de voz-familiar
+   (×3) y de privacidad (banco 100 % local) siguen verdes.
+4. **Unit del cap-500 de gemelas:** `agregarJuiciosGemelas` acota a 500, conservando los más
+   recientes (test en storage.test.ts).
+5. **Lote-por-etapa:** pagado en F1 dentro de O2 (`siguienteLote({etapa, objetivo})`).
+
+Más los cierres de deuda del sprint:
+
+- **Iconos PWA reales:** `scripts/gen-iconos.mjs` refinado (globo del design system, sage/cream,
+  con brillo y cuerdita) — genera `icon-192`, `icon-512` y **`icon-512-maskable`** (globo en la zona
+  segura, fondo sólido). Manifest apunta la entrada maskable a la variante. Cero dependencias nuevas
+  (encoder PNG con `node:zlib`) — **desviación del plan declarada en F0** (se descartó Playwright).
+- **ADR-011 — export .zip:** escrito con decisión **RECHAZAR por ahora** (un backup que puede no
+  restaurar en otro dispositivo es una promesa falsa; el costo de re-grabar es <10 min; ensancha la
+  superficie de privacidad). Validado por el usuario en el gate del plan; reabrible.
 
 _(Se irá completando por fase.)_

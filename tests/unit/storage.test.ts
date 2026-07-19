@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
+  agregarJuiciosGemelas,
   borrarObjetivo,
   borrarTodo,
   CLAVES,
@@ -11,6 +12,7 @@ import {
   leerObjetivo,
   leerPerfil,
   leerProgreso,
+  leerRegistroGemelas,
   leerSesiones,
   registrarSesion,
 } from "@/lib/storage/local";
@@ -226,6 +228,24 @@ describe("sesiones de juego (S4): el insumo del Rumbo, versionado y acotado", ()
     });
     const crudo = window.localStorage.getItem(CLAVES.sesiones) ?? "";
     expect(crudo).not.toMatch(/audio|rms|pcm|wav|pitch|hz|blob:/i);
+  });
+});
+
+describe("registro de gemelas: cap 500 (deuda del remate S3)", () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it("conserva solo los últimos 500 juicios, sin crecer sin fin", () => {
+    // Se agregan 600 juicios en tandas; el registro nunca guarda más de 500.
+    for (let i = 0; i < 600; i++) {
+      agregarJuiciosGemelas([
+        { fecha: "2026-07-19", parId: `par-${i}`, marca: "a" },
+      ]);
+    }
+    const { juicios } = leerRegistroGemelas();
+    expect(juicios).toHaveLength(500);
+    // Se quedan los MÁS recientes (par-599 sigue; par-0 ya no).
+    expect(juicios[juicios.length - 1]?.parId).toBe("par-599");
+    expect(juicios.some((j) => j.parId === "par-0")).toBe(false);
   });
 });
 

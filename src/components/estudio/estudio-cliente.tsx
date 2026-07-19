@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAjustes, usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
+import { useReproductor } from "@/components/use-reproductor";
 import { fechaHoy } from "@/lib/fecha";
 import { alinear } from "@/lib/objetivo/alinear";
 import { leerObjetivo } from "@/lib/storage/local";
@@ -30,14 +31,6 @@ const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], string> = {
   consigna: "Consignas del juego",
   celebracion: "Celebraciones",
 };
-
-/** Reproduce un Blob una vez y libera la URL. (La voz familiar, para escuchar lo grabado.) */
-function reproducir(blob: Blob): void {
-  const url = URL.createObjectURL(blob);
-  const audio = new Audio(url);
-  audio.onended = () => URL.revokeObjectURL(url);
-  void audio.play().catch(() => URL.revokeObjectURL(url));
-}
 
 export function EstudioCliente() {
   const hidratado = useHidratado();
@@ -179,6 +172,7 @@ function FilaGrabada({
   item: ItemGrabable;
   onBorrado: (id: string) => void;
 }) {
+  const reproducir = useReproductor();
   return (
     <li className="bg-superficie border-borde flex items-center justify-between gap-3 rounded-xl border p-3">
       <span className="truncate">{item.texto}</span>
@@ -243,6 +237,7 @@ function Lote({
   const [captura, setCaptura] = useState<Captura | null>(null);
   const [sinEspacio, setSinEspacio] = useState(false);
   const { estado, empezar, detener, cancelar } = useGrabadora();
+  const reproducir = useReproductor();
 
   const item = lote[idx];
 
