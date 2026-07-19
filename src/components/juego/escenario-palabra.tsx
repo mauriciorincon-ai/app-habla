@@ -51,6 +51,15 @@ export function EscenarioPalabra({
     avisarRef.current = onVocalizar;
   }, [onVocalizar]);
 
+  // ANCLA DE VOZ NUEVA (regla dura 3, hallazgo de la auditoría S3): `sostenidoMs` acumula TODO el
+  // intento, así que sin ancla el segundo dibujo se encendería SOLO — con la voz que encendió al
+  // primero — y el contador de activaciones inflaría el logro. Cada dibujo exige sus propios
+  // ~250 ms de voz NUEVA, medidos desde que apareció.
+  const baseSostenidoRef = useRef(0);
+  useEffect(() => {
+    baseSostenidoRef.current = medidas.sostenidoMs();
+  }, [picto.palabra, medidas]);
+
   const idNombre = idPalabra(picto.palabra);
   const nombreDisponible = voz.disponible(idNombre);
 
@@ -87,8 +96,12 @@ export function EscenarioPalabra({
         const escala = 1 + medidas.nivel() * 0.12;
         auraRef.current.style.transform = `scale(${escala})`;
       }
-      // Cualquier vocalización sostenida cuenta — sin importar QUÉ dijo.
-      if (medidas.sostenidoMs() >= MS_PARA_ENCENDER) {
+      // Cualquier vocalización sostenida cuenta — sin importar QUÉ dijo — pero tiene que ser voz
+      // NUEVA de ESTE dibujo (el ancla), no la acumulada del intento.
+      const total = medidas.sostenidoMs();
+      // El intento se reinició ("otra vez" / recalibrar): el ancla no puede quedar en el pasado.
+      if (total < baseSostenidoRef.current) baseSostenidoRef.current = total;
+      if (total - baseSostenidoRef.current >= MS_PARA_ENCENDER) {
         avisarRef.current();
       }
       id = requestAnimationFrame(pintar);

@@ -56,7 +56,7 @@ describe("persistencia local (ADR 002)", () => {
     expect(window.localStorage.getItem(CLAVES.perfil)).toBeNull();
   });
 
-  it('"borrar todos mis datos" borra TODO lo de la app y nada más', () => {
+  it('"borrar todos mis datos" borra TODO lo de la app y nada más', async () => {
     guardarPerfil({ apodo: "San", temas: ["mar"] });
     guardarAjustes({
       modoCalma: true,
@@ -71,7 +71,8 @@ describe("persistencia local (ADR 002)", () => {
     });
     window.localStorage.setItem("otra-app:algo", "no es mío");
 
-    borrarTodo();
+    // Async desde el remate S3 (A-3): también elimina el banco de voz en IndexedDB, esperado.
+    await borrarTodo();
 
     expect(leerPerfil()).toBeNull();
     expect(leerAjustes()).toEqual(AJUSTES_DEFECTO);

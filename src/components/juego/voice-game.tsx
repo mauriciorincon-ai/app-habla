@@ -27,9 +27,11 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
+import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { Escenario } from "./escenario";
 import { GuionCard } from "./guion-card";
+import { useVozFamiliar } from "./use-voz-familiar";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession, type MedidasVivas } from "./use-voice-session";
 
@@ -90,12 +92,17 @@ function JuegoListo({
     terminar,
     otraVez,
     cambiarCalma,
+    silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "sostenido",
     meta: META_MS_DEFECTO,
     metricaActual,
   });
+
+  // La consigna del globo puede sonar en la voz de la familia; la guarda del bucle pausa el
+  // medidor mientras suena (regla dura 3 — el globo mide el micrófono en vivo).
+  const voz = useVozFamiliar({ alSonar: silenciar });
 
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
@@ -139,6 +146,13 @@ function JuegoListo({
               ? "¡El globo está volando!"
               : "Haz sonar tu voz: aaaaah"}
           </h2>
+
+          {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
+          <AltavozConsigna
+            voz={voz}
+            id="consigna:aaah"
+            etiqueta="Oír “Haz sonar tu voz: aaaaah”"
+          />
 
           <Escenario
             medidas={medidas}

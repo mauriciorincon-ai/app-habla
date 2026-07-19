@@ -33,13 +33,18 @@ export function useVozFamiliar(opts?: {
   const vozFamiliarActiva = ajustes?.vozFamiliar ?? true;
 
   // Qué ítems tienen grabación. Se carga una vez al montar el juego; el banco no cambia a mitad
-  // de una sesión de juego (grabar es otra pantalla).
+  // de una sesión de juego (grabar es otra pantalla). Si IndexedDB falla al abrir (modo privado
+  // viejo, storage roto), se juega como si el banco estuviera vacío: fallback limpio, sin romper.
   const [ids, setIds] = useState<Set<string>>(new Set());
   useEffect(() => {
     let vivo = true;
-    void listarIds().then((lista) => {
-      if (vivo) setIds(new Set(lista));
-    });
+    listarIds()
+      .then((lista) => {
+        if (vivo) setIds(new Set(lista));
+      })
+      .catch(() => {
+        // Banco inaccesible = banco vacío: la app suena como antes (sin voz).
+      });
     return () => {
       vivo = false;
     };
@@ -60,7 +65,7 @@ export function useVozFamiliar(opts?: {
   const reproducir = useCallback(
     async (id: string): Promise<boolean> => {
       if (!disponible(id)) return false;
-      const grabacion = await obtenerGrabacion(id);
+      const grabacion = await obtenerGrabacion(id).catch(() => null);
       if (!grabacion) return false;
 
       // Avisar al medidor ANTES de sonar: su eco por los parlantes no debe contar como voz del
@@ -84,6 +89,9 @@ export function useVozFamiliar(opts?: {
         return true;
       } catch {
         // Autoplay bloqueado o sin permiso de audio: fallback silencioso, jamás un error visible.
+        // Y como NO sonó nada, se CANCELA la guarda: sin esto, el medidor quedaría sordo a la
+        // voz real del niño durante un clip que nunca se oyó (regla dura 3, al revés).
+        alSonarRef.current?.(0);
         URL.revokeObjectURL(url);
         return false;
       }

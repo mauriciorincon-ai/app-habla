@@ -141,6 +141,10 @@ pantalla del **Estudio**).
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
+- **En el globo y el cohete también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
+  aaaaah" y "Haz la voz de sirena: aaaAAAaaa"), aparece un altavoz debajo del título que las dice
+  con su voz. Mientras su voz grabada suena, **el juego no se mueve**: el medidor espera a que
+  hable el niño de verdad — así el globo no vuela con una grabación.
 - Puede **apagar** la voz de la familia con el interruptor _"Usar la voz de la familia"_ **sin
   borrar nada**, y volver a encenderla cuando quiera.
 

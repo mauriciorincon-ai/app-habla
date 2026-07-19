@@ -111,8 +111,11 @@ export function guardarProgresoEnStore(progreso: Progreso): void {
 
 export function borrarTodoYRecargar(): void {
   // borrarTodo() vive en lib/storage; recargar deja la app en su estado de primera vez.
-  void import("@/lib/storage/local").then(({ borrarTodo }) => {
-    borrarTodo();
+  // La navegación ESPERA al borrado (el banco de voz vive en IndexedDB y su eliminación es
+  // async — auditoría S3, A-3), con un tope de gracia para que el botón jamás se cuelgue.
+  void import("@/lib/storage/local").then(async ({ borrarTodo }) => {
+    const gracia = new Promise<void>((res) => setTimeout(res, 2000));
+    await Promise.race([borrarTodo().catch(() => undefined), gracia]);
     window.location.href = "/";
   });
 }
