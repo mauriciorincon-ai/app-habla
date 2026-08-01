@@ -34,13 +34,17 @@ Dos audiencias, una paleta dual:
 Regla de oro: **la vista del niño es soberana** — ningún elemento del operador se filtra al
 escenario del juego (solo un botón de salir, pequeño y discreto, para el padre).
 
-### Globos de fiesta (celebración de la palabra — ADR 009)
+### Colores de fiesta (los instantes de logro)
 
 `--color-fiesta-*` (coral · verde · cielo · sol · uva): los primos **saturados** de la paleta del
 niño. La paleta del niño es pastel a propósito —es la pantalla donde él vive, y tiene que ser
-calmada—; estos colores existen **solo** para el instante en que el padre dice que dijo la palabra.
-Regla: se usan en algo que **sube una vez y se va**, nunca en superficie fija. El sosiego se cuida
-por la duración, no por la saturación.
+calmada—; estos colores existen **solo** para los instantes de logro, y hoy son exactamente dos:
+los **globos de la palabra** (ADR 009 — la fiesta mayor: la dispara el padre cuando el niño dijo
+la palabra) y el **confeti de la vuelta** (ADR 012, gate S4 — el hito medido: 3 s de voz real
+completan una vuelta y el estallido cae sobre la línea sin detener el juego). Regla intacta: se
+usan en algo que **corre una vez y se va**, nunca en superficie fija; con "reducir animaciones" no
+se muestran y el texto sigue contando el logro. El sosiego se cuida por la duración, no por la
+saturación.
 
 ## Paleta
 

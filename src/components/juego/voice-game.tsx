@@ -185,6 +185,7 @@ function JuegoListo({
           <Escenario
             medidas={medidas}
             hitoMs={HITO_VUELTA_MS}
+            vuelta={vueltas}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
           />

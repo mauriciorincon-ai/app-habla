@@ -13,6 +13,7 @@
 
 import { useEffect, useRef } from "react";
 import { Globo } from "@/components/iconos";
+import { ConfetiVuelta } from "./confeti-vuelta";
 import type { MedidasVivas } from "./use-voice-session";
 
 /** En calma: ms de voz sostenida para que el globo llegue a su altura máxima. */
@@ -32,12 +33,20 @@ type Props = {
   medidas: MedidasVivas;
   /** ms de voz acumulada que completan UNA vuelta (no cierran nada: se da la vuelta y se sigue). */
   hitoMs: number;
+  /** Vueltas completas del intento: cada una nueva estalla su confeti (re-mirada del gate S4). */
+  vuelta: number;
   modoCalma: boolean;
   /** Invitación amable tras un rato en silencio (jamás un regaño). */
   invitando: boolean;
 };
 
-export function Escenario({ medidas, hitoMs, modoCalma, invitando }: Props) {
+export function Escenario({
+  medidas,
+  hitoMs,
+  vuelta,
+  modoCalma,
+  invitando,
+}: Props) {
   const escenarioRef = useRef<HTMLDivElement | null>(null);
   const globoRef = useRef<HTMLDivElement | null>(null);
   const medidorRef = useRef<HTMLDivElement | null>(null);
@@ -142,6 +151,10 @@ export function Escenario({ medidas, hitoMs, modoCalma, invitando }: Props) {
             <Globo className="h-full w-full" />
           </div>
         </div>
+
+        {/* El confeti de la vuelta: `key` lo re-monta con cada vuelta nueva — el estallido corre
+            UNA vez por logro y queda quieto hasta la siguiente (en calma no hay vueltas). */}
+        {!modoCalma && vuelta > 0 ? <ConfetiVuelta key={vuelta} /> : null}
 
         {invitando ? (
           <p
