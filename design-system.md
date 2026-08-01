@@ -143,6 +143,16 @@ nuevos sin derivarlos de la paleta.
 - **Los estados existen en PAREJA visible.** Si "hecho" tiene su icono (`IconoHecho`), "todavía
   no" tiene el suyo (`IconoPorHacer`) — nunca se comunica un estado solo por la ausencia del
   otro, que además suele ser el estado más frecuente (la cápsula del día empieza pendiente).
+- **PROHIBIDA la chispa/destello de cuatro puntas (✨), en cualquier variante.** Es hoy el símbolo
+  universal de la **IA generativa**, y esta app promete exactamente lo contrario: determinista
+  primero, cero IA (la regla dura 1). Un destello insinúa "esto lo generó una máquina" sobre un
+  contenido que es **biblioteca curada con evidencia citada** — contradice el producto, no solo el
+  estilo. (Vetada en el gate S4, donde se había colado en "La actividad de hoy"; se reemplazó por
+  `IconoJuntos`, dos figuras lado a lado = co-uso.) Si algún día llega el cuentero por lotes, su
+  contenido se marcará **con palabras honestas**, jamás con un destello decorativo.
+- **Tamaño del icono según a quién acompaña:** ~16 px si va dentro de una línea de texto corrida;
+  **~32 px cuando encabeza un bloque** (ahí abarca el bloque completo desde la izquierda, no solo
+  el rótulo — a 16 px junto a un rótulo mono de 11 px no se lee como señal, hallazgo del gate S4).
 - **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
   grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
   cambia de color al encenderse — el estado nunca se comunica solo con color: el texto

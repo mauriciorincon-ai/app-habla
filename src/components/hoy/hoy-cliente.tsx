@@ -11,11 +11,11 @@ import {
   Cohete,
   Globo,
   IconoBurbuja,
-  IconoChispa,
   IconoCita,
   IconoDiana,
   IconoGemelas,
   IconoHecho,
+  IconoJuntos,
   IconoPictograma,
   IconoPorHacer,
 } from "@/components/iconos";
@@ -103,27 +103,33 @@ export function HoyCliente() {
         {/* El guion y la actividad son las DOS cosas que el padre va a hacer hoy: se ven como
             pareja (misma caja, mismo peso, cada una con su icono). Antes la actividad era texto
             suelto al pie y se leía como una introducción — hallazgo del gate S4. */}
-        <div className="border-acento bg-acento-suave/40 mt-6 rounded-xl border-l-4 p-4">
-          <p className="text-tinta-suave flex items-center gap-2 font-mono text-[11px] tracking-[0.08em] uppercase">
-            <IconoBurbuja className="text-acento h-4 w-4 shrink-0" />
-            Tu línea de hoy
-          </p>
-          <p
-            className="font-display mt-2 text-xl italic"
-            data-testid="capsula-guion"
-          >
-            {capsula.guion}
-          </p>
+        {/* El icono va al tamaño de los del juego (32 px) y abarca el bloque entero, no la
+            etiquetita: a 16 px junto a un rótulo mono de 11 px no se leía como señal (gate S4). */}
+        <div className="border-acento bg-acento-suave/40 mt-6 flex gap-3 rounded-xl border-l-4 p-4">
+          <IconoBurbuja className="text-acento mt-0.5 h-8 w-8 shrink-0" />
+          <div>
+            <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
+              Tu línea de hoy
+            </p>
+            <p
+              className="font-display mt-2 text-xl italic"
+              data-testid="capsula-guion"
+            >
+              {capsula.guion}
+            </p>
+          </div>
         </div>
 
-        <div className="border-acento bg-acento-suave/40 mt-4 rounded-xl border-l-4 p-4">
-          <p className="text-tinta-suave flex items-center gap-2 font-mono text-[11px] tracking-[0.08em] uppercase">
-            <IconoChispa className="text-acento h-4 w-4 shrink-0" />
-            La actividad de hoy
-          </p>
-          <p className="mt-2 text-lg leading-relaxed">
-            {capsula.actividad.texto}
-          </p>
+        <div className="border-acento bg-acento-suave/40 mt-4 flex gap-3 rounded-xl border-l-4 p-4">
+          <IconoJuntos className="text-acento mt-0.5 h-8 w-8 shrink-0" />
+          <div>
+            <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
+              La actividad de hoy
+            </p>
+            <p className="mt-2 text-lg leading-relaxed">
+              {capsula.actividad.texto}
+            </p>
+          </div>
         </div>
 
         <details className="mt-6">

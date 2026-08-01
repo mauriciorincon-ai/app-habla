@@ -273,6 +273,16 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      hermana** del guion (mismo borde acentuado, texto `text-lg`), cada una con su icono
      (`IconoBurbuja` · `IconoChispa`) — se leía como una introducción, siendo la acción del día.
   6. **La fuente se ve como cita:** `IconoCita` + cursiva.
+     6-bis. **🔴 La chispa de IA, vetada (segunda pasada del usuario sobre el lote).** El icono que
+     puse para "La actividad de hoy" era un **destello de cuatro puntas** — hoy el símbolo
+     universal de la **IA generativa**. En una app cuya regla dura 1 es "determinista primero,
+     cero IA" (quinto sprint sin un solo LLM) y cuyo contenido es biblioteca curada con evidencia
+     citada, ese icono **insinúa que el contenido lo generó una máquina**: contradice el producto,
+     no el estilo. Reemplazado por **`IconoJuntos`** (un adulto y un niño lado a lado = co-uso, la
+     tesis del producto) y **prohibida la chispa en el design system**, en cualquier variante.
+     Además, los iconos de "Tu línea de hoy" y "La actividad de hoy" pasan de 16 a **32 px** (el
+     tamaño de los del juego) y encabezan el bloque entero desde la izquierda: a 16 px junto a un
+     rótulo mono de 11 px no se leían como señal. Regla de tamaño añadida al design system.
   7. **Etiqueta de la cápsula:** `Hoy practicamos · X · Y` → **`Técnica: X · Etapa: Y`** (no se
      sabía cuál era cuál). El e2e de etapas es indiferente: asevera el `<span>` interno.
   8. **Ajustes:** el "← Hoy" sube al **encabezado** con la misma forma que en Rumbo y Objetivo

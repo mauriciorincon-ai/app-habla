@@ -126,8 +126,17 @@ export function IconoBurbuja({ className }: IconoProps) {
   );
 }
 
-/** La actividad de hoy: lo que van a HACER juntos. Una chispa. */
-export function IconoChispa({ className }: IconoProps) {
+/**
+ * La actividad de hoy: lo que van a hacer JUNTOS — un adulto y un niño, lado a lado. Es la tesis
+ * del producto dibujada (co-uso: la app orquesta al padre, no lo reemplaza).
+ *
+ * ⚠️ Aquí vivía una "chispa" de cuatro puntas y el gate S4 la vetó con razón: ese destello es hoy
+ * el símbolo universal de la IA generativa, y esta app promete lo contrario —determinista
+ * primero, cero IA (quinto sprint sin un solo LLM)—. Un icono que insinúe "esto lo generó una
+ * máquina" contradice el producto, no solo el estilo. Ninguna chispa de cuatro puntas vuelve a
+ * esta app.
+ */
+export function IconoJuntos({ className }: IconoProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -135,14 +144,12 @@ export function IconoChispa({ className }: IconoProps) {
       aria-hidden="true"
       focusable="false"
     >
-      <path
-        d="M12 3l2.2 5.3L19.5 10l-5.3 2.2L12 17.5l-2.2-5.3L4.5 10l5.3-1.7L12 3Z"
-        {...trazo}
-      />
-      <path
-        d="M18.5 16.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z"
-        {...trazo}
-      />
+      {/* El adulto */}
+      <circle cx="8" cy="6" r="2.6" {...trazo} />
+      <path d="M3.5 20v-3.5a4.5 4.5 0 0 1 9 0V20" {...trazo} />
+      {/* El niño, a su lado */}
+      <circle cx="17" cy="9.5" r="2.1" {...trazo} />
+      <path d="M13.5 20v-2.6a3.5 3.5 0 0 1 7 0V20" {...trazo} />
     </svg>
   );
 }
