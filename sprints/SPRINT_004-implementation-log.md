@@ -233,3 +233,18 @@ Lighthouse del PR cazó en vivo el Alto A1** — la CI hizo su trabajo.
 
 **Tras los ajustes:** typecheck · lint · **209 unit** (90,6 % stmts / 86,6 % branches) · **129
 e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy literal nuevo.
+
+## Gate ⭐ ACUMULADO — en curso (por bloques, decisión del usuario)
+
+- **Bloque A (el oído: energía y tono) — 2026-07-19 · APROBADO (11/11).** rms responde al instante
+  (0,1–0,2 al hablar), ~30 fps estables por 4.909 frames, tono "—" en silencio y con voz grave
+  (correcto: el oído arranca en 150 Hz), 195–210 Hz en voz aguda, la barra sigue sin retraso, 4
+  inversiones bien contadas, la imitación de voz infantil entró al rango (188→210+ Hz). A10
+  (temblor) quedó parcial por limitación humana del probador — cubierto por `spike-pitch.spec`
+  (audio sintético). **Hallazgos → a la guía, no a la app:** (1) el "piso (mín. sesión)" del spike
+  es un mínimo corrido — 0,0000 es sano y NUNCA sube dentro de la sesión; A6 pedía un imposible
+  (verificado: con Detener→Empezar con música sonando, el piso nuevo sí arranca alto). El juego no
+  usa ese mínimo (calibra P75 + piso 0,002, `calibration.ts:70`). A2/A6 reescritas. (2) El gate se
+  corrió en Safari, que no reporta `noiseSuppression`/`autoGainControl` (la app los pide en false,
+  `types.ts:32-34`) — A5 gana la nota Safari-vs-Chrome. El spike NO se tocó (congelado por la
+  orden, lista de tablet).
