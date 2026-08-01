@@ -30,7 +30,8 @@ interacción con usted; la pantalla es apenas la excusa para jugar juntos.
 ### La pantalla "Hoy" — su respuesta diaria
 
 Al abrir la app ve **la cápsula del día**: la técnica, por qué funciona, **su línea de hoy** y la
-actividad. Cuando la hagan, toque **"Ya lo hicimos"**.
+actividad. Cuando la hagan, la app le pregunta "¿Ya hicieron la actividad de hoy?" y usted
+toca **"Sí, ya lo hicimos"**.
 
 - Cada día trae una cápsula distinta; no se repite hasta que se acaben todas.
 - La cápsula de hoy **no cambia** aunque cierre y vuelva a abrir la app.
