@@ -267,8 +267,12 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   3. **Contador de días:** se muda del pie de la página a **dentro de la tarjeta**, pegado al
      estado del día, con la cifra grande en sans tabular (antes iba en mono, violando el
      design-system: cifra dentro de frase jamás monoespaciada).
-  4. **`IconoPorHacer`** en el botón "Ya lo hicimos" (el estado pendiente ya no se comunica solo
-     por ausencia del check).
+  4. **`IconoPorHacer`** en el botón de marcar (el estado pendiente ya no se comunica solo por
+     ausencia del check). **Y el microcopy dejó de mentir sobre su propio estado** (tercera pasada
+     del usuario): el botón decía **"Ya lo hicimos"** a secas — una afirmación que se lee como
+     hecho ya cierto, cuando es la acción pendiente. Ahora, mientras está pendiente, encima
+     aparece la **pregunta** "¿Ya hicieron la actividad de hoy?" y el botón es su **respuesta**:
+     "Sí, ya lo hicimos". El estado no-marcado se afirma con palabras, no solo con un icono.
   5. **Jerarquía de la cápsula:** "La actividad de hoy" pasa de texto suelto al pie a **caja
      hermana** del guion (mismo borde acentuado, texto `text-lg`), cada una con su icono
      (`IconoBurbuja` · `IconoChispa`) — se leía como una introducción, siendo la acción del día.

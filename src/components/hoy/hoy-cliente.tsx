@@ -142,7 +142,18 @@ export function HoyCliente() {
           </p>
         </details>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        {/* Mientras está pendiente, la PREGUNTA lo dice: todavía no se ha marcado nada. Antes el
+            botón decía "Ya lo hicimos" a secas y se leía como una afirmación ya cierta —parecía
+            el estado, no la acción— (gate S4). Ahora el botón es la RESPUESTA a la pregunta. */}
+        {!completada ? (
+          <p className="text-tinta-suave mt-8 text-sm">
+            ¿Ya hicieron la actividad de hoy?
+          </p>
+        ) : null}
+
+        <div
+          className={`flex flex-col gap-3 sm:flex-row ${completada ? "mt-8" : "mt-3"}`}
+        >
           {capsula.actividad.conPantalla ? (
             <Link
               href="/jugar"
@@ -171,7 +182,7 @@ export function HoyCliente() {
               data-testid="marcar-hecha"
             >
               <IconoPorHacer className="text-tinta-suave h-5 w-5 shrink-0" />
-              Ya lo hicimos
+              Sí, ya lo hicimos
             </button>
           )}
         </div>
