@@ -248,3 +248,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   corrió en Safari, que no reporta `noiseSuppression`/`autoGainControl` (la app los pide en false,
   `types.ts:32-34`) — A5 gana la nota Safari-vs-Chrome. El spike NO se tocó (congelado por la
   orden, lista de tablet).
+- **Mejora general pedida por el usuario durante el gate (2026-07-19):** cada bloque de la guía
+  ahora abre con **"Empieza en:"** (la ruta exacta de su primera prueba) + la convención explicada
+  una vez en la caja del recorrido. Registrada en el summary como **propuesta al kit para todas
+  las apps** — la planeadora la recoge en el cierre.

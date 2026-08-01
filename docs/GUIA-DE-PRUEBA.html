@@ -181,6 +181,7 @@
       <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día.</p>
       <div class="recorrido">
         <p style="margin:0 0 6px"><strong>Recorrido del gate ⭐ ACUMULADO (S1+S2+S3+S4)</strong> — orden sugerido para hacerlo de una vez, en el computador y con micrófono:</p>
+        <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong> — pega esa ruta después de la URL de la app (p. ej. <code>…vercel.app<strong>/spike/audio</strong></code>) y arrancas a la segura, sin buscar el camino. <em>(Mejora nacida del gate S4.)</em></p>
         <ol class="chica suave" style="margin:0; padding-left:1.2rem">
           <li>El oído de la app (bloque A) — tu tono real. <strong>~8 min</strong></li>
           <li>“Hoy” y la etapa del habla (B–C). <strong>~4 min</strong></li>
@@ -211,6 +212,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">A</span><h2>El oído de la app: energía y tono</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/spike/audio</code></p>
     <p class="meta-bloque chica suave">~12 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. El S1 validó la <strong>energía</strong> (qué tan fuerte suena la voz); el S2 le suma el <strong>tono</strong> (qué tan aguda es), que es el motor del cohete. <strong>Es el bloque más importante del sprint.</strong></p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-a1"><div>
@@ -279,6 +281,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">B</span><h2>“Hoy”: la respuesta del día</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — la raíz de la app (si es la primera vez, ahí vive el onboarding)</p>
     <p class="meta-bloque chica suave">~10 min. La estrella del S1, que este sprint creció: la misma pantalla, pero con 50 cápsulas organizadas por etapa detrás.</p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-b1"><div>
@@ -326,6 +329,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">C</span><h2>La etapa del habla</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
     <p class="meta-bloque chica suave">~8 min. Bloque nuevo entero: la app ahora sabe en qué etapa está él y le da las cápsulas de esa etapa. <strong>Lo que se prueba aquí es que cambiar de etapa NO te cueste tu progreso.</strong></p>
     <ul class="pasos">
       <li data-origen="s2"><input type="checkbox" id="v2-c1"><div>
@@ -358,6 +362,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">D</span><h2>El selector de juegos</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — se llega por la tarjeta “Los juegos de voz” de “Hoy” (eso es parte de la prueba)</p>
     <p class="meta-bloque chica suave">~3 min. En el S1 la puerta llevaba directo al globo; ahora abre cuatro juegos. Esta pantalla la va a tocar <strong>él</strong>: tiene que ser la más predecible de la app.</p>
     <ul class="pasos">
       <li data-origen="mejora"><input type="checkbox" id="v2-d1"><div>
@@ -377,6 +382,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">E</span><h2>El globo <span class="chica suave">(el juego del S1)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~12 min, con micrófono. <strong>Ya lo aprobaste, pero este sprint le cambió el motor por dentro</strong> (ahora lo comparte con los otros dos juegos): hay que probarlo entero otra vez. Vuela con cualquier sonido sostenido — nunca exige palabras.</p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-e1"><div>
@@ -444,6 +450,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">F</span><h2>El cohete del tono <span class="chica suave">(juego nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~10 min, con micrófono. Sube cuando la voz sube de <strong>tono</strong> (no de volumen). Jugar con la voz —estirarla, subirla, bajarla— es el objetivo; <strong>no hay que decir ninguna palabra</strong>.</p>
     <ul class="pasos">
       <li data-origen="s2"><input type="checkbox" id="v2-f1"><div>
@@ -488,6 +495,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">G</span><h2>Palabra y dibujo <span class="chica suave">(juego nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~8 min. El andamio visual: el dibujo invita a nombrarlo, pero <strong>la app JAMÁS exige la palabra</strong>. Esa es la regla más importante de todo el producto.</p>
     <ul class="pasos">
       <li data-origen="s2"><input type="checkbox" id="v2-g1"><div>
@@ -533,6 +541,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">H</span><h2>Ajustes, honestidad y borrar datos</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
     <p class="meta-bloque chica suave">~7 min. El cuarto del padre: lo que se puede cambiar, y lo que la app promete y no promete.</p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-h1"><div>
@@ -571,6 +580,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">I</span><h2>La biblioteca — tu veredicto por bloques</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — la cápsula del día (la etapa se cambia en <code>/ajustes</code>)</p>
     <p class="meta-bloque chica suave">Solo leer, cuando quieras. Aquí <strong>no hay nada técnico que probar</strong>: es tu <strong>aprobación de padre</strong>. En el S1 aprobaste las 14 cápsulas una por una; <strong>esas 14 siguen adentro</strong>, ahora con 36 más (50 en total). Por eso la revisión ya no es de a una, sino <strong>por bloques</strong>. <span class="origen o-s2">S2</span></p>
     <p class="chica suave"><strong>Cómo revisarlas:</strong> elige una etapa en Ajustes y mira la cápsula del día (cambia cada día); o juzga el bloque por la descripción de abajo, que resume de qué van. <strong>Qué esperar de cada una:</strong> que la línea la <strong>dirías tal cual</strong> en tu casa, que la actividad se pueda hacer <strong>hoy</strong> y que reconozcas <strong>tu día real</strong> en ella. Si una no cumple eso, dime cuál y por qué — se reemplaza.</p>
     <ul class="pasos">
@@ -612,6 +622,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">J</span><h2>La voz de la familia: grabar tu voz <span class="chica suave">(el estudio, nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/estudio</code></p>
     <p class="meta-bloque chica suave">~10 min. La estrella del S3: grabar <strong>tu</strong> voz para que los juegos suenen con ella. Necesitas el micrófono. <strong>Graba primero unas 5–6 palabras aquí</strong>: el bloque K las usa.</p>
     <ul class="pasos">
       <li data-origen="s3"><input type="checkbox" id="v3-j1"><div>
@@ -646,6 +657,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">K</span><h2>La voz de la familia dentro de los juegos <span class="chica suave">(nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar/palabras</code> — con al menos una palabra ya grabada en el estudio (bloque J)</p>
     <p class="meta-bloque chica suave">~6 min. <strong>Necesitas haber grabado en el bloque J.</strong> Ahora los juegos suenan con tu voz.</p>
     <ul class="pasos">
       <li data-origen="s3"><input type="checkbox" id="v3-k1"><div>
@@ -676,6 +688,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">L</span><h2>Palabras gemelas <span class="chica suave">(el 4.º juego, sin micrófono, nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~6 min. Dos dibujos que suenan casi igual (pato/gato, mano/mono). <strong>No usa micrófono</strong>: es co-uso puro — el que oye la palabra eres tú.</p>
     <ul class="pasos">
       <li data-origen="s3"><input type="checkbox" id="v3-l1"><div>
@@ -709,6 +722,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">M</span><h2>El kit de prueba <span class="chica suave">(opcional, para repetir el bloque A sin hablar)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>docs/kit-de-prueba/</code> — archivos del repo, no una ruta de la app</p>
     <p class="meta-bloque chica suave">Solo si quieres. En el repo, la carpeta <code>docs/kit-de-prueba/</code> trae dos audios sintéticos para probar el oído de la app sin usar la voz del niño.</p>
     <ul class="pasos">
       <li data-origen="s3"><input type="checkbox" id="v3-m1"><div>
@@ -720,6 +734,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">N</span><h2>El rumbo <span class="chica suave">(cómo van — S4)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — el acceso “El rumbo” del encabezado (eso es parte de la prueba)</p>
     <ul class="pasos">
       <li data-origen="s4"><input type="checkbox" id="v4-n1"><div>
         <label for="v4-n1"><strong>Con la app recién empezada</strong> (o desde “Empezar de cero” en Ajustes), desde “Hoy” toca <strong>“El rumbo”</strong> en el encabezado. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
@@ -745,6 +760,7 @@
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">O</span><h2>El objetivo de la semana <span class="chica suave">(la sintonía con la fono — S4)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — el acceso “Objetivo” del encabezado (eso es parte de la prueba)</p>
     <ul class="pasos">
       <li data-origen="s4"><input type="checkbox" id="v4-o1"><div>
         <label for="v4-o1">Desde “Hoy” toca <strong>“Objetivo”</strong>. Escribe <strong>animales</strong> (o toca la sugerencia “animales”). Mira el texto que aparece abajo, y luego toca <strong>“Guardar el objetivo”</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
@@ -779,6 +795,7 @@
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
     <div class="bloque-cabeza"><span class="letra">→</span><h2>Validaciones pendientes en la tablet Android</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/spike/audio</code> — en la tablet, cuando regrese</p>
     <p class="meta-bloque chica suave">El niño y la tablet están de viaje. Esta lista <strong>se acumula sprint a sprint</strong> y se paga completa al regreso. Bloquea el cierre definitivo del tema de audio (ADR 003) y del tono (ADR 007) y del banco de voz en el aparato real (ADR-010), no el resto.</p>
     <ul class="pasos">
       <li data-origen="s1"><input type="checkbox" id="v2-t1"><div>
@@ -854,7 +871,7 @@
     <p class="eyebrow" style="margin-top:16px">Historial</p>
     <p class="chica suave"><strong>Sprint 004 (2026-07-19) — cierre del ciclo H1:</strong> llegan <strong>“El rumbo”</strong> (progreso honesto: tendencias por semana + hitos funcionales de lo que DE VERDAD se midió o marcaste — cero puntajes, cero %, cero culpa) y el <strong>“Objetivo de la semana”</strong> (escribes qué trabajar y la app alinea, de forma determinista, la cápsula de hoy + los dibujos + el lote de grabación). Toda prueba del S3 se <strong>hereda entera</strong>, ahora como <strong>regresión</strong> (ya no “Nuevo · S3”). <strong>Nuevo:</strong> bloques N (rumbo) y O (objetivo), y dos ítems de tablet (iconos reales, rumbo/objetivo en el aparato). <strong>Mejorado:</strong> el encabezado de “Hoy” abre <strong>tres</strong> cuartos del padre (rumbo, objetivo, ajustes) — O5. Gate ⭐ ACUMULADO: <strong>25 pruebas</strong> (~40 min). <strong>Eliminado:</strong> nada. Además, endurecimiento del cierre: se pagaron las deudas del remate (dedup, tests del estudio, cap-500, revoke al navegar) e iconos PWA reales (ADR-011 rechaza el backup .zip por ahora).<br>
     <strong>Ajustes de auditoría (2026-07-19):</strong> la auditoría final en dos fases cazó que el preview del objetivo contaba contra los bancos COMPLETOS (prometía dibujos que el mazo del niño no trae) y que esa pantalla cargaba de más (el gate de Lighthouse del PR la frenó). Se corrigió: el preview cuenta <strong>solo lo que él verá</strong> y nace la prueba <strong>O6</strong> (el caso “existe pero fuera de su alcance”). También: singular/plural en los datos del rumbo (“1 palabra distinta”, no “1 palabras”), el hito de voz dice <strong>“5 segundos seguidos”</strong> (sin el “más de” que mentía en el borde exacto), el aviso de guardado ahora lo anuncian los lectores de pantalla, y el candado e2e de privacidad corre también <strong>después</strong> de que la app escribe de verdad.<br>
-    <strong>Gate ⭐ ACUMULADO en curso (2026-07-19):</strong> bloque A ejecutado (11/11, el oído sano). Dos pruebas heredadas del S1 se reescribieron con lo aprendido: <strong>A2/A6</strong> — el “piso (mín. sesión)” es un MÍNIMO corrido (0,0000 es sano y jamás sube dentro de la misma sesión; el ruido de fondo se mide arrancando una sesión NUEVA con la música sonando; el juego calibra distinto: percentil 75 + piso 0,002) — y <strong>A5</strong> gana la nota Safari-vs-Chrome (Safari no reporta <code>noiseSuppression</code>/<code>autoGainControl</code>; se verifican en Chrome).</p>
+    <strong>Gate ⭐ ACUMULADO en curso (2026-07-19):</strong> bloque A ejecutado (11/11, el oído sano). Dos pruebas heredadas del S1 se reescribieron con lo aprendido: <strong>A2/A6</strong> — el “piso (mín. sesión)” es un MÍNIMO corrido (0,0000 es sano y jamás sube dentro de la misma sesión; el ruido de fondo se mide arrancando una sesión NUEVA con la música sonando; el juego calibra distinto: percentil 75 + piso 0,002) — y <strong>A5</strong> gana la nota Safari-vs-Chrome (Safari no reporta <code>noiseSuppression</code>/<code>autoGainControl</code>; se verifican en Chrome). Y una mejora general pedida por el usuario en pleno gate: <strong>cada bloque ahora abre con “Empieza en:”</strong> — la ruta exacta donde arranca su primera prueba — para entrar a la segura sin buscar el camino (propuesta al kit para TODAS las apps, va en el informe de cierre a la planeadora).</p>
     <p class="chica suave"><strong>Sprint 003 (2026-07-18):</strong> llega <strong>“La voz de la familia”</strong> — grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100&nbsp;% local, con altavoz en “palabra y dibujo” y en “gemelas”, y apagado opcional) — y el <strong>4.º juego, “palabras gemelas”</strong> (parejas mínimas, sin micrófono, co-uso puro). Toda prueba del S2 se <strong>hereda entera</strong>, ahora etiquetada como <strong>regresión</strong> de su sprint (ya no “Nuevo · S2”). <strong>Nuevo:</strong> bloques J (estudio), K (voz en los juegos), L (gemelas), M (kit de prueba) y tres ítems de tablet (voz real, eco del bucle, sesión de gemelas). <strong>Mejorado:</strong> el selector abre <strong>cuatro</strong> juegos (D1). Gate mínimo: 17 pruebas. <strong>Eliminado:</strong> nada — ninguna feature del S2 desapareció.<br>
     <strong>Remate de auditoría (2026-07-19):</strong> tras la auditoría final del sprint se agregó <strong>K5</strong> (las consignas del globo y el cohete suenan en tu voz, con la guarda del bucle bajo prueba) y tres arreglos que endurecen pruebas existentes: cada dibujo de “palabra y dibujo” ahora exige <strong>voz nueva</strong> (el 2.º dibujo ya no se enciende solo con la voz del 1.º), “Borrar mis datos” <strong>espera</strong> el borrado real del banco de voz, y del estudio se retiró la consigna “Nómbralo tú y espera” (no tenía dónde sonar — no se pide grabar lo que jamás sonará).</p>
     <p class="chica suave"><strong>Sprint 002 (2026-07-12):</strong> se recupera el temario completo del S1 (que la primera versión de esta guía había resumido), se etiqueta cada prueba con su origen y <strong>cada prueba gana su “Esperado”</strong> explícito. Se marca el <strong>⭐ gate mínimo</strong> (14 pruebas: lo que ninguna máquina puede verificar) con su filtro, y se corrige la expectativa de tono para voz adulta: el oído es infantil (150–500 Hz) y la voz grave de un adulto queda por fuera <em>a propósito</em>. <strong>Nuevo:</strong> tono en el spike, etapas del habla, selector, cohete, palabra↔objeto, atribución ARASAAC. <strong>Mejorado:</strong> los temas del onboarding ya sirven; la cápsula muestra su etapa; la puerta del juego abre tres; la celebración es compartida; el modo calma vive en los tres juegos. <strong>Eliminado:</strong> el listado de las 14 cápsulas una por una (ya son 50: se revisan por bloques; las 14 originales siguen dentro de la app y se confirman en I8).<br>

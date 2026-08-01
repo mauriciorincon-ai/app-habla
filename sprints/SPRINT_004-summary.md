@@ -133,6 +133,14 @@ Detalle completo con archivo:línea en la bitácora.
 
 ## Fricción del kit (para la retro)
 
+- **PROPUESTA AL KIT (nació en el gate ⭐ del S4, pedida por el usuario): la guía de prueba debe
+  dar el "Empieza en:" de cada bloque.** Cada bloque de la guía ahora abre con la ruta exacta
+  donde arranca su primera prueba (`/spike/audio`, `/jugar`, `/estudio`…), para que el probador
+  entre a la segura sin buscar el camino — y la convención se explica una vez en la caja del
+  recorrido. Aplicado ya en la guía v4 de habla; **se propone como regla de la plantilla de guía
+  del kit para TODAS las apps del pipeline** (donde la prueba empieza navegando desde otra
+  pantalla, el "Empieza en" lo dice: "se llega por X — eso es parte de la prueba").
+
 - **Regla 9 (v1.7.3) estrenada y útil:** correr la suite e2e entera de las pantallas tocadas cazó
   el único rojo real del sprint (`etapas.spec`: el header de 2 filas + el auto-scroll del onboarding
   dejaban Ajustes fuera de vista). Sin la regla, habría llegado al PR.
