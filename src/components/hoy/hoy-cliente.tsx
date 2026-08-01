@@ -7,7 +7,18 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
-import { Cohete, Globo, IconoDiana, IconoHecho } from "@/components/iconos";
+import {
+  Cohete,
+  Globo,
+  IconoBurbuja,
+  IconoChispa,
+  IconoCita,
+  IconoDiana,
+  IconoGemelas,
+  IconoHecho,
+  IconoPictograma,
+  IconoPorHacer,
+} from "@/components/iconos";
 import {
   useAjustes,
   useObjetivo,
@@ -71,11 +82,13 @@ export function HoyCliente() {
         data-testid="capsula"
         data-completada={completada}
       >
+        {/* Nombra cada cosa por lo que es (gate S4): antes iba "Hoy practicamos · X · Y" y el
+            padre no sabía cuál de los dos era la técnica y cuál la etapa. */}
         <p
           className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
           data-testid="etiqueta-capsula"
         >
-          Hoy practicamos · {NOMBRE_TECNICA[capsula.tecnica]} ·{" "}
+          Técnica: {NOMBRE_TECNICA[capsula.tecnica]} · Etapa:{" "}
           <span data-testid="etiqueta-etapa">
             {NOMBRE_ETAPA[capsula.etapa]}
           </span>
@@ -87,8 +100,12 @@ export function HoyCliente() {
 
         <p className="mt-4 leading-relaxed">{capsula.explicacion}</p>
 
+        {/* El guion y la actividad son las DOS cosas que el padre va a hacer hoy: se ven como
+            pareja (misma caja, mismo peso, cada una con su icono). Antes la actividad era texto
+            suelto al pie y se leía como una introducción — hallazgo del gate S4. */}
         <div className="border-acento bg-acento-suave/40 mt-6 rounded-xl border-l-4 p-4">
-          <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
+          <p className="text-tinta-suave flex items-center gap-2 font-mono text-[11px] tracking-[0.08em] uppercase">
+            <IconoBurbuja className="text-acento h-4 w-4 shrink-0" />
             Tu línea de hoy
           </p>
           <p
@@ -99,18 +116,24 @@ export function HoyCliente() {
           </p>
         </div>
 
-        <div className="mt-6">
-          <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
+        <div className="border-acento bg-acento-suave/40 mt-4 rounded-xl border-l-4 p-4">
+          <p className="text-tinta-suave flex items-center gap-2 font-mono text-[11px] tracking-[0.08em] uppercase">
+            <IconoChispa className="text-acento h-4 w-4 shrink-0" />
             La actividad de hoy
           </p>
-          <p className="mt-2">{capsula.actividad.texto}</p>
+          <p className="mt-2 text-lg leading-relaxed">
+            {capsula.actividad.texto}
+          </p>
         </div>
 
         <details className="mt-6">
-          <summary className="text-tinta-suave cursor-pointer text-sm">
+          <summary className="text-tinta-suave flex cursor-pointer items-center gap-2 text-sm">
+            <IconoCita className="h-4 w-4 shrink-0" />
             ¿De dónde sale esto?
           </summary>
-          <p className="text-tinta-suave mt-2 text-sm">{capsula.fuente}</p>
+          <p className="text-tinta-suave mt-2 text-sm italic">
+            {capsula.fuente}
+          </p>
         </details>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -138,13 +161,31 @@ export function HoyCliente() {
               onClick={() =>
                 marcarCapsulaHecha(fecha, capsula.id, capsula.etapa)
               }
-              className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-6 font-medium"
+              className="border-borde text-tinta flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl border px-6 font-medium"
               data-testid="marcar-hecha"
             >
+              <IconoPorHacer className="text-tinta-suave h-5 w-5 shrink-0" />
               Ya lo hicimos
             </button>
           )}
         </div>
+
+        {/* El contador vive DENTRO de la tarjeta, pegado al estado del día (gate S4): al pie de
+            la página se leía como una nota al margen. La cifra va en sans tabular, no en mono:
+            una cifra dentro de una frase se lee mal monoespaciada (design-system). */}
+        {diasAcompañados > 0 ? (
+          <p
+            className="text-tinta-suave border-borde mt-5 border-t pt-4 text-sm"
+            data-testid="historial"
+          >
+            Han practicado juntos{" "}
+            <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
+              {diasAcompañados}
+            </span>{" "}
+            {diasAcompañados === 1 ? "día" : "días"}. Sin prisa: lo que cuenta
+            es volver, no la racha.
+          </p>
+        ) : null}
       </article>
 
       {/* El juego SIEMPRE está a un toque, sea cual sea la cápsula del día. Hallazgo del primer
@@ -153,34 +194,26 @@ export function HoyCliente() {
           puerta, en el mismo lugar, todos los días. */}
       <Link
         href="/jugar"
-        className="bg-superficie shadow-tarjeta flex min-h-16 items-center justify-between gap-4 rounded-2xl p-5"
+        className="bg-superficie shadow-tarjeta flex min-h-16 items-center gap-4 rounded-2xl p-5"
         data-testid="ir-al-juego"
       >
+        {/* Los CUATRO juegos, y a la IZQUIERDA: los iconos acompañan al texto por delante en
+            toda la app (regla del design system, gate S4). Las gemelas llegaron en el S3 y esta
+            tarjeta seguía anunciando tres. */}
+        <span className="flex shrink-0 items-center gap-1">
+          <Globo className="h-12 w-8" />
+          <Cohete className="h-12 w-8" />
+          <IconoPictograma className="text-acento h-8 w-8" />
+          <IconoGemelas className="text-acento h-8 w-9" />
+        </span>
         <span>
           <span className="block font-medium">Los juegos de voz</span>
           <span className="text-tinta-suave block text-sm">
-            El globo, el cohete y los dibujos. Para jugar juntos — hoy o
-            cualquier día.
+            El globo, el cohete, los dibujos y las gemelas. Para jugar juntos —
+            hoy o cualquier día.
           </span>
-        </span>
-        <span className="flex shrink-0 items-center gap-1">
-          <Globo className="h-14 w-9" />
-          <Cohete className="h-14 w-9" />
         </span>
       </Link>
-
-      {diasAcompañados > 0 ? (
-        <p
-          className="text-tinta-suave text-center text-sm"
-          data-testid="historial"
-        >
-          Han practicado juntos{" "}
-          <span className="font-mono">
-            {diasAcompañados} {diasAcompañados === 1 ? "día" : "días"}
-          </span>
-          . Sin prisa: lo que cuenta es volver, no la racha.
-        </p>
-      ) : null}
     </div>
   );
 }
