@@ -124,7 +124,8 @@ adentro; chispa de IA VETADA en el design system → `IconoJuntos`) · C (limpio
 "← Hoy" estandarizada en las 4 pantallas del padre) · E (**ADR-012**: el globo sin fin automático
 — vueltas infinitas celebradas en vivo; "Salir" vuelve al guion apagando el micrófono; planeo en
 pausas; calma centrada; en la re-mirada del usuario, **confeti determinista por vuelta** — colores
-fiesta, corre una vez, apagado con movimiento reducido).
+fiesta, corre una vez, apagado con movimiento reducido — y la celebración final gana su tercer
+número: "Con esa voz el globo dio N vueltas completas", derivado del mismo total medido).
 
 ## Deuda técnica explícita
 
@@ -163,9 +164,10 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
 5. **Obstáculos/cajas que saltar en el globo** (pedido del bloque E, re-preguntado en la
    re-mirada): una mecánica nueva de verdad — no por complejidad técnica, sino porque un
    obstáculo implica poder FALLAR y las reglas COGA de la app (sin game-over, sin castigo, sin
-   retroceso) exigen diseñar primero qué pasa cuando NO se pasa (¿la caja espera sin drama?
-   ¿se flota por encima con voz sostenida?). Las vueltas del ADR-012 cubren la duración; esto
-   cubriría la variedad. Candidata para el ciclo H2.
+   retroceso) exigen diseñar primero qué pasa cuando NO se pasa. **Dirección de diseño del
+   usuario (re-mirada):** "que la caja se quede ahí sin drama y ya" — el obstáculo espera, sin
+   derrota ni retroceso; queda registrada para que la planeadora la evalúe con el ítem. Las
+   vueltas del ADR-012 cubren la duración; esto cubriría la variedad. Candidata para el ciclo H2.
 6. **Efecto de despegue inicial del globo** (E3, cosmético).
 
 ## Sugerencias de mejora al método

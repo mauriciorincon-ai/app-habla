@@ -62,6 +62,11 @@ test("de la cápsula de hoy al juego: la voz mueve el globo y la celebración di
   );
   expect(segundos).toBeGreaterThanOrEqual(3); // al menos la vuelta que ya dio
 
+  // Y también dice las vueltas (re-mirada del gate S4): derivadas del MISMO total medido.
+  await expect(page.getByTestId("celebracion-vueltas")).toContainText(
+    /\d+ vuelta/,
+  );
+
   // 7. Marcar el día como hecho.
   await page.getByTestId("terminar-sesion").click();
   await expect(page.getByTestId("capsula-completada")).toBeVisible();

@@ -352,6 +352,18 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     **Obstáculos re-preguntados:** siguen en backlog — no por complejidad técnica sino porque un
     obstáculo implica poder FALLAR y las reglas COGA (sin game-over, sin castigo, sin retroceso)
     exigen diseñarlo primero (¿la caja espera? ¿se flota por encima?); mecánica para el ciclo H2.
+  - **Segunda re-mirada (2026-08-01): confeti aprobado + tres ajustes.** (1) La celebración final
+    gana su tercer número — "Con esa voz el globo dio N vueltas completas" (testid
+    `celebracion-vueltas`, prop `vueltas` de `CelebracionHonesta`): derivado del MISMO
+    `sostenidoMs` (floor(ms/hito), nada nuevo que medir ni persistir), **0 en calma** — allí no
+    hay línea de vuelta y la celebración no afirma lo que el juego no mostró. e2e en el camino
+    feliz. (2) **E3 de la guía corregido** (precedente A6: la guía prometía algo que la app no
+    hace): decía que el globo "despega" y el despegue desde el suelo nunca existió — el globo
+    arranca flotando en su reposo; el efecto sigue en backlog como cosmético. De paso, defecto de
+    la guía cazado y corregido: E5 tenía insignia "Mejorado en S4" pero `data-origen="s1"` — el
+    filtro "Solo lo mejorado" no lo mostraba. (3) **Obstáculos: dirección de diseño del usuario
+    registrada** — "que la caja se quede ahí sin drama y ya" — viaja con el ítem del backlog al
+    informe de la planeadora.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
