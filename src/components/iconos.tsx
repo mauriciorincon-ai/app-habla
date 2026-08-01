@@ -91,6 +91,83 @@ export function IconoHecho({ className }: IconoProps) {
   );
 }
 
+/**
+ * Todavía por hacer: el círculo vacío que el check de `IconoHecho` viene a llenar. Existen en
+ * pareja a propósito (gate S4): sin él, "pendiente" solo se comunicaba por la ausencia del check
+ * — y el estado más frecuente de la cápsula del día es justamente ese.
+ */
+export function IconoPorHacer({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="8.5" {...trazo} />
+    </svg>
+  );
+}
+
+/** Tu línea de hoy: lo que TÚ dices. Una burbuja de diálogo. */
+export function IconoBurbuja({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
+/** La actividad de hoy: lo que van a HACER juntos. Una chispa. */
+export function IconoChispa({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M12 3l2.2 5.3L19.5 10l-5.3 2.2L12 17.5l-2.2-5.3L4.5 10l5.3-1.7L12 3Z"
+        {...trazo}
+      />
+      <path
+        d="M18.5 16.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
+/** De dónde sale esto: la cita a la investigación. Comillas. */
+export function IconoCita({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M9.5 6.5C7 7.5 5.5 9.5 5.5 12v5.5h6V12h-3c0-1.8.7-3 2.5-3.8l-1.5-1.7Z"
+        {...trazo}
+      />
+      <path
+        d="M19.5 6.5C17 7.5 15.5 9.5 15.5 12v5.5h6V12h-3c0-1.8.7-3 2.5-3.8l-1.5-1.7Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
 /** Cuando no hubo voz: un brote. Nada se perdió; mañana se sigue. */
 export function IconoBrote({ className }: IconoProps) {
   return (

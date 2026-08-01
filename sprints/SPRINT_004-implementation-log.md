@@ -252,3 +252,35 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   ahora abre con **"Empieza en:"** (la ruta exacta de su primera prueba) + la convención explicada
   una vez en la caja del recorrido. Registrada en el summary como **propuesta al kit para todas
   las apps** — la planeadora la recoge en el cierre.
+
+- **Bloque B ("Hoy": la respuesta del día) — 2026-07-19 · APROBADO 9/9 de lo ejecutable.** (B8,
+  "entra mañana", queda para el día siguiente por naturaleza.) Sin apodo entra igual; los temas
+  quedaron elegidos (animales · dinosaurios · carros) para verificarse en el bloque G; la cápsula
+  se lee sin jerga ni culpa y con su fuente real; la etapa arranca en "palabras sueltas" (ADR-005);
+  "Ya lo hicimos" persiste tras recargar y cerrar el navegador. **Cero defectos funcionales.** El
+  bloque dejó un **lote de pulido de UI**, pedido por el usuario y aplicado en el acto:
+  1. **Tarjeta de juegos:** anunciaba **tres** juegos y mostraba dos iconos — las gemelas del S3
+     nunca se agregaron. Ahora los **cuatro** iconos, y **a la izquierda** del texto.
+  2. **Regla nueva del design system (del usuario): el icono va SIEMPRE a la izquierda** del texto
+     que acompaña, en toda la app (la excepción es el chevron de "sigue por aquí"). Añadida
+     también la regla hermana: **los estados existen en pareja visible** (pendiente ⭕ / hecho ✓).
+  3. **Contador de días:** se muda del pie de la página a **dentro de la tarjeta**, pegado al
+     estado del día, con la cifra grande en sans tabular (antes iba en mono, violando el
+     design-system: cifra dentro de frase jamás monoespaciada).
+  4. **`IconoPorHacer`** en el botón "Ya lo hicimos" (el estado pendiente ya no se comunica solo
+     por ausencia del check).
+  5. **Jerarquía de la cápsula:** "La actividad de hoy" pasa de texto suelto al pie a **caja
+     hermana** del guion (mismo borde acentuado, texto `text-lg`), cada una con su icono
+     (`IconoBurbuja` · `IconoChispa`) — se leía como una introducción, siendo la acción del día.
+  6. **La fuente se ve como cita:** `IconoCita` + cursiva.
+  7. **Etiqueta de la cápsula:** `Hoy practicamos · X · Y` → **`Técnica: X · Etapa: Y`** (no se
+     sabía cuál era cuál). El e2e de etapas es indiferente: asevera el `<span>` interno.
+  8. **Ajustes:** el "← Hoy" sube al **encabezado** con la misma forma que en Rumbo y Objetivo
+     (era un enlace suelto al pie); prueba **H6** nueva en la guía.
+     4 iconos nuevos (trazo 1.5, viewBox 24, `currentColor`). Verificado: typecheck · lint · 209
+     unit · **129 e2e** (incluido axe) · build. Guía v4: B3/B4/B5/B6/B9 → "Mejorado en S4" + H6 nueva.
+- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
+  navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
+  determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
+  como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de
+  nivel" y esta app promete lo contrario — ADR-005; **decisión del usuario pendiente**).

@@ -131,6 +131,26 @@ Detalle completo con archivo:línea en la bitácora.
   borde 79/80/81 del objetivo y cap-200 de palabras sin test · `segundos()` duplicado
   (rumbo/celebración) · el test "Escuchar" no verifica que el blob reproducido sea el devuelto.
 
+## Backlog de producto que nació en el gate ⭐ (para la planeadora — NO entró al S4)
+
+El gate por bloques del usuario destapó pedidos de producto reales que **exceden el alcance
+cerrado del S4** y merecen su propio sprint (o su ADR):
+
+1. **Histórico navegable de cápsulas + "reforzar esta".** Hoy el padre ve la del día y un
+   contador; no puede volver a una que le sirvió. Pedido textual: "quisiera saber cuáles
+   actividades llevo, como un registro histórico" y poder elegir cuáles reforzar.
+2. **Qué pasa al agotar la etapa.** Hoy: ciclo nuevo determinista (se repiten en otro orden), sin
+   control del padre. Pregunta abierta del usuario: ¿se repiten, elige él, o la app crea nuevas?
+   Riesgo declarado por él: "puede llegar a ser molesto si se repite las que no quiero".
+3. **Pantalla que explique las 5 técnicas** (hoy la etiqueta las nombra y nada las explica) —
+   posiblemente en Ajustes, junto a la etapa.
+4. **Numerar las etapas como niveles ordinales** ("Sonidos e intentos = 1, Palabras sueltas = 2,
+   Primeras frases = 3"). **Propuesta del usuario; recomiendo NO hacerlo** y él decide: un ordinal
+   invita a "subir de nivel" y esta app promete exactamente lo contrario (ADR-005: palabras
+   sueltas es el default **permanente**; la etapa se elige por lo que el niño hace hoy, no es una
+   escalera). Alternativa si se quiere orden visible: ordenarlas de menor a mayor exigencia con su
+   descripción, sin número.
+
 ## Sugerencias de mejora al método
 
 - **La guía de prueba debe dar el "Empieza en:" de cada bloque (nació en el gate ⭐ del S4,

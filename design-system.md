@@ -135,6 +135,14 @@ nuevos sin derivarlos de la paleta.
   símbolo que cambia de forma entre dispositivos es ruido, no señal. **Los PERSONAJES son la
   excepción**: el globo y el cohete no son iconos —son los protagonistas del juego— y por eso
   llevan la paleta del niño en vez de `currentColor`.
+- **El icono va SIEMPRE a la IZQUIERDA del texto que acompaña** (regla del usuario, gate S4). En
+  toda la app: botones, etiquetas, filas de tarjeta, `<summary>`. El ojo entra por el símbolo y
+  sigue a la palabra; alternar el lado obliga a re-aprender la pantalla en cada bloque. La
+  excepción es el chevron/flecha de "sigue por aquí", que sí va a la derecha porque señala salida,
+  no identidad.
+- **Los estados existen en PAREJA visible.** Si "hecho" tiene su icono (`IconoHecho`), "todavía
+  no" tiene el suyo (`IconoPorHacer`) — nunca se comunica un estado solo por la ausencia del
+  otro, que además suele ser el estado más frecuente (la cápsula del día empieza pendiente).
 - **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
   grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
   cambia de color al encenderse — el estado nunca se comunica solo con color: el texto
