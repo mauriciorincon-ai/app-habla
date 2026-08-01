@@ -131,15 +131,20 @@ Detalle completo con archivo:línea en la bitácora.
   borde 79/80/81 del objetivo y cap-200 de palabras sin test · `segundos()` duplicado
   (rumbo/celebración) · el test "Escuchar" no verifica que el blob reproducido sea el devuelto.
 
-## Fricción del kit (para la retro)
+## Sugerencias de mejora al método
 
-- **PROPUESTA AL KIT (nació en el gate ⭐ del S4, pedida por el usuario): la guía de prueba debe
-  dar el "Empieza en:" de cada bloque.** Cada bloque de la guía ahora abre con la ruta exacta
-  donde arranca su primera prueba (`/spike/audio`, `/jugar`, `/estudio`…), para que el probador
-  entre a la segura sin buscar el camino — y la convención se explica una vez en la caja del
-  recorrido. Aplicado ya en la guía v4 de habla; **se propone como regla de la plantilla de guía
-  del kit para TODAS las apps del pipeline** (donde la prueba empieza navegando desde otra
-  pantalla, el "Empieza en" lo dice: "se llega por X — eso es parte de la prueba").
+- **La guía de prueba debe dar el "Empieza en:" de cada bloque (nació en el gate ⭐ del S4,
+  pedida por el usuario).** Cada bloque de la guía abre con la ruta exacta donde arranca su
+  primera prueba (`/spike/audio`, `/jugar`, `/estudio`…), y la convención se explica una vez en
+  la caja del recorrido; donde la prueba empieza navegando desde otra pantalla, el "Empieza en"
+  lo dice ("se llega por X — eso es parte de la prueba"). **Aplicado ya en la guía v4 de habla;
+  se propone como regla de la plantilla de guía del kit para TODAS las apps del pipeline.**
+- **Las pruebas de la guía no deben pedir imposibles del instrumento:** el gate S4 cazó que A6
+  pedía ver subir un MÍNIMO corrido dentro de la misma sesión (imposible por definición). Regla
+  propuesta para la plantilla: cuando una prueba observa un acumulado (mín/máx/contador), su
+  "Esperado" debe decir desde qué estado se parte (p. ej. "reinicia la sesión y…").
+
+## Fricción del kit (para la retro)
 
 - **Regla 9 (v1.7.3) estrenada y útil:** correr la suite e2e entera de las pantallas tocadas cazó
   el único rojo real del sprint (`etapas.spec`: el header de 2 filas + el auto-scroll del onboarding
