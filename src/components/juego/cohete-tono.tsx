@@ -61,6 +61,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     continuarConRuido,
     terminar,
     otraVez,
+    volverAlGuion,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
@@ -95,6 +96,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
+      onSalir={volverAlGuion}
     >
       {actual.fase === "guion" ? (
         <GuionCard

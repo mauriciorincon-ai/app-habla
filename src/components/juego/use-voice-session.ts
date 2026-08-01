@@ -63,6 +63,12 @@ export type VoiceSession = {
   continuarConRuido: () => void;
   terminar: () => void;
   otraVez: () => void;
+  /**
+   * "Salir" dentro del juego → de vuelta al GUION (gate S4). Apaga el micrófono: el guion es
+   * pantalla del padre y el audio no la sobrevive (regla dura 2). Tocar "Estamos listos" vuelve
+   * a pedirlo (el navegador recuerda el permiso: es instantáneo).
+   */
+  volverAlGuion: () => void;
   cambiarCalma: (activo: boolean) => void;
   /**
    * Silencia el medidor por `ms` (+ cola): mientras la app REPRODUCE la voz familiar por los
@@ -300,6 +306,14 @@ export function useVoiceSession({
     despachar({ tipo: "TERMINAR", metrica: metricaRef.current(medidas) });
   }, [medidas]);
 
+  const volverAlGuion = useCallback(() => {
+    // El micrófono se APAGA antes de pisar el guion (pantalla del padre, regla dura 2).
+    fuenteRef.current?.stop();
+    fuenteRef.current = null;
+    remedir();
+    despachar({ tipo: "VOLVER_AL_GUION" });
+  }, [remedir]);
+
   return {
     sesion,
     medidas,
@@ -312,6 +326,7 @@ export function useVoiceSession({
     ),
     terminar,
     otraVez,
+    volverAlGuion,
     cambiarCalma: useCallback(
       (activo: boolean) => despachar({ tipo: "CAMBIAR_CALMA", activo }),
       [],

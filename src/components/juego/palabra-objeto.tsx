@@ -123,6 +123,7 @@ function JuegoListo({
     continuarConRuido,
     terminar,
     otraVez,
+    volverAlGuion,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
@@ -210,6 +211,7 @@ function JuegoListo({
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
+      onSalir={volverAlGuion}
     >
       {actual.fase === "guion" ? (
         <GuionCard

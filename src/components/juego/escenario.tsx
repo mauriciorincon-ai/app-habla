@@ -3,10 +3,13 @@
 // El escenario del niño: el globo avanza SOLO mientras su voz se sostiene.
 // Se pinta a 60 fps desde los refs del medidor (cero re-renders de React aquí dentro).
 //
-// Modo calma: sin medidor, sin meta ni línea de llegada — pero el globo NUNCA se apaga:
-// sube mientras hay voz real (el mismo veredicto con histéresis del juego) y baja despacio
-// en el silencio, como un globo de verdad. Hallazgo del gate (2026-07-12): la versión
-// anterior congelaba el avance en 0 y se sentía como pausar el juego.
+// VUELTAS (gate S4, hallazgo E6): el globo ya no tiene meta que cierre el juego — cada
+// `hitoMs` de voz acumulada es UNA VUELTA: cruza la línea, reaparece entrando por la izquierda
+// y sigue volando, las veces que sean. El intento termina cuando el padre toca "Ya jugamos".
+//
+// Modo calma: sin medidor, sin línea de vuelta — pero el globo NUNCA se apaga: flota EN EL
+// CENTRO (gate S4: pegado al borde izquierdo parecía que el juego no había empezado), sube
+// mientras hay voz real y baja despacio en el silencio, como un globo de verdad.
 
 import { useEffect, useRef } from "react";
 import { Globo } from "@/components/iconos";
@@ -17,21 +20,30 @@ const SUBIDA_CALMA_MS = 3500;
 /** En calma: ms de silencio para que baje del todo — mucho más lento que la subida. */
 const BAJADA_CALMA_MS = 9000;
 
+/**
+ * Constantes del planeo (gate S4, hallazgo E5): con voz, el globo persigue su objetivo rápido;
+ * en la pausa NO frena en seco — la persecución se vuelve lenta y el globo desacelera suave,
+ * como algo que de verdad flota. Solo movimiento: la métrica sigue contando únicamente voz real.
+ */
+const PERSECUCION_CON_VOZ_MS = 140;
+const PERSECUCION_EN_PAUSA_MS = 480;
+
 type Props = {
   medidas: MedidasVivas;
-  metaMs: number;
+  /** ms de voz acumulada que completan UNA vuelta (no cierran nada: se da la vuelta y se sigue). */
+  hitoMs: number;
   modoCalma: boolean;
   /** Invitación amable tras un rato en silencio (jamás un regaño). */
   invitando: boolean;
 };
 
-export function Escenario({ medidas, metaMs, modoCalma, invitando }: Props) {
+export function Escenario({ medidas, hitoMs, modoCalma, invitando }: Props) {
   const escenarioRef = useRef<HTMLDivElement | null>(null);
   const globoRef = useRef<HTMLDivElement | null>(null);
   const medidorRef = useRef<HTMLDivElement | null>(null);
   // Estado del vuelo que sobrevive a los cambios de modo: alternar calma no teletransporta
-  // el globo, lo deja planear hacia su nuevo objetivo.
-  const vueloRef = useRef({ x: 0, y: 0, altura: 0, t: 0 });
+  // el globo, lo deja planear hacia su nuevo objetivo. `vuelta` detecta el cruce de la línea.
+  const vueloRef = useRef({ x: 0, y: 0, altura: 0, t: 0, vuelta: 0 });
 
   useEffect(() => {
     let id = 0;
@@ -51,22 +63,42 @@ export function Escenario({ medidas, metaMs, modoCalma, invitando }: Props) {
         let yObjetivo = 0;
 
         if (modoCalma) {
-          // Sin meta: el globo no viaja — flota. La voz lo sube, el silencio lo baja suave.
+          // Sin vueltas: el globo no viaja — flota en el CENTRO del cielo (gate S4). La voz lo
+          // sube, el silencio lo baja suave.
           vuelo.altura = medidas.vozActiva()
             ? Math.min(1, vuelo.altura + deltaMs / SUBIDA_CALMA_MS)
             : Math.max(0, vuelo.altura - deltaMs / BAJADA_CALMA_MS);
+          xObjetivo = ancho * 0.44 - globo.offsetWidth / 2;
           yObjetivo = -(vuelo.altura * alto * 0.42 + nivel * alto * 0.08);
         } else {
           vuelo.altura = 0;
-          const avance = Math.min(1, medidas.sostenidoMs() / metaMs);
-          // Con avance completo, el globo alcanza la línea de llegada (right 12%).
-          xObjetivo = avance * Math.max(0, ancho * 0.82 - globo.offsetWidth);
+          const total = medidas.sostenidoMs();
+          const vuelta = Math.floor(total / hitoMs);
+          const progreso = (total % hitoMs) / hitoMs;
+          const recorrido = Math.max(0, ancho * 0.82 - globo.offsetWidth);
+
+          if (vuelta > vuelo.vuelta) {
+            // Cruzó la línea: se descuenta el recorrido para que el globo "reaparezca" entrando
+            // desde fuera del borde izquierdo y siga volando hacia adelante — jamás en reversa.
+            vuelo.x -= recorrido + globo.offsetWidth;
+            vuelo.vuelta = vuelta;
+          } else if (vuelta < vuelo.vuelta) {
+            // Intento nuevo (otra vez / recalibrar): el vuelo arranca de cero, sin arrastres.
+            vuelo.x = 0;
+            vuelo.vuelta = vuelta;
+          }
+
+          xObjetivo = progreso * recorrido;
           yObjetivo = -nivel * alto * 0.35;
         }
 
-        // Interpolación hacia el objetivo: vuelo continuo a 60 fps aunque el medidor emita
-        // a ~31/s, y sin saltos al alternar el modo calma o al reiniciar el intento.
-        const suavizado = 1 - Math.exp(-deltaMs / 140);
+        // Persecución del objetivo: vuelo continuo a 60 fps aunque el medidor emita a ~31/s.
+        // En pausa la persecución se alarga (E5): el globo desacelera suave en vez de frenar en
+        // seco — y como solo persigue (nunca se adelanta), la posición jamás miente.
+        const persecucionMs = medidas.vozActiva()
+          ? PERSECUCION_CON_VOZ_MS
+          : PERSECUCION_EN_PAUSA_MS;
+        const suavizado = 1 - Math.exp(-deltaMs / persecucionMs);
         vuelo.x += (xObjetivo - vuelo.x) * suavizado;
         vuelo.y += (yObjetivo - vuelo.y) * suavizado;
         globo.style.transform = `translate(${vuelo.x}px, ${vuelo.y}px)`;
@@ -79,7 +111,7 @@ export function Escenario({ medidas, metaMs, modoCalma, invitando }: Props) {
     };
     id = requestAnimationFrame(pintar);
     return () => cancelAnimationFrame(id);
-  }, [medidas, metaMs, modoCalma]);
+  }, [medidas, hitoMs, modoCalma]);
 
   return (
     <div className="flex w-full items-stretch gap-4" data-testid="escenario">
@@ -87,7 +119,7 @@ export function Escenario({ medidas, metaMs, modoCalma, invitando }: Props) {
         ref={escenarioRef}
         className="bg-superficie relative h-64 flex-1 overflow-hidden rounded-3xl sm:h-80"
       >
-        {/* Línea de llegada: solo cuando hay meta (en modo calma no existe). */}
+        {/* Línea de vuelta: cruzarla completa una vuelta y el globo sigue (en calma no existe). */}
         {!modoCalma ? (
           <div
             className="bg-kid-sage/40 absolute top-0 bottom-0 right-[12%] w-1 rounded-full"

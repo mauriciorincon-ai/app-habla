@@ -72,9 +72,10 @@ export type Fase =
 export type Sesion = {
   ajustes: Ajustes;
   /**
-   * El valor de métrica que cierra el intento con celebración (3000 ms del globo, 3 inversiones
-   * del cohete). `null` = sin meta: el juego dura lo que el padre quiera (palabra↔objeto, y
-   * cualquier juego en modo calma). Nunca hay castigo por no llegar.
+   * El valor de métrica que cierra el intento con celebración (3 inversiones del cohete).
+   * `null` = sin meta: el juego dura lo que el padre quiera (el GLOBO desde el gate S4 —sus
+   * vueltas son infinitas—, palabra↔objeto, y cualquier juego en modo calma). Nunca hay castigo
+   * por no llegar.
    */
   meta: number | null;
   /** Qué mide este juego. Fija el tipo de métrica de toda la sesión. */
@@ -99,10 +100,22 @@ export type Evento =
    */
   | { tipo: "TERMINAR"; metrica: Metrica }
   | { tipo: "OTRA_VEZ" }
+  /**
+   * "Salir" dentro del juego (gate S4): vuelve al GUION, no al selector — así el padre puede
+   * releer su línea sin perder la pantalla. La UI que lo despacha DEBE apagar el micrófono
+   * (el guion es pantalla del padre; el audio no la sobrevive).
+   */
+  | { tipo: "VOLVER_AL_GUION" }
   | { tipo: "CAMBIAR_CALMA"; activo: boolean };
 
-/** Meta del globo: sostener la voz este tiempo. Sin castigo si no se llega — solo se sigue. */
-export const META_MS_DEFECTO = 3000;
+/**
+ * El HITO del globo: cada 3000 ms de voz acumulada es UNA VUELTA. Desde el gate S4 el globo ya
+ * NO se cierra solo (pasa `meta: null`): las vueltas son infinitas y el intento termina cuando
+ * el padre toca "Ya jugamos" — el fin automático a los 3 s cortaba el juego justo mientras le
+ * enseñaba al niño (hallazgo E6 del gate). El reducer conserva la mecánica de meta: el cohete
+ * la sigue usando.
+ */
+export const HITO_VUELTA_MS = 3000;
 
 /** Meta del cohete: subir y bajar la voz estas veces (§B.1: exploración vocal, no palabras). */
 export const META_INVERSIONES_DEFECTO = 3;
@@ -113,7 +126,7 @@ export const MS_PARA_INVITAR = 20_000;
 export function sesionInicial(
   ajustes: Ajustes = { modoCalma: false },
   tipoMetrica: Metrica["tipo"] = "sostenido",
-  meta: number | null = META_MS_DEFECTO,
+  meta: number | null = HITO_VUELTA_MS,
 ): Sesion {
   return { ajustes, meta, tipoMetrica, actual: { fase: "guion" } };
 }
@@ -125,6 +138,14 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
       ...sesion,
       ajustes: { ...sesion.ajustes, modoCalma: evento.activo },
     };
+  }
+
+  // Salir → guion, desde cualquier fase posterior (gate S4). Nada se castiga: si había métrica,
+  // simplemente no se celebró — igual que salir de la pantalla, pero sin perder el guion.
+  if (evento.tipo === "VOLVER_AL_GUION") {
+    return sesion.actual.fase === "guion"
+      ? sesion
+      : { ...sesion, actual: { fase: "guion" } };
   }
 
   // Recalibrar es un derecho permanente: en 1 toque, desde donde sea (menos antes del permiso).
