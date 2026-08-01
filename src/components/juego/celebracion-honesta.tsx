@@ -29,6 +29,12 @@ type Props = {
   etiquetaTerminar: string;
   /** Solo palabra↔objeto: las palabras (dibujos) que su voz encendió, para el Rumbo. */
   palabrasEncendidas?: readonly string[];
+  /**
+   * Solo el globo: vueltas completas del intento (re-mirada del gate S4). Derivadas del MISMO
+   * total medido (ms / hito) — 0 las oculta, y en modo calma van en 0: allí no hay línea de
+   * vuelta y la celebración no afirma lo que el juego no mostró.
+   */
+  vueltas?: number;
 };
 
 function segundos(ms: number): string {
@@ -45,7 +51,13 @@ function huboAlgoQueContar(metrica: Metrica): boolean {
 }
 
 /** Lo que SÍ pasó, dicho con el número real. Nada más — y nada menos. */
-function Logro({ metrica }: { metrica: Metrica }) {
+function Logro({
+  metrica,
+  vueltas = 0,
+}: {
+  metrica: Metrica;
+  vueltas?: number;
+}) {
   const cifra = (texto: string) => (
     <span
       className="text-celebracion-fuerte font-sans font-semibold tabular-nums"
@@ -68,6 +80,16 @@ function Logro({ metrica }: { metrica: Metrica }) {
                 monoespaciada se lee como "3 , 1". Mono queda para etiquetas y datos en bloque. */}
             ¡Su voz sonó {cifra(`${segundos(metrica.ms)} segundos`)}!
           </h2>
+          {vueltas > 0 ? (
+            <p className="text-lg" data-testid="celebracion-vueltas">
+              Con esa voz el globo dio{" "}
+              <strong className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+                {vueltas}{" "}
+                {vueltas === 1 ? "vuelta completa" : "vueltas completas"}
+              </strong>
+              .
+            </p>
+          ) : null}
           <p className="text-tinta-suave">
             {metrica.rachaMs >= 1000 ? (
               <>
@@ -192,6 +214,7 @@ export function CelebracionHonesta({
   onTerminar,
   etiquetaTerminar,
   palabrasEncendidas = [],
+  vueltas = 0,
 }: Props) {
   // R1: un intento = una sesión registrada. Es el ÚNICO punto de escritura del Rumbo (compartido
   // por los 4 juegos). Se escribe al montar la celebración; el ref evita el doble registro del
@@ -212,7 +235,7 @@ export function CelebracionHonesta({
       aria-live="polite"
     >
       {huboAlgoQueContar(metrica) ? (
-        <Logro metrica={metrica} />
+        <Logro metrica={metrica} vueltas={vueltas} />
       ) : (
         <SinVoz metrica={metrica} />
       )}
