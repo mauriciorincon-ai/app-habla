@@ -293,7 +293,17 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      (era un enlace suelto al pie); prueba **H6** nueva en la guía.
      4 iconos nuevos (trazo 1.5, viewBox 24, `currentColor`). Verificado: typecheck · lint · 209
      unit · **129 e2e** (incluido axe) · build. Guía v4: B3/B4/B5/B6/B9 → "Mejorado en S4" + H6 nueva.
-- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
+- **Bloque C (la etapa del habla) — 2026-07-19 · APROBADO 5/5, SIN AJUSTES.** El bloque más limpio
+  del gate: las tres etapas se describen por comportamiento observable, sin jerga ni diagnóstico;
+  "palabras sueltas" aparece elegida y recomendada sin haber tocado nada (ADR-005); "primeras
+  frases" existe pero **jamás se activó sola** — hubo que elegirla a mano; la etapa y la cápsula
+  sobreviven a la recarga.
+  **Lo valioso para este sprint:** C2 y C3 validan **en uso real** la invariante que el S4 tocó al
+  construir el objetivo (R4). El padre marcó la cápsula como hecha, cambió a "sonidos e intentos"
+  (cápsula nueva de esa etapa, **contador intacto**) y al volver a "palabras sueltas" **reapareció
+  LA MISMA cápsula, todavía marcada como hecha**. Es decir: la asignación congelada por etapa y el
+  historial que nunca se borra siguen sanos después de que `realinearObjetivo` aprendió a
+  re-evaluar el día. El trabajo hecho es intocable, como prometía el diseño. — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de
