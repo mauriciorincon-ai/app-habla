@@ -303,7 +303,18 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   (cápsula nueva de esa etapa, **contador intacto**) y al volver a "palabras sueltas" **reapareció
   LA MISMA cápsula, todavía marcada como hecha**. Es decir: la asignación congelada por etapa y el
   historial que nunca se borra siguen sanos después de que `realinearObjetivo` aprendió a
-  re-evaluar el día. El trabajo hecho es intocable, como prometía el diseño. — alcance cerrado; va al informe de cierre):** histórico
+  re-evaluar el día. El trabajo hecho es intocable, como prometía el diseño.
+- **Bloque D (el selector de juegos) — 2026-07-19 · APROBADO 3/3.** Las 4 tarjetas (las gemelas
+  incluidas), lo que declara cada una ("mide que hubo voz — nunca qué palabra dijo") y su tamaño
+  quedaron aprobados sin reparos; el usuario lo destacó como una de las mejores visuales de la app.
+  **Un pulido, y destapó un descuido mío:** al subir el "← Hoy" de Ajustes en el bloque B **no
+  barrí el resto de pantallas**; el selector seguía con el enlace suelto al pie. Corregido — ahora
+  **las cuatro pantallas del padre salen igual** (rumbo · objetivo · ajustes · juegos) y la regla
+  quedó escrita en el design system, con su **excepción declarada**: en una pantalla de error o
+  decisión (micrófono denegado en `MarcoJuego`), "Volver a Hoy" sigue siendo un **botón grande
+  emparejado** con "Intentar de nuevo" — ahí no es navegación de encabezado sino una de las dos
+  salidas del problema, y ambas deben pesar igual.
+- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de

@@ -185,6 +185,15 @@ mismos. Es, a propósito, la pantalla más aburrida y más predecible de la app.
 
 ## Pantallas del padre (Sprint 4)
 
+**La salida es SIEMPRE la misma y va ARRIBA** (regla del usuario, gate S4). Toda pantalla del padre
+que no sea "Hoy" abre con el mismo chip `← Hoy` en su encabezado —borde, radio 12, `min-h-11`,
+`data-testid="volver-a-hoy"`—: Rumbo, Objetivo, Ajustes y el **selector de juegos**. Antes cada una
+lo resolvía distinto (enlace subrayado al pie), y la salida se volvía una búsqueda. **Excepción:**
+dentro de una pantalla de error o decisión (p. ej. micrófono denegado en `MarcoJuego`), "Volver a
+Hoy" es un **botón de tamaño completo emparejado con la acción principal** ("Intentar de nuevo") —
+ahí no es navegación de encabezado, es una de las dos salidas del problema, y ambas deben pesar
+igual.
+
 Dos cuartos nuevos del **operador** (paleta operador, LCP estático, jamás se filtran a la vista del
 niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos propios de trazo
 (`IconoBrujula`, `IconoDiana`; stroke 1.5, viewBox 24, `currentColor`):

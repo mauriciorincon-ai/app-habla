@@ -56,8 +56,18 @@ const JUEGOS = [
 export default function JugarPage() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8">
+      {/* El "← Hoy" arriba, igual que en Rumbo, Objetivo y Ajustes: la salida de toda pantalla
+          del padre tiene la misma forma y el mismo sitio (gate S4). */}
       <header className="flex flex-col gap-3">
-        <h1 className="font-display text-center text-4xl sm:text-5xl">
+        <Link
+          href="/"
+          prefetch={false}
+          className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 self-start rounded-xl border px-3 text-sm"
+          data-testid="volver-a-hoy"
+        >
+          ← Hoy
+        </Link>
+        <h1 className="font-display mt-1 text-center text-4xl sm:text-5xl">
           ¿A qué jugamos hoy?
         </h1>
         <p className="text-tinta-suave mx-auto max-w-prose text-center">
@@ -92,12 +102,6 @@ export default function JugarPage() {
           </li>
         ))}
       </ul>
-
-      <nav className="text-tinta-suave text-center text-sm">
-        <Link href="/" className="min-h-11 underline-offset-4 hover:underline">
-          Volver a Hoy
-        </Link>
-      </nav>
     </main>
   );
 }
