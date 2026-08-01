@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (209 unit · 129 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (214 unit · 131 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -56,7 +56,7 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 
 | Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Testing**          | ✅               | **209 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,6 % stmts / 86,6 % branches**. **129 e2e** (rumbo frase-vs-métrica ATADA por testid, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, + suites enteras de las pantallas tocadas, regla 9). Todo en CI.                                                 |
+| **1. Testing**          | ✅               | **214 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,6 % stmts / 86,6 % branches**. **131 e2e** (rumbo frase-vs-métrica ATADA por testid, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, + suites enteras de las pantallas tocadas, regla 9). Todo en CI.                                                 |
 | **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                         |
@@ -74,6 +74,7 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 | #   | Tema                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 011 | **[ACCEPTED 2026-07-19] Export/backup del banco de voz: RECHAZAR el `.zip` por ahora.** Un backup que puede no restaurar en otro dispositivo (ADR-010 graba en códec nativo, portabilidad cross-device es no-meta) sería una **promesa falsa**; re-grabar toma <10 min; el export ensancha la superficie de privacidad. Validado por el usuario en el gate del plan; reabrible con condiciones (verificar códec al importar, manual y local jamás en red). |
+| 012 | **[ACCEPTED 2026-08-01] El globo no termina solo: la meta se vuelve HITO (vueltas infinitas).** Decidido por el usuario EN el gate ⭐ (bloque E): el cierre automático a los 3 s cortaba el juego mientras le enseñaba al niño. Cada 3 s de voz = una vuelta celebrada en vivo; el intento cierra con "Ya jugamos". El cohete conserva su meta (su bloque del gate dirá). |
 
 ## Endurecimiento — las 5 deudas del remate S3 (lista CERRADA, pagadas con evidencia)
 
@@ -116,6 +117,14 @@ Medios (privacidad e2e post-escritura, número↔frase atado por testid, grep an
 singular/plural del rumbo, foco+aria-live al guardar, units de pares/orden-de-hitos/cruce-de-año).
 Detalle completo con archivo:línea en la bitácora.
 
+**Remate del gate ⭐ (ajustes en vivo, por bloques — pedidos y validados por el usuario):** A
+(guía A2/A5/A6 corregidas — el "piso" es un mínimo de sesión) · B (lote de pulido de "Hoy": 4
+juegos en la tarjeta, iconos a la izquierda, estados en pareja, pregunta antes de marcar, contador
+adentro; chispa de IA VETADA en el design system → `IconoJuntos`) · C (limpio, 5/5) · D (la salida
+"← Hoy" estandarizada en las 4 pantallas del padre) · E (**ADR-012**: el globo sin fin automático
+— vueltas infinitas celebradas en vivo; "Salir" vuelve al guion apagando el micrófono; planeo en
+pausas; calma centrada).
+
 ## Deuda técnica explícita
 
 - **Portabilidad cross-device del banco de voz:** consciente (ADR-010/011). Sin backup por ahora.
@@ -150,6 +159,10 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
    sueltas es el default **permanente**; la etapa se elige por lo que el niño hace hoy, no es una
    escalera). Alternativa si se quiere orden visible: ordenarlas de menor a mayor exigencia con su
    descripción, sin número.
+5. **Obstáculos/cajas que saltar en el globo** (pedido del bloque E): una mecánica nueva de
+   verdad (diseño, dificultad, sprites) — las vueltas del ADR-012 cubren la duración; esto
+   cubriría la variedad.
+6. **Efecto de despegue inicial del globo** (E3, cosmético).
 
 ## Sugerencias de mejora al método
 

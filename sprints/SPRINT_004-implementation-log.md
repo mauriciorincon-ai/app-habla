@@ -314,6 +314,33 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   decisión (micrófono denegado en `MarcoJuego`), "Volver a Hoy" sigue siendo un **botón grande
   emparejado** con "Intentar de nuevo" — ahí no es navegación de encabezado sino una de las dos
   salidas del problema, y ambas deben pesar igual.
+- **Bloque E (el globo) — 2026-08-01 · 10 limpias, 2 explicadas, 3 hallazgos de producto → el
+  remate más grande del gate.**
+  - **E6 🔴 (ADR-012): el globo se cerraba solo a los 3 segundos** — justo mientras el padre le
+    enseñaba al niño ("eso va a hacer que mi hijo pierda interés"). La mecánica sin-fin ya existía
+    (`meta: null`, la usan palabra↔objeto y el modo calma): el globo la adopta. **La meta se
+    volvió HITO** (`HITO_VUELTA_MS`): cada 3 s de voz acumulada = una VUELTA — celebrada en vivo
+    ("¡Ya dio N vueltas!", testid `vueltas`), el globo reaparece por la izquierda (jamás en
+    reversa) y sigue; infinitas. Cierra solo con "Ya jugamos". El reducer conserva la meta (el
+    cohete la sigue usando; su bloque dirá). Unit de regresión: "NO celebra solo, ni tras muchas
+    vueltas". El e2e del camino feliz ahora verifica la vuelta en vivo y cierra por el padre.
+  - **E1 + Otras #3 (navegación):** el guion de los 4 juegos gana su **"← Juegos"** (chip
+    estándar, en la GuionCard compartida) y **"Salir" dentro del juego vuelve al GUION**, no al
+    selector (evento `VOLVER_AL_GUION` + `volverAlGuion` en el hook, que **apaga el micrófono**
+    antes de pisar la pantalla del padre — regla dura 2). e2e nuevo del flujo completo.
+  - **E5 (planeo):** el globo ya no frena en seco en las pausas — la persecución del objetivo se
+    alarga (140→480 ms) y desacelera suave. Solo persigue, nunca se adelanta: **la posición no
+    puede mentir** (la métrica sigue contando únicamente voz real). Se descartó la segunda parte
+    de la propuesta (bajar a posición inicial tras 1 s): es retroceso, vetado por COGA (E4).
+  - **E13 (calma):** el globo flota **en el centro** del cielo (estaba pegado al borde izquierdo
+    y parecía que el juego no había empezado). El resto del modo queda igual (deliberado).
+  - **E11 explicado (no defecto):** el aviso de ruido dispara sobre 0,05 RMS ("tan ruidoso que se
+    jugaría a medias"); su música quedó por debajo Y el juego funcionó bien — avisar habría sido
+    falso alarmismo. El propio usuario notó que distinguía su voz del ambiente (el umbral relativo
+    trabajando). **E12 diferido a Chrome** (Safari no revoca mic por sitio); cubierto por e2e.
+  - **Al backlog:** obstáculos/cajas que saltar (mecánica nueva de verdad) · efecto de despegue
+    inicial (E3, cosmético).
+  - Tras el remate: **214 unit · 131 e2e** (+5 units del reducer, +2 e2e de navegación y vueltas).
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

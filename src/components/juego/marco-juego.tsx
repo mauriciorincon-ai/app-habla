@@ -27,6 +27,8 @@ type Props = {
   onReintentarMic: () => void;
   onRecalibrar: () => void;
   onContinuarConRuido: () => void;
+  /** "Salir" dentro del juego: de vuelta al GUION (gate S4) — el hook apaga el micrófono. */
+  onSalir: () => void;
   /** El contenido propio del juego (guion, escenario, celebración). */
   children: ReactNode;
 };
@@ -39,6 +41,7 @@ export function MarcoJuego({
   onReintentarMic,
   onRecalibrar,
   onContinuarConRuido,
+  onSalir,
   children,
 }: Props) {
   const { actual, ajustes } = sesion;
@@ -72,13 +75,16 @@ export function MarcoJuego({
     >
       {esPantallaDelNino ? (
         <div className="flex items-center justify-between gap-3">
-          <Link
-            href="/jugar"
-            prefetch={false}
+          {/* Salir vuelve al GUION, no al selector (gate S4): el padre puede releer su línea sin
+              perder la pantalla. El guion tiene su propio "← Juegos" hacia el selector. */}
+          <button
+            type="button"
+            onClick={onSalir}
             className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
+            data-testid="salir-al-guion"
           >
             Salir
-          </Link>
+          </button>
           <button
             type="button"
             onClick={onAlternarCalma}

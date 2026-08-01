@@ -57,13 +57,17 @@ cualquiera de esos tres pasa siempre lo mismo:
 **El cuarto, "palabras gemelas", NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
-"game over".
+"game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
+micrófono se apaga ahí mismo); desde el guion, **"← Juegos"** lo lleva de vuelta a los cuatro.
 
 #### 1. El globo — la voz que se sostiene
 
-El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo se
-detiene y espera: nunca se pierde lo ya avanzado. Al terminar, la app dice exactamente lo que
-midió, y son **dos cosas distintas**:
+El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo
+desacelera suave y espera: nunca se pierde lo ya avanzado. Cada **3 segundos de voz acumulada**
+el globo cruza la línea, completa **una vuelta** —la app lo celebra en el momento: "¡Ya dio 2
+vueltas!"— y vuelve a entrar por la izquierda para seguir volando. **Las vueltas no se acaban: el
+juego no se termina solo.** Jueguen lo que quieran y, cuando decidan, toque **"Ya jugamos"**. Ahí
+llega la celebración, que dice exactamente lo que se midió, y son **dos cosas distintas**:
 
 - _"¡Su voz sonó 7,3 segundos!"_ — el **total** del intento, sumando todos los ratos en que sonó.
   Es lo que hizo volar al globo.
