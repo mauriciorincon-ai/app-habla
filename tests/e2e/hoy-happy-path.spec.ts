@@ -47,6 +47,10 @@ test("de la cápsula de hoy al juego: la voz mueve el globo y la celebración di
   await expect(vueltas).toContainText("vuelta");
   await expect(juego).toHaveAttribute("data-fase", "jugando");
 
+  // Cada vuelta estalla su confeti (re-mirada del gate S4). El estallido es determinista, corre
+  // una vez y QUEDA en el DOM hasta la vuelta siguiente — la aserción no depende del timing.
+  await expect(page.getByTestId("confeti-vuelta")).toBeAttached();
+
   await page.getByTestId("terminar").click();
 
   // Celebración honesta: reporta el tiempo REALMENTE sostenido, no un elogio vacío.

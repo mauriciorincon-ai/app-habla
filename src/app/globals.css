@@ -277,6 +277,45 @@ html[data-reducir-animacion="true"] .globos-celebracion {
   display: none;
 }
 
+/*
+ * El confeti de la vuelta (gate S4, ADR-012): cada vuelta del globo —3 s de voz real— estalla en
+ * la línea y llueve UNA vez (~1,6 s) mientras el juego sigue. Misma regla que los globos de la
+ * palabra: fiesta, no discoteca. Con movimiento reducido no se muestra y el contador
+ * "¡Ya dio N vueltas!" sigue diciendo el logro.
+ */
+@keyframes confeti-cae {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(calc(var(--deriva) * 0.4), var(--subida))
+      rotate(calc(var(--giro) * 0.4));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--deriva), var(--caida)) rotate(var(--giro));
+    opacity: 0;
+  }
+}
+
+.confeti-pieza {
+  animation: confeti-cae var(--vuelo) ease-out var(--espera) 1 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confeti-vuelta {
+    display: none;
+  }
+}
+
+html[data-reducir-animacion="true"] .confeti-vuelta {
+  display: none;
+}
+
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
 @media (prefers-reduced-motion: reduce) {
   *,

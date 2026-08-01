@@ -341,6 +341,17 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   - **Al backlog:** obstáculos/cajas que saltar (mecánica nueva de verdad) · efecto de despegue
     inicial (E3, cosmético).
   - Tras el remate: **214 unit · 131 e2e** (+5 units del reducer, +2 e2e de navegación y vueltas).
+  - **Re-mirada del usuario (2026-08-01): aprobó vueltas y navegación, y pidió que cada vuelta se
+    SIENTA como logro** → nace el **confeti de la vuelta** (`confeti-vuelta.tsx`): estallido
+    determinista de confeti + serpentinas sobre la línea (14 piezas fijas — el azar no se puede
+    testear, patrón de `globos-celebracion`), colores `fiesta-*` (segundo uso sancionado en el
+    design system), corre UNA vez ~1,6 s vía CSS (`confeti-cae`), re-montado por `key={vuelta}`;
+    apagado doble con movimiento reducido (media query + `data-reducir-animacion`) — el contador
+    aria-live sigue contando el logro. En calma no hay vueltas ni confeti. e2e: `toBeAttached` en
+    el camino feliz (el estallido queda en el DOM hasta la vuelta siguiente — sin flake).
+    **Obstáculos re-preguntados:** siguen en backlog — no por complejidad técnica sino porque un
+    obstáculo implica poder FALLAR y las reglas COGA (sin game-over, sin castigo, sin retroceso)
+    exigen diseñarlo primero (¿la caja espera? ¿se flota por encima?); mecánica para el ciclo H2.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

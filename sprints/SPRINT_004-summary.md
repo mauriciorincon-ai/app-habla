@@ -74,7 +74,7 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 | #   | Tema                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 011 | **[ACCEPTED 2026-07-19] Export/backup del banco de voz: RECHAZAR el `.zip` por ahora.** Un backup que puede no restaurar en otro dispositivo (ADR-010 graba en códec nativo, portabilidad cross-device es no-meta) sería una **promesa falsa**; re-grabar toma <10 min; el export ensancha la superficie de privacidad. Validado por el usuario en el gate del plan; reabrible con condiciones (verificar códec al importar, manual y local jamás en red). |
-| 012 | **[ACCEPTED 2026-08-01] El globo no termina solo: la meta se vuelve HITO (vueltas infinitas).** Decidido por el usuario EN el gate ⭐ (bloque E): el cierre automático a los 3 s cortaba el juego mientras le enseñaba al niño. Cada 3 s de voz = una vuelta celebrada en vivo; el intento cierra con "Ya jugamos". El cohete conserva su meta (su bloque del gate dirá). |
+| 012 | **[ACCEPTED 2026-08-01] El globo no termina solo: la meta se vuelve HITO (vueltas infinitas).** Decidido por el usuario EN el gate ⭐ (bloque E): el cierre automático a los 3 s cortaba el juego mientras le enseñaba al niño. Cada 3 s de voz = una vuelta celebrada en vivo; el intento cierra con "Ya jugamos". El cohete conserva su meta (su bloque del gate dirá).                                                                                  |
 
 ## Endurecimiento — las 5 deudas del remate S3 (lista CERRADA, pagadas con evidencia)
 
@@ -123,7 +123,8 @@ juegos en la tarjeta, iconos a la izquierda, estados en pareja, pregunta antes d
 adentro; chispa de IA VETADA en el design system → `IconoJuntos`) · C (limpio, 5/5) · D (la salida
 "← Hoy" estandarizada en las 4 pantallas del padre) · E (**ADR-012**: el globo sin fin automático
 — vueltas infinitas celebradas en vivo; "Salir" vuelve al guion apagando el micrófono; planeo en
-pausas; calma centrada).
+pausas; calma centrada; en la re-mirada del usuario, **confeti determinista por vuelta** — colores
+fiesta, corre una vez, apagado con movimiento reducido).
 
 ## Deuda técnica explícita
 
@@ -159,9 +160,12 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
    sueltas es el default **permanente**; la etapa se elige por lo que el niño hace hoy, no es una
    escalera). Alternativa si se quiere orden visible: ordenarlas de menor a mayor exigencia con su
    descripción, sin número.
-5. **Obstáculos/cajas que saltar en el globo** (pedido del bloque E): una mecánica nueva de
-   verdad (diseño, dificultad, sprites) — las vueltas del ADR-012 cubren la duración; esto
-   cubriría la variedad.
+5. **Obstáculos/cajas que saltar en el globo** (pedido del bloque E, re-preguntado en la
+   re-mirada): una mecánica nueva de verdad — no por complejidad técnica, sino porque un
+   obstáculo implica poder FALLAR y las reglas COGA de la app (sin game-over, sin castigo, sin
+   retroceso) exigen diseñar primero qué pasa cuando NO se pasa (¿la caja espera sin drama?
+   ¿se flota por encima con voz sostenida?). Las vueltas del ADR-012 cubren la duración; esto
+   cubriría la variedad. Candidata para el ciclo H2.
 6. **Efecto de despegue inicial del globo** (E3, cosmético).
 
 ## Sugerencias de mejora al método

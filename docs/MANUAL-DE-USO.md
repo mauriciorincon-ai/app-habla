@@ -65,9 +65,11 @@ micrófono se apaga ahí mismo); desde el guion, **"← Juegos"** lo lleva de vu
 El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo
 desacelera suave y espera: nunca se pierde lo ya avanzado. Cada **3 segundos de voz acumulada**
 el globo cruza la línea, completa **una vuelta** —la app lo celebra en el momento: "¡Ya dio 2
-vueltas!"— y vuelve a entrar por la izquierda para seguir volando. **Las vueltas no se acaban: el
-juego no se termina solo.** Jueguen lo que quieran y, cuando decidan, toque **"Ya jugamos"**. Ahí
-llega la celebración, que dice exactamente lo que se midió, y son **dos cosas distintas**:
+vueltas!" y un **confeti con serpentinas** estalla sobre la línea (cae una vez y se va; el juego
+no se detiene)— y el globo vuelve a entrar por la izquierda para seguir volando. **Las vueltas no
+se acaban: el juego no se termina solo.** Jueguen lo que quieran y, cuando decidan, toque
+**"Ya jugamos"**. Ahí llega la celebración, que dice exactamente lo que se midió, y son **dos
+cosas distintas**:
 
 - _"¡Su voz sonó 7,3 segundos!"_ — el **total** del intento, sumando todos los ratos en que sonó.
   Es lo que hizo volar al globo.
@@ -237,7 +239,8 @@ cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está so
 cuando el juego con meta le resulta demasiado. Está disponible en los tres juegos.
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
-app lo respeta sin que usted toque nada).
+app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra y el confeti
+de las vueltas no se muestran — el texto sigue contando cada logro.
 
 ### Claro u oscuro
 
