@@ -5,6 +5,7 @@
 // El banco vive en IndexedDB (ADR-010), SOLO en este dispositivo: nunca a la red, nunca al repo.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useAjustes, usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { useReproductor } from "@/components/use-reproductor";
@@ -37,6 +38,9 @@ const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], string> = {
   celebracion: "Celebraciones",
 };
 
+const CHIP_SALIDA =
+  "text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-sm";
+
 export function EstudioCliente() {
   const hidratado = useHidratado();
   const perfil = usePerfil();
@@ -54,35 +58,82 @@ export function EstudioCliente() {
       .finally(() => setCargando(false));
   }, []);
 
+  // La salida estándar, ARRIBA y una sola — pero "atrás" es la pantalla ANTERIOR (gate S4):
+  // desde el banco se vuelve a Ajustes; desde el lote se vuelve AL BANCO (cobertura + lista),
+  // no dos niveles de un salto. Al salir del lote, su desmontaje suelta el micrófono solo.
+  const encabezado = (
+    <header>
+      {modo === "gestion" ? (
+        <Link
+          href="/ajustes"
+          prefetch={false}
+          className={CHIP_SALIDA}
+          data-testid="volver-a-ajustes"
+        >
+          ← Ajustes
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setModo("gestion")}
+          className={CHIP_SALIDA}
+          data-testid="volver-al-banco"
+        >
+          ← Tu banco de voz
+        </button>
+      )}
+      <h1 className="font-display mt-4 text-4xl">La voz de la familia</h1>
+      <p className="text-tinta-suave mt-3 max-w-prose">
+        Graba tu voz —la de mamá o papá— para que los juegos suenen con la voz
+        que tu hijo conoce. <strong>La voz de tu hijo nunca se graba.</strong>{" "}
+        Todo lo que grabes vive <strong>solo en este dispositivo</strong>: no se
+        sube a internet ni sale de aquí.
+      </p>
+    </header>
+  );
+
   if (!hidratado || cargando) {
-    return <div className="min-h-[20rem]" aria-hidden="true" />;
+    return (
+      <>
+        {encabezado}
+        <div className="min-h-[20rem]" aria-hidden="true" />
+      </>
+    );
   }
 
   const catalogo = catalogoGrabable();
   const cobertura = calcularCobertura(grabados, catalogo);
 
-  return modo === "gestion" ? (
-    <Gestion
-      cobertura={cobertura}
-      catalogo={catalogo}
-      grabados={grabados}
-      onGrabar={() => setModo("lote")}
-      onBorrado={(id) =>
-        setGrabados((s) => {
-          const n = new Set(s);
-          n.delete(id);
-          return n;
-        })
-      }
-    />
-  ) : (
-    <Lote
-      temas={perfil?.temas ?? []}
-      etapa={ajustes?.etapa ?? "palabras-sueltas"}
-      grabados={grabados}
-      onGrabado={(id) => setGrabados((s) => new Set(s).add(id))}
-      onSalir={() => setModo("gestion")}
-    />
+  const vista =
+    modo === "gestion" ? (
+      <Gestion
+        cobertura={cobertura}
+        catalogo={catalogo}
+        grabados={grabados}
+        onGrabar={() => setModo("lote")}
+        onBorrado={(id) =>
+          setGrabados((s) => {
+            const n = new Set(s);
+            n.delete(id);
+            return n;
+          })
+        }
+      />
+    ) : (
+      <Lote
+        temas={perfil?.temas ?? []}
+        etapa={ajustes?.etapa ?? "palabras-sueltas"}
+        grabados={grabados}
+        onGrabado={(id) => setGrabados((s) => new Set(s).add(id))}
+        onSalir={() => setModo("gestion")}
+      />
+    );
+
+  return (
+    <>
+      {encabezado}
+      {vista}
+    </>
   );
 }
 

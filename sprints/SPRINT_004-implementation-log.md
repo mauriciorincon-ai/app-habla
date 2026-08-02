@@ -532,6 +532,16 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   `IconoMicrofono` en "Grabar" — este último no lo pidió, pero dejar 3 de 4 botones con icono
   era la inconsistencia visual que la regla de iconos existe para evitar. Guía J3 → Mejorado
   en S4. Los e2e no se tocan: los testids y el microcopy no cambiaron.
+  **Quinto retoque (pedido del usuario): la salida del lote iba a Ajustes, dos niveles de un
+  salto.** Atrás es la pantalla ANTERIOR: del lote se vuelve AL BANCO (cobertura + lista), y
+  solo desde el banco a Ajustes. Cirugía: el encabezado del estudio (chip + h1 + promesa) se
+  movió de `page.tsx` al cliente porque la salida depende de la vista — el chip es `Link` a
+  /ajustes en gestión y `button` a `setModo("gestion")` en el lote (testid `volver-al-banco`,
+  "← Tu banco de voz"). El LCP sigue estático: el cliente se prerenderiza con modo inicial
+  "gestion" y el titular llega en el HTML del servidor (el esqueleto de carga también rinde el
+  encabezado). El micrófono queda a salvo: salir del lote desmonta `Lote` y su cleanup ya
+  cancela la grabación. e2e reescrito en dos pasos: lote → banco (lista visible de inmediato)
+  → Ajustes → re-entrar (persistencia IndexedDB). Guía J4 → texto nuevo; historial al día.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

@@ -47,8 +47,13 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   // Aceptar avanza el lote: el resultado observable (regla 8) es el progreso que sube.
   await expect(page.getByTestId("progreso-lote")).toContainText("2 de");
 
-  // La ÚNICA salida del lote es "← Ajustes" (gate S4: sin "Terminar por ahora"). Al volver a
-  // entrar al estudio, la gestión muestra lo grabado en "lo que ya grabaste" — el banco persistió.
+  // La salida del lote va ARRIBA y vuelve AL BANCO — la pantalla anterior, no Ajustes de un
+  // salto (gate S4): la gestión muestra lo grabado en "lo que ya grabaste" de inmediato.
+  await page.getByTestId("volver-al-banco").click();
+  await expect(page.getByTestId("lista-grabados")).toContainText(textoGrabado);
+
+  // Y desde el banco, la salida estándar sí vuelve a Ajustes. Al re-entrar al estudio, lo
+  // grabado sigue ahí — el banco vive en IndexedDB y persiste entre visitas.
   await page.getByTestId("volver-a-ajustes").click();
   await expect(page).toHaveURL(/\/ajustes/);
   await page.goto("/estudio");
