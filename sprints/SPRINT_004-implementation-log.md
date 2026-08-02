@@ -508,7 +508,12 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   (`cerrarAnalisis()` en detener/cancelar); no se conecta a la salida (no suena), no persiste —
   la regla 2-bis (banco SOLO local) no se toca. e2e: `medidor-grabacion` visible durante la
   grabación (estudio.spec). Guía J1/J2 → Mejorado en S4; manual actualizado. El usuario retoma
-  el bloque J desde J2.
+  el bloque J desde J2. **Segundo retoque (mismo día): "Terminar por ahora" ELIMINADO** — una
+  sola salida ("← Ajustes", arriba). Cuidado crítico que exigió: el botón era quien cancelaba la
+  grabación al salir → el lote gana cleanup de desmontaje (`useEffect(() => () => cancelar())`)
+  que suelta los tracks del micrófono si el padre navega en plena grabación — sin él, la
+  navegación client-side de Next dejaría el mic ABIERTO (no hay recarga de página). e2e del
+  lote reescrito: sale por el chip, vuelve a entrar y el banco persistió. Guía J4 → Mejorado.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
