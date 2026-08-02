@@ -361,8 +361,10 @@ function Lote({
         className="text-tinta-suave text-center text-sm"
         data-testid="progreso-lote"
       >
+        {/* "de esta tanda" (gate S4): sin el apellido, el "de 20" parecía el reto completo —
+            el total real (50 palabras y más) vive en la cobertura del banco. */}
         <span className="font-sans font-semibold tabular-nums">{idx + 1}</span>{" "}
-        de {lote.length}
+        de {lote.length} de esta tanda
       </p>
 
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6 text-center">
