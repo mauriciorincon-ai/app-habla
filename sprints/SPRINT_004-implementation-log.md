@@ -399,6 +399,10 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     (`vuelo.y` bajando 4 frames seguidos con `vozActiva`); el confeti y el contador siguen
     celebrando en el instante del hito (no insinúan dirección). ADR-013 corregido, F3 de la guía
     describe el orden real (y su "Mal" caza la capa en plena bajada), manual ajustado.
+    **Cierre de la re-mirada:** el usuario aceptó el fix sin verificar la bajada a ojo (bajar el
+    tono a voluntad no le salió — mismo límite honesto del bloque A); la MECÁNICA de la bajada
+    queda cubierta por la CI (el fake-mic de `desktop-chromium-tono` barre 230↔420 Hz en ambas
+    direcciones) y la SENSACIÓN se re-mira cuando salga natural jugando con el niño.
   - **Pre-F — orientación en las pantallas de entrada (pedido del usuario, transversal a los 4
     juegos):** evaluó dos opciones (icono junto al titular vs. reemplazar el titular por el
     nombre del juego). **Ganó conservar el titular poético + icono a la izquierda** — el titular
