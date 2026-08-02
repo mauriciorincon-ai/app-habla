@@ -93,6 +93,15 @@ function JuegoListo({
   const yaContadoRef = useRef(false);
   /** Las palabras (dibujos) que se practicaron en el intento — insumo del Rumbo (S4). */
   const [palabrasEncendidas, setPalabrasEncendidas] = useState<string[]>([]);
+  /**
+   * GUARDA DEL JUEZ (gate S4, bloque G): al usuario le salieron globos SOLOS al entrar por
+   * primera vez — la hipótesis más fuerte es un click-through del diálogo de permisos (Safari)
+   * cayendo sobre el botón del padre. Defensa: mientras NADA se ha oído (`yaContadoRef` falso),
+   * el botón ignora toques durante el primer segundo de la pantalla — ningún juicio real llega
+   * tan rápido (hay que nombrar el dibujo y esperar la voz). Si el dibujo ya se encendió, el
+   * toque siempre vale.
+   */
+  const armadoDesdeRef = useRef(0);
 
   const picto = mazo[indice % mazo.length];
   // Ref al picto actual: `alVocalizar` (useCallback estable) necesita la palabra de HOY sin
@@ -141,6 +150,11 @@ function JuegoListo({
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
 
+  const fase = actual.fase;
+  useEffect(() => {
+    if (fase === "esperando-voz") armadoDesdeRef.current = Date.now();
+  }, [fase]);
+
   function alternarCalma() {
     const activo = !modoCalma;
     cambiarCalma(activo);
@@ -169,6 +183,10 @@ function JuegoListo({
   /** El padre oyó la palabra y lo dice. Es el ÚNICO camino a este estado. */
   function marcarPalabra() {
     if (reconocidaAhora) return;
+    // Guarda del juez: sin voz oída todavía, un toque en el primer segundo es un fantasma
+    // (click-through del permiso), no un juicio.
+    if (!yaContadoRef.current && Date.now() - armadoDesdeRef.current < 1000)
+      return;
     reconocidasRef.current += 1;
     setReconocidas(reconocidasRef.current);
     setReconocidaAhora(true);
@@ -189,7 +207,8 @@ function JuegoListo({
     setIndice((i) => (i + 1) % mazo.length);
   }
 
-  function reiniciarSesion() {
+  /** Borra TODO el rastro del intento: contadores, juicios, dibujo actual. */
+  function limpiarJuego() {
     activacionesRef.current = 0;
     setActivaciones(0);
     reconocidasRef.current = 0;
@@ -199,7 +218,21 @@ function JuegoListo({
     setPalabrasEncendidas([]);
     setEncendido(false);
     setIndice(0);
+  }
+
+  function reiniciarSesion() {
+    limpiarJuego();
     otraVez();
+  }
+
+  /**
+   * "Salir" reinicia el juego POR COMPLETO (regla del usuario, gate S4 bloque G): al volver al
+   * guion no queda rastro — el contador arranca en cero. Antes el estado local sobrevivía y el
+   * intento nuevo heredaba los dibujos de la sesión pasada.
+   */
+  function salirAlGuion() {
+    limpiarJuego();
+    volverAlGuion();
   }
 
   return (
@@ -211,7 +244,7 @@ function JuegoListo({
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
-      onSalir={volverAlGuion}
+      onSalir={salirAlGuion}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -234,21 +267,6 @@ function JuegoListo({
             onVocalizar={alVocalizar}
             voz={voz}
           />
-
-          {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.
-              Botón de adulto (44 px, discreto): el niño no tiene por qué tocarlo ni entenderlo. */}
-          <button
-            type="button"
-            onClick={marcarPalabra}
-            disabled={reconocidaAhora}
-            aria-pressed={reconocidaAhora}
-            className="border-exito text-tinta mx-auto min-h-11 rounded-full border px-5 text-sm font-medium disabled:opacity-60"
-            data-testid="dijo-la-palabra"
-          >
-            {reconocidaAhora
-              ? `Dijiste que dijo “${picto.palabra}”`
-              : `¿Dijo “${picto.palabra}”? Tócalo tú`}
-          </button>
 
           {!modoCalma ? (
             <p
@@ -289,6 +307,29 @@ function JuegoListo({
               Ya jugamos
             </button>
           </div>
+
+          {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.
+              Va AL FINAL y en voz baja (gate S4, bloque G): el niño es perspicaz y este control
+              no es suyo — fuera de su barrido visual (el dibujo y los botones grandes) y lejos
+              de la zona del diálogo de permisos (el click fantasma). Sigue siendo de adulto:
+              ≥44 px de alto. */}
+          <button
+            type="button"
+            onClick={marcarPalabra}
+            disabled={reconocidaAhora}
+            aria-pressed={reconocidaAhora}
+            className={[
+              "mx-auto min-h-11 rounded-xl px-3 text-sm",
+              reconocidaAhora
+                ? "text-exito font-medium"
+                : "text-tinta-suave underline decoration-dotted underline-offset-4",
+            ].join(" ")}
+            data-testid="dijo-la-palabra"
+          >
+            {reconocidaAhora
+              ? `Dijiste que dijo “${picto.palabra}”`
+              : `¿Dijo “${picto.palabra}”? Tócalo tú`}
+          </button>
         </section>
       ) : null}
 

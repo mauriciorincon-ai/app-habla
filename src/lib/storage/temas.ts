@@ -13,9 +13,12 @@ export const TEMAS = [
 
 export type Tema = (typeof TEMAS)[number];
 
+// La clave interna sigue siendo "carros" (compatibilidad con perfiles ya guardados); solo el
+// nombre visible dice la verdad del grupo: carro, camión, bus, moto, tren, avión y bici
+// (hallazgo G6 del gate S4 — "escojo carros y no son solo carros").
 export const NOMBRE_TEMA: Record<Tema, string> = {
   animales: "Animales",
-  carros: "Carros",
+  carros: "Transporte",
   espacio: "El espacio",
   dinosaurios: "Dinosaurios",
   musica: "Música",
