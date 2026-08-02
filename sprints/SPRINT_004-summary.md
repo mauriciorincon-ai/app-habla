@@ -125,7 +125,10 @@ adentro; chispa de IA VETADA en el design system → `IconoJuntos`) · C (limpio
 — vueltas infinitas celebradas en vivo; "Salir" vuelve al guion apagando el micrófono; planeo en
 pausas; calma centrada; en la re-mirada del usuario, **confeti determinista por vuelta** — colores
 fiesta, corre una vez, apagado con movimiento reducido — y la celebración final gana su tercer
-número: "Con esa voz el globo dio N vueltas completas", derivado del mismo total medido).
+número: "Con esa voz el globo dio N vueltas completas", derivado del mismo total medido) ·
+transversal pre-F (el titular de cada juego lleva **el icono de su tarjeta del selector** a la
+izquierda — orientación por símbolo repetido, sin tocar el titular que enseña la mecánica; regla
+en el design system).
 
 ## Deuda técnica explícita
 
