@@ -21,6 +21,27 @@ const esc = (s) =>
 
 const fecha = new Date().toISOString().slice(0, 10);
 
+// Las preguntas de juicio por grupo — vivían en las 8 casillas del bloque I de la guía y se
+// MUDARON aquí cuando el bloque se consolidó en una sola casilla (pedido del usuario, gate S4):
+// el juicio se hace donde se lee.
+const JUZGAR_ETAPA = {
+  "sonidos-e-intentos":
+    "¿Te servirían los días difíciles, o si algún día él retrocede? No son para su nivel de hoy: son la red de abajo.",
+  "primeras-frases":
+    "¿Te parecen bien guardadas para cuando junte dos palabras? Recuerda: esta etapa nunca se activa sola.",
+};
+const JUZGAR_TECNICA_PALABRAS = {
+  modelado:
+    "¿Reconoces tu día real en ellas — el carro, vestirse, el mercado, la hora de dormir? Pediste «más novedosas»: ¿lo son?",
+  "espera-estructurada":
+    "¿Son hacibles sin que se te vuelva una tortura la comida o el juego?",
+  "expansion-recast":
+    "¿Te queda claro qué decir EXACTAMENTE en el momento? (esa es la prueba: que no tengas que pensarlo).",
+  "seguir-interes": "¿Te suenan a jugar con él y no a darle una lección?",
+  "estimulacion-focalizada":
+    "¿Te parecen repetibles sin volverse machaconas?",
+};
+
 let cuerpo = "";
 for (const etapa of ETAPAS) {
   const deEtapa = CAPSULAS.filter((c) => c.etapa === etapa);
@@ -29,11 +50,19 @@ for (const etapa of ETAPAS) {
   <section class="etapa">
     <h2>${esc(NOMBRE_ETAPA[etapa])} <span class="conteo">(${deEtapa.length} cápsulas)</span></h2>
     <p class="descripcion">${esc(DESCRIPCION_ETAPA[etapa])}</p>`;
+  if (JUZGAR_ETAPA[etapa]) {
+    cuerpo += `
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ${esc(JUZGAR_ETAPA[etapa])}</p>`;
+  }
   for (const tecnica of TECNICAS) {
     const grupo = deEtapa.filter((c) => c.tecnica === tecnica);
     if (grupo.length === 0) continue;
     cuerpo += `
     <h3>${esc(NOMBRE_TECNICA[tecnica])} <span class="conteo">(${grupo.length})</span></h3>`;
+    if (etapa === "palabras-sueltas" && JUZGAR_TECNICA_PALABRAS[tecnica]) {
+      cuerpo += `
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ${esc(JUZGAR_TECNICA_PALABRAS[tecnica])}</p>`;
+    }
     for (const c of grupo) {
       cuerpo += `
     <article class="capsula" id="${esc(c.id)}">
@@ -81,6 +110,7 @@ const html = `<!doctype html>
   blockquote { margin:.6rem 0; padding:.5rem .9rem; border-left:4px solid var(--acento); background:var(--fondo); border-radius:0 10px 10px 0; font-style:italic; }
   blockquote strong, .actividad strong { font-style:normal; }
   .fuente { font-size:.8rem; margin-bottom:.1rem; }
+  .juzgar { font-family:system-ui,sans-serif; font-size:.85rem; color:var(--acento); background:var(--acento-suave); border-radius:10px; padding:.55rem .85rem; }
   .progreso { position:sticky; top:0; background:var(--fondo); padding:.5rem 0; font-family:system-ui,sans-serif; font-size:.85rem; color:var(--suave); }
   footer { margin-top:3rem; font-size:.8rem; color:var(--suave); border-top:1px solid var(--borde); padding-top:1rem; }
   @media (prefers-color-scheme: dark) {
@@ -95,7 +125,9 @@ const html = `<!doctype html>
   tiene histórico navegable (está en el backlog) — este catálogo existe para que puedas leerlas <strong>todas, de corrido</strong>,
   tal cual viven en la app (generado directo de <code>content/capsulas.ts</code> el ${fecha}; se regenera con
   <code>node scripts/gen-catalogo-capsulas.mjs</code>). La pregunta de siempre por cada una: ¿la línea la dirías tal cual
-  en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.</p>
+  en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.
+  Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (las aprobaste el 2026-07-12 y ninguna se botó):
+  confirma que las reconoces cuando te las cruces.</p>
   <p class="progreso"><span id="hechas">0</span> de ${CAPSULAS.length} revisadas · tu avance queda guardado en este navegador</p>
   ${cuerpo}
   <footer>Hablemos San — catálogo de contenido para el gate del padre. Las fuentes citadas son las mismas que la app
