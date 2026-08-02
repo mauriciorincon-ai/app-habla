@@ -49,8 +49,8 @@ export default function HoyPage() {
         <p className="text-tinta-suave mt-3 max-w-prose">
           Esto es lo de hoy: una técnica con evidencia, explicada en 30
           segundos, con una línea que puedes decirle y una actividad concreta.
-          Práctica en casa para acompañar —nunca reemplazar— la fonoaudiología
-          de su hijo.
+          Práctica en casa para acompañar —nunca reemplazar— las terapias
+          integrales del lenguaje de su hijo.
         </p>
       </header>
 

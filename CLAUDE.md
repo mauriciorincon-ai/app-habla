@@ -20,8 +20,10 @@
 
 **Hablemos San** — _"Su voz mueve el mundo."_ App web (PWA) que ayuda a **estimular el habla de un
 niño de 4–6 años** (hispanohablante, perfil de neurodivergencia) mediante **práctica diaria
-estructurada en casa, dirigida por el padre**. Complementaria — **jamás sustituta** — de la
-fonoaudiología real del niño. Contrato de alcance: `portafolio/habla/VISION.md` (planeadora,
+estructurada en casa, dirigida por el padre**. Complementaria — **jamás sustituta** — de las
+**terapias integrales del lenguaje** reales del niño (fonoaudiología, terapia ocupacional,
+psicología, pedagogía — término fijado por el usuario en el gate S4, H5; la VISION aún dice
+"fonoaudiología": alinear en la retro). Contrato de alcance: `portafolio/habla/VISION.md` (planeadora,
 aprobada 2026-07-11). Sprint 001: "Hoy hablamos" (la respuesta diaria + el primer juego de voz).
 
 **La tesis del producto:** la app **orquesta al padre, no lo reemplaza** — la evidencia dice que

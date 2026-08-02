@@ -62,7 +62,7 @@ export default function AjustesPage() {
             <dd className="text-tinta-suave mt-1">
               No es terapia ni un diagnóstico, y no promete resultados en un
               plazo. Es práctica estructurada de estimulación en casa,
-              complementaria a la fonoaudiología de su hijo.
+              complementaria a las terapias integrales del lenguaje de su hijo.
             </dd>
           </div>
         </dl>

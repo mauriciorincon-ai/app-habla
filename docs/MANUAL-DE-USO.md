@@ -10,7 +10,8 @@ hijo?"_. Cada día le propone una técnica con respaldo científico, explicada e
 la actividad incluye un juego donde **la voz del niño mueve un globo en la pantalla**.
 
 Es **práctica de estimulación del habla en casa**. No es terapia, no da diagnósticos y no promete
-resultados en un plazo: acompaña —nunca reemplaza— a la fonoaudióloga de su hijo.
+resultados en un plazo: acompaña —nunca reemplaza— las terapias integrales del lenguaje de su
+hijo.
 
 **La app orquesta al adulto, no lo reemplaza.** Lo que hace avanzar el habla de un niño es la
 interacción con usted; la pantalla es apenas la excusa para jugar juntos.
@@ -218,9 +219,10 @@ compararlo con otro niño; ni castigarlo por una semana floja (una semana con po
 simplemente un número pequeño, sin drama). No es un diagnóstico ni un boletín — es el registro
 cálido de lo que hicieron juntos. Al principio estará vacío: jueguen unos días y cobra vida.
 
-### El objetivo de la semana — la sintonía con la fonoaudióloga (nuevo)
+### El objetivo de la semana — la sintonía con sus terapias (nuevo)
 
-¿La fonoaudióloga de su hijo le pidió trabajar algo esta semana —los animales, la comida, el baño?
+¿En las terapias de su hijo —fonoaudiología, terapia ocupacional, psicología, pedagogía— le
+pidieron trabajar algo esta semana: los animales, la comida, el baño?
 En el encabezado de "Hoy", **"Objetivo"** le deja escribirlo. La app entonces **pone eso primero**:
 la cápsula del día, los dibujos del juego "palabra y dibujo" y lo que le toca grabar en el Estudio
 se alinean con su objetivo. Es opcional: sin objetivo, todo sigue igual que siempre.
@@ -313,8 +315,9 @@ decirle solo lo que de verdad medimos.
 Sí, después de la primera vez que la abra (si la instaló como app). El juego nunca necesita
 internet.
 
-**¿Reemplaza a la fonoaudióloga?**
-No, y nunca lo va a hacer. Es práctica en casa para acompañar lo que ella ya está haciendo.
+**¿Reemplaza las terapias de su hijo?**
+No, y nunca lo va a hacer. Es práctica en casa para acompañar lo que su equipo —fonoaudiología,
+terapia ocupacional, psicología, pedagogía— ya está haciendo.
 
 **¿Por qué grabo MI voz y no la de mi hijo?**
 Porque la voz que ayuda a un niño a aprender una palabra es la de alguien que quiere: la suya. Y

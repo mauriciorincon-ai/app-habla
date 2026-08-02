@@ -2,7 +2,7 @@
 // continuación, en un orden con sentido. Salta lo ya grabado. Determinista: mismo estado → mismo lote.
 //
 // Prioridad (S4, paga la deuda "lote-por-etapa" DENTRO del objetivo de la semana):
-//   1. Palabras del OBJETIVO de la semana (lo que la fonoaudióloga pidió trabajar) — lo primero.
+//   1. Palabras del OBJETIVO de la semana (lo que pidieron trabajar en sus terapias) — lo primero.
 //   2. Palabras de los TEMAS que eligió para su hijo (las que el niño verá de verdad).
 //   3. El resto de palabras, luego consignas, luego celebraciones.
 // Y por ETAPA: en "sonidos-e-intentos" las palabras que SOLO viven en gemelas (aún no jugable ahí)

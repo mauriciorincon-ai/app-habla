@@ -448,7 +448,21 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   - e2e de movimiento reducido ajustado (espera el encendido antes del toque — la guarda no
     aplica con voz oída). Guía: G3/G5/G8 mejoradas + **G9 nueva** (reset al salir) + historial;
     manual (botón al final + salir reinicia + pop del encendido).
-- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
+- **Bloque H (Ajustes) — 2026-08-02 · aprobado 8/8, cero defectos, un cambio de lenguaje.**
+  Interruptores persisten · calma vive en todos los juegos · cambiar temas re-alinea
+  palabra↔dibujo en vivo (verificado por el usuario de pasada) · claro/oscuro le gana al sistema
+  con los juegos del niño siempre claros · ARASAAC acreditado · "Borrar mis datos" limpia hasta
+  el onboarding. **H4 (pedido del usuario): "fonoaudiología" → "terapias integrales del
+  lenguaje" en TODA la app** — al niño lo atiende un equipo (fonoaudiología, terapia
+  ocupacional, psicología, pedagogía) y el lenguaje de la app ahora refleja esa realidad.
+  Barrido completo: layout (meta), Hoy, /objetivo ("¿Qué te pidieron trabajar en las terapias de
+  tu hijo esta semana?"), Ajustes ("Qué no es esta app"), comentarios de código
+  (objetivo-cliente/schemas/lotes), capsulas.ts, manual (intro + sección objetivo + FAQ) y
+  CLAUDE.md (con nota: **la VISION de la planeadora aún dice "fonoaudiología" — alinear en la
+  retro**; la planeadora es RO y no se toca). Cero referencias en tests (verificado antes del
+  barrido). El posicionamiento no cambia: complementaria, JAMÁS sustituta (regla dura 4 intacta;
+  "terapias" nombra el trabajo del equipo real, no promete que la app sea terapia). Guía: H4
+  Mejorado en S4 + historial. histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de

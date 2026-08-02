@@ -21,7 +21,8 @@ import type { Capsula, EtiquetaCapsula } from "./schema";
  *
  * Tono: cálido, directo, es-CO. Prohibido (§D anti-claims): "terapia", "diagnóstico", plazos
  * ("en X semanas"), puntajes clínicos, elogios desacoplados de lo medido. Esto es práctica de
- * estimulación en casa — complementaria, nunca sustituta, de la fonoaudiología del niño.
+ * estimulación en casa — complementaria, nunca sustituta, de las terapias integrales del
+ * lenguaje del niño.
  *
  * Las ETIQUETAS del objetivo de la semana (S4) viven en el mapa `ETIQUETAS_POR_CAPSULA` al final,
  * no inline: así la curaduría se lee de un vistazo y se ajusta sin tocar 50 objetos. `CAPSULAS`
