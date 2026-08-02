@@ -155,7 +155,8 @@ que suelta el micrófono; y el botón de parar que **parecía un texto** destap�
 `bg-alerta` usaba un token inexistente — Tailwind v4 lo descartaba en silencio y el botón vivía
 sin fondo; ahora "■ Parar" rojo de verdad + línea "● Grabando…" separada; y los botones de la
 captura ganan icono a la izquierda — altavoz/chulo/flecha-que-vuelve/micrófono, con
-`IconoRegrabar` nuevo en la biblioteca).
+`IconoRegrabar` nuevo en la biblioteca; y la salida del lote ahora vuelve AL BANCO
+("← Tu banco de voz") — atrás es la pantalla anterior, no Ajustes de un salto).
 
 ## Deuda técnica explícita
 
