@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Globo } from "@/components/iconos";
 import { VoiceGame } from "@/components/juego/voice-game";
 
 export const metadata: Metadata = {
@@ -13,7 +14,13 @@ export const metadata: Metadata = {
 export default function JugarGloboPage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
-      <h1 className="font-display text-center text-4xl sm:text-5xl">
+      {/* El icono del juego —el MISMO de su tarjeta del selector— dice dónde estás sin leer
+          (gate S4). Decorativo aquí: el título ya lo dice todo, el lector de pantalla no lo
+          necesita dos veces. */}
+      <h1 className="font-display flex items-center justify-center gap-3 text-center text-4xl sm:text-5xl">
+        <span aria-hidden="true">
+          <Globo className="h-12 w-8" />
+        </span>
         Su voz mueve el mundo
       </h1>
       {/* Nace visible en el HTML (es el candidato LCP), pero se retira en cuanto el juego

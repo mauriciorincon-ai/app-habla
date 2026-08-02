@@ -364,6 +364,16 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     filtro "Solo lo mejorado" no lo mostraba. (3) **Obstáculos: dirección de diseño del usuario
     registrada** — "que la caja se quede ahí sin drama y ya" — viaja con el ítem del backlog al
     informe de la planeadora.
+  - **Pre-F — orientación en las pantallas de entrada (pedido del usuario, transversal a los 4
+    juegos):** evaluó dos opciones (icono junto al titular vs. reemplazar el titular por el
+    nombre del juego). **Ganó conservar el titular poético + icono a la izquierda** — el titular
+    enseña la mecánica ("Su voz sube el cohete") y reemplazarlo por el nombre sería redundante
+    (el padre acaba de tocar la tarjeta con ese nombre); la orientación la da el **símbolo
+    repetido** selector→pantalla (wayfinding), cumpliendo las reglas del gate (icono a la
+    izquierda, jerarquía de tamaño). Implementación: `<h1>` de las 4 páginas de `/jugar/*` con el
+    MISMO icono de su tarjeta del selector, envuelto en `aria-hidden` (Globo/Cohete anuncian
+    `aria-label` propio que en el titular sería ruido doble). Regla nueva en `design-system.md`;
+    F1 de la guía lo describe (Mejorado en S4).
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

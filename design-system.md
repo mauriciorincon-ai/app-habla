@@ -157,6 +157,11 @@ nuevos sin derivarlos de la paleta.
 - **Tamaño del icono según a quién acompaña:** ~16 px si va dentro de una línea de texto corrida;
   **~32 px cuando encabeza un bloque** (ahí abarca el bloque completo desde la izquierda, no solo
   el rótulo — a 16 px junto a un rótulo mono de 11 px no se lee como señal, hallazgo del gate S4).
+- **El titular de cada juego lleva su icono a la izquierda — el MISMO de su tarjeta del selector**
+  (regla del usuario, gate S4). El titular poético se queda (enseña la mecánica: "Su voz sube el
+  cohete"); la orientación la da el **símbolo repetido** selector→pantalla, no el texto. El icono
+  ahí es decorativo (`aria-hidden`): el título ya lo dice todo y el lector de pantalla no lo
+  necesita dos veces.
 - **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
   grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
   cambia de color al encenderse — el estado nunca se comunica solo con color: el texto
