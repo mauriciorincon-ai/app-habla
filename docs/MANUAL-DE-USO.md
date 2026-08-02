@@ -162,7 +162,8 @@ pantalla del **Estudio**).
 - El Estudio le va mostrando, de a una, las **palabras y frases** que puede grabar (las palabras de
   los dibujos, algunas consignas del juego y las celebraciones honestas). Toca **"Grabar"**, dice
   la palabra, la **escucha cómo quedó** y la **guarda** o la **regraba**. Una barra le muestra
-  cuánto lleva grabado.
+  cuánto lleva grabado. Mientras graba, **otra barra baila con su voz**: si se mueve cuando
+  habla, le está oyendo bien — así nunca graba a ciegas. (Esa barra solo se mira: no guarda nada.)
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.

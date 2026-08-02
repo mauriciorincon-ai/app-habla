@@ -4,8 +4,7 @@
 // y el "lote guiado" (grabar ítem a ítem). Graba SOLO al adulto — el copy lo deja explícito.
 // El banco vive en IndexedDB (ADR-010), SOLO en este dispositivo: nunca a la red, nunca al repo.
 
-import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAjustes, usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { useReproductor } from "@/components/use-reproductor";
@@ -152,15 +151,6 @@ function Gestion({
           </ul>
         </section>
       ) : null}
-
-      <nav className="text-tinta-suave text-center text-sm">
-        <Link
-          href="/ajustes"
-          className="min-h-11 underline-offset-4 hover:underline"
-        >
-          Volver a Ajustes
-        </Link>
-      </nav>
     </div>
   );
 }
@@ -236,7 +226,7 @@ function Lote({
   const [idx, setIdx] = useState(0);
   const [captura, setCaptura] = useState<Captura | null>(null);
   const [sinEspacio, setSinEspacio] = useState(false);
-  const { estado, empezar, detener, cancelar } = useGrabadora();
+  const { estado, empezar, detener, cancelar, nivel } = useGrabadora();
   const reproducir = useReproductor();
 
   const item = lote[idx];
@@ -352,14 +342,23 @@ function Lote({
           </div>
         </div>
       ) : estado === "grabando" ? (
-        <button
-          type="button"
-          onClick={() => void detener().then((c) => c && setCaptura(c))}
-          className="bg-alerta text-sobre-peligro min-h-16 rounded-2xl px-6 text-lg font-medium"
-          data-testid="detener"
-        >
-          ● Grabando… toca para parar
-        </button>
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={() => void detener().then((c) => c && setCaptura(c))}
+            className="bg-alerta text-sobre-peligro min-h-16 rounded-2xl px-6 text-lg font-medium"
+            data-testid="detener"
+          >
+            ● Grabando… toca para parar
+          </button>
+          {/* El medidor del estudio (gate S4, stopper J2): la barra baila con tu voz — así sabes
+              que YA está grabando y que te está oyendo, sin adivinar. Solo se mira: el análisis
+              vive en memoria y muere con la grabación. */}
+          <MedidorGrabacion nivel={nivel} />
+          <p className="text-tinta-suave text-center text-sm">
+            Si la barra se mueve cuando hablas, te está oyendo bien.
+          </p>
+        </div>
       ) : (
         <button
           type="button"
@@ -384,6 +383,40 @@ function Lote({
         Terminar por ahora
       </button>
     </section>
+  );
+}
+
+/**
+ * La barra que baila con la voz mientras se graba (stopper J2 del gate). Se pinta a 60 fps desde
+ * el getter `nivel` en un rAF — cero re-renders, el mismo patrón del medidor de los juegos.
+ */
+function MedidorGrabacion({ nivel }: { nivel: () => number }) {
+  const barraRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let id = 0;
+    const pintar = () => {
+      if (barraRef.current) {
+        barraRef.current.style.transform = `scaleX(${Math.max(0.02, nivel())})`;
+      }
+      id = requestAnimationFrame(pintar);
+    };
+    id = requestAnimationFrame(pintar);
+    return () => cancelAnimationFrame(id);
+  }, [nivel]);
+
+  return (
+    <div
+      className="bg-acento-suave relative h-3 w-full overflow-hidden rounded-full"
+      data-testid="medidor-grabacion"
+      aria-hidden="true"
+    >
+      <div
+        ref={barraRef}
+        className="bg-acento absolute inset-0 origin-left rounded-full"
+        style={{ transform: "scaleX(0.02)" }}
+      />
+    </div>
   );
 }
 

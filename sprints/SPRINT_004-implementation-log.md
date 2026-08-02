@@ -495,6 +495,20 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   pendientes. _(Higiene: el registro del bloque I volvió a comerse el encabezado del backlog B —
   cuarta vez del mismo error de anclaje; reparado aquí. Lección anotada: al usar un encabezado
   como ancla, SIEMPRE re-incluirlo al final del texto nuevo.)_
+- **Bloque J (el estudio) EN CURSO — 2026-08-02 · stopper del usuario en J2, remate inmediato.**
+  J1 limpio + pedido: "← Ajustes" al encabezado con la forma estándar (hecho; el enlace suelto
+  del final se retiró — la regla "la salida es SIEMPRE la misma y va ARRIBA" ya está en el
+  design system desde el bloque D). **J2 — STOPPER: grabar a ciegas.** Sin indicador de nivel no
+  se sabe si el micrófono oye ni cuándo empezó — el usuario paró las pruebas ("es indispensable
+  un indicador como el de /spike/audio"). Remate: `useGrabadora` gana `nivel()` — un
+  `AnalyserNode` sobre el MISMO stream que ya se graba (cero permisos extra), RMS instantáneo
+  normalizado, getter para rAF; `MedidorGrabacion` en el estudio (barra que baila, patrón del
+  medidor de los juegos) + nota honesta "Si la barra se mueve cuando hablas, te está oyendo
+  bien". **Privacidad intacta:** el análisis vive en memoria y muere con la grabación
+  (`cerrarAnalisis()` en detener/cancelar); no se conecta a la salida (no suena), no persiste —
+  la regla 2-bis (banco SOLO local) no se toca. e2e: `medidor-grabacion` visible durante la
+  grabación (estudio.spec). Guía J1/J2 → Mejorado en S4; manual actualizado. El usuario retoma
+  el bloque J desde J2.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
