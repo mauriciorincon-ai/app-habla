@@ -150,7 +150,10 @@ las 50 leídas en el catálogo** — "muy buenas; algunas parecen repetidas pero
 diferencian, válido"; cero reemplazos pedidos; + unit del barrido completo con objetivo activo,
 garantía pedida por el usuario) · J-parcial (stopper J2: **grabar a ciegas** — el estudio gana su
 **medidor de grabación** en vivo, análisis solo en memoria, jamás persistido; "← Ajustes"
-estándar arriba).
+estándar arriba como ÚNICA salida — "Terminar por ahora" eliminado, con cleanup de desmontaje
+que suelta el micrófono; y el botón de parar que **parecía un texto** destapó un defecto real:
+`bg-alerta` usaba un token inexistente — Tailwind v4 lo descartaba en silencio y el botón vivía
+sin fondo; ahora "■ Parar" rojo de verdad + línea "● Grabando…" separada).
 
 ## Deuda técnica explícita
 

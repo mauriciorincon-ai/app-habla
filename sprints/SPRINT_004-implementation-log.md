@@ -514,6 +514,17 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   que suelta los tracks del micrófono si el padre navega en plena grabación — sin él, la
   navegación client-side de Next dejaría el mic ABIERTO (no hay recarga de página). e2e del
   lote reescrito: sale por el chip, vuelve a entrar y el banco persistió. Guía J4 → Mejorado.
+  **Tercer retoque (mismo día): el botón de parar parecía un texto.** El usuario lo reportó como
+  problema de rótulo ("Grabando… toca para parar" lee como aviso, no como acción) y al mirarlo
+  apareció el defecto real: la clase era `bg-alerta` y **`alerta` no es un token del tema**
+  (el token es `peligro`) — Tailwind v4 descarta clases sin token EN SILENCIO, así que el botón
+  llevaba desde su nacimiento **sin fondo**: texto crema sobre fondo crema. Arreglo doble:
+  (1) estado y acción separados — línea "● Grabando…" con punto latiendo (`animate-pulse`, lo
+  mata la doble matanza global de animaciones) + botón "■ Parar" aparte; (2) fondo real con
+  `bg-peligro`. Lección para la casa: **una clase de Tailwind v4 con token inexistente no
+  truena, desaparece** — el typecheck no la ve y el ojo tampoco si el texto queda legible;
+  la única red es mirar la pantalla (por eso este defecto solo lo cazó el gate). Guía J2
+  actualizada con el microcopy literal nuevo.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
