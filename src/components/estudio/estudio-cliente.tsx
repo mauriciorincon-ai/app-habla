@@ -23,6 +23,12 @@ import {
   obtenerGrabacion,
   pedirPersistencia,
 } from "@/lib/banco-voz/almacen";
+import {
+  IconoAltavoz,
+  IconoHecho,
+  IconoMicrofono,
+  IconoRegrabar,
+} from "@/components/iconos";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
 const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], string> = {
@@ -319,29 +325,34 @@ function Lote({
 
       {captura ? (
         <div className="flex flex-col gap-3">
+          {/* Cada acción con su icono a la IZQUIERDA (regla de la casa): oír → altavoz,
+              guardar → check, regrabar → la flecha que da la vuelta. Pedido del gate S4 (J3). */}
           <button
             type="button"
             onClick={() => reproducir(captura.blob)}
-            className="border-borde text-tinta min-h-14 rounded-xl border px-6 text-lg font-medium"
+            className="border-borde text-tinta flex min-h-14 items-center justify-center gap-2 rounded-xl border px-6 text-lg font-medium"
             data-testid="escuchar-captura"
           >
+            <IconoAltavoz className="h-5 w-5 shrink-0" />
             Escuchar cómo quedó
           </button>
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={() => void aceptar()}
-              className="bg-acento text-sobre-acento min-h-14 flex-1 rounded-xl px-6 text-lg font-medium"
+              className="bg-acento text-sobre-acento flex min-h-14 flex-1 items-center justify-center gap-2 rounded-xl px-6 text-lg font-medium"
               data-testid="aceptar"
             >
+              <IconoHecho className="h-5 w-5 shrink-0" />
               Está bien, guardar
             </button>
             <button
               type="button"
               onClick={() => setCaptura(null)}
-              className="border-borde text-tinta min-h-14 flex-1 rounded-xl border px-6 text-lg font-medium"
+              className="border-borde text-tinta flex min-h-14 flex-1 items-center justify-center gap-2 rounded-xl border px-6 text-lg font-medium"
               data-testid="regrabar"
             >
+              <IconoRegrabar className="h-5 w-5 shrink-0" />
               Regrabar
             </button>
           </div>
@@ -379,9 +390,10 @@ function Lote({
           type="button"
           onClick={() => void empezar()}
           disabled={estado === "pidiendo-permiso"}
-          className="bg-acento text-sobre-acento min-h-16 rounded-2xl px-6 text-lg font-medium disabled:opacity-50"
+          className="bg-acento text-sobre-acento flex min-h-16 items-center justify-center gap-2 rounded-2xl px-6 text-lg font-medium disabled:opacity-50"
           data-testid="grabar"
         >
+          <IconoMicrofono className="h-5 w-5 shrink-0" />
           {estado === "pidiendo-permiso" ? "Abriendo el micrófono…" : "Grabar"}
         </button>
       )}
