@@ -542,6 +542,11 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   encabezado). El micrófono queda a salvo: salir del lote desmonta `Lote` y su cleanup ya
   cancela la grabación. e2e reescrito en dos pasos: lote → banco (lista visible de inmediato)
   → Ajustes → re-entrar (persistencia IndexedDB). Guía J4 → texto nuevo; historial al día.
+  **Sexto retoque (pregunta del usuario): "¿por qué 1 de 20 si el reto son 50+?"** El contador
+  del lote es la posición en la TANDA (máximo 20 por sesión, grabable en <10 min), no en el
+  reto completo (55: 50 palabras + 2 consignas + 3 celebraciones, visible en la cobertura del
+  banco) — pero el microcopy no lo decía. Ahora: "1 de 20 **de esta tanda**". Los e2e aseveran
+  `toContainText("1 de")` → intactos. Guía J3 con la explicación de la tanda en el Esperado.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
