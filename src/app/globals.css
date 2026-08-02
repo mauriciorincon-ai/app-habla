@@ -316,6 +316,43 @@ html[data-reducir-animacion="true"] .confeti-vuelta {
   display: none;
 }
 
+/*
+ * La capa de cielo que pasa (gate S4, ADR-013): con cada subida-y-bajada, nubes y estrellas
+ * cruzan hacia abajo UNA vez (~1,4 s) — el mundo corre y se siente el ascenso, sin que la
+ * posición del cohete (que ES el tono en vivo) mienta jamás. Misma regla de sosiego: corre una
+ * vez y se va; con movimiento reducido no se muestra y el contador sigue diciendo el logro.
+ */
+@keyframes cielo-pasa {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(140%);
+    opacity: 0;
+  }
+}
+
+.capa-cielo {
+  animation: cielo-pasa 1400ms ease-in-out 1 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capa-cielo {
+    display: none;
+  }
+}
+
+html[data-reducir-animacion="true"] .capa-cielo {
+  display: none;
+}
+
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
 @media (prefers-reduced-motion: reduce) {
   *,

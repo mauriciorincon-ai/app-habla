@@ -3,8 +3,9 @@ import { expect, test } from "@playwright/test";
 // EL COHETE DEL TONO (Outcome 2). Corre en el proyecto `desktop-chromium-tono`, cuyo micrófono
 // falso CANTA: un barrido continuo 230↔420 Hz (sube·baja·sube·baja = 3 inversiones).
 //
-// Lo que este test garantiza: el cohete se mueve con el TONO (no con el volumen), y la
-// celebración cuenta las inversiones REALES — jamás un elogio vacío.
+// Lo que este test garantiza: el cohete se mueve con el TONO (no con el volumen), el juego NO se
+// cierra solo (ADR-013: cada subida-y-bajada es un HITO celebrado en vivo) y la celebración
+// cuenta las inversiones REALES — jamás un elogio vacío.
 
 /** Lee la traslación vertical del cohete (px). Negativo = arriba. */
 async function alturaDelCohete(page: import("@playwright/test").Page) {
@@ -15,7 +16,7 @@ async function alturaDelCohete(page: import("@playwright/test").Page) {
   return y ? parseFloat(y) : 0;
 }
 
-test("la voz que sube de tono sube el cohete, y la celebración cuenta las inversiones reales", async ({
+test("la voz que sube de tono sube el cohete, los hitos se celebran en vivo y el padre cierra", async ({
   page,
 }) => {
   await page.goto("/jugar/cohete");
@@ -37,14 +38,28 @@ test("la voz que sube de tono sube el cohete, y la celebración cuenta las inver
     .poll(async () => alturaDelCohete(page), { timeout: 20_000 })
     .toBeLessThan(-30);
 
-  // Celebración honesta: el número que reporta son las inversiones que de verdad hubo.
-  await expect(page.getByTestId("celebracion")).toBeVisible({
-    timeout: 30_000,
-  });
+  // Sin meta que corte el juego (ADR-013): cada subida-y-bajada es un HITO celebrado en vivo —
+  // el contador honesto, el confeti y la capa de cielo que pasa (ambos quedan en el DOM hasta el
+  // hito siguiente: la aserción no depende del timing). El juego SIGUE jugando.
+  const subidas = page.getByTestId("subidas");
+  await expect(subidas).toBeVisible({ timeout: 30_000 });
+  await expect(subidas).toContainText(/vez|veces/);
+  await expect(page.getByTestId("confeti-vuelta")).toBeAttached();
+  await expect(page.getByTestId("capa-cielo")).toBeAttached();
+  await expect(juego).toHaveAttribute("data-fase", "jugando");
+  const contadas = parseInt(
+    (await subidas.innerText()).replace(/\D+/g, " ").trim(),
+    10,
+  );
+
+  // El intento lo cierra el padre. La celebración dice EL MISMO número (o más, si la voz siguió
+  // subiendo y bajando entre la lectura y el toque) — jamás menos de lo celebrado en vivo.
+  await page.getByTestId("terminar").click();
+  await expect(page.getByTestId("celebracion")).toBeVisible();
   const metrica = await page.getByTestId("metrica-real").innerText();
   expect(metrica).toMatch(/^\d+ (vez|veces)$/);
   const veces = parseInt(metrica, 10);
-  expect(veces).toBeGreaterThanOrEqual(3); // la meta del cohete
+  expect(veces).toBeGreaterThanOrEqual(contadas);
 });
 
 test("modo calma en el cohete: sin medidor y sin meta (el cohete solo flota)", async ({
@@ -68,7 +83,10 @@ test("modo calma en el cohete: sin medidor y sin meta (el cohete solo flota)", a
     .poll(async () => alturaDelCohete(page), { timeout: 15_000 })
     .toBeLessThan(-20);
 
-  // Pero sin meta: por mucho que la voz suba y baje, no salta la celebración automática.
+  // Pero sin hitos: en calma no hay contador, ni confeti, ni capa de cielo — solo flotar
+  // (carga sensorial). Y por mucho que la voz suba y baje, no salta ninguna celebración.
   await page.waitForTimeout(6000);
   await expect(page.getByTestId("celebracion")).toHaveCount(0);
+  await expect(page.getByTestId("subidas")).toHaveCount(0);
+  await expect(page.getByTestId("confeti-vuelta")).toHaveCount(0);
 });

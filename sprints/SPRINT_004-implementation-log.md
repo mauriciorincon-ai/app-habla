@@ -364,6 +364,32 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     filtro "Solo lo mejorado" no lo mostraba. (3) **Obstáculos: dirección de diseño del usuario
     registrada** — "que la caja se quede ahí sin drama y ya" — viaja con el ítem del backlog al
     informe de la planeadora.
+- **Bloque F (el cohete) — 2026-08-01 · 6 limpias, 1 diferida (F7→Chrome, junto a E12), 2
+  frentes construidos tras AskUserQuestion (hito por subida-y-bajada · confeti+cielo · lote
+  completo — las 3 recomendadas).**
+  - **Propuesta ⭐ (ADR-013): el cohete tampoco termina solo.** `meta: null` (muere el cierre a
+    las 3 inversiones — mismo defecto del E6); cada **subida-y-bajada real** es un HITO: confeti
+    compartido (`ConfetiVuelta` gana prop `centrado`: corrimiento -38 sobre las mismas 14 piezas
+    deterministas), **capa de cielo que pasa** (`CapaDeCielo` en escenario-cohete: 3 nubes + 2
+    estrellas fijas cruzan hacia abajo UNA vez, ~1,4 s, keyframes `cielo-pasa`, doble apagado con
+    movimiento reducido) y contador vivo `subidas` ("¡Ya subió y bajó N veces!") — **el MISMO
+    número de la celebración final** (misma métrica, cero semántica nueva). El matiz honesto que
+    el globo no tenía: la posición del cohete ES el tono en vivo — el ascenso lo cuenta el MUNDO
+    (cielo que pasa + contador), jamás la posición. Vocabulario: nada de "niveles" (escalera
+    vetada); se celebran "subidas y bajadas", lo medido. La mecánica de meta del reducer queda
+    SIN usuarios — retirarla es deuda declarada (no se toca el motor probado en pleno cierre).
+  - **F8 (fluidez):** el cohete gana el patrón de planeo del globo — persecución 200 ms con voz
+    (mayor que los 140 del globo: el tono llega a ~31 estimaciones/s y a saltos de nota) / 480 ms
+    en pausa, con `medidas.vozActiva()`. Antes: τ fija de 120 ms que dejaba pasar el jitter.
+  - **F5 (matiz honesto, precedente A6):** la guía decía "no se mueve solo" a secas; el usuario
+    encontró que cantantes agudos a alto volumen SÍ lo mueven — correcto: una voz cantada ES una
+    voz con tono en el cuarto y el medidor no adivina quién canta. El "Esperado" lo dice ahora.
+  - **e2e reescrito:** el camino feliz verifica el hito EN VIVO (contador + confeti + capa
+    `toBeAttached` — quedan en el DOM hasta el hito siguiente, sin flake) y que la celebración
+    jamás diga MENOS que lo celebrado en vivo (`veces >= contadas`); el de calma verifica que
+    allí no hay contador ni confeti. El medidor del tono pierde la rayita de meta (ya no existe).
+  - Guía: F3/F5/F6/F8 → Mejorado en S4; F7 gana la nota Safari→Chrome. Manual reescrito (hitos +
+    el detalle honesto de la altura). ADR-013.
   - **Pre-F — orientación en las pantallas de entrada (pedido del usuario, transversal a los 4
     juegos):** evaluó dos opciones (icono junto al titular vs. reemplazar el titular por el
     nombre del juego). **Ganó conservar el titular poético + icono a la izquierda** — el titular

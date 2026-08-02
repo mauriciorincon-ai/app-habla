@@ -128,7 +128,11 @@ fiesta, corre una vez, apagado con movimiento reducido — y la celebración fin
 número: "Con esa voz el globo dio N vueltas completas", derivado del mismo total medido) ·
 transversal pre-F (el titular de cada juego lleva **el icono de su tarjeta del selector** a la
 izquierda — orientación por símbolo repetido, sin tocar el titular que enseña la mecánica; regla
-en el design system).
+en el design system) · F (**ADR-013**: el cohete tampoco termina solo — cada subida-y-bajada es
+un hito con confeti, **capa de cielo que pasa** (el ascenso lo cuenta el mundo, no la posición:
+el cohete ES el tono en vivo) y contador que coincide con la celebración final; planeo del globo
+llevado al cohete (F8) y matiz honesto de F5: una voz cantada aguda sí lo mueve — es una voz con
+tono en el cuarto).
 
 ## Deuda técnica explícita
 
@@ -138,6 +142,9 @@ en el design system).
 - **Nivel "frases" del objetivo:** el objetivo alinea por palabra/etiqueta; combinaciones de dos
   palabras (etapa primeras-frases) alinean por sus palabras sueltas — suficiente para H1.
 - **Tablet:** toda la lista de tablet sigue diferida (ADRs 003/007/010) — **NO gatea el cierre**.
+- **Mecánica de meta del reducer SIN usuarios (ADR-013):** el globo (ADR-012) y el cohete
+  (ADR-013) migraron a hitos infinitos; nadie pasa ya `meta !== null`. El motor conserva la
+  mecánica (probada por unit) — retirarla completa va al próximo ciclo, no en pleno cierre de H1.
 - **Bajos de la auditoría de cierre (declarados, no corregidos):** `lib/audio` fuera de las
   carpetas selladas del test de privacidad (la prohibición de red ahí depende solo de ESLint) ·
   candado de contenido por substring (posible falso positivo si el padre escribe "audio") ·
