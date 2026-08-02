@@ -7,23 +7,60 @@
 // casa no lo mueve — sin voz confiable no hay tono, y sin tono el cohete se queda quieto (jamás
 // cae por silencio: no hay castigo).
 //
-// Modo calma: sin medidor y sin meta; el cohete simplemente flota con su voz.
+// HITOS (gate S4, ADR-013): el cohete ya no tiene meta que cierre el juego — cada subida-y-bajada
+// real de la voz es un HITO: estalla el confeti y una CAPA DE CIELO pasa hacia abajo (el mundo
+// corre: se siente el ascenso, como por la ventanilla). La posición del cohete sigue siendo el
+// TONO EN VIVO — jamás acumula altura que no está sonando: la posición no miente.
+//
+// Modo calma: sin medidor, sin hitos ni confeti; el cohete simplemente flota con su voz.
 
 import { useEffect, useRef } from "react";
 import { Cohete } from "@/components/iconos";
+import { ConfetiVuelta } from "./confeti-vuelta";
 import type { MedidasVivas } from "./use-voice-session";
+
+/**
+ * Constantes del planeo (gate S4, hallazgo F8): el tono llega a saltos (~31 estimaciones/s y la
+ * voz brinca de nota), así que la persecución con voz es más larga que la del globo (200 vs
+ * 140 ms) para absorberlos sin sentirse "con retraso". En pausa el cohete no cae (el objetivo se
+ * congela), pero si el tono reaparece lejos, re-engancha suave en vez de saltar.
+ */
+const PERSECUCION_CON_VOZ_MS = 200;
+const PERSECUCION_EN_PAUSA_MS = 480;
 
 type Props = {
   medidas: MedidasVivas;
-  /** Inversiones necesarias para celebrar (null en modo calma: sin meta). */
-  meta: number | null;
+  /** Subidas-y-bajadas completadas: cada una nueva estalla su confeti y pasa su capa de cielo. */
+  hito: number;
   modoCalma: boolean;
   invitando: boolean;
 };
 
+/**
+ * La capa de cielo que pasa (ADR-013): nubes y estrellas FIJAS que cruzan hacia abajo UNA vez
+ * (~1,4 s) cuando el cohete gana un hito. Determinista (el azar no se puede testear), sin bucle
+ * ni parpadeo; con "reducir animaciones" no se muestra (globals.css) y el contador sigue
+ * contando el logro.
+ */
+function CapaDeCielo() {
+  return (
+    <div
+      className="capa-cielo pointer-events-none absolute inset-0"
+      aria-hidden="true"
+      data-testid="capa-cielo"
+    >
+      <span className="bg-kid-sky absolute top-[-18%] left-[8%] h-5 w-24 rounded-full opacity-80" />
+      <span className="bg-kid-sky absolute top-[-26%] left-[55%] h-4 w-20 rounded-full opacity-60" />
+      <span className="bg-kid-sky absolute top-[-10%] left-[30%] h-3.5 w-14 rounded-full opacity-70" />
+      <span className="bg-kid-yellow absolute top-[-22%] left-[78%] h-2 w-2 rounded-full opacity-70" />
+      <span className="bg-kid-yellow absolute top-[-8%] left-[68%] h-1.5 w-1.5 rounded-full opacity-60" />
+    </div>
+  );
+}
+
 export function EscenarioCohete({
   medidas,
-  meta,
+  hito,
   modoCalma,
   invitando,
 }: Props) {
@@ -45,8 +82,12 @@ export function EscenarioCohete({
         const alto = cielo.clientHeight;
         // La altura del cohete ES el tono (escala musical, 0..1 desde la voz de quien juega).
         const objetivo = -medidas.alturaPitch() * (alto - cohete.offsetHeight);
-        // Interpolación: el vuelo es continuo a 60 fps aunque el tono llegue a ~31 frames/s.
-        const suavizado = 1 - Math.exp(-deltaMs / 120);
+        // Persecución del objetivo (F8): mismo patrón de planeo del globo. Solo persigue, nunca
+        // se adelanta — la posición jamás miente.
+        const persecucionMs = medidas.vozActiva()
+          ? PERSECUCION_CON_VOZ_MS
+          : PERSECUCION_EN_PAUSA_MS;
+        const suavizado = 1 - Math.exp(-deltaMs / persecucionMs);
         vuelo.y += (objetivo - vuelo.y) * suavizado;
         cohete.style.transform = `translateY(${vuelo.y}px)`;
       }
@@ -82,6 +123,13 @@ export function EscenarioCohete({
           <span className="bg-kid-yellow absolute top-[8%] right-[38%] h-1.5 w-1.5 rounded-full opacity-50" />
         </div>
 
+        {/* El hito: `key` re-monta el confeti y la capa con cada subida-y-bajada nueva — corren
+            UNA vez por logro y quedan quietos hasta el siguiente (en calma no hay hitos). */}
+        {!modoCalma && hito > 0 ? <CapaDeCielo key={`capa-${hito}`} /> : null}
+        {!modoCalma && hito > 0 ? (
+          <ConfetiVuelta key={`confeti-${hito}`} centrado />
+        ) : null}
+
         <div className="absolute bottom-10 left-1/2 h-32 w-20 -translate-x-1/2">
           <div
             ref={coheteRef}
@@ -115,9 +163,6 @@ export function EscenarioCohete({
             className="bg-acento absolute inset-x-0 bottom-0 h-full origin-bottom rounded-full"
             style={{ transform: "scaleY(0.02)" }}
           />
-          {meta !== null ? (
-            <span className="bg-celebracion absolute inset-x-0 top-[10%] h-0.5" />
-          ) : null}
         </div>
       ) : null}
     </div>

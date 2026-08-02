@@ -1,6 +1,7 @@
-// EL CONFETI DE LA VUELTA (gate S4, re-mirada del usuario sobre ADR-012): cada vuelta del globo
-// es un logro MEDIDO (3 s de voz real) y merece verse — un estallido de confeti y serpentinas en
-// la línea, que cae una vez y se va mientras el globo sigue volando. El juego no se detiene.
+// EL CONFETI DEL HITO (gate S4): cada logro MEDIDO merece verse — un estallido de confeti y
+// serpentinas que cae una vez y se va mientras el juego sigue. Lo comparten el globo (cada
+// vuelta, sobre la línea — ADR-012) y el cohete (cada subida-y-bajada, en el centro del cielo —
+// ADR-013). El juego no se detiene.
 //
 // Misma familia que los globos de la palabra (fiesta, no discoteca): determinista (el azar no se
 // puede testear), corre UNA vez (~1,6 s), sin bucle ni parpadeo. Con "reducir animaciones"
@@ -177,7 +178,14 @@ const COLORES = [
   "var(--color-fiesta-uva)",
 ];
 
-export function ConfetiVuelta() {
+type Props = {
+  /** true = el estallido nace en el CENTRO del cielo (el cohete); false = sobre la línea de
+   * vuelta del globo (88 % del ancho). Determinista en ambos casos. */
+  centrado?: boolean;
+};
+
+export function ConfetiVuelta({ centrado = false }: Props) {
+  const corrimiento = centrado ? -38 : 0;
   return (
     <div
       className="confeti-vuelta pointer-events-none absolute inset-0 z-10"
@@ -194,7 +202,7 @@ export function ConfetiVuelta() {
           }`}
           style={
             {
-              left: `${pieza.izquierda}%`,
+              left: `${pieza.izquierda + corrimiento}%`,
               top: `${pieza.arriba}%`,
               backgroundColor: COLORES[i % COLORES.length],
               "--deriva": `${pieza.deriva}px`,

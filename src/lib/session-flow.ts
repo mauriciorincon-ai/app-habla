@@ -112,12 +112,15 @@ export type Evento =
  * El HITO del globo: cada 3000 ms de voz acumulada es UNA VUELTA. Desde el gate S4 el globo ya
  * NO se cierra solo (pasa `meta: null`): las vueltas son infinitas y el intento termina cuando
  * el padre toca "Ya jugamos" — el fin automático a los 3 s cortaba el juego justo mientras le
- * enseñaba al niño (hallazgo E6 del gate). El reducer conserva la mecánica de meta: el cohete
- * la sigue usando.
+ * enseñaba al niño (hallazgo E6 del gate). El cohete migró igual en su bloque (ADR-013).
  */
 export const HITO_VUELTA_MS = 3000;
 
-/** Meta del cohete: subir y bajar la voz estas veces (§B.1: exploración vocal, no palabras). */
+/**
+ * Antigua meta del cohete (S2). El ADR-013 la retiró del juego: hoy la mecánica de meta del
+ * reducer no tiene usuarios y SOLO la ejercitan los unit del motor — retirarla completa es deuda
+ * declarada para el próximo ciclo (no se toca el motor probado en pleno cierre de H1).
+ */
 export const META_INVERSIONES_DEFECTO = 3;
 
 /** Tras este silencio en "esperando-voz", la UI invita amablemente (jamás regaña). */

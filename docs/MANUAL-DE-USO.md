@@ -89,9 +89,17 @@ El cohete escucha el **tono** de la voz: cuando la voz sube, el cohete sube; cua
 No hay que decir ninguna palabra — **una vocal estirada como una sirena es exactamente lo que
 buscamos** ("aaaAAAaaa"). Hágalo usted primero, exagerado y riéndose.
 
-Al terminar, la app cuenta las veces reales que su voz **cambió de dirección**: _"¡tu voz subió y
-bajó 3 veces!"_. Jugar con la voz —estirarla, subirla, bajarla— es un ejercicio de exploración
-vocal, y es justo lo que esta etapa necesita.
+Cada vez que la voz **sube y baja de verdad**, el cohete gana un hito: estalla un **confeti**,
+una **capa de nubes y estrellas pasa hacia abajo** (el mundo corre — se siente que va cada vez
+más alto, como mirar por la ventanilla) y aparece el contador: _"¡Ya subió y bajó 2 veces!"_.
+**Los hitos no se acaban: el juego no se termina solo.** Jueguen lo que quieran y, cuando
+decidan, toque **"Ya jugamos"**: la celebración dice **el mismo número del contador** — las
+veces reales que su voz cambió de dirección. Jugar con la voz —estirarla, subirla, bajarla— es
+un ejercicio de exploración vocal, y es justo lo que esta etapa necesita.
+
+Un detalle honesto: la **altura** del cohete siempre es el tono que está sonando en ese momento
+(por eso baja cuando la voz baja — no es un castigo, es el tono). El ascenso acumulado lo
+cuentan el cielo que pasa y el contador, no la posición.
 
 #### 3. Palabra y dibujo — el nombre vive en la cosa (nuevo)
 
@@ -242,8 +250,8 @@ cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está so
 cuando el juego con meta le resulta demasiado. Está disponible en los tres juegos.
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
-app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra y el confeti
-de las vueltas no se muestran — el texto sigue contando cada logro.
+app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra, el confeti
+de los hitos y la capa de cielo del cohete no se muestran — el texto sigue contando cada logro.
 
 ### Claro u oscuro
 
