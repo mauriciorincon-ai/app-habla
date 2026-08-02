@@ -473,7 +473,15 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   archivo del repo, autocontenido, cero red. La guía (bloque I) lo señala como la vía completa.
   Verificado renderizado antes de entregar. _(Nota de higiene: al insertar la entrada del bloque
   H me comí el encabezado del backlog B — mismo error de anclaje del bloque C; reparado aquí.)_
-- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
+- **Bloque I (la biblioteca) — 2026-08-02 · APROBADO: las 50 leídas en el catálogo.** Veredicto
+  del usuario: "me parecen muy buenas; algunas parecen repetidas pero tienen matices que las
+  diferencian — para mí es válido". Cero reemplazos pedidos, cero rutinas faltantes reportadas.
+  (La observación de las "repetidas con matices" es el diseño: son 5 técnicas × contextos
+  distintos — la misma técnica vive en el carro, la comida y el baño porque la evidencia dice
+  que la repetición A TRAVÉS de rutinas es lo que enseña.) Su pregunta —¿se agregarán más
+  cápsulas?— respondida: en H1 no; el crecimiento tiene dos vías ya registradas (curaduría
+  manual con fuente citada, y el "cuentero por lotes" del roadmap — IA por lotes offline con
+  revisión parental, ≤US$10/mes, posterior a H1) + el backlog B2 (qué pasa al agotar la etapa).
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de

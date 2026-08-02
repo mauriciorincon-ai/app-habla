@@ -145,7 +145,9 @@ y CLAUDE.md — al niño lo atiende un equipo completo; **la VISION de la planea
 "fonoaudiología" y debe alinearse en la retro**; regla dura 4 intacta: complementaria, jamás
 sustituta) · pre-I (nace **`docs/CATALOGO-CAPSULAS.html`** — las 50 cápsulas completas generadas
 del contenido real por `scripts/gen-catalogo-capsulas.mjs`, para que el veredicto de contenido no
-tenga que esperar 50 días; el histórico navegable EN la app sigue en el backlog).
+tenga que esperar 50 días; el histórico navegable EN la app sigue en el backlog) · I (**aprobado:
+las 50 leídas en el catálogo** — "muy buenas; algunas parecen repetidas pero con matices que las
+diferencian, válido"; cero reemplazos pedidos).
 
 ## Deuda técnica explícita
 
