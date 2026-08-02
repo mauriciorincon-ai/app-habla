@@ -227,6 +227,11 @@ function Lote({
   const [captura, setCaptura] = useState<Captura | null>(null);
   const [sinEspacio, setSinEspacio] = useState(false);
   const { estado, empezar, detener, cancelar, nivel } = useGrabadora();
+
+  // El lote ya no tiene botón de salida propio (gate S4: la ÚNICA salida es "← Ajustes", arriba),
+  // así que debe soltar el micrófono SOLO: si el padre navega en plena grabación, el desmontaje
+  // cancela y libera los tracks — jamás un micrófono abierto huérfano.
+  useEffect(() => () => cancelar(), [cancelar]);
   const reproducir = useReproductor();
 
   const item = lote[idx];
@@ -370,18 +375,6 @@ function Lote({
           {estado === "pidiendo-permiso" ? "Abriendo el micrófono…" : "Grabar"}
         </button>
       )}
-
-      <button
-        type="button"
-        onClick={() => {
-          cancelar();
-          onSalir();
-        }}
-        className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
-        data-testid="salir-lote"
-      >
-        Terminar por ahora
-      </button>
     </section>
   );
 }
