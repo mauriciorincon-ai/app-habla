@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (214 unit · 131 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (214 unit · 133 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -56,7 +56,7 @@ ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
 
 | Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Testing**          | ✅               | **214 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,6 % stmts / 86,6 % branches**. **131 e2e** (rumbo frase-vs-métrica ATADA por testid, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, + suites enteras de las pantallas tocadas, regla 9). Todo en CI.                                                 |
+| **1. Testing**          | ✅               | **214 unit** (motores nuevos: rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library; + cap-500 de gemelas) — cobertura **90,6 % stmts / 86,6 % branches**. **133 e2e** (rumbo frase-vs-métrica ATADA por testid, reset-al-salir de palabra↔objeto, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, + suites enteras de las pantallas tocadas, regla 9). Todo en CI.                                                 |
 | **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                         |
@@ -134,7 +134,12 @@ cuenta el mundo, no la posición: el cohete ES el tono en vivo; en la re-mirada 
 que pasarla en el pico hacía parecer subida la bajada) y contador que coincide con la celebración
 final; planeo del globo
 llevado al cohete (F8) y matiz honesto de F5: una voz cantada aguda sí lo mueve — es una voz con
-tono en el cuarto).
+tono en el cuarto) · G (dos defectos reales: **"Salir" ahora reinicia el juego por completo**
+—regla general de los 4 juegos, prueba G9 nueva— y los **globos fantasma** del primer ingreso
+ganan defensa doble —guarda del primer segundo + botón del juez reubicado—; el botón del juez
+baja al final, discreto; el encendido gana pop + halo de una corrida; el tema "Carros" pasa a
+llamarse **"Transporte"**; el filtro por tono niño/adulto NO se construyó — va al backlog H2 con
+diseño, decisión del usuario tras evaluación honesta).
 
 ## Deuda técnica explícita
 
@@ -181,6 +186,15 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
    derrota ni retroceso; queda registrada para que la planeadora la evalúe con el ítem. Las
    vueltas del ADR-012 cubren la duración; esto cubriría la variedad. Candidata para el ciclo H2.
 6. **Efecto de despegue inicial del globo** (E3, cosmético).
+7. **Filtro por tono niño/adulto en palabra↔dibujo** (pedido del bloque G, decidido a backlog
+   por el usuario tras evaluación honesta): quiere que el dibujo se encienda con la voz del
+   NIÑO, no con la del adulto que lo nombra. No se hizo a ciegas porque (a) los pedacitos sin
+   tono medible ("pe", "mmm" corto) son justo el esfuerzo a premiar y exigir tono infantil los
+   castigaría (ADR-005); (b) no existe umbral universal — la voz del propio padre mide 195–210
+   Hz, en plena zona de solapamiento; (c) encender es veredicto y la regla exige "quizás".
+   **Diseño esbozado para H2:** derivar el rango REAL del adulto de su banco de voz (la app ya
+   tiene sus grabaciones — calibración por familia) y **descartar solo lo confiablemente
+   adulto**, jamás exigir tono de niño. Necesita spike de fiabilidad de pitch en fragmentos.
 
 ## Sugerencias de mejora al método
 

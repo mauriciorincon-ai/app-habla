@@ -58,7 +58,9 @@ cualquiera de esos tres pasa siempre lo mismo:
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
 "game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
-micrófono se apaga ahí mismo); desde el guion, **"← Juegos"** lo lleva de vuelta a los cuatro.
+micrófono se apaga ahí mismo) y **el juego se reinicia por completo**: al volver a entrar, los
+contadores arrancan en cero — no queda rastro de la sesión pasada. Desde el guion, **"← Juegos"**
+lo lleva de vuelta a los cuatro.
 
 #### 1. El globo — la voz que se sostiene
 
@@ -109,13 +111,16 @@ los **temas que usted eligió** para su hijo.
 
 Su trabajo es el importante: **nombre el dibujo una sola vez** —"¡perro!"— y **espere tres
 segundos en silencio**. El dibujo se enciende con **cualquier sonido** que el niño haga: un
-intento, un "pe", un balbuceo. **La app no le exige la palabra y no juzga si la dijo bien**: solo
-sabe —y solo afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
+intento, un "pe", un balbuceo — y el momento se ve: el marco hace un **pop** breve y un halo se
+expande una vez. **La app no le exige la palabra y no juzga si la dijo bien**: solo sabe —y solo
+afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
 
-**¿Y si sí dijo la palabra? Usted lo dice.** Debajo del dibujo hay un botón pequeño —_"¿Dijo
-«perro»? Tócalo tú"_— y al tocarlo sube una **bandada de globos** por encima del dibujo, porque decir la
-palabra merece más que un sonido cualquiera. (Si activó "reducir animaciones", los globos no
-vuelan pero la celebración se sigue viendo: el dibujo se pone verde y lo dice con palabras.)
+**¿Y si sí dijo la palabra? Usted lo dice.** Al **final de la pantalla**, debajo de los botones
+grandes, hay un control discreto en letra pequeña —_"¿Dijo «perro»? Tócalo tú"_— puesto ahí a
+propósito, fuera de la vista del niño (es suyo, no de él). Al tocarlo sube una **bandada de
+globos** por encima del dibujo, porque decir la palabra merece más que un sonido cualquiera. (Si
+activó "reducir animaciones", los globos no vuelan pero la celebración se sigue viendo: el dibujo
+se pone verde y lo dice con palabras.)
 
 Ese botón es **suyo, no del niño**, y es la única forma de encender esa celebración: **la app no
 reconoce palabras y no va a fingir que sí.** No es que no sepamos hacerlo: es que hacerlo bien

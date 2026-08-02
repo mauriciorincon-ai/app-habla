@@ -413,6 +413,41 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     MISMO icono de su tarjeta del selector, envuelto en `aria-hidden` (Globo/Cohete anuncian
     `aria-label` propio que en el titular sería ruido doble). Regla nueva en `design-system.md`;
     F1 de la guía lo describe (Mejorado en S4).
+- **Bloque G (palabra y dibujo) — 2026-08-02 · 8 ejecutadas, 2 defectos reales, lote aprobado
+  tras AskUserQuestion (tono→backlog H2 · lote completo).** Además **B8 quedó ejecutado** (al día
+  siguiente salió otra cápsula, contador intacto — bloque B 100 %).
+  - **Defecto 1 — "Salir" no reiniciaba el juego (regla general del usuario):** el estado local
+    de palabra↔objeto (activaciones, reconocidas, índice, palabras) sobrevivía al VOLVER_AL_GUION
+    y el intento nuevo heredaba el contador viejo. Fix: `limpiarJuego()` compartido por
+    `reiniciarSesion` y el nuevo `salirAlGuion` (limpia + `volverAlGuion`). Globo/cohete/gemelas
+    verificados en código: ya quedaban limpios (medidas se re-miden; sus escenarios desmontan).
+    e2e nuevo: "«Salir» reinicia el juego: al volver, el contador arranca de cero" (corre en desktop y móvil: 131→133).
+  - **Defecto 2 — globos fantasma al entrar por primera vez (intermitente, Safari):** el único
+    camino a los globos es el botón del juez ⇒ hipótesis más fuerte: click-through del diálogo
+    de permisos cayendo sobre el botón (estaba centrado bajo el dibujo). Defensa doble: **guarda
+    del juez** (sin voz oída aún, se ignoran toques el primer segundo — `armadoDesdeRef`; con el
+    dibujo ya encendido el toque siempre vale, así los e2e y el uso real no cambian) +
+    **reubicación** del botón. Causa raíz hipotetizada, no reproducida — si reaparece, se
+    instrumenta (declarado en la guía G8: "repórtalo con los pasos exactos").
+  - **Botón del juez discreto (pedido: hijo perspicaz):** baja AL FINAL de la pantalla, bajo
+    "Otro dibujo / Ya jugamos", texto pequeño `tinta-suave` subrayado punteado, ≥44 px (control
+    de adulto). Fuera del barrido visual del niño y de la zona del diálogo de permisos.
+  - **Encendido que se siente (pedido: más llamativo):** pop del marco (scale 1→1.06→1, 500 ms)
+    - halo que se expande UNA vez (700 ms), keyframes `encendido-pop`/`halo-encendido`,
+      deterministas; con movimiento reducido quedan invisibles y borde+texto siguen contando.
+  - **"Carros" → "Transporte"** (G6): la etiqueta mentía — el tema trae carro, camión, bus,
+    moto, tren, avión y bici. Solo cambia `NOMBRE_TEMA` (la clave interna `carros` se conserva:
+    perfiles guardados y e2e intactos; cero referencias a la etiqueta en tests).
+  - **Filtro por tono niño/adulto: NO construido — decisión del usuario tras evaluación honesta**
+    (AskUserQuestion): (1) los pedacitos ("pe", "mmm" corto) muchas veces no tienen tono medible
+    y son JUSTO el esfuerzo a premiar — exigir tono infantil los castigaría (ADR-005); (2) la voz
+    del propio usuario mide 195–210 Hz (bloque A): un umbral seguro no lo filtra, uno que lo
+    filtre se traga mamás y graves del niño; (3) encender/no-encender es veredicto, y la regla de
+    la casa exige "quizás". Va al backlog H2 con diseño esbozado: derivar el rango del ADULTO de
+    su banco de voz (calibración por familia) y descartar solo lo confiablemente-adulto.
+  - e2e de movimiento reducido ajustado (espera el encendido antes del toque — la guarda no
+    aplica con voz oída). Guía: G3/G5/G8 mejoradas + **G9 nueva** (reset al salir) + historial;
+    manual (botón al final + salir reinicia + pop del encendido).
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

@@ -353,6 +353,43 @@ html[data-reducir-animacion="true"] .capa-cielo {
   display: none;
 }
 
+/*
+ * El instante de encenderse el dibujo (gate S4, bloque G): un pop breve del marco y un halo que
+ * se expande UNA vez — el logro se siente sin volverse discoteca. Con movimiento reducido la
+ * regla global los deja invisibles al instante y el borde encendido + "¡Le salió la voz!" siguen
+ * contando la noticia.
+ */
+@keyframes encendido-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.encendido-pop {
+  animation: encendido-pop 500ms ease-out 1 both;
+}
+
+@keyframes halo-encendido {
+  0% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.halo-encendido {
+  animation: halo-encendido 700ms ease-out 1 both;
+}
+
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
 @media (prefers-reduced-motion: reduce) {
   *,
