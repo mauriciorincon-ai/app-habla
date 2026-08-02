@@ -26,6 +26,7 @@
   blockquote { margin:.6rem 0; padding:.5rem .9rem; border-left:4px solid var(--acento); background:var(--fondo); border-radius:0 10px 10px 0; font-style:italic; }
   blockquote strong, .actividad strong { font-style:normal; }
   .fuente { font-size:.8rem; margin-bottom:.1rem; }
+  .juzgar { font-family:system-ui,sans-serif; font-size:.85rem; color:var(--acento); background:var(--acento-suave); border-radius:10px; padding:.55rem .85rem; }
   .progreso { position:sticky; top:0; background:var(--fondo); padding:.5rem 0; font-family:system-ui,sans-serif; font-size:.85rem; color:var(--suave); }
   footer { margin-top:3rem; font-size:.8rem; color:var(--suave); border-top:1px solid var(--borde); padding-top:1rem; }
   @media (prefers-color-scheme: dark) {
@@ -40,12 +41,15 @@
   tiene histórico navegable (está en el backlog) — este catálogo existe para que puedas leerlas <strong>todas, de corrido</strong>,
   tal cual viven en la app (generado directo de <code>content/capsulas.ts</code> el 2026-08-02; se regenera con
   <code>node scripts/gen-catalogo-capsulas.mjs</code>). La pregunta de siempre por cada una: ¿la línea la dirías tal cual
-  en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.</p>
+  en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.
+  Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (las aprobaste el 2026-07-12 y ninguna se botó):
+  confirma que las reconoces cuando te las cruces.</p>
   <p class="progreso"><span id="hechas">0</span> de 50 revisadas · tu avance queda guardado en este navegador</p>
   
   <section class="etapa">
     <h2>Sonidos e intentos <span class="conteo">(8 cápsulas)</span></h2>
     <p class="descripcion">Todavía explora: hace sonidos, señala, lleva de la mano. Los intentos y los gestos son su forma de hablar.</p>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te servirían los días difíciles, o si algún día él retrocede? No son para su nivel de hoy: son la red de abajo.</p>
     <h3>Modelar <span class="conteo">(2)</span></h3>
     <article class="capsula" id="sonidos-ponle-sonido-al-mundo">
       <label class="revision"><input type="checkbox" data-id="sonidos-ponle-sonido-al-mundo"> Revisada</label>
@@ -128,6 +132,7 @@
     <h2>Palabras sueltas <span class="conteo">(35 cápsulas)</span></h2>
     <p class="descripcion">Dice palabras de a una: “agua”, “mamá”, “carro”. Todavía no las junta — y no hace falta apurarlo.</p>
     <h3>Modelar <span class="conteo">(10)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Reconoces tu día real en ellas — el carro, vestirse, el mercado, la hora de dormir? Pediste «más novedosas»: ¿lo son?</p>
     <article class="capsula" id="modelado-nombra-su-mundo">
       <label class="revision"><input type="checkbox" data-id="modelado-nombra-su-mundo"> Revisada</label>
       <h4>Ponle nombre a lo que él está mirando</h4>
@@ -219,6 +224,7 @@
       <p class="fuente">Rutinas predecibles y modelado (Heidlage et al. 2019, ECRQ): la repetición dentro de rutinas familiares es el vehículo con mayor efecto en lenguaje expresivo guiado por padres.</p>
     </article>
     <h3>Expandir lo que dijo <span class="conteo">(4)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te queda claro qué decir EXACTAMENTE en el momento? (esa es la prueba: que no tengas que pensarlo).</p>
     <article class="capsula" id="recast-devuelve-la-palabra">
       <label class="revision"><input type="checkbox" data-id="recast-devuelve-la-palabra"> Revisada</label>
       <h4>Devuélvele la palabra, completa y celebrada</h4>
@@ -256,6 +262,7 @@
       <p class="fuente">Modelado y recast dentro de rutinas afectivas: la evidencia de intervención por padres (Heidlage et al. 2019, ECRQ) muestra su mayor efecto en contextos de alta implicación emocional del niño.</p>
     </article>
     <h3>Esperar en silencio <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Son hacibles sin que se te vuelva una tortura la comida o el juego?</p>
     <article class="capsula" id="espera-cuenta-cinco">
       <label class="revision"><input type="checkbox" data-id="espera-cuenta-cinco"> Revisada</label>
       <h4>Cuenta hasta cinco por dentro</h4>
@@ -320,6 +327,7 @@
       <p class="fuente">Espera estructurada (EMT): la pausa expectante prolongada aumenta la iniciación comunicativa del niño; el adulto suele subestimar cuánto tiempo necesita (PubMed 29054980).</p>
     </article>
     <h3>Seguir su interés <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te suenan a jugar con él y no a darle una lección?</p>
     <article class="capsula" id="interes-el-manda">
       <label class="revision"><input type="checkbox" data-id="interes-el-manda"> Revisada</label>
       <h4>Habla de lo que él está mirando</h4>
@@ -384,6 +392,7 @@
       <p class="fuente">Modelado dentro del juego (Heidlage et al. 2019, ECRQ, g=0.50) combinado con seguir el interés del niño (NDBI): la palabra llega sobre la acción que él ya está ejecutando.</p>
     </article>
     <h3>Repetir una palabra clave <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te parecen repetibles sin volverse machaconas?</p>
     <article class="capsula" id="focalizada-palabra-semana">
       <label class="revision"><input type="checkbox" data-id="focalizada-palabra-semana"> Revisada</label>
       <h4>Una sola palabra, muchas veces</h4>
@@ -451,6 +460,7 @@
   <section class="etapa">
     <h2>Primeras frases <span class="conteo">(7 cápsulas)</span></h2>
     <p class="descripcion">A veces junta dos palabras: “más agua”, “carro grande”. Sigue diciendo mucho de a una, y está bien.</p>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te parecen bien guardadas para cuando junte dos palabras? Recuerda: esta etapa nunca se activa sola.</p>
     <h3>Modelar <span class="conteo">(1)</span></h3>
     <article class="capsula" id="frases-narra-con-dos">
       <label class="revision"><input type="checkbox" data-id="frases-narra-con-dos"> Revisada</label>
