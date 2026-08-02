@@ -143,7 +143,9 @@ diseño, decisión del usuario tras evaluación honesta) · H (8/8 limpio; cambi
 por el usuario: **"fonoaudiología" → "terapias integrales del lenguaje"** en toda la app, manual
 y CLAUDE.md — al niño lo atiende un equipo completo; **la VISION de la planeadora aún dice
 "fonoaudiología" y debe alinearse en la retro**; regla dura 4 intacta: complementaria, jamás
-sustituta).
+sustituta) · pre-I (nace **`docs/CATALOGO-CAPSULAS.html`** — las 50 cápsulas completas generadas
+del contenido real por `scripts/gen-catalogo-capsulas.mjs`, para que el veredicto de contenido no
+tenga que esperar 50 días; el histórico navegable EN la app sigue en el backlog).
 
 ## Deuda técnica explícita
 

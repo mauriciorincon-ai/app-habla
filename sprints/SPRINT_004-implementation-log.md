@@ -462,7 +462,18 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   retro**; la planeadora es RO y no se toca). Cero referencias en tests (verificado antes del
   barrido). El posicionamiento no cambia: complementaria, JAMÁS sustituta (regla dura 4 intacta;
   "terapias" nombra el trabajo del equipo real, no promete que la app sea terapia). Guía: H4
-  Mejorado en S4 + historial. histórico
+  Mejorado en S4 + historial.
+- **Pre-I — el catálogo de cápsulas (2026-08-02, pregunta real del usuario):** "¿cómo pruebo el
+  bloque I si las cápsulas van saliendo día a día?" — la app no tiene histórico navegable
+  (backlog B1) y el veredicto de contenido no puede esperar 50 días. Nace
+  `docs/CATALOGO-CAPSULAS.html`: las 50 completas (explicación + línea + actividad + fuente +
+  etiquetas), agrupadas por etapa→técnica, con casilla "Revisada" por cápsula (localStorage).
+  Generado DIRECTO de `content/capsulas.ts` por `scripts/gen-catalogo-capsulas.mjs` (Node 24
+  importa el TS nativamente — cero copias a mano, regenerable). Regla 11 cumplida: instrumento =
+  archivo del repo, autocontenido, cero red. La guía (bloque I) lo señala como la vía completa.
+  Verificado renderizado antes de entregar. _(Nota de higiene: al insertar la entrada del bloque
+  H me comí el encabezado del backlog B — mismo error de anclaje del bloque C; reparado aquí.)_
+- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de
