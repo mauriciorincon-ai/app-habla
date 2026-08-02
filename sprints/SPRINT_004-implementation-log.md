@@ -482,6 +482,20 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   cápsulas?— respondida: en H1 no; el crecimiento tiene dos vías ya registradas (curaduría
   manual con fuente citada, y el "cuentero por lotes" del roadmap — IA por lotes offline con
   revisión parental, ≤US$10/mes, posterior a H1) + el backlog B2 (qué pasa al agotar la etapa).
+- **Post-I — verificación pedida por el usuario: "garantizar que no se repiten hasta completar
+  el barrido" (2026-08-02).** Revisado el motor (`daily.ts`): la garantía EXISTE y está clavada
+  por unit — `cicloCompletadas` por etapa; pendientes = etapa − completadas; agotar ⇒ ciclo
+  nuevo; el objetivo filtra SOLO entre pendientes (sesga el orden, jamás el barrido); test de
+  barrido completo (N días → N distintas → ciclo+1). **Matiz honesto reportado:** el barrido
+  avanza por COMPLETADA ("Sí, ya lo hicimos"), no por vista — una cápsula de un día no marcado
+  sigue pendiente y puede volver (correcto: no se hizo; solo se evita repetir la de ayer).
+  **Hueco cerrado:** ningún test cubría el barrido completo CON objetivo activo todo el ciclo —
+  nuevo unit (214→215): N días con predicado "animales" ⇒ N distintas, las coincidentes TODAS
+  primero, ciclo+1 al agotar. Falla si el pool se filtrara contra la etapa entera en vez de las
+  pendientes. _(Higiene: el registro del bloque I volvió a comerse el encabezado del backlog B —
+  cuarta vez del mismo error de anclaje; reparado aquí. Lección anotada: al usar un encabezado
+  como ancla, SIEMPRE re-incluirlo al final del texto nuevo.)_
+- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
   como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de
