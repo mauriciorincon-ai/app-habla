@@ -27,6 +27,34 @@ export function useGrabadora() {
   const streamRef = useRef<MediaStream | null>(null);
   const trozosRef = useRef<Blob[]>([]);
   const inicioRef = useRef<number>(0);
+  // Medidor en vivo (gate S4, stopper J2): un AnalyserNode SOLO para MIRAR el nivel mientras se
+  // graba ("¿ya empezó? ¿me está oyendo?"). Análisis en memoria y nada más: no se conecta a la
+  // salida (no suena), no persiste, y muere con la grabación.
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const analizadorRef = useRef<AnalyserNode | null>(null);
+  const muestrasRef = useRef<Float32Array<ArrayBuffer> | null>(null);
+
+  const cerrarAnalisis = useCallback(() => {
+    void audioCtxRef.current?.close().catch(() => undefined);
+    audioCtxRef.current = null;
+    analizadorRef.current = null;
+    muestrasRef.current = null;
+  }, []);
+
+  /**
+   * Nivel de voz instantáneo 0..1 para la barra (RMS normalizado: hablar normal la mueve bien).
+   * Getter para leer en un rAF — no dispara renders.
+   */
+  const nivel = useCallback(() => {
+    const analizador = analizadorRef.current;
+    const muestras = muestrasRef.current;
+    if (!analizador || !muestras) return 0;
+    analizador.getFloatTimeDomainData(muestras);
+    let suma = 0;
+    for (let i = 0; i < muestras.length; i++) suma += muestras[i] * muestras[i];
+    const rms = Math.sqrt(suma / muestras.length);
+    return Math.min(1, rms * 8);
+  }, []);
 
   const empezar = useCallback(async () => {
     setEstado("pidiendo-permiso");
@@ -45,6 +73,14 @@ export function useGrabadora() {
       recRef.current = rec;
       inicioRef.current = performance.now();
       rec.start();
+      // El medidor mira el MISMO stream que ya se está grabando: cero permisos extra.
+      const ctx = new AudioContext();
+      const analizador = ctx.createAnalyser();
+      analizador.fftSize = 2048;
+      ctx.createMediaStreamSource(stream).connect(analizador);
+      audioCtxRef.current = ctx;
+      analizadorRef.current = analizador;
+      muestrasRef.current = new Float32Array(analizador.fftSize);
       setEstado("grabando");
     } catch (e) {
       // Permiso negado vs. cualquier otro fallo (sin micrófono, hardware ocupado).
@@ -68,12 +104,13 @@ export function useGrabadora() {
         streamRef.current?.getTracks().forEach((t) => t.stop());
         streamRef.current = null;
         recRef.current = null;
+        cerrarAnalisis();
         setEstado("inactivo");
         res(blob.size > 0 ? { blob, mimeType, duracionMs } : null);
       };
       rec.stop();
     });
-  }, [estado]);
+  }, [estado, cerrarAnalisis]);
 
   /** Cancela sin entregar nada (p. ej. al salir de la pantalla). Libera el micrófono. */
   const cancelar = useCallback(() => {
@@ -85,8 +122,9 @@ export function useGrabadora() {
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
     recRef.current = null;
+    cerrarAnalisis();
     setEstado("inactivo");
-  }, []);
+  }, [cerrarAnalisis]);
 
-  return { estado, empezar, detener, cancelar };
+  return { estado, empezar, detener, cancelar, nivel };
 }

@@ -31,8 +31,10 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   ).trim();
 
   await page.getByTestId("grabar").click();
-  // "Grabando…" (estado grabando): el botón de parar aparece.
+  // "Grabando…" (estado grabando): el botón de parar aparece — y el MEDIDOR (gate S4, J2):
+  // grabar a ciegas era un stopper real; la barra dice "ya empezó y te está oyendo".
   await expect(page.getByTestId("detener")).toBeVisible();
+  await expect(page.getByTestId("medidor-grabacion")).toBeVisible();
   // Ventana de captura real (MediaRecorder es basado en tiempo): dejamos entrar algo de audio.
   await page.waitForTimeout(600);
   await page.getByTestId("detener").click();
