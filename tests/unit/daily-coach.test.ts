@@ -438,6 +438,41 @@ describe("objetivo de la semana (S4): alinea Hoy DENTRO de la etapa, sin romper 
     expect(conObjetivoImposible.capsula.etapa).toBe(PS);
   });
 
+  it("con objetivo activo TODO el ciclo, el barrido sigue COMPLETO: salen todas sin repetir ninguna (garantía pedida en el gate S4)", () => {
+    // La garantía del usuario: "hasta que no se completen todas las de la etapa, no se repiten".
+    // El objetivo sesga el ORDEN (las que coinciden primero) — jamás el barrido. Este test FALLA
+    // si alguien filtra el pool contra la etapa entera en vez de contra las pendientes.
+    const deEtapa = capsulasDe(PS);
+    const coincide = (c: Capsula) => c.etiquetas.includes("animales");
+    const queCoinciden = deEtapa.filter(coincide).map((c) => c.id);
+    expect(queCoinciden.length).toBeGreaterThan(0); // el predicado es real, no vacío
+
+    let progreso: Progreso = PROGRESO_INICIAL;
+    const vistas: string[] = [];
+    for (let dia = 0; dia < deEtapa.length; dia++) {
+      const fecha = claveFechaLocal(new Date(2026, 6, 11 + dia));
+      const sel = seleccionarCapsula(fecha, progreso, CAPSULAS, PS, coincide);
+      vistas.push(sel.capsula.id);
+      progreso = marcarCompletada(fecha, sel.capsula.id, PS, sel.progreso);
+    }
+
+    // Barrido COMPLETO: las N de la etapa, sin repetir ni una.
+    expect(new Set(vistas).size).toBe(deEtapa.length);
+    // El sesgo prometido: mientras haya pendientes que coinciden, salen ellas — todas primero.
+    expect(new Set(vistas.slice(0, queCoinciden.length))).toEqual(
+      new Set(queCoinciden),
+    );
+    // Y al agotar, ciclo nuevo: el barrido arranca otra vez.
+    const despues = seleccionarCapsula(
+      claveFechaLocal(new Date(2026, 6, 11 + deEtapa.length)),
+      progreso,
+      CAPSULAS,
+      PS,
+      coincide,
+    );
+    expect(despues.progreso.porEtapa[PS]?.ciclo).toBe(1);
+  });
+
   it("realinear re-evalúa HOY si NO está completada", () => {
     const base = seleccionarCapsula(HOY, PROGRESO_INICIAL, BIB, PS).progreso;
     const asignada = base.porEtapa[PS]!.asignacionHoy!.capsulaId;
