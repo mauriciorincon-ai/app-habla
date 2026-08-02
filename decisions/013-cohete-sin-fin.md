@@ -24,10 +24,16 @@ miente" manda.
    vivo sin detener nada: **confeti** (el estallido determinista compartido, `centrado` en el
    cielo del cohete) + **contador honesto** "¡Ya subió y bajó N veces!" — que es EXACTAMENTE el
    número que dirá la celebración final (misma métrica, cero semántica nueva).
-3. **El ascenso se muestra con el MUNDO, no con el cohete:** con cada hito, una **capa de cielo**
-   (nubes y estrellas deterministas) cruza hacia abajo UNA vez (~1,4 s) — como mirar por la
-   ventanilla: el mundo corre, el cohete va más alto, y su posición sigue diciendo la verdad del
-   tono. Sin bucle, sin parpadeo; con "reducir animaciones" no se muestra (el contador sigue).
+3. **El ascenso se muestra con el MUNDO, no con el cohete:** una **capa de cielo** (nubes y
+   estrellas deterministas) cruza hacia abajo UNA vez (~1,4 s) — como mirar por la ventanilla:
+   el mundo corre, el cohete va más alto, y su posición sigue diciendo la verdad del tono. Sin
+   bucle, sin parpadeo; con "reducir animaciones" no se muestra (el contador sigue).
+   **Corrección de la re-mirada (mismo día):** la capa NO pasa en el instante del hito — ese
+   instante es el PICO de la voz, justo cuando empieza a bajar, y el mundo corriendo hacia abajo
+   hacía parecer SUBIDA lo que era bajada (hallazgo del usuario en la preview). La capa queda
+   **pendiente y pasa cuando la voz VUELVE A SUBIR de verdad** (~65 ms sostenidos de ascenso):
+   la ilusión de ascenso solo suena cuando de verdad se sube. El confeti y el contador sí
+   celebran en el instante del hito — no insinúan dirección.
 4. **Vocabulario:** nada de "niveles" en el microcopy — es la escalera vetada (rumbo anti-clínico
    y contra-recomendación de las etapas ordinales). Se celebran "subidas y bajadas", lo medido.
 5. **De paso (F8):** el cohete adopta el patrón de planeo del globo — persecución 200 ms con voz

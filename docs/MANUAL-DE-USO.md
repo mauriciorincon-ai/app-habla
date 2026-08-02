@@ -89,9 +89,10 @@ El cohete escucha el **tono** de la voz: cuando la voz sube, el cohete sube; cua
 No hay que decir ninguna palabra — **una vocal estirada como una sirena es exactamente lo que
 buscamos** ("aaaAAAaaa"). Hágalo usted primero, exagerado y riéndose.
 
-Cada vez que la voz **sube y baja de verdad**, el cohete gana un hito: estalla un **confeti**,
-una **capa de nubes y estrellas pasa hacia abajo** (el mundo corre — se siente que va cada vez
-más alto, como mirar por la ventanilla) y aparece el contador: _"¡Ya subió y bajó 2 veces!"_.
+Cada vez que la voz **sube y baja de verdad**, el cohete gana un hito: estalla un **confeti** y
+aparece el contador: _"¡Ya subió y bajó 2 veces!"_. Y en la **siguiente subida** de la voz, una
+**capa de nubes y estrellas pasa hacia abajo** — el mundo corre mientras el cohete sube, y se
+siente que va cada vez más alto, como mirar por la ventanilla.
 **Los hitos no se acaban: el juego no se termina solo.** Jueguen lo que quieran y, cuando
 decidan, toque **"Ya jugamos"**: la celebración dice **el mismo número del contador** — las
 veces reales que su voz cambió de dirección. Jugar con la voz —estirarla, subirla, bajarla— es
