@@ -1,6 +1,6 @@
 "use client";
 
-// OBJETIVO DE LA SEMANA (Outcome 2) — la sintonía con la fonoaudióloga. El padre escribe qué
+// OBJETIVO DE LA SEMANA (Outcome 2) — la sintonía con las terapias del niño. El padre escribe qué
 // trabajar; la app lo alinea de forma DETERMINISTA (sin IA). Honestidad (auditoría de cierre S4):
 // el preview cuenta contra lo que el niño DE VERDAD verá —su etapa y sus temas—, no contra los
 // bancos completos; y si el objetivo existe en la app pero fuera de su alcance, lo dice de frente.

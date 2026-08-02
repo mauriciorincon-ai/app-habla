@@ -214,7 +214,7 @@ export type RegistroSesiones = z.infer<typeof RegistroSesionesSchema>;
 
 export const REGISTRO_SESIONES_VACIO: RegistroSesiones = { sesiones: [] };
 
-// ─── Objetivo de la semana (S4) — la sintonía con la fonoaudióloga ───────────────────────────────
+// ─── Objetivo de la semana (S4) — la sintonía con las terapias del niño ──────────────────────────
 // Texto libre y corto que el padre escribe ("animales", "el baño", "más agua"). Alinea contenido
 // de forma determinista (ver lib/objetivo). SIN expiración automática (predictibilidad COGA: solo
 // el padre lo cambia o lo borra); `desde` es la fecha en que lo escribió, para mostrar "activo

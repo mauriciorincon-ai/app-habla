@@ -21,7 +21,7 @@ export default function ObjetivoPage() {
           Objetivo de la semana
         </h1>
         <p className="text-tinta-suave mt-3 max-w-prose">
-          ¿Qué te pidió trabajar la fonoaudióloga de tu hijo esta semana?
+          ¿Qué te pidieron trabajar en las terapias de tu hijo esta semana?
           Escríbelo aquí y la app pone eso primero: en la cápsula de hoy, en los
           dibujos del juego y en lo que te toca grabar. Es opcional — sin
           objetivo, todo sigue igual que siempre.
