@@ -129,8 +129,10 @@ número: "Con esa voz el globo dio N vueltas completas", derivado del mismo tota
 transversal pre-F (el titular de cada juego lleva **el icono de su tarjeta del selector** a la
 izquierda — orientación por símbolo repetido, sin tocar el titular que enseña la mecánica; regla
 en el design system) · F (**ADR-013**: el cohete tampoco termina solo — cada subida-y-bajada es
-un hito con confeti, **capa de cielo que pasa** (el ascenso lo cuenta el mundo, no la posición:
-el cohete ES el tono en vivo) y contador que coincide con la celebración final; planeo del globo
+un hito con confeti, **capa de cielo que pasa en la siguiente SUBIDA de la voz** (el ascenso lo
+cuenta el mundo, no la posición: el cohete ES el tono en vivo; en la re-mirada el usuario cazó
+que pasarla en el pico hacía parecer subida la bajada) y contador que coincide con la celebración
+final; planeo del globo
 llevado al cohete (F8) y matiz honesto de F5: una voz cantada aguda sí lo mueve — es una voz con
 tono en el cuarto).
 

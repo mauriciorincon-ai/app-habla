@@ -390,6 +390,15 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     allí no hay contador ni confeti. El medidor del tono pierde la rayita de meta (ya no existe).
   - Guía: F3/F5/F6/F8 → Mejorado en S4; F7 gana la nota Safari→Chrome. Manual reescrito (hitos +
     el detalle honesto de la altura). ADR-013.
+  - **Re-mirada F (2026-08-01) — defecto de percepción cazado por el usuario: "si baja igual
+    parece que sube".** Causa: el hito se registra en el PICO de la voz (la inversión es el
+    cambio de dirección), así que la capa de cielo arrancaba a correr hacia abajo EXACTAMENTE
+    cuando la voz empezaba a bajar — y un mundo corriendo hacia abajo se lee como ascenso
+    (ilusión de vección). Fix: **la capa espera la siguiente subida** — queda pendiente
+    (`capaPendienteRef`) y se lanza desde el rAF solo tras ~65 ms sostenidos de ascenso real
+    (`vuelo.y` bajando 4 frames seguidos con `vozActiva`); el confeti y el contador siguen
+    celebrando en el instante del hito (no insinúan dirección). ADR-013 corregido, F3 de la guía
+    describe el orden real (y su "Mal" caza la capa en plena bajada), manual ajustado.
   - **Pre-F — orientación en las pantallas de entrada (pedido del usuario, transversal a los 4
     juegos):** evaluó dos opciones (icono junto al titular vs. reemplazar el titular por el
     nombre del juego). **Ganó conservar el titular poético + icono a la izquierda** — el titular

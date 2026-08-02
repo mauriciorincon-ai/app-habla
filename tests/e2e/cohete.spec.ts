@@ -39,13 +39,16 @@ test("la voz que sube de tono sube el cohete, los hitos se celebran en vivo y el
     .toBeLessThan(-30);
 
   // Sin meta que corte el juego (ADR-013): cada subida-y-bajada es un HITO celebrado en vivo —
-  // el contador honesto, el confeti y la capa de cielo que pasa (ambos quedan en el DOM hasta el
-  // hito siguiente: la aserción no depende del timing). El juego SIGUE jugando.
+  // el contador honesto y el confeti al instante; la capa de cielo pasa en la SIGUIENTE subida
+  // (el mundo solo corre mientras el cohete sube — re-mirada del gate F). Todos quedan en el
+  // DOM hasta el hito siguiente: las aserciones no dependen del timing. El juego SIGUE jugando.
   const subidas = page.getByTestId("subidas");
   await expect(subidas).toBeVisible({ timeout: 30_000 });
   await expect(subidas).toContainText(/vez|veces/);
   await expect(page.getByTestId("confeti-vuelta")).toBeAttached();
-  await expect(page.getByTestId("capa-cielo")).toBeAttached();
+  await expect(page.getByTestId("capa-cielo")).toBeAttached({
+    timeout: 15_000,
+  });
   await expect(juego).toHaveAttribute("data-fase", "jugando");
   const contadas = parseInt(
     (await subidas.innerText()).replace(/\D+/g, " ").trim(),

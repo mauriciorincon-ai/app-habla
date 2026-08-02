@@ -8,13 +8,14 @@
 // cae por silencio: no hay castigo).
 //
 // HITOS (gate S4, ADR-013): el cohete ya no tiene meta que cierre el juego — cada subida-y-bajada
-// real de la voz es un HITO: estalla el confeti y una CAPA DE CIELO pasa hacia abajo (el mundo
-// corre: se siente el ascenso, como por la ventanilla). La posición del cohete sigue siendo el
-// TONO EN VIVO — jamás acumula altura que no está sonando: la posición no miente.
+// real de la voz es un HITO: estalla el confeti, y una CAPA DE CIELO pasa hacia abajo EN LA
+// SIGUIENTE SUBIDA (el mundo corre solo mientras el cohete sube: se siente el ascenso, como por
+// la ventanilla, sin volver confusa la bajada). La posición del cohete sigue siendo el TONO EN
+// VIVO — jamás acumula altura que no está sonando: la posición no miente.
 //
 // Modo calma: sin medidor, sin hitos ni confeti; el cohete simplemente flota con su voz.
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Cohete } from "@/components/iconos";
 import { ConfetiVuelta } from "./confeti-vuelta";
 import type { MedidasVivas } from "./use-voice-session";
@@ -38,9 +39,10 @@ type Props = {
 
 /**
  * La capa de cielo que pasa (ADR-013): nubes y estrellas FIJAS que cruzan hacia abajo UNA vez
- * (~1,4 s) cuando el cohete gana un hito. Determinista (el azar no se puede testear), sin bucle
- * ni parpadeo; con "reducir animaciones" no se muestra (globals.css) y el contador sigue
- * contando el logro.
+ * (~1,4 s) — en la SIGUIENTE subida de la voz tras el hito, nunca en la bajada (la ilusión de
+ * ascenso solo puede sonar cuando de verdad se sube). Determinista (el azar no se puede
+ * testear), sin bucle ni parpadeo; con "reducir animaciones" no se muestra (globals.css) y el
+ * contador sigue contando el logro.
  */
 function CapaDeCielo() {
   return (
@@ -69,6 +71,26 @@ export function EscenarioCohete({
   const medidorRef = useRef<HTMLDivElement | null>(null);
   const vueloRef = useRef({ y: 0, t: 0 });
 
+  // LA CAPA ESPERA LA SUBIDA (re-mirada del gate F): el hito se registra en el PICO de la voz —
+  // justo cuando empieza a bajar. Si la capa pasara ahí, el mundo corriendo hacia abajo haría
+  // parecer SUBIDA lo que es bajada (hallazgo del usuario). Por eso queda PENDIENTE y se lanza
+  // solo cuando la voz vuelve a subir de verdad: el mundo corre únicamente mientras el cohete
+  // sube. El confeti y el contador sí celebran en el instante del hito (no insinúan ascenso).
+  const capaPendienteRef = useRef(false);
+  const ultimoHitoRef = useRef(0);
+  const subidaRef = useRef({ yAnterior: 0, frames: 0 });
+  const [capasLanzadas, setCapasLanzadas] = useState(0);
+
+  useEffect(() => {
+    if (hito > ultimoHitoRef.current) capaPendienteRef.current = true;
+    if (hito < ultimoHitoRef.current) {
+      // Intento nuevo (otra vez / recalibrar): nada pendiente, capas de cero.
+      capaPendienteRef.current = false;
+      setCapasLanzadas(0);
+    }
+    ultimoHitoRef.current = hito;
+  }, [hito]);
+
   useEffect(() => {
     let id = 0;
     const pintar = (t: number) => {
@@ -90,6 +112,18 @@ export function EscenarioCohete({
         const suavizado = 1 - Math.exp(-deltaMs / persecucionMs);
         vuelo.y += (objetivo - vuelo.y) * suavizado;
         cohete.style.transform = `translateY(${vuelo.y}px)`;
+
+        // ¿La voz está subiendo de verdad? (y negativo = arriba; 4 frames seguidos ≈ 65 ms
+        // filtran el jitter del tono). Solo entonces se suelta la capa pendiente del hito.
+        const subida = subidaRef.current;
+        const subiendo =
+          medidas.vozActiva() && vuelo.y < subida.yAnterior - 0.4;
+        subida.frames = subiendo ? subida.frames + 1 : 0;
+        subida.yAnterior = vuelo.y;
+        if (capaPendienteRef.current && subida.frames >= 4) {
+          capaPendienteRef.current = false;
+          setCapasLanzadas((c) => c + 1);
+        }
       }
 
       if (medidorRef.current) {
@@ -123,9 +157,12 @@ export function EscenarioCohete({
           <span className="bg-kid-yellow absolute top-[8%] right-[38%] h-1.5 w-1.5 rounded-full opacity-50" />
         </div>
 
-        {/* El hito: `key` re-monta el confeti y la capa con cada subida-y-bajada nueva — corren
-            UNA vez por logro y quedan quietos hasta el siguiente (en calma no hay hitos). */}
-        {!modoCalma && hito > 0 ? <CapaDeCielo key={`capa-${hito}`} /> : null}
+        {/* El hito: el confeti celebra en el instante (pico de la voz); la capa de cielo pasa
+            en la SIGUIENTE subida (`capasLanzadas`, desde el rAF) — el mundo solo corre mientras
+            el cohete sube. `key` re-monta cada pieza UNA vez por logro (en calma no hay hitos). */}
+        {!modoCalma && capasLanzadas > 0 ? (
+          <CapaDeCielo key={`capa-${capasLanzadas}`} />
+        ) : null}
         {!modoCalma && hito > 0 ? (
           <ConfetiVuelta key={`confeti-${hito}`} centrado />
         ) : null}
