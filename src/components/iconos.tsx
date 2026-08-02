@@ -378,6 +378,24 @@ export function IconoAltavoz({ className }: IconoProps) {
   );
 }
 
+/** Regrabar: la flecha que da la vuelta completa — "otra vez", sin drama. */
+export function IconoRegrabar({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M19.5 12a7.5 7.5 0 1 1-7.5-7.5c2.1 0 4.11.83 5.62 2.28L19.5 8.67"
+        {...trazo}
+      />
+      <path d="M19.5 4.5v4.17h-4.17" {...trazo} />
+    </svg>
+  );
+}
+
 /** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
 export function IconoPictograma({ className }: IconoProps) {
   return (

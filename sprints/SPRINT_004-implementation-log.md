@@ -525,6 +525,13 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   truena, desaparece** — el typecheck no la ve y el ojo tampoco si el texto queda legible;
   la única red es mirar la pantalla (por eso este defecto solo lo cazó el gate). Guía J2
   actualizada con el microcopy literal nuevo.
+  **Cuarto retoque (J3, pedido del usuario): iconos en los botones de la captura.** Cada acción
+  con su icono a la IZQUIERDA (regla de la casa): `IconoAltavoz` en "Escuchar cómo quedó",
+  `IconoHecho` en "Está bien, guardar", `IconoRegrabar` (NUEVO en `iconos.tsx`: la flecha que da
+  la vuelta completa, trazo 1.5 / viewBox 24 como toda la biblioteca) en "Regrabar", y
+  `IconoMicrofono` en "Grabar" — este último no lo pidió, pero dejar 3 de 4 botones con icono
+  era la inconsistencia visual que la regla de iconos existe para evitar. Guía J3 → Mejorado
+  en S4. Los e2e no se tocan: los testids y el microcopy no cambiaron.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

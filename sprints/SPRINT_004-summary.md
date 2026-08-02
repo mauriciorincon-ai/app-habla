@@ -153,7 +153,9 @@ garantía pedida por el usuario) · J-parcial (stopper J2: **grabar a ciegas** �
 estándar arriba como ÚNICA salida — "Terminar por ahora" eliminado, con cleanup de desmontaje
 que suelta el micrófono; y el botón de parar que **parecía un texto** destapó un defecto real:
 `bg-alerta` usaba un token inexistente — Tailwind v4 lo descartaba en silencio y el botón vivía
-sin fondo; ahora "■ Parar" rojo de verdad + línea "● Grabando…" separada).
+sin fondo; ahora "■ Parar" rojo de verdad + línea "● Grabando…" separada; y los botones de la
+captura ganan icono a la izquierda — altavoz/chulo/flecha-que-vuelve/micrófono, con
+`IconoRegrabar` nuevo en la biblioteca).
 
 ## Deuda técnica explícita
 
