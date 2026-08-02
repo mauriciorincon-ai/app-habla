@@ -348,14 +348,24 @@ function Lote({
         </div>
       ) : estado === "grabando" ? (
         <div className="flex flex-col gap-3">
+          {/* El estado ("Grabando…") va como TEXTO y la acción ("Parar") como BOTÓN con fondo:
+              mezclarlos en un solo rótulo hacía que el botón leyera como un aviso (gate S4, J2).
+              Ojo: el fondo es `bg-peligro` — `alerta` no es un token del tema y Tailwind
+              descartaba la clase en silencio, dejando el botón sin fondo. */}
           <button
             type="button"
             onClick={() => void detener().then((c) => c && setCaptura(c))}
-            className="bg-alerta text-sobre-peligro min-h-16 rounded-2xl px-6 text-lg font-medium"
+            className="bg-peligro text-sobre-peligro min-h-16 rounded-2xl px-6 text-lg font-medium"
             data-testid="detener"
           >
-            ● Grabando… toca para parar
+            <span aria-hidden="true">■</span> Parar
           </button>
+          <p className="text-peligro text-center text-sm font-medium">
+            <span aria-hidden="true" className="inline-block animate-pulse">
+              ●
+            </span>{" "}
+            Grabando…
+          </p>
           {/* El medidor del estudio (gate S4, stopper J2): la barra baila con tu voz — así sabes
               que YA está grabando y que te está oyendo, sin adivinar. Solo se mira: el análisis
               vive en memoria y muere con la grabación. */}
