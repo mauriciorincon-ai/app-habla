@@ -26,6 +26,7 @@ import {
 } from "@/lib/banco-voz/almacen";
 import {
   IconoAltavoz,
+  IconoBorrar,
   IconoHecho,
   IconoMicrofono,
   IconoRegrabar,
@@ -199,52 +200,140 @@ function Gestion({
       </button>
 
       {grabadosItems.length > 0 ? (
-        <section className="flex flex-col gap-2">
-          <h2 className="font-medium">Lo que ya grabaste</h2>
-          <ul className="flex flex-col gap-2" data-testid="lista-grabados">
-            {grabadosItems.map((item) => (
-              <FilaGrabada key={item.id} item={item} onBorrado={onBorrado} />
-            ))}
-          </ul>
-        </section>
+        <ListaGrabados grabadosItems={grabadosItems} onBorrado={onBorrado} />
       ) : null}
     </div>
   );
 }
 
-function FilaGrabada({
-  item,
+/**
+ * "Lo que ya grabaste" (gate S4, J4+J5): filas numeradas (al borrar se NOTA que el conteo bajó),
+ * UN solo reproductor para toda la lista (empezar un clip corta el anterior y la barrita de
+ * avance vive en la fila que suena), y borrar en dos toques con efecto de despedida.
+ */
+function ListaGrabados({
+  grabadosItems,
   onBorrado,
 }: {
-  item: ItemGrabable;
+  grabadosItems: ItemGrabable[];
   onBorrado: (id: string) => void;
 }) {
-  const reproducir = useReproductor();
+  const { reproducir, sonando, progreso } = useReproductor();
   return (
-    <li className="bg-superficie border-borde flex items-center justify-between gap-3 rounded-xl border p-3">
-      <span className="truncate">{item.texto}</span>
-      <span className="flex shrink-0 gap-2">
-        <button
-          type="button"
-          onClick={() =>
-            void obtenerGrabacion(item.id).then((g) => g && reproducir(g.blob))
-          }
-          className="border-borde text-tinta min-h-11 rounded-lg border px-3 text-sm"
-          data-testid={`escuchar-${item.id}`}
-        >
-          Escuchar
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            void borrarGrabacion(item.id).then(() => onBorrado(item.id))
-          }
-          className="text-alerta min-h-11 rounded-lg px-3 text-sm"
-          data-testid={`borrar-${item.id}`}
-        >
-          Borrar
-        </button>
-      </span>
+    <section className="flex flex-col gap-2">
+      <h2 className="font-medium">Lo que ya grabaste</h2>
+      <ul className="flex flex-col gap-2" data-testid="lista-grabados">
+        {grabadosItems.map((item, indice) => (
+          <FilaGrabada
+            key={item.id}
+            indice={indice}
+            item={item}
+            sonando={sonando === item.id}
+            progreso={progreso}
+            onEscuchar={() =>
+              void obtenerGrabacion(item.id).then(
+                (g) =>
+                  g &&
+                  reproducir(g.blob, {
+                    clave: item.id,
+                    duracionMs: g.duracionMs,
+                  }),
+              )
+            }
+            onBorrado={onBorrado}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** Cuánto dura el efecto de despedida de una fila borrada antes de quitarla de verdad. */
+const DESPEDIDA_MS = 240;
+/** Cuánto espera el "¿Seguro?" armado antes de desarmarse solo (toque accidental olvidado). */
+const DESARME_MS = 4000;
+
+function FilaGrabada({
+  indice,
+  item,
+  sonando,
+  progreso,
+  onEscuchar,
+  onBorrado,
+}: {
+  indice: number;
+  item: ItemGrabable;
+  sonando: boolean;
+  progreso: () => number;
+  onEscuchar: () => void;
+  onBorrado: (id: string) => void;
+}) {
+  // Borrar pide un segundo toque (gate S4, J5): el primero arma "¿Seguro?" y se desarma solo;
+  // el segundo dispara el efecto de despedida y AHÍ SÍ borra del banco.
+  const [confirmando, setConfirmando] = useState(false);
+  const [despidiendose, setDespidiendose] = useState(false);
+  const desarmeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (desarmeRef.current) clearTimeout(desarmeRef.current);
+    },
+    [],
+  );
+
+  const alTocarBorrar = () => {
+    if (despidiendose) return;
+    if (!confirmando) {
+      setConfirmando(true);
+      desarmeRef.current = setTimeout(() => setConfirmando(false), DESARME_MS);
+      return;
+    }
+    if (desarmeRef.current) clearTimeout(desarmeRef.current);
+    setDespidiendose(true);
+    setTimeout(() => {
+      void borrarGrabacion(item.id).then(() => onBorrado(item.id));
+    }, DESPEDIDA_MS);
+  };
+
+  return (
+    <li
+      className={`bg-superficie border-borde flex flex-col gap-2 rounded-xl border p-3${
+        despidiendose ? " fila-se-va" : ""
+      }`}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="text-tinta-suave font-mono text-sm tabular-nums">
+            {indice + 1}.
+          </span>
+          <span className="truncate">{item.texto}</span>
+        </span>
+        <span className="flex shrink-0 gap-2">
+          <button
+            type="button"
+            onClick={onEscuchar}
+            className="border-borde text-tinta flex min-h-11 items-center gap-1.5 rounded-lg border px-3 text-sm"
+            data-testid={`escuchar-${item.id}`}
+          >
+            <IconoAltavoz className="h-4 w-4 shrink-0" />
+            Escuchar
+          </button>
+          <button
+            type="button"
+            onClick={alTocarBorrar}
+            className={`flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm ${
+              confirmando
+                ? "bg-peligro text-sobre-peligro font-medium"
+                : "text-peligro"
+            }`}
+            data-testid={`borrar-${item.id}`}
+          >
+            <IconoBorrar className="h-4 w-4 shrink-0" />
+            {confirmando ? "¿Seguro?" : "Borrar"}
+          </button>
+        </span>
+      </div>
+      {sonando ? <BarraReproduccion progreso={progreso} /> : null}
     </li>
   );
 }
@@ -289,7 +378,7 @@ function Lote({
   // así que debe soltar el micrófono SOLO: si el padre navega en plena grabación, el desmontaje
   // cancela y libera los tracks — jamás un micrófono abierto huérfano.
   useEffect(() => () => cancelar(), [cancelar]);
-  const reproducir = useReproductor();
+  const { reproducir, sonando, progreso } = useReproductor();
 
   const item = lote[idx];
 
@@ -382,13 +471,23 @@ function Lote({
               guardar → check, regrabar → la flecha que da la vuelta. Pedido del gate S4 (J3). */}
           <button
             type="button"
-            onClick={() => reproducir(captura.blob)}
+            onClick={() =>
+              reproducir(captura.blob, {
+                clave: "captura",
+                duracionMs: captura.duracionMs,
+              })
+            }
             className="border-borde text-tinta flex min-h-14 items-center justify-center gap-2 rounded-xl border px-6 text-lg font-medium"
             data-testid="escuchar-captura"
           >
             <IconoAltavoz className="h-5 w-5 shrink-0" />
             Escuchar cómo quedó
           </button>
+          {/* La señal de que SUENA (gate S4, J3): la barrita se llena con el avance del clip —
+              sin ella, "Escuchar" era un acto de fe. */}
+          {sonando === "captura" ? (
+            <BarraReproduccion progreso={progreso} />
+          ) : null}
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
@@ -483,6 +582,40 @@ function MedidorGrabacion({ nivel }: { nivel: () => number }) {
         ref={barraRef}
         className="bg-acento absolute inset-0 origin-left rounded-full"
         style={{ transform: "scaleX(0.02)" }}
+      />
+    </div>
+  );
+}
+
+/**
+ * La barrita que se llena con el avance del clip que suena (gate S4, J3): la señal visible de
+ * "sí está reproduciendo". Mismo patrón rAF del medidor — lee el getter, cero re-renders.
+ */
+function BarraReproduccion({ progreso }: { progreso: () => number }) {
+  const barraRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let id = 0;
+    const pintar = () => {
+      if (barraRef.current) {
+        barraRef.current.style.transform = `scaleX(${progreso()})`;
+      }
+      id = requestAnimationFrame(pintar);
+    };
+    id = requestAnimationFrame(pintar);
+    return () => cancelAnimationFrame(id);
+  }, [progreso]);
+
+  return (
+    <div
+      className="bg-acento-suave relative h-2 w-full overflow-hidden rounded-full"
+      data-testid="progreso-escucha"
+      aria-hidden="true"
+    >
+      <div
+        ref={barraRef}
+        className="bg-acento absolute inset-0 origin-left rounded-full"
+        style={{ transform: "scaleX(0)" }}
       />
     </div>
   );

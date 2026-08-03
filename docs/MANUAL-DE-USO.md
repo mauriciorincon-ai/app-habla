@@ -164,6 +164,12 @@ pantalla del **Estudio**).
   la palabra, la **escucha cómo quedó** y la **guarda** o la **regraba**. Una barra le muestra
   cuánto lleva grabado. Mientras graba, **otra barra baila con su voz**: si se mueve cuando
   habla, le está oyendo bien — así nunca graba a ciegas. (Esa barra solo se mira: no guarda nada.)
+  Y al escuchar cualquier grabación, **una barrita se va llenando con el avance del audio**: así
+  sabe que sí está sonando y cuánto falta.
+- En **"Lo que ya grabaste"** cada grabación tiene su número y sus botones de **Escuchar** (suena
+  con su barrita de avance en la fila) y **Borrar**. Borrar pide un **segundo toque** —el botón
+  se pone rojo con "¿Seguro?"— para que un dedo apurado no borre nada sin querer; si se
+  arrepiente, en unos segundos se desarma solo.
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.

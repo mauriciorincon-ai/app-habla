@@ -8,7 +8,11 @@ import { idPalabra } from "@/lib/banco-voz/catalogo";
 
 const reproducir = vi.fn();
 vi.mock("@/components/use-reproductor", () => ({
-  useReproductor: () => reproducir,
+  useReproductor: () => ({
+    reproducir,
+    sonando: null,
+    progreso: () => 0,
+  }),
 }));
 
 const listarIds = vi.fn();
@@ -57,9 +61,14 @@ describe("EstudioCliente — vista de gestión (banco de voz)", () => {
     });
   });
 
-  it("«Borrar» quita la grabación del banco y de la lista", async () => {
+  it("«Borrar» pide un segundo toque: «¿Seguro?» primero, y solo entonces borra", async () => {
     render(<EstudioCliente />);
     const borrar = await screen.findByTestId(`borrar-${PERRO}`);
+    // Primer toque: arma la confirmación — NADA se borra todavía (gate S4, J5).
+    fireEvent.click(borrar);
+    expect(borrar).toHaveTextContent("¿Seguro?");
+    expect(borrarGrabacion).not.toHaveBeenCalled();
+    // Segundo toque: efecto de despedida y borrado real.
     fireEvent.click(borrar);
     await waitFor(() => expect(borrarGrabacion).toHaveBeenCalledWith(PERRO));
     // La fila desaparece (onBorrado actualiza el estado).

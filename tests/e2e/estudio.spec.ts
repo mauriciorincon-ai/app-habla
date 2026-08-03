@@ -39,9 +39,11 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   await page.waitForTimeout(600);
   await page.getByTestId("detener").click();
 
-  // Se puede escuchar cómo quedó y aceptarla (o regrabar).
+  // Se puede escuchar cómo quedó y aceptarla (o regrabar). Al escuchar, la barrita de avance
+  // aparece (gate S4, J3): la señal visible de que el clip SUENA.
   await expect(page.getByTestId("escuchar-captura")).toBeVisible();
   await page.getByTestId("escuchar-captura").click(); // reproduce la voz familiar (local)
+  await expect(page.getByTestId("progreso-escucha")).toBeVisible();
   await page.getByTestId("aceptar").click();
 
   // Aceptar avanza el lote: el resultado observable (regla 8) es el progreso que sube.
@@ -57,7 +59,21 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   await page.getByTestId("volver-a-ajustes").click();
   await expect(page).toHaveURL(/\/ajustes/);
   await page.goto("/estudio");
-  await expect(page.getByTestId("lista-grabados")).toContainText(textoGrabado);
+  const lista = page.getByTestId("lista-grabados");
+  await expect(lista).toContainText(textoGrabado);
+
+  // "Escuchar" desde la lista también muestra su barrita de avance, EN la fila que suena.
+  await lista.getByRole("button", { name: "Escuchar" }).first().click();
+  await expect(page.getByTestId("progreso-escucha")).toBeVisible();
+
+  // Borrar pide un segundo toque (gate S4, J5): "¿Seguro?" primero; al confirmar, la fila se
+  // despide, la lista queda vacía y la cobertura de palabras vuelve a cero.
+  const borrar = lista.getByRole("button", { name: "Borrar" }).first();
+  await borrar.click();
+  await expect(lista.getByRole("button", { name: "¿Seguro?" })).toBeVisible();
+  await lista.getByRole("button", { name: "¿Seguro?" }).click();
+  await expect(page.getByTestId("lista-grabados")).toHaveCount(0);
+  await expect(page.getByTestId("cobertura-palabra")).toHaveText(/^0\//);
 });
 
 // Sin permiso de micrófono, el estudio lo dice sin romperse (patrón mic-denegado). Forzamos la

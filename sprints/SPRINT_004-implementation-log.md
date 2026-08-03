@@ -547,6 +547,28 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   reto completo (55: 50 palabras + 2 consignas + 3 celebraciones, visible en la cobertura del
   banco) — pero el microcopy no lo decía. Ahora: "1 de 20 **de esta tanda**". Los e2e aseveran
   `toContainText("1 de")` → intactos. Guía J3 con la explicación de la tanda en el Esperado.
+- **Bloque J CERRADO — 2026-08-03 · J1–J5 limpias, J6 diferida (Safari no deja revocar el mic
+  por sitio → lista de Chrome con E12/F7; la cubre el e2e del mic denegado). Remate con las 3
+  propuestas del usuario:**
+  1. **Escuchar ya no es un acto de fe (J3).** `reproducirBlob` gana `progreso()` (0..1, con la
+     `duracionMs` guardada como red de seguridad: el webm de MediaRecorder llega con
+     `duration === Infinity` en Chrome, bug conocido) y `alTerminar`; `useReproductor` pasa de
+     función suelta a `{reproducir, sonando, progreso}` (la clave del clip en curso + getter
+     para rAF). `BarraReproduccion` (patrón del medidor: rAF + scaleX, cero re-renders) aparece
+     bajo "Escuchar cómo quedó" y EN la fila de la lista que suena. Hallazgo lateral: el
+     "Borrar" de la lista usaba `text-alerta` — **el mismo token fantasma** del botón de parar;
+     ahora `text-peligro`.
+  2. **Iconos en la lista (J4):** altavoz en "Escuchar", papelera en "Borrar" — `IconoBorrar`
+     nuevo en `iconos.tsx` (trazo 1.5, viewBox 24).
+  3. **El borrado se NOTA (J5):** filas numeradas (1., 2., …), segundo toque **"¿Seguro?"**
+     (bg-peligro; se desarma solo a los 4 s — toque accidental olvidado) y efecto `fila-se-va`
+     (240 ms, desvanecido + corrimiento; instantáneo con movimiento reducido por la doble
+     matanza global). El borrado real ocurre DESPUÉS de la despedida. La lista ahora comparte
+     UN reproductor (antes cada fila tenía el suyo: dos filas podían sonar a la vez).
+     Tests: unit del estudio actualizado (mock del reproductor nuevo + "el primer toque NO borra");
+     e2e del estudio extendido (barrita visible al escuchar captura Y lista; borrar en dos toques →
+     lista vacía + cobertura 0/N). Guía J3/J4/J5 mejoradas + bloque J cerrado en el historial;
+     manual con la barrita y el "¿Seguro?". 215 unit · 133 e2e.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

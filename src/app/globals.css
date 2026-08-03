@@ -390,6 +390,22 @@ html[data-reducir-animacion="true"] .capa-cielo {
   animation: halo-encendido 700ms ease-out 1 both;
 }
 
+/*
+ * La despedida de una fila borrada del banco (gate S4, J5): se desvanece UNA vez antes de irse
+ * de verdad — así el borrado se NOTA. Con movimiento reducido la regla global la vuelve
+ * instantánea; la confirmación "¿Seguro?" sigue contando la noticia.
+ */
+@keyframes fila-se-va {
+  to {
+    transform: translateX(14px);
+    opacity: 0;
+  }
+}
+
+.fila-se-va {
+  animation: fila-se-va 240ms ease-in 1 both;
+}
+
 /* Movimiento reducido: por preferencia del sistema O por el ajuste de la app (mismo efecto). */
 @media (prefers-reduced-motion: reduce) {
   *,
