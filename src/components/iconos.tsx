@@ -378,6 +378,29 @@ export function IconoAltavoz({ className }: IconoProps) {
   );
 }
 
+/** Borrar: la papelera — quitar una grabación del banco, decisión del adulto. */
+export function IconoBorrar({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4.5 6.5h15" {...trazo} />
+      <path
+        d="M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"
+        {...trazo}
+      />
+      <path
+        d="M6.5 6.5l.7 12.1a2 2 0 0 0 2 1.9h5.6a2 2 0 0 0 2-1.9l.7-12.1"
+        {...trazo}
+      />
+      <path d="M10 10.5v6.5M14 10.5v6.5" {...trazo} />
+    </svg>
+  );
+}
+
 /** Regrabar: la flecha que da la vuelta completa — "otra vez", sin drama. */
 export function IconoRegrabar({ className }: IconoProps) {
   return (

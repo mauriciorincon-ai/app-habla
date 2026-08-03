@@ -148,16 +148,20 @@ del contenido real por `scripts/gen-catalogo-capsulas.mjs`, para que el veredict
 tenga que esperar 50 días; el histórico navegable EN la app sigue en el backlog) · I (**aprobado:
 las 50 leídas en el catálogo** — "muy buenas; algunas parecen repetidas pero con matices que las
 diferencian, válido"; cero reemplazos pedidos; + unit del barrido completo con objetivo activo,
-garantía pedida por el usuario) · J-parcial (stopper J2: **grabar a ciegas** — el estudio gana su
-**medidor de grabación** en vivo, análisis solo en memoria, jamás persistido; "← Ajustes"
-estándar arriba como ÚNICA salida — "Terminar por ahora" eliminado, con cleanup de desmontaje
-que suelta el micrófono; y el botón de parar que **parecía un texto** destapó un defecto real:
-`bg-alerta` usaba un token inexistente — Tailwind v4 lo descartaba en silencio y el botón vivía
-sin fondo; ahora "■ Parar" rojo de verdad + línea "● Grabando…" separada; y los botones de la
-captura ganan icono a la izquierda — altavoz/chulo/flecha-que-vuelve/micrófono, con
-`IconoRegrabar` nuevo en la biblioteca; la salida del lote ahora vuelve AL BANCO
-("← Tu banco de voz") — atrás es la pantalla anterior, no Ajustes de un salto; y el contador
-del lote dice "de esta tanda" para no confundirse con el reto completo de 50+).
+garantía pedida por el usuario) · J (**CERRADO: J1–J5 limpias, J6 con E12/F7 en la lista de
+Chrome.** Stopper J2: **grabar a ciegas** — el estudio gana su **medidor de grabación** en vivo,
+análisis solo en memoria, jamás persistido; "← Ajustes" estándar arriba — "Terminar por ahora"
+eliminado, con cleanup de desmontaje que suelta el micrófono; el botón de parar que **parecía un
+texto** destapó un defecto real: `bg-alerta` usaba un token inexistente — Tailwind v4 lo
+descartaba en silencio y el botón vivía sin fondo (y el "Borrar" de la lista tenía **el mismo
+token fantasma** en `text-alerta`); ahora "■ Parar" rojo de verdad + línea "● Grabando…"
+separada; botones de la captura y de la lista con icono a la izquierda — `IconoRegrabar` e
+`IconoBorrar` nuevos en la biblioteca; la salida del lote vuelve AL BANCO ("← Tu banco de voz")
+— atrás es la pantalla anterior; el contador dice "de esta tanda" para no confundirse con el
+reto completo de 50+; **escuchar ya no es un acto de fe** — `useReproductor` expone
+`{sonando, progreso}` y una barrita se llena con el avance del clip, bajo la captura y EN la
+fila que suena; y **el borrado se NOTA** — filas numeradas, segundo toque "¿Seguro?" que se
+desarma solo, y efecto de despedida antes del borrado real).
 
 ## Deuda técnica explícita
 
