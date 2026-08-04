@@ -161,7 +161,9 @@ separada; botones de la captura y de la lista con icono a la izquierda — `Icon
 reto completo de 50+; **escuchar ya no es un acto de fe** — `useReproductor` expone
 `{sonando, progreso}` y una barrita se llena con el avance del clip, bajo la captura y EN la
 fila que suena; y **el borrado se NOTA** — filas numeradas, segundo toque "¿Seguro?" que se
-desarma solo, y efecto de despedida antes del borrado real).
+desarma solo, y efecto de despedida antes del borrado real; pulido final: ninguna barra salta al
+arrancar — el medidor ignora el pop del micrófono (300 ms) y el avance de escucha usa la
+duración conocida y solo camina hacia adelante).
 
 ## Deuda técnica explícita
 
