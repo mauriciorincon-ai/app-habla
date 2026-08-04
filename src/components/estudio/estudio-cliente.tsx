@@ -12,7 +12,11 @@ import { useReproductor } from "@/components/use-reproductor";
 import { fechaHoy } from "@/lib/fecha";
 import { alinear } from "@/lib/objetivo/alinear";
 import { leerObjetivo } from "@/lib/storage/local";
-import { catalogoGrabable, type ItemGrabable } from "@/lib/banco-voz/catalogo";
+import {
+  catalogoGrabable,
+  type CategoriaGrabable,
+  type ItemGrabable,
+} from "@/lib/banco-voz/catalogo";
 import { calcularCobertura, type Cobertura } from "@/lib/banco-voz/cobertura";
 import { siguienteLote } from "@/lib/banco-voz/lotes";
 import type { Etapa } from "@content/schema";
@@ -49,6 +53,10 @@ export function EstudioCliente() {
   const [grabados, setGrabados] = useState<Set<string>>(new Set());
   const [cargando, setCargando] = useState(true);
   const [modo, setModo] = useState<"gestion" | "lote">("gestion");
+  // Acotar el lote a UN grupo (gate S4, K5): null = el lote guiado de siempre (todo pendiente).
+  const [categoriaLote, setCategoriaLote] = useState<CategoriaGrabable | null>(
+    null,
+  );
 
   useEffect(() => {
     // Si IndexedDB falla al abrir (modo privado viejo, storage roto), el estudio NO se queda en
@@ -111,7 +119,10 @@ export function EstudioCliente() {
         cobertura={cobertura}
         catalogo={catalogo}
         grabados={grabados}
-        onGrabar={() => setModo("lote")}
+        onGrabar={(categoria) => {
+          setCategoriaLote(categoria ?? null);
+          setModo("lote");
+        }}
         onBorrado={(id) =>
           setGrabados((s) => {
             const n = new Set(s);
@@ -125,6 +136,7 @@ export function EstudioCliente() {
         temas={perfil?.temas ?? []}
         etapa={ajustes?.etapa ?? "palabras-sueltas"}
         grabados={grabados}
+        categoria={categoriaLote}
         onGrabado={(id) => setGrabados((s) => new Set(s).add(id))}
         onSalir={() => setModo("gestion")}
       />
@@ -150,7 +162,7 @@ function Gestion({
   cobertura: Cobertura;
   catalogo: ItemGrabable[];
   grabados: Set<string>;
-  onGrabar: () => void;
+  onGrabar: (categoria?: CategoriaGrabable) => void;
   onBorrado: (id: string) => void;
 }) {
   const grabadosItems = catalogo.filter((i) => grabados.has(i.id));
@@ -159,16 +171,31 @@ function Gestion({
     <div className="flex flex-col gap-6">
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">Con tu voz vas</h2>
-        <div className="mt-4 flex flex-col gap-3" data-testid="cobertura">
+        <div className="mt-4 flex flex-col gap-4" data-testid="cobertura">
           {cobertura.porCategoria.map((c) => (
             <div key={c.categoria}>
-              <div className="flex justify-between text-sm">
+              <div className="flex items-center justify-between gap-3 text-sm">
                 <span>{NOMBRE_CATEGORIA[c.categoria]}</span>
-                <span
-                  className="font-mono tabular-nums"
-                  data-testid={`cobertura-${c.categoria}`}
-                >
-                  {c.grabados}/{c.total}
+                <span className="flex shrink-0 items-center gap-3">
+                  <span
+                    className="font-mono tabular-nums"
+                    data-testid={`cobertura-${c.categoria}`}
+                  >
+                    {c.grabados}/{c.total}
+                  </span>
+                  {/* Cada grupo con su propia puerta al lote (gate S4, K5): llegar a las
+                      consignas no puede exigir atravesar las 50 palabras. */}
+                  {c.grabados < c.total ? (
+                    <button
+                      type="button"
+                      onClick={() => onGrabar(c.categoria)}
+                      className="border-borde text-tinta min-h-11 rounded-lg border px-3 text-sm"
+                      data-testid={`grabar-${c.categoria}`}
+                      aria-label={`Grabar ${NOMBRE_CATEGORIA[c.categoria].toLowerCase()}`}
+                    >
+                      Grabar
+                    </button>
+                  ) : null}
                 </span>
               </div>
               <div className="bg-acento-suave mt-1 h-2 overflow-hidden rounded-full">
@@ -192,7 +219,7 @@ function Gestion({
 
       <button
         type="button"
-        onClick={onGrabar}
+        onClick={() => onGrabar()}
         className="bg-acento text-sobre-acento min-h-14 rounded-xl px-6 text-lg font-medium"
         data-testid="ir-al-lote"
       >
@@ -206,10 +233,18 @@ function Gestion({
   );
 }
 
+/** Orden fijo de los grupos en la lista — el mismo de la cobertura, para que se lean en espejo. */
+const GRUPOS: readonly CategoriaGrabable[] = [
+  "palabra",
+  "consigna",
+  "celebracion",
+];
+
 /**
- * "Lo que ya grabaste" (gate S4, J4+J5): filas numeradas (al borrar se NOTA que el conteo bajó),
- * UN solo reproductor para toda la lista (empezar un clip corta el anterior y la barrita de
- * avance vive en la fila que suena), y borrar en dos toques con efecto de despedida.
+ * "Lo que ya grabaste" (gate S4, J4+J5+K5): agrupada por los tres grupos de la cobertura, filas
+ * numeradas dentro de cada grupo (al borrar se NOTA que el conteo bajó), UN solo reproductor para
+ * toda la lista (empezar un clip corta el anterior y la barrita de avance vive en la fila que
+ * suena), y borrar en dos toques con efecto de despedida.
  */
 function ListaGrabados({
   grabadosItems,
@@ -222,28 +257,44 @@ function ListaGrabados({
   return (
     <section className="flex flex-col gap-2">
       <h2 className="font-medium">Lo que ya grabaste</h2>
-      <ul className="flex flex-col gap-2" data-testid="lista-grabados">
-        {grabadosItems.map((item, indice) => (
-          <FilaGrabada
-            key={item.id}
-            indice={indice}
-            item={item}
-            sonando={sonando === item.id}
-            progreso={progreso}
-            onEscuchar={() =>
-              void obtenerGrabacion(item.id).then(
-                (g) =>
-                  g &&
-                  reproducir(g.blob, {
-                    clave: item.id,
-                    duracionMs: g.duracionMs,
-                  }),
-              )
-            }
-            onBorrado={onBorrado}
-          />
-        ))}
-      </ul>
+      <div className="flex flex-col gap-4" data-testid="lista-grabados">
+        {GRUPOS.map((grupo) => {
+          const delGrupo = grabadosItems.filter((i) => i.categoria === grupo);
+          if (delGrupo.length === 0) return null;
+          return (
+            <div key={grupo}>
+              <h3
+                className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
+                data-testid={`grupo-${grupo}`}
+              >
+                {NOMBRE_CATEGORIA[grupo]} · {delGrupo.length}
+              </h3>
+              <ul className="mt-2 flex flex-col gap-2">
+                {delGrupo.map((item, indice) => (
+                  <FilaGrabada
+                    key={item.id}
+                    indice={indice}
+                    item={item}
+                    sonando={sonando === item.id}
+                    progreso={progreso}
+                    onEscuchar={() =>
+                      void obtenerGrabacion(item.id).then(
+                        (g) =>
+                          g &&
+                          reproducir(g.blob, {
+                            clave: item.id,
+                            duracionMs: g.duracionMs,
+                          }),
+                      )
+                    }
+                    onBorrado={onBorrado}
+                  />
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
@@ -344,12 +395,15 @@ function Lote({
   temas,
   etapa,
   grabados,
+  categoria,
   onGrabado,
   onSalir,
 }: {
   temas: readonly Tema[];
   etapa: Etapa;
   grabados: Set<string>;
+  /** Grupo al que se acota la tanda (gate S4, K5), o null para el lote guiado completo. */
+  categoria: CategoriaGrabable | null;
   onGrabado: (id: string) => void;
   onSalir: () => void;
 }) {
@@ -365,6 +419,7 @@ function Lote({
         grabados,
         objetivo: alinear(leerObjetivo()?.texto),
         tamano: 20,
+        categoria: categoria ?? undefined,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -451,9 +506,11 @@ function Lote({
         data-testid="progreso-lote"
       >
         {/* "de esta tanda" (gate S4): sin el apellido, el "de 20" parecía el reto completo —
-            el total real (50 palabras y más) vive en la cobertura del banco. */}
+            el total real (50 palabras y más) vive en la cobertura del banco. Si la tanda está
+            acotada a un grupo (K5), lo dice. */}
         <span className="font-sans font-semibold tabular-nums">{idx + 1}</span>{" "}
         de {lote.length} de esta tanda
+        {categoria ? ` · ${NOMBRE_CATEGORIA[categoria]}` : null}
       </p>
 
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6 text-center">

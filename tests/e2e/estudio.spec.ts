@@ -76,6 +76,24 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   await expect(page.getByTestId("cobertura-palabra")).toHaveText(/^0\//);
 });
 
+// Gate S4 (K5): cada grupo de la cobertura tiene su propia puerta al lote — llegar a las
+// consignas no puede exigir atravesar las 50 palabras.
+test("«Grabar» junto a Consignas del juego acota la tanda a las 2 consignas", async ({
+  page,
+}) => {
+  await page.goto("/estudio");
+  await page.getByTestId("grabar-consigna").click();
+
+  await expect(page.getByTestId("lote")).toBeVisible();
+  // Con el banco vacío la tanda son las 2 consignas, y el contador dice de cuál grupo es.
+  await expect(page.getByTestId("progreso-lote")).toContainText(
+    "1 de 2 de esta tanda · Consignas del juego",
+  );
+  await expect(page.getByTestId("item-texto")).toContainText(
+    "Haz la voz de sirena",
+  );
+});
+
 // Sin permiso de micrófono, el estudio lo dice sin romperse (patrón mic-denegado). Forzamos la
 // negación sobrescribiendo getUserMedia — con el mic falso de Chromium no hay diálogo real que
 // rechazar, así que este es el único camino honesto a ese estado.

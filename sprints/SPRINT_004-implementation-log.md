@@ -576,6 +576,23 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      de duración** cuando `audio.duration` carga tarde → la `duracionMs` conocida manda siempre que
      exista, y el pintor solo camina hacia ADELANTE (un retroceso grande = clip reiniciado, ahí sí
      vuelve a cero).
+- **Bloque K — 2026-08-03 · K1–K4 limpias · stopper K5 rematado (lote por grupo).** La duda de
+  K1 ("¿priorizas las grabadas? salieron seguidas") se respondió con el código, no con teoría:
+  el mazo del juego usa SOLO los pictos de sus temas, y el lote priorizó grabar exactamente esas
+  (rango -1 "palabras de tus temas") — sus 25 grabadas cubren todas las del juego; no es azar,
+  es la alineación diseñada (por eso K2 no encontró mudas). **Stopper K5: para grabar las 2
+  consignas había que atravesar las ~25 palabras restantes.** Remate: `siguienteLote` gana
+  `categoria?: CategoriaGrabable` (filtro puro; sin categoría = identidad, unit lo clava);
+  cada grupo de la cobertura con pendientes muestra su botón "Grabar" (testid
+  `grabar-<categoria>`, aria-label distinto por grupo) que abre el lote acotado; el contador
+  lo declara ("1 de 2 de esta tanda · Consignas del juego"); y "Lo que ya grabaste" se agrupa
+  por los tres grupos (encabezado `grupo-<categoria>` con conteo, numeración por grupo). El
+  botón grande sigue siendo el lote guiado completo (`onClick={() => onGrabar()}` — ojo: pasar
+  `onGrabar` directo habría metido el MouseEvent como categoría). Tests: +2 unit (lote acotado
+  - identidad; lista agrupada; puerta al lote con tanda acotada) y +1 e2e ×2 proyectos
+    (grabar-consigna → "1 de 2 · Consignas" → primer ítem la sirena — el catálogo la trae
+    primero). **218 unit · 135 e2e.** Guía: J4 (lista agrupada) y K5 (flujo nuevo) mejoradas +
+    historial; manual con el botón por grupo.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

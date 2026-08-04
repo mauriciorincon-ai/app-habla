@@ -8,7 +8,11 @@
 // Y por ETAPA: en "sonidos-e-intentos" las palabras que SOLO viven en gemelas (aún no jugable ahí)
 // bajan al final — no tiene sentido pedirle grabar algo que el niño todavía no va a oír.
 
-import { catalogoGrabable, type ItemGrabable } from "./catalogo";
+import {
+  catalogoGrabable,
+  type CategoriaGrabable,
+  type ItemGrabable,
+} from "./catalogo";
 import type { Tema } from "@/lib/storage/temas";
 import type { Etapa } from "@content/schema";
 import type { Alineacion } from "@/lib/objetivo/alinear";
@@ -46,6 +50,8 @@ export function coincideConObjetivo(
  * @param objetivo  la alineación del objetivo de la semana (S4). Sin objetivo activo, no cambia nada.
  * @param etapa     la etapa activa (S4). Solo "sonidos-e-intentos" reordena (baja las de gemelas).
  * @param tamano    tope del lote (~20 → grabable en <10 min).
+ * @param categoria acota el lote a UN grupo (gate S4, K5: sin esto, llegar a las consignas
+ *                  exigía atravesar las 50 palabras). Sin categoría, el lote guiado de siempre.
  */
 export function siguienteLote(opts: {
   temas: readonly Tema[];
@@ -53,6 +59,7 @@ export function siguienteLote(opts: {
   objetivo?: Alineacion;
   etapa?: Etapa;
   tamano?: number;
+  categoria?: CategoriaGrabable;
   catalogo?: readonly ItemGrabable[];
 }): ItemGrabable[] {
   const {
@@ -61,6 +68,7 @@ export function siguienteLote(opts: {
     objetivo,
     etapa = "palabras-sueltas",
     tamano = 20,
+    categoria,
     catalogo = catalogoGrabable(),
   } = opts;
   const elegidos = new Set(temas);
@@ -77,7 +85,10 @@ export function siguienteLote(opts: {
 
   return catalogo
     .map((item, indice) => ({ item, indice }))
-    .filter(({ item }) => !grabados.has(item.id))
+    .filter(
+      ({ item }) =>
+        !grabados.has(item.id) && (!categoria || item.categoria === categoria),
+    )
     .sort(
       (a, b) =>
         rango(a.item) +

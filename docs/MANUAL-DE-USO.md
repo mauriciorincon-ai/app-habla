@@ -166,10 +166,15 @@ pantalla del **Estudio**).
   habla, le está oyendo bien — así nunca graba a ciegas. (Esa barra solo se mira: no guarda nada.)
   Y al escuchar cualquier grabación, **una barrita se va llenando con el avance del audio**: así
   sabe que sí está sonando y cuánto falta.
-- En **"Lo que ya grabaste"** cada grabación tiene su número y sus botones de **Escuchar** (suena
-  con su barrita de avance en la fila) y **Borrar**. Borrar pide un **segundo toque** —el botón
-  se pone rojo con "¿Seguro?"— para que un dedo apurado no borre nada sin querer; si se
-  arrepiente, en unos segundos se desarma solo.
+- En **"Con tu voz vas"** cada grupo (Palabras · Consignas del juego · Celebraciones) tiene su
+  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las dos
+  consignas sin pasar por las 50 palabras—. El botón grande ("Grabar más") sigue siendo el
+  recorrido guiado de siempre, que propone primero lo que más le sirve al niño.
+- En **"Lo que ya grabaste"** las grabaciones se agrupan por esos mismos tres grupos, numeradas
+  dentro de cada uno, con sus botones de **Escuchar** (suena con su barrita de avance en la
+  fila) y **Borrar**. Borrar pide un **segundo toque** —el botón se pone rojo con "¿Seguro?"—
+  para que un dedo apurado no borre nada sin querer; si se arrepiente, en unos segundos se
+  desarma solo.
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
