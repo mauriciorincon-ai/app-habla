@@ -89,6 +89,26 @@ describe("banco-voz: el lote guiado", () => {
     expect(despues.map((i) => i.id)).not.toContain(primero.id);
   });
 
+  // Gate S4 (K5): llegar a las consignas no puede exigir atravesar las 50 palabras.
+  it("acotado a una categoría, el lote SOLO trae esa categoría; sin categoría, nada cambia", () => {
+    const consignas = siguienteLote({
+      temas: [],
+      grabados: new Set(),
+      categoria: "consigna",
+    });
+    expect(consignas.length).toBeGreaterThan(0);
+    expect(consignas.every((i) => i.categoria === "consigna")).toBe(true);
+
+    // Identidad: no pasar categoría deja el lote guiado EXACTAMENTE como era.
+    const sin = siguienteLote({ temas: ["animales"], grabados: new Set() });
+    const conIndefinida = siguienteLote({
+      temas: ["animales"],
+      grabados: new Set(),
+      categoria: undefined,
+    });
+    expect(conIndefinida.map((i) => i.id)).toEqual(sin.map((i) => i.id));
+  });
+
   // S4: el lote crece con objetivo + etapa (paga la deuda lote-por-etapa).
   it("sin objetivo activo, el orden es IDÉNTICO a no pasar objetivo (identidad)", () => {
     const sin = siguienteLote({ temas: ["animales"], grabados: new Set() });

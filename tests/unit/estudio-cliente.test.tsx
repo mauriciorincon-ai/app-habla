@@ -51,6 +51,29 @@ describe("EstudioCliente — vista de gestión (banco de voz)", () => {
     expect(screen.getByText("Haz sonar tu voz: aaaaah")).toBeInTheDocument();
   });
 
+  it("la lista agrupa por los tres grupos de la cobertura (gate S4, K5)", async () => {
+    render(<EstudioCliente />);
+    // Con una palabra y una consigna grabadas, aparecen SUS encabezados (y solo esos).
+    expect(await screen.findByTestId("grupo-palabra")).toHaveTextContent(
+      "Palabras · 1",
+    );
+    expect(screen.getByTestId("grupo-consigna")).toHaveTextContent(
+      "Consignas del juego · 1",
+    );
+    expect(screen.queryByTestId("grupo-celebracion")).not.toBeInTheDocument();
+  });
+
+  it("cada grupo pendiente tiene su puerta al lote: «Grabar» acota la tanda (gate S4, K5)", async () => {
+    render(<EstudioCliente />);
+    // La consigna "aaah" ya está grabada → el lote de consignas arranca en la de la sirena.
+    fireEvent.click(await screen.findByTestId("grabar-consigna"));
+    expect(await screen.findByTestId("lote")).toBeInTheDocument();
+    expect(screen.getByTestId("progreso-lote")).toHaveTextContent(
+      "Consignas del juego",
+    );
+    expect(screen.getByTestId("item-texto")).toHaveTextContent(/sirena/);
+  });
+
   it("«Escuchar» reproduce el blob de esa grabación (voz familiar)", async () => {
     render(<EstudioCliente />);
     const escuchar = await screen.findByTestId(`escuchar-${PERRO}`);
