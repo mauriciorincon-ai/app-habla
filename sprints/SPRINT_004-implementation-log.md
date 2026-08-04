@@ -592,7 +592,8 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   - identidad; lista agrupada; puerta al lote con tanda acotada) y +1 e2e ×2 proyectos
     (grabar-consigna → "1 de 2 · Consignas" → primer ítem la sirena — el catálogo la trae
     primero). **218 unit · 135 e2e.** Guía: J4 (lista agrupada) y K5 (flujo nuevo) mejoradas +
-    historial; manual con el botón por grupo.
+    historial; manual con el botón por grupo. **K5 re-probada por el usuario tras el remate:
+    limpia ("perfecto sin inconveniente") — bloque K CERRADO.**
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
