@@ -47,10 +47,13 @@ export function reproducirBlob(
   return {
     sono,
     progreso: () => {
+      // La duración conocida manda cuando existe: `audio.duration` llega DESPUÉS (al cargar los
+      // metadatos) y cambiar de fuente a mitad de clip hacía saltar la barra (gate S4).
       const durMs =
-        Number.isFinite(audio.duration) && audio.duration > 0
+        opciones?.duracionMs ??
+        (Number.isFinite(audio.duration) && audio.duration > 0
           ? audio.duration * 1000
-          : (opciones?.duracionMs ?? 0);
+          : 0);
       if (!durMs) return 0;
       return Math.min(1, (audio.currentTime * 1000) / durMs);
     },

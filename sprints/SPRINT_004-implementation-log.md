@@ -569,6 +569,13 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      e2e del estudio extendido (barrita visible al escuchar captura Y lista; borrar en dos toques →
      lista vacía + cobertura 0/N). Guía J3/J4/J5 mejoradas + bloque J cerrado en el historial;
      manual con la barrita y el "¿Seguro?". 215 unit · 133 e2e.
+     **Pulido final (usuario): ambas barras saltaban raro al arrancar.** Dos causas distintas, dos
+     arreglos: (a) el medidor de grabación pintaba el **pop de abrir el micrófono** y el auto-gain
+     inicial como si fueran voz → `nivel()` ignora los primeros 300 ms (`CALENTAMIENTO_MS`); (b) la
+     barra de escucha sufría el **jitter del reloj del audio** al arrancar y el **cambio de fuente
+     de duración** cuando `audio.duration` carga tarde → la `duracionMs` conocida manda siempre que
+     exista, y el pintor solo camina hacia ADELANTE (un retroceso grande = clip reiniciado, ahí sí
+     vuelve a cero).
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

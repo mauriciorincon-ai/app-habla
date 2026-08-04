@@ -593,12 +593,19 @@ function MedidorGrabacion({ nivel }: { nivel: () => number }) {
  */
 function BarraReproduccion({ progreso }: { progreso: () => number }) {
   const barraRef = useRef<HTMLDivElement | null>(null);
+  const maxRef = useRef(0);
 
   useEffect(() => {
     let id = 0;
     const pintar = () => {
       if (barraRef.current) {
-        barraRef.current.style.transform = `scaleX(${progreso()})`;
+        // El avance solo camina hacia ADELANTE (gate S4): en los primeros instantes el reloj
+        // del audio llega con jitter (retrocede mientras sincroniza) y la barra se veía saltar.
+        // Un retroceso grande sí cuenta: es el clip volviendo a empezar.
+        const p = progreso();
+        maxRef.current =
+          p < maxRef.current - 0.3 ? p : Math.max(maxRef.current, p);
+        barraRef.current.style.transform = `scaleX(${maxRef.current})`;
       }
       id = requestAnimationFrame(pintar);
     };

@@ -12,6 +12,9 @@ export type EstadoGrabadora =
 
 export type Captura = { blob: Blob; mimeType: string; duracionMs: number };
 
+/** Primeros ms de grabación que el medidor ignora: el pop del micrófono no es voz. */
+const CALENTAMIENTO_MS = 300;
+
 /** El mejor contenedor que soporte el dispositivo (spike F0: Chrome/Android → webm/opus). */
 function mejorMime(): string {
   if (typeof MediaRecorder === "undefined") return "";
@@ -49,6 +52,9 @@ export function useGrabadora() {
     const analizador = analizadorRef.current;
     const muestras = muestrasRef.current;
     if (!analizador || !muestras) return 0;
+    // Calentamiento (gate S4): el pop de abrir el micrófono y el auto-gain inicial pintaban un
+    // salto falso al arrancar. Esos primeros instantes no son voz — la barra arranca quieta.
+    if (performance.now() - inicioRef.current < CALENTAMIENTO_MS) return 0;
     analizador.getFloatTimeDomainData(muestras);
     let suma = 0;
     for (let i = 0; i < muestras.length; i++) suma += muestras[i] * muestras[i];
