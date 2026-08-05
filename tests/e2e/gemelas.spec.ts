@@ -62,6 +62,29 @@ test("una partida de gemelas: el padre marca, la celebración es honesta y el re
   expect(vecesMic).toBe(0);
 });
 
+// Regla del bloque G, ahora también aquí: "Salir" vuelve al GUION y reinicia POR COMPLETO —
+// al volver a entrar no queda rastro (Ronda 1, contador en cero).
+test("«Salir» en plena ronda vuelve al guion y reinicia el juego completo", async ({
+  page,
+}) => {
+  await page.goto("/jugar/gemelas");
+  await page.getByTestId("empezar-juego").click();
+
+  // Avanza dos rondas marcando (con su festejo de por medio).
+  for (let i = 0; i < 2; i++) {
+    await page.getByTestId("marcar-a").click();
+    await page.getByTestId("siguiente-pareja").click();
+  }
+  await expect(page.getByTestId("progreso-rondas")).toContainText("Ronda 3");
+
+  await page.getByTestId("salir-al-guion").click();
+  await expect(page.getByTestId("empezar-juego")).toBeVisible();
+
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("progreso-rondas")).toContainText("Ronda 1");
+  await expect(page.getByTestId("oidas")).toContainText("0");
+});
+
 test("el padre puede saltar una ronda sin castigo (COGA: estar juntos ya cuenta)", async ({
   page,
 }) => {

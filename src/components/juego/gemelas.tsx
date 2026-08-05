@@ -153,6 +153,19 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
 
   return (
     <section className="flex flex-col gap-6" data-testid="gemelas-ronda">
+      {/* La salida de la ronda (gate S4: gemelas no usa el marco de los juegos de voz y se había
+          quedado sin puerta): "Salir" vuelve al GUION y reinicia POR COMPLETO (regla del bloque
+          G) — el guion tiene su propio "← Juegos" hacia el selector. */}
+      <div className="flex items-center">
+        <button
+          type="button"
+          onClick={otraVez}
+          data-testid="salir-al-guion"
+          className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
+        >
+          Salir
+        </button>
+      </div>
       <div className="text-center">
         <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
           Ronda{" "}
