@@ -183,7 +183,10 @@ crecen de 6 a 12** (contrastes terapéuticos como r/l; pictos ARASAAC revisados 
 `fnv1a(fecha)`, y el test de cobertura nuevo **destapó un sesgo aritmético en `barajar`** — el
 LCG desterraba al primer elemento en el 99,8 % de las semillas ("pato-gato" jamás habría
 salido; el mazo de palabra↔objeto sufría lo mismo) — reemplazado por mulberry32, uniforme
-verificado, suite entera verde sin tocar un e2e).
+verificado, suite entera verde sin tocar un e2e; **L cerrado 7/7** y su alarma de "rachas"
+resultó ser de microcopy: el contador de días es acumulado y nunca baja — pero decía "…no la
+racha" y nombrar el anti-patrón para negarlo sembró la duda; ahora Hoy y Rumbo describen la
+garantía en positivo: "Este número nunca baja").
 
 ## Deuda técnica explícita
 

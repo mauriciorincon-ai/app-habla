@@ -199,8 +199,8 @@ export function HoyCliente() {
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
               {diasAcompañados}
             </span>{" "}
-            {diasAcompañados === 1 ? "día" : "días"}. Sin prisa: lo que cuenta
-            es volver, no la racha.
+            {diasAcompañados === 1 ? "día" : "días"} en total. Este número nunca
+            baja: si un día no entran, no se pierde nada.
           </p>
         ) : null}
       </article>

@@ -36,8 +36,9 @@ toca **"Sí, ya lo hicimos"**.
 
 - Cada día trae una cápsula distinta; no se repite hasta que se acaben todas.
 - La cápsula de hoy **no cambia** aunque cierre y vuelva a abrir la app.
-- Abajo dice cuántos días han practicado juntos. **No hay rachas ni castigos**: si se saltan un
-  día, no pasa absolutamente nada. Lo que cuenta es volver.
+- Abajo dice cuántos días han practicado juntos **en total** (crece al marcar "Sí, ya lo
+  hicimos"). **No hay rachas ni castigos**: ese número **nunca baja** — si se saltan un día, no
+  se pierde nada. Lo que cuenta es volver.
 - En "¿De dónde sale esto?" puede ver el estudio en el que se apoya cada cápsula.
 
 ### Los juegos de voz — "su voz mueve el mundo"
