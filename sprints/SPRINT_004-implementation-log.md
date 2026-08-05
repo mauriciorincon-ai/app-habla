@@ -622,6 +622,29 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      con REINICIO COMPLETO (regla del bloque G: reutiliza `otraVez()` — marcas, ronda y festejo a
      cero); el guion ya tenía su "← Juegos" al selector. e2e nuevo (salir en ronda 3 → guion →
      re-entrar → Ronda 1 + contador 0) ×2 proyectos → **137 e2e**. Guía: L7 nueva + historial.
+- **Bloque L (continuación) — 2026-08-04 · "¿cuántas parejas tenemos? si son pocas necesitamos
+  más" + hallazgo grave en el motor.** Eran 6 pares (12 palabras, 9 solo-de-gemelas sin grabar —
+  por eso no oía su voz: el lote las dejó en la cola, la otra cara de K1). Ampliación con la
+  maquinaria existente (`scripts/descargar-gemelas.mjs`, ARASAAC CC BY-NC-SA, runtime cero-red):
+  **6 pares nuevos → 12** (rana/lana con el contraste r/l — el más terapéutico en español —,
+  sol/sal, toro/loro, casa/cama, queso/beso, moto/mono; casa/moto/mono/sol REUSAN picto y
+  grabación). **Curaduría visual real:** se descargaron y MIRARON los pictos — "rama" (flecha
+  didáctica que compite con "árbol") y "piso" (cuarto vacío abstracto) se DESCARTARON y sus PNG
+  se borraron; "lana" entró de reemplazo. Catálogo: 50 → **58 palabras** (63 grabables).
+  **Semilla del día:** con 12 pares y semilla fija saldrían siempre los mismos 6 → gemelas ahora
+  usa `fnv1a(fechaHoy())` (exportado de daily.ts — patrón cápsula diaria): mezcla distinta cada
+  día, determinista, sin Math.random.
+  **DEFECTO GRAVE DESTAPADO POR EL TEST DE COBERTURA:** el `barajar` (LCG) tenía un sesgo
+  aritmético — multiplicador ≡ 9 (mod 12) ⇒ los primeros saltos solo caían en {0,3,6,9} y el
+  PRIMER elemento quedaba desterrado a las posiciones 7-11 en el **99,8 %** de 2 000 semillas
+  ("pato-gato" no habría salido JAMÁS en 60 días simulados; el mazo de palabra↔objeto sufría el
+  mismo sesgo). **Desviación consciente del riesgo 7 del plan** ("no cambiar el orden de
+  barajar"): aquella regla protegía el refactor 1:1 del dedup; esto es una REPARACIÓN con causa
+  medida. Fix: mulberry32 + Fisher-Yates (histograma uniforme verificado: 153-185 sobre 167
+  esperado). La suite ENTERA pasó sin tocar un e2e — ninguno dependía del orden literal (leen el
+  primer picto dinámicamente). Unit nuevos: mezclas distintas por semilla + **cobertura total
+  (ninguna pareja huérfana en 60 semillas)** — este último es el que CAZÓ el sesgo. **219 unit ·
+  137 e2e · build.** Guía: historial L ampliado + conteos vivos 50→58; manual ídem.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

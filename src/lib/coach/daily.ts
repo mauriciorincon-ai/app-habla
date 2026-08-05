@@ -17,8 +17,9 @@ import { claveFechaLocal } from "@/lib/fecha";
 // motor de cápsulas y sus tests la piden como parte de la API de daily.
 export { claveFechaLocal };
 
-/** FNV-1a: hash estable y sin dependencias — la misma fecha da siempre la misma cápsula. */
-function fnv1a(texto: string): number {
+/** FNV-1a: hash estable y sin dependencias — la misma fecha da siempre la misma cápsula.
+ *  Lo comparte gemelas (S4): semilla del día para variar los pares SIN azar. */
+export function fnv1a(texto: string): number {
   let hash = 0x811c9dc5;
   for (let i = 0; i < texto.length; i++) {
     hash ^= texto.charCodeAt(i);
