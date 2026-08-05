@@ -30,12 +30,18 @@ test("una partida de gemelas: el padre marca, la celebración es honesta y el re
   await expect(page.getByTestId("gemelas-ronda")).toBeVisible();
   await expect(page.getByTestId("progreso-rondas")).toContainText("de 6");
 
-  // Jugamos las 6 rondas: el padre marca lo que oyó (aquí siempre el de la izquierda).
+  // Jugamos las 6 rondas: el padre marca lo que oyó (aquí siempre el de la izquierda) en la
+  // zona discreta "¿Cuál oíste?", el dibujo FESTEJA (gate S4, L1: la palabra tiene consecuencia
+  // visible — "¡Dijo «…»!"), y el padre decide cuándo seguir con "Siguiente pareja".
   for (let ronda = 1; ronda <= 6; ronda++) {
     await expect(page.getByTestId("progreso-rondas")).toContainText(
       `Ronda ${ronda}`,
     );
     await page.getByTestId("marcar-a").click();
+    await expect(page.getByTestId("dijo")).toContainText(/¡Dijo «.+»!/);
+    // El contador honesto sube con lo que el padre marcó (jamás dice "acertó").
+    await expect(page.getByTestId("oidas")).toContainText(`${ronda}`);
+    await page.getByTestId("siguiente-pareja").click();
   }
 
   // Celebración honesta: cuenta las RONDAS jugadas, nunca "acertó".
