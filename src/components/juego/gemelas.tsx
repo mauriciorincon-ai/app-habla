@@ -15,6 +15,7 @@ import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { IconoAltavoz } from "@/components/iconos";
 import { fechaHoy } from "@/lib/fecha";
+import { fnv1a } from "@/lib/coach/daily";
 import { alinear } from "@/lib/objetivo/alinear";
 import { agregarJuiciosGemelas, leerObjetivo } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
@@ -42,13 +43,15 @@ export function Gemelas() {
 
 function GemelasListo({ etapa }: { etapa: Etapa }) {
   const router = useRouter();
-  // Semilla estable por montaje: el orden no cambia al re-renderizar (sin Math.random en render).
-  // Con objetivo de la semana, los pares que coinciden entran primero; sin él, el orden es idéntico.
+  // Semilla DEL DÍA (gate S4: con 12 pares y semilla fija saldrían siempre los mismos 6): cada
+  // día trae su mezcla de parejas, determinista y sin Math.random — el patrón de la cápsula
+  // diaria. Estable por montaje: el orden no cambia al re-renderizar. Con objetivo de la semana,
+  // los pares que coinciden entran primero; sin él, el orden es idéntico.
   const rondas = useMemo(() => {
     const objetivo = alinear(leerObjetivo()?.texto);
     return secuenciaDeRondas(
       etapa,
-      7919,
+      fnv1a(fechaHoy()),
       6,
       undefined,
       (par) =>

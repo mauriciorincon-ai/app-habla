@@ -65,11 +65,25 @@ describe("gemelas: la secuencia de rondas", () => {
     expect(a).toHaveLength(4);
   });
 
-  it("semillas distintas pueden dar órdenes distintos", () => {
+  it("semillas distintas traen mezclas distintas (S4: la variedad del día, sin azar)", () => {
+    // Con 12 pares y sesiones de 6, la semilla del día decide QUÉ parejas entran (además del
+    // orden). Reproducible: misma semilla → misma mezcla; el juego usa la fecha como semilla.
     const a = secuenciaDeRondas("palabras-sueltas", 1, 6).map((p) => p.id);
     const b = secuenciaDeRondas("palabras-sueltas", 999, 6).map((p) => p.id);
-    // Mismo conjunto, y al menos una semilla reordena (no es prueba de azar: es reproducible).
-    expect(new Set(a)).toEqual(new Set(b));
+    expect(a).toHaveLength(6);
+    expect(b).toHaveLength(6);
+    expect(new Set(a)).not.toEqual(new Set(b));
+  });
+
+  it("con el tiempo, TODAS las parejas llegan a jugarse (ninguna queda huérfana)", () => {
+    // La garantía de cobertura: barriendo semillas (días), cada par aparece en alguna sesión.
+    const vistos = new Set<string>();
+    for (let semilla = 1; semilla <= 60; semilla++) {
+      for (const par of secuenciaDeRondas("palabras-sueltas", semilla, 6)) {
+        vistos.add(par.id);
+      }
+    }
+    expect(vistos.size).toBe(paresParaEtapa("palabras-sueltas").length);
   });
 });
 

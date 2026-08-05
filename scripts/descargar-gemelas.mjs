@@ -15,7 +15,8 @@ const API = "https://api.arasaac.org/api/pictograms/es/bestsearch";
 const ESTATICO = "https://static.arasaac.org/pictograms";
 const RESOLUCION = 500;
 
-// Solo las palabras NUEVAS (pato, gato, luna ya viven en el lote principal).
+// Solo las palabras NUEVAS (pato, gato, luna ya viven en el lote principal; el script salta lo
+// que ya exista). Las 10 últimas son la ampliación del gate S4 (bloque L: "necesitamos más").
 const NUEVAS = [
   "mano",
   "mono",
@@ -26,7 +27,17 @@ const NUEVAS = [
   "cuna",
   "gota",
   "bota",
+  "rana",
+  "lana",
+  "sal",
+  "toro",
+  "loro",
+  "cama",
+  "queso",
+  "beso",
 ];
+// Descartadas tras revisión visual (gate S4): "rama" y "piso" dependen de una flecha didáctica
+// o de una escena abstracta — débiles para 4-6 años; "pino" cayó con su par.
 
 const salida = resolve(
   dirname(fileURLToPath(import.meta.url)),
