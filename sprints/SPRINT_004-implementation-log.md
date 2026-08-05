@@ -645,6 +645,19 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   primer picto dinámicamente). Unit nuevos: mezclas distintas por semilla + **cobertura total
   (ninguna pareja huérfana en 60 semillas)** — este último es el que CAZÓ el sesgo. **219 unit ·
   137 e2e · build.** Guía: historial L ampliado + conteos vivos 50→58; manual ídem.
+- **Bloque L CERRADO — 2026-08-04 · 7/7 limpias tras el rediseño ("muy buen resultado") + la
+  alarma de las rachas.** El usuario creyó que el contador de días de Hoy era una racha que se
+  borraría al saltarse un día ("así no debe funcionar, debe mantener los días"). Verificado en
+  el código: `diasAcompañados = progreso.historial.length` — arreglo acumulativo de
+  solo-agregar; NO existe lógica de racha en la app y saltarse un día no borra nada (justo lo
+  que él pedía, ya funcionaba así). El culpable era el MICROCOPY: "lo que cuenta es volver, no
+  la racha" — nombrar la racha para negarla sembró la duda. Fix: "N días en total. Este número
+  nunca baja: si un día no entran, no se pierde nada." (+ "en total" y el gatillo real —crece
+  al marcar "Sí, ya lo hicimos"— aclarados en guía y manual). El encabezado del Rumbo tenía la
+  misma coletilla ("volver es lo que cuenta, no la racha") → "aquí nada se pierde por saltarse
+  un día" — cazada ANTES de que el bloque N la encontrara. Lección de microcopy para la casa:
+  **no nombrar el anti-patrón ni para negarlo** — describir la garantía en positivo. También
+  respondida la duda de L7: sí, la mezcla de parejas cambia cada día (semilla por fecha).
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

@@ -23,7 +23,7 @@ export default function RumboPage() {
         <p className="text-tinta-suave mt-3 max-w-prose">
           Cómo van, contado con lo que de verdad pasó: los días que jugaron, las
           palabras que practicaron, lo que su voz hizo. Sin comparar con nadie y
-          sin apuros: volver es lo que cuenta, no la racha.
+          sin apuros: aquí nada se pierde por saltarse un día.
         </p>
       </header>
 
