@@ -658,6 +658,15 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   un día" — cazada ANTES de que el bloque N la encontrara. Lección de microcopy para la casa:
   **no nombrar el anti-patrón ni para negarlo** — describir la garantía en positivo. También
   respondida la duda de L7: sí, la mezcla de parejas cambia cada día (semilla por fecha).
+- **Sonidos de ambientación (pedido del usuario tras el bloque M) → backlog H2, decisión suya
+  con AskUserQuestion.** Quería sonidos que amenicen los juegos, no solo festejo. Evaluación
+  honesta entregada: 3 de 4 juegos MIDEN el sonido (todo lo emitido vuelve por el micrófono —
+  el eco de K3), música ambiente en globo/cohete descartada de raíz, y el festejo sonoro en
+  plena vuelta cortaría la racha vía la guarda anti-eco. Mapa de lo seguro (gemelas sin mic ·
+  juicio de palabra↔objeto por el riel anti-eco de K5 · pantallas sin medición) + reglas
+  sensoriales (interruptor, silencio en calma, sin bucles) registrados en el ítem 8 del backlog
+  del summary. Se ofreció una "tajada segura ahora" y eligió backlog completo — el S4 cierra
+  con N y O sin crecer más.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

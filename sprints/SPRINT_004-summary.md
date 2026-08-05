@@ -242,6 +242,17 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
    **Diseño esbozado para H2:** derivar el rango REAL del adulto de su banco de voz (la app ya
    tiene sus grabaciones — calibración por familia) y **descartar solo lo confiablemente
    adulto**, jamás exigir tono de niño. Necesita spike de fiabilidad de pitch en fragmentos.
+8. **Sonidos de ambientación en los juegos** (pedido del bloque M/L del gate; decidido a backlog
+   por el usuario con el mapa en la mano). El deseo: sonidos que amenicen, no solo festejo. La
+   restricción física que manda el diseño: **tres juegos MIDEN el sonido mientras se juega** —
+   todo lo que la app emita entra de vuelta por el micrófono (el eco de K3 lo demostró), así que
+   música ambiente en globo/cohete queda descartada de raíz, y un festejo sonoro en plena vuelta
+   del globo cortaría la racha del niño vía la guarda anti-eco. **Mapa de lo seguro:** gemelas
+   (sin micrófono — libertad total) · el momento del juicio en palabra↔objeto (ya suena la voz
+   familiar por el riel anti-eco probado en K5) · pantallas sin medición (guion, selector,
+   celebración). **Reglas sensoriales innegociables (COGA):** interruptor en Ajustes, silencio
+   total en modo calma, nada en bucle, volúmenes suaves, síntesis determinista propia (cero
+   assets externos, cero red). Candidata para el ciclo H2 con diseño sonoro de verdad.
 
 ## Sugerencias de mejora al método
 
