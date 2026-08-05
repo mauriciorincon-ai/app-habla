@@ -169,7 +169,13 @@ palabras de sus temas y el lote las propuso grabar primero; y para llegar a las 
 hay que atravesar las 50 palabras: **cada grupo de "Con tu voz vas" tiene su botón "Grabar"**
 que acota la tanda (`siguienteLote({categoria})`, identidad sin categoría con unit) — el
 contador lo declara ("1 de 2 de esta tanda · Consignas del juego") y "Lo que ya grabaste" se
-agrupa por los tres grupos, numerado dentro de cada uno).
+agrupa por los tres grupos, numerado dentro de cada uno) · L (**STOPPER: "gemelas se siente
+simplón" — rediseño de la ronda con las piezas de la casa**, elegido por el usuario vía
+AskUserQuestion: tocar un dibujo lo hace sonar con la voz del padre (la tarjeta es el botón,
+tocar JAMÁS marca), el juicio baja a la línea discreta "¿Cuál oíste?" (lección del bloque G),
+y al marcar el dibujo festeja como en palabra↔objeto — pop + halo + la palabra con tu voz +
+"¡Dijo «pato»!" + "Siguiente pareja" en manos del padre + contador honesto "Palabras que le
+oíste: N"; motor, celebración final y registro de juicios intactos).
 
 ## Deuda técnica explícita
 

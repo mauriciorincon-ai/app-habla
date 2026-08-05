@@ -594,6 +594,27 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     primero). **218 unit · 135 e2e.** Guía: J4 (lista agrupada) y K5 (flujo nuevo) mejoradas +
     historial; manual con el botón por grupo. **K5 re-probada por el usuario tras el remate:
     limpia ("perfecto sin inconveniente") — bloque K CERRADO.**
+- **Bloque L — 2026-08-04 · STOPPER del usuario en L1: "el juego me parece muy simplón, ese
+  botón oí x palabra no me genera ninguna opinión positiva; ayúdame a potenciarlo con lo que
+  tenemos a mano".** Diagnóstico: al marcar "Oí «pato»" NO pasaba nada visible para el niño (la
+  ronda solo avanzaba — cero consecuencia, cero festejo) y los dos botones grandes del juicio
+  estaban en plena vista (contra la lección del bloque G: el niño es perspicaz). Decisión con
+  AskUserQuestion (2 preguntas): **"Como palabra↔objeto" + "Siguiente pareja" manual** — ambas
+  recomendadas, elegidas por el usuario. Remate SOLO con piezas existentes:
+  1. **La tarjeta del dibujo ES el botón de oírla** (voz familiar; insignia de altavoz en la
+     esquina; sin grabación, tarjeta quieta) — tocar = oír, JAMÁS marca (el riesgo de la opción
+     "tocar = marcar" se descartó explícitamente: el niño podría auto-certificarse).
+  2. **El juicio baja a la línea discreta "¿Cuál oíste?"** (patrón del juez de palabra↔objeto:
+     underline punteado, zona del padre), testids `marcar-a/b` intactos.
+  3. **Al marcar, el dibujo FESTEJA**: `encendido-pop` + `halo-encendido` +
+     `border-celebracion-fuerte` (CSS ya existente), la palabra suena con la voz del padre,
+     "¡Dijo «pato»!" (aria-live) y botón **"Siguiente pareja"** — el padre controla el ritmo
+     (patrón "Otro dibujo"). Contador honesto **"Palabras que le oíste: N"** (jamás "acertó").
+     Saltar ronda sigue avanzando directo (nada que festejar, honesto). Motor `rondas.ts`,
+     celebración final y registro de juicios INTACTOS. e2e de gemelas reescrito al flujo nuevo
+     (marcar → "¡Dijo!" → contador → siguiente); axe verde en la ronda. Guía L2/L6 mejoradas +
+     historial; manual reescrito (decía "toque el dibujo que oyó" — ahora tocar = oír). 218 unit ·
+     135 e2e · build.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

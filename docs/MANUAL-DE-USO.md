@@ -135,7 +135,18 @@ tal cual: _"Y **tú** oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
 Aparecen **dos dibujos a la vez** cuyas palabras se diferencian por un solo sonido: _pato_ y
 _gato_, _mano_ y _mono_, _foca_ y _boca_. Son las llamadas **parejas mínimas**: practicar ese
 contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga UNO**, y luego
-**toque usted el dibujo que oyó**.
+**marque usted el que oyó** en la línea discreta _"¿Cuál oíste?"_ de abajo.
+
+**Cómo se juega la ronda:**
+
+- **Tocar un dibujo lo hace sonar con su voz** (si grabó esa palabra en el Estudio; trae una
+  insignia de altavoz en la esquina). El niño puede tocarlos y explorar la pareja — tocar solo
+  hace sonar, **jamás marca nada**.
+- Cuando el niño dice una palabra, **usted la marca** en _"¿Cuál oíste?"_. Ahí el dibujo elegido
+  **festeja**: se enciende, suena la palabra con su voz y aparece _"¡Dijo «pato»!"_ — la fiesta
+  del niño está en los dibujos, las teclas discretas son suyas.
+- **"Siguiente pareja"** lo toca usted cuando quieran seguir: pueden repetir, volver a tocar los
+  dibujos o quedarse un rato. Arriba, _"Palabras que le oíste: N"_ va contando la sesión.
 
 Este juego es **distinto a los otros tres**:
 
@@ -144,7 +155,8 @@ Este juego es **distinto a los otros tres**:
 - **No hay respuesta correcta ni incorrecta para el niño.** Cualquier intento vale; si hoy solo
   quiere mirar, toque **"Hoy solo miramos esta"** y sigan sin apuro.
 - La celebración es honesta: cuenta **cuántas rondas jugaron** y en cuántas **usted** marcó algo —
-  nunca dice que "acertó".
+  nunca dice que "acertó". Y el festejo del dibujo celebra **lo que usted marcó**, no un veredicto
+  de la app.
 - **Necesita que el niño ya diga palabras sueltas.** Si su etapa es _"sonidos e intentos"_, el
   juego se lo dice con cariño y lo invita a volver más adelante. Se cambia en Ajustes.
 
