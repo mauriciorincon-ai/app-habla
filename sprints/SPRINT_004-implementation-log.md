@@ -615,6 +615,13 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      (marcar → "¡Dijo!" → contador → siguiente); axe verde en la ronda. Guía L2/L6 mejoradas +
      historial; manual reescrito (decía "toque el dibujo que oyó" — ahora tocar = oír). 218 unit ·
      135 e2e · build.
+     **Segundo hallazgo del usuario (mismo día): "no tengo cómo salir del juego".** La ronda de
+     gemelas nunca tuvo puerta — el "Salir" de los otros juegos vive en `MarcoJuego`, que gemelas
+     no usa por no tener micrófono; con el rediseño el hueco se volvió evidente. Arreglo: "Salir"
+     arriba a la izquierda (mismo estilo y testid `salir-al-guion` de la casa) que vuelve al guion
+     con REINICIO COMPLETO (regla del bloque G: reutiliza `otraVez()` — marcas, ronda y festejo a
+     cero); el guion ya tenía su "← Juegos" al selector. e2e nuevo (salir en ronda 3 → guion →
+     re-entrar → Ronda 1 + contador 0) ×2 proyectos → **137 e2e**. Guía: L7 nueva + historial.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
