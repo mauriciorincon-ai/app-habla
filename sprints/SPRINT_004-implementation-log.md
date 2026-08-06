@@ -687,7 +687,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   cápsulas; primeras veces y acumulados; el día exacto de dias-10) y el test de orden EXACTO
   actualizado (empates de fecha conservan inserción — sort estable). **222 unit · 137 e2e ·
   build.** Guía N1/N2/N3 al día + historial; manual con las líneas nuevas y la regla de la
-  celebración.
+  celebración. **Re-verificado por el usuario: "todo perfecto" — bloque N CERRADO.**
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
