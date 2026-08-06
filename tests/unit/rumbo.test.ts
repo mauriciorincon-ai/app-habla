@@ -103,6 +103,17 @@ describe("tendenciasPorSemana: agrega lo medido, sin culpa", () => {
     expect(semana.marcadasPorTi).toBe(2); // reconocidas de palabras
   });
 
+  it("el globo aporta su total y sus vueltas; las cápsulas su conteo (N2: verlo TODO)", () => {
+    const semana = tendenciasPorSemana(sesiones, [
+      { fecha: diaDeLaSemana(0) },
+      { fecha: diaDeLaSemana(2) },
+    ]).find((s) => s.semana === LUNES)!;
+    expect(semana.vozMsTotal).toBe(8000); // 3000 + 5000, sumando intentos
+    // Vueltas POR INTENTO (3000→1, 5000→1): la voz de dos intentos no inventa una vuelta.
+    expect(semana.vueltasGlobo).toBe(2);
+    expect(semana.capsulasHechas).toBe(2);
+  });
+
   it("los días de cápsula (sin juego) cuentan para la constancia", () => {
     const t = tendenciasPorSemana(
       [{ juego: "cohete", fecha: diaDeLaSemana(0), inversiones: 1 }],
@@ -175,6 +186,45 @@ describe("hitosAlcanzados: logros funcionales, jamás clínicos", () => {
     expect(ids).not.toContain("palabras-25");
   });
 
+  it("las primeras veces de cada juego y los acumulados dan sus hitos (N3)", () => {
+    const sesiones: Sesion[] = [
+      // Primera vuelta del globo (vozMs >= 3000) y voz de 10 s seguidos.
+      { juego: "globo", fecha: diaDeLaSemana(0), vozMs: 3200, rachaMs: 10000 },
+      // Primera sirena del cohete.
+      { juego: "cohete", fecha: diaDeLaSemana(1), inversiones: 2 },
+      // Primer dibujo encendido + 50 dibujos acumulados + 10 oídas acumuladas.
+      {
+        juego: "palabras",
+        fecha: diaDeLaSemana(2),
+        encendidos: 50,
+        reconocidas: 10,
+        palabras: ["perro"],
+      },
+      // Primera ronda de gemelas.
+      { juego: "gemelas", fecha: diaDeLaSemana(3), rondas: 6, participadas: 0 },
+    ];
+    const ids = hitosAlcanzados(sesiones).map((h) => h.id);
+    expect(ids).toContain("primera-vuelta");
+    expect(ids).toContain("voz-larga-10");
+    expect(ids).toContain("primera-sirena");
+    expect(ids).toContain("primer-encendido");
+    expect(ids).toContain("primera-gemela");
+    expect(ids).toContain("dibujos-50");
+    expect(ids).toContain("oidas-10");
+  });
+
+  it("los días acumulados dan su hito en el día EXACTO en que se cumplen", () => {
+    // 10 días de práctica repartidos en varias semanas (cápsulas solas también cuentan).
+    const historial = Array.from({ length: 10 }, (_, i) => ({
+      fecha: diaDeLaSemana(i * 3),
+    }));
+    const hitos = hitosAlcanzados([], historial);
+    const dias10 = hitos.find((h) => h.id === "dias-10");
+    expect(dias10).toBeDefined();
+    expect(dias10!.fecha).toBe(diaDeLaSemana(27)); // el décimo día, no el último registrado
+    expect(hitos.some((h) => h.id === "dias-25")).toBe(false);
+  });
+
   it("da el hito de constancia cuando una semana llega a 3 días", () => {
     const sesiones: Sesion[] = [0, 1, 2].map((o) => ({
       juego: "cohete" as const,
@@ -201,11 +251,16 @@ describe("hitosAlcanzados: logros funcionales, jamás clínicos", () => {
       { juego: "cohete", fecha: diaDeLaSemana(0), inversiones: 2 },
     ];
     const ids = hitosAlcanzados(sesiones).map((h) => h.id);
+    // Empates de fecha conservan el orden de inserción (sort estable) — S4: el mismo dataset
+    // ahora también alcanza las "primeras veces" de cada juego.
     expect(ids).toEqual([
       "primer-dia", // día 0 (cohete)
+      "primera-sirena", // día 0 (inversiones > 0)
       "constancia-3", // el lunes de la semana que llegó a 3 días
       "primera-oida", // día 1 (la palabra que TÚ oíste)
+      "primer-encendido", // día 1 (encendidos > 0)
       "voz-larga", // día 2 (racha ≥ 5 s)
+      "primera-vuelta", // día 2 (vozMs ≥ 3000)
     ]);
   });
 });

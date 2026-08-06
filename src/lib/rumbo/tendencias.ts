@@ -6,6 +6,7 @@
 // floja es un número pequeño SIN adjetivo — no hay rachas que se rompan ni semanas "malas".
 
 import { lunesDeLaSemana } from "@/lib/fecha";
+import { HITO_VUELTA_MS } from "@/lib/session-flow";
 import type { Sesion } from "@/lib/storage/schemas";
 
 /** Los días de cápsula del historial (fecha+id) — el otro insumo del Rumbo (lo que el padre marcó). */
@@ -26,6 +27,12 @@ export type ResumenSemana = {
   subidasYBajadas: number;
   /** La racha de voz más larga del globo esa semana, en ms (medido). */
   vozMsMax: number;
+  /** Total de voz del globo esa semana, en ms — todo lo que su voz sonó, sumado (medido). */
+  vozMsTotal: number;
+  /** Vueltas completas del globo esa semana (cada HITO_VUELTA_MS de voz de un intento). */
+  vueltasGlobo: number;
+  /** Cápsulas del día completadas esa semana (lo que el padre marcó "Sí, ya lo hicimos"). */
+  capsulasHechas: number;
   /** Rondas de gemelas jugadas. */
   rondasGemelas: number;
   /** Lo que el PADRE marcó haber oído (palabras reconocidas + participación en gemelas). */
@@ -42,6 +49,8 @@ function resumirSemana(
   let dibujos = 0;
   let inversiones = 0;
   let vozMax = 0;
+  let vozTotal = 0;
+  let vueltas = 0;
   let rondas = 0;
   let marcadas = 0;
 
@@ -58,6 +67,10 @@ function resumirSemana(
         break;
       case "globo":
         vozMax = Math.max(vozMax, s.rachaMs);
+        vozTotal += s.vozMs;
+        // Las vueltas se cuentan POR INTENTO (como las celebró el juego): la voz de dos
+        // intentos no se suma para inventar una vuelta que ninguno completó.
+        vueltas += Math.floor(s.vozMs / HITO_VUELTA_MS);
         break;
       case "gemelas":
         rondas += s.rondas;
@@ -74,6 +87,9 @@ function resumirSemana(
     dibujosEncendidos: dibujos,
     subidasYBajadas: inversiones,
     vozMsMax: vozMax,
+    vozMsTotal: vozTotal,
+    vueltasGlobo: vueltas,
+    capsulasHechas: diasCapsula.size,
     rondasGemelas: rondas,
     marcadasPorTi: marcadas,
   };

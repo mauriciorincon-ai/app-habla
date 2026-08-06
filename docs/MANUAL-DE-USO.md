@@ -235,9 +235,17 @@ practicados no se pierden. Si duda, quédese en _palabras sueltas_.
 
 En el encabezado de "Hoy" hay un acceso, **"El rumbo"**. Es la respuesta honesta a "¿cómo vamos?".
 Muestra, **semana a semana**, solo lo que de verdad pasó: los días que practicaron juntos, las
-palabras distintas que practicaron, cuántos dibujos encendió con su voz, los segundos que sostuvo
-la voz sin cortarse. Y una sección de **hitos** celebrables: "su primer rato de práctica juntos",
-"la primera palabra que USTED le oyó".
+cápsulas completadas, las palabras distintas que practicaron, cuántos dibujos encendió con su
+voz, las vueltas del globo, las veces que su voz subió y bajó, las rondas de gemelas, las
+palabras que usted le oyó, y los segundos de su voz en el globo (el total y la más larga sin
+cortarse). Cada línea aparece solo cuando tiene algo que contar. Y una sección de **hitos**
+celebrables —hay **16 posibles**—: desde "su primer rato de práctica juntos" y las primeras
+veces de cada juego, hasta acumulados como "25 días de práctica en total". Una vez ganados, no
+se pierden.
+
+Un detalle que conviene saber: **el rumbo cuenta lo que llegó a la celebración.** Termine el
+juego con "Ya jugamos" para que el intento quede registrado; si sale con "Salir" a mitad de
+juego, ese rato no se cuenta (a propósito: solo se registra lo que el juego ya le mostró).
 
 Lo que el rumbo **nunca** va a hacer: ponerle una nota, un puntaje, un porcentaje o un plazo; ni
 compararlo con otro niño; ni castigarlo por una semana floja (una semana con pocos días es
