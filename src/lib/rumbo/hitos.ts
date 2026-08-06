@@ -5,6 +5,7 @@
 // la cara amable del progreso: "la primera palabra que TÚ le oíste", no "percentil 40".
 
 import { lunesDeLaSemana } from "@/lib/fecha";
+import { HITO_VUELTA_MS } from "@/lib/session-flow";
 import type { Sesion } from "@/lib/storage/schemas";
 import type { DiaCapsula } from "./tendencias";
 
@@ -23,6 +24,22 @@ const UMBRALES_PALABRAS = [
 const UMBRALES_CONSTANCIA = [
   { d: 3, id: "constancia-3", titulo: "Una semana de 3 días juntos" },
   { d: 5, id: "constancia-5", titulo: "Una semana de 5 días juntos" },
+];
+
+/** Días de práctica ACUMULADOS (total histórico — el número que nunca baja). */
+const UMBRALES_DIAS_TOTALES = [
+  { d: 10, id: "dias-10", titulo: "10 días de práctica en total" },
+  { d: 25, id: "dias-25", titulo: "25 días de práctica en total" },
+];
+
+/** Dibujos encendidos ACUMULADOS (cuentan las repeticiones: cada encendido fue voz real). */
+const UMBRALES_DIBUJOS = [
+  { n: 50, id: "dibujos-50", titulo: "50 dibujos encendidos con su voz" },
+];
+
+/** Palabras que el PADRE marcó haber oído, acumuladas (reconocidas + participación gemelas). */
+const UMBRALES_OIDAS = [
+  { n: 10, id: "oidas-10", titulo: "10 palabras que TÚ le oíste" },
 ];
 
 /**
@@ -74,6 +91,101 @@ export function hitosAlcanzados(
       titulo: "Su voz sonó 5 segundos seguidos",
       fecha: vozLarga.fecha,
     });
+  }
+  const vozMuyLarga = orden.find(
+    (s) => s.juego === "globo" && s.rachaMs >= 10000,
+  );
+  if (vozMuyLarga) {
+    hitos.push({
+      id: "voz-larga-10",
+      titulo: "Su voz sonó 10 segundos seguidos",
+      fecha: vozMuyLarga.fecha,
+    });
+  }
+
+  // Primeras veces de cada juego (gate S4, N3): logros concretos, celebrables, con fecha.
+  const primerEncendido = orden.find(
+    (s) => s.juego === "palabras" && s.encendidos > 0,
+  );
+  if (primerEncendido) {
+    hitos.push({
+      id: "primer-encendido",
+      titulo: "El primer dibujo que su voz encendió",
+      fecha: primerEncendido.fecha,
+    });
+  }
+  const primeraVuelta = orden.find(
+    (s) => s.juego === "globo" && s.vozMs >= HITO_VUELTA_MS,
+  );
+  if (primeraVuelta) {
+    hitos.push({
+      id: "primera-vuelta",
+      titulo: "La primera vuelta completa del globo",
+      fecha: primeraVuelta.fecha,
+    });
+  }
+  const primeraSirena = orden.find(
+    (s) => s.juego === "cohete" && s.inversiones > 0,
+  );
+  if (primeraSirena) {
+    hitos.push({
+      id: "primera-sirena",
+      titulo: "La primera sirena: su voz subió y bajó",
+      fecha: primeraSirena.fecha,
+    });
+  }
+  const primeraGemela = orden.find(
+    (s) => s.juego === "gemelas" && s.rondas > 0,
+  );
+  if (primeraGemela) {
+    hitos.push({
+      id: "primera-gemela",
+      titulo: "Su primera ronda de palabras gemelas",
+      fecha: primeraGemela.fecha,
+    });
+  }
+
+  // Acumulados que nunca bajan (dibujos encendidos, palabras oídas): en orden cronológico.
+  let dibujosAcum = 0;
+  let oidasAcum = 0;
+  let idxDibujos = 0;
+  let idxOidas = 0;
+  for (const s of orden) {
+    if (s.juego === "palabras") {
+      dibujosAcum += s.encendidos;
+      oidasAcum += s.reconocidas;
+    }
+    if (s.juego === "gemelas") oidasAcum += s.participadas;
+    while (
+      idxDibujos < UMBRALES_DIBUJOS.length &&
+      dibujosAcum >= UMBRALES_DIBUJOS[idxDibujos].n
+    ) {
+      hitos.push({
+        id: UMBRALES_DIBUJOS[idxDibujos].id,
+        titulo: UMBRALES_DIBUJOS[idxDibujos].titulo,
+        fecha: s.fecha,
+      });
+      idxDibujos++;
+    }
+    while (
+      idxOidas < UMBRALES_OIDAS.length &&
+      oidasAcum >= UMBRALES_OIDAS[idxOidas].n
+    ) {
+      hitos.push({
+        id: UMBRALES_OIDAS[idxOidas].id,
+        titulo: UMBRALES_OIDAS[idxOidas].titulo,
+        fecha: s.fecha,
+      });
+      idxOidas++;
+    }
+  }
+
+  // Días de práctica acumulados (cualquier práctica: juego o cápsula), día a día.
+  const diasUnicos = [...new Set(fechas)].sort();
+  for (const u of UMBRALES_DIAS_TOTALES) {
+    if (diasUnicos.length >= u.d) {
+      hitos.push({ id: u.id, titulo: u.titulo, fecha: diasUnicos[u.d - 1] });
+    }
   }
 
   // Palabras distintas practicadas: se cuentan acumulando en orden cronológico.

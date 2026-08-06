@@ -75,6 +75,12 @@ function Semana({
           plural="días que practicaron juntos"
         />
         <Dato
+          n={semana.capsulasHechas}
+          id="capsulas"
+          singular="cápsula del día completada"
+          plural="cápsulas del día completadas"
+        />
+        <Dato
           n={semana.palabrasDistintas}
           id="palabras"
           singular="palabra distinta que practicaron"
@@ -85,6 +91,12 @@ function Semana({
           id="dibujos"
           singular="dibujo que encendió con su voz"
           plural="dibujos que encendió con su voz"
+        />
+        <Dato
+          n={semana.vueltasGlobo}
+          id="vueltas"
+          singular="vuelta completa dio el globo con su voz"
+          plural="vueltas completas dio el globo con su voz"
         />
         <Dato
           n={semana.subidasYBajadas}
@@ -104,6 +116,22 @@ function Semana({
           singular="palabra que TÚ le oíste"
           plural="palabras que TÚ le oíste"
         />
+        {/* Los segundos del globo (gate S4, N2: "si quiero ver el rumbo debería ver todo"):
+            el total que sonó y, aparte, la más larga sin cortarse — las mismas dos verdades
+            de la celebración, jamás sumadas en una sola. */}
+        {semana.vozMsTotal >= 1000 ? (
+          <li
+            className="flex items-baseline gap-2"
+            data-testid="dato-voz-total"
+          >
+            <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
+              {segundos(semana.vozMsTotal)}
+            </span>
+            <span className="text-tinta-suave text-sm">
+              segundos sonó su voz en el globo, sumando todos los ratos
+            </span>
+          </li>
+        ) : null}
         {semana.vozMsMax >= 1000 ? (
           <li className="flex items-baseline gap-2" data-testid="dato-voz-max">
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
@@ -153,7 +181,7 @@ export function RumboCliente() {
         </p>
         <Link
           href="/jugar"
-          className="bg-acento text-sobre-acento min-h-12 rounded-xl px-6 font-medium"
+          className="bg-acento text-sobre-acento inline-flex min-h-12 items-center justify-center rounded-xl px-6 font-medium"
         >
           Ir a los juegos
         </Link>

@@ -667,6 +667,27 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   sensoriales (interruptor, silencio en calma, sin bucles) registrados en el ítem 8 del backlog
   del summary. Se ofreció una "tajada segura ahora" y eligió backlog completo — el S4 cierra
   con N y O sin crecer más.
+- **Bloque N — 2026-08-05 · 4/4 limpias ("visual muy buena, limpia, minimalista") con tres
+  remates.** (1) **N1:** "Ir a los juegos" con el texto pegado arriba — `min-h-12` sin flex en
+  el Link del vacío honesto; `inline-flex items-center justify-center`. (2) **N2 ("si quiero
+  ver el rumbo debería ver todo"):** jugó el globo y no vio estadística — dos causas: la línea
+  del globo existente (voz más larga) pudo no registrarse si salió con "Salir" (la sesión se
+  escribe al montar la celebración — regla honesta, ahora ESCRITA en guía y manual: "el Rumbo
+  cuenta lo que llegó a la celebración"), y de verdad faltaban datos ya registrados sin línea:
+  `tendencias` gana **vozMsTotal** (suma), **vueltasGlobo** (POR intento —
+  `floor(vozMs/HITO_VUELTA_MS)` por sesión: la voz de dos intentos no inventa una vuelta) y
+  **capsulasHechas**; la UI las pinta con el patrón Dato (solo si >0, singular/plural,
+  testid propio: dato-capsulas/dato-vueltas/dato-voz-total). (3) **N3 ("debería haber al menos
+  10 hitos; ¿cuántos hay?"):** había 7 posibles → **16**: + primeras veces de cada juego
+  (primer-encendido, primera-vuelta, primera-sirena, primera-gemela), voz-larga-10 (10 s
+  seguidos), y acumulados que nunca bajan (dibujos-50, oidas-10, dias-10, dias-25 — el hito de
+  días lleva la fecha del día EXACTO en que se cumplió, no la del último registro). Umbrales de
+  palabras distintas se quedan en 10/25: el universo real son las palabras de SUS temas —
+  un umbral de 50 sería inalcanzable y por tanto deshonesto. Unit: +3 (globo total/vueltas/
+  cápsulas; primeras veces y acumulados; el día exacto de dias-10) y el test de orden EXACTO
+  actualizado (empates de fecha conservan inserción — sort estable). **222 unit · 137 e2e ·
+  build.** Guía N1/N2/N3 al día + historial; manual con las líneas nuevas y la regla de la
+  celebración.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
