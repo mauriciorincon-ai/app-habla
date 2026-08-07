@@ -12,6 +12,7 @@
 // Lighthouse del PR del S4.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { ETAPA_DEFECTO, type Capsula, type Etapa } from "@content/schema";
 import type { Pictograma } from "@content/pictogramas";
 import type { ParGemelo } from "@content/pares-gemelos";
@@ -26,7 +27,12 @@ import {
   usePerfil,
 } from "@/components/estado-local";
 import { IconoDiana, IconoHecho } from "@/components/iconos";
-import { alinear, contarAlineacion, normalizar } from "@/lib/objetivo/alinear";
+import {
+  alinear,
+  contarAlineacion,
+  estadoDeAlineacion,
+  normalizar,
+} from "@/lib/objetivo/alinear";
 import { acotarContenido } from "@/lib/objetivo/alcance";
 import {
   sugerir,
@@ -147,6 +153,33 @@ function GruposDeChips({
   );
 }
 
+/** Cuenta un texto contra el contenido: el alcance del niño (su etapa y temas), la app entera
+ *  y el estudio — compartido por el preview de lo que se escribe y por la tarjeta activa. */
+function contarPara(
+  bancos: Bancos,
+  etapa: Etapa,
+  temas: readonly string[] | null,
+  texto: string,
+) {
+  const alineacion = alinear(texto);
+  // Lo que el niño verá: cápsulas de SU etapa, pictos de SUS temas, pares jugables en su etapa.
+  const alcance = contarAlineacion(
+    alineacion,
+    acotarContenido(bancos, {
+      etapa,
+      temas,
+      parJugable: (p) => bancos.parJugableEn(p, etapa),
+    }),
+  );
+  // Contra la app entera (para distinguir "no existe" de "existe pero fuera de su alcance").
+  const global = contarAlineacion(alineacion, bancos);
+  // El lote del estudio matchea el catálogo completo (mismo predicado que siguienteLote).
+  const estudio = bancos.grabables.filter((i) =>
+    bancos.coincideGrabable(alineacion, i),
+  ).length;
+  return { alcance, global, estudio };
+}
+
 export function ObjetivoCliente() {
   const hidratado = useHidratado();
   const activo = useObjetivo();
@@ -164,9 +197,10 @@ export function ObjetivoCliente() {
   const etapa = ajustes?.etapa ?? ETAPA_DEFECTO;
   const temas = perfil?.temas ?? null;
 
-  // Carga perezosa: los bancos entran cuando hay algo que contar (primer teclazo), nunca antes.
+  // Carga perezosa: los bancos entran cuando hay algo que contar — el primer teclazo o un
+  // objetivo YA activo (su tarjeta ahora dice su estado de alineación) — nunca antes.
   useEffect(() => {
-    if (limpio === "" || bancos) return;
+    if ((limpio === "" && !activo) || bancos) return;
     let vivo = true;
     void cargarBancos().then((b) => {
       if (vivo) setBancos(b);
@@ -174,28 +208,28 @@ export function ObjetivoCliente() {
     return () => {
       vivo = false;
     };
-  }, [limpio, bancos]);
+  }, [limpio, activo, bancos]);
 
-  const conteos = useMemo(() => {
-    if (!bancos || limpio === "") return null;
-    const alineacion = alinear(limpio);
-    // Lo que el niño verá: cápsulas de SU etapa, pictos de SUS temas, pares jugables en su etapa.
-    const alcance = contarAlineacion(
-      alineacion,
-      acotarContenido(bancos, {
-        etapa,
-        temas,
-        parJugable: (p) => bancos.parJugableEn(p, etapa),
-      }),
-    );
-    // Contra la app entera (para distinguir "no existe" de "existe pero fuera de su alcance").
-    const global = contarAlineacion(alineacion, bancos);
-    // El lote del estudio matchea el catálogo completo (mismo predicado que siguienteLote).
-    const estudio = bancos.grabables.filter((i) =>
-      bancos.coincideGrabable(alineacion, i),
-    ).length;
-    return { alcance, global, estudio };
-  }, [bancos, limpio, etapa, temas]);
+  const conteos = useMemo(
+    () =>
+      bancos && limpio !== "" ? contarPara(bancos, etapa, temas, limpio) : null,
+    [bancos, limpio, etapa, temas],
+  );
+
+  // El estado del objetivo GUARDADO (hallazgo O5 + propuesta O3 del gate): la tarjeta activa
+  // dice la verdad — verde si alinea, ámbar si está fuera de su alcance o sin contenido aún.
+  const conteosActivo = useMemo(
+    () =>
+      bancos && activo ? contarPara(bancos, etapa, temas, activo.texto) : null,
+    [bancos, activo, etapa, temas],
+  );
+  const estadoActivo = conteosActivo
+    ? estadoDeAlineacion(
+        conteosActivo.alcance,
+        conteosActivo.global,
+        conteosActivo.estudio,
+      )
+    : null;
 
   // Sugerencias en vivo (gate S4, O1): lo que escribe, contra el vocabulario REAL del contenido.
   const sugerencias = useMemo<Sugerencia[]>(() => {
@@ -298,12 +332,28 @@ export function ObjetivoCliente() {
   return (
     <div className="flex flex-col gap-6">
       {activo ? (
+        /* La tarjeta dice su ESTADO (hallazgo O5 + propuesta O3 del gate): verde cuando alinea;
+           ámbar —con el porqué en palabras— cuando está fuera del alcance del niño o cuando la
+           app aún no tiene ese contenido. Nada comunica solo con color (regla 4). */
         <section
-          className="bg-acento-suave/40 border-acento flex flex-col gap-3 rounded-2xl border-l-4 p-5"
+          className={`flex flex-col gap-3 rounded-2xl border-l-4 p-5 ${
+            estadoActivo === "fuera-de-alcance" ||
+            estadoActivo === "sin-contenido"
+              ? "bg-aviso/10 border-aviso"
+              : "bg-acento-suave/40 border-acento"
+          }`}
           data-testid="objetivo-activo"
+          data-estado={estadoActivo ?? undefined}
         >
           <div className="flex items-start gap-3">
-            <IconoDiana className="text-acento mt-0.5 h-6 w-6 shrink-0" />
+            <IconoDiana
+              className={`mt-0.5 h-6 w-6 shrink-0 ${
+                estadoActivo === "fuera-de-alcance" ||
+                estadoActivo === "sin-contenido"
+                  ? "text-aviso"
+                  : "text-acento"
+              }`}
+            />
             <div className="min-w-0">
               <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
                 Objetivo activo
@@ -315,6 +365,31 @@ export function ObjetivoCliente() {
                 Activo desde el {fechaLarga(activo.desde)}. Se queda hasta que
                 lo cambies o lo quites.
               </p>
+              {estadoActivo === "sin-contenido" ? (
+                <p
+                  className="text-tinta mt-2 text-sm font-medium"
+                  data-testid="objetivo-activo-sin-contenido"
+                >
+                  Priorizado, pero la app aún no tiene contenido de esto: por
+                  ahora la cápsula y los juegos no cambian.
+                </p>
+              ) : estadoActivo === "fuera-de-alcance" ? (
+                <p
+                  className="text-tinta mt-2 text-sm font-medium"
+                  data-testid="objetivo-activo-fuera"
+                >
+                  Está en la app, pero no en lo que él ve hoy (su etapa y sus
+                  temas): la cápsula y los juegos no cambian.
+                  {conteosActivo && conteosActivo.estudio > 0
+                    ? " En el estudio sí se pone primero al grabar."
+                    : ""}{" "}
+                  Si quieres que los juegos lo traigan,{" "}
+                  <Link href="/ajustes" className="underline">
+                    revisa sus temas en Ajustes
+                  </Link>
+                  .
+                </p>
+              ) : null}
             </div>
           </div>
           <button
