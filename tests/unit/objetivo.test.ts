@@ -54,6 +54,20 @@ describe("alinear: objetivo → predicados de coincidencia", () => {
     expect(a.coincidePalabra("perro")).toBe(true);
     expect(a.coincideTema("animales")).toBe(false);
   });
+
+  // Hallazgo del usuario en el gate (bloque O): en Ajustes el tema se VE "Transporte", pero la
+  // clave interna del contenido es "carros" (rename G6). Lo que la pantalla muestra tiene que
+  // alinear — la clave es un detalle nuestro, no del padre.
+  it('el nombre VISIBLE del tema alinea su clave: «transporte» → "carros"', () => {
+    const a = alinear("transporte");
+    expect(a.coincideTema("carros")).toBe(true);
+    expect(a.coincideEtiquetas(["carros"])).toBe(true);
+    // La clave de siempre sigue funcionando tal cual.
+    expect(alinear("carros").coincideTema("carros")).toBe(true);
+    // Y la expansión no inventa nada: ni con texto lejano ni con el objetivo vacío.
+    expect(alinear("colores").coincideTema("carros")).toBe(false);
+    expect(alinear("").activo).toBe(false);
+  });
 });
 
 describe("contarAlineacion: el preview honesto y el caso sin coincidencias", () => {

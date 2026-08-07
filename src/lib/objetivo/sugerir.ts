@@ -6,6 +6,7 @@
 // ofrece "¿quisiste decir…?"; solo cuando está completamente lejos, el mensaje honesto de antes.
 
 import { normalizar, normalizarConForma } from "./alinear";
+import { NOMBRE_TEMA } from "@/lib/storage/temas";
 
 export type Sugerencia = {
   termino: string;
@@ -49,6 +50,11 @@ export function vocabularioDe(contenido: {
   for (const p of contenido.pictos) {
     terminos.add(p.palabra);
     terminos.add(p.tema);
+    // El nombre VISIBLE del tema también es vocabulario: el padre ve "Transporte" en Ajustes,
+    // no la clave "carros" — lo que la pantalla muestra se puede escribir (y alinear.ts lo
+    // expande a su clave al alinear). El cast: aquí `tema` es string genérico, no Tema.
+    const nombre = (NOMBRE_TEMA as Record<string, string>)[p.tema];
+    if (nombre) terminos.add(nombre);
   }
   for (const p of contenido.pares) {
     terminos.add(p.a.palabra);

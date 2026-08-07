@@ -8,6 +8,8 @@
 // que no existe en el contenido), la app lo dice claro y no finge alinear algo. El objetivo NUNCA
 // salta de etapa (ADR-005): alinea DENTRO de la etapa activa, jamás fuerza contenido de otra.
 
+import { NOMBRE_TEMA, TEMAS } from "@/lib/storage/temas";
+
 /** Palabras estructurales (artículos, preposiciones, conjunciones) de ≥3 letras que no aportan. */
 const PALABRAS_VACIAS = new Set([
   "del",
@@ -74,6 +76,16 @@ export function alinear(texto: string | null | undefined): Alineacion {
   const tokens = texto ? normalizar(texto) : [];
   const activo = tokens.length > 0;
   const objetivo = new Set(tokens);
+
+  // Los nombres VISIBLES de los temas también alinean su clave interna: en Ajustes el padre ve
+  // "Transporte", pero la clave del contenido sigue siendo "carros" (rename del gate S4, G6).
+  // Escribir lo que la pantalla muestra TIENE que funcionar — la clave es un detalle nuestro,
+  // no suyo (hallazgo del usuario en el gate, bloque O). Con el set vacío no expande nada.
+  for (const tema of TEMAS) {
+    if (normalizar(NOMBRE_TEMA[tema]).some((t) => objetivo.has(t))) {
+      objetivo.add(tema);
+    }
+  }
 
   const comparte = (candidato: string): boolean => {
     for (const t of normalizar(candidato)) if (objetivo.has(t)) return true;

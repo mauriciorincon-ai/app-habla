@@ -766,6 +766,22 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      ("medi" → grupo neutro con «medio»; tocar «medio» → mensaje honesto + «medios» como
      continuación; guardar sin pregunta). **243 unit · 145 e2e · typecheck · lint · build.**
      ADR-014 escrita. Guía O1 con el caso "medi" y los "Mal" nuevos; manual con los dos grupos.
+- **Bloque O (cuarto remate) — 2026-08-07 · lo que Ajustes muestra, alinea.** El usuario escribió
+  "transporte" — el tema que TIENE seleccionado en Ajustes — y la app le dijo que no estaba.
+  Secuela del rename G6 de este mismo gate: el tema se VE "Transporte" pero la clave interna del
+  contenido quedó `"carros"` (compatibilidad con perfiles guardados), y el alineador solo conocía
+  claves. Arreglo en el motor, no en la pantalla:
+  1. **`alinear()` expande los nombres visibles a su clave:** si un token del objetivo aparece en
+     `NOMBRE_TEMA[tema]` (normalizado), la clave del tema entra al set — con eso "transporte"
+     alinea cápsulas (etiqueta carros), dibujos (tema), gemelas y el lote del estudio de una vez
+     (todos usan los mismos predicados). Con set vacío no expande nada (identidad intacta).
+  2. **`vocabularioDe` suma los nombres visibles** de los temas de los pictos: "transp" sugiere
+     «transporte» en verde (y `clavesApp` lo excluye del grupo neutro del diccionario).
+     Tests: +2 unit (expansión con ida y vuelta — carros sigue, colores no inventa, vacío
+     intacto; "transp"→«transporte» por vocabulario) · +1 e2e ×2 proyectos (temas con carros:
+     "transp" → chip verde → preview alinea, sin mensaje de "no está"). **245 unit · 147 e2e ·
+     typecheck · lint · build.** Guía O1 (los temas de Ajustes valen + "Mal" nuevo) + historial;
+     manual con la línea.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

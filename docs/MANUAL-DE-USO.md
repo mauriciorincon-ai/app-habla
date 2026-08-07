@@ -270,7 +270,8 @@ palabras del español **bien escritas que la app aún no tiene** ("medi" → «m
 no cambian los juegos, pero le ayudan a que el objetivo quede bien escrito — vienen de un
 diccionario de las 10.000 palabras más comunes del español que viaja dentro de la app (sin
 internet, como todo aquí). El campo también usa el corrector de su navegador o teclado (el
-subrayado rojo de siempre).
+subrayado rojo de siempre). Los nombres de los temas **tal como los ve en Ajustes** también
+valen: escribir "transporte" alinea todo lo de ese tema.
 
 Si escribe con un error de ortografía ("animles") y le da guardar, **pregunta primero**:
 _"¿Quisiste decir «animales»?"_ — puede corregir con un toque o guardar tal cual (escribir
