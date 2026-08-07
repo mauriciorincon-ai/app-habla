@@ -831,6 +831,14 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      enlace) · aserción del desglose en el e2e verde. **249 unit · 149 e2e · typecheck · lint ·
      build.** Guía O3 (rojo+triángulo), O4/O6 (azul+info), O5 (los tres estados con sus formas,
      "si sale AZUL elige el tema y vuelve a mirar") + historial (9); manual con la tríada.
+- **BLOQUE O CERRADO — GATE ⭐ ACUMULADO COMPLETO (2026-08-07).** El usuario confirmó O1–O6
+  "todo en orden y corriendo según lo esperado" tras seis remates nacidos en el bloque:
+  sugerencias vivas + paso de ortografía + botón que nombra + diana (1) · la eñe sobrevive (2) ·
+  ortografía general en dos colores, ADR-014 (3) · lo que Ajustes muestra alinea (4) · la
+  tarjeta activa dice su estado (5) · estado con grano fino y colores para daltonismo (6).
+  Con esto TODOS los bloques del recorrido del gate quedan aprobados (la lista de tablet sigue
+  diferida por viaje — ADRs 003/007/010 al regresar). **Siguiente paso: merge del PR #5 (solo
+  a la orden explícita del usuario) → `/cierre-sprint habla` en la planeadora → H1 COMPLETO.**
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
