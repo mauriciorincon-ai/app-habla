@@ -160,6 +160,30 @@ test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de graba
   await expect(page.getByTestId("objetivo-activo")).toContainText("«animales»");
 });
 
+// Gate S4 (hallazgo del usuario, bloque O): lo que Ajustes MUESTRA se puede escribir como
+// objetivo. El tema se ve "Transporte" pero su clave interna es "carros" (rename G6) — el
+// nombre visible tiene que sugerirse y alinear igual que la clave.
+test("«transporte» (el nombre visible del tema) sugiere y alinea aunque la clave sea «carros»", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "habla:v1:perfil",
+      JSON.stringify({ temas: ["carros", "mar"] }),
+    );
+  });
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("transp");
+  await expect(page.getByTestId("sugerencia-viva-transporte")).toBeVisible();
+
+  await page.getByTestId("sugerencia-viva-transporte").click();
+  await expect(page.getByTestId("objetivo-preview")).toBeVisible();
+  await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
+  await expect(page.getByTestId("guardar-objetivo")).toContainText(
+    "Guardar «transporte»",
+  );
+});
+
 test("lo que existe en la app pero FUERA de su alcance se dice de frente (auditoría de cierre)", async ({
   page,
 }) => {

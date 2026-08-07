@@ -74,6 +74,17 @@ describe("sugerir: el acompañante del teclazo", () => {
 });
 
 describe("vocabularioDe: el universo real de términos", () => {
+  it("incluye el nombre VISIBLE del tema: «transp» sugiere «transporte» (clave: carros)", () => {
+    const v = vocabularioDe({
+      capsulas: [],
+      pictos: [{ palabra: "carro", tema: "carros" }],
+      pares: [],
+    });
+    expect(sugerir("transp", v)).toEqual([
+      { termino: "transporte", tipo: "prefijo" },
+    ]);
+  });
+
   it("junta etiquetas, palabras, temas y pares, sin repetir", () => {
     const v = vocabularioDe({
       capsulas: [{ etiquetas: ["animales", "comida"] }],
