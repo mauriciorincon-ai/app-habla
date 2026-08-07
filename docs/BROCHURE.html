@@ -132,6 +132,35 @@
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta);
     background: var(--acento-suave); border-radius: 8px; padding: 3px 10px; }
 
+  /* Señas de identidad dentro del detalle: el icono o el personaje REAL de la app, solo
+     donde el texto nombra algo que ella va a buscar en pantalla (jamás adorno). Las cosas
+     del niño (los personajes, los dibujos) van sobre su escenario claro — la pantalla del
+     niño es clara SIEMPRE, también aquí. Lo del adulto, en trazo sobre el fondo normal. */
+  .feature h4 { display: flex; align-items: center; gap: 8px; }
+  svg.f-icono { flex: none; width: 22px; height: 22px; color: var(--acento); }
+  svg.f-icono :is(path, rect, circle) { fill: none; stroke: currentColor;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .escenario { flex: none; width: 44px; height: 44px; display: grid;
+    place-items: center; background: #FFF9EE; border: 1px solid #ECE4D2;
+    border-radius: var(--radio-chico); }
+  .escenario svg { display: block; }
+  svg.trazo-nino { color: #2B3530; }
+  svg.trazo-nino :is(path, rect, circle) { fill: none; stroke: currentColor;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  svg.ic { display: inline-block; width: 16px; height: 16px; vertical-align: -3px; }
+  svg.ic :is(path, circle) { fill: none; stroke: currentColor; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round; }
+  .ic-exito { color: #527947; }
+  .ic-info { color: #4A6E84; }
+  .ic-peligro { color: #B14B3D; }
+  .chip-ej { display: inline-block; font-size: 0.8rem; border-radius: 8px;
+    padding: 1px 8px; white-space: nowrap; }
+  .chip-ej-verde { background: var(--acento-suave); color: var(--acento); }
+  .chip-ej-neutra { background: var(--fondo); color: var(--tinta-suave);
+    border: 1px solid var(--borde); }
+  .marca { display: flex; justify-content: center; margin-bottom: 10px; }
+  .marca svg { width: 44px; height: 66px; }
+
   /* ===== Capa 3 · Lo fino ===== */
   details.fino { background: var(--superficie); border: 1px solid var(--borde);
     border-radius: var(--radio); padding: 0 18px; margin-top: 12px; }
@@ -164,6 +193,9 @@
     .portada h1, .portada .promesa { animation: alzar 0.9s var(--ease-suave) both; }
     .portada .promesa { animation-delay: 0.25s; }
     @keyframes alzar { from { opacity: 0; transform: translateY(22px); } }
+    /* El globo de la portada flota apenas — es el alma del producto, no un adorno. */
+    .marca svg { animation: flotar 5s ease-in-out infinite alternate; }
+    @keyframes flotar { to { transform: translateY(-8px); } }
   }
   /* Reduced motion: experiencia alterna completa — todo visible, cero movimiento. */
   @media (prefers-reduced-motion: reduce) {
@@ -178,6 +210,17 @@
 
   <!-- Capa 0 · Portada -->
   <header class="portada">
+    <div class="marca" aria-hidden="true">
+      <!-- EL GLOBO — el personaje que la voz mueve (copiado de la app, paleta del niño). -->
+      <svg viewBox="0 0 64 96" focusable="false">
+        <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="#2B3530"
+          stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M28 62h8l-4 5z" fill="#2B3530" opacity="0.55"/>
+        <ellipse cx="32" cy="32" rx="25" ry="31" fill="#FFC7B0" stroke="#2B3530"
+          stroke-width="1.5"/>
+        <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity="0.4"/>
+      </svg>
+    </div>
     <p class="eyebrow">Hablemos San</p>
     <h1>Su voz mueve el mundo.</h1>
     <p class="promesa">Juegos que se juegan hablando — y se juegan contigo. Y cada día,
@@ -232,7 +275,9 @@
                 solo frente a la pantalla.</p>
             </div>
             <div class="feature">
-              <h4>«Sí, ya lo hicimos» — los días que llevan</h4>
+              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+                  focusable="false"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                «Sí, ya lo hicimos» — los días que llevan</h4>
               <p class="como">Cuando hagan la actividad, tócalo y el contador de días
                 practicados crece. Ese número <strong>nunca baja</strong>: si un día no se
                 pudo, no se pierde nada y no hay racha que se rompa. Lo que cuenta es
@@ -283,7 +328,9 @@
         <div class="detalle" id="d2" role="region" aria-label="Jugar con la voz — detalle">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature">
-              <h4>Antes de jugar, tu guion</h4>
+              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+                  focusable="false"><path d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"/></svg>
+                Antes de jugar, tu guion</h4>
               <p class="como">Tres de los juegos escuchan el micrófono (el globo, el cohete
                 y «palabra y dibujo»), y antes de cada uno pasa siempre lo mismo: primero
                 te muestra <strong>tu guion</strong> —la línea que tú vas a decir—, luego
@@ -296,7 +343,17 @@
                 voz, no el vocabulario. Cualquier sonido vale.</p>
             </div>
             <div class="feature">
-              <h4>El globo — la voz que se sostiene</h4>
+              <h4><span class="escenario" aria-hidden="true">
+                  <!-- El personaje real de la app, en su escenario claro. -->
+                  <svg viewBox="0 0 64 96" width="23" height="34" focusable="false">
+                    <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="#2B3530"
+                      stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+                    <path d="M28 62h8l-4 5z" fill="#2B3530" opacity="0.55"/>
+                    <ellipse cx="32" cy="32" rx="25" ry="31" fill="#FFC7B0" stroke="#2B3530"
+                      stroke-width="1.5"/>
+                    <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity="0.4"/>
+                  </svg></span>
+                El globo — la voz que se sostiene</h4>
               <p class="como">El globo avanza mientras la voz suena («aaaaah») y espera sin
                 drama cuando se calla: lo avanzado nunca se pierde. Cada 3 segundos de voz
                 acumulada cruza la línea, da <strong>una vuelta</strong> y estalla un
@@ -306,7 +363,20 @@
                 sin cortarse. La app nunca dice que sostuvo un tiempo que no sostuvo.</p>
             </div>
             <div class="feature">
-              <h4>El cohete — la voz que sube y baja</h4>
+              <h4><span class="escenario" aria-hidden="true">
+                  <svg viewBox="0 0 64 96" width="23" height="34" focusable="false">
+                    <path d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z" fill="#FFE08A"
+                      stroke="#2B3530" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M20 68c-6 2-8 6-8 10 5 0 9-2 12-5zM44 68c6 2 8 6 8 10-5 0-9-2-12-5z"
+                      fill="#A8C9A0" stroke="#2B3530" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M32 6c9 9 13 22 13 36v28H19V42C19 28 23 15 32 6z" fill="#FFC7B0"
+                      stroke="#2B3530" stroke-width="1.5" stroke-linejoin="round"/>
+                    <circle cx="32" cy="36" r="8" fill="#BCD9E2" stroke="#2B3530"
+                      stroke-width="1.5"/>
+                    <path d="M28 32a5 5 0 0 1 4-2" fill="none" stroke="#FFFFFF"
+                      stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                  </svg></span>
+                El cohete — la voz que sube y baja</h4>
               <p class="como">El cohete escucha el <strong>tono</strong>: voz que sube,
                 cohete que sube. No hay que decir ninguna palabra — la sirena exagerada
                 («aaaAAAaaa») es exactamente lo que se busca; hazla tú primero, riéndote.
@@ -315,7 +385,15 @@
                 sienta que va cada vez más alto, como mirar por la ventanilla.</p>
             </div>
             <div class="feature">
-              <h4>Palabra y dibujo — el nombre vive en la cosa</h4>
+              <h4><span class="escenario" aria-hidden="true">
+                  <svg class="trazo-nino" viewBox="0 0 24 24" width="26" height="26"
+                    focusable="false">
+                    <rect x="3" y="3" width="18" height="14" rx="2.5"/>
+                    <path d="M6 14l3.5-4 3 3.4L15 11l3 3"/>
+                    <circle cx="9" cy="7.5" r="1.4"/>
+                    <path d="M6 20h12"/>
+                  </svg></span>
+                Palabra y dibujo — el nombre vive en la cosa</h4>
               <p class="como">Aparece un dibujo grande con su palabra escrita, de los temas
                 que elegiste. Tu papel es el importante: nómbralo <strong>una sola vez</strong>
                 —«¡perro!»— y espera tres segundos en silencio. El dibujo se enciende con
@@ -328,7 +406,15 @@
                 viven dentro de la app — no se descargan de internet mientras juegan.</p>
             </div>
             <div class="feature">
-              <h4>Palabras gemelas — casi iguales, no idénticas</h4>
+              <h4><span class="escenario" aria-hidden="true">
+                  <svg class="trazo-nino" viewBox="0 0 32 24" width="28" height="21"
+                    focusable="false">
+                    <rect x="2" y="4" width="13" height="16" rx="2.5"/>
+                    <rect x="17" y="4" width="13" height="16" rx="2.5"/>
+                    <circle cx="8.5" cy="11" r="2.2"/>
+                    <path d="M23.5 9v4M21.5 11h4"/>
+                  </svg></span>
+                Palabras gemelas — casi iguales, no idénticas</h4>
               <p class="como">Dos dibujos a la vez cuyas palabras se diferencian por un solo
                 sonido: <em>pato</em> y <em>gato</em>, <em>foca</em> y <em>boca</em>.
                 Señalas los dos, le pides que diga uno, y <strong>tú marcas el que
@@ -393,7 +479,12 @@
                 sin querer; si te arrepientes, en unos segundos se desarma solo.</p>
             </div>
             <div class="feature">
-              <h4>Y aquí la magia: tu voz suena en los juegos</h4>
+              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+                  focusable="false">
+                  <path d="M4 9v6h4l5 4V5L8 9H4Z"/>
+                  <path d="M16 9a3.5 3.5 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11"/>
+                </svg>
+                Y aquí la magia: tu voz suena en los juegos</h4>
               <p class="como">Con grabaciones guardadas, en «palabra y dibujo» y en
                 «palabras gemelas» cada dibujo trae un <strong>botón de altavoz</strong>
                 (grande: él lo puede tocar) y la palabra suena sola al aparecer — el nombre
@@ -446,8 +537,10 @@
             <div class="feature">
               <h4>Mientras escribes, te acompaña</h4>
               <p class="como">A media palabra («anim») te sugiere en qué puedes estar
-                pensando, en dos grupos: chips <strong>verdes</strong> —términos que están
-                en la app y alinean los juegos— y chips <strong>neutros</strong> —palabras
+                pensando, en dos grupos: chips <strong>verdes</strong> como
+                <span class="chip-ej chip-ej-verde">animales</span> —términos que están
+                en la app y alinean los juegos— y chips <strong>neutros</strong> como
+                <span class="chip-ej chip-ej-neutra">animar</span> —palabras
                 del español bien escritas que la app aún no tiene, de un diccionario de
                 10.000 palabras que viaja dentro de la app, sin internet—. Y si escribes
                 con un error («animles») y das guardar, pregunta primero: «¿Quisiste decir
@@ -457,13 +550,22 @@
             <div class="feature">
               <h4>La tarjeta te dice el estado — con tres señales</h4>
               <p class="como">Color, forma y palabras a la vez (pensado también para
-                daltonismo): <strong>verde con la diana</strong> cuando los juegos van a
-                cambiar, con el desglose real («Alineando ahora: 4 cápsulas · 6 dibujos»);
-                <strong>azul con el círculo de info</strong> cuando hay que ponerle
-                atención — la cápsula sí, pero ese tema no está entre los elegidos—; y
-                <strong>rojo con el triángulo</strong> cuando la app aún no tiene contenido
-                de eso: te lo dice de frente en vez de fingir. Y en el Estudio, las
-                grabaciones que le sirven al objetivo llevan una diana al lado.</p>
+                daltonismo): <strong><svg class="ic ic-exito" viewBox="0 0 24 24"
+                aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle
+                cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> verde con la
+                diana</strong> cuando los juegos van a cambiar, con el desglose real
+                («Alineando ahora: 4 cápsulas · 6 dibujos»); <strong><svg class="ic ic-info"
+                viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12"
+                cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5v.5"/></svg> azul con el
+                círculo de info</strong> cuando hay que ponerle atención — la cápsula sí,
+                pero ese tema no está entre los elegidos—; y <strong><svg class="ic
+                ic-peligro" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path
+                d="M12 4L21 19.5H3L12 4z"/><path d="M12 10v4.5"/><path d="M12 17v.5"/></svg>
+                rojo con el triángulo</strong> cuando la app aún no tiene contenido de eso:
+                te lo dice de frente en vez de fingir. Y en el Estudio, las grabaciones que
+                le sirven al objetivo llevan una diana <svg class="ic" viewBox="0 0 24 24"
+                aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle
+                cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> al lado.</p>
             </div>
           </div></div>
         </div>
