@@ -231,8 +231,12 @@ de esto"). El chip verde de sugerencias dejó de prometer de más ("se ponen pri
 ## Deuda técnica explícita
 
 - **Portabilidad cross-device del banco de voz:** consciente (ADR-010/011). Sin backup por ahora.
-- **`audit` 1 moderate** (`postcss` transitivo vía build): sin fix upstream aún, no explotable en
-  esta app (sin server). Heredada del S2/S3.
+- ~~**`audit` 1 moderate** (`postcss` transitivo)~~ **SALDADA en el cierre (2026-08-07):** un
+  lote de advisories upstream (26: fast-uri, sharp, next, postcss, brace-expansion, undici,
+  js-yaml) puso la CI en rojo el día del cierre; se resolvió con `next` 16.2.11 + overrides
+  ACOTADOS con caret en `pnpm-workspace.yaml` (un `>=` abierto salta de mayor — brace-expansion
+  1→5 rompió minimatch@3 en el primer intento). `pnpm audit` quedó en **cero** en todos los
+  niveles; los candados se revisan al subir mayores.
 - **Nivel "frases" del objetivo:** el objetivo alinea por palabra/etiqueta; combinaciones de dos
   palabras (etapa primeras-frases) alinean por sus palabras sueltas — suficiente para H1.
 - **Tablet:** toda la lista de tablet sigue diferida (ADRs 003/007/010) — **NO gatea el cierre**.
