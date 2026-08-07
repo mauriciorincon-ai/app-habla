@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   invitacionAmable,
   META_INVERSIONES_DEFECTO,
-  META_MS_DEFECTO,
+  HITO_VUELTA_MS,
   MS_PARA_INVITAR,
   muestraMedidor,
   reducir,
@@ -55,22 +55,72 @@ describe("session-flow: el camino feliz", () => {
   it("celebra al alcanzar la meta, con el tiempo REALMENTE sostenido", () => {
     const sesion = correr(sesionInicial(), [
       ...HASTA_JUGANDO,
-      tick(true, sostenido(META_MS_DEFECTO + 120)),
+      tick(true, sostenido(HITO_VUELTA_MS + 120)),
     ]);
 
     expect(sesion.actual).toEqual({
       fase: "celebracion",
-      metrica: sostenido(META_MS_DEFECTO + 120),
+      metrica: sostenido(HITO_VUELTA_MS + 120),
     });
   });
 
   it("volver a jugar recalibra (la casa pudo cambiar de ruido) sin re-pedir permiso", () => {
     const sesion = correr(sesionInicial(), [
       ...HASTA_JUGANDO,
-      tick(true, sostenido(META_MS_DEFECTO)),
+      tick(true, sostenido(HITO_VUELTA_MS)),
       { tipo: "OTRA_VEZ" },
     ]);
     expect(sesion.actual).toEqual({ fase: "calibrando", msTranscurridos: 0 });
+  });
+});
+
+describe("session-flow: el globo sin meta (gate S4 — las vueltas son infinitas)", () => {
+  const sinMeta = () => sesionInicial({ modoCalma: false }, "sostenido", null);
+
+  it("NO celebra solo, ni tras muchas vueltas: el intento lo cierra el padre", () => {
+    // La regresión que protege el hallazgo E6: el fin automático a los 3 s cortaba el juego
+    // justo mientras el padre le enseñaba al niño.
+    const sesion = correr(sinMeta(), [
+      ...HASTA_JUGANDO,
+      tick(true, sostenido(HITO_VUELTA_MS * 7)),
+    ]);
+    expect(sesion.actual.fase).toBe("jugando");
+  });
+
+  it('"Ya jugamos" cierra con la métrica real acumulada', () => {
+    const sesion = correr(sinMeta(), [
+      ...HASTA_JUGANDO,
+      tick(true, sostenido(HITO_VUELTA_MS * 4 + 500)),
+      { tipo: "TERMINAR", metrica: sostenido(HITO_VUELTA_MS * 4 + 500) },
+    ]);
+    expect(sesion.actual).toEqual({
+      fase: "celebracion",
+      metrica: sostenido(HITO_VUELTA_MS * 4 + 500),
+    });
+  });
+});
+
+describe("session-flow: salir → guion (gate S4)", () => {
+  it("desde el juego vuelve al guion (la UI apaga el micrófono)", () => {
+    const sesion = correr(sesionInicial(), [
+      ...HASTA_JUGANDO,
+      { tipo: "VOLVER_AL_GUION" },
+    ]);
+    expect(sesion.actual).toEqual({ fase: "guion" });
+  });
+
+  it("desde la celebración también (salir no castiga: simplemente no se celebró)", () => {
+    const sesion = correr(sesionInicial(), [
+      ...HASTA_JUGANDO,
+      { tipo: "TERMINAR", metrica: sostenido(900) },
+      { tipo: "VOLVER_AL_GUION" },
+    ]);
+    expect(sesion.actual).toEqual({ fase: "guion" });
+  });
+
+  it("en el guion es un no-op (misma referencia: cero renders de más)", () => {
+    const sesion = sesionInicial();
+    expect(reducir(sesion, { tipo: "VOLVER_AL_GUION" })).toBe(sesion);
   });
 });
 
@@ -226,7 +276,7 @@ describe("session-flow: modo calma y recalibrar", () => {
     const calma = correr(sesionInicial(), [
       { tipo: "CAMBIAR_CALMA", activo: true },
       ...HASTA_JUGANDO,
-      tick(true, sostenido(META_MS_DEFECTO * 3)),
+      tick(true, sostenido(HITO_VUELTA_MS * 3)),
     ]);
     expect(calma.actual.fase).toBe("jugando");
   });

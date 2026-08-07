@@ -4,6 +4,10 @@
 // tono y baja cuando baja. Es exploración vocal pura — NO exige ninguna palabra (ADR 005): una
 // vocal estirada como una sirena es exactamente lo que el juego quiere.
 //
+// Sin meta (gate S4, ADR-013): el cohete ya NO se cierra solo. Cada subida-y-bajada real es un
+// HITO —confeti, capa de cielo que pasa y el contador vivo— y el intento termina cuando el padre
+// toca "Ya jugamos". El contador y la celebración dicen EL MISMO número (las inversiones reales).
+//
 // Celebración honesta: cuenta las veces REALES que su voz cambió de dirección (inversiones).
 // Si el tono no fue confiable, el cohete no se mueve y la app lo dice sin drama.
 
@@ -16,7 +20,6 @@ import {
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import {
-  META_INVERSIONES_DEFECTO,
   invitacionAmable,
   muestraMedidor,
   type Metrica,
@@ -61,12 +64,15 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     continuarConRuido,
     terminar,
     otraVez,
+    volverAlGuion,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "inversiones",
-    meta: META_INVERSIONES_DEFECTO,
+    // Sin meta (ADR-013): el cierre automático a las 3 inversiones cortaba el juego igual que el
+    // del globo (E6). Los hitos son infinitos; cierra el padre con "Ya jugamos".
+    meta: null,
     metricaActual,
   });
 
@@ -77,14 +83,18 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
 
+  // Subidas-y-bajadas completas del intento (las inversiones reales). Leerlas aquí es seguro:
+  // este componente re-renderiza con cada TICK (~10/s) mientras el juego corre.
+  const subidas =
+    actual.fase === "esperando-voz" || actual.fase === "jugando"
+      ? medidas.inversiones()
+      : 0;
+
   function alternarCalma() {
     const activo = !modoCalma;
     cambiarCalma(activo);
     guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
   }
-
-  // En calma no hay meta: el cohete solo flota con la voz, sin carrera y sin llegada.
-  const meta = modoCalma ? null : META_INVERSIONES_DEFECTO;
 
   return (
     <MarcoJuego
@@ -95,6 +105,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
+      onSalir={volverAlGuion}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -114,6 +125,23 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               : "Haz la voz de sirena: aaaAAAaaa"}
           </h2>
 
+          {/* El logro medido, en vivo (ADR-013): cada subida-y-bajada se celebra sin detener el
+              juego — es EL MISMO número de la celebración final. Solo aparece cuando hay al
+              menos una; cero presión antes. */}
+          {subidas > 0 && !modoCalma ? (
+            <p
+              className="text-center text-lg font-medium"
+              data-testid="subidas"
+              aria-live="polite"
+            >
+              ¡Ya subió y bajó{" "}
+              <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+                {subidas} {subidas === 1 ? "vez" : "veces"}
+              </span>
+              !
+            </p>
+          ) : null}
+
           {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
           <AltavozConsigna
             voz={voz}
@@ -123,7 +151,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
 
           <EscenarioCohete
             medidas={medidas}
-            meta={meta}
+            hito={subidas}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
           />

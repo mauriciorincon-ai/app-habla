@@ -138,10 +138,22 @@ export function EscenarioPalabra({
               : encendido
                 ? "border-celebracion-fuerte"
                 : "border-borde",
-          ].join(" ")}
+            // El instante de encenderse SE SIENTE (gate S4, bloque G): un pop breve, una vez.
+            encendido ? "encendido-pop" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
           data-testid="picto"
           data-reconocida={reconocida}
         >
+          {/* El halo que se expande UNA vez al encenderse (determinista; con movimiento reducido
+              queda invisible y el borde + el texto siguen contando). */}
+          {encendido ? (
+            <span
+              className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4"
+              aria-hidden="true"
+            />
+          ) : null}
           <Image
             src={rutaPictograma(picto)}
             alt={picto.palabra}

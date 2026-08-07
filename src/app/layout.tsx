@@ -26,7 +26,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Hablemos San",
   description:
-    "Su voz mueve el mundo. Práctica diaria de estimulación del habla en casa, para jugar juntos — complementaria y no sustitutiva de la fonoaudiología.",
+    "Su voz mueve el mundo. Práctica diaria de estimulación del habla en casa, para jugar juntos — complementaria y no sustitutiva de las terapias integrales del lenguaje.",
   applicationName: "Hablemos San",
 };
 

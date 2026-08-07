@@ -23,8 +23,12 @@ test("desde Hoy se llega a la etapa del habla SIN saberse la URL y sin bajar la 
 }) => {
   await pasarOnboarding(page);
 
+  // Completar el onboarding (tocar el botón del final del formulario) puede dejar la página
+  // desplazada; el usuario aterriza en su Hoy y mira desde arriba. Nos ponemos en el tope y
+  // verificamos que Ajustes esté AHÍ, visible — no enterrado al pie (el defecto que este test caza).
+  await page.evaluate(() => window.scrollTo(0, 0));
   const entrada = page.getByTestId("ir-a-ajustes");
-  await expect(entrada).toBeInViewport(); // visible sin hacer scroll
+  await expect(entrada).toBeInViewport(); // visible arriba, sin bajar la página
   await entrada.click();
 
   await expect(

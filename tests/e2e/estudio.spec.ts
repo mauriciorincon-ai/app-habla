@@ -31,23 +31,67 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
   ).trim();
 
   await page.getByTestId("grabar").click();
-  // "Grabando…" (estado grabando): el botón de parar aparece.
+  // "Grabando…" (estado grabando): el botón de parar aparece — y el MEDIDOR (gate S4, J2):
+  // grabar a ciegas era un stopper real; la barra dice "ya empezó y te está oyendo".
   await expect(page.getByTestId("detener")).toBeVisible();
+  await expect(page.getByTestId("medidor-grabacion")).toBeVisible();
   // Ventana de captura real (MediaRecorder es basado en tiempo): dejamos entrar algo de audio.
   await page.waitForTimeout(600);
   await page.getByTestId("detener").click();
 
-  // Se puede escuchar cómo quedó y aceptarla (o regrabar).
+  // Se puede escuchar cómo quedó y aceptarla (o regrabar). Al escuchar, la barrita de avance
+  // aparece (gate S4, J3): la señal visible de que el clip SUENA.
   await expect(page.getByTestId("escuchar-captura")).toBeVisible();
   await page.getByTestId("escuchar-captura").click(); // reproduce la voz familiar (local)
+  await expect(page.getByTestId("progreso-escucha")).toBeVisible();
   await page.getByTestId("aceptar").click();
 
   // Aceptar avanza el lote: el resultado observable (regla 8) es el progreso que sube.
   await expect(page.getByTestId("progreso-lote")).toContainText("2 de");
 
-  // Volver a la gestión: lo grabado aparece en "lo que ya grabaste".
-  await page.getByTestId("salir-lote").click();
+  // La salida del lote va ARRIBA y vuelve AL BANCO — la pantalla anterior, no Ajustes de un
+  // salto (gate S4): la gestión muestra lo grabado en "lo que ya grabaste" de inmediato.
+  await page.getByTestId("volver-al-banco").click();
   await expect(page.getByTestId("lista-grabados")).toContainText(textoGrabado);
+
+  // Y desde el banco, la salida estándar sí vuelve a Ajustes. Al re-entrar al estudio, lo
+  // grabado sigue ahí — el banco vive en IndexedDB y persiste entre visitas.
+  await page.getByTestId("volver-a-ajustes").click();
+  await expect(page).toHaveURL(/\/ajustes/);
+  await page.goto("/estudio");
+  const lista = page.getByTestId("lista-grabados");
+  await expect(lista).toContainText(textoGrabado);
+
+  // "Escuchar" desde la lista también muestra su barrita de avance, EN la fila que suena.
+  await lista.getByRole("button", { name: "Escuchar" }).first().click();
+  await expect(page.getByTestId("progreso-escucha")).toBeVisible();
+
+  // Borrar pide un segundo toque (gate S4, J5): "¿Seguro?" primero; al confirmar, la fila se
+  // despide, la lista queda vacía y la cobertura de palabras vuelve a cero.
+  const borrar = lista.getByRole("button", { name: "Borrar" }).first();
+  await borrar.click();
+  await expect(lista.getByRole("button", { name: "¿Seguro?" })).toBeVisible();
+  await lista.getByRole("button", { name: "¿Seguro?" }).click();
+  await expect(page.getByTestId("lista-grabados")).toHaveCount(0);
+  await expect(page.getByTestId("cobertura-palabra")).toHaveText(/^0\//);
+});
+
+// Gate S4 (K5): cada grupo de la cobertura tiene su propia puerta al lote — llegar a las
+// consignas no puede exigir atravesar las 50 palabras.
+test("«Grabar» junto a Consignas del juego acota la tanda a las 2 consignas", async ({
+  page,
+}) => {
+  await page.goto("/estudio");
+  await page.getByTestId("grabar-consigna").click();
+
+  await expect(page.getByTestId("lote")).toBeVisible();
+  // Con el banco vacío la tanda son las 2 consignas, y el contador dice de cuál grupo es.
+  await expect(page.getByTestId("progreso-lote")).toContainText(
+    "1 de 2 de esta tanda · Consignas del juego",
+  );
+  await expect(page.getByTestId("item-texto")).toContainText(
+    "Haz la voz de sirena",
+  );
 });
 
 // Sin permiso de micrófono, el estudio lo dice sin romperse (patrón mic-denegado). Forzamos la

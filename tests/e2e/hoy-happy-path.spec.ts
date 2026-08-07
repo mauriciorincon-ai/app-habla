@@ -39,16 +39,33 @@ test("de la cápsula de hoy al juego: la voz mueve el globo y la celebración di
   });
   await expect(page.getByTestId("medidor")).toBeVisible();
 
-  // 6. Celebración honesta: reporta el tiempo REALMENTE sostenido, no un elogio vacío.
-  await expect(page.getByTestId("celebracion")).toBeVisible({
-    timeout: 20_000,
-  });
+  // 6. Sin meta que corte el juego (gate S4, hallazgo E6): al acumular 3 s de voz el globo da
+  //    su primera VUELTA —se celebra en vivo, sin detener nada— y el juego sigue. El intento lo
+  //    cierra el padre con "Ya jugamos".
+  const vueltas = page.getByTestId("vueltas");
+  await expect(vueltas).toBeVisible({ timeout: 20_000 });
+  await expect(vueltas).toContainText("vuelta");
+  await expect(juego).toHaveAttribute("data-fase", "jugando");
+
+  // Cada vuelta estalla su confeti (re-mirada del gate S4). El estallido es determinista, corre
+  // una vez y QUEDA en el DOM hasta la vuelta siguiente — la aserción no depende del timing.
+  await expect(page.getByTestId("confeti-vuelta")).toBeAttached();
+
+  await page.getByTestId("terminar").click();
+
+  // Celebración honesta: reporta el tiempo REALMENTE sostenido, no un elogio vacío.
+  await expect(page.getByTestId("celebracion")).toBeVisible();
   const metrica = await page.getByTestId("metrica-real").innerText();
   expect(metrica).toMatch(/^\d+(,\d)? segundos$/);
   const segundos = parseFloat(
     metrica.replace(",", ".").replace(" segundos", ""),
   );
-  expect(segundos).toBeGreaterThanOrEqual(3); // la meta del juego
+  expect(segundos).toBeGreaterThanOrEqual(3); // al menos la vuelta que ya dio
+
+  // Y también dice las vueltas (re-mirada del gate S4): derivadas del MISMO total medido.
+  await expect(page.getByTestId("celebracion-vueltas")).toContainText(
+    /\d+ vuelta/,
+  );
 
   // 7. Marcar el día como hecho.
   await page.getByTestId("terminar-sesion").click();
@@ -119,6 +136,31 @@ test("modo calma en un toque: sin medidor y sin meta", async ({ page }) => {
   // Sin meta: aunque la voz siga sonando, no salta la celebración automática.
   await page.waitForTimeout(4000);
   await expect(page.getByTestId("celebracion")).toHaveCount(0);
+});
+
+test("salir del juego vuelve al GUION, y el guion sale al selector (gate S4)", async ({
+  page,
+}) => {
+  await page.goto("/jugar/globo");
+  // El guion tiene su salida estándar hacia el selector.
+  await expect(page.getByTestId("volver-a-juegos")).toBeVisible();
+
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("juego")).toHaveAttribute(
+    "data-fase",
+    "jugando",
+    {
+      timeout: 20_000,
+    },
+  );
+
+  // "Salir" dentro del juego NO abandona la pantalla: trae de vuelta el guion del padre.
+  await page.getByTestId("salir-al-guion").click();
+  await expect(page.getByTestId("empezar-juego")).toBeVisible();
+
+  // Y desde el guion, "← Juegos" sí lleva al selector de los cuatro.
+  await page.getByTestId("volver-a-juegos").click();
+  await expect(page.getByTestId("juego-globo")).toBeVisible();
 });
 
 test("los toques del niño son grandes (≥64 px) y no hay límite de tiempo", async ({

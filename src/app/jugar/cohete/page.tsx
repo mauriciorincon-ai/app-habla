@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Cohete } from "@/components/iconos";
 import { CoheteTono } from "@/components/juego/cohete-tono";
 
 export const metadata: Metadata = {
@@ -11,7 +12,11 @@ export const metadata: Metadata = {
 export default function JugarCohetePage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
-      <h1 className="font-display text-center text-4xl sm:text-5xl">
+      {/* El icono del juego —el MISMO del selector— dice dónde estás sin leer (gate S4). */}
+      <h1 className="font-display flex items-center justify-center gap-3 text-center text-4xl sm:text-5xl">
+        <span aria-hidden="true">
+          <Cohete className="h-12 w-8" />
+        </span>
         Su voz sube el cohete
       </h1>
       <p

@@ -4,6 +4,8 @@
 // Esta pantalla es del padre (paleta operador), no del niño — por eso el guion vive aquí y no
 // dentro del juego (regla del design-system: la vista del niño es soberana).
 
+import Link from "next/link";
+
 type Props = {
   /** Etiqueta pequeña de contexto (la técnica del día, o el nombre del juego). */
   etiqueta: string;
@@ -18,6 +20,17 @@ type Props = {
 export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
   return (
     <section className="mx-auto flex w-full max-w-xl flex-col gap-6">
+      {/* La salida estándar del guion (gate S4): el chip con la misma forma que el "← Hoy" de
+          las pantallas del padre. Desde dentro del juego, "Salir" trae de vuelta AQUÍ. */}
+      <Link
+        href="/jugar"
+        prefetch={false}
+        className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 self-start rounded-xl border px-3 text-sm"
+        data-testid="volver-a-juegos"
+      >
+        ← Juegos
+      </Link>
+
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6">
         <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
           Antes de jugar · {etiqueta}

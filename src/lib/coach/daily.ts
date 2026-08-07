@@ -11,17 +11,15 @@
 
 import type { Capsula, Etapa } from "@content/schema";
 import { ETAPA_VACIA, type Progreso } from "@/lib/storage/schemas";
+import { claveFechaLocal } from "@/lib/fecha";
 
-/** Fecha LOCAL del dispositivo como YYYY-MM-DD (con UTC, en Colombia el día cambiaría a las 7 p. m.). */
-export function claveFechaLocal(fecha: Date): string {
-  const anio = fecha.getFullYear();
-  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
-  const dia = String(fecha.getDate()).padStart(2, "0");
-  return `${anio}-${mes}-${dia}`;
-}
+// `claveFechaLocal` vive en `@/lib/fecha` (dedup del remate S4). Se re-exporta aquí porque el
+// motor de cápsulas y sus tests la piden como parte de la API de daily.
+export { claveFechaLocal };
 
-/** FNV-1a: hash estable y sin dependencias — la misma fecha da siempre la misma cápsula. */
-function fnv1a(texto: string): number {
+/** FNV-1a: hash estable y sin dependencias — la misma fecha da siempre la misma cápsula.
+ *  Lo comparte gemelas (S4): semilla del día para variar los pares SIN azar. */
+export function fnv1a(texto: string): number {
   let hash = 0x811c9dc5;
   for (let i = 0; i < texto.length; i++) {
     hash ^= texto.charCodeAt(i);
@@ -37,11 +35,19 @@ export type SeleccionDiaria = {
   completada: boolean;
 };
 
+/**
+ * `coincide` = predicado del objetivo de la semana (S4): ¿esta cápsula sirve al objetivo que el
+ * padre escribió? Es OPCIONAL — sin objetivo el motor se comporta EXACTAMENTE igual que antes
+ * (el orden por defecto no cambia, unit de identidad). Con objetivo, entre las pendientes se
+ * prefiere una que coincida; si ninguna coincide, se elige como siempre (sin saltarse la etapa,
+ * ADR-005 — el objetivo alinea DENTRO de la etapa, jamás fuerza contenido de otra).
+ */
 export function seleccionarCapsula(
   fecha: string,
   progreso: Progreso,
   biblioteca: readonly Capsula[],
   etapa: Etapa,
+  coincide?: (c: Capsula) => boolean,
 ): SeleccionDiaria {
   const deEtapa = biblioteca.filter((c) => c.etapa === etapa);
   if (deEtapa.length === 0) {
@@ -86,8 +92,14 @@ export function seleccionarCapsula(
     if (sinAyer.length > 0) pendientes = sinAyer;
   }
 
-  const capsula =
-    pendientes[fnv1a(`${fecha}:${etapa}:${ciclo}`) % pendientes.length];
+  // Objetivo de la semana (S4): entre las pendientes, prefiere las que coinciden. Sin objetivo (o
+  // sin coincidencias) el conjunto no cambia → el índice determinista escoge la misma de siempre.
+  const pool =
+    coincide && pendientes.some(coincide)
+      ? pendientes.filter(coincide)
+      : pendientes;
+
+  const capsula = pool[fnv1a(`${fecha}:${etapa}:${ciclo}`) % pool.length];
 
   return {
     capsula,
@@ -105,6 +117,43 @@ export function seleccionarCapsula(
       },
     },
   };
+}
+
+/**
+ * Re-alinea la cápsula de HOY cuando el padre escribe o borra el objetivo de la semana (S4, R4).
+ * Regla dura: la asignación del día está CONGELADA (invariante del S2). Esta acción es la ÚNICA
+ * excepción, y solo en un caso — que la cápsula de hoy NO esté completada. El trabajo ya hecho es
+ * intocable: si el padre ya marcó "ya lo hicimos", el objetivo aplica desde MAÑANA, nunca le
+ * borra el logro del día. Si la cápsula actual ya coincide (o no había ninguna asignada), no hay
+ * cambio. Es explícita (se llama al cambiar el objetivo), no un efecto de cada render.
+ */
+export function realinearObjetivo(
+  fecha: string,
+  progreso: Progreso,
+  biblioteca: readonly Capsula[],
+  etapa: Etapa,
+  coincide: (c: Capsula) => boolean,
+): Progreso {
+  const estadoEtapa = progreso.porEtapa[etapa] ?? ETAPA_VACIA;
+  const asignada = estadoEtapa.asignacionHoy;
+
+  // Sin asignación de hoy: no hay nada congelado que re-evaluar; la próxima selección ya usará
+  // el objetivo.
+  if (asignada?.fecha !== fecha) return progreso;
+  // Completada: intocable. El objetivo aplica desde mañana.
+  if (estadoEtapa.cicloCompletadas.includes(asignada.capsulaId))
+    return progreso;
+
+  // Suelta la asignación de hoy y deja que el selector escoja de nuevo con el objetivo activo.
+  const sinHoy: Progreso = {
+    ...progreso,
+    porEtapa: {
+      ...progreso.porEtapa,
+      [etapa]: { ...estadoEtapa, asignacionHoy: estadoEtapa.asignacionAyer },
+    },
+  };
+  return seleccionarCapsula(fecha, sinHoy, biblioteca, etapa, coincide)
+    .progreso;
 }
 
 /** Marcar completada es idempotente: dos toques no ensucian el historial. */

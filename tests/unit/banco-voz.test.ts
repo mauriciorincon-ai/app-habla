@@ -7,6 +7,7 @@ import {
 } from "@/lib/banco-voz/catalogo";
 import { calcularCobertura } from "@/lib/banco-voz/cobertura";
 import { siguienteLote } from "@/lib/banco-voz/lotes";
+import { alinear } from "@/lib/objetivo/alinear";
 import {
   borrarGrabacion,
   guardarGrabacion,
@@ -86,6 +87,69 @@ describe("banco-voz: el lote guiado", () => {
       grabados: new Set([primero.id]),
     });
     expect(despues.map((i) => i.id)).not.toContain(primero.id);
+  });
+
+  // Gate S4 (K5): llegar a las consignas no puede exigir atravesar las 50 palabras.
+  it("acotado a una categoría, el lote SOLO trae esa categoría; sin categoría, nada cambia", () => {
+    const consignas = siguienteLote({
+      temas: [],
+      grabados: new Set(),
+      categoria: "consigna",
+    });
+    expect(consignas.length).toBeGreaterThan(0);
+    expect(consignas.every((i) => i.categoria === "consigna")).toBe(true);
+
+    // Identidad: no pasar categoría deja el lote guiado EXACTAMENTE como era.
+    const sin = siguienteLote({ temas: ["animales"], grabados: new Set() });
+    const conIndefinida = siguienteLote({
+      temas: ["animales"],
+      grabados: new Set(),
+      categoria: undefined,
+    });
+    expect(conIndefinida.map((i) => i.id)).toEqual(sin.map((i) => i.id));
+  });
+
+  // S4: el lote crece con objetivo + etapa (paga la deuda lote-por-etapa).
+  it("sin objetivo activo, el orden es IDÉNTICO a no pasar objetivo (identidad)", () => {
+    const sin = siguienteLote({ temas: ["animales"], grabados: new Set() });
+    const conVacio = siguienteLote({
+      temas: ["animales"],
+      grabados: new Set(),
+      objetivo: alinear(""),
+    });
+    expect(conVacio.map((i) => i.id)).toEqual(sin.map((i) => i.id));
+  });
+
+  it("el objetivo de la semana manda: sus palabras van antes que las del tema elegido", () => {
+    const objetivo = alinear("animales");
+    const lote = siguienteLote({
+      temas: ["mar"],
+      grabados: new Set(),
+      objetivo,
+      tamano: 5,
+    });
+    const primero = lote[0];
+    const coincide =
+      objetivo.coincidePalabra(primero.texto) ||
+      (primero.tema ? objetivo.coincideTema(primero.tema) : false);
+    expect(coincide).toBe(true);
+  });
+
+  it("en 'sonidos-e-intentos' las palabras que solo viven en gemelas bajan al final", () => {
+    const mano = idPalabra("mano"); // "mano" no es picto de ningún tema: solo existe en gemelas
+    const idxDefault = siguienteLote({
+      temas: [],
+      grabados: new Set(),
+      tamano: 100,
+    }).findIndex((i) => i.id === mano);
+    const idxSonidos = siguienteLote({
+      temas: [],
+      grabados: new Set(),
+      tamano: 100,
+      etapa: "sonidos-e-intentos",
+    }).findIndex((i) => i.id === mano);
+    expect(idxDefault).toBeGreaterThanOrEqual(0);
+    expect(idxSonidos).toBeGreaterThan(idxDefault);
   });
 });
 

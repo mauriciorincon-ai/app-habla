@@ -12,6 +12,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAjustes } from "@/components/estado-local";
 import { listarIds, obtenerGrabacion } from "@/lib/banco-voz/almacen";
 import { resolverFuente } from "@/lib/audio/resolver";
+import { reproducirBlob } from "@/lib/audio/reproducir";
 
 export type VozFamiliar = {
   /** ¿Este ítem tiene grabación Y el padre dejó activa la voz familiar? (decide si mostrar el altavoz). */
@@ -55,6 +56,11 @@ export function useVozFamiliar(opts?: {
     alSonarRef.current = opts?.alSonar;
   });
 
+  // Cancela (para + revoca la URL) el clip en curso al desmontar: si el padre navega a mitad de un
+  // clip, la URL no se filtra (remate S4).
+  const cancelarRef = useRef<(() => void) | null>(null);
+  useEffect(() => () => cancelarRef.current?.(), []);
+
   const disponible = useCallback(
     (id: string): boolean =>
       resolverFuente({ tieneGrabacion: ids.has(id), vozFamiliarActiva }) ===
@@ -72,10 +78,6 @@ export function useVozFamiliar(opts?: {
       // niño (regla dura 3, guarda del bucle — ADR-010).
       alSonarRef.current?.(grabacion.duracionMs);
 
-      const url = URL.createObjectURL(grabacion.blob);
-      const audio = new Audio(url);
-      audio.addEventListener("ended", () => URL.revokeObjectURL(url));
-
       // Señal observable para el e2e (y sondas de depuración): sonó la voz familiar de este ítem.
       // NO lleva audio ni contenido: solo el id del ítem (regla dura 2 — nada del niño sale de aquí).
       if (typeof window !== "undefined") {
@@ -84,17 +86,16 @@ export function useVozFamiliar(opts?: {
         );
       }
 
-      try {
-        await audio.play();
-        return true;
-      } catch {
-        // Autoplay bloqueado o sin permiso de audio: fallback silencioso, jamás un error visible.
-        // Y como NO sonó nada, se CANCELA la guarda: sin esto, el medidor quedaría sordo a la
-        // voz real del niño durante un clip que nunca se oyó (regla dura 3, al revés).
-        alSonarRef.current?.(0);
-        URL.revokeObjectURL(url);
-        return false;
-      }
+      cancelarRef.current?.(); // corta un clip anterior que siguiera sonando
+      const { sono, cancelar } = reproducirBlob(grabacion.blob);
+      cancelarRef.current = cancelar;
+
+      if (await sono) return true;
+      // Autoplay bloqueado o sin permiso: fallback silencioso (reproducirBlob ya revocó la URL). Y
+      // como NO sonó nada, se CANCELA la guarda: sin esto el medidor quedaría sordo a la voz real
+      // del niño durante un clip que nunca se oyó (regla dura 3, al revés).
+      alSonarRef.current?.(0);
+      return false;
     },
     [disponible],
   );

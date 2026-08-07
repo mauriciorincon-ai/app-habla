@@ -10,14 +10,23 @@
 
 import { useSyncExternalStore } from "react";
 import {
+  borrarObjetivo,
   guardarAjustes,
+  guardarObjetivo,
   guardarPerfil,
   guardarProgreso,
   leerAjustes,
+  leerObjetivo,
   leerPerfil,
   leerProgreso,
 } from "@/lib/storage/local";
-import type { AjustesGuardados, Perfil, Progreso } from "@/lib/storage/schemas";
+import { fechaHoy } from "@/lib/fecha";
+import type {
+  AjustesGuardados,
+  Objetivo,
+  Perfil,
+  Progreso,
+} from "@/lib/storage/schemas";
 
 type Store<T> = {
   subscribe: (oyente: () => void) => () => void;
@@ -58,6 +67,10 @@ const storeProgreso = crearStore<Progreso>(leerProgreso, guardarProgreso);
 const storeAjustes = crearStore<AjustesGuardados>(leerAjustes, guardarAjustes);
 const storePerfil = crearStore<Perfil | null>(leerPerfil, (perfil) => {
   if (perfil) guardarPerfil(perfil);
+});
+const storeObjetivo = crearStore<Objetivo | null>(leerObjetivo, (obj) => {
+  if (obj) guardarObjetivo(obj.texto);
+  else borrarObjetivo();
 });
 
 const sinDatosEnServidor = () => null;
@@ -107,6 +120,25 @@ export function progresoActual(): Progreso {
 
 export function guardarProgresoEnStore(progreso: Progreso): void {
   storeProgreso.set(progreso);
+}
+
+/** El objetivo de la semana, reactivo (S4). `null` hasta hidratar y cuando no hay objetivo. */
+export function useObjetivo(): Objetivo | null {
+  return useSyncExternalStore(
+    storeObjetivo.subscribe,
+    storeObjetivo.snapshot,
+    sinDatosEnServidor,
+  );
+}
+
+/** Escribe el objetivo (texto vacío = quitarlo) y notifica a los suscriptores. `desde` = hoy. */
+export function guardarObjetivoEnStore(texto: string): void {
+  const limpio = texto.trim();
+  storeObjetivo.set(limpio ? { texto: limpio, desde: fechaHoy() } : null);
+}
+
+export function borrarObjetivoEnStore(): void {
+  storeObjetivo.set(null);
 }
 
 export function borrarTodoYRecargar(): void {

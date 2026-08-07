@@ -91,6 +91,90 @@ export function IconoHecho({ className }: IconoProps) {
   );
 }
 
+/**
+ * Todavía por hacer: el círculo vacío que el check de `IconoHecho` viene a llenar. Existen en
+ * pareja a propósito (gate S4): sin él, "pendiente" solo se comunicaba por la ausencia del check
+ * — y el estado más frecuente de la cápsula del día es justamente ese.
+ */
+export function IconoPorHacer({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="8.5" {...trazo} />
+    </svg>
+  );
+}
+
+/** Tu línea de hoy: lo que TÚ dices. Una burbuja de diálogo. */
+export function IconoBurbuja({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
+/**
+ * La actividad de hoy: lo que van a hacer JUNTOS — un adulto y un niño, lado a lado. Es la tesis
+ * del producto dibujada (co-uso: la app orquesta al padre, no lo reemplaza).
+ *
+ * ⚠️ Aquí vivía una "chispa" de cuatro puntas y el gate S4 la vetó con razón: ese destello es hoy
+ * el símbolo universal de la IA generativa, y esta app promete lo contrario —determinista
+ * primero, cero IA (quinto sprint sin un solo LLM)—. Un icono que insinúe "esto lo generó una
+ * máquina" contradice el producto, no solo el estilo. Ninguna chispa de cuatro puntas vuelve a
+ * esta app.
+ */
+export function IconoJuntos({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* El adulto */}
+      <circle cx="8" cy="6" r="2.6" {...trazo} />
+      <path d="M3.5 20v-3.5a4.5 4.5 0 0 1 9 0V20" {...trazo} />
+      {/* El niño, a su lado */}
+      <circle cx="17" cy="9.5" r="2.1" {...trazo} />
+      <path d="M13.5 20v-2.6a3.5 3.5 0 0 1 7 0V20" {...trazo} />
+    </svg>
+  );
+}
+
+/** De dónde sale esto: la cita a la investigación. Comillas. */
+export function IconoCita({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M9.5 6.5C7 7.5 5.5 9.5 5.5 12v5.5h6V12h-3c0-1.8.7-3 2.5-3.8l-1.5-1.7Z"
+        {...trazo}
+      />
+      <path
+        d="M19.5 6.5C17 7.5 15.5 9.5 15.5 12v5.5h6V12h-3c0-1.8.7-3 2.5-3.8l-1.5-1.7Z"
+        {...trazo}
+      />
+    </svg>
+  );
+}
+
 /** Cuando no hubo voz: un brote. Nada se perdió; mañana se sigue. */
 export function IconoBrote({ className }: IconoProps) {
   return (
@@ -103,6 +187,37 @@ export function IconoBrote({ className }: IconoProps) {
       <path d="M12 21v-8" {...trazo} />
       <path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5Z" {...trazo} />
       <path d="M12 16c0-3-2-5-5-5 0 3 2 5 5 5Z" {...trazo} />
+    </svg>
+  );
+}
+
+/** El rumbo — una brújula: hacia dónde van, sin puntajes. */
+export function IconoBrujula({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <path d="M15.5 8.5l-2 5-5 2 2-5 5-2Z" {...trazo} />
+    </svg>
+  );
+}
+
+/** El objetivo de la semana — una diana: hacia qué apuntan juntos. */
+export function IconoDiana({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <circle cx="12" cy="12" r="5" {...trazo} />
+      <circle cx="12" cy="12" r="1.5" {...trazo} />
     </svg>
   );
 }
@@ -263,6 +378,47 @@ export function IconoAltavoz({ className }: IconoProps) {
   );
 }
 
+/** Borrar: la papelera — quitar una grabación del banco, decisión del adulto. */
+export function IconoBorrar({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4.5 6.5h15" {...trazo} />
+      <path
+        d="M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"
+        {...trazo}
+      />
+      <path
+        d="M6.5 6.5l.7 12.1a2 2 0 0 0 2 1.9h5.6a2 2 0 0 0 2-1.9l.7-12.1"
+        {...trazo}
+      />
+      <path d="M10 10.5v6.5M14 10.5v6.5" {...trazo} />
+    </svg>
+  );
+}
+
+/** Regrabar: la flecha que da la vuelta completa — "otra vez", sin drama. */
+export function IconoRegrabar({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M19.5 12a7.5 7.5 0 1 1-7.5-7.5c2.1 0 4.11.83 5.62 2.28L19.5 8.67"
+        {...trazo}
+      />
+      <path d="M19.5 4.5v4.17h-4.17" {...trazo} />
+    </svg>
+  );
+}
+
 /** Un pictograma (marco con dibujo): la puerta al juego de palabra↔objeto. */
 export function IconoPictograma({ className }: IconoProps) {
   return (
@@ -279,6 +435,40 @@ export function IconoPictograma({ className }: IconoProps) {
       <circle cx="9" cy="7.5" r="1.4" {...trazo} />
       {/* La palabra escrita debajo (dos renglones): el picto siempre viene con su nombre. */}
       <path d="M6 20h12" {...trazo} />
+    </svg>
+  );
+}
+
+/** Círculo de información: el estado "atención con explicación" de la tarjeta del objetivo
+ *  (S4, gate bloque O) — forma distinta a la diana y al triángulo, no solo color distinto
+ *  (el usuario tiene daltonismo básico: la forma también tiene que hablar). */
+export function IconoInfo({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <path d="M12 11v5" {...trazo} />
+      <path d="M12 7.5v.5" {...trazo} />
+    </svg>
+  );
+}
+
+/** Triángulo de alerta: el estado "sin contenido aún" de la tarjeta del objetivo (S4). */
+export function IconoAlerta({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M12 4L21 19.5H3L12 4z" {...trazo} />
+      <path d="M12 10v4.5" {...trazo} />
+      <path d="M12 17v.5" {...trazo} />
     </svg>
   );
 }

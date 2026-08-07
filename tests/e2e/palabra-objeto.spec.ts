@@ -142,6 +142,12 @@ test("con movimiento reducido no hay globos, pero la buena noticia se sigue vien
     { timeout: 20_000 },
   );
 
+  // La voz ya encendió el dibujo (con voz oída, la guarda del juez no aplica — gate S4).
+  await expect(page.getByTestId("escenario")).toHaveAttribute(
+    "data-encendido",
+    "true",
+    { timeout: 20_000 },
+  );
   await page.getByTestId("dijo-la-palabra").click();
 
   await expect(page.getByTestId("globos-celebracion")).toBeHidden();
@@ -150,4 +156,36 @@ test("con movimiento reducido no hay globos, pero la buena noticia se sigue vien
     "true",
   );
   await expect(page.getByText("¡Dijo la palabra! Lo oíste tú.")).toBeVisible();
+});
+
+// "Salir" reinicia el juego POR COMPLETO (gate S4, bloque G): el usuario salió, volvió a entrar
+// y el contador seguía sumando los dibujos de la sesión pasada — el rastro debe morir al salir.
+test("«Salir» reinicia el juego: al volver, el contador arranca de cero", async ({
+  page,
+}) => {
+  await page.goto("/jugar/palabras");
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("juego")).toHaveAttribute(
+    "data-fase",
+    "jugando",
+    { timeout: 20_000 },
+  );
+  await expect(page.getByTestId("contador-activaciones")).toContainText("1", {
+    timeout: 20_000,
+  });
+
+  // Al guion: contadores, juicios y dibujo actual mueren aquí.
+  await page.getByTestId("salir-al-guion").click();
+  await expect(page.getByTestId("empezar-juego")).toBeVisible();
+
+  // Reentrada: el primer encendido deja el contador en 1 — jamás en 2 (el viejo + este).
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("escenario")).toHaveAttribute(
+    "data-encendido",
+    "true",
+    { timeout: 20_000 },
+  );
+  await expect(page.getByTestId("contador-activaciones")).toContainText(
+    "Dibujos encendidos con su voz: 1",
+  );
 });
