@@ -300,8 +300,13 @@ vivo. Las tres son de él; la planeadora solo las agenda.
    obstáculo implica poder FALLAR y las reglas COGA de la app (sin game-over, sin castigo, sin
    retroceso) exigen diseñar primero qué pasa cuando NO se pasa. **Dirección de diseño del
    usuario (re-mirada):** "que la caja se quede ahí sin drama y ya" — el obstáculo espera, sin
-   derrota ni retroceso; queda registrada para que la planeadora la evalúe con el ítem. Las
-   vueltas del ADR-012 cubren la duración; esto cubriría la variedad. Candidata para el ciclo H2.
+   derrota ni retroceso. **Segunda dirección del usuario (cierre, 2026-08-07): los obstáculos
+   nacen como opción ACTIVABLE/DESACTIVABLE** — un interruptor (selección/deselección, en
+   Ajustes o antes de jugar) **apagado por defecto**: el padre los enciende cuando quiera y los
+   apaga cuando no. Encaja con la carga sensorial ajustable (regla 6) y con la filosofía opt-in
+   de la app (nada nuevo se impone por defecto — mismo patrón del futuro nivel "frases",
+   ADR-005); además desactiva parte del riesgo COGA, porque es el padre quien decide el momento.
+   Las vueltas del ADR-012 cubren la duración; esto cubriría la variedad. Candidata para H2.
 6. **Efecto de despegue inicial del globo** (E3, cosmético).
 7. **Filtro por tono niño/adulto en palabra↔dibujo** (pedido del bloque G, decidido a backlog
    por el usuario tras evaluación honesta): quiere que el dibujo se encienda con la voz del
