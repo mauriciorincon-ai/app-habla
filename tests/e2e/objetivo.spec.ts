@@ -98,6 +98,26 @@ test("a medio teclazo («anim») la app sugiere, no regaña; tocar la sugerencia
   );
 });
 
+// Gate S4 (O1, hallazgo del usuario en la preview): la eñe se conserva — "bañ" debe sugerir
+// «baño» (antes salía «bano», la forma normalizada) y sin ruido de palabras a 2 letras (rana…).
+test("«bañ» sugiere «baño» con su eñe y sin palabras lejanas de relleno", async ({
+  page,
+}) => {
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("bañ");
+
+  const vivas = page.getByTestId("objetivo-sugerencias-vivas");
+  await expect(vivas).toBeVisible();
+  await expect(vivas).toContainText("baño");
+  await expect(vivas).not.toContainText("bano");
+  await expect(vivas).not.toContainText("rana");
+
+  await page.getByTestId("sugerencia-viva-baño").click();
+  await expect(page.getByTestId("guardar-objetivo")).toContainText(
+    "Guardar «baño»",
+  );
+});
+
 // Gate S4 (O1): el paso de ortografía — guardar un texto que no coincide con NADA pero se parece
 // a un término real pregunta primero; las dos salidas son honestas.
 test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de grabar", async ({

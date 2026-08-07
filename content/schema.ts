@@ -62,17 +62,21 @@ export const DESCRIPCION_ETAPA: Record<Etapa, string> = {
  * también las cápsulas, no solo los pictogramas. (El sexto tema, "dinosaurios", no rotula ninguna
  * cápsula —no hay contenido de dinosaurios en la biblioteca— pero un objetivo así igual alinea sus
  * pictogramas por tema; se excluye del enum para no dejar una etiqueta huérfana.)
+ *
+ * Ortografía REAL, no normalizada («baño», «música»): desde el gate S4 estas palabras llegan a
+ * los ojos del padre (sugerencias en vivo de /objetivo). La alineación compara normalizado
+ * (lib/objetivo/alinear), así que el tema "musica" del onboarding sigue coincidiendo con «música».
  */
 export const ETIQUETAS_CAPSULA = [
   // Temas de interés (subconjunto de TEMAS del onboarding con contenido de cápsula).
   "animales",
   "carros",
   "espacio",
-  "musica",
+  "música",
   "mar",
   // Rutinas de la casa y la calle.
   "comida",
-  "bano",
+  "baño",
   "dormir",
   "vestirse",
   "calle",
@@ -87,7 +91,7 @@ export const ETIQUETAS_CAPSULA = [
   "acciones",
   "emociones",
   "elegir",
-  "imitacion",
+  "imitación",
   "agua",
   "juego",
 ] as const;

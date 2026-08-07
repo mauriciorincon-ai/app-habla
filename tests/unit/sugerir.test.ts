@@ -51,6 +51,26 @@ describe("sugerir: el acompañante del teclazo", () => {
     const s = sugerir("más animles", VOCABULARIO);
     expect(s.some((x) => x.termino === "animales")).toBe(true);
   });
+
+  // Hallazgo del gate (bloque O): "bañ" sugería «bano» — la forma normalizada, irreconocible — y
+  // de paso rana/lana/mano como "parecidos" del token de 3 letras. La comparación normaliza; la
+  // FORMA que se muestra conserva eñes y tildes, y con prefijos a la vista no hay parecidos.
+  it("«bañ» sugiere «baño» con su eñe, sin ruido de parecidos (rana, lana…)", () => {
+    const s = sugerir("bañ", ["el baño", "rana", "lana", "mano"]);
+    expect(s).toEqual([{ termino: "baño", tipo: "prefijo" }]);
+  });
+
+  it("un parecido también se muestra con su forma real: «banio» → «baño»", () => {
+    expect(sugerir("banio", ["el baño"])).toEqual([
+      { termino: "baño", tipo: "parecido" },
+    ]);
+  });
+
+  it("la tilde se conserva y la primera forma gana: «musi» → «música»", () => {
+    expect(sugerir("musi", ["música", "musica"])).toEqual([
+      { termino: "música", tipo: "prefijo" },
+    ]);
+  });
 });
 
 describe("vocabularioDe: el universo real de términos", () => {

@@ -5,7 +5,7 @@
 // buen camino (prefijo), lo acompaña; si parece un error de ortografía (distancia ≤ 2), le
 // ofrece "¿quisiste decir…?"; solo cuando está completamente lejos, el mensaje honesto de antes.
 
-import { normalizar } from "./alinear";
+import { normalizar, normalizarConForma } from "./alinear";
 
 export type Sugerencia = {
   termino: string;
@@ -60,7 +60,11 @@ export function vocabularioDe(contenido: {
 /**
  * Sugerencias para lo que el padre lleva escrito, contra el vocabulario real. Se sugiere sobre el
  * ÚLTIMO token significativo (lo que está tecleando ahora). Determinista: prefijos primero
- * (alfabético), luego parecidos (por distancia y alfabético), sin repetir, tope `max`.
+ * (alfabético por clave), sin repetir, tope `max`. La comparación es SIN tildes ni eñes, pero la
+ * sugerencia se muestra CON ellas (hallazgo del gate S4: "bañ" sugería «bano» — era «baño»
+ * mutilado e irreconocible). Los parecidos solo entran cuando ningún término empieza por lo
+ * escrito: con prefijos a la vista el padre va bien encaminado, y ofrecerle además palabras a
+ * 2 letras de distancia (rana, lana…) es ruido, no ayuda.
  */
 export function sugerir(
   texto: string,
@@ -71,35 +75,36 @@ export function sugerir(
   if (tokens.length === 0) return [];
   const token = tokens[tokens.length - 1];
 
-  const prefijos: string[] = [];
-  const parecidos: { termino: string; d: number }[] = [];
+  // clave normalizada → forma real. Primera forma vista gana: el vocabulario pone las etiquetas
+  // curadas («música») antes que las claves crudas de tema ("musica"), así el empate va bien.
+  const prefijos = new Map<string, string>();
+  const parecidos = new Map<string, { forma: string; d: number }>();
   for (const crudo of vocabulario) {
-    for (const term of normalizar(crudo)) {
-      if (term === token) continue; // ya lo escribió exacto: nada que sugerir
-      if (term.startsWith(token)) {
-        prefijos.push(term);
-      } else if (term.length >= 4) {
-        const d = distancia(token, term);
-        if (d <= 2) parecidos.push({ termino: term, d });
+    for (const { forma, clave } of normalizarConForma(crudo)) {
+      if (clave === token) continue; // ya lo escribió exacto: nada que sugerir
+      if (clave.startsWith(token)) {
+        if (!prefijos.has(clave)) prefijos.set(clave, forma);
+      } else if (token.length >= 4 && clave.length >= 4) {
+        // Con 3 letras escritas, distancia 2 matchea medio catálogo ("ban" → rana, lana, mano):
+        // eso no es corregir ortografía, es otra palabra. El parecido exige ≥4 letras escritas.
+        const d = distancia(token, clave);
+        if (d <= 2 && !parecidos.has(clave)) parecidos.set(clave, { forma, d });
       }
     }
   }
 
-  const vistos = new Set<string>();
   const resultado: Sugerencia[] = [];
-  for (const t of prefijos.sort()) {
+  for (const [, forma] of [...prefijos].sort(([a], [b]) => (a < b ? -1 : 1))) {
     if (resultado.length >= max) break;
-    if (vistos.has(t)) continue;
-    vistos.add(t);
-    resultado.push({ termino: t, tipo: "prefijo" });
+    resultado.push({ termino: forma, tipo: "prefijo" });
   }
-  for (const p of parecidos.sort(
-    (a, b) => a.d - b.d || (a.termino < b.termino ? -1 : 1),
-  )) {
-    if (resultado.length >= max) break;
-    if (vistos.has(p.termino)) continue;
-    vistos.add(p.termino);
-    resultado.push({ termino: p.termino, tipo: "parecido" });
+  if (resultado.length === 0) {
+    for (const [, p] of [...parecidos].sort(
+      (x, y) => x[1].d - y[1].d || (x[0] < y[0] ? -1 : 1),
+    )) {
+      if (resultado.length >= max) break;
+      resultado.push({ termino: p.forma, tipo: "parecido" });
+    }
   }
   return resultado;
 }
