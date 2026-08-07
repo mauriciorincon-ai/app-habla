@@ -839,6 +839,17 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   Con esto TODOS los bloques del recorrido del gate quedan aprobados (la lista de tablet sigue
   diferida por viaje — ADRs 003/007/010 al regresar). **Siguiente paso: merge del PR #5 (solo
   a la orden explícita del usuario) → `/cierre-sprint habla` en la planeadora → H1 COMPLETO.**
+- **CI en rojo el día del cierre — lote de advisories upstream (2026-08-07).** El job `quality`
+  cayó por `pnpm audit --audit-level high`: 26 advisories publicadas ese día (15 high) en
+  transitivas — fast-uri, sharp, next (¡directa!), postcss, brace-expansion, undici, js-yaml.
+  Arreglo: `next` 16.2.10→16.2.11 (parche oficial) + overrides en `pnpm-workspace.yaml` (pnpm 11
+  NO lee `package.json#pnpm.overrides` — primer intento mudo). Dos lecciones que quedaron en
+  comentario del yaml: (1) el archivo ya existía con `allowBuilds` y lo pisé con `cat >` —
+  restaurado de git y ANEXADO; (2) los overrides van con **caret, jamás `>=` abierto**: un
+  `>=1.1.18` resolvió brace-expansion@1 al latest GLOBAL (5.x) y minimatch@3 explotó en lint
+  ("expand is not a function"). Resultado: `pnpm audit` en CERO (todos los niveles — cayó
+  también la moderate de postcss heredada del S2/S3). Verificación completa tras el cambio de
+  deps: typecheck · lint · 249 unit · build · 149 e2e — todo verde.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
