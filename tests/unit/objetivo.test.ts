@@ -227,11 +227,21 @@ describe("estadoDeAlineacion: la tarjeta activa dice la verdad (O3+O5 del gate)"
     pares: 0,
   };
 
-  it("con alcance real es «alineado» — la tarjeta se queda verde", () => {
+  it("con dibujos o gemelas en su alcance es «alineado» — los JUEGOS cambian (verde)", () => {
     expect(estadoDeAlineacion(lleno, lleno, 3)).toBe("alineado");
+    // Con solo pares de gemelas también: es un juego que el niño ve.
+    expect(
+      estadoDeAlineacion({ ...vacio, vacio: false, pares: 1 }, lleno, 0),
+    ).toBe("alineado");
   });
 
-  it("existe en la app pero no en su mundo → «fuera-de-alcance» (el caso O5: animales sin su tema)", () => {
+  it("la cápsula sí pero los juegos no → «sin-juegos» (el hallazgo: animales con temas Transporte+Espacio)", () => {
+    expect(
+      estadoDeAlineacion({ ...vacio, vacio: false, capsulas: 4 }, lleno, 3),
+    ).toBe("sin-juegos");
+  });
+
+  it("existe en la app pero nada de lo que él ve cambia → «fuera-de-alcance»", () => {
     expect(estadoDeAlineacion(vacio, lleno, 3)).toBe("fuera-de-alcance");
     // También cuando SOLO el estudio lo tiene (palabras de consigna, p. ej.).
     expect(estadoDeAlineacion(vacio, vacio, 2)).toBe("fuera-de-alcance");

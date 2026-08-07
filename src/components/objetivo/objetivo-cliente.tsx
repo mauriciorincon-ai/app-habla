@@ -26,7 +26,12 @@ import {
   useObjetivo,
   usePerfil,
 } from "@/components/estado-local";
-import { IconoDiana, IconoHecho } from "@/components/iconos";
+import {
+  IconoAlerta,
+  IconoDiana,
+  IconoHecho,
+  IconoInfo,
+} from "@/components/iconos";
 import {
   alinear,
   contarAlineacion,
@@ -112,7 +117,7 @@ function GruposDeChips({
       {app.length > 0 ? (
         <div className="mt-2">
           <p className="text-tinta-suave text-xs">
-            Están en la app — alinean la cápsula y los juegos:
+            Están en la app — se ponen primero en lo que él ve:
           </p>
           <div className="mt-1.5 flex flex-wrap gap-2">
             {app.map((s) => (
@@ -332,28 +337,31 @@ export function ObjetivoCliente() {
   return (
     <div className="flex flex-col gap-6">
       {activo ? (
-        /* La tarjeta dice su ESTADO (hallazgo O5 + propuesta O3 del gate): verde cuando alinea;
-           ámbar —con el porqué en palabras— cuando está fuera del alcance del niño o cuando la
-           app aún no tiene ese contenido. Nada comunica solo con color (regla 4). */
+        /* La tarjeta dice su ESTADO (hallazgos O3+O5 del gate). Tres familias visuales pensadas
+           para daltonismo (pedido del usuario): VERDE + diana (los juegos cambian), AZUL + círculo
+           de info (atención con explicación: a medias o fuera de su alcance), ROJO + triángulo
+           (sin contenido aún). Color + FORMA del icono + texto — nada comunica solo con color. */
         <section
           className={`flex flex-col gap-3 rounded-2xl border-l-4 p-5 ${
-            estadoActivo === "fuera-de-alcance" ||
             estadoActivo === "sin-contenido"
-              ? "bg-aviso/10 border-aviso"
-              : "bg-acento-suave/40 border-acento"
+              ? "bg-peligro/10 border-peligro"
+              : estadoActivo === "sin-juegos" ||
+                  estadoActivo === "fuera-de-alcance"
+                ? "bg-info/10 border-info"
+                : "bg-acento-suave/40 border-acento"
           }`}
           data-testid="objetivo-activo"
           data-estado={estadoActivo ?? undefined}
         >
           <div className="flex items-start gap-3">
-            <IconoDiana
-              className={`mt-0.5 h-6 w-6 shrink-0 ${
-                estadoActivo === "fuera-de-alcance" ||
-                estadoActivo === "sin-contenido"
-                  ? "text-aviso"
-                  : "text-acento"
-              }`}
-            />
+            {estadoActivo === "sin-contenido" ? (
+              <IconoAlerta className="text-peligro mt-0.5 h-6 w-6 shrink-0" />
+            ) : estadoActivo === "sin-juegos" ||
+              estadoActivo === "fuera-de-alcance" ? (
+              <IconoInfo className="text-info mt-0.5 h-6 w-6 shrink-0" />
+            ) : (
+              <IconoDiana className="text-acento mt-0.5 h-6 w-6 shrink-0" />
+            )}
             <div className="min-w-0">
               <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
                 Objetivo activo
@@ -365,7 +373,44 @@ export function ObjetivoCliente() {
                 Activo desde el {fechaLarga(activo.desde)}. Se queda hasta que
                 lo cambies o lo quites.
               </p>
-              {estadoActivo === "sin-contenido" ? (
+              {estadoActivo === "alineado" && conteosActivo ? (
+                <p
+                  className="text-tinta mt-2 text-sm font-medium"
+                  data-testid="objetivo-activo-alineando"
+                >
+                  Alineando ahora:{" "}
+                  {[
+                    conteosActivo.alcance.capsulas > 0
+                      ? `${conteosActivo.alcance.capsulas} ${conteosActivo.alcance.capsulas === 1 ? "cápsula" : "cápsulas"}`
+                      : null,
+                    conteosActivo.alcance.palabras > 0
+                      ? `${conteosActivo.alcance.palabras} ${conteosActivo.alcance.palabras === 1 ? "dibujo" : "dibujos"}`
+                      : null,
+                    conteosActivo.alcance.pares > 0
+                      ? `${conteosActivo.alcance.pares} ${conteosActivo.alcance.pares === 1 ? "par de gemelas" : "pares de gemelas"}`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                  .
+                </p>
+              ) : estadoActivo === "sin-juegos" ? (
+                <p
+                  className="text-tinta mt-2 text-sm font-medium"
+                  data-testid="objetivo-activo-sin-juegos"
+                >
+                  La cápsula de hoy sí se alinea, pero los dibujos de los juegos
+                  no cambian: ese tema no está entre los elegidos.
+                  {conteosActivo && conteosActivo.estudio > 0
+                    ? " En el estudio sí se pone primero al grabar."
+                    : ""}{" "}
+                  Si quieres que los juegos lo traigan,{" "}
+                  <Link href="/ajustes" className="underline">
+                    revisa sus temas en Ajustes
+                  </Link>
+                  .
+                </p>
+              ) : estadoActivo === "sin-contenido" ? (
                 <p
                   className="text-tinta mt-2 text-sm font-medium"
                   data-testid="objetivo-activo-sin-contenido"
