@@ -438,3 +438,37 @@ export function IconoPictograma({ className }: IconoProps) {
     </svg>
   );
 }
+
+/** Círculo de información: el estado "atención con explicación" de la tarjeta del objetivo
+ *  (S4, gate bloque O) — forma distinta a la diana y al triángulo, no solo color distinto
+ *  (el usuario tiene daltonismo básico: la forma también tiene que hablar). */
+export function IconoInfo({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="9" {...trazo} />
+      <path d="M12 11v5" {...trazo} />
+      <path d="M12 7.5v.5" {...trazo} />
+    </svg>
+  );
+}
+
+/** Triángulo de alerta: el estado "sin contenido aún" de la tarjeta del objetivo (S4). */
+export function IconoAlerta({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M12 4L21 19.5H3L12 4z" {...trazo} />
+      <path d="M12 10v4.5" {...trazo} />
+      <path d="M12 17v.5" {...trazo} />
+    </svg>
+  );
+}

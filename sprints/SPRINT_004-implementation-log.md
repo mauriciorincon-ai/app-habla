@@ -809,6 +809,28 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      colores es parte de la prueba; O5 pide verificar tarjeta VERDE antes de jugar) + historial
      (8); manual con el párrafo de estados. **Pendiente de confirmación del usuario:** si con
      la tarjeta VERDE el mazo sigue sin priorizar, es otro defecto y se caza aparte.
+- **Bloque O (sexto remate) — 2026-08-07 · el estado con más grano + colores para daltonismo.**
+  El usuario reprodujo el caso con precisión: temas Transporte+Espacio, objetivo "animales" —
+  y la tarjeta salió VERDE sin aviso ("uno interpreta que ya quedó y está priorizado, punto").
+  Mi estado v1 tenía el grano mal: las cápsulas van por ETAPA (alineaban → `alcance.vacio`
+  false → "alineado") pero los dibujos van por TEMAS (cero) — que era exactamente lo que él
+  esperaba ver en el juego. Además pidió colores CLARAMENTE distintos: tiene daltonismo básico
+  (verde vs. ámbar es justo el par débil).
+  1. **`estadoDeAlineacion` v2:** cuatro estados — "alineado" (dibujos o pares en alcance: los
+     JUEGOS cambian) · **"sin-juegos"** (cápsulas sí, juegos no — SU caso) · "fuera-de-alcance"
+     (nada de lo que ve) · "sin-contenido". Unit de los cuatro, incluido pares-solo → alineado.
+  2. **Tres familias visuales, color + FORMA (daltonismo):** verde + IconoDiana con desglose
+     "Alineando ahora: N cápsulas · M dibujos · K pares" (testid objetivo-activo-alineando) ·
+     azul `info` + IconoInfo nuevo (sin-juegos y fuera-de-alcance, cada uno con su mensaje y el
+     enlace a Ajustes) · rojo `peligro` + IconoAlerta nuevo (sin-contenido). El token semántico
+     `info` ya vivía en el design system y cambia con el tema oscuro; ámbar descartado.
+  3. **El chip verde ya no promete de más:** "alinean la cápsula y los juegos" → "se ponen
+     primero en lo que él ve" (con animales-sin-tema la promesa vieja era falsa a medias).
+     Tests: +1 unit (sin-juegos; alineado por pares-solo) · +1 e2e ×2 proyectos con SU
+     escenario (temas carros+espacio, guardar "animales" → data-estado sin-juegos + mensaje +
+     enlace) · aserción del desglose en el e2e verde. **249 unit · 149 e2e · typecheck · lint ·
+     build.** Guía O3 (rojo+triángulo), O4/O6 (azul+info), O5 (los tres estados con sus formas,
+     "si sale AZUL elige el tema y vuelve a mirar") + historial (9); manual con la tríada.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

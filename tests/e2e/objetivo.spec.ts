@@ -52,10 +52,14 @@ test("«animales» alinea la cápsula de Hoy, el mazo y el lote del estudio", as
 }) => {
   await guardarObjetivo(page, "animales");
 
-  // La tarjeta activa dice su estado (O3+O5 del gate): aquí alinea → verde, sin avisos.
+  // La tarjeta activa dice su estado (O3+O5 del gate): aquí los juegos cambian → verde,
+  // con el desglose de lo que está alineando.
   await expect(page.getByTestId("objetivo-activo")).toHaveAttribute(
     "data-estado",
     "alineado",
+  );
+  await expect(page.getByTestId("objetivo-activo-alineando")).toContainText(
+    "dibujos",
   );
 
   // Hoy: aparece la línea del objetivo activo.
@@ -175,6 +179,31 @@ test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de graba
 
   await page.getByTestId("guardar-candidata").click();
   await expect(page.getByTestId("objetivo-activo")).toContainText("«animales»");
+});
+
+// Gate S4 (segundo hallazgo de O5 — el escenario EXACTO del usuario): temas Transporte+Espacio
+// y objetivo "animales". Las cápsulas van por etapa (sí alinean) pero los dibujos van por temas
+// (cero): la tarjeta NO puede quedarse verde como si los juegos fueran a cambiar — estado
+// «sin-juegos», azul, con el porqué y el camino a Ajustes.
+test("«animales» sin su tema elegido: la tarjeta dice «sin-juegos» — no un verde a medias", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "habla:v1:perfil",
+      JSON.stringify({ temas: ["carros", "espacio"] }),
+    );
+  });
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("animales");
+  await page.getByTestId("guardar-objetivo").click();
+
+  const activo = page.getByTestId("objetivo-activo");
+  await expect(activo).toContainText("animales");
+  await expect(activo).toHaveAttribute("data-estado", "sin-juegos");
+  const aviso = page.getByTestId("objetivo-activo-sin-juegos");
+  await expect(aviso).toContainText("los dibujos de los juegos no cambian");
+  await expect(aviso).toContainText("revisa sus temas en Ajustes");
 });
 
 // Gate S4 (hallazgo del usuario, bloque O): lo que Ajustes MUESTRA se puede escribir como

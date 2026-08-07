@@ -121,19 +121,25 @@ export type ResumenAlineacion = {
  * El estado de un objetivo YA GUARDADO frente al contenido (gate S4, bloque O — hallazgo O5 +
  * propuesta O3 del usuario): la tarjeta "Objetivo activo" tiene que decir la verdad de lo que
  * está pasando, no verse igual alinee o no alinee.
- * - "alineado": prioriza contenido que el niño VE (su etapa y sus temas).
- * - "fuera-de-alcance": existe en la app pero no en su mundo de hoy → los juegos no cambian.
+ *
+ * El grano lo fijó el segundo hallazgo del usuario (temas Transporte+Espacio, objetivo
+ * "animales", tarjeta verde): las cápsulas van por ETAPA y los dibujos por TEMAS, así que
+ * "alinea" puede ser verdad a medias — la cápsula sí, los juegos no. Ese caso tiene su estado:
+ * - "alineado": los JUEGOS del niño cambian (dibujos o gemelas) — la promesa completa.
+ * - "sin-juegos": la cápsula de hoy sí se alinea, pero los juegos no (el tema no está elegido).
+ * - "fuera-de-alcance": existe en la app pero nada de lo que él ve hoy cambia.
  * - "sin-contenido": la app no tiene nada de esto → priorizado, a la espera de contenido.
  */
 export type EstadoAlineacion =
-  "alineado" | "fuera-de-alcance" | "sin-contenido";
+  "alineado" | "sin-juegos" | "fuera-de-alcance" | "sin-contenido";
 
 export function estadoDeAlineacion(
   alcance: ResumenAlineacion,
   global: ResumenAlineacion,
   estudio: number,
 ): EstadoAlineacion {
-  if (!alcance.vacio) return "alineado";
+  if (alcance.palabras > 0 || alcance.pares > 0) return "alineado";
+  if (alcance.capsulas > 0) return "sin-juegos";
   return global.vacio && estudio === 0 ? "sin-contenido" : "fuera-de-alcance";
 }
 
