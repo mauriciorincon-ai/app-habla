@@ -255,6 +255,32 @@ de esto"). El chip verde de sugerencias dejó de prometer de más ("se ponen pri
 El gate por bloques del usuario destapó pedidos de producto reales que **exceden el alcance
 cerrado del S4** y merecen su propio sprint (o su ADR):
 
+**PRIORIDAD PROPUESTA** (recomendación con su porqué — el usuario y la planeadora ajustan en
+la retro; el criterio es valor/urgencia para la práctica diaria, la planeadora balancea costo):
+
+- **ALTA — el uso diario los va a pedir solo:** **ítem 2** (agotar la etapa: con práctica real
+  las cápsulas de la etapa se acaban en semanas y la primera repetición no elegida llega sola —
+  bomba de tiempo de UX) · **ítem 1** (histórico + "reforzar esta": control del padre sobre su
+  práctica, pedido dos veces en el gate).
+- **MEDIA — valor claro, exigen su propio diseño:** **ítem 8** (sonidos de ambientación: el
+  mapa de seguridad ya quedó hecho, falta el diseño sonoro) · **ítem 7** (filtro tono
+  niño/adulto: protege la honestidad de la medición; arranca con el spike de fiabilidad) ·
+  **ítem 3** (pantalla de las 5 técnicas: barata y educativa — cabe como acompañante de
+  cualquier sprint H2).
+- **BAJA — pulido, o bloqueados por una decisión previa:** **ítem 5** (obstáculos del globo:
+  el diseño COGA del "no pasar" va primero) · **ítem 6** (despegue del globo: cosmético) ·
+  **ítem 4** (ordinales: BLOQUEADO por decisión del usuario — recomendación registrada: no
+  hacerlo) · **ítem 9** (alerta dos-casas: BLOQUEADO por la decisión de sincronización).
+
+**DECISIONES ABIERTAS QUE ANTECEDEN** (agendar en la retro — son conversaciones, no
+construcción): **(a)** ordinales en las etapas (destraba o entierra el ítem 4; mi
+recomendación: no). **(b)** **Sincronización entre las dos casas** — el usuario la dejó en
+"por ahora ahí vamos" (2026-08-07); destraba o entierra el ítem 9 y tocaría el ADR-002
+(local-first, sin cuentas). **(c)** **Revisión de la regla dura 2** (¿la voz grabada es dato
+tan sensible como para jamás salir del dispositivo?) — la posición del usuario quedó
+registrada desde el S3 (ver su summary, ADR-010); el código no cambió y el candado sigue
+vivo. Las tres son de él; la planeadora solo las agenda.
+
 1. **Histórico navegable de cápsulas + "reforzar esta".** Hoy el padre ve la del día y un
    contador; no puede volver a una que le sirvió. Pedido textual: "quisiera saber cuáles
    actividades llevo, como un registro histórico" y poder elegir cuáles reforzar.
@@ -300,8 +326,8 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
 9. **Alerta entre las dos casas cuando un objetivo queda "a la espera de contenido"** (pedido
    del bloque O3 del gate). El deseo: si la mamá del niño guarda un objetivo que la app aún no
    tiene ("colores"), que al papá le llegue una alerta de que ese contenido hay que agregarlo.
-   Lo que el S4 SÍ dejó: la tarjeta activa en ámbar con "priorizado, pero la app aún no tiene
-   contenido de esto" — el estado ya existe y es visible en el dispositivo donde se guardó. La
+   Lo que el S4 SÍ dejó: la tarjeta activa en rojo con su triángulo ("priorizado, pero la app
+   aún no tiene contenido de esto") — el estado ya existe y es visible donde se guardó. La
    alerta ENTRE dispositivos exige sincronización entre las dos casas (hoy todo es local por
    diseño — ADR-002): es la misma conversación de la sync dos-casas que el usuario dejó en
    "por ahora ahí vamos" (2026-08-07). Candidata para H2 junto a esa decisión.
