@@ -47,6 +47,31 @@ test("una tarjeta abre su detalle y lo vuelve a cerrar (progressive disclosure)"
   await expect(detalle).not.toBeVisible();
 });
 
+// La progressive disclosure también tiene que existir para quien no ve la pantalla.
+// El recorte visual (overflow) engaña al ojo pero NO al lector de pantalla: sin sacar lo
+// cerrado del árbol de accesibilidad, esa persona recibe las 24 features de corrido
+// mientras aria-expanded le dice "cerrado". Playwright no distingue los dos casos (para
+// él ambos son "no visible"), así que se mira el árbol real por CDP.
+test("lo cerrado no llega al lector de pantalla", async ({ page }) => {
+  await page.goto("/conoce");
+
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Accessibility.enable");
+  const arbol = async () =>
+    (await cdp.send("Accessibility.getFullAXTree")).nodes
+      .map((n) => n.name?.value ?? "")
+      .join(" | ");
+
+  expect(await arbol()).not.toContain("La cápsula del día");
+
+  // Y al abrirla, sí llega: el contenido existe, solo estaba guardado.
+  await page.getByRole("button", { name: /La respuesta de cada día/ }).click();
+  await expect(
+    page.getByRole("region", { name: "La respuesta de cada día — detalle" }),
+  ).toBeVisible();
+  expect(await arbol()).toContain("La cápsula del día");
+});
+
 // Regla de conteo del molde: el pie declara N y N cuadra con las features del
 // MANUAL-DE-USO (mapeo verificable en sprints/ENTREGA-brochure-summary.md). Si alguien
 // agrega una feature al brochure sin actualizar el pie, este test lo dice.

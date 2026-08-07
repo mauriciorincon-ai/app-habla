@@ -106,9 +106,15 @@
   .tarjeta[data-abierta] .chevron { transform: rotate(180deg); }
 
   /* ===== Capa 2 · Detalle (G2: transición de estado; excepción declarada grid-rows) ===== */
-  .detalle { display: grid; grid-template-rows: 0fr;
-    transition: grid-template-rows var(--dur-lenta) var(--ease-suave); }
-  .tarjeta[data-abierta] .detalle { grid-template-rows: 1fr; }
+  /* `visibility` saca lo cerrado del árbol de accesibilidad — sin él, un lector de
+     pantalla lee las 24 features de corrido mientras aria-expanded dice "cerrado"
+     (el recorte por overflow engaña al ojo, no al lector: verificado por CDP). Se
+     transiciona a propósito: con un extremo en `visible`, CSS mantiene visible todo
+     el colapso y solo apaga al final, así la animación no se corta. */
+  .detalle { display: grid; grid-template-rows: 0fr; visibility: hidden;
+    transition: grid-template-rows var(--dur-lenta) var(--ease-suave),
+      visibility var(--dur-lenta); }
+  .tarjeta[data-abierta] .detalle { grid-template-rows: 1fr; visibility: visible; }
   .detalle-interior { overflow: hidden; }
   .detalle-cuerpo { padding: 2px 18px 20px; border-top: 1px solid var(--borde);
     opacity: 0; transform: translateY(6px);
@@ -190,8 +196,13 @@
     .tarjetas .revela:nth-child(4) { transition-delay: 0.24s; }
     .tarjetas .revela:nth-child(5) { transition-delay: 0.32s; }
     .tarjetas .revela:nth-child(6) { transition-delay: 0.40s; }
-    .portada h1, .portada .promesa { animation: alzar 0.9s var(--ease-suave) both; }
-    .portada .promesa { animation-delay: 0.25s; }
+    /* El titular es el candidato a LCP: SUBE, pero nunca nace en opacity 0 — un LCP que
+       arranca invisible se mide como pintado al final del fundido (patrón
+       `lcp-nace-estatico` del design system). El fundido se lo queda la línea de apoyo,
+       que no es candidata. */
+    .portada h1 { animation: subir 0.9s var(--ease-suave) both; }
+    .portada .promesa { animation: alzar 0.9s var(--ease-suave) 0.25s both; }
+    @keyframes subir { from { transform: translateY(22px); } }
     @keyframes alzar { from { opacity: 0; transform: translateY(22px); } }
     /* El globo de la portada flota apenas — es el alma del producto, no un adorno. */
     .marca svg { animation: flotar 5s ease-in-out infinite alternate; }
