@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { alinear, contarAlineacion, normalizar } from "@/lib/objetivo/alinear";
+import {
+  alinear,
+  contarAlineacion,
+  estadoDeAlineacion,
+  normalizar,
+} from "@/lib/objetivo/alinear";
 import { acotarContenido } from "@/lib/objetivo/alcance";
 import { priorizarEstable } from "@/lib/objetivo/prioridad";
 import { CAPSULAS } from "@content/capsulas";
@@ -203,6 +208,37 @@ describe("priorizarEstable: los que coinciden primero, orden estable", () => {
     const items = ["a1", "b1", "a2", "b2", "a3"];
     const r = priorizarEstable(items, (s) => s.startsWith("a"));
     expect(r).toEqual(["a1", "a2", "a3", "b1", "b2"]);
+  });
+});
+
+describe("estadoDeAlineacion: la tarjeta activa dice la verdad (O3+O5 del gate)", () => {
+  const lleno = {
+    activo: true,
+    vacio: false,
+    capsulas: 1,
+    palabras: 2,
+    pares: 0,
+  };
+  const vacio = {
+    activo: true,
+    vacio: true,
+    capsulas: 0,
+    palabras: 0,
+    pares: 0,
+  };
+
+  it("con alcance real es «alineado» — la tarjeta se queda verde", () => {
+    expect(estadoDeAlineacion(lleno, lleno, 3)).toBe("alineado");
+  });
+
+  it("existe en la app pero no en su mundo → «fuera-de-alcance» (el caso O5: animales sin su tema)", () => {
+    expect(estadoDeAlineacion(vacio, lleno, 3)).toBe("fuera-de-alcance");
+    // También cuando SOLO el estudio lo tiene (palabras de consigna, p. ej.).
+    expect(estadoDeAlineacion(vacio, vacio, 2)).toBe("fuera-de-alcance");
+  });
+
+  it("la app no tiene nada de esto → «sin-contenido» (el caso O3: colores)", () => {
+    expect(estadoDeAlineacion(vacio, vacio, 0)).toBe("sin-contenido");
   });
 });
 

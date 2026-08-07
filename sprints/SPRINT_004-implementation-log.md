@@ -782,6 +782,33 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      "transp" → chip verde → preview alinea, sin mensaje de "no está"). **245 unit · 147 e2e ·
      typecheck · lint · build.** Guía O1 (los temas de Ajustes valen + "Mal" nuevo) + historial;
      manual con la línea.
+- **Bloque O (resultados O3–O6 + quinto remate) — 2026-08-07 · la tarjeta activa dice su estado.**
+  O3, O4(dinosaurios) y O6 limpias. **Stopper de O5:** "guardé animales y palabra↔dibujo no me
+  los trajo — ¿para qué sirve el objetivo?". Diagnóstico: el mazo prioriza SOLO dentro de los
+  temas del niño (`palabra-objeto.tsx:67-79` — diseño honesto, ADR-005: el objetivo jamás mete
+  contenido ajeno a su mundo); la causa más probable es que "animales" ya no está entre sus
+  temas (estuvo moviendo Ajustes probando Transporte). El DEFECTO real de UX: la tarjeta
+  "Objetivo activo" se veía IGUAL alineara o no — guardabas y nada te decía que no iba a pasar
+  nada. Mismo hueco que su propuesta de O3 ("colores guardado no puede verse como un objetivo
+  más"). Un solo arreglo para ambos:
+  1. **`estadoDeAlineacion(alcance, global, estudio)`** (motor puro, alinear.ts): "alineado" ·
+     "fuera-de-alcance" (existe pero no en su etapa/temas — el caso O5) · "sin-contenido" (el
+     caso O3 "colores").
+  2. **La tarjeta activa se pinta por estado:** verde como siempre al alinear; **ámbar**
+     (`bg-aviso/10 border-aviso` — token semántico vivo, cambia con el tema oscuro) con el
+     porqué EN PALABRAS (regla 4: nada comunica solo con color): fuera-de-alcance → "Está en la
+     app, pero no en lo que él ve hoy… los juegos no cambian" + enlace "revisa sus temas en
+     Ajustes"; sin-contenido → "Priorizado, pero la app aún no tiene contenido de esto".
+     `data-estado` en el section para los e2e. Los bancos ahora cargan también con objetivo
+     activo (antes solo al teclear); `contarPara()` extraída y compartida por el preview y la
+     tarjeta.
+     Tests: +3 unit (los tres estados, incluido estudio-solo → fuera-de-alcance) · 3 e2e
+     extendidos ×2 proyectos (animales→data-estado alineado; colores guardado→ámbar
+     sin-contenido; dinosaurios guardado→ámbar fuera-de-alcance con enlace a Ajustes).
+     **248 unit · 147 e2e · typecheck · lint · build.** Guía O3/O4/O6/O5 actualizadas (guardar
+     colores es parte de la prueba; O5 pide verificar tarjeta VERDE antes de jugar) + historial
+     (8); manual con el párrafo de estados. **Pendiente de confirmación del usuario:** si con
+     la tarjeta VERDE el mazo sigue sin priorizar, es otro defecto y se caza aparte.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

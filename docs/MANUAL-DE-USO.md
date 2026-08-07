@@ -289,6 +289,13 @@ aunque el Estudio sí le propondrá grabar esas palabras primero. El objetivo **
 queda hasta que usted lo cambie o lo quite (y quitarlo deja todo como estaba). Siempre trabaja
 **dentro de la etapa** que eligió: nunca la salta.
 
+La tarjeta del **objetivo activo dice su estado con color y con palabras**: se ve **verde**
+cuando de verdad está alineando la cápsula y los juegos. Si sale en **ámbar**, ahí mismo le
+explica por qué los juegos no van a cambiar: o el tema no está entre los elegidos (con el
+enlace para revisarlo en Ajustes), o la app aún no tiene contenido de eso ("priorizado, a la
+espera de contenido"). Importante: el objetivo **solo puede poner primero lo que su hijo ya
+ve** — sus temas y su etapa —; nunca mete contenido ajeno a su mundo.
+
 Con un objetivo activo, en el Estudio las grabaciones de **"Lo que ya grabaste"** que le sirven
 al objetivo llevan una **diana** junto a la palabra: de un vistazo ve cuáles del reto ya apuntan
 a lo que pidieron en las terapias.

@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (245 unit · 147 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (248 unit · 147 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -57,7 +57,7 @@ Detalle en las secciones de abajo.
 
 | Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ----------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Testing**          | ✅               | **245 unit** (motores nuevos: barrido completo con objetivo activo (garantía del gate), rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo/**categoría (K5: acotado + identidad)**, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library (lista agrupada, tanda acotada, borrar en dos toques); + cap-500 de gemelas) — cobertura **91,2 % stmts / 85,7 % branches**. **147 e2e** (rumbo frase-vs-métrica ATADA por testid, reset-al-salir de palabra↔objeto, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, lote por grupo del estudio, + suites enteras de las pantallas tocadas, regla 9). Todo en CI. |
+| **1. Testing**          | ✅               | **248 unit** (motores nuevos: barrido completo con objetivo activo (garantía del gate), rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo/**categoría (K5: acotado + identidad)**, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library (lista agrupada, tanda acotada, borrar en dos toques); + cap-500 de gemelas) — cobertura **91,2 % stmts / 85,7 % branches**. **147 e2e** (rumbo frase-vs-métrica ATADA por testid, reset-al-salir de palabra↔objeto, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, lote por grupo del estudio, + suites enteras de las pantallas tocadas, regla 9). Todo en CI. |
 | **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                                                                                                                                                                                               |
@@ -214,7 +214,14 @@ bien escrita se guarda SIN pregunta («medios», «colores»), una conocida reci
 remate: lo que Ajustes muestra, alinea** — "transporte" (el nombre visible del tema cuya clave
 interna quedó "carros" tras el rename G6) decía "no está en la app"; ahora `alinear()` expande
 los nombres visibles de los temas a su clave y `vocabularioDe` los sugiere en verde — cápsulas,
-dibujos, gemelas y estudio de una vez, con los mismos predicados).
+dibujos, gemelas y estudio de una vez, con los mismos predicados. **O3–O6 probadas: quinto
+remate — la tarjeta activa dice su estado.** El stopper de O5 ("guardé animales y el juego no
+los trajo") y la propuesta de O3 ("colores guardado no puede verse como un objetivo más") eran
+el MISMO hueco: la tarjeta se veía igual alineara o no. Ahora `estadoDeAlineacion` la pinta
+verde al alinear y **ámbar con el porqué en palabras** cuando el objetivo está fuera del
+alcance del niño (con enlace a Ajustes — la causa probable del stopper: el tema no estaba
+elegido) o cuando la app no tiene ese contenido ("priorizado, a la espera de contenido"). La
+alerta entre casas que pidió va al backlog (item 9, atada a la sync dos-casas)).
 
 ## Deuda técnica explícita
 
@@ -281,6 +288,14 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
    celebración). **Reglas sensoriales innegociables (COGA):** interruptor en Ajustes, silencio
    total en modo calma, nada en bucle, volúmenes suaves, síntesis determinista propia (cero
    assets externos, cero red). Candidata para el ciclo H2 con diseño sonoro de verdad.
+9. **Alerta entre las dos casas cuando un objetivo queda "a la espera de contenido"** (pedido
+   del bloque O3 del gate). El deseo: si la mamá del niño guarda un objetivo que la app aún no
+   tiene ("colores"), que al papá le llegue una alerta de que ese contenido hay que agregarlo.
+   Lo que el S4 SÍ dejó: la tarjeta activa en ámbar con "priorizado, pero la app aún no tiene
+   contenido de esto" — el estado ya existe y es visible en el dispositivo donde se guardó. La
+   alerta ENTRE dispositivos exige sincronización entre las dos casas (hoy todo es local por
+   diseño — ADR-002): es la misma conversación de la sync dos-casas que el usuario dejó en
+   "por ahora ahí vamos" (2026-08-07). Candidata para H2 junto a esa decisión.
 
 ## Sugerencias de mejora al método
 

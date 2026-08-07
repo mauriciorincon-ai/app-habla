@@ -118,6 +118,26 @@ export type ResumenAlineacion = {
 };
 
 /**
+ * El estado de un objetivo YA GUARDADO frente al contenido (gate S4, bloque O — hallazgo O5 +
+ * propuesta O3 del usuario): la tarjeta "Objetivo activo" tiene que decir la verdad de lo que
+ * está pasando, no verse igual alinee o no alinee.
+ * - "alineado": prioriza contenido que el niño VE (su etapa y sus temas).
+ * - "fuera-de-alcance": existe en la app pero no en su mundo de hoy → los juegos no cambian.
+ * - "sin-contenido": la app no tiene nada de esto → priorizado, a la espera de contenido.
+ */
+export type EstadoAlineacion =
+  "alineado" | "fuera-de-alcance" | "sin-contenido";
+
+export function estadoDeAlineacion(
+  alcance: ResumenAlineacion,
+  global: ResumenAlineacion,
+  estudio: number,
+): EstadoAlineacion {
+  if (!alcance.vacio) return "alineado";
+  return global.vacio && estudio === 0 ? "sin-contenido" : "fuera-de-alcance";
+}
+
+/**
  * Cuenta cuánto alinea un objetivo contra el contenido — insumo del preview honesto del /objetivo
  * ("con «animales»: N palabras y M cápsulas se priorizan") y del estado "sin coincidencias".
  */

@@ -52,6 +52,12 @@ test("«animales» alinea la cápsula de Hoy, el mazo y el lote del estudio", as
 }) => {
   await guardarObjetivo(page, "animales");
 
+  // La tarjeta activa dice su estado (O3+O5 del gate): aquí alinea → verde, sin avisos.
+  await expect(page.getByTestId("objetivo-activo")).toHaveAttribute(
+    "data-estado",
+    "alineado",
+  );
+
   // Hoy: aparece la línea del objetivo activo.
   await page.goto("/");
   await expect(page.getByTestId("objetivo-activo-hoy")).toContainText(
@@ -76,6 +82,17 @@ test("«colores» no coincide con nada y la app lo dice honesto (sin fingir)", a
   await page.getByTestId("objetivo-input").fill("colores");
   await expect(page.getByTestId("objetivo-sin-matches")).toBeVisible();
   await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
+
+  // Propuesta O3 del gate: si igual lo guarda, la tarjeta activa NO se ve como una más — va
+  // en ámbar y dice que está priorizado a la espera de contenido ("colores" es palabra bien
+  // escrita: se guarda sin pregunta).
+  await page.getByTestId("guardar-objetivo").click();
+  const activo = page.getByTestId("objetivo-activo");
+  await expect(activo).toContainText("colores");
+  await expect(activo).toHaveAttribute("data-estado", "sin-contenido");
+  await expect(page.getByTestId("objetivo-activo-sin-contenido")).toContainText(
+    "aún no tiene contenido de esto",
+  );
 });
 
 // Gate S4 (O1): escribir a medias no es error — mientras el texto sea el comienzo de un término
@@ -205,6 +222,15 @@ test("lo que existe en la app pero FUERA de su alcance se dice de frente (audito
   await expect(fuera).toContainText("estudio de grabación");
   await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
   await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
+
+  // Guardado igual (hallazgo O5): la tarjeta activa va en ámbar, dice POR QUÉ los juegos no
+  // cambian y lleva el camino de arreglo (elegir el tema en Ajustes).
+  await page.getByTestId("guardar-objetivo").click();
+  const activo = page.getByTestId("objetivo-activo");
+  await expect(activo).toHaveAttribute("data-estado", "fuera-de-alcance");
+  const aviso = page.getByTestId("objetivo-activo-fuera");
+  await expect(aviso).toContainText("no en lo que él ve hoy");
+  await expect(aviso).toContainText("revisa sus temas en Ajustes");
 });
 
 test("quitar el objetivo restaura el orden por defecto (identidad)", async ({
