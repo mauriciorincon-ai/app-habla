@@ -78,6 +78,43 @@ test("«colores» no coincide con nada y la app lo dice honesto (sin fingir)", a
   await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
 });
 
+// Gate S4 (O1): escribir a medias no es error — mientras el texto sea el comienzo de un término
+// real, la app acompaña con sugerencias vivas en vez de regañar con "no está en el contenido".
+test("a medio teclazo («anim») la app sugiere, no regaña; tocar la sugerencia alinea", async ({
+  page,
+}) => {
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("anim");
+
+  const vivas = page.getByTestId("objetivo-sugerencias-vivas");
+  await expect(vivas).toBeVisible();
+  await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
+
+  await page.getByTestId("sugerencia-viva-animales").click();
+  await expect(page.getByTestId("objetivo-preview")).toBeVisible();
+  // El botón nombra EXACTAMENTE lo que va a guardar (la conexión campo→botón).
+  await expect(page.getByTestId("guardar-objetivo")).toContainText(
+    "Guardar «animales»",
+  );
+});
+
+// Gate S4 (O1): el paso de ortografía — guardar un texto que no coincide con NADA pero se parece
+// a un término real pregunta primero; las dos salidas son honestas.
+test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de grabar", async ({
+  page,
+}) => {
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("animles");
+  await page.getByTestId("guardar-objetivo").click();
+
+  const confirmar = page.getByTestId("objetivo-confirmar");
+  await expect(confirmar).toBeVisible();
+  await expect(confirmar).toContainText("¿Quisiste decir «animales»?");
+
+  await page.getByTestId("guardar-candidata").click();
+  await expect(page.getByTestId("objetivo-activo")).toContainText("«animales»");
+});
+
 test("lo que existe en la app pero FUERA de su alcance se dice de frente (auditoría de cierre)", async ({
   page,
 }) => {

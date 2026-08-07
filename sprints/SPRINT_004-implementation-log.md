@@ -688,6 +688,33 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   actualizado (empates de fecha conservan inserción — sort estable). **222 unit · 137 e2e ·
   build.** Guía N1/N2/N3 al día + historial; manual con las líneas nuevas y la regla de la
   celebración. **Re-verificado por el usuario: "todo perfecto" — bloque N CERRADO.**
+- **Bloque O (parcial: O1+O2) — 2026-08-07 · cuatro remates de UX del usuario.**
+  1. **Escribir a medias no es error (O1).** El preview regañaba a medio teclazo ("«anim» no
+     está en el contenido"). Motor puro NUEVO `lib/objetivo/sugerir.ts` (sin IA): `sugerir()`
+     propone términos del vocabulario REAL (`vocabularioDe`: etiquetas + palabras de pictos y
+     pares + claves de tema) por **prefijo** (va bien, sigue) y por **distancia de edición ≤ 2**
+     (probable typo), sobre el ÚLTIMO token; determinista (prefijos alfabéticos, luego parecidos
+     por distancia), tope 4. La UI: con prefijos vivos → chips "¿Vas hacia alguna de estas?"
+     (SIN regaño); solo lo completamente lejano recibe el mensaje honesto de siempre (que
+     conserva su testid `objetivo-sin-matches` — el e2e de "colores" ni se movió).
+  2. **Paso de ortografía al guardar (O1).** Con texto que no coincide con NADA pero tiene
+     candidata (sugerencias[0]), el primer toque de guardar NO graba: muestra
+     `objetivo-confirmar` — "¿Quisiste decir «animales»?" con dos salidas honestas
+     (`guardar-candidata` / `guardar-tal-cual`). El texto libre sigue siendo un derecho (la
+     terapeuta puede pedir algo que la app no tiene — caso O6 intacto); teclear resetea el paso.
+  3. **La conexión campo→botón (O1).** Todo en UNA tarjeta `bg-superficie` (campo → sugerencias
+     → preview → botón; las cajas internas pasaron a `bg-fondo` — token verificado, lección del
+     fantasma `bg-alerta`) y el botón **nombra lo que guarda**: "Guardar «animales»" (truncado
+     a 28). Deshabilitado y genérico solo con el campo vacío.
+  4. **La diana del estudio (O2).** En "Lo que ya grabaste", las grabaciones que sirven al
+     objetivo llevan `IconoDiana` + sr-only "del objetivo de la semana" (testid
+     `del-objetivo-<id>`), con el MISMO predicado del lote (`coincideConObjetivo`) — insignia y
+     orden no pueden divergir.
+     Tests: +8 unit (sugerir: prefijo/typo/lejos/exacto/determinismo/último-token; vocabulario;
+     diana en la lista con objetivo en storage) · +2 e2e ×2 proyectos (sugerencias vivas + botón
+     nombrado; paso de ortografía completo). **230 unit · 141 e2e · build.** Guía O1/O2 reescritas
+     con los "Mal" nuevos + historial; manual con la tarjeta, el acompañar-no-regañar, la pregunta
+     de ortografía y la diana.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
