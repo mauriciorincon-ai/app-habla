@@ -29,12 +29,27 @@ const PALABRAS_VACIAS = new Set([
  * palabras estructurales, y solo tokens de ≥3 letras. "El Baño de María" → ["bano", "maria"].
  */
 export function normalizar(texto: string): string[] {
+  return normalizarConForma(texto).map((t) => t.clave);
+}
+
+/**
+ * Como `normalizar`, pero cada token conserva su FORMA real (eñes y tildes) junto a su clave
+ * normalizada: "El Baño" → [{ forma: "baño", clave: "bano" }]. La clave COMPARA; la forma se
+ * MUESTRA — una sugerencia debe decir «baño», jamás «bano» (hallazgo del gate S4, bloque O).
+ * Misma tokenización que antes: las marcas diacríticas nunca separan palabras.
+ */
+export function normalizarConForma(
+  texto: string,
+): { forma: string; clave: string }[] {
   return texto
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter((t) => t.length >= 3 && !PALABRAS_VACIAS.has(t));
+    .split(/[^a-z0-9̀-ͯ]+/)
+    .map((cruda) => ({
+      forma: cruda.normalize("NFC"),
+      clave: cruda.replace(/[̀-ͯ]/g, ""),
+    }))
+    .filter(({ clave }) => clave.length >= 3 && !PALABRAS_VACIAS.has(clave));
 }
 
 export type Alineacion = {

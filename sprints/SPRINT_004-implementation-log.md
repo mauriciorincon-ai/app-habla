@@ -715,6 +715,27 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      nombrado; paso de ortografía completo). **230 unit · 141 e2e · build.** Guía O1/O2 reescritas
      con los "Mal" nuevos + historial; manual con la tarjeta, el acompañar-no-regañar, la pregunta
      de ortografía y la diana.
+- **Bloque O (re-prueba O1) — 2026-08-07 · la eñe sobrevive (hallazgo del usuario).** Escribió
+  "bañ" y el chip decía «bano» + rana/lana/mano de relleno. Tres capas del mismo defecto:
+  1. **`sugerir` mostraba la clave normalizada.** `normalizar` descompone "baño"→"bano" (correcto
+     para COMPARAR — "bano" sin eñe también matchea), pero el chip mostraba esa forma mutilada.
+     Nuevo `normalizarConForma` en `alinear.ts` (misma tokenización: las marcas diacríticas nunca
+     separan; `normalizar` ahora delega — equivalencia exacta, los unit de alinear ni se movieron):
+     cada token lleva `{forma, clave}`; `sugerir` compara claves y MUESTRA formas.
+  2. **El vocabulario del contenido estaba escrito normalizado.** `ETIQUETAS_CAPSULA` decía
+     literalmente `"bano"`, `"musica"`, `"imitacion"` — invisible cuando solo comparaba; ahora que
+     el gate S4 lo puso ante los ojos del padre, se corrigió a ortografía real («baño», «música»,
+     «imitación») en schema + las 5 citas del mapa de cápsulas. Neutral para la alineación (compara
+     normalizado; el tema "musica" del onboarding sigue coincidiendo). En `sugerir`, primera forma
+     vista gana: las etiquetas curadas van antes que las claves crudas de tema en `vocabularioDe`.
+  3. **Los "parecidos" eran ruido con tokens cortos.** Distancia ≤ 2 sobre "ban" (3 letras)
+     matchea medio catálogo (rana, lana, mano — eso no es typo, es otra palabra). Dos rejas:
+     parecidos exigen **token ≥ 4 letras**, y **callan cuando hay prefijos** (si vas bien
+     encaminado hacia «baño», ofrecerte «rana» distrae).
+     Tests: +3 unit (bañ→«baño» sin relleno; banio→«baño» parecido con forma real; musi→«música»
+     primera-forma-gana) · +1 e2e ×2 proyectos con el caso exacto del usuario (chip «baño», sin
+     «bano» ni «rana», botón "Guardar «baño»"). **233 unit · 143 e2e · typecheck · lint · build.**
+     Guía O1 ampliada (probar "bañ"/"musi" + los dos "Mal" nuevos) + historial.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas

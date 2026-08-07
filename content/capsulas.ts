@@ -888,7 +888,7 @@ const BASE: Omit<Capsula, "etiquetas">[] = [
 const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
   // palabras-sueltas (técnicas base)
   "modelado-nombra-su-mundo": ["comida", "agua"],
-  "modelado-mismas-palabras-rutina": ["bano", "agua"],
+  "modelado-mismas-palabras-rutina": ["baño", "agua"],
   "modelado-habla-a-su-tamano": ["carros", "acciones"],
   "recast-devuelve-la-palabra": ["agua", "comida"],
   "recast-su-palabra-mas-una": ["agua", "juego"],
@@ -903,12 +903,12 @@ const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
   "focalizada-sin-examen": ["animales"],
   // sonidos-e-intentos
   "sonidos-ponle-sonido-al-mundo": ["sonidos", "animales", "juego"],
-  "sonidos-habla-como-el": ["sonidos", "imitacion", "turnos"],
+  "sonidos-habla-como-el": ["sonidos", "imitación", "turnos"],
   "sonidos-espera-con-cara-de-pregunta": ["espera", "pedir"],
   "sonidos-senalar-ya-es-hablar": ["pedir", "comida"],
   "sonidos-su-sonido-tu-palabra": ["sonidos", "agua"],
   "sonidos-un-solo-sonido-todo-el-dia": ["sonidos", "juego"],
-  "sonidos-turnos-de-sonidos": ["turnos", "sonidos", "musica"],
+  "sonidos-turnos-de-sonidos": ["turnos", "sonidos", "música"],
   "sonidos-cualquier-sonido-cuenta": ["sonidos", "espacio", "juego"],
   // palabras-sueltas (rutinas)
   "modelado-en-el-carro": ["carros", "calle", "animales"],
@@ -927,8 +927,8 @@ const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
   "interes-cohete-de-la-voz": ["espacio", "sonidos", "juego"],
   "interes-palabra-y-objeto": ["juego", "animales"],
   "focalizada-palabra-abre": ["acciones", "pedir"],
-  "focalizada-misma-palabra-cinco-lugares": ["agua", "mar", "bano"],
-  "modelado-cancion-de-la-rutina": ["canciones", "musica"],
+  "focalizada-misma-palabra-cinco-lugares": ["agua", "mar", "baño"],
+  "modelado-cancion-de-la-rutina": ["canciones", "música"],
   "espera-tres-segundos-mas": ["espera"],
   "interes-nombra-lo-que-el-hace": ["acciones", "juego"],
   "focalizada-no-preguntes-nombra": ["animales"],
