@@ -26,13 +26,19 @@ import {
   usePerfil,
 } from "@/components/estado-local";
 import { IconoDiana, IconoHecho } from "@/components/iconos";
-import { alinear, contarAlineacion } from "@/lib/objetivo/alinear";
+import { alinear, contarAlineacion, normalizar } from "@/lib/objetivo/alinear";
 import { acotarContenido } from "@/lib/objetivo/alcance";
 import {
   sugerir,
   vocabularioDe,
   type Sugerencia,
 } from "@/lib/objetivo/sugerir";
+import {
+  conoceElDiccionario,
+  indexarDiccionario,
+  sugerirOrtografia,
+  ultimaClave,
+} from "@/lib/objetivo/diccionario";
 import { fechaLarga } from "@/lib/fecha";
 
 type Bancos = {
@@ -42,6 +48,8 @@ type Bancos = {
   parJugableEn: (par: ParGemelo, etapa: Etapa) => boolean;
   grabables: readonly ItemGrabable[];
   coincideGrabable: (objetivo: Alineacion, i: ItemGrabable) => boolean;
+  /** Diccionario de ortografía general (gate S4, bloque O): 10 000 palabras curadas. */
+  palabrasEs: readonly string[];
 };
 
 // Cache a nivel de módulo: los bancos se cargan UNA vez por visita, y solo si el padre escribe.
@@ -53,13 +61,15 @@ function cargarBancos(): Promise<Bancos> {
     import("@content/pares-gemelos"),
     import("@/lib/banco-voz/catalogo"),
     import("@/lib/banco-voz/lotes"),
-  ]).then(([capsulas, pictos, pares, catalogo, lotes]) => ({
+    import("@/lib/objetivo/palabras-es"),
+  ]).then(([capsulas, pictos, pares, catalogo, lotes, palabras]) => ({
     capsulas: capsulas.CAPSULAS,
     pictos: pictos.PICTOGRAMAS,
     pares: pares.PARES_GEMELOS,
     parJugableEn: pares.parJugableEn,
     grabables: catalogo.catalogoGrabable(),
     coincideGrabable: (objetivo, i) => lotes.coincideConObjetivo(objetivo, i),
+    palabrasEs: palabras.PALABRAS_ES,
   }));
   return promesaBancos;
 }
@@ -74,6 +84,68 @@ const SUGERENCIAS = [
   "pedir cosas",
   "los sonidos",
 ];
+
+/**
+ * Los dos grupos de chips del gate (bloque O): en verde lo que ESTÁ en la app (tocarlo alinea
+ * la cápsula y los juegos), en neutro la palabra bien escrita que la app aún no tiene (solo
+ * ortografía). Cada grupo lleva su etiqueta en texto — nada comunica solo con color (regla 4).
+ */
+function GruposDeChips({
+  app,
+  orto,
+  alElegir,
+}: {
+  app: readonly Sugerencia[];
+  orto: readonly Sugerencia[];
+  alElegir: (termino: string) => void;
+}) {
+  // Un parecido pregunta ("¿Quisiste decir…?"); un prefijo solo se ofrece (vas escribiendo).
+  const pregunta = (s: Sugerencia) => s.tipo === "parecido";
+  return (
+    <>
+      {app.length > 0 ? (
+        <div className="mt-2">
+          <p className="text-tinta-suave text-xs">
+            Están en la app — alinean la cápsula y los juegos:
+          </p>
+          <div className="mt-1.5 flex flex-wrap gap-2">
+            {app.map((s) => (
+              <button
+                key={s.termino}
+                type="button"
+                onClick={() => alElegir(s.termino)}
+                className="border-acento text-tinta min-h-11 rounded-full border px-4 text-sm font-medium"
+                data-testid={`sugerencia-viva-${s.termino}`}
+              >
+                {pregunta(s) ? `¿Quisiste decir «${s.termino}»?` : s.termino}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {orto.length > 0 ? (
+        <div className="mt-2">
+          <p className="text-tinta-suave text-xs">
+            Bien escritas, aunque aún no están en la app:
+          </p>
+          <div className="mt-1.5 flex flex-wrap gap-2">
+            {orto.map((s) => (
+              <button
+                key={s.termino}
+                type="button"
+                onClick={() => alElegir(s.termino)}
+                className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
+                data-testid={`ortografia-${s.termino}`}
+              >
+                {pregunta(s) ? `¿Quisiste decir «${s.termino}»?` : s.termino}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
 
 export function ObjetivoCliente() {
   const hidratado = useHidratado();
@@ -131,16 +203,65 @@ export function ObjetivoCliente() {
     return sugerir(limpio, vocabularioDe(bancos));
   }, [bancos, limpio]);
 
+  // Ortografía GENERAL (gate S4, bloque O — segundo remate): el diccionario embebido sugiere la
+  // palabra bien escrita AUNQUE la app no la tenga («medi» → medio, media…), en su propio grupo.
+  const indice = useMemo(
+    () => (bancos ? indexarDiccionario(bancos.palabrasEs) : null),
+    [bancos],
+  );
+  const clavesApp = useMemo(
+    () =>
+      bancos
+        ? new Set(vocabularioDe(bancos).flatMap((crudo) => normalizar(crudo)))
+        : new Set<string>(),
+    [bancos],
+  );
+  const ortografia = useMemo<Sugerencia[]>(() => {
+    if (!indice || limpio === "") return [];
+    return sugerirOrtografia(limpio, indice, clavesApp);
+  }, [indice, limpio, clavesApp]);
+
+  // ¿Lo que teclea ya es una palabra bien escrita (de la app o del idioma)? Entonces el paso de
+  // ortografía no pregunta: existir en el idioma ES estar bien escrito («medios», «colores»).
+  const conocido = useMemo(() => {
+    if (limpio === "") return false;
+    const clave = ultimaClave(limpio);
+    if (clave === null) return false;
+    if (clavesApp.has(clave)) return true;
+    return indice !== null && conoceElDiccionario(indice, limpio);
+  }, [limpio, clavesApp, indice]);
+
   const sinNada =
     conteos !== null &&
     conteos.alcance.vacio &&
     conteos.global.vacio &&
     conteos.estudio === 0;
-  /** La candidata de ortografía: solo cuando lo escrito no coincide con NADA. */
-  const candidata = sinNada ? (sugerencias[0]?.termino ?? null) : null;
+
+  // Cada grupo trae o solo prefijos o solo parecidos (regla de silencio de cada motor).
+  const appSonPrefijos = sugerencias[0]?.tipo === "prefijo";
+  const ortoSonPrefijos = ortografia[0]?.tipo === "prefijo";
+  const hayPrefijos = appSonPrefijos || ortoSonPrefijos;
+
+  /** La candidata del paso de ortografía: primero lo que alinea (la app), luego el idioma —
+   *  y SOLO cuando lo escrito no coincide con nada Y no es una palabra bien escrita. */
+  const candidata =
+    sinNada && !conocido
+      ? ([
+          ...(appSonPrefijos ? sugerencias : []),
+          ...(ortoSonPrefijos ? ortografia : []),
+          ...(appSonPrefijos ? [] : sugerencias),
+          ...(ortoSonPrefijos ? [] : ortografia),
+        ][0]?.termino ?? null)
+      : null;
 
   if (!hidratado) {
     return <div className="min-h-[20rem]" aria-hidden="true" />;
+  }
+
+  function elegir(termino: string) {
+    setTexto(termino);
+    setGuardado(false);
+    setConfirmando(false);
   }
 
   async function guardarTexto(elegido: string) {
@@ -229,6 +350,8 @@ export function ObjetivoCliente() {
           placeholder="animales, la comida, el baño…"
           maxLength={80}
           autoComplete="off"
+          lang="es"
+          spellCheck
           className="border-borde bg-fondo text-tinta min-h-14 rounded-xl border px-4 text-lg"
           data-testid="objetivo-input"
         />
@@ -242,11 +365,7 @@ export function ObjetivoCliente() {
             <button
               key={s}
               type="button"
-              onClick={() => {
-                setTexto(s);
-                setGuardado(false);
-                setConfirmando(false);
-              }}
+              onClick={() => elegir(s)}
               className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
               data-testid={`sugerencia-${s.replace(/\s+/g, "-")}`}
             >
@@ -264,8 +383,10 @@ export function ObjetivoCliente() {
               Escribe una palabra o dos. La app buscará eso en las cápsulas, en
               los dibujos y en las gemelas, y lo pondrá primero.
             </p>
-          ) : conteos === null ? null : sinNada &&
-            sugerencias.some((s) => s.tipo === "prefijo") ? (
+          ) : conteos === null ? null : sinNada && hayPrefijos && !conocido ? (
+            /* Va a media palabra hacia algo real: se acompaña, sin regaño. Una palabra COMPLETA
+               bien escrita que no alinea cae al estado de abajo — el mensaje honesto — aunque
+               tenga continuaciones («medio» → medios): ahí sí hay que decir la verdad. */
             <div
               className="bg-fondo rounded-xl p-4"
               data-testid="objetivo-sugerencias-vivas"
@@ -273,23 +394,11 @@ export function ObjetivoCliente() {
               <p className="text-tinta-suave text-sm">
                 ¿Vas hacia alguna de estas? Tócala y listo:
               </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {sugerencias.map((s) => (
-                  <button
-                    key={s.termino}
-                    type="button"
-                    onClick={() => {
-                      setTexto(s.termino);
-                      setGuardado(false);
-                      setConfirmando(false);
-                    }}
-                    className="border-acento text-tinta min-h-11 rounded-full border px-4 text-sm font-medium"
-                    data-testid={`sugerencia-viva-${s.termino}`}
-                  >
-                    {s.termino}
-                  </button>
-                ))}
-              </div>
+              <GruposDeChips
+                app={appSonPrefijos ? sugerencias : []}
+                orto={ortoSonPrefijos ? ortografia : []}
+                alElegir={elegir}
+              />
             </div>
           ) : sinNada ? (
             <div
@@ -302,25 +411,11 @@ export function ObjetivoCliente() {
                 no cambia nada, o probar con otra palabra (animales, la comida,
                 acciones…).
               </p>
-              {sugerencias.length > 0 ? (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {sugerencias.map((s) => (
-                    <button
-                      key={s.termino}
-                      type="button"
-                      onClick={() => {
-                        setTexto(s.termino);
-                        setGuardado(false);
-                        setConfirmando(false);
-                      }}
-                      className="border-acento text-tinta min-h-11 rounded-full border px-4 text-sm font-medium"
-                      data-testid={`sugerencia-viva-${s.termino}`}
-                    >
-                      ¿Quisiste decir «{s.termino}»?
-                    </button>
-                  ))}
-                </div>
-              ) : null}
+              <GruposDeChips
+                app={sugerencias}
+                orto={ortografia}
+                alElegir={elegir}
+              />
             </div>
           ) : conteos.alcance.vacio ? (
             <p

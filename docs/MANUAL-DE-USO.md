@@ -264,10 +264,19 @@ Todo pasa en **una sola tarjeta**: el campo, las sugerencias, el aviso de qué e
 botón de guardar — que **nombra exactamente lo que va a guardar** ("Guardar «animales»").
 
 Mientras escribe, la app **acompaña, no regaña**: si va a media palabra ("anim"), le sugiere
-términos reales de su contenido — _"¿Vas hacia alguna de estas? Tócala y listo"_. Si escribe con
-un error de ortografía ("animles") y le da guardar, **pregunta primero**: _"¿Quisiste decir
-«animales»?"_ — puede corregir con un toque o guardar tal cual (escribir libre sigue siendo su
-derecho: en las terapias pueden pedirle algo que la app aún no tiene).
+en qué puede estar pensando — en **dos grupos con su etiqueta**. Los chips **verdes** son
+términos que **están en la app** y alinean la cápsula y los juegos. Los chips **neutros** son
+palabras del español **bien escritas que la app aún no tiene** ("medi" → «medio», «media»):
+no cambian los juegos, pero le ayudan a que el objetivo quede bien escrito — vienen de un
+diccionario de las 10.000 palabras más comunes del español que viaja dentro de la app (sin
+internet, como todo aquí). El campo también usa el corrector de su navegador o teclado (el
+subrayado rojo de siempre).
+
+Si escribe con un error de ortografía ("animles") y le da guardar, **pregunta primero**:
+_"¿Quisiste decir «animales»?"_ — puede corregir con un toque o guardar tal cual (escribir
+libre sigue siendo su derecho: en las terapias pueden pedirle algo que la app aún no tiene).
+Una palabra **bien escrita** nunca recibe esa pregunta: "medios" o "colores" se guardan a la
+primera, aunque no alineen nada.
 
 Con la palabra completa, le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
 hijo de verdad va a ver**: las cápsulas de su etapa y los dibujos de los temas que eligieron ("con

@@ -15,7 +15,7 @@ export type Sugerencia = {
 };
 
 /** Distancia de Levenshtein clásica — pequeña y determinista (los términos miden ≤ ~20). */
-function distancia(a: string, b: string): number {
+export function distancia(a: string, b: string): number {
   if (a === b) return 0;
   const fila = Array.from({ length: b.length + 1 }, (_, i) => i);
   for (let i = 1; i <= a.length; i++) {

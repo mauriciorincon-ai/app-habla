@@ -118,6 +118,31 @@ test("«bañ» sugiere «baño» con su eñe y sin palabras lejanas de relleno",
   );
 });
 
+// Gate S4 (O1, segundo remate — pedido del usuario): ortografía GENERAL. La app solo tiene ~90
+// palabras de contenido; para lo demás viaja el diccionario embebido (10 000 palabras curadas),
+// que sugiere la palabra bien escrita en su propio grupo. Y una palabra bien escrita se guarda
+// SIN pregunta: existir en el idioma ES estar bien escrito, aunque no alinee nada.
+test("«medi» sugiere «medio» del idioma en su grupo; la palabra bien escrita se guarda sin pregunta", async ({
+  page,
+}) => {
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("medi");
+
+  const vivas = page.getByTestId("objetivo-sugerencias-vivas");
+  await expect(vivas).toBeVisible();
+  await expect(vivas).toContainText("aún no están en la app");
+  await expect(page.getByTestId("ortografia-medio")).toBeVisible();
+
+  await page.getByTestId("ortografia-medio").click();
+  // «medio» es palabra completa que no alinea nada: el mensaje honesto (con sus
+  // continuaciones «medios»… como oferta, no como pregunta) — y guardar NO pregunta.
+  await expect(page.getByTestId("objetivo-sin-matches")).toBeVisible();
+  await expect(page.getByTestId("ortografia-medios")).toBeVisible();
+  await page.getByTestId("guardar-objetivo").click();
+  await expect(page.getByTestId("objetivo-confirmar")).toHaveCount(0);
+  await expect(page.getByTestId("objetivo-activo")).toContainText("«medio»");
+});
+
 // Gate S4 (O1): el paso de ortografía — guardar un texto que no coincide con NADA pero se parece
 // a un término real pregunta primero; las dos salidas son honestas.
 test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de grabar", async ({

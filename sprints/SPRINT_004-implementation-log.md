@@ -736,6 +736,36 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      primera-forma-gana) · +1 e2e ×2 proyectos con el caso exacto del usuario (chip «baño», sin
      «bano» ni «rana», botón "Guardar «baño»"). **233 unit · 143 e2e · typecheck · lint · build.**
      Guía O1 ampliada (probar "bañ"/"musi" + los dos "Mal" nuevos) + historial.
+- **Bloque O (tercer remate) — 2026-08-07 · ortografía GENERAL en dos colores (ADR-014).** El
+  usuario escribió "medi" (iba hacia "medios") y la app solo pudo ofrecer «pedir»: el sugeridor
+  únicamente conocía las ~90 palabras del contenido. Su pedido, decidido por AskUserQuestion:
+  chips en dos colores (app vs. ortografía) + corrector del sistema.
+  1. **`scripts/gen-diccionario.mjs` + `lib/objetivo/palabras-es.ts`:** las 10 000 palabras más
+     frecuentes del español (OpenSubtitles 2018 vía hermitdave/FrequencyWords, MIT), CURADAS:
+     solo alfabeto español, marcadores anti-inglés (th/sh/ck/w/k/ss…), terminaciones no
+     españolas con lista blanca de préstamos (reloj, club, coñac…), interjecciones (jaja, mmm)
+     y veto de groserías/insultos/términos sexuales (es + es-CO) — JAMÁS un chip así en una app
+     familiar. El "vigía" del script imprime sospechosas para ojo humano (quedó 1 residuo en
+     10 000: "raj"). ~115 KB, en el chunk BAJO DEMANDA del primer teclazo (LCP intacto).
+  2. **`lib/objetivo/diccionario.ts` (motor puro):** prefijos por FRECUENCIA real (el índice del
+     arreglo es el rango: "medi" → medio, médico, media, medicina), parecidos (d≤2, token ≥4)
+     solo si el token NO es palabra conocida; una conocida sí recibe continuaciones («medio» →
+     «medios» — así se llega tecleando). Excluye claves del vocabulario app (van en su grupo).
+  3. **UI en dos grupos etiquetados** (regla 4: nada comunica solo con color): verdes "Están en
+     la app — alinean la cápsula y los juegos" · neutros "Bien escritas, aunque aún no están en
+     la app". `GruposDeChips` comparte los dos estados (vivas y sin-matches); un parecido
+     pregunta "¿Quisiste decir…?", un prefijo solo se ofrece. Palabra completa conocida que no
+     alinea («medio») cae al mensaje HONESTO con sus continuaciones como oferta.
+  4. **El paso de ortografía se calla ante palabra bien escrita:** `conocido` (vocab app ∪
+     diccionario) desactiva la candidata — «medios»/«colores» se guardan a la primera (existir
+     en el idioma ES estar bien escrito). Candidata compuesta: app-prefijo → dicc-prefijo →
+     app-parecido → dicc-parecido.
+  5. **Corrector nativo:** `lang="es" spellCheck` en el campo (cubre lo que el top-10k no trae).
+     Tests: +10 unit (motor con lista sintética: frecuencia/exclusión/continuaciones/typo/formas
+     con eñe; sanidad de la lista real: tope, formas, duplicados, veto) · +1 e2e ×2 proyectos
+     ("medi" → grupo neutro con «medio»; tocar «medio» → mensaje honesto + «medios» como
+     continuación; guardar sin pregunta). **243 unit · 145 e2e · typecheck · lint · build.**
+     ADR-014 escrita. Guía O1 con el caso "medi" y los "Mal" nuevos; manual con los dos grupos.
 - **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
   navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
   determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
