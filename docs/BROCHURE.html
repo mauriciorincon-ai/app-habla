@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Conoce Hablemos San: juegos que se juegan hablando — y se juegan juntos.">
+<title>Hablemos San — Conócela</title>
+<!--
+  BROCHURE VIVO de Hablemos San — estampado desde kit v1.9.0 (BROCHURE.plantilla.html) el
+  2026-08-07, entrega puntual ENTREGA-BROCHURE. Es el anti-manual: se recorre como una página
+  web, de lo general a lo particular, y nadie lee nada que no pidió leer.
+
+  Doble vida: este archivo es el CANÓNICO (autocontenido, abre con doble clic) y la ruta
+  pública /conoce de la app sirve este mismo contenido (copia automatizada en build —
+  scripts/copiar-brochure.mjs — jamás edición manual de la copia).
+
+  Reglas heredadas del molde (ver plantilla del kit): autocontenido sin CDNs · 4 capas de
+  progressive disclosure · regla de conteo (el pie declara N y N cuadra con las features
+  documentadas en docs/MANUAL-DE-USO.md — tabla de mapeo en sprints/ENTREGA-brochure-summary.md) ·
+  motion G3 (entrada) + G2 (abrir tarjeta, excepción declarada grid-template-rows) ·
+  prefers-reduced-motion = experiencia completa sin movimiento · a11y (acordeón h3>button
+  con aria-expanded/aria-controls, contenido real en el DOM, contraste AA).
+
+  Adaptaciones al design-system.md de habla (regla 8 del molde):
+  - Tokens reemplazados por la paleta "Clínica cálida" del operador (cream/sage/ink light +
+    la paleta --oscuro-* en dark). Sin data-tema: /conoce vive fuera del storage de la app,
+    así que el tema sigue solo al sistema (nota de piloto para la planeadora).
+  - Tipografía: autocontenido manda — sin webfonts. Georgia (serif del sistema) hace de
+    display en lugar de Instrument Serif; system-ui de cuerpo. Trade-off declarado.
+  - Iconos: SVG de trazo copiados de src/components/iconos.tsx (stroke 1.5, viewBox 24,
+    currentColor). Cero emojis (regla del DS).
+  - Tono: es-CO llano, de "tú" (decisión del usuario 2026-08-07). Cero datos del menor.
+-->
+<style>
+  :root {
+    /* Paleta operador light (design-system.md — capa semántica) */
+    --fondo: #FBF8F2; --superficie: #F5F0E5; --borde: #ECE4D2;
+    --tinta: #1F2420; --tinta-suave: #5A615C;
+    --acento: #2E4628; --acento-suave: #DCE6D8; --acento-vivo: #3F5F37;
+    --realce: #8C6113; /* ámbar 700: la voz parental, legible sobre crema */
+    --radio: 16px; --radio-chico: 12px;
+    --dur-media: 220ms; --dur-lenta: 380ms;
+    --ease-suave: cubic-bezier(.25, .8, .3, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Paleta --oscuro-* del DS */
+      --fondo: #14171A; --superficie: #1B1F22; --borde: #232830;
+      --tinta: #F2EFE8; --tinta-suave: #969994;
+      --acento: #B5D5AB; --acento-suave: #233022; --acento-vivo: #94BB89;
+      --realce: #ECC56F; /* ámbar 300 sobre fondo oscuro */
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--fondo); color: var(--tinta);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .lienzo { max-width: 720px; margin: 0 auto; padding: 0 20px 90px; }
+  h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 400;
+    text-wrap: balance; margin: 0; }
+  p { margin: 0.55em 0; }
+  .suave { color: var(--tinta-suave); }
+  .chica { font-size: 0.88rem; }
+  .eyebrow { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); }
+
+  /* ===== Capa 0 · Portada: la promesa en una frase ===== */
+  .portada { min-height: 88svh; display: flex; flex-direction: column;
+    justify-content: center; text-align: center; padding: 48px 0 24px; }
+  .portada h1 { font-size: clamp(2.3rem, 8vw, 3.6rem); line-height: 1.08; margin: 14px 0 18px; }
+  .portada .promesa { font-size: clamp(1.05rem, 3.4vw, 1.3rem); color: var(--tinta-suave);
+    max-width: 36ch; margin: 0 auto; }
+  .baja { margin-top: auto; padding-top: 40px; color: var(--tinta-suave);
+    font-size: 0.85rem; }
+  .baja .flecha { display: block; font-size: 1.3rem; margin-top: 6px; }
+
+  /* ===== Capa 1 · Tarjetas ===== */
+  .seccion { padding-top: 46px; }
+  .seccion > h2 { font-size: 1.7rem; margin-bottom: 6px; }
+  .tarjetas { display: grid; gap: 14px; margin-top: 22px; }
+  .tarjeta { background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: var(--radio); overflow: hidden; }
+  .tarjeta-cabeza { margin: 0; }
+  .tarjeta-boton { display: flex; align-items: center; gap: 14px; width: 100%;
+    padding: 18px; font: inherit; text-align: left; color: inherit;
+    background: none; border: 0; cursor: pointer; }
+  .tarjeta-boton:focus-visible { outline: 3px solid var(--acento-vivo); outline-offset: -3px; }
+  /* El icono va a la IZQUIERDA del texto (regla del DS); trazo de la app, jamás emoji. */
+  .icono { flex: none; width: 52px; height: 52px; display: grid; place-items: center;
+    background: var(--acento-suave); border-radius: var(--radio-chico);
+    color: var(--acento); }
+  .icono svg { width: 30px; height: 30px; }
+  .icono svg :is(path, rect, circle) { fill: none; stroke: currentColor;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tarjeta-titulos { flex: 1; min-width: 0; display: block; }
+  .estrellita { display: block; font-family: ui-monospace, Menlo, monospace;
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--realce); margin-bottom: 2px; }
+  .t-nombre { display: block; font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400; font-size: 1.18rem; line-height: 1.25; }
+  .t-linea { display: block; margin-top: 2px; font-size: 0.9rem; color: var(--tinta-suave); }
+  .chevron { flex: none; color: var(--tinta-suave);
+    transition: transform var(--dur-media) var(--ease-suave); }
+  .tarjeta[data-abierta] .chevron { transform: rotate(180deg); }
+
+  /* ===== Capa 2 · Detalle (G2: transición de estado; excepción declarada grid-rows) ===== */
+  .detalle { display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-lenta) var(--ease-suave); }
+  .tarjeta[data-abierta] .detalle { grid-template-rows: 1fr; }
+  .detalle-interior { overflow: hidden; }
+  .detalle-cuerpo { padding: 2px 18px 20px; border-top: 1px solid var(--borde);
+    opacity: 0; transform: translateY(6px);
+    transition: opacity var(--dur-lenta) ease 0.12s, transform var(--dur-lenta) ease 0.12s; }
+  .tarjeta[data-abierta] .detalle-cuerpo { opacity: 1; transform: none; }
+  .feature { padding: 13px 0; border-top: 1px solid var(--borde); }
+  .feature:first-of-type { border-top: 0; }
+  .feature h4 { margin: 0; font-size: 1rem; }
+  .feature .como { margin: 5px 0 0; font-size: 0.92rem; color: var(--tinta-suave); }
+  .tip { margin-top: 7px; padding: 8px 12px; background: var(--acento-suave);
+    border-radius: 10px; font-size: 0.88rem; }
+  .tip strong { color: var(--acento-vivo); }
+
+  /* El catálogo de cápsulas: la amplitud real, agrupada (jamás las 50 una a una). */
+  .catalogo { margin-top: 14px; padding: 14px; background: var(--fondo);
+    border: 1px solid var(--borde); border-radius: var(--radio-chico); }
+  .catalogo .como { margin-top: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0;
+    list-style: none; }
+  .chip { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta);
+    background: var(--acento-suave); border-radius: 8px; padding: 3px 10px; }
+
+  /* ===== Capa 3 · Lo fino ===== */
+  details.fino { background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: var(--radio); padding: 0 18px; margin-top: 12px; }
+  details.fino summary { padding: 15px 0; cursor: pointer; font-weight: 600;
+    list-style-position: inside; }
+  details.fino summary:focus-visible { outline: 3px solid var(--acento-vivo);
+    outline-offset: 2px; border-radius: 6px; }
+  details.fino[open] summary { border-bottom: 1px solid var(--borde); }
+  details.fino .cuerpo { padding: 12px 0 16px; }
+  .mapa { margin: 0; padding: 0; list-style: none; }
+  .mapa li { padding: 5px 0; }
+  .mapa code { font-family: ui-monospace, Menlo, monospace; font-size: 0.82rem;
+    background: var(--acento-suave); border-radius: 6px; padding: 1px 7px; }
+
+  footer { margin-top: 54px; padding-top: 18px; border-top: 1px solid var(--borde); }
+  footer summary { cursor: pointer; }
+  footer summary:focus-visible { outline: 3px solid var(--acento-vivo);
+    outline-offset: 2px; border-radius: 6px; }
+
+  /* ===== G3 · Coreografía de entrada (solo transform/opacity, stagger por CSS) ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    .revela { opacity: 0; transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s var(--ease-suave); }
+    .revela.visto { opacity: 1; transform: none; }
+    .tarjetas .revela:nth-child(2) { transition-delay: 0.08s; }
+    .tarjetas .revela:nth-child(3) { transition-delay: 0.16s; }
+    .tarjetas .revela:nth-child(4) { transition-delay: 0.24s; }
+    .tarjetas .revela:nth-child(5) { transition-delay: 0.32s; }
+    .tarjetas .revela:nth-child(6) { transition-delay: 0.40s; }
+    .portada h1, .portada .promesa { animation: alzar 0.9s var(--ease-suave) both; }
+    .portada .promesa { animation-delay: 0.25s; }
+    @keyframes alzar { from { opacity: 0; transform: translateY(22px); } }
+  }
+  /* Reduced motion: experiencia alterna completa — todo visible, cero movimiento. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .revela { opacity: 1; transform: none; }
+    .detalle, .detalle-cuerpo, .chevron { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="lienzo">
+
+  <!-- Capa 0 · Portada -->
+  <header class="portada">
+    <p class="eyebrow">Hablemos San</p>
+    <h1>Su voz mueve el mundo.</h1>
+    <p class="promesa">Juegos que se juegan hablando — y se juegan contigo. Y cada día,
+      una respuesta concreta a la pregunta que más pesa: «¿y hoy qué puedo hacer por
+      mi hijo?».</p>
+    <p class="baja">Baja cuando quieras — cada tarjeta se abre solo si tú la tocas
+      <span class="flecha" aria-hidden="true">↓</span></p>
+  </header>
+
+  <!-- Capa 1 · Qué hace: seis tarjetas, una por grupo natural de la app. -->
+  <section class="seccion" aria-labelledby="t-quehace">
+    <h2 id="t-quehace" class="revela">Qué hace</h2>
+    <p class="suave revela">Seis puertas, una línea cada una. Ábrelas en el orden que
+      quieras — aquí nadie lee nada que no pidió leer.</p>
+    <div class="tarjetas">
+
+      <!-- Tarjeta 1 · La respuesta de cada día (la estrella) -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d1">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 21v-8"/>
+                <path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5Z"/>
+                <path d="M12 16c0-3-2-5-5-5 0 3 2 5 5 5Z"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="estrellita">La estrella de la app</span>
+              <span class="t-nombre">La respuesta de cada día</span>
+              <span class="t-linea">Cada mañana, una idea lista: qué decirle hoy y qué
+                jugar juntos.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d1" role="region" aria-label="La respuesta de cada día — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>La cápsula del día</h4>
+              <p class="como">Al abrir la app te espera la cápsula de hoy: una técnica con
+                respaldo científico, el porqué en dos líneas, <strong>tu línea de hoy</strong>
+                —la frase que puedes decirle tal cual— y una actividad corta para hacer
+                juntos. Cada día trae una distinta, no se repite hasta que se acaben todas,
+                y la de hoy no cambia aunque cierres y vuelvas a abrir. Si te da curiosidad,
+                en «¿De dónde sale esto?» está el estudio que la respalda.</p>
+              <p class="tip"><strong>Tip:</strong> son cosas de 5 a 10 minutos, pensadas
+                para la comida, el baño o el juego — el habla se estimula todo el día, no
+                solo frente a la pantalla.</p>
+            </div>
+            <div class="feature">
+              <h4>«Sí, ya lo hicimos» — los días que llevan</h4>
+              <p class="como">Cuando hagan la actividad, tócalo y el contador de días
+                practicados crece. Ese número <strong>nunca baja</strong>: si un día no se
+                pudo, no se pierde nada y no hay racha que se rompa. Lo que cuenta es
+                volver.</p>
+            </div>
+            <div class="catalogo">
+              <p class="eyebrow">El catálogo completo</p>
+              <p class="como chica">Detrás del día a día hay <strong>50 cápsulas</strong>,
+                organizadas por cómo habla el niño hoy y construidas sobre cinco técnicas
+                con evidencia — ninguna es un consejo genérico: cada una cita su fuente.</p>
+              <ul class="chips" aria-label="Las tres etapas del habla">
+                <li class="chip">Sonidos e intentos</li>
+                <li class="chip">Palabras sueltas</li>
+                <li class="chip">Primeras frases</li>
+              </ul>
+              <ul class="chips" aria-label="Las cinco técnicas">
+                <li class="chip">Modelar</li>
+                <li class="chip">Expandir lo que dijo</li>
+                <li class="chip">Esperar en silencio</li>
+                <li class="chip">Seguir su interés</li>
+                <li class="chip">Repetir una palabra clave</li>
+              </ul>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 2 · Jugar con la voz -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d2">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="t-nombre">Jugar con la voz</span>
+              <span class="t-linea">Cuatro juegos donde su voz es el control — y tú
+                diriges.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d2" role="region" aria-label="Jugar con la voz — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>Antes de jugar, tu guion</h4>
+              <p class="como">Tres de los juegos escuchan el micrófono (el globo, el cohete
+                y «palabra y dibujo»), y antes de cada uno pasa siempre lo mismo: primero
+                te muestra <strong>tu guion</strong> —la línea que tú vas a decir—, luego
+                el navegador pide permiso para escuchar, y por último dos segundos de
+                silencio («shhh…») para medir cómo suena tu casa y no confundir el
+                ventilador con la voz. Puedes tocar «Ya jugamos» cuando quieras: no hay
+                tiempo mínimo, ni meta obligatoria, ni «game over». Y «Salir» apaga el
+                micrófono ahí mismo.</p>
+              <p class="tip"><strong>Tip:</strong> ninguno le exige palabras — miden la
+                voz, no el vocabulario. Cualquier sonido vale.</p>
+            </div>
+            <div class="feature">
+              <h4>El globo — la voz que se sostiene</h4>
+              <p class="como">El globo avanza mientras la voz suena («aaaaah») y espera sin
+                drama cuando se calla: lo avanzado nunca se pierde. Cada 3 segundos de voz
+                acumulada cruza la línea, da <strong>una vuelta</strong> y estalla un
+                confeti que cae una vez y se va. Al final, la celebración dice exactamente
+                lo que se midió — tres cosas: cuánto sonó la voz en total («¡Su voz sonó
+                7,3 segundos!»), cuántas vueltas dio el globo, y cuál fue el rato más largo
+                sin cortarse. La app nunca dice que sostuvo un tiempo que no sostuvo.</p>
+            </div>
+            <div class="feature">
+              <h4>El cohete — la voz que sube y baja</h4>
+              <p class="como">El cohete escucha el <strong>tono</strong>: voz que sube,
+                cohete que sube. No hay que decir ninguna palabra — la sirena exagerada
+                («aaaAAAaaa») es exactamente lo que se busca; hazla tú primero, riéndote.
+                Cada subida y bajada de verdad gana un hito con confeti («¡Ya subió y bajó
+                2 veces!»), y una capa de nubes y estrellas pasa hacia abajo para que se
+                sienta que va cada vez más alto, como mirar por la ventanilla.</p>
+            </div>
+            <div class="feature">
+              <h4>Palabra y dibujo — el nombre vive en la cosa</h4>
+              <p class="como">Aparece un dibujo grande con su palabra escrita, de los temas
+                que elegiste. Tu papel es el importante: nómbralo <strong>una sola vez</strong>
+                —«¡perro!»— y espera tres segundos en silencio. El dibujo se enciende con
+                cualquier sonido que él haga: un intento, un «pe», un balbuceo. ¿Y si sí
+                dijo la palabra? Eso lo decides tú: abajo, en letra pequeña, está «¿Dijo
+                ‹perro›? Tócalo tú» — y sube una bandada de globos, porque decir la palabra
+                merece más que un sonido cualquiera. La app no reconoce palabras y no va a
+                fingir que sí: tú estabas ahí, y tú sabes.</p>
+              <p class="tip"><strong>Tip:</strong> los dibujos son pictogramas de ARASAAC y
+                viven dentro de la app — no se descargan de internet mientras juegan.</p>
+            </div>
+            <div class="feature">
+              <h4>Palabras gemelas — casi iguales, no idénticas</h4>
+              <p class="como">Dos dibujos a la vez cuyas palabras se diferencian por un solo
+                sonido: <em>pato</em> y <em>gato</em>, <em>foca</em> y <em>boca</em>.
+                Señalas los dos, le pides que diga uno, y <strong>tú marcas el que
+                oíste</strong> en «¿Cuál oíste?» — ahí el dibujo elegido festeja. Este
+                juego no usa micrófono ni analiza nada: el que oye eres tú. No hay
+                respuesta incorrecta para el niño; si hoy solo quiere mirar, tocas «Hoy
+                solo miramos esta» y siguen sin apuro.</p>
+              <p class="tip"><strong>Tip:</strong> necesita que el niño ya diga palabras
+                sueltas — si su etapa es «sonidos e intentos», el juego mismo te lo dice
+                con cariño.</p>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 3 · Tu voz dentro de la app -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d3">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <rect x="9" y="2" width="6" height="11" rx="3"/>
+                <path d="M5 10a7 7 0 0 0 14 0"/>
+                <path d="M12 17v4M9 21h6"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="t-nombre">Tu voz dentro de la app</span>
+              <span class="t-linea">Grabas «perro» una vez — y los juegos hablan con tu
+                voz.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d3" role="region" aria-label="Tu voz dentro de la app — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>El Estudio: grabar, oír, guardar</h4>
+              <p class="como">El Estudio te va mostrando, de a una, las palabras y frases
+                que puedes grabar. Tocas «Grabar», la dices, la escuchas cómo quedó y la
+                guardas — o la regrabas sin pena. Mientras grabas, una barra baila con tu
+                voz: si se mueve cuando hablas, te está oyendo bien. Y al escuchar
+                cualquier grabación, una barrita se llena con el avance del audio: sabes
+                que suena y cuánto falta.</p>
+            </div>
+            <div class="feature">
+              <h4>Ve directo a lo que quieras grabar</h4>
+              <p class="como">Las grabaciones se organizan en tres grupos —Palabras ·
+                Consignas del juego · Celebraciones— y cada grupo tiene su propio botón
+                «Grabar»: puedes irte derecho a las dos consignas sin pasar por todas las
+                palabras. El botón grande sigue siendo el recorrido guiado de siempre, que
+                propone primero lo que más le sirve al niño.</p>
+            </div>
+            <div class="feature">
+              <h4>Lo que ya grabaste</h4>
+              <p class="como">Cada grabación con sus botones de Escuchar y Borrar,
+                agrupadas y numeradas. Borrar pide un <strong>segundo toque</strong> —el
+                botón se pone rojo con «¿Seguro?»— para que un dedo apurado no borre nada
+                sin querer; si te arrepientes, en unos segundos se desarma solo.</p>
+            </div>
+            <div class="feature">
+              <h4>Y aquí la magia: tu voz suena en los juegos</h4>
+              <p class="como">Con grabaciones guardadas, en «palabra y dibujo» y en
+                «palabras gemelas» cada dibujo trae un <strong>botón de altavoz</strong>
+                (grande: él lo puede tocar) y la palabra suena sola al aparecer — el nombre
+                vive en la cosa, con una voz que él conoce. En el globo y el cohete, tus
+                invitaciones grabadas («Haz sonar tu voz: aaaaah») suenan bajo el título —
+                y mientras tu voz grabada suena, el juego espera: el globo no vuela con una
+                grabación, solo con la voz de verdad. ¿Quieres apagarla un rato? El
+                interruptor «Usar la voz de la familia» la apaga sin borrar nada.</p>
+              <p class="tip"><strong>Importante:</strong> se graba TU voz, la del adulto.
+                La del niño nunca — ni aquí ni en ningún juego (mira «Qué pasa con la voz
+                de tu hijo», más abajo).</p>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 4 · El objetivo de la semana -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d4">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="t-nombre">El objetivo de la semana</span>
+              <span class="t-linea">Lo que pidieron en sus terapias, puesto primero en
+                todo.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d4" role="region" aria-label="El objetivo de la semana — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>Escríbelo y la app se alinea</h4>
+              <p class="como">¿Te pidieron trabajar los animales, la comida, el baño?
+                Escríbelo en «Objetivo» y la app pone eso <strong>primero</strong>: la
+                cápsula del día, los dibujos de «palabra y dibujo» y lo que te propone
+                grabar el Estudio. Es opcional y no caduca solo: se queda hasta que lo
+                cambies o lo quites — y quitarlo deja todo como estaba. El botón nombra
+                exactamente lo que va a guardar: «Guardar ‹animales›».</p>
+            </div>
+            <div class="feature">
+              <h4>Mientras escribes, te acompaña</h4>
+              <p class="como">A media palabra («anim») te sugiere en qué puedes estar
+                pensando, en dos grupos: chips <strong>verdes</strong> —términos que están
+                en la app y alinean los juegos— y chips <strong>neutros</strong> —palabras
+                del español bien escritas que la app aún no tiene, de un diccionario de
+                10.000 palabras que viaja dentro de la app, sin internet—. Y si escribes
+                con un error («animles») y das guardar, pregunta primero: «¿Quisiste decir
+                ‹animales›?» — corriges con un toque o guardas tal cual: escribir libre es
+                tu derecho.</p>
+            </div>
+            <div class="feature">
+              <h4>La tarjeta te dice el estado — con tres señales</h4>
+              <p class="como">Color, forma y palabras a la vez (pensado también para
+                daltonismo): <strong>verde con la diana</strong> cuando los juegos van a
+                cambiar, con el desglose real («Alineando ahora: 4 cápsulas · 6 dibujos»);
+                <strong>azul con el círculo de info</strong> cuando hay que ponerle
+                atención — la cápsula sí, pero ese tema no está entre los elegidos—; y
+                <strong>rojo con el triángulo</strong> cuando la app aún no tiene contenido
+                de eso: te lo dice de frente en vez de fingir. Y en el Estudio, las
+                grabaciones que le sirven al objetivo llevan una diana al lado.</p>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 5 · El rumbo -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d5">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M15.5 8.5l-2 5-5 2 2-5 5-2Z"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="t-nombre">El rumbo</span>
+              <span class="t-linea">Cómo van, semana a semana — sin notas y sin
+                drama.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d5" role="region" aria-label="El rumbo — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>Tendencias de lo que de verdad pasó</h4>
+              <p class="como">Semana a semana: los días que practicaron juntos, las
+                cápsulas completadas, las palabras distintas, los dibujos encendidos, las
+                vueltas del globo, las subidas del cohete, las rondas de gemelas, las
+                palabras que tú le oíste y los segundos de su voz (el total y el rato más
+                largo sin cortarse). Cada línea aparece solo cuando tiene algo que contar.
+                Al principio estará vacío: jueguen unos días y cobra vida.</p>
+              <p class="tip"><strong>Tip:</strong> el rumbo cuenta lo que llegó a la
+                celebración — terminen con «Ya jugamos» para que el intento quede.</p>
+            </div>
+            <div class="feature">
+              <h4>16 hitos que no se pierden</h4>
+              <p class="como">Desde «su primer rato de práctica juntos» y las primeras
+                veces de cada juego, hasta acumulados como «25 días de práctica en total».
+                Una vez ganados, no se pierden nunca.</p>
+              <p class="tip"><strong>Lo que nunca hará:</strong> ponerle una nota, un
+                puntaje, un porcentaje o un plazo; ni compararlo con otro niño; ni
+                castigar una semana floja. No es un boletín — es el registro cálido de lo
+                que hicieron juntos.</p>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 6 · A su medida -->
+      <article class="tarjeta revela">
+        <h3 class="tarjeta-cabeza">
+          <button class="tarjeta-boton" aria-expanded="false" aria-controls="d6">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+              </svg>
+            </span>
+            <span class="tarjeta-titulos">
+              <span class="t-nombre">A su medida</span>
+              <span class="t-linea">Temas, etapa, calma: la app se ajusta a él, no al
+                revés.</span>
+            </span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </h3>
+        <div class="detalle" id="d6" role="region" aria-label="A su medida — detalle">
+          <div class="detalle-interior"><div class="detalle-cuerpo">
+            <div class="feature">
+              <h4>Apodo y temas</h4>
+              <p class="como">La primera vez, la app pregunta dos cosas: cómo le dicen en
+                casa (opcional) y hasta tres temas que le gusten — y los juegos se visten
+                de eso, para que practicar nunca lo aburra. ¿Cambiar después? Ajustes →
+                «Apodo y temas» → «Cambiar apodo y temas». No borra nada: el progreso se
+                queda como está.</p>
+            </div>
+            <div class="feature">
+              <h4>La etapa del habla</h4>
+              <p class="como">En Ajustes eliges cómo habla <strong>hoy</strong>: «Sonidos e
+                intentos», «Palabras sueltas» (la que la app trae por defecto — y su
+                especialidad) o «Primeras frases», que nunca se activa sola: la eliges tú,
+                a propósito. Las cápsulas se ajustan a la etapa. Cambiarla no borra nada;
+                el progreso de cada una se guarda por separado. Si dudas, quédate en
+                palabras sueltas.</p>
+            </div>
+            <div class="feature">
+              <h4>Modo calma</h4>
+              <p class="como">Un toque —en el juego o en Ajustes— y la pantalla baja a
+                colores de atardecer: sin medidor, sin meta y sin celebración automática.
+                El globo no se detiene: sube con la voz y baja despacito en el silencio,
+                como un globo de verdad; el cohete flota igual. Para los días en que el
+                juego con meta pesa demasiado.</p>
+            </div>
+            <div class="feature">
+              <h4>Reducir animaciones</h4>
+              <p class="como">Con este ajuste, los globos de la palabra, el confeti y la
+                capa de cielo del cohete no se muestran — el texto sigue contando cada
+                logro. Y si tu aparato ya pide menos movimiento, la app lo respeta sin que
+                toques nada.</p>
+            </div>
+            <div class="feature">
+              <h4>Claro u oscuro</h4>
+              <p class="como">Decide cómo se ve <strong>tu</strong> pantalla: seguir al
+                sistema (lo normal) o fijarla en claro u oscuro — útil de noche, al lado
+                del niño. La pantalla de él no cambia nunca: es clara siempre, y esa
+                previsibilidad es parte del diseño.</p>
+            </div>
+            <div class="feature">
+              <h4>Instálala como app — y sin internet</h4>
+              <p class="como">En el menú del navegador (Chrome en Android): «Añadir a la
+                pantalla de inicio». Abre a pantalla completa y, después de la primera vez,
+                funciona sin conexión: el juego nunca necesita internet.</p>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Capa 3 · Lo fino -->
+  <section class="seccion" aria-labelledby="t-fino">
+    <h2 id="t-fino" class="revela">Los detalles finos</h2>
+    <details class="fino revela">
+      <summary>Qué pasa con la voz de tu hijo — la promesa mayor</summary>
+      <div class="cuerpo chica">
+        <p><strong>La voz de tu hijo nunca se graba, ni se guarda, ni sale del
+          aparato.</strong> El sonido se analiza en el momento, dentro de la tablet o el
+          teléfono, para calcular dos números —cuánta energía hay y, en el cohete, qué tan
+          agudo es el tono— y se descarta enseguida. Ese tono también es un dato de su voz,
+          y se trata con la misma regla: no se guarda, no se envía, no queda en ningún
+          lado.</p>
+        <p>No hay servidores, ni cuentas, ni nube: durante el juego la app no hace ninguna
+          petición a internet. Hay pruebas automáticas que lo verifican en cada cambio del
+          código — si alguien intentara guardar o enviar audio, esas pruebas fallan y el
+          cambio no entra. La cámara no se usa nunca.</p>
+        <p>Tu voz —la del Estudio— sí se guarda, <strong>solo en este aparato</strong>: no
+          va a internet, no se copia a ningún servidor y, si cambias de aparato, no viaja:
+          se vuelve a grabar donde se va a usar. Y aun con el Estudio, la voz de tu hijo
+          nunca se graba.</p>
+        <p>Lo único que la app guarda: el apodo (si lo pusiste), los temas, los ajustes,
+          el progreso y —si las grabaste— tus voces. Todo se borra cuando quieras en
+          Ajustes → «Borrar mis datos», o solo las grabaciones con «Borrar solo el banco
+          de voz».</p>
+      </div>
+    </details>
+    <details class="fino revela">
+      <summary>Qué mide — y qué no va a fingir que mide</summary>
+      <div class="cuerpo chica">
+        <p><strong>Sí mide:</strong> si hay voz (sonido por encima del ruido de tu casa),
+          cuánto tiempo se sostiene y, en el cohete, si el tono sube o baja.</p>
+        <p><strong>No mide:</strong> qué palabra dijo, ni si la pronunció bien. Hoy
+          ninguna tecnología evalúa con fiabilidad la pronunciación de un niño de 4 a 6
+          años en español, y por eso esta app no lo finge. El dibujo que se enciende con
+          cualquier sonido no significa que la palabra estuvo bien — y la app nunca va a
+          decir que sí.</p>
+        <p><strong>Quien juzga el acierto eres tú.</strong> Si dijo la palabra, tú lo
+          sabes: celébralo con tus propias palabras. Aquí nadie felicita por felicitar —
+          ese «¡muy bien!» que suena aunque el niño no haya dicho nada es justo lo que
+          esta app no hace.</p>
+      </div>
+    </details>
+    <details class="fino revela">
+      <summary>Requisitos — y lo que esta app no es</summary>
+      <div class="cuerpo chica">
+        <p>Funciona en el navegador de una tablet o un teléfono (Chrome en Android es el
+          probado). Tres de los juegos piden permiso de micrófono, que se usa solo para
+          medir en el momento. Instalarla como app es opcional pero recomendado: abre a
+          pantalla completa y funciona sin conexión.</p>
+        <p>Y la honestidad completa: es <strong>práctica de estimulación del habla en
+          casa</strong>. No es terapia, no da diagnósticos y no promete resultados en un
+          plazo — acompaña, nunca reemplaza, las terapias integrales del lenguaje del
+          niño. Está pensada para jugar de a dos: no existe un «modo niño solo», a
+          propósito, porque lo que hace avanzar el habla es la interacción contigo.</p>
+      </div>
+    </details>
+    <details class="fino revela">
+      <summary>El mapa — a dónde lleva cada puerta</summary>
+      <div class="cuerpo chica">
+        <ul class="mapa">
+          <li><code>/</code> — «Hoy»: la cápsula del día y la puerta a todo lo demás.</li>
+          <li><code>/jugar</code> — los cuatro juegos, siempre en el mismo orden.</li>
+          <li><code>/jugar/globo</code> — el globo (la voz que se sostiene).</li>
+          <li><code>/jugar/cohete</code> — el cohete (la voz que sube y baja).</li>
+          <li><code>/jugar/palabras</code> — palabra y dibujo.</li>
+          <li><code>/jugar/gemelas</code> — palabras gemelas.</li>
+          <li><code>/estudio</code> — el Estudio: grabar tu voz.</li>
+          <li><code>/rumbo</code> — el rumbo: cómo van.</li>
+          <li><code>/objetivo</code> — el objetivo de la semana.</li>
+          <li><code>/ajustes</code> — apodo y temas, etapa, calma, claro u oscuro,
+            borrar datos.</li>
+          <li><code>/conoce</code> — esta página.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <footer class="revela">
+    <p class="chica suave">Este recorrido cubre las <strong>24 funcionalidades</strong> de
+      Hablemos San — todas, agrupadas para que las descubras a tu ritmo. Ninguna se quedó
+      por fuera.</p>
+    <details class="chica">
+      <summary>Historial del brochure</summary>
+      <ul>
+        <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
+          recorrido completo de la app al cierre de su primer ciclo (las 24
+          funcionalidades de los sprints 1 a 4).</li>
+      </ul>
+    </details>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    // G2 · abrir/cerrar tarjetas (transición de estado; accesible por teclado nativo).
+    document.querySelectorAll(".tarjeta-boton").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tarjeta = btn.closest(".tarjeta");
+        var abierta = tarjeta.hasAttribute("data-abierta");
+        if (abierta) { tarjeta.removeAttribute("data-abierta"); }
+        else { tarjeta.setAttribute("data-abierta", ""); }
+        btn.setAttribute("aria-expanded", String(!abierta));
+      });
+    });
+    // G3 · coreografía de entrada. Con reduced-motion el CSS ya muestra todo: el observer
+    // solo añade la clase (inofensivo). Sin IntersectionObserver, todo visible (fallback).
+    if ("IntersectionObserver" in window) {
+      var obs = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("visto"); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll(".revela").forEach(function (el) { obs.observe(el); });
+    } else {
+      document.querySelectorAll(".revela").forEach(function (el) { el.classList.add("visto"); });
+    }
+  })();
+</script>
+</body>
+</html>
