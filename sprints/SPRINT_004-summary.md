@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (233 unit · 143 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (243 unit · 145 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -49,14 +49,15 @@ re-evalúa la cápsula del día si **no** está completada (R4, invariante conge
 
 **Outcome 3 — CIERRE DE CICLO H1:** ✅ (producido) / ⏳ (gate del usuario)
 Endurecimiento (las 5 deudas del remate S3 pagadas con evidencia) + iconos PWA reales + ADR-011 +
-`docs/BLUEPRINT.html` + design system publicado (`/design-sync`) + **guía v4 con el gate ⭐
-ACUMULADO** como recorrido ordenado. Detalle en las secciones de abajo.
+ADR-014 (diccionario de ortografía embebido, nacido en el gate) + `docs/BLUEPRINT.html` + design
+system publicado (`/design-sync`) + **guía v4 con el gate ⭐ ACUMULADO** como recorrido ordenado.
+Detalle en las secciones de abajo.
 
 ## Definition of Done — los 6+1
 
 | Gate                    | Estado           | Evidencia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ----------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Testing**          | ✅               | **233 unit** (motores nuevos: barrido completo con objetivo activo (garantía del gate), rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo/**categoría (K5: acotado + identidad)**, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library (lista agrupada, tanda acotada, borrar en dos toques); + cap-500 de gemelas) — cobertura **91,0 % stmts / 85,3 % branches**. **143 e2e** (rumbo frase-vs-métrica ATADA por testid, reset-al-salir de palabra↔objeto, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, lote por grupo del estudio, + suites enteras de las pantallas tocadas, regla 9). Todo en CI. |
+| **1. Testing**          | ✅               | **243 unit** (motores nuevos: barrido completo con objetivo activo (garantía del gate), rumbo tendencias/hitos, objetivo alinear/prioridad/**alcance**, sesión, daily con objetivo + realinear, lote por etapa/objetivo/**categoría (K5: acotado + identidad)**, fecha con cruces de mes/año; + tests de componente del estudio con Testing Library (lista agrupada, tanda acotada, borrar en dos toques); + cap-500 de gemelas) — cobertura **91,2 % stmts / 85,7 % branches**. **145 e2e** (rumbo frase-vs-métrica ATADA por testid, reset-al-salir de palabra↔objeto, objetivo animales/colores/fuera-de-alcance/borrar, privacidad post-escritura, lote por grupo del estudio, + suites enteras de las pantallas tocadas, regla 9). Todo en CI. |
 | **2. CI/CD**            | ✅               | typecheck · lint · unit+cobertura · build · e2e verdes localmente. Actions (quality · e2e · lighthouse) esperado verde en el PR. Preview Vercel por rama.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                                                                                                                                                                                               |
@@ -203,7 +204,13 @@ mostraba la clave normalizada de comparar) más rana/lana/mano de relleno; ahora
 compara normalizado pero muestra la **forma real** («baño», «música»), el vocabulario del
 contenido se corrigió a ortografía real (era `"bano"`/`"musica"`/`"imitacion"` literal en el
 enum — invisible mientras solo comparaba), y los "parecidos" exigen ≥4 letras escritas y callan
-cuando ya hay prefijos).
+cuando ya hay prefijos. **Tercer remate: ortografía GENERAL en dos colores (ADR-014)** — "medi"
+no recibía ayuda porque "medios" no está en las ~90 palabras del contenido; ahora viaja un
+diccionario embebido (las 10.000 más frecuentes del español, curadas: sin inglés, sin nombres,
+sin groserías — script regenerable con "vigía" a ojo humano) que sugiere la palabra bien
+escrita en su grupo neutro etiquetado, separado de los chips verdes que alinean; una palabra
+bien escrita se guarda SIN pregunta («medios», «colores»), una conocida recibe continuaciones
+(«medio» → «medios»), y el campo activa el corrector nativo del navegador/teclado).
 
 ## Deuda técnica explícita
 
