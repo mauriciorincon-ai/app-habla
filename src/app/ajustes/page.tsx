@@ -9,8 +9,17 @@ export const metadata: Metadata = {
 export default function AjustesPage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-8 sm:py-12">
+      {/* El "← Hoy" va ARRIBA y con la misma forma que en Rumbo y Objetivo (gate S4): la salida
+          de los cuartos del padre es la misma en todos, siempre a la vista. */}
       <header>
-        <h1 className="font-display text-4xl">Ajustes y privacidad</h1>
+        <Link
+          href="/"
+          className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-sm"
+          data-testid="volver-a-hoy"
+        >
+          ← Hoy
+        </Link>
+        <h1 className="font-display mt-4 text-4xl">Ajustes y privacidad</h1>
       </header>
 
       <AjustesSesion />
@@ -53,7 +62,7 @@ export default function AjustesPage() {
             <dd className="text-tinta-suave mt-1">
               No es terapia ni un diagnóstico, y no promete resultados en un
               plazo. Es práctica estructurada de estimulación en casa,
-              complementaria a la fonoaudiología de su hijo.
+              complementaria a las terapias integrales del lenguaje de su hijo.
             </dd>
           </div>
         </dl>
@@ -83,12 +92,6 @@ export default function AjustesPage() {
           descargan de internet mientras juegan.
         </p>
       </section>
-
-      <nav className="text-tinta-suave text-center text-sm">
-        <Link href="/" className="min-h-11 underline-offset-4 hover:underline">
-          Volver a Hoy
-        </Link>
-      </nav>
     </main>
   );
 }

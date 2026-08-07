@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hablemos San — Catálogo de las 50 cápsulas (bloque I del gate)</title>
+<style>
+  :root { --fondo:#fbf8f2; --superficie:#f5f0e5; --borde:#ece4d2; --tinta:#1f2420; --suave:#5a615c; --acento:#527947; --acento-suave:#eef2ec; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:2rem 1rem 4rem; background:var(--fondo); color:var(--tinta); font:16px/1.55 Georgia,"Times New Roman",serif; }
+  main { max-width:46rem; margin:0 auto; }
+  h1 { font-size:1.7rem; line-height:1.25; }
+  h2 { margin:2.5rem 0 .25rem; font-size:1.35rem; border-bottom:2px solid var(--borde); padding-bottom:.35rem; }
+  h3 { margin:1.75rem 0 .5rem; font-size:1.05rem; color:var(--acento); }
+  .aviso, .descripcion, .fuente, .conteo { color:var(--suave); }
+  .aviso { font-size:.9rem; background:var(--superficie); border:1px solid var(--borde); border-radius:12px; padding: .75rem 1rem; }
+  .conteo { font-weight:normal; font-size:.85em; }
+  .capsula { background:var(--superficie); border:1px solid var(--borde); border-radius:14px; padding:1rem 1.15rem; margin:.8rem 0; position:relative; }
+  .capsula h4 { margin:.1rem 8.5rem .4rem 0; font-size:1.05rem; }
+  .capsula.lista { opacity:.55; }
+  .revision { position:absolute; top: .9rem; right:1rem; font-size:.8rem; color:var(--suave); font-family:system-ui,sans-serif; user-select:none; }
+  .chips { margin:.2rem 0 .6rem; }
+  .chip { display:inline-block; font:600 .72rem/1 system-ui,sans-serif; letter-spacing:.03em; background:var(--acento-suave); color:var(--acento); border-radius:999px; padding:.3rem .6rem; margin:0 .3rem .3rem 0; }
+  .chip.suave { background:transparent; border:1px solid var(--borde); color:var(--suave); }
+  .explicacion { margin:.4rem 0; }
+  blockquote { margin:.6rem 0; padding:.5rem .9rem; border-left:4px solid var(--acento); background:var(--fondo); border-radius:0 10px 10px 0; font-style:italic; }
+  blockquote strong, .actividad strong { font-style:normal; }
+  .fuente { font-size:.8rem; margin-bottom:.1rem; }
+  .juzgar { font-family:system-ui,sans-serif; font-size:.85rem; color:var(--acento); background:var(--acento-suave); border-radius:10px; padding:.55rem .85rem; }
+  .progreso { position:sticky; top:0; background:var(--fondo); padding:.5rem 0; font-family:system-ui,sans-serif; font-size:.85rem; color:var(--suave); }
+  footer { margin-top:3rem; font-size:.8rem; color:var(--suave); border-top:1px solid var(--borde); padding-top:1rem; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fondo:#1f2420; --superficie:#2a312b; --borde:#3a423b; --tinta:#f5f0e5; --suave:#9ca29c; --acento:#a8c9a0; --acento-suave:#2e4628; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Las 50 cápsulas, completas — tu veredicto (bloque I)</h1>
+  <p class="aviso">Instrumento de revisión del gate ⭐ (S4): la app entrega la cápsula <strong>una por día</strong> y todavía no
+  tiene histórico navegable (está en el backlog) — este catálogo existe para que puedas leerlas <strong>todas, de corrido</strong>,
+  tal cual viven en la app (generado directo de <code>content/capsulas.ts</code> el 2026-08-02; se regenera con
+  <code>node scripts/gen-catalogo-capsulas.mjs</code>). La pregunta de siempre por cada una: ¿la línea la dirías tal cual
+  en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.
+  Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (las aprobaste el 2026-07-12 y ninguna se botó):
+  confirma que las reconoces cuando te las cruces.</p>
+  <p class="progreso"><span id="hechas">0</span> de 50 revisadas · tu avance queda guardado en este navegador</p>
+  
+  <section class="etapa">
+    <h2>Sonidos e intentos <span class="conteo">(8 cápsulas)</span></h2>
+    <p class="descripcion">Todavía explora: hace sonidos, señala, lleva de la mano. Los intentos y los gestos son su forma de hablar.</p>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te servirían los días difíciles, o si algún día él retrocede? No son para su nivel de hoy: son la red de abajo.</p>
+    <h3>Modelar <span class="conteo">(2)</span></h3>
+    <article class="capsula" id="sonidos-ponle-sonido-al-mundo">
+      <label class="revision"><input type="checkbox" data-id="sonidos-ponle-sonido-al-mundo"> Revisada</label>
+      <h4>Ponle sonido a lo que pasa</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">sonidos</span><span class="chip suave">animales</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Antes de las palabras vienen los sonidos, y son mucho más fáciles de imitar: “brum”, “pum”, “guau”, “aaah”. Un sonido tiene todo lo que necesita una palabra —alguien lo dice, significa algo, y provoca respuesta— pero sin la dificultad de pronunciarlo. Hoy tu trabajo es sonorizar el mundo de él.</p>
+      <blockquote><strong>Tu línea:</strong> Cada vez que algo se mueva o se caiga, ponle sonido: “¡pum!”, “¡brum!”, “¡uuuh!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Saca sus carros o sus muñecos y juega 5 minutos poniéndole sonido a todo: el carro hace “brum”, la torre se cae “¡pum!”, el perro “guau”. Si él hace cualquier sonido, celébralo como si te hubiera hablado — porque te habló.</p>
+      <p class="fuente">Heidlage et al. 2019 (Early Childhood Research Quarterly): la intervención guiada por padres muestra g=0.42 en lenguaje expresivo, y el efecto es mayor cuando ocurre dentro del juego (g=0.50).</p>
+    </article>
+    <article class="capsula" id="sonidos-turnos-de-sonidos">
+      <label class="revision"><input type="checkbox" data-id="sonidos-turnos-de-sonidos"> Revisada</label>
+      <h4>El juego de los turnos: yo, tú, yo, tú</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">turnos</span><span class="chip suave">sonidos</span><span class="chip suave">musica</span></p>
+      <p class="explicacion">Hablar es, antes que nada, tomar turnos. Y los turnos se pueden practicar sin una sola palabra: tú golpeas la mesa dos veces, esperas; él golpea; tú haces un sonido, esperas; él hace el suyo. Ese ritmo de ida y vuelta es el esqueleto de toda conversación futura, y a los niños les encanta.</p>
+      <blockquote><strong>Tu línea:</strong> Haz un sonido, señálate: “yo”. Luego señálalo a él y espera: es su turno.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Cinco minutos de turnos con un tambor, una olla o las palmas. Cuando él haga cualquier cosa en su turno, celébralo. Después cambia el golpe por un sonido de la boca: el turno es el mismo, la voz es nueva.</p>
+      <p class="fuente">Heidlage et al. 2019 (ECRQ): las estrategias implementadas por padres funcionan mejor incrustadas en rutinas de juego recíproco, donde el niño ya está motivado a participar.</p>
+    </article>
+    <h3>Expandir lo que dijo <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="sonidos-su-sonido-tu-palabra">
+      <label class="revision"><input type="checkbox" data-id="sonidos-su-sonido-tu-palabra"> Revisada</label>
+      <h4>Su sonido, tu palabra</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">sonidos</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">Él dice “aaa” señalando el agua. Ese “aaa” no es un error que corregir: es un intento que hay que celebrar y completar. Tú lo recoges y se lo devuelves hecho palabra, con alegría y sin corregir. Él oye la versión completa justo cuando su cabeza está pensando en eso — el mejor momento posible para aprenderla.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “aaa”; tú: “¡Agua! Sí, agua.” — y se la das. Nunca “no, se dice agua”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada sonido que él haga con intención, devuélveselo convertido en su palabra, feliz. Si no entiendes qué quiso decir, adivina con cariño y sigue: equivocarte no rompe nada.</p>
+      <p class="fuente">Recast/expansión conversacional: meta-análisis de 35 estudios con tamaño de efecto 0.96 en medidas próximas y 0.76 en distales; funciona mejor con densidad de al menos un recast por minuto (Cleave et al. 2015, AJSLP).</p>
+    </article>
+    <h3>Esperar en silencio <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="sonidos-espera-con-cara-de-pregunta">
+      <label class="revision"><input type="checkbox" data-id="sonidos-espera-con-cara-de-pregunta"> Revisada</label>
+      <h4>Espera con cara de pregunta</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">espera</span><span class="chip suave">pedir</span></p>
+      <p class="explicacion">El silencio del adulto es lo que abre el espacio para el sonido del niño. Nos cuesta: llenamos las pausas por costumbre. Hoy pruebas lo contrario — pones la cara de “te estoy esperando” (cejas arriba, sonrisa, cuerpo hacia él) y aguantas. El intento que salga, sea el que sea, es la respuesta.</p>
+      <blockquote><strong>Tu línea:</strong> Sostén el juguete, míralo con cejas de pregunta y cuenta hasta cinco en silencio.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En tres momentos del día (comida, juego, salir), haz la pausa de cinco segundos con cara de pregunta. Lo que salga —un sonido, un gesto, un jalón— respóndelo nombrando: “¿jugo? ¡jugo!”, y dáselo.</p>
+      <p class="fuente">Enseñanza del Milieu Mejorada (EMT): el ensayo aleatorizado con toddlers muestra ganancias en comunicación cuando el adulto crea oportunidades y espera; el efecto no se sostuvo al año, así que se habla de práctica sostenida, no de resultados prometidos (PubMed 29054980).</p>
+    </article>
+    <h3>Seguir su interés <span class="conteo">(3)</span></h3>
+    <article class="capsula" id="sonidos-habla-como-el">
+      <label class="revision"><input type="checkbox" data-id="sonidos-habla-como-el"> Revisada</label>
+      <h4>Háblale en su idioma: imita sus sonidos</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">sonidos</span><span class="chip suave">imitacion</span><span class="chip suave">turnos</span></p>
+      <p class="explicacion">Cuando imitas el sonido que él acaba de hacer, pasan dos cosas grandes: él descubre que lo que sale de su boca TE MUEVE a ti, y descubre el turno (yo hago, tú haces). Es la semilla de la conversación, y no necesita ni una palabra. Imita su sonido tal cual, con cara de fiesta, y espera a ver si lo repite.</p>
+      <blockquote><strong>Tu línea:</strong> Él hace “ba-ba”; tú haces “ba-ba” igualito, lo miras y esperas.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Durante 5 minutos, cada sonido que él haga, devuélveselo igual. Si repite, hazlo otra vez: ya están conversando. Si cambia el sonido, síguelo a él — el que manda es él.</p>
+      <p class="fuente">Intervenciones naturalistas del desarrollo (NDBI): responder contingentemente a la iniciativa del niño —incluidos sus sonidos y gestos— es el mecanismo central; Crank et al. 2021, con la cautela de que las magnitudes varían.</p>
+    </article>
+    <article class="capsula" id="sonidos-senalar-ya-es-hablar">
+      <label class="revision"><input type="checkbox" data-id="sonidos-senalar-ya-es-hablar"> Revisada</label>
+      <h4>Si señala, ya está hablando</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">pedir</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">Señalar, llevarte de la mano, mirarte y mirar el objeto: todo eso ES comunicación, y de la buena. El error común es responder solo dándole la cosa. Lo que multiplica el lenguaje es darle la cosa Y ponerle el nombre. Así el gesto que ya tiene se convierte, con el tiempo, en la palabra que todavía no.</p>
+      <blockquote><strong>Tu línea:</strong> Él señala la galleta; tú: “¡galleta!” — y se la das. El nombre siempre acompaña.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada vez que él pida con un gesto, nombra lo que pide con UNA palabra y dáselo enseguida. Sin pedirle que la repita. Estás enseñando que las palabras sirven, no evaluándolo.</p>
+      <p class="fuente">La CAA y el gesto no frenan el habla: la evidencia muestra que apoyar la comunicación por otras vías se asocia a MÁS producción verbal, no a menos (§A.5 de la investigación).</p>
+    </article>
+    <article class="capsula" id="sonidos-cualquier-sonido-cuenta">
+      <label class="revision"><input type="checkbox" data-id="sonidos-cualquier-sonido-cuenta"> Revisada</label>
+      <h4>Cualquier sonido cuenta: su voz mueve el mundo</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">con pantalla</span><span class="chip suave">sonidos</span><span class="chip suave">espacio</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Hoy la pantalla es la utilería de tu juego. En el juego de voz, el globo (o el cohete) se mueve con CUALQUIER sonido que él haga: no hay que decir ninguna palabra ni pronunciar bien. Lo que él descubre —y es enorme— es que su voz cambia el mundo. Tú estás al lado, nombrando lo que pasa.</p>
+      <blockquote><strong>Tu línea:</strong> “Mira: cuando haces aaaah, el globo vuela. Yo primero… ¡ahora tú!”</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Abre el juego de voz y juega TÚ primero: haz el sonido, que él vea el globo subir. Luego pásale el turno. Si solo mira, ya ganaron: mañana probará. Cinco minutos bastan.</p>
+      <p class="fuente">Juegos controlados por voz con parámetros simples (sonoridad, duración, tono) son factibles y muestran pilotos positivos en habla infantil; se clasifican como PROMETEDORES, no como tratamiento probado (Flappy Voice, CHI PLAY 2014; Apraxia World, Hair et al. 2021).</p>
+    </article>
+    <h3>Repetir una palabra clave <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="sonidos-un-solo-sonido-todo-el-dia">
+      <label class="revision"><input type="checkbox" data-id="sonidos-un-solo-sonido-todo-el-dia"> Revisada</label>
+      <h4>Un solo sonido, muchas veces</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">sonidos</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">En vez de regarte en muchos sonidos, elige UNO y sé insistente y cálido con él todo el día. La repetición masiva de un blanco —sin pedirle que lo produzca— es justo lo que hace la estimulación focalizada. Un buen sonido para empezar: “aaah” (largo, fácil, y además es el que mueve el globo en el juego).</p>
+      <blockquote><strong>Tu línea:</strong> Elige “aaah” y úsalo en todo: el avión hace “aaah”, el columpio sube “aaah”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Escoge un sonido (“aaah”, “mmm”, “brum”) y métetelo en el día: en el juego, en la comida, al despedirte. Que lo oiga veinte veces sin que se lo pidas ni una.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; revisión en AJSLP 2022): el niño recibe modelos abundantes del blanco SIN demanda de producción — es el rasgo que la distingue del entrenamiento por repetición.</p>
+    </article>
+  </section>
+  <section class="etapa">
+    <h2>Palabras sueltas <span class="conteo">(35 cápsulas)</span></h2>
+    <p class="descripcion">Dice palabras de a una: “agua”, “mamá”, “carro”. Todavía no las junta — y no hace falta apurarlo.</p>
+    <h3>Modelar <span class="conteo">(10)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Reconoces tu día real en ellas — el carro, vestirse, el mercado, la hora de dormir? Pediste «más novedosas»: ¿lo son?</p>
+    <article class="capsula" id="modelado-nombra-su-mundo">
+      <label class="revision"><input type="checkbox" data-id="modelado-nombra-su-mundo"> Revisada</label>
+      <h4>Ponle nombre a lo que él está mirando</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">comida</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">A esta edad las palabras se aprenden así: el niño tiene la atención puesta en algo y justo en ese momento oye su nombre. Ahí se enciende la asociación entre la palabra y la cosa. Tu trabajo de hoy es simple y poderoso: ser el que le pone nombre al mundo. Una sola palabra, clara, en el momento exacto: “agua”, “carro”, “pelota”. Sin pedirle que repita — él está grabando.</p>
+      <blockquote><strong>Tu línea:</strong> Cuando él mire o agarre algo, di su nombre, una sola palabra: “¡pelota!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En la comida de hoy, nombra tres cosas cada vez que él las mire o las toque: “jugo”, “pan”, “cuchara”. Solo el nombre, cálido y claro. Nada más.</p>
+      <p class="fuente">Heidlage et al. 2019 (Early Childhood Research Quarterly): la intervención guiada por padres muestra g=0.42 en lenguaje expresivo; el efecto es mayor cuando ocurre dentro del juego y las rutinas (g=0.50).</p>
+    </article>
+    <article class="capsula" id="modelado-mismas-palabras-rutina">
+      <label class="revision"><input type="checkbox" data-id="modelado-mismas-palabras-rutina"> Revisada</label>
+      <h4>Las mismas palabras, en los mismos momentos</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">bano</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">Las rutinas que se repiten todos los días son las mejores maestras: el niño ya sabe qué va a pasar, así que su cabeza queda libre para conectar la palabra con la cosa. El baño tiene agua, jabón, patico. Si “agua” suena todos los días en el mismo momento, esa palabra encuentra su lugar. No hace falta inventar nada; solo decirlo igual, cada vez.</p>
+      <blockquote><strong>Tu línea:</strong> En el baño, las mismas dos palabras de siempre: “agua… jabón”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige dos palabras del baño (o de la comida) y dilas siempre en el mismo momento, todos los días de esta semana. La repetición en rutina es lo que sella la asociación.</p>
+      <p class="fuente">Heidlage et al. 2019: los efectos más grandes del modelado aparecen dentro del juego y las rutinas diarias, no en sesiones aparte.</p>
+    </article>
+    <article class="capsula" id="modelado-habla-a-su-tamano">
+      <label class="revision"><input type="checkbox" data-id="modelado-habla-a-su-tamano"> Revisada</label>
+      <h4>Háblale a su tamaño</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">carros</span><span class="chip suave">acciones</span></p>
+      <p class="explicacion">Las frases largas de adulto se le pierden a un niño que está en palabras sueltas: no alcanza a pescar dónde empieza y termina cada palabra. Hablarle “a su tamaño” es usar una o dos palabras por turno, despacio y con ganas: “¡carro!”, “carro grande”. Así cada palabra le llega entera, y el siguiente escalón (dos palabras juntas) le queda a la vista.</p>
+      <blockquote><strong>Tu línea:</strong> Cambia “mira ese carro tan bonito que va por ahí” por: “¡carro!… carro rojo”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Durante 10 minutos de juego, háblale solo en palabras de a una o de a dos. Si se te escapa una frase larga, no pasa nada: recorta la siguiente.</p>
+      <p class="fuente">Roberts &amp; Kaiser 2011: el motor del cambio es el ajuste del lenguaje del adulto al nivel del niño; el efecto pasa por lo que hace el padre, no por exigirle al niño.</p>
+    </article>
+    <article class="capsula" id="modelado-en-el-carro">
+      <label class="revision"><input type="checkbox" data-id="modelado-en-el-carro"> Revisada</label>
+      <h4>El carro es un salón de clase</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">carros</span><span class="chip suave">calle</span><span class="chip suave">animales</span></p>
+      <p class="explicacion">El carro tiene todo lo que necesita una buena rutina de lenguaje: pasa siempre lo mismo, hay cosas que se repiten afuera, y ustedes dos están quietos y juntos. No hace falta un ejercicio: solo nombrar lo que aparece, una palabra a la vez, cuando él lo está mirando.</p>
+      <blockquote><strong>Tu línea:</strong> Cuando pase algo por la ventana, nómbralo con una sola palabra: “¡moto!”, “¡perro!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En el próximo viaje en carro o en bus, nombra tres cosas que él mire: “bus”, “luz”, “agua”. Solo el nombre, claro y con ganas. Si él hace cualquier sonido, respóndele nombrando otra vez.</p>
+      <p class="fuente">Heidlage et al. 2019 (ECRQ): el efecto de la intervención por padres es mayor cuando ocurre dentro de rutinas cotidianas (g=0.50) que en sesiones separadas de la vida diaria.</p>
+    </article>
+    <article class="capsula" id="modelado-vestirse">
+      <label class="revision"><input type="checkbox" data-id="modelado-vestirse"> Revisada</label>
+      <h4>Vestirse: la misma palabra, todos los días</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">vestirse</span></p>
+      <p class="explicacion">Vestirse pasa todos los días, en el mismo orden, con los mismos objetos. Esa repetición es oro: el niño oye “media” cuando ve la media, y mañana otra vez, y pasado también. La palabra se pega por costumbre, no por esfuerzo. Elige tres palabras de la rutina y no las cambies.</p>
+      <blockquote><strong>Tu línea:</strong> Levanta la prenda, espera que él la mire y di su nombre: “¡media!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Al vestirlo hoy, di solo tres palabras, siempre las mismas: “camisa”, “media”, “zapato”. Levanta cada prenda, espera que la mire, nómbrala. Nada más.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): pocos blancos, muchas repeticiones y sin demanda de producción — las rutinas diarias son el vehículo natural de esa dosis.</p>
+    </article>
+    <article class="capsula" id="modelado-mercado">
+      <label class="revision"><input type="checkbox" data-id="modelado-mercado"> Revisada</label>
+      <h4>El mercado es un catálogo de palabras</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">mercado</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">En el mercado hay cientos de objetos con nombre, y él los va a estar mirando de todas formas. No los nombres todos: elige los que él mire, y solo esos. La regla es la misma de siempre — la palabra entra cuando su atención ya está puesta en la cosa, no cuando tú decides enseñarla.</p>
+      <blockquote><strong>Tu línea:</strong> Él mira algo del estante; tú lo bajas, se lo muestras y dices: “¡banano!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En el próximo mercado, deja que él escoja qué mirar. Nombra cinco cosas que él haya mirado primero. Si señala, se lo pasas y nombras. El que manda es él.</p>
+      <p class="fuente">Seguir el interés del niño (NDBI): responder al foco atencional que él YA tiene es el mecanismo central de las intervenciones naturalistas del desarrollo (Crank et al. 2021).</p>
+    </article>
+    <article class="capsula" id="modelado-parque">
+      <label class="revision"><input type="checkbox" data-id="modelado-parque"> Revisada</label>
+      <h4>En el parque, las palabras se mueven</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">parque</span><span class="chip suave">acciones</span></p>
+      <p class="explicacion">En el parque las palabras vienen con el cuerpo: “sube”, “baja”, “salta”, “corre”. Los verbos aprendidos con el cuerpo en movimiento se pegan distinto — el niño los siente. Y hay una ventaja enorme: puedes repetir la misma palabra cada vez que él hace la acción, sin que se vuelva aburrido.</p>
+      <blockquote><strong>Tu línea:</strong> Cada vez que el columpio suba, di “¡sube!”. Cada vez que baje: “¡baja!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En el parque, elige dos palabras de movimiento y dilas cada vez que pase la acción: “sube”, “baja”. Al final, haz la pausa: empújalo, para y espera con cara de pregunta antes de volver a empujar.</p>
+      <p class="fuente">Heidlage et al. 2019 (ECRQ): dentro del juego y del movimiento, el modelado por padres alcanza su mayor efecto (g=0.50) — el niño está motivado y la palabra llega con la experiencia.</p>
+    </article>
+    <article class="capsula" id="modelado-hora-de-dormir">
+      <label class="revision"><input type="checkbox" data-id="modelado-hora-de-dormir"> Revisada</label>
+      <h4>La noche también enseña palabras</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">dormir</span></p>
+      <p class="explicacion">La rutina de dormir es tranquila, callada y siempre igual: perfecta. Tres o cuatro palabras dichas cada noche, en el mismo orden, terminan siendo de las primeras que el niño usa — porque las oye cuando está calmado y contigo. No es una tarea más: es lo mismo que ya haces, con nombre.</p>
+      <blockquote><strong>Tu línea:</strong> En cada paso de la noche, una palabra: “pijama”… “diente”… “cama”… “luz”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Esta noche, di en voz alta y clara las cuatro palabras de la rutina, una por paso. Al apagar la luz, haz una pausa larga: a veces, en ese silencio, sale una palabra.</p>
+      <p class="fuente">Dosis distribuida: la evidencia favorece práctica breve y frecuente incrustada en rutinas (5–10 minutos al día) sobre sesiones largas y aisladas (§A.8 de la investigación).</p>
+    </article>
+    <article class="capsula" id="modelado-la-calle">
+      <label class="revision"><input type="checkbox" data-id="modelado-la-calle"> Revisada</label>
+      <h4>La calle: nombra lo que él ya está mirando</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">calle</span><span class="chip suave">animales</span><span class="chip suave">carros</span></p>
+      <p class="explicacion">Caminar por la calle es un desfile de cosas con nombre: perro, moto, bus, árbol, agua. Tu trabajo no es señalarle cosas — es mirar qué está mirando ÉL y ponerle nombre a eso. Sigue sus ojos: ahí está la palabra que hoy sí va a entrar.</p>
+      <blockquote><strong>Tu línea:</strong> Sigue su mirada. Lo que él esté mirando, eso nombras: “¡perro!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En la próxima caminata, no nombres nada que él no esté mirando. Solo lo suyo. Cuenta cuántas veces lo hiciste: cinco ya es un día excelente.</p>
+      <p class="fuente">Seguir el interés (NDBI): la palabra dicha sobre el foco de atención que el niño YA tiene es la que mejor se asocia con el objeto; imponer el tema del adulto rinde menos (Crank et al. 2021).</p>
+    </article>
+    <article class="capsula" id="modelado-cancion-de-la-rutina">
+      <label class="revision"><input type="checkbox" data-id="modelado-cancion-de-la-rutina"> Revisada</label>
+      <h4>Una canción para cada momento</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">canciones</span><span class="chip suave">musica</span></p>
+      <p class="explicacion">La música pega las palabras. Si cada momento del día tiene su cancioncita —la de lavarse las manos, la de guardar los juguetes— las palabras de esa canción se repiten sin esfuerzo y con ritmo. No importa si desafinas: importa que sea SIEMPRE la misma y que él la reconozca.</p>
+      <blockquote><strong>Tu línea:</strong> Invéntate una cancioncita de tres palabras y cántala cada vez: “a guardar, a guardar”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige un momento (guardar, lavarse, salir) y ponle una canción cortica, de tres o cuatro palabras. Cántala hoy cada vez que llegue ese momento. Mañana también. Y pasado.</p>
+      <p class="fuente">Rutinas predecibles y modelado (Heidlage et al. 2019, ECRQ): la repetición dentro de rutinas familiares es el vehículo con mayor efecto en lenguaje expresivo guiado por padres.</p>
+    </article>
+    <h3>Expandir lo que dijo <span class="conteo">(4)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te queda claro qué decir EXACTAMENTE en el momento? (esa es la prueba: que no tengas que pensarlo).</p>
+    <article class="capsula" id="recast-devuelve-la-palabra">
+      <label class="revision"><input type="checkbox" data-id="recast-devuelve-la-palabra"> Revisada</label>
+      <h4>Devuélvele la palabra, completa y celebrada</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">Cuando tu hijo intenta una palabra y le sale a medias (“aba” por agua, “tete” por chupete), no lo corrijas ni le pidas repetir: devuélvele la palabra completa, con alegría, como confirmando que le entendiste: “¡Agua! Sí, agua”. Él oye la versión buena justo cuando más le importa — en su propio intento — y sin ningún costo de sentirse equivocado. Esta es, de todas las técnicas, la que más evidencia tiene a favor.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “aba”; tú: “¡Agua! Sí, agua”. Y se la das.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada intento de palabra que le salga a medias se lo devuelves completo y cálido. Cuenta mentalmente cuántas veces lo lograste. Sin corregir, sin “di agua”.</p>
+      <p class="fuente">Cleave et al. 2015 (AJSLP), meta-análisis de 35 estudios: los recasts muestran un efecto de 0.96 en medidas cercanas, y funcionan mejor con al menos un recast por minuto.</p>
+    </article>
+    <article class="capsula" id="recast-su-palabra-mas-una">
+      <label class="revision"><input type="checkbox" data-id="recast-su-palabra-mas-una"> Revisada</label>
+      <h4>Su palabra + una tuya</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Cuando tu hijo dice una palabra, respóndele con esa misma palabra más una: él dice “carro”, tú dices “carro rojo” o “más carro”. Le confirmas que su palabra funcionó (¡te movió a ti!) y le muestras, sin pedirle nada, cómo suena el siguiente escalón. No esperes que lo repita: hoy solo lo está oyendo, y eso es exactamente lo que toca.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “agua”; tú: “agua fría” — y se la pasas.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En el juego de hoy, cada palabra suya recíbela y devuélvela con una más: “pelota” → “pelota grande”. Una vez por minuto ya es muchísimo.</p>
+      <p class="fuente">Cleave et al. 2015 (AJSLP): las expansiones muestran efectos de 0.96 (proximal) y 0.76 (distal); la densidad recomendada es ≥1 por minuto de juego.</p>
+    </article>
+    <article class="capsula" id="recast-repite-bien-sin-corregir">
+      <label class="revision"><input type="checkbox" data-id="recast-repite-bien-sin-corregir"> Revisada</label>
+      <h4>Repítela bien, sin corregirlo nunca</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">Él dice “ete” por “leche”. La tentación es corregir: “no, se dice leche”. Eso lo calla. Lo que sí funciona es devolvérsela bien dicha, como si tal cosa, con alegría y con la leche en la mano: “¡Leche! Sí, leche.” Él oye la versión correcta sin sentirse corregido, y sigue hablando.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “ete”; tú, feliz y sin corregir: “¡Leche! Sí, leche.” — y se la das.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada palabra a medias que él diga, devuélvesela completa y celebrada. Prohibido: “no”, “así no”, “repite”. Estás confirmándole que lo entendiste — no evaluándolo.</p>
+      <p class="fuente">Recast conversacional: meta-análisis de 35 estudios, ES 0.96 en medidas próximas y 0.76 en distales; el rasgo clave es que el adulto reformula SIN exigir repetición (Cleave et al. 2015, AJSLP).</p>
+    </article>
+    <article class="capsula" id="recast-nombra-lo-que-siente">
+      <label class="revision"><input type="checkbox" data-id="recast-nombra-lo-que-siente"> Revisada</label>
+      <h4>Ponle nombre a lo que le está pasando</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">emociones</span></p>
+      <p class="explicacion">Cuando se ríe, cuando se cae, cuando se enoja: ahí hay una emoción enorme y ninguna palabra. Ponerle nombre a eso —“¡susto!”, “¡rico!”, “¡ay!”— le da algo poderoso: la palabra justo cuando más la siente. Son palabras que se quedan, porque llegaron con el cuerpo.</p>
+      <blockquote><strong>Tu línea:</strong> Se cae y se asusta; tú lo abrazas y dices, con su cara: “¡susto! Ya pasó.”</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada vez que él sienta algo fuerte (alegría, susto, rabia, cosquillas), ponle una palabra sola y clara. Sin explicaciones largas: una palabra y tu abrazo.</p>
+      <p class="fuente">Modelado y recast dentro de rutinas afectivas: la evidencia de intervención por padres (Heidlage et al. 2019, ECRQ) muestra su mayor efecto en contextos de alta implicación emocional del niño.</p>
+    </article>
+    <h3>Esperar en silencio <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Son hacibles sin que se te vuelva una tortura la comida o el juego?</p>
+    <article class="capsula" id="espera-cuenta-cinco">
+      <label class="revision"><input type="checkbox" data-id="espera-cuenta-cinco"> Revisada</label>
+      <h4>Cuenta hasta cinco por dentro</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">espera</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">El silencio incomoda, y por eso los adultos lo llenamos. Pero un niño que está buscando una palabra necesita más tiempo del que creemos. Si le das cinco segundos completos —mirándolo, con cara de expectativa— a veces sale una palabra, un sonido o un gesto. Todo eso cuenta como comunicación, y todo eso se responde igual: nombrando. “¡Jugo! Toma tu jugo”.</p>
+      <blockquote><strong>Tu línea:</strong> Míralo, sonríe y espera cinco segundos antes de hablar tú. Lo que salga, nómbralo.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Escoge un momento del día (el jugo, la puerta, el juguete) y espera cinco segundos antes de dárselo o de hablar. Si pide con un sonido o señalando, también vale: dale la cosa y dile su nombre.</p>
+      <p class="fuente">Espera estructurada dentro del enfoque EMT (ensayo controlado, PubMed 29054980): produce ganancias en lenguaje; el sostenimiento depende de que la práctica continúe.</p>
+    </article>
+    <article class="capsula" id="espera-pausa-canciones">
+      <label class="revision"><input type="checkbox" data-id="espera-pausa-canciones"> Revisada</label>
+      <h4>Deja el hueco en la canción</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">canciones</span><span class="chip suave">espera</span></p>
+      <p class="explicacion">En una canción que él se sabe, corta justo antes de la última palabra y espera. El hueco es una invitación clarísima: la melodía pide esa palabra y él ya sabe cuál va. Muchos niños que no dicen palabras “a pedido” sí completan la canción — porque no es un examen, es un juego que ya conocen.</p>
+      <blockquote><strong>Tu línea:</strong> Canta “los pollitos dicen…” y quédate callado, esperando con cara de juego.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Canta hoy una canción que él conozca y deja tres huecos en la última palabra. Si no los llena, no pasa nada: cántala completa y sigue. El hueco queda sembrado.</p>
+      <p class="fuente">Espera estructurada / tiempo de espera dentro de EMT (PubMed 29054980), técnica central de las intervenciones naturalistas implementadas por padres.</p>
+    </article>
+    <article class="capsula" id="espera-no-adivines">
+      <label class="revision"><input type="checkbox" data-id="espera-no-adivines"> Revisada</label>
+      <h4>No adivines tan rápido</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">espera</span><span class="chip suave">pedir</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Cuando adivinamos lo que quiere antes de que lo pida, le quitamos la razón para usar su voz. Prueba a poner su juguete favorito a la vista pero fuera de su alcance, y espera. No es una trampa ni un castigo: es dejarle un motivo real para pedir. Y pedir, a esta edad, puede ser una palabra, un sonido o señalar con el dedo — todo cuenta, y todo se responde nombrando la cosa.</p>
+      <blockquote><strong>Tu línea:</strong> Sostén el juguete, míralo y espera. Pida como pida, dáselo y di: “¡pelota!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Una sola vez hoy, deja algo que él quiera a la vista y espera cinco segundos. Si no pide, se lo das igual — sin condiciones. El nombre de la cosa suena siempre.</p>
+      <p class="fuente">Espera estructurada (EMT, PubMed 29054980): crear oportunidades comunicativas dentro de la rutina, sin forzar ni condicionar el acceso.</p>
+    </article>
+    <article class="capsula" id="espera-el-frasco-dificil">
+      <label class="revision"><input type="checkbox" data-id="espera-el-frasco-dificil"> Revisada</label>
+      <h4>El frasco que no abre solo</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">espera</span><span class="chip suave">pedir</span><span class="chip suave">comida</span></p>
+      <p class="explicacion">Si todo está al alcance y resuelto, no hace falta pedir nada. Un frasco duro, una bolsa cerrada, el juguete en un estante alto: crean una razón REAL para comunicarse. No es una trampa ni un castigo — es una invitación. Cuando él pida (como pida), tú abres enseguida y nombras.</p>
+      <blockquote><strong>Tu línea:</strong> Dale la galleta en su bolsa cerrada, quédate cerca y espera con cara de pregunta.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, en la merienda, entrega algo que necesite tu ayuda para abrirse. Espera cinco segundos. Ante cualquier intento —sonido, gesto o palabra— abre, nombra (“¡galleta!”) y celebra. Nunca lo hagas esperar por castigo.</p>
+      <p class="fuente">Enseñanza del Milieu Mejorada (EMT): montar el ambiente para crear oportunidades de comunicación y esperar la iniciativa del niño (RCT con toddlers, PubMed 29054980).</p>
+    </article>
+    <article class="capsula" id="espera-de-a-poquitos">
+      <label class="revision"><input type="checkbox" data-id="espera-de-a-poquitos"> Revisada</label>
+      <h4>De a poquitos: cada uno es una oportunidad</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">comida</span><span class="chip suave">espera</span><span class="chip suave">pedir</span></p>
+      <p class="explicacion">Si le sirves el plato lleno, hay una sola oportunidad de comunicarse. Si le das las uvas de a una, hay diez. Sin apurarlo y sin negarle nada: simplemente, cada vez que se acaba, hay un momento natural para pedir más. Y cada vez que pide (como sea), tú nombras y le das.</p>
+      <blockquote><strong>Tu línea:</strong> Dale una uva. Cuando se la coma, espera mirándolo. Ante cualquier intento: “¿más? ¡más!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En una merienda, sirve de a poquitos: una uva, un pedacito, un sorbo. Espera cinco segundos entre uno y otro. Nombra siempre lo que le das. Cuenta cuántos intentos hizo hoy: eso es lo que cuenta.</p>
+      <p class="fuente">EMT / comunicación tentadora: fragmentar el acceso al objeto deseado multiplica las oportunidades de iniciación sin frustrar al niño (PubMed 29054980).</p>
+    </article>
+    <article class="capsula" id="espera-el-hueco-de-la-rutina">
+      <label class="revision"><input type="checkbox" data-id="espera-el-hueco-de-la-rutina"> Revisada</label>
+      <h4>Deja un hueco en lo que él ya se sabe</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span><span class="chip suave">espera</span></p>
+      <p class="explicacion">Cuando una rutina está muy aprendida —el juego de siempre, la frase de siempre— el niño la anticipa entera. Si tú te detienes justo antes del final, se abre un hueco que a él le PICA llenar. Ese cosquilleo es motivación pura, y muchas veces es lo que empuja la primera palabra.</p>
+      <blockquote><strong>Tu línea:</strong> “Uno… dos… ¡y…!” — y te quedas callado, mirándolo, con las manos listas.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige un juego que él conozca de memoria (cosquillas, “te voy a atrapar”, subir escaleras contando). Hoy párate justo antes del final y espera. Lo que salga, celébralo y termina el juego enseguida.</p>
+      <p class="fuente">Espera estructurada (EMT): las rutinas predecibles con pausa expectante generan iniciación comunicativa; la evidencia respalda la práctica sostenida, no promesas de resultados (PubMed 29054980).</p>
+    </article>
+    <article class="capsula" id="espera-tres-segundos-mas">
+      <label class="revision"><input type="checkbox" data-id="espera-tres-segundos-mas"> Revisada</label>
+      <h4>Espera tres segundos más de los que aguantas</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">espera</span></p>
+      <p class="explicacion">Los adultos esperamos, en promedio, uno o dos segundos antes de volver a hablar. Un niño que está armando una palabra necesita más — a veces mucho más. La técnica de hoy es incómoda a propósito: cuando sientas que ya esperaste bastante, espera tres segundos MÁS. Ahí es donde suelen salir las palabras.</p>
+      <blockquote><strong>Tu línea:</strong> Pregunta, cierra la boca y cuenta hasta ocho por dentro. No la abras antes.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Tres veces hoy, después de darle una oportunidad de hablar, cuenta hasta ocho en silencio con cara amable. Vas a sentir que es eterno. Anota qué pasó — te va a sorprender.</p>
+      <p class="fuente">Espera estructurada (EMT): la pausa expectante prolongada aumenta la iniciación comunicativa del niño; el adulto suele subestimar cuánto tiempo necesita (PubMed 29054980).</p>
+    </article>
+    <h3>Seguir su interés <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te suenan a jugar con él y no a darle una lección?</p>
+    <article class="capsula" id="interes-el-manda">
+      <label class="revision"><input type="checkbox" data-id="interes-el-manda"> Revisada</label>
+      <h4>Habla de lo que él está mirando</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span><span class="chip suave">carros</span></p>
+      <p class="explicacion">El niño aprende las palabras de aquello a lo que ya le está poniendo atención, no de aquello a lo que queremos que se la ponga. Si está fascinado con la rueda del carro, la palabra de hoy es “rueda” — no “carro”, que es lo que tú mirarías. Seguir su interés no es rendirse: es apuntar la palabra exactamente donde su cabeza ya está. Ahí es donde la asociación prende.</p>
+      <blockquote><strong>Tu línea:</strong> Siéntate a su altura, mira lo que él mira, y nombra ESO: “¡rueda!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Diez minutos de juego donde él elige TODO. Tú solo pones nombre a lo que él va tocando y mirando. Sin dirigir, sin proponer otra cosa.</p>
+      <p class="fuente">Intervenciones naturalistas del desarrollo (revisión Crank et al. 2021): seguir el foco de atención del niño es el núcleo común de los enfoques con mejor respaldo.</p>
+    </article>
+    <article class="capsula" id="interes-voz-mueve">
+      <label class="revision"><input type="checkbox" data-id="interes-voz-mueve"> Revisada</label>
+      <h4>Su voz mueve el mundo</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">con pantalla</span><span class="chip suave">espacio</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Cuando su voz hace que algo pase —que un globo vuele—, usar la voz deja de ser una tarea y se vuelve un poder. Hoy usamos el juego de voz de la app: mientras él sostiene CUALQUIER sonido (“aaaah”, un balbuceo, lo que le salga), el globo vuela. No necesita decir palabras: el juego celebra la voz misma. Tú te sientas al lado, haces el sonido primero y le pones nombre a lo que pasa: “¡globo!… ¡sube!”.</p>
+      <blockquote><strong>Tu línea:</strong> “Mira: cuando haces aaaah, el globo vuela. Yo primero… ¡ahora tú!”</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Jueguen juntos el juego de voz de la app. Hazlo tú primero para mostrarle cómo. Cualquier sonido sostenido vale — y tú nombras: “globo”, “sube”, “¡más!”.</p>
+      <p class="fuente">Juegos controlados por voz (Flappy Voice, Apraxia World — evidencia prometedora, pilotos): la voz como control del juego sostiene la práctica; el co-uso adulto-niño es lo que la vuelve lenguaje (Madigan et al. 2020, JAMA Pediatrics).</p>
+    </article>
+    <article class="capsula" id="interes-co-uso">
+      <label class="revision"><input type="checkbox" data-id="interes-co-uso"> Revisada</label>
+      <h4>La pantalla solo sirve si estás al lado</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">con pantalla</span><span class="chip suave">espacio</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Los estudios son claros y a la vez tranquilizadores: la pantalla sola no enseña a hablar, pero la pantalla con un adulto al lado que nombra, comenta y celebra, sí ayuda. Lo que enseña es la interacción contigo; la app solo la organiza. Por eso aquí no existe el “modo niño solo”. Y las palabras que él oye de ti frente a la pantalla (“globo”, “sube”, “más”) son tan reales como las del parque.</p>
+      <blockquote><strong>Tu línea:</strong> Al lado de él, nombra lo que pasa, en palabras de a una: “¡globo!… ¡sube!… ¿más?”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Si hoy usan pantalla, que sea poquito y contigo al lado poniendo nombres. Si él prefiere jugar sin pantalla, mejor todavía.</p>
+      <p class="fuente">Madigan et al. 2020 (JAMA Pediatrics): más pantalla se asocia a menor lenguaje (r=−0.14), pero el contenido visto acompañado se asocia positivamente. La carencia es la interacción, no la pantalla.</p>
+    </article>
+    <article class="capsula" id="interes-siéntate-en-el-piso">
+      <label class="revision"><input type="checkbox" data-id="interes-siéntate-en-el-piso"> Revisada</label>
+      <h4>Siéntate en el piso, frente a él</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Parece un detalle y es una técnica: cuando te pones a su altura y de frente, él te ve la cara, ve tu boca hacer la palabra, y siente que están en lo mismo. Desde arriba, tú diriges. Desde el piso, ustedes juegan. La cara del adulto, a la altura del niño, es media técnica ganada.</p>
+      <blockquote><strong>Tu línea:</strong> Siéntate en el piso, mira lo que él mira, y nombra ESO: “¡rueda!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cinco minutos en el piso, cara a cara, con el juguete que él eligió. No propongas otro juego. Solo nombra lo que él está haciendo, de a una palabra.</p>
+      <p class="fuente">NDBI: la atención conjunta cara a cara y el seguimiento del interés del niño son el núcleo de las intervenciones naturalistas del desarrollo (Crank et al. 2021).</p>
+    </article>
+    <article class="capsula" id="interes-el-juguete-que-el-eligio">
+      <label class="revision"><input type="checkbox" data-id="interes-el-juguete-que-el-eligio"> Revisada</label>
+      <h4>El juguete que él eligió, no el que tú querías</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span><span class="chip suave">elegir</span></p>
+      <p class="explicacion">Tú sacaste el rompecabezas educativo; él quiere la tapa de la olla. Gana la tapa. No porque haya que consentirlo, sino porque el aprendizaje va donde va su atención: la palabra que entra es la de la cosa que él está mirando. La tapa de la olla, con tu voz encima, enseña más que el mejor juguete ignorado.</p>
+      <blockquote><strong>Tu línea:</strong> Deja lo que trajiste y ve a lo suyo: “¡tapa! Suena la tapa. ¡Pum!”</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, en el juego, no propongas nada. Espera a ver qué agarra él y métete ahí, nombrando de a una palabra. Cinco minutos. Es más difícil de lo que parece — y es la técnica.</p>
+      <p class="fuente">Seguir el interés (NDBI): el aprendizaje de palabras se asocia al foco atencional del niño; imponer el material del adulto reduce las oportunidades de aprendizaje (Crank et al. 2021).</p>
+    </article>
+    <article class="capsula" id="interes-cohete-de-la-voz">
+      <label class="revision"><input type="checkbox" data-id="interes-cohete-de-la-voz"> Revisada</label>
+      <h4>El cohete que sube con su voz</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">con pantalla</span><span class="chip suave">espacio</span><span class="chip suave">sonidos</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Hoy le muestras algo nuevo: cuando su voz sube de tono, el cohete sube; cuando baja, el cohete baja. No hay que decir ninguna palabra — solo jugar con la voz como una sirena. Es un juego de exploración vocal: el niño descubre que tiene un instrumento adentro, y que ese instrumento manda.</p>
+      <blockquote><strong>Tu línea:</strong> “Haz la voz como una sirena: aaaAAAaaa… ¡mira cómo sube el cohete!”</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Abre el juego del cohete y hazlo tú primero: sube y baja la voz, exagerado, riéndote. Luego pásale el turno. Si él solo hace un sonido plano, ¡también vale! El cohete responde a su voz, no a su puntería.</p>
+      <p class="fuente">Juegos de voz con parámetros simples (tono, sonoridad, duración): factibles en tiempo real y con pilotos positivos en habla infantil; clasificados como PROMETEDORES, no como tratamiento probado (§A.9 de la investigación).</p>
+    </article>
+    <article class="capsula" id="interes-nombra-lo-que-el-hace">
+      <label class="revision"><input type="checkbox" data-id="interes-nombra-lo-que-el-hace"> Revisada</label>
+      <h4>Narra lo que él hace, no lo que tú piensas</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">acciones</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">En vez de hacerle preguntas (que son un examen), narra lo que él está haciendo, de a una palabra: “sube”… “cae”… “rueda”. Es como ponerle subtítulos a su juego. Él no tiene que responder nada — solo oye, una y otra vez, la palabra exacta que corresponde a lo que sus manos están haciendo.</p>
+      <blockquote><strong>Tu línea:</strong> Ponle subtítulos a su juego, de a una palabra: “sube”… “cae”… “otra”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Cinco minutos narrando su juego con palabras sueltas. Sin preguntas, sin instrucciones, sin “¿qué es esto?”. Solo subtítulos. Es sorprendentemente difícil y sorprendentemente potente.</p>
+      <p class="fuente">Modelado dentro del juego (Heidlage et al. 2019, ECRQ, g=0.50) combinado con seguir el interés del niño (NDBI): la palabra llega sobre la acción que él ya está ejecutando.</p>
+    </article>
+    <h3>Repetir una palabra clave <span class="conteo">(7)</span></h3>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te parecen repetibles sin volverse machaconas?</p>
+    <article class="capsula" id="focalizada-palabra-semana">
+      <label class="revision"><input type="checkbox" data-id="focalizada-palabra-semana"> Revisada</label>
+      <h4>Una sola palabra, muchas veces</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">pedir</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">En vez de exponerlo a cien palabras nuevas, escoge UNA que le sirva de verdad (“más”, “agua”, “abre”) y úsala muchísimas veces hoy, en contextos distintos, sin pedirle nunca que la diga. La repetición concentrada hace que la palabra se vuelva familiar — y una palabra familiar es la que un día sale sola. Este es el corazón de la etapa de tu hijo: pocas palabras, muy regadas por el día.</p>
+      <blockquote><strong>Tu línea:</strong> Elige “más” y úsala en cada oportunidad: “¿más?”, “¡más agua!”, “más carro”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Escoge una palabra útil para él y propóntela decir 20 veces hoy, en momentos distintos. No le pidas repetirla ni una sola vez. Mañana, la misma u otra.</p>
+      <p class="fuente">Estimulación focalizada (revisión de facilitación del lenguaje, ASHA; revisión sistemática AJSLP 2022): exposición concentrada sin exigir producción. La evidencia es más fuerte en niños con retraso del lenguaje que en autismo — por eso la usamos sin prometer resultados.</p>
+    </article>
+    <article class="capsula" id="focalizada-el-nombre-vive-en-la-cosa">
+      <label class="revision"><input type="checkbox" data-id="focalizada-el-nombre-vive-en-la-cosa"> Revisada</label>
+      <h4>El nombre vive en la cosa</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span><span class="chip suave">carros</span></p>
+      <p class="explicacion">Para despertar la asociación palabra↔objeto, la palabra tiene que sonar SIEMPRE que la cosa aparece — no en una lámina ni en una lista, sino en el objeto real, en sus manos. Elige sus tres cosas favoritas (su carro, su vaso, su peluche) y conviértete en el eco fiel de sus nombres: cada vez que una aparezca, suena su nombre. Corto, igual, cada vez.</p>
+      <blockquote><strong>Tu línea:</strong> Cada vez que agarre su carro, tú: “¡carro!”. Cada vez. Siempre la misma palabra.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige TRES objetos favoritos de él. Hoy, cada vez que uno entre en escena, di su nombre (solo el nombre). La constancia — mismo objeto, misma palabra — es lo que suelda la asociación.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): modelos abundantes y consistentes de la palabra objetivo en su contexto natural, sin demanda de producción.</p>
+    </article>
+    <article class="capsula" id="focalizada-sin-examen">
+      <label class="revision"><input type="checkbox" data-id="focalizada-sin-examen"> Revisada</label>
+      <h4>No lo pongas a examen</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">animales</span></p>
+      <p class="explicacion">“¿Cómo se llama esto?”, “¿qué es?”, “di agua” convierten el juego en un examen, y a un niño al que le cuesta hablar el examen le enseña a callarse. Lo contrario funciona mejor: baña de nombres el ambiente y quítale toda presión de responder. En vez de preguntar “¿qué es?”, afirma: “un perro”. Él habla cuando está listo — tu trabajo es que, cuando llegue ese día, las palabras ya estén ahí, cargadas.</p>
+      <blockquote><strong>Tu línea:</strong> Cambia “¿qué es esto?” por la respuesta regalada: “¡un perro!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy cuenta cuántas preguntas de examen le haces. La meta no es cero de golpe: es notarlas y cambiar la mitad por el nombre regalado.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): el niño recibe modelos abundantes de la palabra objetivo sin demanda de producción — el rasgo que la distingue del entrenamiento por repetición.</p>
+    </article>
+    <article class="capsula" id="interes-palabra-y-objeto">
+      <label class="revision"><input type="checkbox" data-id="interes-palabra-y-objeto"> Revisada</label>
+      <h4>La palabra y su dibujo, juntos</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">con pantalla</span><span class="chip suave">juego</span><span class="chip suave">animales</span></p>
+      <p class="explicacion">El juego de palabra↔objeto pone un dibujo grande de algo que a él le gusta. Tu trabajo es el importante: nombras el dibujo con UNA palabra y esperas. Cualquier sonido que él haga enciende el dibujo. Ojo: el juego NO evalúa si dijo la palabra —eso lo juzgas tú— solo celebra que su voz apareció.</p>
+      <blockquote><strong>Tu línea:</strong> Señala el dibujo, nómbralo una vez —“¡perro!”— y espera tres segundos en silencio.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Abre el juego de palabra↔objeto. Por cada dibujo: nómbralo UNA vez, espera, y celebra cualquier intento. No le pidas que repita. Cinco dibujos y paren — mejor corto y con ganas.</p>
+      <p class="fuente">Estimulación focalizada con apoyo visual: modelos abundantes del blanco sin demanda de producción (ASHA; AJSLP 2022). El apoyo visual/CAA no frena el habla — se asocia a más producción (§A.5).</p>
+    </article>
+    <article class="capsula" id="focalizada-palabra-abre">
+      <label class="revision"><input type="checkbox" data-id="focalizada-palabra-abre"> Revisada</label>
+      <h4>Una palabra que le sirva: “abre”</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">acciones</span><span class="chip suave">pedir</span></p>
+      <p class="explicacion">Las mejores primeras palabras no son las bonitas: son las ÚTILES. “Abre” le sirve veinte veces al día (la puerta, el frasco, la caja, el carro, el paquete). Una palabra que resuelve cosas se usa; una palabra que solo se luce, se olvida. Elige una palabra-herramienta y satúrale el día con ella.</p>
+      <blockquote><strong>Tu línea:</strong> Antes de abrir cualquier cosa, mírala, míralo y di: “abre… ¡abre!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy elige “abre” (o “más”, o “ya”). Dila cada vez que ocurra la acción, sin pedirle que la repita. Cuenta mentalmente: la meta es que la oiga muchísimas veces.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): pocos blancos funcionales, alta densidad de modelos y cero demanda de producción; los blancos útiles generalizan mejor a la vida diaria.</p>
+    </article>
+    <article class="capsula" id="focalizada-misma-palabra-cinco-lugares">
+      <label class="revision"><input type="checkbox" data-id="focalizada-misma-palabra-cinco-lugares"> Revisada</label>
+      <h4>La misma palabra en cinco lugares distintos</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">mar</span><span class="chip suave">bano</span></p>
+      <p class="explicacion">Si “agua” solo aparece en el vaso, “agua” significa vaso. Para que la palabra se despegue del objeto y se vuelva una palabra de verdad, tiene que aparecer en sitios distintos: el vaso, la ducha, la lluvia, la piscina, la botella. Misma palabra, mundos distintos: así se generaliza.</p>
+      <blockquote><strong>Tu línea:</strong> Di “¡agua!” en la ducha, en el vaso, en la lluvia y en la botella. La misma palabra.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige una palabra que él ya oye mucho y hoy dila en cinco contextos diferentes. Es el mismo esfuerzo de siempre, repartido — y hace que la palabra crezca.</p>
+      <p class="fuente">Generalización en estimulación focalizada: la variación de contextos con el mismo blanco favorece el uso funcional de la palabra (revisión de intervenciones para late talkers, AJSLP 2022).</p>
+    </article>
+    <article class="capsula" id="focalizada-no-preguntes-nombra">
+      <label class="revision"><input type="checkbox" data-id="focalizada-no-preguntes-nombra"> Revisada</label>
+      <h4>Cambia las preguntas por regalos</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">animales</span></p>
+      <p class="explicacion">“¿Qué es esto?” pone al niño a rendir examen, y el que no está seguro se calla. “Regalar” la palabra hace lo contrario: le quita la presión y le da el modelo. La regla de hoy: por cada pregunta que te salga, cámbiala por la respuesta dicha con alegría. Cero exámenes en esta casa.</p>
+      <blockquote><strong>Tu línea:</strong> En vez de “¿qué es esto?”, di la respuesta regalada: “¡un perro!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy cuenta cuántas preguntas de examen te salen (“¿cómo se dice?”, “¿qué es?”) y cámbialas TODAS por la palabra regalada. Al final del día, mira cuántas cambiaste.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): modelos abundantes SIN demanda de producción. El refuerzo informativo, no la evaluación, sostiene la motivación (Deci et al. 1999).</p>
+    </article>
+  </section>
+  <section class="etapa">
+    <h2>Primeras frases <span class="conteo">(7 cápsulas)</span></h2>
+    <p class="descripcion">A veces junta dos palabras: “más agua”, “carro grande”. Sigue diciendo mucho de a una, y está bien.</p>
+    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ¿Te parecen bien guardadas para cuando junte dos palabras? Recuerda: esta etapa nunca se activa sola.</p>
+    <h3>Modelar <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="frases-narra-con-dos">
+      <label class="revision"><input type="checkbox" data-id="frases-narra-con-dos"> Revisada</label>
+      <h4>Subtítulos, ahora de a dos palabras</h4>
+      <p class="chips"><span class="chip">Modelar</span><span class="chip">sin pantalla</span><span class="chip suave">acciones</span><span class="chip suave">carros</span><span class="chip suave">juego</span></p>
+      <p class="explicacion">Es la misma técnica de siempre —ponerle subtítulos a lo que él hace— pero subiendo un escalón: en vez de “cae”, dices “carro cae”. En vez de “sube”, “nene sube”. Dos palabras, no más. Él te oye armar combinaciones cortas todo el día, sin que nadie le pida nada.</p>
+      <blockquote><strong>Tu línea:</strong> Narra su juego de a dos: “carro cae”… “nene sube”… “más torre”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Cinco minutos narrando su juego con combinaciones de dos palabras. Sin preguntas. Si él contesta con una sola, perfecto: se la devuelves con dos.</p>
+      <p class="fuente">Heidlage et al. 2019 (ECRQ): el modelado por padres dentro del juego alcanza su mayor efecto en lenguaje expresivo (g=0.50); el nivel del modelo se ajusta un paso por encima del niño.</p>
+    </article>
+    <h3>Expandir lo que dijo <span class="conteo">(2)</span></h3>
+    <article class="capsula" id="frases-una-palabra-mas-una">
+      <label class="revision"><input type="checkbox" data-id="frases-una-palabra-mas-una"> Revisada</label>
+      <h4>Su palabra, más una tuya</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">carros</span></p>
+      <p class="explicacion">Cuando el niño ya dice palabras sueltas con soltura, el siguiente paso natural es que oiga esas mismas palabras acompañadas de UNA más. No dos, no una frase larga: una. Él dice “agua”; tú dices “agua fría”. Esa distancia corta —lo suyo más uno— es la que él puede alcanzar.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “agua”; tú: “agua fría” — y se la pasas. Solo una palabra más.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, a cada palabra que él diga, devuélvele esa palabra más una sola. “Carro” → “carro rojo”. “Más” → “más pan”. Sin pedirle que lo repita.</p>
+      <p class="fuente">Expansión conversacional: meta-análisis de 35 estudios con ES 0.96 en medidas próximas; la expansión efectiva se mantiene apenas un paso por encima del nivel actual del niño (Cleave et al. 2015, AJSLP).</p>
+    </article>
+    <article class="capsula" id="frases-recast-sin-corregir">
+      <label class="revision"><input type="checkbox" data-id="frases-recast-sin-corregir"> Revisada</label>
+      <h4>Devuélvele la frase bien armada, sin corregirlo</h4>
+      <p class="chips"><span class="chip">Expandir lo que dijo</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">acciones</span></p>
+      <p class="explicacion">Él dice “nene agua”. La versión correcta sería “el nene quiere agua”, pero corregirlo lo calla. Devuélvesela armada, como si estuvieran conversando: “Sí, el nene quiere agua.” Él oye la estructura completa sin sentirse evaluado — y sigue hablando, que es lo que queremos.</p>
+      <blockquote><strong>Tu línea:</strong> Él dice “nene agua”; tú: “Sí, el nene quiere agua.” — y se la das.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, cada combinación suya devuélvesela bien armada, con naturalidad y sin corregir. Prohibido: “se dice…”, “repite”. La conversación es el premio.</p>
+      <p class="fuente">Recast conversacional: ES 0.96 proximal / 0.76 distal en meta-análisis de 35 estudios; el efecto depende de que el adulto reformule SIN exigir repetición y con densidad de ≥1 por minuto (Cleave et al. 2015, AJSLP).</p>
+    </article>
+    <h3>Esperar en silencio <span class="conteo">(2)</span></h3>
+    <article class="capsula" id="frases-el-hueco-de-la-segunda">
+      <label class="revision"><input type="checkbox" data-id="frases-el-hueco-de-la-segunda"> Revisada</label>
+      <h4>Di la primera y deja el hueco de la segunda</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">pedir</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">Cuando ya dice dos palabras a veces, puedes ayudarle a llegar: empiezas tú la combinación y le dejas el final. “Más…” y esperas. Ese hueco al final de una frase que él ya conoce es mucho más fácil de llenar que una frase entera desde cero.</p>
+      <blockquote><strong>Tu línea:</strong> Con el vaso en la mano: “más…” — y esperas, mirándolo, en silencio.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, tres veces, empieza una combinación que él conozca y déjale el final. Si no lo llena, complétala tú con alegría y sigue. Nunca insistas dos veces seguidas.</p>
+      <p class="fuente">Espera estructurada (EMT): la pausa expectante dentro de una rutina verbal muy aprendida es una de las formas más eficaces de provocar iniciación (PubMed 29054980).</p>
+    </article>
+    <article class="capsula" id="frases-cuenta-cuentos-con-huecos">
+      <label class="revision"><input type="checkbox" data-id="frases-cuenta-cuentos-con-huecos"> Revisada</label>
+      <h4>El cuento de siempre, con huecos</h4>
+      <p class="chips"><span class="chip">Esperar en silencio</span><span class="chip">sin pantalla</span><span class="chip suave">juego</span><span class="chip suave">espera</span></p>
+      <p class="explicacion">Un cuento que él se sabe de memoria es una mina: puedes parar en cualquier parte y él sabe qué sigue. Al principio, deja el hueco al final de la frase; después, hazlo en el medio. No es un examen: si no llena el hueco, lo llenas tú, contento, y sigues leyendo.</p>
+      <blockquote><strong>Tu línea:</strong> Lee el cuento de siempre y párate antes de la palabra final. Mira y espera.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Lee su cuento favorito y deja tres huecos. Si los llena, celébralo con la historia (no con un premio). Si no, sigue leyendo con alegría: mañana hay otro cuento.</p>
+      <p class="fuente">Espera estructurada en rutinas verbales muy aprendidas (EMT, PubMed 29054980); la lectura compartida repetida es uno de los contextos con mejor evidencia para provocar producción.</p>
+    </article>
+    <h3>Seguir su interés <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="frases-elige-tu-o-yo">
+      <label class="revision"><input type="checkbox" data-id="frases-elige-tu-o-yo"> Revisada</label>
+      <h4>Ofrécele elegir: dos opciones, dos palabras</h4>
+      <p class="chips"><span class="chip">Seguir su interés</span><span class="chip">sin pantalla</span><span class="chip suave">elegir</span><span class="chip suave">comida</span><span class="chip suave">agua</span></p>
+      <p class="explicacion">Ofrecer una elección real —“¿jugo o agua?”— hace dos cosas: le da poder de verdad (y eso motiva a hablar) y le regala el modelo de las dos palabras en la misma frase. Sostén las dos cosas en alto, nómbralas, y espera. Lo que él elija, se lo das enseguida.</p>
+      <blockquote><strong>Tu línea:</strong> Sostén las dos cosas en alto: “¿jugo… o agua?” — y espera con cara de pregunta.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Hoy, en tres momentos, ofrécele elegir entre dos cosas que de verdad quiera. Nombra ambas al mostrarlas. Ante cualquier respuesta —palabra, sonido o gesto— dale lo que eligió y nombra su elección.</p>
+      <p class="fuente">Seguir el interés y dar control al niño (NDBI): las oportunidades de elección aumentan la iniciación comunicativa; el refuerzo informativo sostiene la motivación intrínseca (Crank et al. 2021; Deci et al. 1999).</p>
+    </article>
+    <h3>Repetir una palabra clave <span class="conteo">(1)</span></h3>
+    <article class="capsula" id="frases-dos-palabras-utiles">
+      <label class="revision"><input type="checkbox" data-id="frases-dos-palabras-utiles"> Revisada</label>
+      <h4>Dos palabras que resuelven la vida</h4>
+      <p class="chips"><span class="chip">Repetir una palabra clave</span><span class="chip">sin pantalla</span><span class="chip suave">agua</span><span class="chip suave">pedir</span></p>
+      <p class="explicacion">Las primeras combinaciones útiles son poquitas y valen oro: “más agua”, “no quiero”, “otra vez”, “ya está”. Elige UNA de esas parejas y satúrale el día con ella, igual que hacías con las palabras sueltas. La estrategia no cambia; solo crece el blanco.</p>
+      <blockquote><strong>Tu línea:</strong> Elige “más agua” y dila tú, completa, cada vez que ocurra: “¿más agua? ¡Más agua!”.</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Escoge una pareja de palabras que él necesite de verdad y dila muchas veces hoy, en su momento natural. Sin pedirle que la repita: hoy solo la oye.</p>
+      <p class="fuente">Estimulación focalizada (ASHA; AJSLP 2022): pocos blancos, alta densidad de modelos, cero demanda de producción — el mismo principio aplicado a combinaciones de dos palabras.</p>
+    </article>
+  </section>
+  <footer>Hablemos San — catálogo de contenido para el gate del padre. Las fuentes citadas son las mismas que la app
+  guarda con cada cápsula (§A.3 de la investigación). Este documento no es la app: es el contenido, desnudo, para tu juicio.</footer>
+</main>
+<script>
+  var CLAVE = "catalogo-capsulas-v1:";
+  var cajas = document.querySelectorAll(".revision input");
+  var contador = document.getElementById("hechas");
+  function pintar() {
+    var n = 0;
+    cajas.forEach(function (c) { if (c.checked) n++; c.closest(".capsula").classList.toggle("lista", c.checked); });
+    contador.textContent = n;
+  }
+  cajas.forEach(function (c) {
+    c.checked = localStorage.getItem(CLAVE + c.dataset.id) === "1";
+    c.addEventListener("change", function () {
+      if (c.checked) localStorage.setItem(CLAVE + c.dataset.id, "1");
+      else localStorage.removeItem(CLAVE + c.dataset.id);
+      pintar();
+    });
+  });
+  pintar();
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { IconoPictograma } from "@/components/iconos";
 import { PalabraObjeto } from "@/components/juego/palabra-objeto";
 
 export const metadata: Metadata = {
@@ -11,7 +12,11 @@ export const metadata: Metadata = {
 export default function JugarPalabrasPage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
-      <h1 className="font-display text-center text-4xl sm:text-5xl">
+      {/* El icono del juego —el MISMO del selector— dice dónde estás sin leer (gate S4). */}
+      <h1 className="font-display flex items-center justify-center gap-3 text-center text-4xl sm:text-5xl">
+        <span aria-hidden="true">
+          <IconoPictograma className="text-acento h-10 w-10" />
+        </span>
         Cada dibujo tiene su palabra
       </h1>
       <p

@@ -34,13 +34,17 @@ Dos audiencias, una paleta dual:
 Regla de oro: **la vista del niño es soberana** — ningún elemento del operador se filtra al
 escenario del juego (solo un botón de salir, pequeño y discreto, para el padre).
 
-### Globos de fiesta (celebración de la palabra — ADR 009)
+### Colores de fiesta (los instantes de logro)
 
 `--color-fiesta-*` (coral · verde · cielo · sol · uva): los primos **saturados** de la paleta del
 niño. La paleta del niño es pastel a propósito —es la pantalla donde él vive, y tiene que ser
-calmada—; estos colores existen **solo** para el instante en que el padre dice que dijo la palabra.
-Regla: se usan en algo que **sube una vez y se va**, nunca en superficie fija. El sosiego se cuida
-por la duración, no por la saturación.
+calmada—; estos colores existen **solo** para los instantes de logro, y hoy son exactamente dos:
+los **globos de la palabra** (ADR 009 — la fiesta mayor: la dispara el padre cuando el niño dijo
+la palabra) y el **confeti de la vuelta** (ADR 012, gate S4 — el hito medido: 3 s de voz real
+completan una vuelta y el estallido cae sobre la línea sin detener el juego). Regla intacta: se
+usan en algo que **corre una vez y se va**, nunca en superficie fija; con "reducir animaciones" no
+se muestran y el texto sigue contando el logro. El sosiego se cuida por la duración, no por la
+saturación.
 
 ## Paleta
 
@@ -135,6 +139,29 @@ nuevos sin derivarlos de la paleta.
   símbolo que cambia de forma entre dispositivos es ruido, no señal. **Los PERSONAJES son la
   excepción**: el globo y el cohete no son iconos —son los protagonistas del juego— y por eso
   llevan la paleta del niño en vez de `currentColor`.
+- **El icono va SIEMPRE a la IZQUIERDA del texto que acompaña** (regla del usuario, gate S4). En
+  toda la app: botones, etiquetas, filas de tarjeta, `<summary>`. El ojo entra por el símbolo y
+  sigue a la palabra; alternar el lado obliga a re-aprender la pantalla en cada bloque. La
+  excepción es el chevron/flecha de "sigue por aquí", que sí va a la derecha porque señala salida,
+  no identidad.
+- **Los estados existen en PAREJA visible.** Si "hecho" tiene su icono (`IconoHecho`), "todavía
+  no" tiene el suyo (`IconoPorHacer`) — nunca se comunica un estado solo por la ausencia del
+  otro, que además suele ser el estado más frecuente (la cápsula del día empieza pendiente).
+- **PROHIBIDA la chispa/destello de cuatro puntas (✨), en cualquier variante.** Es hoy el símbolo
+  universal de la **IA generativa**, y esta app promete exactamente lo contrario: determinista
+  primero, cero IA (la regla dura 1). Un destello insinúa "esto lo generó una máquina" sobre un
+  contenido que es **biblioteca curada con evidencia citada** — contradice el producto, no solo el
+  estilo. (Vetada en el gate S4, donde se había colado en "La actividad de hoy"; se reemplazó por
+  `IconoJuntos`, dos figuras lado a lado = co-uso.) Si algún día llega el cuentero por lotes, su
+  contenido se marcará **con palabras honestas**, jamás con un destello decorativo.
+- **Tamaño del icono según a quién acompaña:** ~16 px si va dentro de una línea de texto corrida;
+  **~32 px cuando encabeza un bloque** (ahí abarca el bloque completo desde la izquierda, no solo
+  el rótulo — a 16 px junto a un rótulo mono de 11 px no se lee como señal, hallazgo del gate S4).
+- **El titular de cada juego lleva su icono a la izquierda — el MISMO de su tarjeta del selector**
+  (regla del usuario, gate S4). El titular poético se queda (enseña la mecánica: "Su voz sube el
+  cohete"); la orientación la da el **símbolo repetido** selector→pantalla, no el texto. El icono
+  ahí es decorativo (`aria-hidden`): el título ya lo dice todo y el lector de pantalla no lo
+  necesita dos veces.
 - **Los pictogramas (ARASAAC) no son iconos ni personajes: son CONTENIDO** (ADR 008). Van
   grandes, con su palabra escrita debajo en la display, dentro de un marco con `border-4` que
   cambia de color al encenderse — el estado nunca se comunica solo con color: el texto
@@ -164,3 +191,28 @@ nuevos sin derivarlos de la paleta.
 
 **El selector de juegos** no tiene estado vacío ni de error: siempre hay tres juegos, siempre los
 mismos. Es, a propósito, la pantalla más aburrida y más predecible de la app.
+
+## Pantallas del padre (Sprint 4)
+
+**La salida es SIEMPRE la misma y va ARRIBA** (regla del usuario, gate S4). Toda pantalla del padre
+que no sea "Hoy" abre con el mismo chip `← Hoy` en su encabezado —borde, radio 12, `min-h-11`,
+`data-testid="volver-a-hoy"`—: Rumbo, Objetivo, Ajustes y el **selector de juegos**. Antes cada una
+lo resolvía distinto (enlace subrayado al pie), y la salida se volvía una búsqueda. **Excepción:**
+dentro de una pantalla de error o decisión (p. ej. micrófono denegado en `MarcoJuego`), "Volver a
+Hoy" es un **botón de tamaño completo emparejado con la acción principal** ("Intentar de nuevo") —
+ahí no es navegación de encabezado, es una de las dos salidas del problema, y ambas deben pesar
+igual.
+
+Dos cuartos nuevos del **operador** (paleta operador, LCP estático, jamás se filtran a la vista del
+niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos propios de trazo
+(`IconoBrujula`, `IconoDiana`; stroke 1.5, viewBox 24, `currentColor`):
+
+- **El rumbo** (`/rumbo`) — progreso honesto. **Vacío:** "Todavía no hay nada que contar" + puerta
+  a los juegos. **Contenido:** tendencias por semana (números medidos en Geist `tabular-nums`, nunca
+  Mono dentro de frase) + hitos funcionales. **Regla de contenido dura:** cero vocabulario clínico
+  —ni "puntaje", ni "diagnóstico", ni "nivel", ni "%", ni siquiera negado—; una semana floja es un
+  número sin adjetivo (sin rachas que castiguen). Es la mecánica de honestidad hecha pantalla.
+- **Objetivo de la semana** (`/objetivo`) — texto libre → alineación determinista. Los 5 estados:
+  **vacío** (sin objetivo, campo con placeholder), **escribiendo** (preview honesto en vivo),
+  **activo** (tarjeta con "desde…" + quitar), **sin coincidencias** (dice honesto que no encontró
+  nada — el caso "colores"), **guardado** (confirmación sobria). Toques del adulto ≥44 px.

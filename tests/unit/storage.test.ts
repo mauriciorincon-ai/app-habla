@@ -1,13 +1,20 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
+  agregarJuiciosGemelas,
+  borrarObjetivo,
   borrarTodo,
   CLAVES,
   guardarAjustes,
+  guardarObjetivo,
   guardarPerfil,
   guardarProgreso,
   leerAjustes,
+  leerObjetivo,
   leerPerfil,
   leerProgreso,
+  leerRegistroGemelas,
+  leerSesiones,
+  registrarSesion,
 } from "@/lib/storage/local";
 import { AJUSTES_DEFECTO, PROGRESO_INICIAL } from "@/lib/storage/schemas";
 
@@ -69,6 +76,8 @@ describe("persistencia local (ADR 002)", () => {
       ...PROGRESO_INICIAL,
       historial: [{ capsulaId: "x", fecha: "2026-07-11" }],
     });
+    registrarSesion({ juego: "cohete", fecha: "2026-07-11", inversiones: 2 });
+    guardarObjetivo("animales");
     window.localStorage.setItem("otra-app:algo", "no es mío");
 
     // Async desde el remate S3 (A-3): también elimina el banco de voz en IndexedDB, esperado.
@@ -77,6 +86,9 @@ describe("persistencia local (ADR 002)", () => {
     expect(leerPerfil()).toBeNull();
     expect(leerAjustes()).toEqual(AJUSTES_DEFECTO);
     expect(leerProgreso()).toEqual(PROGRESO_INICIAL);
+    // Las claves nuevas del S4 también se van (empiezan con "habla:").
+    expect(leerSesiones().sesiones).toEqual([]);
+    expect(leerObjetivo()).toBeNull();
     expect(window.localStorage.getItem("otra-app:algo")).toBe("no es mío");
   });
 
@@ -176,5 +188,87 @@ describe("migración de progreso v1 → v2 (ADR 006): el progreso real jamás se
     const ajustes = leerAjustes();
     expect(ajustes.etapa).toBe("palabras-sueltas");
     expect(ajustes.modoCalma).toBe(true);
+  });
+});
+
+describe("sesiones de juego (S4): el insumo del Rumbo, versionado y acotado", () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it("registra intentos y los lee de vuelta", () => {
+    registrarSesion({
+      juego: "globo",
+      fecha: "2026-07-15",
+      vozMs: 3000,
+      rachaMs: 1200,
+    });
+    registrarSesion({ juego: "cohete", fecha: "2026-07-15", inversiones: 4 });
+    const { sesiones } = leerSesiones();
+    expect(sesiones).toHaveLength(2);
+    expect(sesiones[0]).toMatchObject({ juego: "globo", vozMs: 3000 });
+  });
+
+  it("la clave está versionada y no crece más de 500 (cap, como gemelas)", () => {
+    expect(CLAVES.sesiones).toMatch(/^habla:v1:/);
+    for (let i = 0; i < 520; i++) {
+      registrarSesion({ juego: "cohete", fecha: "2026-07-15", inversiones: i });
+    }
+    const { sesiones } = leerSesiones();
+    expect(sesiones).toHaveLength(500);
+    // Se conservan los MÁS recientes: el último registrado sigue ahí.
+    expect(sesiones[sesiones.length - 1]).toMatchObject({ inversiones: 519 });
+  });
+
+  it("NO deja rastro de audio ni de tono en lo guardado (regla dura 2)", () => {
+    registrarSesion({
+      juego: "palabras",
+      fecha: "2026-07-15",
+      encendidos: 2,
+      reconocidas: 1,
+      palabras: ["perro", "gato"],
+    });
+    const crudo = window.localStorage.getItem(CLAVES.sesiones) ?? "";
+    expect(crudo).not.toMatch(/audio|rms|pcm|wav|pitch|hz|blob:/i);
+  });
+});
+
+describe("registro de gemelas: cap 500 (deuda del remate S3)", () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it("conserva solo los últimos 500 juicios, sin crecer sin fin", () => {
+    // Se agregan 600 juicios en tandas; el registro nunca guarda más de 500.
+    for (let i = 0; i < 600; i++) {
+      agregarJuiciosGemelas([
+        { fecha: "2026-07-19", parId: `par-${i}`, marca: "a" },
+      ]);
+    }
+    const { juicios } = leerRegistroGemelas();
+    expect(juicios).toHaveLength(500);
+    // Se quedan los MÁS recientes (par-599 sigue; par-0 ya no).
+    expect(juicios[juicios.length - 1]?.parId).toBe("par-599");
+    expect(juicios.some((j) => j.parId === "par-0")).toBe(false);
+  });
+});
+
+describe("objetivo de la semana (S4): local, sin expiración automática", () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it("guarda el texto con la fecha de hoy y lo lee", () => {
+    guardarObjetivo("  animales  ");
+    const obj = leerObjetivo();
+    expect(obj?.texto).toBe("animales"); // recortado
+    expect(obj?.desde).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it("guardar vacío equivale a borrar (no guarda basura)", () => {
+    guardarObjetivo("animales");
+    guardarObjetivo("   ");
+    expect(leerObjetivo()).toBeNull();
+  });
+
+  it("borrar lo elimina y la lectura vuelve a null (restaura el comportamiento por etapa)", () => {
+    guardarObjetivo("comida");
+    borrarObjetivo();
+    expect(leerObjetivo()).toBeNull();
+    expect(window.localStorage.getItem(CLAVES.objetivo)).toBeNull();
   });
 });

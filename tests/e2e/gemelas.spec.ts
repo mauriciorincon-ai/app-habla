@@ -30,12 +30,18 @@ test("una partida de gemelas: el padre marca, la celebración es honesta y el re
   await expect(page.getByTestId("gemelas-ronda")).toBeVisible();
   await expect(page.getByTestId("progreso-rondas")).toContainText("de 6");
 
-  // Jugamos las 6 rondas: el padre marca lo que oyó (aquí siempre el de la izquierda).
+  // Jugamos las 6 rondas: el padre marca lo que oyó (aquí siempre el de la izquierda) en la
+  // zona discreta "¿Cuál oíste?", el dibujo FESTEJA (gate S4, L1: la palabra tiene consecuencia
+  // visible — "¡Dijo «…»!"), y el padre decide cuándo seguir con "Siguiente pareja".
   for (let ronda = 1; ronda <= 6; ronda++) {
     await expect(page.getByTestId("progreso-rondas")).toContainText(
       `Ronda ${ronda}`,
     );
     await page.getByTestId("marcar-a").click();
+    await expect(page.getByTestId("dijo")).toContainText(/¡Dijo «.+»!/);
+    // El contador honesto sube con lo que el padre marcó (jamás dice "acertó").
+    await expect(page.getByTestId("oidas")).toContainText(`${ronda}`);
+    await page.getByTestId("siguiente-pareja").click();
   }
 
   // Celebración honesta: cuenta las RONDAS jugadas, nunca "acertó".
@@ -54,6 +60,29 @@ test("una partida de gemelas: el padre marca, la celebración es honesta y el re
     () => (window as unknown as { __gum: number }).__gum,
   );
   expect(vecesMic).toBe(0);
+});
+
+// Regla del bloque G, ahora también aquí: "Salir" vuelve al GUION y reinicia POR COMPLETO —
+// al volver a entrar no queda rastro (Ronda 1, contador en cero).
+test("«Salir» en plena ronda vuelve al guion y reinicia el juego completo", async ({
+  page,
+}) => {
+  await page.goto("/jugar/gemelas");
+  await page.getByTestId("empezar-juego").click();
+
+  // Avanza dos rondas marcando (con su festejo de por medio).
+  for (let i = 0; i < 2; i++) {
+    await page.getByTestId("marcar-a").click();
+    await page.getByTestId("siguiente-pareja").click();
+  }
+  await expect(page.getByTestId("progreso-rondas")).toContainText("Ronda 3");
+
+  await page.getByTestId("salir-al-guion").click();
+  await expect(page.getByTestId("empezar-juego")).toBeVisible();
+
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("progreso-rondas")).toContainText("Ronda 1");
+  await expect(page.getByTestId("oidas")).toContainText("0");
 });
 
 test("el padre puede saltar una ronda sin castigo (COGA: estar juntos ya cuenta)", async ({

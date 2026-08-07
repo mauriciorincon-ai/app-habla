@@ -102,6 +102,51 @@ export const PARES_GEMELOS: ParGemelo[] = [
     a: { palabra: "gota", archivo: "gota.png" },
     b: { palabra: "bota", archivo: "bota.png" },
   },
+  // ── Ampliación del gate S4 (bloque L: "si son pocas necesitamos más") ──────────────────────
+  // Misma investigación § A.4; pictos revisados visualmente (se descartaron "rama" y "piso" por
+  // depender de flechas didácticas o escenas abstractas — débiles para 4-6 años).
+  {
+    id: "rana-lana",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la r y la l al empezar",
+    a: { palabra: "rana", archivo: "rana.png" },
+    b: { palabra: "lana", archivo: "lana.png" },
+  },
+  {
+    id: "sol-sal",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la o y la a del medio",
+    a: { palabra: "sol", archivo: "sol.png" },
+    b: { palabra: "sal", archivo: "sal.png" },
+  },
+  {
+    id: "toro-loro",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la t y la l al empezar",
+    a: { palabra: "toro", archivo: "toro.png" },
+    b: { palabra: "loro", archivo: "loro.png" },
+  },
+  {
+    id: "casa-cama",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la s y la m del medio",
+    a: { palabra: "casa", archivo: "casa.png" },
+    b: { palabra: "cama", archivo: "cama.png" },
+  },
+  {
+    id: "queso-beso",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la q y la b al empezar",
+    a: { palabra: "queso", archivo: "queso.png" },
+    b: { palabra: "beso", archivo: "beso.png" },
+  },
+  {
+    id: "moto-mono",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la t y la n del medio",
+    a: { palabra: "moto", archivo: "moto.png" },
+    b: { palabra: "mono", archivo: "mono.png" },
+  },
 ];
 
 /** Todas las palabras del banco de gemelas (para el catálogo de grabación del banco de voz). */

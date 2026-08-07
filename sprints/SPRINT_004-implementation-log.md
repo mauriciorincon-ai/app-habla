@@ -1,0 +1,857 @@
+# Sprint 004 — "El rumbo" + CIERRE DE CICLO H1 · Bitácora de implementación
+
+> Orden: `portafolio/habla/ordenes/SPRINT_004-orden.md` (planeadora, RO) · Plan aprobado por el
+> usuario 2026-07-19 (plan mode) · «construye» dado con modelo Opus 4.8 `[1m]`. Branch
+> `sprint-004/el-rumbo` desde `main` (post-merge PR #4, S3 + remate cerrados — `610622b`).
+> **ÚLTIMO sprint del ciclo H1 (4 de 4).** Gate: escritorio + teléfono (la tablet NO gatea el
+> cierre — lista post-ciclo ACUMULADA en la guía v4). Quinto sprint consecutivo con cero IA.
+
+## Estado por fase
+
+- [x] F0 — Setup (branch, deltas kit v1.7.3 ×3, verificación de supuestos + riesgos de integración R1-R9)
+- [x] F1 — Motores puros (sesiones · rumbo · etiquetas · objetivo · daily con objetivo · lote-por-etapa · dedup) — 193 unit verdes, cobertura 92 %/86 %
+- [x] F2 — UI (/rumbo · /objetivo · header Hoy · CelebracionHonesta registra · alineaciones; suites enteras, regla 9)
+- [x] F3 — Integración + e2e (rumbo frase-vs-métrica · objetivo animales/colores/borrar · privacidad · axe) — **127 e2e verdes** (lighthouse en F5)
+- [x] F4 — Endurecimiento (5 deudas del remate + iconos PWA reales + ADR-011) — 200 unit verdes
+- [x] F5 — CIERRE DE CICLO (BLUEPRINT.html · guía v4 · manual · design-system · summary · deploy-check · PR) — 200 unit · 127 e2e · build verdes
+- [ ] **Gate ⭐ ACUMULADO S1+S2+S3+S4 del usuario** (desktop + teléfono) + `/design-sync` push → merge → `/cierre-sprint habla` (H1 COMPLETO)
+
+## Los tres outcomes
+
+- **O1 — Rumbo (progreso honesto del padre):** tendencias por semana + hitos funcionales, de lo
+  que DE VERDAD se midió o el padre marcó. CERO puntajes clínicos, CERO %, CERO plazos, CERO culpa
+  (semana floja = dato sin adjetivo). VISION § 5.
+- **O2 — Objetivo de la semana (sintonía fonoaudióloga):** texto libre → alineación DETERMINISTA
+  de Hoy + juegos + lote del estudio. Paga la deuda lote-por-etapa. "colores" = sin-matches
+  honesto; borrarlo restaura el comportamiento por etapa.
+- **O3 — CIERRE DE CICLO:** endurecimiento (5 deudas del remate + iconos reales + ADR-011) +
+  `docs/BLUEPRINT.html` + design system publicado (`/design-sync`) + gate ⭐ ACUMULADO.
+
+## Verificación de supuestos del kit y del sprint (F0)
+
+- `githooks/pre-commit` **ejecutable (100755)** ✅ · `core.hooksPath=githooks` ✅ (K12 sigue vivo).
+- **Carnada canónica partida** (regla 6 de CLAUDE.md): `AKIA` + `Q7RTZ4PXKM2WNB3S`. Habla es el
+  ORIGEN de la regla "carnada partida" del kit (v1.7.3) — el full key (`AKIA` + los 16 base32 de
+  la regla 6) nunca aparece contiguo en el repo, así que el hook no bloquea el commit del propio
+  CLAUDE.md, y la carnada sigue íntegra y reconstruible. La plantilla del kit generalizó esta forma
+  con otro punto de corte; ambas garantizan lo mismo. Verificado equivalente ✅ (delta #3 = solo
+  verificación, no cambio). _(El gate lo comprobó en vivo: un borrador de esta bitácora escribió el
+  key contiguo por descuido y el pre-commit lo bloqueó — el candado de secrets está armado.)_
+- `/design-sync` disponible como herramienta de sesión ✅ (se ejerce en F5, al cierre).
+- **Registros existentes** (supuesto 2 de la orden): `habla:v1:progreso` (historial de cápsulas,
+  fecha+id) y `habla:v1:gemelas` (juicios por par) existen; los juegos de voz NO persisten nada
+  (ver R1). Se crea el registro versionado nuevo `habla:v1:sesiones`, no un esquema paralelo.
+
+## Deltas del kit aplicados (F0) — kit v1.7.3
+
+| Delta                                                                                | Archivo(s)                                                                          | Estado    |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | --------- |
+| v1.7.3 — testing-patterns **regla 9** (suite entera por pantalla tocada, en su fase) | `.claude/skills/testing-patterns.md` (regla 9 + corolario de identidad por semilla) | ✅        |
+| v1.7.3 — plan-sprint **§ Riesgos de integración con lo existente**                   | `.claude/commands/plan-sprint.md` (paso 7 nuevo)                                    | ✅        |
+| v1.7.3 — **carnada partida** (verificar vs. plantilla final)                         | `CLAUDE.md` regla 6 (ya partida, origen de la regla)                                | ✅ verif. |
+
+## ⚠️ Riesgos de integración con lo existente (kit v1.7.3) — examinados EN EL CÓDIGO
+
+La sección que la orden exige que estrene el plan. Cada riesgo se verificó con archivo:línea:
+
+- **R1 🔴 EL SUPUESTO ROTO — los juegos de voz NO persisten ninguna métrica.** La orden asume
+  "los insumos del progreso YA existen"; la realidad: `sostenidoMs/rachaMs` (globo),
+  `inversiones` (cohete) y `activaciones/reconocidas` (palabra↔objeto) **mueren en la
+  celebración** — cero escrituras en `voice-game.tsx`, `cohete-tono.tsx`, `palabra-objeto.tsx`.
+  Solo existen `historial` de cápsulas (sin números) y `habla:v1:gemelas` (juicios).
+  **Mitigación:** registro NUEVO versionado `habla:v1:sesiones` (cap 500), escrito UNA vez por
+  intento al montar `CelebracionHonesta` (compartida por los 4 juegos → un solo punto de
+  escritura). Guarda SOLO los números que la celebración ya muestra + las palabras encendidas de
+  palabra↔objeto. **Jamás audio ni pitch crudo (Hz)** — el conteo de inversiones/activaciones es
+  la clase de dato que VISION § 5 sanciona ("registro de intentos y logros"), igual que los
+  juicios de gemelas del S3; el sello de la regla dura 2 sigue sobre audio y Hz.
+- **R2 — El e2e de privacidad asevera la lista EXACTA de claves** (`privacidad-cero-red.spec.ts`
+  L190: `^habla:v1:(perfil|ajustes|progreso)$`). Las claves nuevas `sesiones` y `objetivo` (y la
+  `gemelas` del S3) entran a la lista permitida **conscientemente** en F3, con el candado de
+  contenido (`/audio|rms|pcm|wav|pitch|hz|blob:/`) intacto. (Nota: los nombres de campo elegidos
+  —`vozMs`, `rachaMs`— no contienen la subcadena `rms`, verificado.)
+- **R3 — Los e2e del S3 dependen del orden del mazo por semilla** (`voz-familiar.spec.ts` — el más
+  frágil: mismo 1.er picto entre montajes). El objetivo re-prioriza mazos → **sin objetivo escrito,
+  el orden queda BYTE-IDÉNTICO al de hoy** (unit de identidad lo clava); esos e2e corren con
+  storage limpio → intactos. La alineación se prueba con e2e nuevos que escriben el objetivo POR
+  LA UI. Regla 9 estrenada.
+- **R4 — La asignación del día está CONGELADA por diseño** (invariante del S2, nacida de un
+  defecto real: `daily.ts:57-68` — la cápsula de hoy no cambia al recargar/completar/volver).
+  "Escribir el objetivo alinea Hoy" (acceptance) choca con ella. **Decisión:** escribir/borrar el
+  objetivo re-evalúa la asignación de HOY **solo si la cápsula de hoy NO está completada** (el
+  trabajo hecho jamás se toca); unit para ambas ramas. El congelamiento por-etapa queda intacto.
+- **R5 — El estudio recién auditado:** `siguienteLote` crece a `{etapa, objetivo, …}` (paga
+  lote-por-etapa DENTRO de O2). El lote se fija al montar (`useMemo([])`,
+  `estudio-cliente.tsx:227`) → un objetivo escrito a mitad de lote aplica al SIGUIENTE lote
+  (correcto, se documenta). Sin objetivo → orden idéntico al actual.
+- **R6 — `CelebracionHonesta` es compartida por los 4 juegos:** escribir la sesión ahí hace que
+  "otra vez" registre CADA intento (correcto: un intento = una sesión). El spec de
+  rastro-en-storage corta a mitad de juego (no llega a celebración): sin impacto; se verifica con
+  la suite entera.
+- **R7 — El refactor de `barajar` (deuda) NO puede cambiar la semilla ni el orden:** la copia
+  local de `palabra-objeto.tsx:33-43` es idéntica a `lib/barajar.ts` → sustitución 1:1;
+  `voz-familiar.spec` es la evidencia de regresión.
+- **R8 — El contenido NO tiene etiquetas** (`CapsulaSchema` solo `tecnica+etapa`; pictos solo
+  `palabra+tema`; **cero palabras de color en el contenido** → "colores" es literalmente el caso
+  sin-matches honesto de la orden). O2 exige etiquetar: campo `etiquetas: string[]` (default `[]`)
+  en cápsulas + etiquetado curado es-CO de las 50; pictos matchean por `palabra`+`tema`; pares por
+  sus dos palabras.
+- **R9 — Iconos PWA:** `manifest.ts:16-25` referencia `icon-192/512.png` placeholders. `sw.js` NO
+  fija hashes de esos assets (los sirve por URL con refresco, no por hash) → sustituir archivos con
+  MISMOS nombres es seguro; el manifest no cambia. Verificado ✅.
+
+## Desviación del plan
+
+- **Iconos PWA (F4):** el plan proponía renderizar un SVG del globo con Playwright → PNG. Al abrir
+  `scripts/gen-iconos.mjs` resultó que YA existe un generador **sin dependencias** (encoder PNG
+  puro con `node:zlib`) que dibuja el globo de la paleta. Introducir Playwright para rasterizar es
+  más pesado y flakier que refinar el script existente. **Decisión:** refino `gen-iconos.mjs`
+  (paleta del design system + variante maskable con zona segura) en vez de añadir Playwright —
+  cero dependencias nuevas, determinista, más en el espíritu de la app. (Anotado aquí al construir,
+  no después — método v1.9.1.)
+
+## F1 — Motores puros (hecho)
+
+- **Sesiones (`habla:v1:sesiones`):** `SesionSchema` unión discriminada por juego + `registrarSesion`
+  (cap 500). `lib/rumbo/sesion.ts` mapea Metrica→Sesion (puente puro testeable). Unit: cap,
+  versionado, y candado "sin audio/pitch" sobre lo guardado.
+- **Rumbo:** `lib/rumbo/tendencias.ts` (agrega por semana: días con práctica —juego o cápsula—,
+  palabras distintas, dibujos, inversiones, racha máx, marcadas por el padre; más reciente primero,
+  semana floja = número sin adjetivo) + `lib/rumbo/hitos.ts` (primer día, primera palabra que TÚ
+  oíste, voz > 5 s, 10/25 palabras distintas, constancia 3/5 días). Cero clínica.
+- **Objetivo:** `lib/objetivo/alinear.ts` (`normalizar` + predicados + `contarAlineacion` con el
+  caso honesto `vacio`) + `lib/objetivo/prioridad.ts` (`priorizarEstable`, identidad sin objetivo).
+- **Etiquetas (R8):** `ETIQUETAS_CAPSULA` (vocabulario controlado, sin colores) + `etiquetas` en
+  `CapsulaSchema` (≥1) + curaduría de las 50 en `ETIQUETAS_POR_CAPSULA` (mapa al final de
+  capsulas.ts, no inline). Unit: cobertura total, cero huérfanas, "animales" alinea, "colores" vacío.
+- **daily con objetivo (R4):** `seleccionarCapsula` gana predicado opcional `coincide` (sin él =
+  identidad); `realinearObjetivo` re-evalúa HOY solo si NO está completada (unit doble).
+- **Lote por etapa (R5):** `siguienteLote` gana `objetivo` + `etapa` (sin objetivo = orden idéntico;
+  en sonidos-e-intentos las palabras solo-de-gemelas bajan). Paga la deuda lote-por-etapa dentro de O2.
+- **Dedup (deudas del remate):** `barajar` (copia local de palabra-objeto → `@/lib/barajar`),
+  `fechaHoy` (copias de gemelas + estudio → `@/lib/fecha`, que además trae `lunesDeLaSemana`).
+
+## F2 + F3 — UI y e2e (hecho)
+
+- **Registro de sesiones (R1):** `CelebracionHonesta` escribe la sesión al montar (ref-guard vs.
+  doble-efecto de StrictMode); palabra↔objeto aporta las palabras encendidas por **estado** (no
+  ref-en-render, que el linter de React 19 prohíbe).
+- **`/rumbo`:** tendencias por semana + hitos + vacío honesto. Microcopy SIN vocabulario clínico
+  (ni negado: el design system dice "jamás diagnóstico/puntaje" — se quitó "sin puntajes/notas").
+- **`/objetivo`:** editor con preview honesto + caso sin-matches + guardar/quitar; store reactivo
+  `useObjetivo` (idiomático `useSyncExternalStore`, sin `setState`-en-efecto).
+- **Alineaciones:** mazo palabra↔objeto, rondas de gemelas y lote del estudio priorizan el objetivo
+  (identidad sin objetivo). Header de Hoy + línea del objetivo activo. Iconos brújula + diana.
+- **e2e nuevos:** `rumbo.spec` (vacío · frase-vs-métrica con números inyectados · write-path por la
+  UI · grep anti-clínico) · `objetivo.spec` (animales alinea Hoy+mazo+lote · colores honesto ·
+  quitar restaura identidad).
+- **Regla 9 (kit v1.7.3, estrenada):** corrida la suite e2e ENTERA de las pantallas tocadas en esta
+  fase. Un solo rojo real: `etapas.spec` — el header más alto (2 filas) empujó el botón del
+  onboarding bajo el pliegue y el auto-scroll del tap dejó Ajustes fuera de vista; se corrigió
+  mirando desde el tope (sigue cazando "enterrado al pie"). **127 e2e verdes en todos los proyectos.**
+- **Privacidad (R2):** lista blanca de claves ampliada conscientemente (`sesiones`, `objetivo`,
+  `gemelas`) con el candado de contenido (audio/pitch) intacto. axe + lighthouse ganan `/rumbo` y
+  `/objetivo`.
+
+## F4 — Endurecimiento (lista CERRADA — hecho)
+
+Las 5 deudas del remate S3, pagadas con evidencia:
+
+1. **Tests de componente del estudio:** `tests/unit/estudio-cliente.test.tsx` (Testing Library) —
+   cobertura, lista de grabados, escuchar (reproduce el blob), borrar, banco vacío, IndexedDB roto.
+   De paso arregló un hueco del setup: faltaba `afterEach(cleanup)` de RTL (los renders se
+   acumulaban) — se añadió a `tests/setup.ts` (beneficia a todo test de componente).
+2. **Dedup `reproducir`:** `src/lib/audio/reproducir.ts` (`reproducirBlob`, con cancelación) +
+   `useReproductor` (revoca al desmontar). Sustituye la copia del estudio y la de la voz familiar.
+   (barajar y fechaHoy ya se dedup-earon en F1.)
+3. **Revoke al navegar a mitad de clip:** `reproducirBlob` libera la URL al terminar, al fallar o
+   al cancelar; `useReproductor` y `use-voz-familiar` cancelan en el desmontaje. e2e de voz-familiar
+   (×3) y de privacidad (banco 100 % local) siguen verdes.
+4. **Unit del cap-500 de gemelas:** `agregarJuiciosGemelas` acota a 500, conservando los más
+   recientes (test en storage.test.ts).
+5. **Lote-por-etapa:** pagado en F1 dentro de O2 (`siguienteLote({etapa, objetivo})`).
+
+Más los cierres de deuda del sprint:
+
+- **Iconos PWA reales:** `scripts/gen-iconos.mjs` refinado (globo del design system, sage/cream,
+  con brillo y cuerdita) — genera `icon-192`, `icon-512` y **`icon-512-maskable`** (globo en la zona
+  segura, fondo sólido). Manifest apunta la entrada maskable a la variante. Cero dependencias nuevas
+  (encoder PNG con `node:zlib`) — **desviación del plan declarada en F0** (se descartó Playwright).
+- **ADR-011 — export .zip:** escrito con decisión **RECHAZAR por ahora** (un backup que puede no
+  restaurar en otro dispositivo es una promesa falsa; el costo de re-grabar es <10 min; ensancha la
+  superficie de privacidad). Validado por el usuario en el gate del plan; reabrible.
+
+## F5 — Cierre de ciclo (hecho)
+
+- **`docs/BLUEPRINT.html`** — as-built del ciclo H1: SVG embebido (cero CDNs), tabla por pieza,
+  costo real US$0, punto único de falla = el dispositivo (ADR-011 citado), historial iniciado.
+- **Guía v4 acumulativa** — hereda ENTERAS las v3 (S3 pasa a regresión), bloques N (rumbo) y O
+  (objetivo), 2 ítems de tablet, recorrido del gate ⭐ ACUMULADO con tiempos (25 pruebas, ~40 min).
+- **Manual** — secciones "El rumbo" y "El objetivo de la semana"; **design-system.md** — sección
+  "Pantallas del padre (Sprint 4)".
+- **`/design-sync`** — el repo es una app (sin Storybook/dist), así que se publicó una **referencia
+  de marca** (decisión del usuario): tokens + 8 tarjetas de preview + README de convenciones →
+  proyecto "Hablemos San — Design System"; pin en `.design-sync/config.json`.
+- **`/deploy-check`** → MERGE OK local (200 unit · 127 e2e · build · typecheck · lint) → summary →
+  PR #5.
+
+## Auditoría de cierre (2 fases, 2026-07-19) — pedida por el usuario antes del gate
+
+**Fase 1 (solo lectura):** alcance contrastado ítem a ítem contra la orden, motores leídos línea a
+línea, 3 revisores paralelos (tests · privacidad · UI) + verificación en código de cada hallazgo.
+Resultado: **0 Críticos · 2 Altos · 6 Medios · 11 Bajos** → "requiere ajustes". La promesa de
+privacidad salió BLINDADA (cero fugas; flujos, sellos y revokes verificados). **El gate de
+Lighthouse del PR cazó en vivo el Alto A1** — la CI hizo su trabajo.
+
+**Fase 2 (ajustes, aprobados por el usuario — alcance completo: Altos + Medios + doc):**
+
+- **A1 (CI rojo — budget):** `/objetivo` cargaba los 3 bancos de contenido en su bundle inicial
+  (383 KB > 350 KB): los importaba el preview Y `aplicarObjetivoAHoy` (vía estado-capsulas, que
+  arrastra la biblioteca — la MISMA trampa que el S2 cazó en los juegos). Arreglo: los bancos se
+  cargan con `import()` dinámico al primer teclazo y estado-capsulas se importa al guardar/quitar.
+  Medido en prod local: **383,0 → 331,3 KB gzip** (~27 KB bajo el budget, al nivel de /rumbo).
+- **A2 (preview deshonesto):** contaba contra los bancos COMPLETOS, pero la priorización real está
+  acotada (cápsulas por etapa, mazo por temas, pares jugables) — prometía "poner primero" dibujos
+  que el mazo del niño no trae. Arreglo: `lib/objetivo/alcance.ts` (motor puro que ESPEJA el mazo
+  real) + conteo acotado + **tercer estado honesto** "existe pero fuera de su alcance" (con la
+  línea del estudio solo cuando es verdad — predicado compartido `coincideConObjetivo` exportado
+  de lotes.ts, no duplicado). Unit ×5 + e2e nuevo (dinosaurios sin su tema) + prueba O6 en la guía.
+- **M1:** el candado e2e de privacidad corría ANTES de que la app escribiera — ahora corre también
+  tras la celebración y tras guardar un objetivo por la UI, y asevera que `sesiones`/`objetivo`
+  EXISTEN (la lista blanca ya no puede pasar en vacío).
+- **M2:** cada dato del rumbo tiene testid y el e2e ata número↔frase (un intercambio de etiquetas
+  ya no pasa verde). **M3:** grep anti-clínico igualado al vocabulario vetado de las cápsulas
+  (+puntuación, atraso, nivel, déficit, trastorno, "en N semanas"). **M4:** singular/plural en los
+  6 datos del rumbo ("1 palabra distinta", no "1 palabras"). **M5:** al guardar el objetivo el foco
+  vuelve al input y la confirmación vive en una región `aria-live` permanente (el lector la
+  anuncia). **M6:** units de `pares>0`, orden EXACTO de hitos y semanas que cruzan mes/año.
+- **De regalo (Bajos B3/B8/B9):** el hito dice "5 segundos seguidos" (el "más de" mentía en el
+  borde exacto de 5000 ms) · `role="group"` en las sugerencias · esta sección F5 que faltaba.
+- **Bajos restantes → deuda explícita** declarada en el summary (lib/audio fuera del test-sello,
+  candado por substring, umbrales 25/5 solo en ausencia, `toBe(8)` acoplado al contenido, borde
+  80 chars, cap-200 sin test, dedup de `segundos()`, blob del test "Escuchar").
+
+**Tras los ajustes:** typecheck · lint · **209 unit** (90,6 % stmts / 86,6 % branches) · **129
+e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy literal nuevo.
+
+## Gate ⭐ ACUMULADO — en curso (por bloques, decisión del usuario)
+
+- **Bloque A (el oído: energía y tono) — 2026-07-19 · APROBADO (11/11).** rms responde al instante
+  (0,1–0,2 al hablar), ~30 fps estables por 4.909 frames, tono "—" en silencio y con voz grave
+  (correcto: el oído arranca en 150 Hz), 195–210 Hz en voz aguda, la barra sigue sin retraso, 4
+  inversiones bien contadas, la imitación de voz infantil entró al rango (188→210+ Hz). A10
+  (temblor) quedó parcial por limitación humana del probador — cubierto por `spike-pitch.spec`
+  (audio sintético). **Hallazgos → a la guía, no a la app:** (1) el "piso (mín. sesión)" del spike
+  es un mínimo corrido — 0,0000 es sano y NUNCA sube dentro de la sesión; A6 pedía un imposible
+  (verificado: con Detener→Empezar con música sonando, el piso nuevo sí arranca alto). El juego no
+  usa ese mínimo (calibra P75 + piso 0,002, `calibration.ts:70`). A2/A6 reescritas. (2) El gate se
+  corrió en Safari, que no reporta `noiseSuppression`/`autoGainControl` (la app los pide en false,
+  `types.ts:32-34`) — A5 gana la nota Safari-vs-Chrome. El spike NO se tocó (congelado por la
+  orden, lista de tablet).
+- **Mejora general pedida por el usuario durante el gate (2026-07-19):** cada bloque de la guía
+  ahora abre con **"Empieza en:"** (la ruta exacta de su primera prueba) + la convención explicada
+  una vez en la caja del recorrido. Registrada en el summary como **propuesta al kit para todas
+  las apps** — la planeadora la recoge en el cierre.
+
+- **Bloque B ("Hoy": la respuesta del día) — 2026-07-19 · APROBADO 9/9 de lo ejecutable.** (B8,
+  "entra mañana", queda para el día siguiente por naturaleza.) Sin apodo entra igual; los temas
+  quedaron elegidos (animales · dinosaurios · carros) para verificarse en el bloque G; la cápsula
+  se lee sin jerga ni culpa y con su fuente real; la etapa arranca en "palabras sueltas" (ADR-005);
+  "Ya lo hicimos" persiste tras recargar y cerrar el navegador. **Cero defectos funcionales.** El
+  bloque dejó un **lote de pulido de UI**, pedido por el usuario y aplicado en el acto:
+  1. **Tarjeta de juegos:** anunciaba **tres** juegos y mostraba dos iconos — las gemelas del S3
+     nunca se agregaron. Ahora los **cuatro** iconos, y **a la izquierda** del texto.
+  2. **Regla nueva del design system (del usuario): el icono va SIEMPRE a la izquierda** del texto
+     que acompaña, en toda la app (la excepción es el chevron de "sigue por aquí"). Añadida
+     también la regla hermana: **los estados existen en pareja visible** (pendiente ⭕ / hecho ✓).
+  3. **Contador de días:** se muda del pie de la página a **dentro de la tarjeta**, pegado al
+     estado del día, con la cifra grande en sans tabular (antes iba en mono, violando el
+     design-system: cifra dentro de frase jamás monoespaciada).
+  4. **`IconoPorHacer`** en el botón de marcar (el estado pendiente ya no se comunica solo por
+     ausencia del check). **Y el microcopy dejó de mentir sobre su propio estado** (tercera pasada
+     del usuario): el botón decía **"Ya lo hicimos"** a secas — una afirmación que se lee como
+     hecho ya cierto, cuando es la acción pendiente. Ahora, mientras está pendiente, encima
+     aparece la **pregunta** "¿Ya hicieron la actividad de hoy?" y el botón es su **respuesta**:
+     "Sí, ya lo hicimos". El estado no-marcado se afirma con palabras, no solo con un icono.
+  5. **Jerarquía de la cápsula:** "La actividad de hoy" pasa de texto suelto al pie a **caja
+     hermana** del guion (mismo borde acentuado, texto `text-lg`), cada una con su icono
+     (`IconoBurbuja` · `IconoChispa`) — se leía como una introducción, siendo la acción del día.
+  6. **La fuente se ve como cita:** `IconoCita` + cursiva.
+     6-bis. **🔴 La chispa de IA, vetada (segunda pasada del usuario sobre el lote).** El icono que
+     puse para "La actividad de hoy" era un **destello de cuatro puntas** — hoy el símbolo
+     universal de la **IA generativa**. En una app cuya regla dura 1 es "determinista primero,
+     cero IA" (quinto sprint sin un solo LLM) y cuyo contenido es biblioteca curada con evidencia
+     citada, ese icono **insinúa que el contenido lo generó una máquina**: contradice el producto,
+     no el estilo. Reemplazado por **`IconoJuntos`** (un adulto y un niño lado a lado = co-uso, la
+     tesis del producto) y **prohibida la chispa en el design system**, en cualquier variante.
+     Además, los iconos de "Tu línea de hoy" y "La actividad de hoy" pasan de 16 a **32 px** (el
+     tamaño de los del juego) y encabezan el bloque entero desde la izquierda: a 16 px junto a un
+     rótulo mono de 11 px no se leían como señal. Regla de tamaño añadida al design system.
+  7. **Etiqueta de la cápsula:** `Hoy practicamos · X · Y` → **`Técnica: X · Etapa: Y`** (no se
+     sabía cuál era cuál). El e2e de etapas es indiferente: asevera el `<span>` interno.
+  8. **Ajustes:** el "← Hoy" sube al **encabezado** con la misma forma que en Rumbo y Objetivo
+     (era un enlace suelto al pie); prueba **H6** nueva en la guía.
+     4 iconos nuevos (trazo 1.5, viewBox 24, `currentColor`). Verificado: typecheck · lint · 209
+     unit · **129 e2e** (incluido axe) · build. Guía v4: B3/B4/B5/B6/B9 → "Mejorado en S4" + H6 nueva.
+- **Bloque C (la etapa del habla) — 2026-07-19 · APROBADO 5/5, SIN AJUSTES.** El bloque más limpio
+  del gate: las tres etapas se describen por comportamiento observable, sin jerga ni diagnóstico;
+  "palabras sueltas" aparece elegida y recomendada sin haber tocado nada (ADR-005); "primeras
+  frases" existe pero **jamás se activó sola** — hubo que elegirla a mano; la etapa y la cápsula
+  sobreviven a la recarga.
+  **Lo valioso para este sprint:** C2 y C3 validan **en uso real** la invariante que el S4 tocó al
+  construir el objetivo (R4). El padre marcó la cápsula como hecha, cambió a "sonidos e intentos"
+  (cápsula nueva de esa etapa, **contador intacto**) y al volver a "palabras sueltas" **reapareció
+  LA MISMA cápsula, todavía marcada como hecha**. Es decir: la asignación congelada por etapa y el
+  historial que nunca se borra siguen sanos después de que `realinearObjetivo` aprendió a
+  re-evaluar el día. El trabajo hecho es intocable, como prometía el diseño.
+- **Bloque D (el selector de juegos) — 2026-07-19 · APROBADO 3/3.** Las 4 tarjetas (las gemelas
+  incluidas), lo que declara cada una ("mide que hubo voz — nunca qué palabra dijo") y su tamaño
+  quedaron aprobados sin reparos; el usuario lo destacó como una de las mejores visuales de la app.
+  **Un pulido, y destapó un descuido mío:** al subir el "← Hoy" de Ajustes en el bloque B **no
+  barrí el resto de pantallas**; el selector seguía con el enlace suelto al pie. Corregido — ahora
+  **las cuatro pantallas del padre salen igual** (rumbo · objetivo · ajustes · juegos) y la regla
+  quedó escrita en el design system, con su **excepción declarada**: en una pantalla de error o
+  decisión (micrófono denegado en `MarcoJuego`), "Volver a Hoy" sigue siendo un **botón grande
+  emparejado** con "Intentar de nuevo" — ahí no es navegación de encabezado sino una de las dos
+  salidas del problema, y ambas deben pesar igual.
+- **Bloque E (el globo) — 2026-08-01 · 10 limpias, 2 explicadas, 3 hallazgos de producto → el
+  remate más grande del gate.**
+  - **E6 🔴 (ADR-012): el globo se cerraba solo a los 3 segundos** — justo mientras el padre le
+    enseñaba al niño ("eso va a hacer que mi hijo pierda interés"). La mecánica sin-fin ya existía
+    (`meta: null`, la usan palabra↔objeto y el modo calma): el globo la adopta. **La meta se
+    volvió HITO** (`HITO_VUELTA_MS`): cada 3 s de voz acumulada = una VUELTA — celebrada en vivo
+    ("¡Ya dio N vueltas!", testid `vueltas`), el globo reaparece por la izquierda (jamás en
+    reversa) y sigue; infinitas. Cierra solo con "Ya jugamos". El reducer conserva la meta (el
+    cohete la sigue usando; su bloque dirá). Unit de regresión: "NO celebra solo, ni tras muchas
+    vueltas". El e2e del camino feliz ahora verifica la vuelta en vivo y cierra por el padre.
+  - **E1 + Otras #3 (navegación):** el guion de los 4 juegos gana su **"← Juegos"** (chip
+    estándar, en la GuionCard compartida) y **"Salir" dentro del juego vuelve al GUION**, no al
+    selector (evento `VOLVER_AL_GUION` + `volverAlGuion` en el hook, que **apaga el micrófono**
+    antes de pisar la pantalla del padre — regla dura 2). e2e nuevo del flujo completo.
+  - **E5 (planeo):** el globo ya no frena en seco en las pausas — la persecución del objetivo se
+    alarga (140→480 ms) y desacelera suave. Solo persigue, nunca se adelanta: **la posición no
+    puede mentir** (la métrica sigue contando únicamente voz real). Se descartó la segunda parte
+    de la propuesta (bajar a posición inicial tras 1 s): es retroceso, vetado por COGA (E4).
+  - **E13 (calma):** el globo flota **en el centro** del cielo (estaba pegado al borde izquierdo
+    y parecía que el juego no había empezado). El resto del modo queda igual (deliberado).
+  - **E11 explicado (no defecto):** el aviso de ruido dispara sobre 0,05 RMS ("tan ruidoso que se
+    jugaría a medias"); su música quedó por debajo Y el juego funcionó bien — avisar habría sido
+    falso alarmismo. El propio usuario notó que distinguía su voz del ambiente (el umbral relativo
+    trabajando). **E12 diferido a Chrome** (Safari no revoca mic por sitio); cubierto por e2e.
+  - **Al backlog:** obstáculos/cajas que saltar (mecánica nueva de verdad) · efecto de despegue
+    inicial (E3, cosmético).
+  - Tras el remate: **214 unit · 131 e2e** (+5 units del reducer, +2 e2e de navegación y vueltas).
+  - **Re-mirada del usuario (2026-08-01): aprobó vueltas y navegación, y pidió que cada vuelta se
+    SIENTA como logro** → nace el **confeti de la vuelta** (`confeti-vuelta.tsx`): estallido
+    determinista de confeti + serpentinas sobre la línea (14 piezas fijas — el azar no se puede
+    testear, patrón de `globos-celebracion`), colores `fiesta-*` (segundo uso sancionado en el
+    design system), corre UNA vez ~1,6 s vía CSS (`confeti-cae`), re-montado por `key={vuelta}`;
+    apagado doble con movimiento reducido (media query + `data-reducir-animacion`) — el contador
+    aria-live sigue contando el logro. En calma no hay vueltas ni confeti. e2e: `toBeAttached` en
+    el camino feliz (el estallido queda en el DOM hasta la vuelta siguiente — sin flake).
+    **Obstáculos re-preguntados:** siguen en backlog — no por complejidad técnica sino porque un
+    obstáculo implica poder FALLAR y las reglas COGA (sin game-over, sin castigo, sin retroceso)
+    exigen diseñarlo primero (¿la caja espera? ¿se flota por encima?); mecánica para el ciclo H2.
+  - **Segunda re-mirada (2026-08-01): confeti aprobado + tres ajustes.** (1) La celebración final
+    gana su tercer número — "Con esa voz el globo dio N vueltas completas" (testid
+    `celebracion-vueltas`, prop `vueltas` de `CelebracionHonesta`): derivado del MISMO
+    `sostenidoMs` (floor(ms/hito), nada nuevo que medir ni persistir), **0 en calma** — allí no
+    hay línea de vuelta y la celebración no afirma lo que el juego no mostró. e2e en el camino
+    feliz. (2) **E3 de la guía corregido** (precedente A6: la guía prometía algo que la app no
+    hace): decía que el globo "despega" y el despegue desde el suelo nunca existió — el globo
+    arranca flotando en su reposo; el efecto sigue en backlog como cosmético. De paso, defecto de
+    la guía cazado y corregido: E5 tenía insignia "Mejorado en S4" pero `data-origen="s1"` — el
+    filtro "Solo lo mejorado" no lo mostraba. (3) **Obstáculos: dirección de diseño del usuario
+    registrada** — "que la caja se quede ahí sin drama y ya" — viaja con el ítem del backlog al
+    informe de la planeadora.
+- **Bloque F (el cohete) — 2026-08-01 · 6 limpias, 1 diferida (F7→Chrome, junto a E12), 2
+  frentes construidos tras AskUserQuestion (hito por subida-y-bajada · confeti+cielo · lote
+  completo — las 3 recomendadas).**
+  - **Propuesta ⭐ (ADR-013): el cohete tampoco termina solo.** `meta: null` (muere el cierre a
+    las 3 inversiones — mismo defecto del E6); cada **subida-y-bajada real** es un HITO: confeti
+    compartido (`ConfetiVuelta` gana prop `centrado`: corrimiento -38 sobre las mismas 14 piezas
+    deterministas), **capa de cielo que pasa** (`CapaDeCielo` en escenario-cohete: 3 nubes + 2
+    estrellas fijas cruzan hacia abajo UNA vez, ~1,4 s, keyframes `cielo-pasa`, doble apagado con
+    movimiento reducido) y contador vivo `subidas` ("¡Ya subió y bajó N veces!") — **el MISMO
+    número de la celebración final** (misma métrica, cero semántica nueva). El matiz honesto que
+    el globo no tenía: la posición del cohete ES el tono en vivo — el ascenso lo cuenta el MUNDO
+    (cielo que pasa + contador), jamás la posición. Vocabulario: nada de "niveles" (escalera
+    vetada); se celebran "subidas y bajadas", lo medido. La mecánica de meta del reducer queda
+    SIN usuarios — retirarla es deuda declarada (no se toca el motor probado en pleno cierre).
+  - **F8 (fluidez):** el cohete gana el patrón de planeo del globo — persecución 200 ms con voz
+    (mayor que los 140 del globo: el tono llega a ~31 estimaciones/s y a saltos de nota) / 480 ms
+    en pausa, con `medidas.vozActiva()`. Antes: τ fija de 120 ms que dejaba pasar el jitter.
+  - **F5 (matiz honesto, precedente A6):** la guía decía "no se mueve solo" a secas; el usuario
+    encontró que cantantes agudos a alto volumen SÍ lo mueven — correcto: una voz cantada ES una
+    voz con tono en el cuarto y el medidor no adivina quién canta. El "Esperado" lo dice ahora.
+  - **e2e reescrito:** el camino feliz verifica el hito EN VIVO (contador + confeti + capa
+    `toBeAttached` — quedan en el DOM hasta el hito siguiente, sin flake) y que la celebración
+    jamás diga MENOS que lo celebrado en vivo (`veces >= contadas`); el de calma verifica que
+    allí no hay contador ni confeti. El medidor del tono pierde la rayita de meta (ya no existe).
+  - Guía: F3/F5/F6/F8 → Mejorado en S4; F7 gana la nota Safari→Chrome. Manual reescrito (hitos +
+    el detalle honesto de la altura). ADR-013.
+  - **Re-mirada F (2026-08-01) — defecto de percepción cazado por el usuario: "si baja igual
+    parece que sube".** Causa: el hito se registra en el PICO de la voz (la inversión es el
+    cambio de dirección), así que la capa de cielo arrancaba a correr hacia abajo EXACTAMENTE
+    cuando la voz empezaba a bajar — y un mundo corriendo hacia abajo se lee como ascenso
+    (ilusión de vección). Fix: **la capa espera la siguiente subida** — queda pendiente
+    (`capaPendienteRef`) y se lanza desde el rAF solo tras ~65 ms sostenidos de ascenso real
+    (`vuelo.y` bajando 4 frames seguidos con `vozActiva`); el confeti y el contador siguen
+    celebrando en el instante del hito (no insinúan dirección). ADR-013 corregido, F3 de la guía
+    describe el orden real (y su "Mal" caza la capa en plena bajada), manual ajustado.
+    **Cierre de la re-mirada:** el usuario aceptó el fix sin verificar la bajada a ojo (bajar el
+    tono a voluntad no le salió — mismo límite honesto del bloque A); la MECÁNICA de la bajada
+    queda cubierta por la CI (el fake-mic de `desktop-chromium-tono` barre 230↔420 Hz en ambas
+    direcciones) y la SENSACIÓN se re-mira cuando salga natural jugando con el niño.
+  - **Pre-F — orientación en las pantallas de entrada (pedido del usuario, transversal a los 4
+    juegos):** evaluó dos opciones (icono junto al titular vs. reemplazar el titular por el
+    nombre del juego). **Ganó conservar el titular poético + icono a la izquierda** — el titular
+    enseña la mecánica ("Su voz sube el cohete") y reemplazarlo por el nombre sería redundante
+    (el padre acaba de tocar la tarjeta con ese nombre); la orientación la da el **símbolo
+    repetido** selector→pantalla (wayfinding), cumpliendo las reglas del gate (icono a la
+    izquierda, jerarquía de tamaño). Implementación: `<h1>` de las 4 páginas de `/jugar/*` con el
+    MISMO icono de su tarjeta del selector, envuelto en `aria-hidden` (Globo/Cohete anuncian
+    `aria-label` propio que en el titular sería ruido doble). Regla nueva en `design-system.md`;
+    F1 de la guía lo describe (Mejorado en S4).
+- **Bloque G (palabra y dibujo) — 2026-08-02 · 8 ejecutadas, 2 defectos reales, lote aprobado
+  tras AskUserQuestion (tono→backlog H2 · lote completo).** Además **B8 quedó ejecutado** (al día
+  siguiente salió otra cápsula, contador intacto — bloque B 100 %).
+  - **Defecto 1 — "Salir" no reiniciaba el juego (regla general del usuario):** el estado local
+    de palabra↔objeto (activaciones, reconocidas, índice, palabras) sobrevivía al VOLVER_AL_GUION
+    y el intento nuevo heredaba el contador viejo. Fix: `limpiarJuego()` compartido por
+    `reiniciarSesion` y el nuevo `salirAlGuion` (limpia + `volverAlGuion`). Globo/cohete/gemelas
+    verificados en código: ya quedaban limpios (medidas se re-miden; sus escenarios desmontan).
+    e2e nuevo: "«Salir» reinicia el juego: al volver, el contador arranca de cero" (corre en desktop y móvil: 131→133).
+  - **Defecto 2 — globos fantasma al entrar por primera vez (intermitente, Safari):** el único
+    camino a los globos es el botón del juez ⇒ hipótesis más fuerte: click-through del diálogo
+    de permisos cayendo sobre el botón (estaba centrado bajo el dibujo). Defensa doble: **guarda
+    del juez** (sin voz oída aún, se ignoran toques el primer segundo — `armadoDesdeRef`; con el
+    dibujo ya encendido el toque siempre vale, así los e2e y el uso real no cambian) +
+    **reubicación** del botón. Causa raíz hipotetizada, no reproducida — si reaparece, se
+    instrumenta (declarado en la guía G8: "repórtalo con los pasos exactos").
+  - **Botón del juez discreto (pedido: hijo perspicaz):** baja AL FINAL de la pantalla, bajo
+    "Otro dibujo / Ya jugamos", texto pequeño `tinta-suave` subrayado punteado, ≥44 px (control
+    de adulto). Fuera del barrido visual del niño y de la zona del diálogo de permisos.
+  - **Encendido que se siente (pedido: más llamativo):** pop del marco (scale 1→1.06→1, 500 ms)
+    - halo que se expande UNA vez (700 ms), keyframes `encendido-pop`/`halo-encendido`,
+      deterministas; con movimiento reducido quedan invisibles y borde+texto siguen contando.
+  - **"Carros" → "Transporte"** (G6): la etiqueta mentía — el tema trae carro, camión, bus,
+    moto, tren, avión y bici. Solo cambia `NOMBRE_TEMA` (la clave interna `carros` se conserva:
+    perfiles guardados y e2e intactos; cero referencias a la etiqueta en tests).
+  - **Filtro por tono niño/adulto: NO construido — decisión del usuario tras evaluación honesta**
+    (AskUserQuestion): (1) los pedacitos ("pe", "mmm" corto) muchas veces no tienen tono medible
+    y son JUSTO el esfuerzo a premiar — exigir tono infantil los castigaría (ADR-005); (2) la voz
+    del propio usuario mide 195–210 Hz (bloque A): un umbral seguro no lo filtra, uno que lo
+    filtre se traga mamás y graves del niño; (3) encender/no-encender es veredicto, y la regla de
+    la casa exige "quizás". Va al backlog H2 con diseño esbozado: derivar el rango del ADULTO de
+    su banco de voz (calibración por familia) y descartar solo lo confiablemente-adulto.
+  - e2e de movimiento reducido ajustado (espera el encendido antes del toque — la guarda no
+    aplica con voz oída). Guía: G3/G5/G8 mejoradas + **G9 nueva** (reset al salir) + historial;
+    manual (botón al final + salir reinicia + pop del encendido).
+- **Bloque H (Ajustes) — 2026-08-02 · aprobado 8/8, cero defectos, un cambio de lenguaje.**
+  Interruptores persisten · calma vive en todos los juegos · cambiar temas re-alinea
+  palabra↔dibujo en vivo (verificado por el usuario de pasada) · claro/oscuro le gana al sistema
+  con los juegos del niño siempre claros · ARASAAC acreditado · "Borrar mis datos" limpia hasta
+  el onboarding. **H4 (pedido del usuario): "fonoaudiología" → "terapias integrales del
+  lenguaje" en TODA la app** — al niño lo atiende un equipo (fonoaudiología, terapia
+  ocupacional, psicología, pedagogía) y el lenguaje de la app ahora refleja esa realidad.
+  Barrido completo: layout (meta), Hoy, /objetivo ("¿Qué te pidieron trabajar en las terapias de
+  tu hijo esta semana?"), Ajustes ("Qué no es esta app"), comentarios de código
+  (objetivo-cliente/schemas/lotes), capsulas.ts, manual (intro + sección objetivo + FAQ) y
+  CLAUDE.md (con nota: **la VISION de la planeadora aún dice "fonoaudiología" — alinear en la
+  retro**; la planeadora es RO y no se toca). Cero referencias en tests (verificado antes del
+  barrido). El posicionamiento no cambia: complementaria, JAMÁS sustituta (regla dura 4 intacta;
+  "terapias" nombra el trabajo del equipo real, no promete que la app sea terapia). Guía: H4
+  Mejorado en S4 + historial.
+- **Pre-I — el catálogo de cápsulas (2026-08-02, pregunta real del usuario):** "¿cómo pruebo el
+  bloque I si las cápsulas van saliendo día a día?" — la app no tiene histórico navegable
+  (backlog B1) y el veredicto de contenido no puede esperar 50 días. Nace
+  `docs/CATALOGO-CAPSULAS.html`: las 50 completas (explicación + línea + actividad + fuente +
+  etiquetas), agrupadas por etapa→técnica, con casilla "Revisada" por cápsula (localStorage).
+  Generado DIRECTO de `content/capsulas.ts` por `scripts/gen-catalogo-capsulas.mjs` (Node 24
+  importa el TS nativamente — cero copias a mano, regenerable). Regla 11 cumplida: instrumento =
+  archivo del repo, autocontenido, cero red. La guía (bloque I) lo señala como la vía completa.
+  Verificado renderizado antes de entregar. _(Nota de higiene: al insertar la entrada del bloque
+  H me comí el encabezado del backlog B — mismo error de anclaje del bloque C; reparado aquí.)_
+- **Bloque I (la biblioteca) — 2026-08-02 · APROBADO: las 50 leídas en el catálogo.** Veredicto
+  del usuario: "me parecen muy buenas; algunas parecen repetidas pero tienen matices que las
+  diferencian — para mí es válido". Cero reemplazos pedidos, cero rutinas faltantes reportadas.
+  (La observación de las "repetidas con matices" es el diseño: son 5 técnicas × contextos
+  distintos — la misma técnica vive en el carro, la comida y el baño porque la evidencia dice
+  que la repetición A TRAVÉS de rutinas es lo que enseña.) Su pregunta —¿se agregarán más
+  cápsulas?— respondida: en H1 no; el crecimiento tiene dos vías ya registradas (curaduría
+  manual con fuente citada, y el "cuentero por lotes" del roadmap — IA por lotes offline con
+  revisión parental, ≤US$10/mes, posterior a H1) + el backlog B2 (qué pasa al agotar la etapa).
+- **Post-I — verificación pedida por el usuario: "garantizar que no se repiten hasta completar
+  el barrido" (2026-08-02).** Revisado el motor (`daily.ts`): la garantía EXISTE y está clavada
+  por unit — `cicloCompletadas` por etapa; pendientes = etapa − completadas; agotar ⇒ ciclo
+  nuevo; el objetivo filtra SOLO entre pendientes (sesga el orden, jamás el barrido); test de
+  barrido completo (N días → N distintas → ciclo+1). **Matiz honesto reportado:** el barrido
+  avanza por COMPLETADA ("Sí, ya lo hicimos"), no por vista — una cápsula de un día no marcado
+  sigue pendiente y puede volver (correcto: no se hizo; solo se evita repetir la de ayer).
+  **Hueco cerrado:** ningún test cubría el barrido completo CON objetivo activo todo el ciclo —
+  nuevo unit (214→215): N días con predicado "animales" ⇒ N distintas, las coincidentes TODAS
+  primero, ciclo+1 al agotar. Falla si el pool se filtrara contra la etapa entera en vez de las
+  pendientes. _(Higiene: el registro del bloque I volvió a comerse el encabezado del backlog B —
+  cuarta vez del mismo error de anclaje; reparado aquí. Lección anotada: al usar un encabezado
+  como ancla, SIEMPRE re-incluirlo al final del texto nuevo.)_
+- **Bloque J (el estudio) EN CURSO — 2026-08-02 · stopper del usuario en J2, remate inmediato.**
+  J1 limpio + pedido: "← Ajustes" al encabezado con la forma estándar (hecho; el enlace suelto
+  del final se retiró — la regla "la salida es SIEMPRE la misma y va ARRIBA" ya está en el
+  design system desde el bloque D). **J2 — STOPPER: grabar a ciegas.** Sin indicador de nivel no
+  se sabe si el micrófono oye ni cuándo empezó — el usuario paró las pruebas ("es indispensable
+  un indicador como el de /spike/audio"). Remate: `useGrabadora` gana `nivel()` — un
+  `AnalyserNode` sobre el MISMO stream que ya se graba (cero permisos extra), RMS instantáneo
+  normalizado, getter para rAF; `MedidorGrabacion` en el estudio (barra que baila, patrón del
+  medidor de los juegos) + nota honesta "Si la barra se mueve cuando hablas, te está oyendo
+  bien". **Privacidad intacta:** el análisis vive en memoria y muere con la grabación
+  (`cerrarAnalisis()` en detener/cancelar); no se conecta a la salida (no suena), no persiste —
+  la regla 2-bis (banco SOLO local) no se toca. e2e: `medidor-grabacion` visible durante la
+  grabación (estudio.spec). Guía J1/J2 → Mejorado en S4; manual actualizado. El usuario retoma
+  el bloque J desde J2. **Segundo retoque (mismo día): "Terminar por ahora" ELIMINADO** — una
+  sola salida ("← Ajustes", arriba). Cuidado crítico que exigió: el botón era quien cancelaba la
+  grabación al salir → el lote gana cleanup de desmontaje (`useEffect(() => () => cancelar())`)
+  que suelta los tracks del micrófono si el padre navega en plena grabación — sin él, la
+  navegación client-side de Next dejaría el mic ABIERTO (no hay recarga de página). e2e del
+  lote reescrito: sale por el chip, vuelve a entrar y el banco persistió. Guía J4 → Mejorado.
+  **Tercer retoque (mismo día): el botón de parar parecía un texto.** El usuario lo reportó como
+  problema de rótulo ("Grabando… toca para parar" lee como aviso, no como acción) y al mirarlo
+  apareció el defecto real: la clase era `bg-alerta` y **`alerta` no es un token del tema**
+  (el token es `peligro`) — Tailwind v4 descarta clases sin token EN SILENCIO, así que el botón
+  llevaba desde su nacimiento **sin fondo**: texto crema sobre fondo crema. Arreglo doble:
+  (1) estado y acción separados — línea "● Grabando…" con punto latiendo (`animate-pulse`, lo
+  mata la doble matanza global de animaciones) + botón "■ Parar" aparte; (2) fondo real con
+  `bg-peligro`. Lección para la casa: **una clase de Tailwind v4 con token inexistente no
+  truena, desaparece** — el typecheck no la ve y el ojo tampoco si el texto queda legible;
+  la única red es mirar la pantalla (por eso este defecto solo lo cazó el gate). Guía J2
+  actualizada con el microcopy literal nuevo.
+  **Cuarto retoque (J3, pedido del usuario): iconos en los botones de la captura.** Cada acción
+  con su icono a la IZQUIERDA (regla de la casa): `IconoAltavoz` en "Escuchar cómo quedó",
+  `IconoHecho` en "Está bien, guardar", `IconoRegrabar` (NUEVO en `iconos.tsx`: la flecha que da
+  la vuelta completa, trazo 1.5 / viewBox 24 como toda la biblioteca) en "Regrabar", y
+  `IconoMicrofono` en "Grabar" — este último no lo pidió, pero dejar 3 de 4 botones con icono
+  era la inconsistencia visual que la regla de iconos existe para evitar. Guía J3 → Mejorado
+  en S4. Los e2e no se tocan: los testids y el microcopy no cambiaron.
+  **Quinto retoque (pedido del usuario): la salida del lote iba a Ajustes, dos niveles de un
+  salto.** Atrás es la pantalla ANTERIOR: del lote se vuelve AL BANCO (cobertura + lista), y
+  solo desde el banco a Ajustes. Cirugía: el encabezado del estudio (chip + h1 + promesa) se
+  movió de `page.tsx` al cliente porque la salida depende de la vista — el chip es `Link` a
+  /ajustes en gestión y `button` a `setModo("gestion")` en el lote (testid `volver-al-banco`,
+  "← Tu banco de voz"). El LCP sigue estático: el cliente se prerenderiza con modo inicial
+  "gestion" y el titular llega en el HTML del servidor (el esqueleto de carga también rinde el
+  encabezado). El micrófono queda a salvo: salir del lote desmonta `Lote` y su cleanup ya
+  cancela la grabación. e2e reescrito en dos pasos: lote → banco (lista visible de inmediato)
+  → Ajustes → re-entrar (persistencia IndexedDB). Guía J4 → texto nuevo; historial al día.
+  **Sexto retoque (pregunta del usuario): "¿por qué 1 de 20 si el reto son 50+?"** El contador
+  del lote es la posición en la TANDA (máximo 20 por sesión, grabable en <10 min), no en el
+  reto completo (55: 50 palabras + 2 consignas + 3 celebraciones, visible en la cobertura del
+  banco) — pero el microcopy no lo decía. Ahora: "1 de 20 **de esta tanda**". Los e2e aseveran
+  `toContainText("1 de")` → intactos. Guía J3 con la explicación de la tanda en el Esperado.
+- **Bloque J CERRADO — 2026-08-03 · J1–J5 limpias, J6 diferida (Safari no deja revocar el mic
+  por sitio → lista de Chrome con E12/F7; la cubre el e2e del mic denegado). Remate con las 3
+  propuestas del usuario:**
+  1. **Escuchar ya no es un acto de fe (J3).** `reproducirBlob` gana `progreso()` (0..1, con la
+     `duracionMs` guardada como red de seguridad: el webm de MediaRecorder llega con
+     `duration === Infinity` en Chrome, bug conocido) y `alTerminar`; `useReproductor` pasa de
+     función suelta a `{reproducir, sonando, progreso}` (la clave del clip en curso + getter
+     para rAF). `BarraReproduccion` (patrón del medidor: rAF + scaleX, cero re-renders) aparece
+     bajo "Escuchar cómo quedó" y EN la fila de la lista que suena. Hallazgo lateral: el
+     "Borrar" de la lista usaba `text-alerta` — **el mismo token fantasma** del botón de parar;
+     ahora `text-peligro`.
+  2. **Iconos en la lista (J4):** altavoz en "Escuchar", papelera en "Borrar" — `IconoBorrar`
+     nuevo en `iconos.tsx` (trazo 1.5, viewBox 24).
+  3. **El borrado se NOTA (J5):** filas numeradas (1., 2., …), segundo toque **"¿Seguro?"**
+     (bg-peligro; se desarma solo a los 4 s — toque accidental olvidado) y efecto `fila-se-va`
+     (240 ms, desvanecido + corrimiento; instantáneo con movimiento reducido por la doble
+     matanza global). El borrado real ocurre DESPUÉS de la despedida. La lista ahora comparte
+     UN reproductor (antes cada fila tenía el suyo: dos filas podían sonar a la vez).
+     Tests: unit del estudio actualizado (mock del reproductor nuevo + "el primer toque NO borra");
+     e2e del estudio extendido (barrita visible al escuchar captura Y lista; borrar en dos toques →
+     lista vacía + cobertura 0/N). Guía J3/J4/J5 mejoradas + bloque J cerrado en el historial;
+     manual con la barrita y el "¿Seguro?". 215 unit · 133 e2e.
+     **Pulido final (usuario): ambas barras saltaban raro al arrancar.** Dos causas distintas, dos
+     arreglos: (a) el medidor de grabación pintaba el **pop de abrir el micrófono** y el auto-gain
+     inicial como si fueran voz → `nivel()` ignora los primeros 300 ms (`CALENTAMIENTO_MS`); (b) la
+     barra de escucha sufría el **jitter del reloj del audio** al arrancar y el **cambio de fuente
+     de duración** cuando `audio.duration` carga tarde → la `duracionMs` conocida manda siempre que
+     exista, y el pintor solo camina hacia ADELANTE (un retroceso grande = clip reiniciado, ahí sí
+     vuelve a cero).
+- **Bloque K — 2026-08-03 · K1–K4 limpias · stopper K5 rematado (lote por grupo).** La duda de
+  K1 ("¿priorizas las grabadas? salieron seguidas") se respondió con el código, no con teoría:
+  el mazo del juego usa SOLO los pictos de sus temas, y el lote priorizó grabar exactamente esas
+  (rango -1 "palabras de tus temas") — sus 25 grabadas cubren todas las del juego; no es azar,
+  es la alineación diseñada (por eso K2 no encontró mudas). **Stopper K5: para grabar las 2
+  consignas había que atravesar las ~25 palabras restantes.** Remate: `siguienteLote` gana
+  `categoria?: CategoriaGrabable` (filtro puro; sin categoría = identidad, unit lo clava);
+  cada grupo de la cobertura con pendientes muestra su botón "Grabar" (testid
+  `grabar-<categoria>`, aria-label distinto por grupo) que abre el lote acotado; el contador
+  lo declara ("1 de 2 de esta tanda · Consignas del juego"); y "Lo que ya grabaste" se agrupa
+  por los tres grupos (encabezado `grupo-<categoria>` con conteo, numeración por grupo). El
+  botón grande sigue siendo el lote guiado completo (`onClick={() => onGrabar()}` — ojo: pasar
+  `onGrabar` directo habría metido el MouseEvent como categoría). Tests: +2 unit (lote acotado
+  - identidad; lista agrupada; puerta al lote con tanda acotada) y +1 e2e ×2 proyectos
+    (grabar-consigna → "1 de 2 · Consignas" → primer ítem la sirena — el catálogo la trae
+    primero). **218 unit · 135 e2e.** Guía: J4 (lista agrupada) y K5 (flujo nuevo) mejoradas +
+    historial; manual con el botón por grupo. **K5 re-probada por el usuario tras el remate:
+    limpia ("perfecto sin inconveniente") — bloque K CERRADO.**
+- **Bloque L — 2026-08-04 · STOPPER del usuario en L1: "el juego me parece muy simplón, ese
+  botón oí x palabra no me genera ninguna opinión positiva; ayúdame a potenciarlo con lo que
+  tenemos a mano".** Diagnóstico: al marcar "Oí «pato»" NO pasaba nada visible para el niño (la
+  ronda solo avanzaba — cero consecuencia, cero festejo) y los dos botones grandes del juicio
+  estaban en plena vista (contra la lección del bloque G: el niño es perspicaz). Decisión con
+  AskUserQuestion (2 preguntas): **"Como palabra↔objeto" + "Siguiente pareja" manual** — ambas
+  recomendadas, elegidas por el usuario. Remate SOLO con piezas existentes:
+  1. **La tarjeta del dibujo ES el botón de oírla** (voz familiar; insignia de altavoz en la
+     esquina; sin grabación, tarjeta quieta) — tocar = oír, JAMÁS marca (el riesgo de la opción
+     "tocar = marcar" se descartó explícitamente: el niño podría auto-certificarse).
+  2. **El juicio baja a la línea discreta "¿Cuál oíste?"** (patrón del juez de palabra↔objeto:
+     underline punteado, zona del padre), testids `marcar-a/b` intactos.
+  3. **Al marcar, el dibujo FESTEJA**: `encendido-pop` + `halo-encendido` +
+     `border-celebracion-fuerte` (CSS ya existente), la palabra suena con la voz del padre,
+     "¡Dijo «pato»!" (aria-live) y botón **"Siguiente pareja"** — el padre controla el ritmo
+     (patrón "Otro dibujo"). Contador honesto **"Palabras que le oíste: N"** (jamás "acertó").
+     Saltar ronda sigue avanzando directo (nada que festejar, honesto). Motor `rondas.ts`,
+     celebración final y registro de juicios INTACTOS. e2e de gemelas reescrito al flujo nuevo
+     (marcar → "¡Dijo!" → contador → siguiente); axe verde en la ronda. Guía L2/L6 mejoradas +
+     historial; manual reescrito (decía "toque el dibujo que oyó" — ahora tocar = oír). 218 unit ·
+     135 e2e · build.
+     **Segundo hallazgo del usuario (mismo día): "no tengo cómo salir del juego".** La ronda de
+     gemelas nunca tuvo puerta — el "Salir" de los otros juegos vive en `MarcoJuego`, que gemelas
+     no usa por no tener micrófono; con el rediseño el hueco se volvió evidente. Arreglo: "Salir"
+     arriba a la izquierda (mismo estilo y testid `salir-al-guion` de la casa) que vuelve al guion
+     con REINICIO COMPLETO (regla del bloque G: reutiliza `otraVez()` — marcas, ronda y festejo a
+     cero); el guion ya tenía su "← Juegos" al selector. e2e nuevo (salir en ronda 3 → guion →
+     re-entrar → Ronda 1 + contador 0) ×2 proyectos → **137 e2e**. Guía: L7 nueva + historial.
+- **Bloque L (continuación) — 2026-08-04 · "¿cuántas parejas tenemos? si son pocas necesitamos
+  más" + hallazgo grave en el motor.** Eran 6 pares (12 palabras, 9 solo-de-gemelas sin grabar —
+  por eso no oía su voz: el lote las dejó en la cola, la otra cara de K1). Ampliación con la
+  maquinaria existente (`scripts/descargar-gemelas.mjs`, ARASAAC CC BY-NC-SA, runtime cero-red):
+  **6 pares nuevos → 12** (rana/lana con el contraste r/l — el más terapéutico en español —,
+  sol/sal, toro/loro, casa/cama, queso/beso, moto/mono; casa/moto/mono/sol REUSAN picto y
+  grabación). **Curaduría visual real:** se descargaron y MIRARON los pictos — "rama" (flecha
+  didáctica que compite con "árbol") y "piso" (cuarto vacío abstracto) se DESCARTARON y sus PNG
+  se borraron; "lana" entró de reemplazo. Catálogo: 50 → **58 palabras** (63 grabables).
+  **Semilla del día:** con 12 pares y semilla fija saldrían siempre los mismos 6 → gemelas ahora
+  usa `fnv1a(fechaHoy())` (exportado de daily.ts — patrón cápsula diaria): mezcla distinta cada
+  día, determinista, sin Math.random.
+  **DEFECTO GRAVE DESTAPADO POR EL TEST DE COBERTURA:** el `barajar` (LCG) tenía un sesgo
+  aritmético — multiplicador ≡ 9 (mod 12) ⇒ los primeros saltos solo caían en {0,3,6,9} y el
+  PRIMER elemento quedaba desterrado a las posiciones 7-11 en el **99,8 %** de 2 000 semillas
+  ("pato-gato" no habría salido JAMÁS en 60 días simulados; el mazo de palabra↔objeto sufría el
+  mismo sesgo). **Desviación consciente del riesgo 7 del plan** ("no cambiar el orden de
+  barajar"): aquella regla protegía el refactor 1:1 del dedup; esto es una REPARACIÓN con causa
+  medida. Fix: mulberry32 + Fisher-Yates (histograma uniforme verificado: 153-185 sobre 167
+  esperado). La suite ENTERA pasó sin tocar un e2e — ninguno dependía del orden literal (leen el
+  primer picto dinámicamente). Unit nuevos: mezclas distintas por semilla + **cobertura total
+  (ninguna pareja huérfana en 60 semillas)** — este último es el que CAZÓ el sesgo. **219 unit ·
+  137 e2e · build.** Guía: historial L ampliado + conteos vivos 50→58; manual ídem.
+- **Bloque L CERRADO — 2026-08-04 · 7/7 limpias tras el rediseño ("muy buen resultado") + la
+  alarma de las rachas.** El usuario creyó que el contador de días de Hoy era una racha que se
+  borraría al saltarse un día ("así no debe funcionar, debe mantener los días"). Verificado en
+  el código: `diasAcompañados = progreso.historial.length` — arreglo acumulativo de
+  solo-agregar; NO existe lógica de racha en la app y saltarse un día no borra nada (justo lo
+  que él pedía, ya funcionaba así). El culpable era el MICROCOPY: "lo que cuenta es volver, no
+  la racha" — nombrar la racha para negarla sembró la duda. Fix: "N días en total. Este número
+  nunca baja: si un día no entran, no se pierde nada." (+ "en total" y el gatillo real —crece
+  al marcar "Sí, ya lo hicimos"— aclarados en guía y manual). El encabezado del Rumbo tenía la
+  misma coletilla ("volver es lo que cuenta, no la racha") → "aquí nada se pierde por saltarse
+  un día" — cazada ANTES de que el bloque N la encontrara. Lección de microcopy para la casa:
+  **no nombrar el anti-patrón ni para negarlo** — describir la garantía en positivo. También
+  respondida la duda de L7: sí, la mezcla de parejas cambia cada día (semilla por fecha).
+- **Sonidos de ambientación (pedido del usuario tras el bloque M) → backlog H2, decisión suya
+  con AskUserQuestion.** Quería sonidos que amenicen los juegos, no solo festejo. Evaluación
+  honesta entregada: 3 de 4 juegos MIDEN el sonido (todo lo emitido vuelve por el micrófono —
+  el eco de K3), música ambiente en globo/cohete descartada de raíz, y el festejo sonoro en
+  plena vuelta cortaría la racha vía la guarda anti-eco. Mapa de lo seguro (gemelas sin mic ·
+  juicio de palabra↔objeto por el riel anti-eco de K5 · pantallas sin medición) + reglas
+  sensoriales (interruptor, silencio en calma, sin bucles) registrados en el ítem 8 del backlog
+  del summary. Se ofreció una "tajada segura ahora" y eligió backlog completo — el S4 cierra
+  con N y O sin crecer más.
+- **Bloque N — 2026-08-05 · 4/4 limpias ("visual muy buena, limpia, minimalista") con tres
+  remates.** (1) **N1:** "Ir a los juegos" con el texto pegado arriba — `min-h-12` sin flex en
+  el Link del vacío honesto; `inline-flex items-center justify-center`. (2) **N2 ("si quiero
+  ver el rumbo debería ver todo"):** jugó el globo y no vio estadística — dos causas: la línea
+  del globo existente (voz más larga) pudo no registrarse si salió con "Salir" (la sesión se
+  escribe al montar la celebración — regla honesta, ahora ESCRITA en guía y manual: "el Rumbo
+  cuenta lo que llegó a la celebración"), y de verdad faltaban datos ya registrados sin línea:
+  `tendencias` gana **vozMsTotal** (suma), **vueltasGlobo** (POR intento —
+  `floor(vozMs/HITO_VUELTA_MS)` por sesión: la voz de dos intentos no inventa una vuelta) y
+  **capsulasHechas**; la UI las pinta con el patrón Dato (solo si >0, singular/plural,
+  testid propio: dato-capsulas/dato-vueltas/dato-voz-total). (3) **N3 ("debería haber al menos
+  10 hitos; ¿cuántos hay?"):** había 7 posibles → **16**: + primeras veces de cada juego
+  (primer-encendido, primera-vuelta, primera-sirena, primera-gemela), voz-larga-10 (10 s
+  seguidos), y acumulados que nunca bajan (dibujos-50, oidas-10, dias-10, dias-25 — el hito de
+  días lleva la fecha del día EXACTO en que se cumplió, no la del último registro). Umbrales de
+  palabras distintas se quedan en 10/25: el universo real son las palabras de SUS temas —
+  un umbral de 50 sería inalcanzable y por tanto deshonesto. Unit: +3 (globo total/vueltas/
+  cápsulas; primeras veces y acumulados; el día exacto de dias-10) y el test de orden EXACTO
+  actualizado (empates de fecha conservan inserción — sort estable). **222 unit · 137 e2e ·
+  build.** Guía N1/N2/N3 al día + historial; manual con las líneas nuevas y la regla de la
+  celebración. **Re-verificado por el usuario: "todo perfecto" — bloque N CERRADO.**
+- **Bloque O (parcial: O1+O2) — 2026-08-07 · cuatro remates de UX del usuario.**
+  1. **Escribir a medias no es error (O1).** El preview regañaba a medio teclazo ("«anim» no
+     está en el contenido"). Motor puro NUEVO `lib/objetivo/sugerir.ts` (sin IA): `sugerir()`
+     propone términos del vocabulario REAL (`vocabularioDe`: etiquetas + palabras de pictos y
+     pares + claves de tema) por **prefijo** (va bien, sigue) y por **distancia de edición ≤ 2**
+     (probable typo), sobre el ÚLTIMO token; determinista (prefijos alfabéticos, luego parecidos
+     por distancia), tope 4. La UI: con prefijos vivos → chips "¿Vas hacia alguna de estas?"
+     (SIN regaño); solo lo completamente lejano recibe el mensaje honesto de siempre (que
+     conserva su testid `objetivo-sin-matches` — el e2e de "colores" ni se movió).
+  2. **Paso de ortografía al guardar (O1).** Con texto que no coincide con NADA pero tiene
+     candidata (sugerencias[0]), el primer toque de guardar NO graba: muestra
+     `objetivo-confirmar` — "¿Quisiste decir «animales»?" con dos salidas honestas
+     (`guardar-candidata` / `guardar-tal-cual`). El texto libre sigue siendo un derecho (la
+     terapeuta puede pedir algo que la app no tiene — caso O6 intacto); teclear resetea el paso.
+  3. **La conexión campo→botón (O1).** Todo en UNA tarjeta `bg-superficie` (campo → sugerencias
+     → preview → botón; las cajas internas pasaron a `bg-fondo` — token verificado, lección del
+     fantasma `bg-alerta`) y el botón **nombra lo que guarda**: "Guardar «animales»" (truncado
+     a 28). Deshabilitado y genérico solo con el campo vacío.
+  4. **La diana del estudio (O2).** En "Lo que ya grabaste", las grabaciones que sirven al
+     objetivo llevan `IconoDiana` + sr-only "del objetivo de la semana" (testid
+     `del-objetivo-<id>`), con el MISMO predicado del lote (`coincideConObjetivo`) — insignia y
+     orden no pueden divergir.
+     Tests: +8 unit (sugerir: prefijo/typo/lejos/exacto/determinismo/último-token; vocabulario;
+     diana en la lista con objetivo en storage) · +2 e2e ×2 proyectos (sugerencias vivas + botón
+     nombrado; paso de ortografía completo). **230 unit · 141 e2e · build.** Guía O1/O2 reescritas
+     con los "Mal" nuevos + historial; manual con la tarjeta, el acompañar-no-regañar, la pregunta
+     de ortografía y la diana.
+- **Bloque O (re-prueba O1) — 2026-08-07 · la eñe sobrevive (hallazgo del usuario).** Escribió
+  "bañ" y el chip decía «bano» + rana/lana/mano de relleno. Tres capas del mismo defecto:
+  1. **`sugerir` mostraba la clave normalizada.** `normalizar` descompone "baño"→"bano" (correcto
+     para COMPARAR — "bano" sin eñe también matchea), pero el chip mostraba esa forma mutilada.
+     Nuevo `normalizarConForma` en `alinear.ts` (misma tokenización: las marcas diacríticas nunca
+     separan; `normalizar` ahora delega — equivalencia exacta, los unit de alinear ni se movieron):
+     cada token lleva `{forma, clave}`; `sugerir` compara claves y MUESTRA formas.
+  2. **El vocabulario del contenido estaba escrito normalizado.** `ETIQUETAS_CAPSULA` decía
+     literalmente `"bano"`, `"musica"`, `"imitacion"` — invisible cuando solo comparaba; ahora que
+     el gate S4 lo puso ante los ojos del padre, se corrigió a ortografía real («baño», «música»,
+     «imitación») en schema + las 5 citas del mapa de cápsulas. Neutral para la alineación (compara
+     normalizado; el tema "musica" del onboarding sigue coincidiendo). En `sugerir`, primera forma
+     vista gana: las etiquetas curadas van antes que las claves crudas de tema en `vocabularioDe`.
+  3. **Los "parecidos" eran ruido con tokens cortos.** Distancia ≤ 2 sobre "ban" (3 letras)
+     matchea medio catálogo (rana, lana, mano — eso no es typo, es otra palabra). Dos rejas:
+     parecidos exigen **token ≥ 4 letras**, y **callan cuando hay prefijos** (si vas bien
+     encaminado hacia «baño», ofrecerte «rana» distrae).
+     Tests: +3 unit (bañ→«baño» sin relleno; banio→«baño» parecido con forma real; musi→«música»
+     primera-forma-gana) · +1 e2e ×2 proyectos con el caso exacto del usuario (chip «baño», sin
+     «bano» ni «rana», botón "Guardar «baño»"). **233 unit · 143 e2e · typecheck · lint · build.**
+     Guía O1 ampliada (probar "bañ"/"musi" + los dos "Mal" nuevos) + historial.
+- **Bloque O (tercer remate) — 2026-08-07 · ortografía GENERAL en dos colores (ADR-014).** El
+  usuario escribió "medi" (iba hacia "medios") y la app solo pudo ofrecer «pedir»: el sugeridor
+  únicamente conocía las ~90 palabras del contenido. Su pedido, decidido por AskUserQuestion:
+  chips en dos colores (app vs. ortografía) + corrector del sistema.
+  1. **`scripts/gen-diccionario.mjs` + `lib/objetivo/palabras-es.ts`:** las 10 000 palabras más
+     frecuentes del español (OpenSubtitles 2018 vía hermitdave/FrequencyWords, MIT), CURADAS:
+     solo alfabeto español, marcadores anti-inglés (th/sh/ck/w/k/ss…), terminaciones no
+     españolas con lista blanca de préstamos (reloj, club, coñac…), interjecciones (jaja, mmm)
+     y veto de groserías/insultos/términos sexuales (es + es-CO) — JAMÁS un chip así en una app
+     familiar. El "vigía" del script imprime sospechosas para ojo humano (quedó 1 residuo en
+     10 000: "raj"). ~115 KB, en el chunk BAJO DEMANDA del primer teclazo (LCP intacto).
+  2. **`lib/objetivo/diccionario.ts` (motor puro):** prefijos por FRECUENCIA real (el índice del
+     arreglo es el rango: "medi" → medio, médico, media, medicina), parecidos (d≤2, token ≥4)
+     solo si el token NO es palabra conocida; una conocida sí recibe continuaciones («medio» →
+     «medios» — así se llega tecleando). Excluye claves del vocabulario app (van en su grupo).
+  3. **UI en dos grupos etiquetados** (regla 4: nada comunica solo con color): verdes "Están en
+     la app — alinean la cápsula y los juegos" · neutros "Bien escritas, aunque aún no están en
+     la app". `GruposDeChips` comparte los dos estados (vivas y sin-matches); un parecido
+     pregunta "¿Quisiste decir…?", un prefijo solo se ofrece. Palabra completa conocida que no
+     alinea («medio») cae al mensaje HONESTO con sus continuaciones como oferta.
+  4. **El paso de ortografía se calla ante palabra bien escrita:** `conocido` (vocab app ∪
+     diccionario) desactiva la candidata — «medios»/«colores» se guardan a la primera (existir
+     en el idioma ES estar bien escrito). Candidata compuesta: app-prefijo → dicc-prefijo →
+     app-parecido → dicc-parecido.
+  5. **Corrector nativo:** `lang="es" spellCheck` en el campo (cubre lo que el top-10k no trae).
+     Tests: +10 unit (motor con lista sintética: frecuencia/exclusión/continuaciones/typo/formas
+     con eñe; sanidad de la lista real: tope, formas, duplicados, veto) · +1 e2e ×2 proyectos
+     ("medi" → grupo neutro con «medio»; tocar «medio» → mensaje honesto + «medios» como
+     continuación; guardar sin pregunta). **243 unit · 145 e2e · typecheck · lint · build.**
+     ADR-014 escrita. Guía O1 con el caso "medi" y los "Mal" nuevos; manual con los dos grupos.
+- **Bloque O (cuarto remate) — 2026-08-07 · lo que Ajustes muestra, alinea.** El usuario escribió
+  "transporte" — el tema que TIENE seleccionado en Ajustes — y la app le dijo que no estaba.
+  Secuela del rename G6 de este mismo gate: el tema se VE "Transporte" pero la clave interna del
+  contenido quedó `"carros"` (compatibilidad con perfiles guardados), y el alineador solo conocía
+  claves. Arreglo en el motor, no en la pantalla:
+  1. **`alinear()` expande los nombres visibles a su clave:** si un token del objetivo aparece en
+     `NOMBRE_TEMA[tema]` (normalizado), la clave del tema entra al set — con eso "transporte"
+     alinea cápsulas (etiqueta carros), dibujos (tema), gemelas y el lote del estudio de una vez
+     (todos usan los mismos predicados). Con set vacío no expande nada (identidad intacta).
+  2. **`vocabularioDe` suma los nombres visibles** de los temas de los pictos: "transp" sugiere
+     «transporte» en verde (y `clavesApp` lo excluye del grupo neutro del diccionario).
+     Tests: +2 unit (expansión con ida y vuelta — carros sigue, colores no inventa, vacío
+     intacto; "transp"→«transporte» por vocabulario) · +1 e2e ×2 proyectos (temas con carros:
+     "transp" → chip verde → preview alinea, sin mensaje de "no está"). **245 unit · 147 e2e ·
+     typecheck · lint · build.** Guía O1 (los temas de Ajustes valen + "Mal" nuevo) + historial;
+     manual con la línea.
+- **Bloque O (resultados O3–O6 + quinto remate) — 2026-08-07 · la tarjeta activa dice su estado.**
+  O3, O4(dinosaurios) y O6 limpias. **Stopper de O5:** "guardé animales y palabra↔dibujo no me
+  los trajo — ¿para qué sirve el objetivo?". Diagnóstico: el mazo prioriza SOLO dentro de los
+  temas del niño (`palabra-objeto.tsx:67-79` — diseño honesto, ADR-005: el objetivo jamás mete
+  contenido ajeno a su mundo); la causa más probable es que "animales" ya no está entre sus
+  temas (estuvo moviendo Ajustes probando Transporte). El DEFECTO real de UX: la tarjeta
+  "Objetivo activo" se veía IGUAL alineara o no — guardabas y nada te decía que no iba a pasar
+  nada. Mismo hueco que su propuesta de O3 ("colores guardado no puede verse como un objetivo
+  más"). Un solo arreglo para ambos:
+  1. **`estadoDeAlineacion(alcance, global, estudio)`** (motor puro, alinear.ts): "alineado" ·
+     "fuera-de-alcance" (existe pero no en su etapa/temas — el caso O5) · "sin-contenido" (el
+     caso O3 "colores").
+  2. **La tarjeta activa se pinta por estado:** verde como siempre al alinear; **ámbar**
+     (`bg-aviso/10 border-aviso` — token semántico vivo, cambia con el tema oscuro) con el
+     porqué EN PALABRAS (regla 4: nada comunica solo con color): fuera-de-alcance → "Está en la
+     app, pero no en lo que él ve hoy… los juegos no cambian" + enlace "revisa sus temas en
+     Ajustes"; sin-contenido → "Priorizado, pero la app aún no tiene contenido de esto".
+     `data-estado` en el section para los e2e. Los bancos ahora cargan también con objetivo
+     activo (antes solo al teclear); `contarPara()` extraída y compartida por el preview y la
+     tarjeta.
+     Tests: +3 unit (los tres estados, incluido estudio-solo → fuera-de-alcance) · 3 e2e
+     extendidos ×2 proyectos (animales→data-estado alineado; colores guardado→ámbar
+     sin-contenido; dinosaurios guardado→ámbar fuera-de-alcance con enlace a Ajustes).
+     **248 unit · 147 e2e · typecheck · lint · build.** Guía O3/O4/O6/O5 actualizadas (guardar
+     colores es parte de la prueba; O5 pide verificar tarjeta VERDE antes de jugar) + historial
+     (8); manual con el párrafo de estados. **Pendiente de confirmación del usuario:** si con
+     la tarjeta VERDE el mazo sigue sin priorizar, es otro defecto y se caza aparte.
+- **Bloque O (sexto remate) — 2026-08-07 · el estado con más grano + colores para daltonismo.**
+  El usuario reprodujo el caso con precisión: temas Transporte+Espacio, objetivo "animales" —
+  y la tarjeta salió VERDE sin aviso ("uno interpreta que ya quedó y está priorizado, punto").
+  Mi estado v1 tenía el grano mal: las cápsulas van por ETAPA (alineaban → `alcance.vacio`
+  false → "alineado") pero los dibujos van por TEMAS (cero) — que era exactamente lo que él
+  esperaba ver en el juego. Además pidió colores CLARAMENTE distintos: tiene daltonismo básico
+  (verde vs. ámbar es justo el par débil).
+  1. **`estadoDeAlineacion` v2:** cuatro estados — "alineado" (dibujos o pares en alcance: los
+     JUEGOS cambian) · **"sin-juegos"** (cápsulas sí, juegos no — SU caso) · "fuera-de-alcance"
+     (nada de lo que ve) · "sin-contenido". Unit de los cuatro, incluido pares-solo → alineado.
+  2. **Tres familias visuales, color + FORMA (daltonismo):** verde + IconoDiana con desglose
+     "Alineando ahora: N cápsulas · M dibujos · K pares" (testid objetivo-activo-alineando) ·
+     azul `info` + IconoInfo nuevo (sin-juegos y fuera-de-alcance, cada uno con su mensaje y el
+     enlace a Ajustes) · rojo `peligro` + IconoAlerta nuevo (sin-contenido). El token semántico
+     `info` ya vivía en el design system y cambia con el tema oscuro; ámbar descartado.
+  3. **El chip verde ya no promete de más:** "alinean la cápsula y los juegos" → "se ponen
+     primero en lo que él ve" (con animales-sin-tema la promesa vieja era falsa a medias).
+     Tests: +1 unit (sin-juegos; alineado por pares-solo) · +1 e2e ×2 proyectos con SU
+     escenario (temas carros+espacio, guardar "animales" → data-estado sin-juegos + mensaje +
+     enlace) · aserción del desglose en el e2e verde. **249 unit · 149 e2e · typecheck · lint ·
+     build.** Guía O3 (rojo+triángulo), O4/O6 (azul+info), O5 (los tres estados con sus formas,
+     "si sale AZUL elige el tema y vuelve a mirar") + historial (9); manual con la tríada.
+- **BLOQUE O CERRADO — GATE ⭐ ACUMULADO COMPLETO (2026-08-07).** El usuario confirmó O1–O6
+  "todo en orden y corriendo según lo esperado" tras seis remates nacidos en el bloque:
+  sugerencias vivas + paso de ortografía + botón que nombra + diana (1) · la eñe sobrevive (2) ·
+  ortografía general en dos colores, ADR-014 (3) · lo que Ajustes muestra alinea (4) · la
+  tarjeta activa dice su estado (5) · estado con grano fino y colores para daltonismo (6).
+  Con esto TODOS los bloques del recorrido del gate quedan aprobados (la lista de tablet sigue
+  diferida por viaje — ADRs 003/007/010 al regresar). **Siguiente paso: merge del PR #5 (solo
+  a la orden explícita del usuario) → `/cierre-sprint habla` en la planeadora → H1 COMPLETO.**
+- **CI en rojo el día del cierre — lote de advisories upstream (2026-08-07).** El job `quality`
+  cayó por `pnpm audit --audit-level high`: 26 advisories publicadas ese día (15 high) en
+  transitivas — fast-uri, sharp, next (¡directa!), postcss, brace-expansion, undici, js-yaml.
+  Arreglo: `next` 16.2.10→16.2.11 (parche oficial) + overrides en `pnpm-workspace.yaml` (pnpm 11
+  NO lee `package.json#pnpm.overrides` — primer intento mudo). Dos lecciones que quedaron en
+  comentario del yaml: (1) el archivo ya existía con `allowBuilds` y lo pisé con `cat >` —
+  restaurado de git y ANEXADO; (2) los overrides van con **caret, jamás `>=` abierto**: un
+  `>=1.1.18` resolvió brace-expansion@1 al latest GLOBAL (5.x) y minimatch@3 explotó en lint
+  ("expand is not a function"). Resultado: `pnpm audit` en CERO (todos los niveles — cayó
+  también la moderate de postcss heredada del S2/S3). Verificación completa tras el cambio de
+  deps: typecheck · lint · 249 unit · build · 149 e2e — todo verde.
+- **Backlog del bloque B (NO entra al S4 — alcance cerrado; va al informe de cierre):** histórico
+  navegable de cápsulas con "reforzar esta" · qué pasa al agotar la etapa (hoy: ciclo nuevo
+  determinista, sin control del padre) · pantalla que explique las 5 técnicas · numerar las etapas
+  como niveles ordinales (propuesta del usuario; mi contra-razón: un ordinal invita a "subir de
+  nivel" y esta app promete lo contrario — ADR-005; **decisión del usuario pendiente**).

@@ -1,4 +1,4 @@
-import type { Capsula } from "./schema";
+import type { Capsula, EtiquetaCapsula } from "./schema";
 
 /**
  * Biblioteca de "Hoy" — la respuesta diaria al padre. 50 cápsulas es-CO organizadas por
@@ -21,9 +21,14 @@ import type { Capsula } from "./schema";
  *
  * Tono: cálido, directo, es-CO. Prohibido (§D anti-claims): "terapia", "diagnóstico", plazos
  * ("en X semanas"), puntajes clínicos, elogios desacoplados de lo medido. Esto es práctica de
- * estimulación en casa — complementaria, nunca sustituta, de la fonoaudiología del niño.
+ * estimulación en casa — complementaria, nunca sustituta, de las terapias integrales del
+ * lenguaje del niño.
+ *
+ * Las ETIQUETAS del objetivo de la semana (S4) viven en el mapa `ETIQUETAS_POR_CAPSULA` al final,
+ * no inline: así la curaduría se lee de un vistazo y se ajusta sin tocar 50 objetos. `CAPSULAS`
+ * es `BASE` con sus etiquetas ya adjuntas.
  */
-export const CAPSULAS: Capsula[] = [
+const BASE: Omit<Capsula, "etiquetas">[] = [
   {
     id: "modelado-nombra-su-mundo",
     tecnica: "modelado",
@@ -874,3 +879,72 @@ export const CAPSULAS: Capsula[] = [
       "Espera estructurada en rutinas verbales muy aprendidas (EMT, PubMed 29054980); la lectura compartida repetida es uno de los contextos con mejor evidencia para provocar producción.",
   },
 ];
+
+/**
+ * Etiquetas del objetivo de la semana (S4), curadas por CONTENIDO real de cada cápsula (rutina +
+ * foco), no por menciones incidentales. Cada cápsula tiene ≥1; el objetivo alinea DENTRO de la
+ * etapa (ADR-005). Un unit verifica que cubre las 50 y que toda etiqueta del vocabulario se usa.
+ */
+const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
+  // palabras-sueltas (técnicas base)
+  "modelado-nombra-su-mundo": ["comida", "agua"],
+  "modelado-mismas-palabras-rutina": ["baño", "agua"],
+  "modelado-habla-a-su-tamano": ["carros", "acciones"],
+  "recast-devuelve-la-palabra": ["agua", "comida"],
+  "recast-su-palabra-mas-una": ["agua", "juego"],
+  "espera-cuenta-cinco": ["espera", "comida"],
+  "espera-pausa-canciones": ["canciones", "espera"],
+  "espera-no-adivines": ["espera", "pedir", "juego"],
+  "interes-el-manda": ["juego", "carros"],
+  "interes-voz-mueve": ["espacio", "juego"],
+  "interes-co-uso": ["espacio", "juego"],
+  "focalizada-palabra-semana": ["pedir", "agua"],
+  "focalizada-el-nombre-vive-en-la-cosa": ["juego", "carros"],
+  "focalizada-sin-examen": ["animales"],
+  // sonidos-e-intentos
+  "sonidos-ponle-sonido-al-mundo": ["sonidos", "animales", "juego"],
+  "sonidos-habla-como-el": ["sonidos", "imitación", "turnos"],
+  "sonidos-espera-con-cara-de-pregunta": ["espera", "pedir"],
+  "sonidos-senalar-ya-es-hablar": ["pedir", "comida"],
+  "sonidos-su-sonido-tu-palabra": ["sonidos", "agua"],
+  "sonidos-un-solo-sonido-todo-el-dia": ["sonidos", "juego"],
+  "sonidos-turnos-de-sonidos": ["turnos", "sonidos", "música"],
+  "sonidos-cualquier-sonido-cuenta": ["sonidos", "espacio", "juego"],
+  // palabras-sueltas (rutinas)
+  "modelado-en-el-carro": ["carros", "calle", "animales"],
+  "modelado-vestirse": ["vestirse"],
+  "modelado-mercado": ["mercado", "comida"],
+  "modelado-parque": ["parque", "acciones"],
+  "modelado-hora-de-dormir": ["dormir"],
+  "modelado-la-calle": ["calle", "animales", "carros"],
+  "espera-el-frasco-dificil": ["espera", "pedir", "comida"],
+  "espera-de-a-poquitos": ["comida", "espera", "pedir"],
+  "espera-el-hueco-de-la-rutina": ["juego", "espera"],
+  "recast-repite-bien-sin-corregir": ["comida"],
+  "recast-nombra-lo-que-siente": ["emociones"],
+  "interes-siéntate-en-el-piso": ["juego"],
+  "interes-el-juguete-que-el-eligio": ["juego", "elegir"],
+  "interes-cohete-de-la-voz": ["espacio", "sonidos", "juego"],
+  "interes-palabra-y-objeto": ["juego", "animales"],
+  "focalizada-palabra-abre": ["acciones", "pedir"],
+  "focalizada-misma-palabra-cinco-lugares": ["agua", "mar", "baño"],
+  "modelado-cancion-de-la-rutina": ["canciones", "música"],
+  "espera-tres-segundos-mas": ["espera"],
+  "interes-nombra-lo-que-el-hace": ["acciones", "juego"],
+  "focalizada-no-preguntes-nombra": ["animales"],
+  // primeras-frases
+  "frases-una-palabra-mas-una": ["agua", "carros"],
+  "frases-dos-palabras-utiles": ["agua", "pedir"],
+  "frases-el-hueco-de-la-segunda": ["pedir", "agua"],
+  "frases-recast-sin-corregir": ["agua", "acciones"],
+  "frases-narra-con-dos": ["acciones", "carros", "juego"],
+  "frases-elige-tu-o-yo": ["elegir", "comida", "agua"],
+  "frases-cuenta-cuentos-con-huecos": ["juego", "espera"],
+};
+
+/** La biblioteca con sus etiquetas adjuntas. Si a alguna cápsula le faltara etiqueta, el schema
+ *  (etiquetas.min(1)) y el unit lo cazan — nunca llega al niño sin curar. */
+export const CAPSULAS: Capsula[] = BASE.map((c) => ({
+  ...c,
+  etiquetas: ETIQUETAS_POR_CAPSULA[c.id] ?? [],
+}));

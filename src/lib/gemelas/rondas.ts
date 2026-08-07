@@ -5,6 +5,7 @@
 // cuenta la participación honesta. Lo que el padre marcó se registra aparte (ver storage/schemas).
 
 import { barajar } from "@/lib/barajar";
+import { priorizarEstable } from "@/lib/objetivo/prioridad";
 import {
   PARES_GEMELOS,
   parJugableEn,
@@ -34,9 +35,16 @@ export function secuenciaDeRondas(
   semilla: number,
   cantidad = 6,
   pares: readonly ParGemelo[] = PARES_GEMELOS,
+  /** Objetivo de la semana (S4): los pares que coinciden entran primero (antes del recorte). Sin
+   *  predicado, el orden es el barajado por semilla de siempre (identidad). */
+  prefiere?: (par: ParGemelo) => boolean,
 ): ParGemelo[] {
   const jugables = paresParaEtapa(etapa, pares);
-  return barajar(jugables, semilla).slice(0, Math.max(0, cantidad));
+  const barajados = barajar(jugables, semilla);
+  const ordenados = prefiere
+    ? priorizarEstable(barajados, prefiere)
+    : barajados;
+  return ordenados.slice(0, Math.max(0, cantidad));
 }
 
 /**

@@ -10,7 +10,8 @@ hijo?"_. Cada día le propone una técnica con respaldo científico, explicada e
 la actividad incluye un juego donde **la voz del niño mueve un globo en la pantalla**.
 
 Es **práctica de estimulación del habla en casa**. No es terapia, no da diagnósticos y no promete
-resultados en un plazo: acompaña —nunca reemplaza— a la fonoaudióloga de su hijo.
+resultados en un plazo: acompaña —nunca reemplaza— las terapias integrales del lenguaje de su
+hijo.
 
 **La app orquesta al adulto, no lo reemplaza.** Lo que hace avanzar el habla de un niño es la
 interacción con usted; la pantalla es apenas la excusa para jugar juntos.
@@ -30,12 +31,14 @@ interacción con usted; la pantalla es apenas la excusa para jugar juntos.
 ### La pantalla "Hoy" — su respuesta diaria
 
 Al abrir la app ve **la cápsula del día**: la técnica, por qué funciona, **su línea de hoy** y la
-actividad. Cuando la hagan, toque **"Ya lo hicimos"**.
+actividad. Cuando la hagan, la app le pregunta "¿Ya hicieron la actividad de hoy?" y usted
+toca **"Sí, ya lo hicimos"**.
 
 - Cada día trae una cápsula distinta; no se repite hasta que se acaben todas.
 - La cápsula de hoy **no cambia** aunque cierre y vuelva a abrir la app.
-- Abajo dice cuántos días han practicado juntos. **No hay rachas ni castigos**: si se saltan un
-  día, no pasa absolutamente nada. Lo que cuenta es volver.
+- Abajo dice cuántos días han practicado juntos **en total** (crece al marcar "Sí, ya lo
+  hicimos"). **No hay rachas ni castigos**: ese número **nunca baja** — si se saltan un día, no
+  se pierde nada. Lo que cuenta es volver.
 - En "¿De dónde sale esto?" puede ver el estudio en el que se apoya cada cápsula.
 
 ### Los juegos de voz — "su voz mueve el mundo"
@@ -56,16 +59,27 @@ cualquiera de esos tres pasa siempre lo mismo:
 **El cuarto, "palabras gemelas", NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
-"game over".
+"game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
+micrófono se apaga ahí mismo) y **el juego se reinicia por completo**: al volver a entrar, los
+contadores arrancan en cero — no queda rastro de la sesión pasada. Desde el guion, **"← Juegos"**
+lo lleva de vuelta a los cuatro.
 
 #### 1. El globo — la voz que se sostiene
 
-El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo se
-detiene y espera: nunca se pierde lo ya avanzado. Al terminar, la app dice exactamente lo que
-midió, y son **dos cosas distintas**:
+El globo **avanza solo mientras el niño hace sonar la voz** ("aaaaah"). Si se calla, el globo
+desacelera suave y espera: nunca se pierde lo ya avanzado. Cada **3 segundos de voz acumulada**
+el globo cruza la línea, completa **una vuelta** —la app lo celebra en el momento: "¡Ya dio 2
+vueltas!" y un **confeti con serpentinas** estalla sobre la línea (cae una vez y se va; el juego
+no se detiene)— y el globo vuelve a entrar por la izquierda para seguir volando. **Las vueltas no
+se acaban: el juego no se termina solo.** Jueguen lo que quieran y, cuando decidan, toque
+**"Ya jugamos"**. Ahí llega la celebración, que dice exactamente lo que se midió, y son **tres
+cosas distintas**:
 
 - _"¡Su voz sonó 7,3 segundos!"_ — el **total** del intento, sumando todos los ratos en que sonó.
   Es lo que hizo volar al globo.
+- _"Con esa voz el globo dio 2 vueltas completas."_ — las **mismas vueltas** que celebraron en
+  vivo, dichas de nuevo al final. (En modo calma no hay línea de vuelta, así que esta línea no
+  aparece.)
 - _"Y la vez más larga la sostuvo 2,4 segundos seguidos"_ — la **racha continua** más larga. Es lo
   único que autoriza a decir que la _sostuvo_, y es la habilidad que de verdad se está entrenando.
 
@@ -79,9 +93,18 @@ El cohete escucha el **tono** de la voz: cuando la voz sube, el cohete sube; cua
 No hay que decir ninguna palabra — **una vocal estirada como una sirena es exactamente lo que
 buscamos** ("aaaAAAaaa"). Hágalo usted primero, exagerado y riéndose.
 
-Al terminar, la app cuenta las veces reales que su voz **cambió de dirección**: _"¡tu voz subió y
-bajó 3 veces!"_. Jugar con la voz —estirarla, subirla, bajarla— es un ejercicio de exploración
-vocal, y es justo lo que esta etapa necesita.
+Cada vez que la voz **sube y baja de verdad**, el cohete gana un hito: estalla un **confeti** y
+aparece el contador: _"¡Ya subió y bajó 2 veces!"_. Y en la **siguiente subida** de la voz, una
+**capa de nubes y estrellas pasa hacia abajo** — el mundo corre mientras el cohete sube, y se
+siente que va cada vez más alto, como mirar por la ventanilla.
+**Los hitos no se acaban: el juego no se termina solo.** Jueguen lo que quieran y, cuando
+decidan, toque **"Ya jugamos"**: la celebración dice **el mismo número del contador** — las
+veces reales que su voz cambió de dirección. Jugar con la voz —estirarla, subirla, bajarla— es
+un ejercicio de exploración vocal, y es justo lo que esta etapa necesita.
+
+Un detalle honesto: la **altura** del cohete siempre es el tono que está sonando en ese momento
+(por eso baja cuando la voz baja — no es un castigo, es el tono). El ascenso acumulado lo
+cuentan el cielo que pasa y el contador, no la posición.
 
 #### 3. Palabra y dibujo — el nombre vive en la cosa (nuevo)
 
@@ -90,13 +113,16 @@ los **temas que usted eligió** para su hijo.
 
 Su trabajo es el importante: **nombre el dibujo una sola vez** —"¡perro!"— y **espere tres
 segundos en silencio**. El dibujo se enciende con **cualquier sonido** que el niño haga: un
-intento, un "pe", un balbuceo. **La app no le exige la palabra y no juzga si la dijo bien**: solo
-sabe —y solo afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
+intento, un "pe", un balbuceo — y el momento se ve: el marco hace un **pop** breve y un halo se
+expande una vez. **La app no le exige la palabra y no juzga si la dijo bien**: solo sabe —y solo
+afirma— que su voz sonó. Toque **"Otro dibujo"** cuando quieran cambiar.
 
-**¿Y si sí dijo la palabra? Usted lo dice.** Debajo del dibujo hay un botón pequeño —_"¿Dijo
-«perro»? Tócalo tú"_— y al tocarlo sube una **bandada de globos** por encima del dibujo, porque decir la
-palabra merece más que un sonido cualquiera. (Si activó "reducir animaciones", los globos no
-vuelan pero la celebración se sigue viendo: el dibujo se pone verde y lo dice con palabras.)
+**¿Y si sí dijo la palabra? Usted lo dice.** Al **final de la pantalla**, debajo de los botones
+grandes, hay un control discreto en letra pequeña —_"¿Dijo «perro»? Tócalo tú"_— puesto ahí a
+propósito, fuera de la vista del niño (es suyo, no de él). Al tocarlo sube una **bandada de
+globos** por encima del dibujo, porque decir la palabra merece más que un sonido cualquiera. (Si
+activó "reducir animaciones", los globos no vuelan pero la celebración se sigue viendo: el dibujo
+se pone verde y lo dice con palabras.)
 
 Ese botón es **suyo, no del niño**, y es la única forma de encender esa celebración: **la app no
 reconoce palabras y no va a fingir que sí.** No es que no sepamos hacerlo: es que hacerlo bien
@@ -110,7 +136,18 @@ tal cual: _"Y **tú** oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
 Aparecen **dos dibujos a la vez** cuyas palabras se diferencian por un solo sonido: _pato_ y
 _gato_, _mano_ y _mono_, _foca_ y _boca_. Son las llamadas **parejas mínimas**: practicar ese
 contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga UNO**, y luego
-**toque usted el dibujo que oyó**.
+**marque usted el que oyó** en la línea discreta _"¿Cuál oíste?"_ de abajo.
+
+**Cómo se juega la ronda:**
+
+- **Tocar un dibujo lo hace sonar con su voz** (si grabó esa palabra en el Estudio; trae una
+  insignia de altavoz en la esquina). El niño puede tocarlos y explorar la pareja — tocar solo
+  hace sonar, **jamás marca nada**.
+- Cuando el niño dice una palabra, **usted la marca** en _"¿Cuál oíste?"_. Ahí el dibujo elegido
+  **festeja**: se enciende, suena la palabra con su voz y aparece _"¡Dijo «pato»!"_ — la fiesta
+  del niño está en los dibujos, las teclas discretas son suyas.
+- **"Siguiente pareja"** lo toca usted cuando quieran seguir: pueden repetir, volver a tocar los
+  dibujos o quedarse un rato. Arriba, _"Palabras que le oíste: N"_ va contando la sesión.
 
 Este juego es **distinto a los otros tres**:
 
@@ -119,7 +156,8 @@ Este juego es **distinto a los otros tres**:
 - **No hay respuesta correcta ni incorrecta para el niño.** Cualquier intento vale; si hoy solo
   quiere mirar, toque **"Hoy solo miramos esta"** y sigan sin apuro.
 - La celebración es honesta: cuenta **cuántas rondas jugaron** y en cuántas **usted** marcó algo —
-  nunca dice que "acertó".
+  nunca dice que "acertó". Y el festejo del dibujo celebra **lo que usted marcó**, no un veredicto
+  de la app.
 - **Necesita que el niño ya diga palabras sueltas.** Si su etapa es _"sonidos e intentos"_, el
   juego se lo dice con cariño y lo invita a volver más adelante. Se cambia en Ajustes.
 
@@ -137,7 +175,19 @@ pantalla del **Estudio**).
 - El Estudio le va mostrando, de a una, las **palabras y frases** que puede grabar (las palabras de
   los dibujos, algunas consignas del juego y las celebraciones honestas). Toca **"Grabar"**, dice
   la palabra, la **escucha cómo quedó** y la **guarda** o la **regraba**. Una barra le muestra
-  cuánto lleva grabado.
+  cuánto lleva grabado. Mientras graba, **otra barra baila con su voz**: si se mueve cuando
+  habla, le está oyendo bien — así nunca graba a ciegas. (Esa barra solo se mira: no guarda nada.)
+  Y al escuchar cualquier grabación, **una barrita se va llenando con el avance del audio**: así
+  sabe que sí está sonando y cuánto falta.
+- En **"Con tu voz vas"** cada grupo (Palabras · Consignas del juego · Celebraciones) tiene su
+  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las dos
+  consignas sin pasar por todas las palabras—. El botón grande ("Grabar más") sigue siendo el
+  recorrido guiado de siempre, que propone primero lo que más le sirve al niño.
+- En **"Lo que ya grabaste"** las grabaciones se agrupan por esos mismos tres grupos, numeradas
+  dentro de cada uno, con sus botones de **Escuchar** (suena con su barrita de avance en la
+  fila) y **Borrar**. Borrar pide un **segundo toque** —el botón se pone rojo con "¿Seguro?"—
+  para que un dedo apurado no borre nada sin querer; si se arrepiente, en unos segundos se
+  desarma solo.
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
@@ -181,6 +231,78 @@ a lo que su hijo hace HOY, no a lo que quisiéramos que hiciera:
 **Cambiar de etapa no borra nada.** El progreso de cada etapa se guarda por separado y los días
 practicados no se pierden. Si duda, quédese en _palabras sueltas_.
 
+### El rumbo — cómo van, sin notas (nuevo)
+
+En el encabezado de "Hoy" hay un acceso, **"El rumbo"**. Es la respuesta honesta a "¿cómo vamos?".
+Muestra, **semana a semana**, solo lo que de verdad pasó: los días que practicaron juntos, las
+cápsulas completadas, las palabras distintas que practicaron, cuántos dibujos encendió con su
+voz, las vueltas del globo, las veces que su voz subió y bajó, las rondas de gemelas, las
+palabras que usted le oyó, y los segundos de su voz en el globo (el total y la más larga sin
+cortarse). Cada línea aparece solo cuando tiene algo que contar. Y una sección de **hitos**
+celebrables —hay **16 posibles**—: desde "su primer rato de práctica juntos" y las primeras
+veces de cada juego, hasta acumulados como "25 días de práctica en total". Una vez ganados, no
+se pierden.
+
+Un detalle que conviene saber: **el rumbo cuenta lo que llegó a la celebración.** Termine el
+juego con "Ya jugamos" para que el intento quede registrado; si sale con "Salir" a mitad de
+juego, ese rato no se cuenta (a propósito: solo se registra lo que el juego ya le mostró).
+
+Lo que el rumbo **nunca** va a hacer: ponerle una nota, un puntaje, un porcentaje o un plazo; ni
+compararlo con otro niño; ni castigarlo por una semana floja (una semana con pocos días es
+simplemente un número pequeño, sin drama). No es un diagnóstico ni un boletín — es el registro
+cálido de lo que hicieron juntos. Al principio estará vacío: jueguen unos días y cobra vida.
+
+### El objetivo de la semana — la sintonía con sus terapias (nuevo)
+
+¿En las terapias de su hijo —fonoaudiología, terapia ocupacional, psicología, pedagogía— le
+pidieron trabajar algo esta semana: los animales, la comida, el baño?
+En el encabezado de "Hoy", **"Objetivo"** le deja escribirlo. La app entonces **pone eso primero**:
+la cápsula del día, los dibujos del juego "palabra y dibujo" y lo que le toca grabar en el Estudio
+se alinean con su objetivo. Es opcional: sin objetivo, todo sigue igual que siempre.
+
+Todo pasa en **una sola tarjeta**: el campo, las sugerencias, el aviso de qué encuentra y el
+botón de guardar — que **nombra exactamente lo que va a guardar** ("Guardar «animales»").
+
+Mientras escribe, la app **acompaña, no regaña**: si va a media palabra ("anim"), le sugiere
+en qué puede estar pensando — en **dos grupos con su etiqueta**. Los chips **verdes** son
+términos que **están en la app** y alinean la cápsula y los juegos. Los chips **neutros** son
+palabras del español **bien escritas que la app aún no tiene** ("medi" → «medio», «media»):
+no cambian los juegos, pero le ayudan a que el objetivo quede bien escrito — vienen de un
+diccionario de las 10.000 palabras más comunes del español que viaja dentro de la app (sin
+internet, como todo aquí). El campo también usa el corrector de su navegador o teclado (el
+subrayado rojo de siempre). Los nombres de los temas **tal como los ve en Ajustes** también
+valen: escribir "transporte" alinea todo lo de ese tema.
+
+Si escribe con un error de ortografía ("animles") y le da guardar, **pregunta primero**:
+_"¿Quisiste decir «animales»?"_ — puede corregir con un toque o guardar tal cual (escribir
+libre sigue siendo su derecho: en las terapias pueden pedirle algo que la app aún no tiene).
+Una palabra **bien escrita** nunca recibe esa pregunta: "medios" o "colores" se guardan a la
+primera, aunque no alineen nada.
+
+Con la palabra completa, le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
+hijo de verdad va a ver**: las cápsulas de su etapa y los dibujos de los temas que eligieron ("con
+«animales», la app pone primero N cápsulas · M dibujos"). Si escribe algo que no está en el
+contenido de la app —por ejemplo, "colores", que a propósito no existe—, se lo dice de frente en
+vez de fingir que alineó algo. Y si escribe algo que sí existe pero **fuera de lo que él ve hoy**
+(un tema que no eligieron en el onboarding), también se lo dice claro: los juegos no cambian,
+aunque el Estudio sí le propondrá grabar esas palabras primero. El objetivo **no caduca solo**: se
+queda hasta que usted lo cambie o lo quite (y quitarlo deja todo como estaba). Siempre trabaja
+**dentro de la etapa** que eligió: nunca la salta.
+
+La tarjeta del **objetivo activo dice su estado** con tres señales a la vez — color, icono y
+palabras (pensado también para daltonismo: cada estado tiene su **forma** propia, no solo su
+color): **verde con la diana** cuando los juegos de su hijo van a cambiar, con el desglose de
+lo que está alineando ("Alineando ahora: 4 cápsulas · 6 dibujos"); **azul con el círculo de
+info** cuando hay que ponerle atención — por ejemplo "la cápsula de hoy sí, pero los dibujos
+de los juegos no cambian: ese tema no está entre los elegidos", con el enlace para revisarlo
+en Ajustes; y **rojo con el triángulo** cuando la app aún no tiene contenido de eso
+("priorizado, a la espera de contenido"). Importante: el objetivo **solo puede poner primero
+lo que su hijo ya ve** — sus temas y su etapa —; nunca mete contenido ajeno a su mundo.
+
+Con un objetivo activo, en el Estudio las grabaciones de **"Lo que ya grabaste"** que le sirven
+al objetivo llevan una **diana** junto a la palabra: de un vistazo ve cuáles del reto ya apuntan
+a lo que pidieron en las terapias.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -202,7 +324,8 @@ cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está so
 cuando el juego con meta le resulta demasiado. Está disponible en los tres juegos.
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
-app lo respeta sin que usted toque nada).
+app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra, el confeti
+de los hitos y la capa de cielo del cohete no se muestran — el texto sigue contando cada logro.
 
 ### Claro u oscuro
 
@@ -258,8 +381,9 @@ decirle solo lo que de verdad medimos.
 Sí, después de la primera vez que la abra (si la instaló como app). El juego nunca necesita
 internet.
 
-**¿Reemplaza a la fonoaudióloga?**
-No, y nunca lo va a hacer. Es práctica en casa para acompañar lo que ella ya está haciendo.
+**¿Reemplaza las terapias de su hijo?**
+No, y nunca lo va a hacer. Es práctica en casa para acompañar lo que su equipo —fonoaudiología,
+terapia ocupacional, psicología, pedagogía— ya está haciendo.
 
 **¿Por qué grabo MI voz y no la de mi hijo?**
 Porque la voz que ayuda a un niño a aprender una palabra es la de alguien que quiere: la suya. Y
@@ -279,8 +403,9 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 
 ## Historial
 
-| Sprint | Features añadidas a este manual                                                                                                                                                                                                                                             |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión.                                                                                                     |
-| 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                            |
-| 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz. |
+| Sprint | Features añadidas a este manual                                                                                                                                                                                                                                                                                       |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 001    | Pantalla "Hoy" con la cápsula diaria (14 cápsulas), juego de voz con celebración honesta, modo calma, ajustes y borrado de datos, PWA instalable con modo sin conexión.                                                                                                                                               |
+| 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                                                                      |
+| 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
+| 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |

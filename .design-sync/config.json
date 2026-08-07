@@ -1,0 +1,6 @@
+{
+  "projectId": "915209fb-d05f-455c-9188-30d136a07cbc",
+  "projectName": "Hablemos San — Design System",
+  "shape": "brand-reference",
+  "note": "Este repo es una app Next.js, no una librería de componentes (sin Storybook ni dist/). El design-sync es una REFERENCIA DE MARCA autorada a mano (off-script): tokens de styles.css + tarjetas de preview autocontenidas de las pantallas y personajes. Fuente de verdad: design-system.md + src/app/globals.css. Un futuro sync re-verifica todo (sin _ds_sync.json). El bundle se autora en scratchpad, no se commitea al repo."
+}

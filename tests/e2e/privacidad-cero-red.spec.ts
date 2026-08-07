@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.
@@ -146,22 +146,16 @@ test("cero red al grabar y reproducir en el estudio (banco 100 % local)", async 
   await context.close();
 });
 
-test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async ({
-  page,
-}) => {
-  await page.goto("/jugar/cohete");
-  await page.getByTestId("empezar-juego").click();
-  await expect(page.getByTestId("juego")).toHaveAttribute(
-    "data-fase",
-    "jugando",
-    {
-      timeout: 20_000,
-    },
-  );
-  await page.waitForTimeout(2000);
+// Lista blanca CONSCIENTE de claves locales (ADR-002). El S4 le suma `sesiones` (números del
+// Rumbo) y `objetivo` (texto del padre) a las del S1/S3; el candado de CONTENIDO sigue vetando
+// cualquier rastro de audio o de tono, sea cual sea la clave.
+const LISTA_BLANCA =
+  /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo)$/;
+const RASTRO_DE_AUDIO = /audio|rms|pcm|wav|pitch|hz|blob:|data:audio/i;
 
-  // Lo único que la app puede guardar: perfil, ajustes y progreso. Nada de audio ni de tono.
-  const almacenamiento = await page.evaluate(async () => {
+/** Foto del almacenamiento del navegador, para correr el candado en un momento dado. */
+async function leerAlmacenamiento(page: Page) {
+  return page.evaluate(async () => {
     const local = Object.fromEntries(
       Object.entries(localStorage).map(([clave, valor]) => [
         clave,
@@ -185,9 +179,13 @@ test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async
       basesDeDatos: bases.map((b) => b.name ?? ""),
     };
   });
+}
 
+function esperarAlmacenamientoLimpio(
+  almacenamiento: Awaited<ReturnType<typeof leerAlmacenamiento>>,
+): void {
   for (const clave of almacenamiento.claves) {
-    expect(clave).toMatch(/^habla:v1:(perfil|ajustes|progreso)$/);
+    expect(clave).toMatch(LISTA_BLANCA);
   }
   expect(almacenamiento.sessionStorage).toEqual([]);
   expect(almacenamiento.basesDeDatos).toEqual([]);
@@ -196,7 +194,41 @@ test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async
     /audio|rms|pcm|wav|pitch|data:audio/i,
   );
   // Ni rastros de audio/pitch en lo que sí se guarda.
-  expect(almacenamiento.contenido).not.toMatch(
-    /audio|rms|pcm|wav|pitch|hz|blob:|data:audio/i,
+  expect(almacenamiento.contenido).not.toMatch(RASTRO_DE_AUDIO);
+}
+
+test("el audio y el pitch del niño no dejan rastro en el almacenamiento", async ({
+  page,
+}) => {
+  await page.goto("/jugar/cohete");
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("juego")).toHaveAttribute(
+    "data-fase",
+    "jugando",
+    {
+      timeout: 20_000,
+    },
   );
+  await page.waitForTimeout(2000);
+
+  // 1) A MITAD de juego (el momento de mayor flujo de audio): nada raro en el almacenamiento.
+  esperarAlmacenamientoLimpio(await leerAlmacenamiento(page));
+
+  // 2) DESPUÉS de que la app escribe de verdad (auditoría de cierre S4): el intento termina —la
+  //    celebración registra `habla:v1:sesiones`— y el padre guarda un objetivo por la UI. Solo
+  //    ahora las claves nuevas de la lista blanca existen; el candado corre sobre datos REALES,
+  //    no sobre un almacenamiento vacío.
+  await page.getByTestId("terminar").click();
+  await expect(page.getByTestId("celebracion")).toBeVisible();
+
+  await page.goto("/objetivo");
+  await page.getByTestId("objetivo-input").fill("animales");
+  await page.getByTestId("guardar-objetivo").click();
+  await expect(page.getByTestId("objetivo-activo")).toBeVisible();
+
+  const trasEscribir = await leerAlmacenamiento(page);
+  // Las claves del S4 EXISTEN: la lista blanca ya no puede pasar en vacío.
+  expect(trasEscribir.claves).toContain("habla:v1:sesiones");
+  expect(trasEscribir.claves).toContain("habla:v1:objetivo");
+  esperarAlmacenamientoLimpio(trasEscribir);
 });

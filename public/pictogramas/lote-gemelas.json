@@ -43,5 +43,45 @@
     "palabra": "bota",
     "archivo": "bota.png",
     "arasaacId": 5401
+  },
+  {
+    "palabra": "rana",
+    "archivo": "rana.png",
+    "arasaacId": 2543
+  },
+  {
+    "palabra": "sal",
+    "archivo": "sal.png",
+    "arasaacId": 25576
+  },
+  {
+    "palabra": "toro",
+    "archivo": "toro.png",
+    "arasaacId": 2595
+  },
+  {
+    "palabra": "loro",
+    "archivo": "loro.png",
+    "arasaacId": 2934
+  },
+  {
+    "palabra": "cama",
+    "archivo": "cama.png",
+    "arasaacId": 2304
+  },
+  {
+    "palabra": "queso",
+    "archivo": "queso.png",
+    "arasaacId": 2541
+  },
+  {
+    "palabra": "beso",
+    "archivo": "beso.png",
+    "arasaacId": 4576
+  },
+  {
+    "palabra": "lana",
+    "archivo": "lana.png",
+    "arasaacId": 2948
   }
 ]

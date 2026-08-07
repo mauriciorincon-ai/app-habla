@@ -14,7 +14,10 @@ import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { IconoAltavoz } from "@/components/iconos";
-import { agregarJuiciosGemelas } from "@/lib/storage/local";
+import { fechaHoy } from "@/lib/fecha";
+import { fnv1a } from "@/lib/coach/daily";
+import { alinear } from "@/lib/objetivo/alinear";
+import { agregarJuiciosGemelas, leerObjetivo } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { NOMBRE_ETAPA, type Etapa } from "@content/schema";
 import {
@@ -40,12 +43,29 @@ export function Gemelas() {
 
 function GemelasListo({ etapa }: { etapa: Etapa }) {
   const router = useRouter();
-  // Semilla estable por montaje: el orden no cambia al re-renderizar (sin Math.random en render).
-  const rondas = useMemo(() => secuenciaDeRondas(etapa, 7919, 6), [etapa]);
+  // Semilla DEL DÍA (gate S4: con 12 pares y semilla fija saldrían siempre los mismos 6): cada
+  // día trae su mezcla de parejas, determinista y sin Math.random — el patrón de la cápsula
+  // diaria. Estable por montaje: el orden no cambia al re-renderizar. Con objetivo de la semana,
+  // los pares que coinciden entran primero; sin él, el orden es idéntico.
+  const rondas = useMemo(() => {
+    const objetivo = alinear(leerObjetivo()?.texto);
+    return secuenciaDeRondas(
+      etapa,
+      fnv1a(fechaHoy()),
+      6,
+      undefined,
+      (par) =>
+        objetivo.coincidePalabra(par.a.palabra) ||
+        objetivo.coincidePalabra(par.b.palabra),
+    );
+  }, [etapa]);
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);
   const [marcas, setMarcas] = useState<Marca[]>([]);
+  // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
+  // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
+  const [festejo, setFestejo] = useState<"a" | "b" | null>(null);
   // La voz de la familia modela cada palabra del par. Gemelas no tiene micrófono → sin guarda.
   const voz = useVozFamiliar();
 
@@ -76,9 +96,10 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
 
   const par = rondas[indice];
 
-  function marcar(marca: Marca) {
+  function avanzar(marca: Marca) {
     const nuevas = [...marcas, marca];
     setMarcas(nuevas);
+    setFestejo(null);
     if (indice + 1 >= rondas.length) {
       // Registro local honesto (insumo del progreso del S4): qué marcó el padre por par.
       agregarJuiciosGemelas(
@@ -94,9 +115,17 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
     }
   }
 
+  /** El padre marcó cuál oyó: el dibujo festeja (se enciende + suena) ANTES de avanzar. */
+  function marcar(lado: "a" | "b") {
+    setFestejo(lado);
+    const id = idPalabra(par[lado].palabra);
+    if (voz.disponible(id)) void voz.reproducir(id);
+  }
+
   function otraVez() {
     setMarcas([]);
     setIndice(0);
+    setFestejo(null);
     setFase("guion");
   }
 
@@ -123,40 +152,80 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
     );
   }
 
+  const oidas = marcas.filter((m) => m !== null).length + (festejo ? 1 : 0);
+
   return (
     <section className="flex flex-col gap-6" data-testid="gemelas-ronda">
-      <p
-        className="text-tinta-suave text-center text-sm"
-        data-testid="progreso-rondas"
-      >
-        Ronda{" "}
-        <span className="font-sans font-semibold tabular-nums">
-          {indice + 1}
-        </span>{" "}
-        de {rondas.length}
-      </p>
+      {/* La salida de la ronda (gate S4: gemelas no usa el marco de los juegos de voz y se había
+          quedado sin puerta): "Salir" vuelve al GUION y reinicia POR COMPLETO (regla del bloque
+          G) — el guion tiene su propio "← Juegos" hacia el selector. */}
+      <div className="flex items-center">
+        <button
+          type="button"
+          onClick={otraVez}
+          data-testid="salir-al-guion"
+          className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
+        >
+          Salir
+        </button>
+      </div>
+      <div className="text-center">
+        <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
+          Ronda{" "}
+          <span className="font-sans font-semibold tabular-nums">
+            {indice + 1}
+          </span>{" "}
+          de {rondas.length}
+        </p>
+        {/* El contador honesto de la sesión (patrón de palabra↔objeto): cuenta lo que el PADRE
+            marcó, jamás "aciertos". */}
+        <p className="text-tinta-suave mt-1 text-sm" data-testid="oidas">
+          Palabras que le oíste:{" "}
+          <span className="font-sans font-semibold tabular-nums">{oidas}</span>
+        </p>
+      </div>
 
       <div className="flex items-stretch justify-center gap-3 sm:gap-6">
         {(["a", "b"] as const).map((lado) => {
           const palabra = par[lado];
+          const grabada = voz.disponible(idPalabra(palabra.palabra));
+          const encendida = festejo === lado;
+          // La tarjeta del dibujo ES el botón de oírla (gate S4, L1): el niño toca el dibujo y
+          // suena con la voz de su familia — mismo lenguaje que palabra↔objeto. Tocar = oír,
+          // JAMÁS marca: el juicio sigue siendo solo del padre. Sin grabación, tarjeta quieta.
+          const tarjeta = (
+            <div
+              className={[
+                "bg-superficie ease-suave relative rounded-3xl border-4 p-3 transition-colors duration-[--dur-lenta] sm:p-5",
+                encendida
+                  ? "border-celebracion-fuerte encendido-pop"
+                  : "border-borde",
+              ].join(" ")}
+            >
+              <Image
+                src={`/pictogramas/${palabra.archivo}`}
+                alt={palabra.palabra}
+                width={500}
+                height={500}
+                loading="lazy"
+                className="h-32 w-32 object-contain sm:h-44 sm:w-44"
+              />
+              {grabada ? (
+                <span
+                  aria-hidden="true"
+                  className="border-acento text-acento bg-superficie absolute right-2 bottom-2 flex h-8 w-8 items-center justify-center rounded-full border-2"
+                >
+                  <IconoAltavoz className="h-4 w-4" />
+                </span>
+              ) : null}
+              {encendida ? (
+                <span className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4" />
+              ) : null}
+            </div>
+          );
           return (
             <div key={lado} className="flex flex-1 flex-col items-center gap-3">
-              <div className="bg-superficie border-borde rounded-3xl border-4 p-3 sm:p-5">
-                <Image
-                  src={`/pictogramas/${palabra.archivo}`}
-                  alt={palabra.palabra}
-                  width={500}
-                  height={500}
-                  loading="lazy"
-                  className="h-32 w-32 object-contain sm:h-44 sm:w-44"
-                />
-              </div>
-              <p className="font-display text-3xl sm:text-4xl">
-                {palabra.palabra}
-              </p>
-              {/* Altavoz de la voz familiar: modela la palabra para el niño (≥64 px, él lo puede
-                  tocar). Solo aparece si esa palabra está grabada; si no, se juega en silencio. */}
-              {voz.disponible(idPalabra(palabra.palabra)) ? (
+              {grabada ? (
                 <button
                   type="button"
                   onClick={() =>
@@ -165,41 +234,68 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
                   data-testid={`altavoz-${lado}`}
                   data-fuente-voz="familiar"
                   aria-label={`Oír «${palabra.palabra}»`}
-                  className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
+                  className="ease-suave transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
                 >
-                  <IconoAltavoz className="h-7 w-7" />
+                  {tarjeta}
                 </button>
-              ) : null}
-              {/* Tecla del PADRE: marca cuál oyó (≥64 px — pero la maneja el adulto). */}
-              <button
-                type="button"
-                onClick={() => marcar(lado)}
-                data-testid={`marcar-${lado}`}
-                className="border-acento text-tinta min-h-16 w-full rounded-2xl border-2 px-4 text-lg font-medium"
-              >
-                Oí «{palabra.palabra}»
-              </button>
+              ) : (
+                tarjeta
+              )}
+              <p className="font-display text-3xl sm:text-4xl">
+                {palabra.palabra}
+              </p>
             </div>
           );
         })}
       </div>
 
-      <button
-        type="button"
-        onClick={() => marcar(null)}
-        data-testid="saltar-ronda"
-        className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
-      >
-        Hoy solo miramos esta — siguiente
-      </button>
+      {festejo === null ? (
+        <div className="flex flex-col items-center gap-2">
+          {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el niño
+              es perspicaz — su fiesta está en los dibujos, no en estas teclas). */}
+          <p className="text-tinta-suave text-sm">¿Cuál oíste?</p>
+          <div className="flex items-center gap-6">
+            {(["a", "b"] as const).map((lado) => (
+              <button
+                key={lado}
+                type="button"
+                onClick={() => marcar(lado)}
+                data-testid={`marcar-${lado}`}
+                className="text-tinta-suave min-h-11 rounded-xl px-3 text-sm underline decoration-dotted underline-offset-4"
+              >
+                «{par[lado].palabra}»
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => avanzar(null)}
+            data-testid="saltar-ronda"
+            className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
+          >
+            Hoy solo miramos esta — siguiente
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-3">
+          {/* La noticia honesta: lo que TÚ marcaste, celebrado sin veredicto de la app. */}
+          <p
+            aria-live="polite"
+            data-testid="dijo"
+            className="font-display text-center text-2xl"
+          >
+            ¡Dijo «{par[festejo].palabra}»!
+          </p>
+          <button
+            type="button"
+            onClick={() => avanzar(festejo)}
+            data-testid="siguiente-pareja"
+            className="bg-acento text-sobre-acento min-h-14 rounded-xl px-8 text-lg font-medium"
+          >
+            Siguiente pareja
+          </button>
+        </div>
+      )}
     </section>
   );
-}
-
-/** Fecha local YYYY-MM-DD (no UTC: el día en Colombia cambiaría a las 7 p. m.). */
-function fechaHoy(): string {
-  const d = new Date();
-  const mes = String(d.getMonth() + 1).padStart(2, "0");
-  const dia = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${mes}-${dia}`;
 }

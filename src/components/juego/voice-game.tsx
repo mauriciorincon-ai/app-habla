@@ -22,7 +22,7 @@ import {
 } from "@/components/estado-capsulas";
 import { useHidratado } from "@/components/use-hidratado";
 import {
-  META_MS_DEFECTO,
+  HITO_VUELTA_MS,
   invitacionAmable,
   muestraMedidor,
   type Metrica,
@@ -91,12 +91,16 @@ function JuegoListo({
     continuarConRuido,
     terminar,
     otraVez,
+    volverAlGuion,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "sostenido",
-    meta: META_MS_DEFECTO,
+    // Sin meta (gate S4, hallazgo E6): el globo ya NO se cierra solo. Cada HITO_VUELTA_MS de voz
+    // es una vuelta —infinitas— y el intento termina cuando el padre toca "Ya jugamos". El fin
+    // automático a los 3 s cortaba el juego justo mientras le enseñaba al niño.
+    meta: null,
     metricaActual,
   });
 
@@ -106,6 +110,13 @@ function JuegoListo({
 
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
+
+  // Vueltas completas del intento (cada HITO_VUELTA_MS de voz acumulada). Leer las medidas aquí
+  // es seguro: este componente re-renderiza con cada TICK (~10/s) mientras el juego corre.
+  const vueltas =
+    actual.fase === "esperando-voz" || actual.fase === "jugando"
+      ? Math.floor(medidas.sostenidoMs() / HITO_VUELTA_MS)
+      : 0;
 
   function alternarCalma() {
     const activo = !modoCalma;
@@ -128,6 +139,7 @@ function JuegoListo({
       onReintentarMic={reintentarMic}
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
+      onSalir={volverAlGuion}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -147,6 +159,22 @@ function JuegoListo({
               : "Haz sonar tu voz: aaaaah"}
           </h2>
 
+          {/* El logro medido, en vivo (gate S4): cada vuelta completa se celebra sin detener el
+              juego. Solo aparece cuando hay al menos una — cero presión antes. */}
+          {vueltas > 0 && !modoCalma ? (
+            <p
+              className="text-center text-lg font-medium"
+              data-testid="vueltas"
+              aria-live="polite"
+            >
+              ¡Ya dio{" "}
+              <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+                {vueltas} {vueltas === 1 ? "vuelta" : "vueltas"}
+              </span>
+              !
+            </p>
+          ) : null}
+
           {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
           <AltavozConsigna
             voz={voz}
@@ -156,7 +184,8 @@ function JuegoListo({
 
           <Escenario
             medidas={medidas}
-            metaMs={META_MS_DEFECTO}
+            hitoMs={HITO_VUELTA_MS}
+            vuelta={vueltas}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
           />
@@ -185,6 +214,13 @@ function JuegoListo({
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          // Las vueltas salen del MISMO total medido; en calma van en 0 (allí no hay línea de
+          // vuelta y la celebración no afirma lo que el juego no mostró).
+          vueltas={
+            !modoCalma && actual.metrica.tipo === "sostenido"
+              ? Math.floor(actual.metrica.ms / HITO_VUELTA_MS)
+              : 0
+          }
           onOtraVez={otraVez}
           onTerminar={terminarYMarcar}
           etiquetaTerminar="Marcar el día como hecho"
