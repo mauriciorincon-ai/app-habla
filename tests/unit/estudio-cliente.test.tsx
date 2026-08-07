@@ -51,6 +51,21 @@ describe("EstudioCliente — vista de gestión (banco de voz)", () => {
     expect(screen.getByText("Haz sonar tu voz: aaaaah")).toBeInTheDocument();
   });
 
+  it("las grabadas que sirven al objetivo llevan su diana (gate S4, O2)", async () => {
+    window.localStorage.setItem(
+      "habla:v1:objetivo",
+      JSON.stringify({ texto: "animales", desde: "2026-08-01" }),
+    );
+    render(<EstudioCliente />);
+    // "perro" (tema animales) coincide con el objetivo → diana; la consigna no.
+    expect(
+      await screen.findByTestId(`del-objetivo-${PERRO}`),
+    ).toHaveTextContent("del objetivo de la semana");
+    expect(
+      screen.queryByTestId("del-objetivo-consigna:aaah"),
+    ).not.toBeInTheDocument();
+  });
+
   it("la lista agrupa por los tres grupos de la cobertura (gate S4, K5)", async () => {
     render(<EstudioCliente />);
     // Con una palabra y una consigna grabadas, aparecen SUS encabezados (y solo esos).

@@ -260,7 +260,16 @@ En el encabezado de "Hoy", **"Objetivo"** le deja escribirlo. La app entonces **
 la cápsula del día, los dibujos del juego "palabra y dibujo" y lo que le toca grabar en el Estudio
 se alinean con su objetivo. Es opcional: sin objetivo, todo sigue igual que siempre.
 
-Mientras escribe, la app le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
+Todo pasa en **una sola tarjeta**: el campo, las sugerencias, el aviso de qué encuentra y el
+botón de guardar — que **nombra exactamente lo que va a guardar** ("Guardar «animales»").
+
+Mientras escribe, la app **acompaña, no regaña**: si va a media palabra ("anim"), le sugiere
+términos reales de su contenido — _"¿Vas hacia alguna de estas? Tócala y listo"_. Si escribe con
+un error de ortografía ("animles") y le da guardar, **pregunta primero**: _"¿Quisiste decir
+«animales»?"_ — puede corregir con un toque o guardar tal cual (escribir libre sigue siendo su
+derecho: en las terapias pueden pedirle algo que la app aún no tiene).
+
+Con la palabra completa, le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
 hijo de verdad va a ver**: las cápsulas de su etapa y los dibujos de los temas que eligieron ("con
 «animales», la app pone primero N cápsulas · M dibujos"). Si escribe algo que no está en el
 contenido de la app —por ejemplo, "colores", que a propósito no existe—, se lo dice de frente en
@@ -269,6 +278,10 @@ vez de fingir que alineó algo. Y si escribe algo que sí existe pero **fuera de
 aunque el Estudio sí le propondrá grabar esas palabras primero. El objetivo **no caduca solo**: se
 queda hasta que usted lo cambie o lo quite (y quitarlo deja todo como estaba). Siempre trabaja
 **dentro de la etapa** que eligió: nunca la salta.
+
+Con un objetivo activo, en el Estudio las grabaciones de **"Lo que ya grabaste"** que le sirven
+al objetivo llevan una **diana** junto a la palabra: de un vistazo ve cuáles del reto ya apuntan
+a lo que pidieron en las terapias.
 
 ### Qué mide y qué NO mide la app (importante)
 

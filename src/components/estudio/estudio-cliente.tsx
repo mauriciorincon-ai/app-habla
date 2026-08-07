@@ -18,7 +18,7 @@ import {
   type ItemGrabable,
 } from "@/lib/banco-voz/catalogo";
 import { calcularCobertura, type Cobertura } from "@/lib/banco-voz/cobertura";
-import { siguienteLote } from "@/lib/banco-voz/lotes";
+import { coincideConObjetivo, siguienteLote } from "@/lib/banco-voz/lotes";
 import type { Etapa } from "@content/schema";
 import type { Tema } from "@/lib/storage/temas";
 import {
@@ -31,6 +31,7 @@ import {
 import {
   IconoAltavoz,
   IconoBorrar,
+  IconoDiana,
   IconoHecho,
   IconoMicrofono,
   IconoRegrabar,
@@ -254,6 +255,9 @@ function ListaGrabados({
   onBorrado: (id: string) => void;
 }) {
   const { reproducir, sonando, progreso } = useReproductor();
+  // La diana del objetivo (gate S4, O2): las grabadas que sirven al objetivo de la semana se
+  // marcan — mismo predicado del lote, así la insignia y el orden jamás divergen.
+  const objetivo = useMemo(() => alinear(leerObjetivo()?.texto), []);
   return (
     <section className="flex flex-col gap-2">
       <h2 className="font-medium">Lo que ya grabaste</h2>
@@ -275,6 +279,7 @@ function ListaGrabados({
                     key={item.id}
                     indice={indice}
                     item={item}
+                    delObjetivo={coincideConObjetivo(objetivo, item)}
                     sonando={sonando === item.id}
                     progreso={progreso}
                     onEscuchar={() =>
@@ -307,6 +312,7 @@ const DESARME_MS = 4000;
 function FilaGrabada({
   indice,
   item,
+  delObjetivo,
   sonando,
   progreso,
   onEscuchar,
@@ -314,6 +320,8 @@ function FilaGrabada({
 }: {
   indice: number;
   item: ItemGrabable;
+  /** ¿Esta grabación sirve al objetivo de la semana? (gate S4, O2: lleva su diana.) */
+  delObjetivo: boolean;
   sonando: boolean;
   progreso: () => number;
   onEscuchar: () => void;
@@ -358,6 +366,15 @@ function FilaGrabada({
             {indice + 1}.
           </span>
           <span className="truncate">{item.texto}</span>
+          {delObjetivo ? (
+            <span
+              className="text-acento inline-flex shrink-0 items-center"
+              data-testid={`del-objetivo-${item.id}`}
+            >
+              <IconoDiana className="h-4 w-4" />
+              <span className="sr-only">del objetivo de la semana</span>
+            </span>
+          ) : null}
         </span>
         <span className="flex shrink-0 gap-2">
           <button
