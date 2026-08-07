@@ -2,7 +2,7 @@
 sprint: 004
 app: habla
 feature: el-rumbo-cierre-de-ciclo
-estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (249 unit · 149 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync + gate ⭐ ACUMULADO). Falta: gate ⭐ ACUMULADO del usuario (desktop+teléfono) → merge → /cierre-sprint.
+estado: listo para cierre — auditoría final en 2 fases EJECUTADA (0 críticos; 2 altos + 6 medios corregidos) · CI verde local (249 unit · 149 e2e · build · typecheck · lint) · deploy-check MERGE OK · CIERRE DE CICLO H1 (BLUEPRINT + design-sync) · **gate ⭐ ACUMULADO COMPLETADO por el usuario (2026-08-07, todos los bloques aprobados)**. Falta: merge del PR #5 (a su orden) → /cierre-sprint.
 fecha: 2026-07-19
 ciclo: H1 (sprint 4 de 4 — ÚLTIMO: este cierra el ciclo H1 de Hablemos San)
 ---
@@ -47,7 +47,7 @@ jamás la salta.
 por semilla del S3 no se movieron. La re-alineación de "Hoy" respeta el trabajo ya hecho: solo
 re-evalúa la cápsula del día si **no** está completada (R4, invariante congelada del S2 intacta).
 
-**Outcome 3 — CIERRE DE CICLO H1:** ✅ (producido) / ⏳ (gate del usuario)
+**Outcome 3 — CIERRE DE CICLO H1:** ✅ COMPLETO (gate ⭐ ACUMULADO ejecutado y aprobado por el usuario, 2026-08-07)
 Endurecimiento (las 5 deudas del remate S3 pagadas con evidencia) + iconos PWA reales + ADR-011 +
 ADR-014 (diccionario de ortografía embebido, nacido en el gate) + `docs/BLUEPRINT.html` + design
 system publicado (`/design-sync`) + **guía v4 con el gate ⭐ ACUMULADO** como recorrido ordenado.
@@ -66,7 +66,7 @@ Detalle en las secciones de abajo.
 | **7. IA embebida**      | **N/A**          | Cero LLM, cero SDK — **quinta vez consecutiva**. La alineación objetivo→contenido es **mapeo determinista**, no un modelo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | **Manual de uso**       | ✅               | Secciones nuevas "El rumbo — cómo van, sin notas" y "Objetivo de la semana — la sintonía con la fonoaudióloga"; historial 004.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | **Guía de prueba viva** | ✅               | `docs/GUIA-DE-PRUEBA.html` **v4 acumulativa**: hereda las v3 ENTERAS (S3 pasa a regresión), agrega bloques N (rumbo) y O (objetivo) + 2 ítems de tablet, **recorrido del gate ⭐ ACUMULADO con tiempos**. Gate ⭐ = **25** (~40 min). Elimina: nada.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **Revisión de diseño**  | ⏳               | Checklist `diseno-ui` auto-corrido sobre `/rumbo` y `/objetivo` (paleta operador, 5 estados del objetivo, sin jerga). **Aprobación visual del usuario = parte del gate ⭐ ACUMULADO** (abajo).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| **Revisión de diseño**  | ✅               | Checklist `diseno-ui` auto-corrido sobre `/rumbo` y `/objetivo` (paleta operador, estados del objetivo, sin jerga). **Aprobación visual del usuario DADA dentro del gate ⭐ ACUMULADO** (bloques N y O, con remates incorporados).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **BLUEPRINT (ciclo)**   | ✅               | `docs/BLUEPRINT.html` — as-built autocontenido con SVG embebido. Topología local-first honesta: sin BD, costo **US$0**, punto único de falla = **el dispositivo**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **design-sync (ciclo)** | ✅               | Publicado en Claude Design → **"Hablemos San — Design System"** (`915209fb…`). El repo es una app, no una librería de componentes → se autoró una **referencia de marca** (decisión del usuario): `styles.css` con los tokens + 8 tarjetas de preview (paleta, tipografía, personajes, Hoy/Rumbo/Objetivo, escenario, celebración honesta) + README de convenciones. Pin en `.design-sync/config.json`.                                                                                                                                                                                                                                                                                                                                             |
 
@@ -340,29 +340,27 @@ cerrado del S4** y merecen su propio sprint (o su ADR):
 
 - **`docs/BLUEPRINT.html`** ✅ — as-built real del ciclo H1. Diagrama SVG embebido, tabla por pieza
   completa, costo US$0, punto único de falla = el dispositivo (con ADR-011 citado).
-- **Design system publicado (`/design-sync`)** ⏳ acción externa — `design-system.md` consolidado
-  y listo; la publicación en Claude Design usa el login de diseño del usuario (ver abajo).
-- **Gate ⭐ ACUMULADO S1+S2+S3+S4** — la guía v4 lo ordena como recorrido con tiempos (25 pruebas,
-  ~40 min, desktop + teléfono). Es la **única vía de cierre** (jamás diferible — condición 4 del
-  método v1.9.0 que el S3 dejó pendiente). La lista de tablet es post-ciclo y **no gatea**.
+- **Design system publicado (`/design-sync`)** ✅ — referencia de marca "Hablemos San — Design
+  System" publicada en Claude Design.
+- **Gate ⭐ ACUMULADO S1+S2+S3+S4** ✅ **EJECUTADO Y APROBADO** (ver abajo).
 
-## El gate ⭐ ACUMULADO — pendiente del usuario (OBLIGATORIO, no diferible)
+## El gate ⭐ ACUMULADO — EJECUTADO por el usuario (cerrado 2026-08-07)
 
-Este es el cierre del ciclo: el S3 difirió su gate aquí, así que el gate del S4 es **acumulado
-S1+S2+S3+S4** y es la única vía. Se ejecuta con `docs/GUIA-DE-PRUEBA.html` v4:
-
-1. **Desktop + teléfono** (la tablet no gatea). Recorrido ordenado con tiempos en la guía.
-2. 25 pruebas ⭐ (~40 min): el oído (tono real) · Hoy + etapas · los 4 juegos con voz real · la voz
-   de la familia · **el rumbo** · **el objetivo**. Si excede una sesión, se parte en dos del MISMO gate.
-3. Incluye la **aprobación visual** de `/rumbo` y `/objetivo` (idealmente con el niño observando).
+El cierre del ciclo: el S3 difirió su gate aquí, así que el del S4 fue **acumulado
+S1+S2+S3+S4** — la única vía. Se ejecutó con `docs/GUIA-DE-PRUEBA.html` v4, por bloques a lo
+largo de varias sesiones (2026-08-01 → 2026-08-07), con resultados y propuestas de mejora del
+usuario POR BLOQUE y remates construidos en vivo (los grandes: ADR-012/013 de los juegos sin
+fin, el rediseño de gemelas, el lote por grupos del estudio, la barra de reproducción, los
+hitos 7→16, y los **seis remates del bloque O** — sugerencias vivas, la eñe, el diccionario de
+ortografía ADR-014, los temas visibles, y la tarjeta activa con estados para daltonismo).
+Aprobación final del usuario: **"probé todo el bloque O, todo en orden y corriendo según lo
+esperado"** — todos los bloques del recorrido aprobados. La lista de tablet queda post-ciclo
+(de viaje; ADRs 003/007/010 al regresar — no gatea).
 
 ## Lo que falta para cerrar (acciones del usuario)
 
-1. **Ejecutar el gate ⭐ ACUMULADO** (desktop + teléfono, guía v4) — única vía de cierre.
-2. ~~Publicar el design system~~ ✅ **hecho** — referencia de marca en Claude Design
-   ("Hablemos San — Design System"). Revísalo si quieres (link en el reporte del chat).
-3. **Merge del PR** con CI verde + tu OK del gate.
-4. **Correr `/cierre-sprint habla`** en la planeadora — cierra el sprint **y el ciclo H1** (H1 de
+1. **Merge del PR #5** con CI verde — a tu orden explícita.
+2. **Correr `/cierre-sprint habla`** en la planeadora — cierra el sprint **y el ciclo H1** (H1 de
    Hablemos San COMPLETO).
 
 ## Aprovisionamiento
