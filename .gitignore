@@ -4,6 +4,8 @@ node_modules/
 .next/
 # Artefacto generado por build:worklet (fuente: src/worklets/)
 public/worklets/
+# Artefacto generado por build:brochure (fuente: docs/BROCHURE.html — el canónico)
+public/conoce.html
 out/
 build/
 coverage/
