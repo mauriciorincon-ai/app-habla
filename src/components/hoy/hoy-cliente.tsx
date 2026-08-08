@@ -30,6 +30,7 @@ import {
   capsulaDeHoy,
   marcarCapsulaHecha,
 } from "@/components/estado-capsulas";
+import { diasPracticados } from "@/lib/coach/daily";
 import { useHidratado } from "@/components/use-hidratado";
 import { Onboarding } from "./onboarding";
 
@@ -42,8 +43,19 @@ export function HoyCliente() {
   const etapa = ajustes?.etapa;
 
   // Corre también cuando el padre cambia de etapa en Ajustes (la cápsula de hoy se re-hace).
+  // Y cuando la pestaña DESPIERTA en otro día (la PWA que quedó abierta desde anoche):
+  // sin re-asignar, la pantalla mostraba la cápsula de ayer congelada.
   useEffect(() => {
     asegurarAsignacionDeHoy();
+    const alDespertar = () => {
+      if (!document.hidden) asegurarAsignacionDeHoy();
+    };
+    document.addEventListener("visibilitychange", alDespertar);
+    window.addEventListener("focus", alDespertar);
+    return () => {
+      document.removeEventListener("visibilitychange", alDespertar);
+      window.removeEventListener("focus", alDespertar);
+    };
   }, [etapa]);
 
   // Altura reservada: el contenido llega tras hidratar, pero el layout no salta (CLS).
@@ -60,7 +72,7 @@ export function HoyCliente() {
   }
 
   const { capsula, completada, fecha } = capsulaDeHoy(progreso, ajustes.etapa);
-  const diasAcompañados = progreso.historial.length;
+  const diasAcompañados = diasPracticados(progreso.historial);
 
   return (
     <div className="flex min-h-[22rem] flex-col gap-6">
