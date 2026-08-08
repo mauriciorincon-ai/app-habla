@@ -352,6 +352,8 @@ nació muerta y la v2 no. **Recomendación: el brochure no se estampa, se PRODUC
       molde en la v1, 2 propios en la v2, 12 que solo se veían mirando la imagen).
 - [x] Cero cambios de comportamiento en la app.
 - [x] **CI verde en el PR #7** (quality · e2e · lighthouse · Vercel).
-- [ ] **Gate visual del usuario sobre la v6** — la v1 lo reprobó; de la v2 en adelante fue puliendo
-      ronda a ronda, y esta cierra sus dos últimas correcciones.
+- [x] **Gate visual del usuario APROBADO sobre la v6** (2026-08-07): _"todo en orden para este MVP,
+      pero sé que tendremos ajustes, pero por ahora nos vamos así"_. La v1 lo reprobó; de la v2 en
+      adelante fue puliendo ronda a ronda hasta esta. **Queda declarado que habrá ajustes**: el
+      brochure es vivo y acumulativo, como la guía de prueba.
 - [ ] Merge a la orden del usuario → él envía el link de producción a la mamá.
