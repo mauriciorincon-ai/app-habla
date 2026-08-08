@@ -146,6 +146,65 @@ Los dos hallazgos son **del molde v1.9.0**, no de habla — por eso van también
    del fundido. Ahora el titular **sube sin desvanecerse** y el fundido se lo queda la línea de
    apoyo, que no es candidata.
 
+## ⚠️ El gate visual RECHAZÓ la v1 — y el diagnóstico es del molde
+
+El usuario probó la v1 y la rechazó sin medias tintas: _"la parte inicial tiene un pequeño
+viso de lo que podría ser el diseño, pero hacia abajo todo mal"_. Tenía razón, y el hallazgo
+importa mucho más para la planeadora que para habla, porque **el defecto es del molde**, no
+de esta app:
+
+> **El molde v1.9.0 heredó la LEY del Estudio CINE y ninguna de sus TÉCNICAS.**
+
+La plantilla declara que su ADN viene de `hr03-estudio-cine` y cita las tres gramáticas —
+pero al estamparse **vetó G1** ("pesa demasiado para un brochure"), **redujo G2 a un
+acordeón** y **G3 a un `fade-up` con stagger**. El estudio tiene **13 patrones catalogados**
+en `memoria/patrones-acumulados.md` (cortina de 3 poses, `steps()` como identidad, física en
+timeline, boiling line, brochazo, typewriter honesto, gramática de apertura blur-to-focus…):
+el molde usaba **dos**. Un builder que sigue el molde al pie de la letra produce
+inevitablemente un documento peinado — que es exactamente lo que pasó.
+
+Y hubo un segundo defecto, de **método**: el molde salta la dramaturgia. No pide storyboard,
+no pide clímax, no pide ritmo. Por eso la promesa más importante de la app —la privacidad—
+había quedado como el primer acordeón del pie de página. El motion no era el problema de
+fondo: **la escaleta lo era**.
+
+### Cómo se corrigió
+
+Se corrió el método completo del estudio: **storyboard primero**
+([`ENTREGA-brochure-storyboard.md`](ENTREGA-brochure-storyboard.md), aprobado por el usuario
+con «guion aprobado»), con 8 escenas, gramática por escena, justificación narrativa de cada
+técnica, riesgo de dirección de arte registrado y variante `reduced-motion` declarada
+**por escena**. Solo después se escribió una línea de HTML.
+
+### Las 5 referencias que trajo el usuario — qué se tomó y qué NO
+
+Él aportó los prompts de 5 piezas de motionsites que le gustan. Se analizaron con el
+protocolo del estudio (técnicas, no stacks — las 5 usan React/GSAP/Framer/vídeo remoto y
+este entregable es un archivo autocontenido que abre con doble clic):
+
+| Referencia                | Qué se adoptó                                                                                                                                                                                                                                            | Qué se descartó y por qué                                                                                                                                                                                    |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1 y 5 · portafolio oscuro | Entrada `blur-to-focus` con stagger y curva `cubic-bezier(.16,1,.3,1)` · contador rAF que se cuenta solo · marquesina lenta · indicador de scroll con riel animado                                                                                       | Pantalla de carga (un brochure que hace esperar a quien odia los manuales es un chiste cruel) · vídeo HLS y webfonts de CDN (romperían el autocontenido) · gradiente de acento (el DS de habla no lo tiene)  |
+| 2 · museo                 | Numeración de actos con regla mono `01 —` · titulares grandes en display · píldoras/chips · **`steps()` como identidad** (la llama del cohete hierve en dos poses) · cortina que barre el botón al hover                                                 | Disolución por `feTurbulence`/`feDisplacementMap` (bonita, pero re-renderiza el filtro por frame en un móvil; el "grano" se logró con transforms) · auto-ciclado de capítulos (quita el control a quien lee) |
+| **3 · Mostar (vanilla)**  | **El motor entero**: escena pegada + rig de scroll, variables CSS escritas por un solo `rAF`, `clamp`/`smoothstep`/`lerp`, inercia `lerp(…, .14)`, paralaje de puntero `.12`, y el patrón de "seguir pidiendo cuadros solo mientras la inercia no llegó" | El secuestro del scroll y los 3.700 px de rig (aquí el rig es **una pantalla**: ella lee en el teléfono) · las capas fotográficas remotas                                                                    |
+| 4 · moda                  | Escalado de tarjetas según su posición en pantalla, con origen de transformación variable                                                                                                                                                                | Cursor personalizado y `mix-blend-mode: exclusion` (ilegible sobre crema, y un cursor propio no ayuda a nadie en una tablet) · panel negro a pantalla completa (secuestra el recorrido)                      |
+
+**La regla que gobernó cada decisión** es la del propio estudio: _"¿qué del MENSAJE hace
+necesaria esta técnica?"_. Si la respuesta era "se ve increíble", la técnica se cortó.
+
+### Qué es la v2, en una línea
+
+El **hilo del globo**: sube por el borde mientras avanzas — tu recorrido _es_ la voz
+sostenida. El titular se enfoca palabra por palabra; los iconos se terminan de dibujar; el
+globo cruza y da su vuelta con confeti; y la privacidad dejó de ser un acordeón para volverse
+**escena nocturna con paleta propia**, donde las barras del medidor bailan y se apagan
+**dentro** del marco y la fuga llega al borde y se devuelve. El motion ES el argumento.
+
+**Dos defectos propios, cazados por sondas antes de entregar** (no por la CI —de ahí la
+lección): (1) con `prefers-reduced-motion` el rig colapsado daba progreso 1 y **desvanecía el
+hero**: la experiencia alterna quedaba en blanco, justo lo que la regla prohíbe; (2) un token
+del acto claro se coló en la escena nocturna (contraste 1,73:1) — ese sí lo cazó axe.
+
 ## Feedback del molde v1.9.0 — para la planeadora
 
 Como piloto del estándar, esto es lo que el caso real le pide al molde:
@@ -168,6 +227,38 @@ Como piloto del estándar, esto es lo que el caso real le pide al molde:
 6. **Nota de `data-tema`:** el brochure vive fuera del storage de la app, así que no puede seguir
    la preferencia de tema que el padre fijó en Ajustes — solo la del sistema. Vale la pena que el
    molde lo diga, porque en cualquier app con selector de tema pasará lo mismo.
+
+## Propuesta concreta: el molde v2 (lo que este piloto aprendió a la mala)
+
+Los 6 puntos de arriba son correcciones. Esto es lo estructural — la razón por la que la v1
+nació muerta y la v2 no. **Recomendación: el brochure no se estampa, se PRODUCE.**
+
+1. **Paso de dramaturgia obligatorio, antes del HTML.** El molde debe pedir un storyboard con
+   escenas, mensaje por escena, técnica con su justificación narrativa, clímax explícito y
+   ritmo (regla del estudio: _toda escena clímax = ninguna lo es_). La v1 escondió la promesa
+   más importante de la app en el primer acordeón del pie **porque nadie le preguntó cuál era
+   el clímax**. Gate barato: se corrige en el guion, no en el código.
+2. **Un banco de técnicas por gramática, no las etiquetas.** Hoy el molde nombra G1/G2/G3 y
+   entrega un `fade-up`. Debe traer las recetas del estudio listas para copiar y **en vanilla**
+   (el motor de la referencia Mostar cabe en ~60 líneas: `clamp`/`smoothstep`/`lerp` + un
+   `rAF` que escribe variables CSS). Sin recetas, "G3" degenera en fundido.
+3. **La dirección de arte necesita diales y un riesgo registrado.** El molde debe exigir
+   `MOTION_INTENSITY` fijado con el usuario **antes** de construir, la identidad justificada
+   en una frase, y **una decisión valiente registrada** que el usuario juzgue. Sin eso, el
+   builder elige lo seguro y lo seguro se ve a plantilla.
+4. **La sala de proyección es el gate, y su checklist debe estar en el molde.** "La CI verifica
+   el comportamiento, no la experiencia": aquí la CI estuvo **verde con un entregable
+   rechazado**. El molde debe decirlo con esas palabras para que nadie confunda verde con
+   bueno.
+5. **`prefers-reduced-motion` necesita verificación ACTIVA, no una promesa.** El bug más grave
+   de esta entrega —el hero invisible con movimiento reducido— **pasó los 12 e2e y Lighthouse
+   100/100**: ningún gate automático miraba esa rama. Propuesta para el molde: un e2e
+   obligatorio que cargue la pieza con `reducedMotion: "reduce"` y afirme que los elementos
+   clave tienen opacidad y tamaño reales. Es de las pocas cosas de "experiencia" que **sí** se
+   pueden automatizar, y esta entrega demuestra por qué hay que hacerlo.
+6. **Presupuesto de recorrido en móvil.** El molde debe acotar cuánto scroll extra puede
+   costar la coreografía. Aquí el rig son **~1 pantalla** (las referencias usan 3–4): quien
+   odia los manuales no puede pagar peaje para llegar al contenido.
 
 ## Decisiones abiertas y oportunidades de mejora (para la planeadora)
 
@@ -194,13 +285,18 @@ Como piloto del estándar, esto es lo que el caso real le pide al molde:
 
 - [x] `docs/BROCHURE.html` autocontenido, 4 capas, 6 tarjetas, 24 features con conteo verificable.
 - [x] `/conoce` sirve el mismo contenido, sin duplicación manual.
-- [x] Motion G3 + G2 (con la excepción declarada de `grid-template-rows`), y `prefers-reduced-motion`
-      como experiencia **completa**: todo el contenido llega, sin movimiento.
+- [x] **Rediseño CINE (v2)** sobre el storyboard aprobado: 8 escenas, gramática dominante G3 con
+      un momento G1 sereno y G2 en las tarjetas, motor vanilla de ~60 líneas (cero librerías).
+- [x] Motion con las **tres excepciones declaradas y comentadas** a solo-`transform`/`opacity`
+      (`grid-template-rows`, `stroke-dashoffset`, `filter: blur` de apertura), y
+      `prefers-reduced-motion` como experiencia **completa** — verificada en los dos modos con
+      una sonda propia, no asumida.
 - [x] A11y: teclado completo, `aria-expanded`/`aria-controls` correctos, contraste AA en los dos
-      temas, y lo cerrado fuera del árbol de accesibilidad.
-- [x] `/self-review` corrido, con sus dos hallazgos corregidos y verificados.
+      temas, lo cerrado fuera del árbol de accesibilidad y el LCP naciendo pintado.
+- [x] `/self-review` corrido; 4 defectos hallados y corregidos en total (2 del molde en la v1,
+      2 propios en la v2).
 - [x] Cero cambios de comportamiento en la app.
-- [ ] **CI verde en el PR.**
-- [ ] **Gate visual del usuario sobre la preview** (obligatorio: aprueba el brochure de habla Y
-      sella el molde v1.9.0 con el caso real enfrente).
+- [x] **CI verde en el PR #7** (quality · e2e · lighthouse · Vercel) con la v2.
+- [ ] **Gate visual del usuario sobre la preview** — la v1 lo reprobó; este es el segundo
+      intento, y sella el molde v2 con el caso real enfrente.
 - [ ] Merge a la orden del usuario → él envía el link de producción a la mamá.
