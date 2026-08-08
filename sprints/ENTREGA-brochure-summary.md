@@ -356,4 +356,13 @@ nació muerta y la v2 no. **Recomendación: el brochure no se estampa, se PRODUC
       pero sé que tendremos ajustes, pero por ahora nos vamos así"_. La v1 lo reprobó; de la v2 en
       adelante fue puliendo ronda a ronda hasta esta. **Queda declarado que habrá ajustes**: el
       brochure es vivo y acumulativo, como la guía de prueba.
+- [x] **Auditoría pre-merge a su orden** (Fase 1 solo lectura → Fase 2 aprobada): lectura completa
+      del archivo (2 114 líneas), verificación de TODO dato factual contra el código de la app
+      (50 cápsulas · 5 técnicas con nombres exactos · 16 hitos contados · microcopy literal),
+      sondas de consola en 3 modos (0 errores) y revisión del JS por casos borde. **9 hallazgos,
+      ninguno bloqueante**: 1 media (el taller bajo movimiento reducido no quedaba en su pose
+      final — corregido) + 4 bajas de prolijidad (corregidas: escenas 8→9 en la doc, CSS muerto,
+      tinta unificada, comentario del motor desactualizado) + 4 observaciones aceptadas sin
+      cambio (comillas anidadas « ‹ › », maquetas representativas, estilos inline del h2,
+      `overflow-anchor`). Los datos factuales y el microcopy citado: **cero errores**.
 - [ ] Merge a la orden del usuario → él envía el link de producción a la mamá.

@@ -242,3 +242,22 @@ acordeón a escena.
 - **El feel no es verificable por CI** ("la CI verifica el comportamiento, no la
   experiencia"): la sala de proyección eres tú, en tu teléfono y tu computador, a
   velocidad real y a scroll lento. Este storyboard es el contrato de qué vas a ver.
+
+---
+
+## Adenda — lo que el gate visual sumó después de la aprobación (v3–v6)
+
+El contrato de arriba (8 escenas) se aprobó con «guion aprobado» y se construyó entero.
+Las cuatro rondas del gate visual del usuario lo AMPLIARON — no lo contradijeron:
+
+- **E06a · El acto del Estudio (nueva, v4):** una novena escena, antes del clímax de
+  privacidad — «me parece incluso más relevante por lo que debe ir antes de esta». Misma
+  noche que E06 (un solo fondo, decidido en v5), distinguida solo por el acento ámbar de
+  la voz parental. Su animación: grabas → se queda aquí → viaja → suena en los juegos.
+- **E03/E04:** las tarjetas pasan páginas solas al bajar (con anclaje de scroll) y quedan
+  cerradas al subir; la apertura se anuncia (marco + destello + telón); 10 enlaces
+  directos a las rutas reales.
+- **E05:** la galería creció de 1 cancha a las 4, se re-anima en cada pasada, y las
+  canchas se arman como la app (marco → palabra → altavoz).
+
+El detalle de cada ronda vive en `ENTREGA-brochure-summary.md` (tabla v3–v6).

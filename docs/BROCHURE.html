@@ -10,7 +10,8 @@
   BROCHURE VIVO de Hablemos San — v2, rediseño con el método del Estudio CINE
   (hr03-estudio-cine). El v1 estampó el molde del kit v1.9.0 y el gate visual lo rechazó
   con razón: era un documento peinado, no una pieza. El guion de esta versión está
-  aprobado por el usuario en sprints/ENTREGA-brochure-storyboard.md (G-Guion, 8 escenas).
+  aprobado por el usuario en sprints/ENTREGA-brochure-storyboard.md (G-Guion, 8 escenas;
+  el gate visual sumó después una novena: E06a, el acto del Estudio, antes del clímax).
 
   Doble vida: este archivo es el CANÓNICO (autocontenido, abre con doble clic sin
   internet) y la ruta pública /conoce sirve esta misma copia (scripts/copiar-brochure.mjs).
@@ -406,7 +407,6 @@
 
   /* ── E06 · EL TALLER: grabas una vez y tu voz queda en los cuatro juegos. ──── */
   .taller-svg { display: block; width: 100%; height: auto; }
-  .taller-svg .traza { fill: none; stroke: var(--borde-n); stroke-width: 1.5; }
   .taller-svg .via { fill: none; stroke: var(--borde-n); stroke-width: 1.5;
     stroke-dasharray: 3 5; }
   .taller-svg .tv-barra { fill: var(--acento-n); transform-box: fill-box;
@@ -414,7 +414,7 @@
   .taller-svg .tv-tarjeta { transform-box: fill-box; transform-origin: 50% 50%; }
   .taller-svg .tv-caja { fill: color-mix(in srgb, var(--acento-n) 16%, transparent);
     stroke: var(--acento-n); stroke-width: 1.5; }
-  .taller-svg .tv-texto { fill: #F4EFE6; font-family: Georgia, serif; font-size: 15px; }
+  .taller-svg .tv-texto { fill: #F2EFE8; font-family: Georgia, serif; font-size: 15px; }
   .taller-svg .tv-rotulo { fill: var(--tinta-suave-n);
     font-family: ui-monospace, Menlo, monospace; font-size: 8px;
     letter-spacing: .1em; text-transform: uppercase; }
@@ -814,6 +814,11 @@
     .cielo-juego i { opacity: .75; }
     /* Las barras de la promesa, quietas a media altura dentro del marco. */
     .aparato .barra { transform: scaleY(.55); }
+    /* Y el taller en su pose FINAL, no en la de reposo del ciclo: las pantallas de
+       «Suena en los juegos» encendidas y el medidor a media altura — la misma regla
+       que el aparato de la promesa (auditoría pre-merge, hallazgo 1). */
+    .taller-svg .tv-pantalla { opacity: 1; }
+    .taller-svg .tv-barra { transform: scaleY(.55); }
     .marquesina div { animation: none; }
   }
 </style>
@@ -1630,7 +1635,7 @@
       <p class="pie-aparato">grabas una vez · se queda aquí · suena en los cuatro juegos</p>
 
       <p class="revela" style="margin-top:26px">Los juegos pueden sonar con la voz de mamá
-        o papá en vez de estar mudos. En el <strong style="color:#F4EFE6">Estudio</strong>
+        o papá en vez de estar mudos. En el <strong style="color:#F2EFE8">Estudio</strong>
         grabas de a una las palabras de los dibujos, las consignas del juego y las
         celebraciones: tocas «Grabar», la dices, la <em>escuchas cómo quedó</em> y la
         guardas o la regrabas sin pena. Mientras grabas, una barra baila con tu voz — si se
@@ -2008,8 +2013,10 @@
   }
 
   /* ── E01 + E02 · EL MOTOR. Un solo bucle escribe variables CSS con inercia: el
-        scroll únicamente mueve el playhead, nada anima por su cuenta. Cero lectura
-        de layout dentro del tick (las medidas se cachean en resize).  ────────── */
+        scroll únicamente mueve el playhead, nada anima por su cuenta. Las medidas
+        del rig y el hilo se cachean en resize; la ÚNICA lectura de layout por tick
+        es la del acordeón (sus getBoundingClientRect), inevitable porque decide
+        contra el layout que de verdad hay — perf medida: TBT 0 ms.  ──────────── */
   var rig = document.getElementById("apertura");
   var hiloCaja = document.querySelector(".hilo");
   var pista = document.querySelector(".hilo-pista");
