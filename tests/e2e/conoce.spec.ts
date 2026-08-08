@@ -59,6 +59,28 @@ test("las tarjetas se abren al bajar, y tu toque manda sobre el recorrido", asyn
   await expect(tarjeta).toHaveAttribute("aria-expanded", "false");
 });
 
+// El recorrido es de ida: bajando se abren, subiendo NO. El camino de vuelta queda
+// limpio — quien ya leyó y regresa no vuelve a encontrarse el contenido desplegado.
+test("al volver hacia arriba, las tarjetas se quedan cerradas", async ({
+  page,
+}) => {
+  await page.goto("/conoce");
+
+  const tarjeta = page.getByRole("button", {
+    name: /La respuesta de cada día/,
+  });
+  await page.evaluate(() =>
+    document
+      .querySelector(".tarjetas .tarjeta")
+      ?.scrollIntoView({ block: "start" }),
+  );
+  await expect(tarjeta).toHaveAttribute("aria-expanded", "true");
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(page.getByRole("button", { expanded: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { expanded: false })).toHaveCount(6);
+});
+
 // Cada tarjeta lleva a su sitio en la app: la entrega no es solo entender, es llegar.
 test("cada tarjeta y cada juego enlazan a su ruta real", async ({ page }) => {
   await page.goto("/conoce");
