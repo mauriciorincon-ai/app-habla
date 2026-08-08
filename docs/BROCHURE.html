@@ -261,26 +261,134 @@
      ═══════════════════════════════════════════════════════════════════════════ */
   .respiro { margin-top: clamp(64px, 12vh, 116px); }
   .respiro .marco { max-width: 760px; margin: 0 auto; padding: 0 22px; }
-  .cancha { position: relative; height: 210px; margin-top: 22px; overflow: hidden;
-    background: var(--nino-bg); border-radius: 22px; border: 1px solid #ECE4D2; }
-  .suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 34px;
+  .galeria { display: grid; gap: 30px; margin-top: 26px; }
+  .juego h3 { font-size: 1.12rem; margin-bottom: 3px; }
+  .juego h3 .num { font-family: ui-monospace, Menlo, monospace; font-size: .66rem;
+    letter-spacing: .12em; color: var(--tinta-suave); margin-right: 8px; }
+
+  /* Las canchas son la pantalla DEL NIÑO: siempre claras, en su paleta, pase lo que
+     pase con el tema del adulto. `container-type` deja que el recorrido del globo se
+     mida contra la cancha (cqw) y no contra la ventana. */
+  .cancha { position: relative; height: 178px; margin-top: 12px; overflow: hidden;
+    container-type: inline-size;
+    background: var(--nino-bg); border-radius: 20px; border: 1px solid #ECE4D2; }
+  .suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 30px;
     background: color-mix(in srgb, var(--nino-sage) 40%, var(--nino-bg)); }
-  .meta { position: absolute; right: 17%; top: 16px; bottom: 34px; width: 2px;
+  .meta { position: absolute; left: 83%; top: 14px; bottom: 30px; width: 2px;
     background: color-mix(in srgb, var(--nino-ink) 26%, transparent); }
   .meta::after { content: ""; position: absolute; left: -5px; top: -2px; width: 12px;
     height: 8px; background: var(--nino-peach);
     border: 1.5px solid var(--nino-ink); border-radius: 2px; }
-  .globo-juego { position: absolute; left: 0; bottom: 44px; width: 42px; height: 63px;
-    transform: translateX(-70px); }
-  .globo-juego svg { display: block; width: 100%; height: 100%; }
-  .confeti { position: absolute; right: 17%; top: 24px; width: 2px; height: 2px; }
+  .globo-juego { position: absolute; left: 0; bottom: 38px; width: 42px; height: 63px;
+    transform: translateX(-56px); }
+  .globo-juego svg, .cohete-juego svg { display: block; width: 100%; height: 100%; }
+  .confeti { position: absolute; left: 83%; top: 20px; width: 2px; height: 2px; }
   .confeti i { position: absolute; display: block; width: 7px; height: 11px;
     border-radius: 2px; background: var(--c); opacity: 0;
     transform: translate3d(0, 0, 0) rotate(var(--r)); }
-  .leyenda { display: flex; align-items: baseline; gap: 10px; margin-top: 14px;
-    font-size: .9rem; color: var(--tinta-suave); }
-  .leyenda b { font-family: ui-monospace, Menlo, monospace; font-size: .8rem;
-    color: var(--acento); font-weight: 400; }
+  .leyenda { display: flex; align-items: baseline; gap: 10px; margin-top: 11px;
+    font-size: .88rem; color: var(--tinta-suave); }
+  .leyenda b { font-family: ui-monospace, Menlo, monospace; font-size: .78rem;
+    color: var(--acento); font-weight: 400; white-space: nowrap; }
+
+  /* Cancha 2 · el cohete: aquí no hay pasto, hay CIELO — y pasa hacia abajo mientras
+     él sube, que es lo que hace sentir la altura. */
+  .cancha[data-juego="cohete"] { background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--nino-sky) 55%, var(--nino-bg)) 0%, var(--nino-bg) 82%); }
+  .cielo-juego { position: absolute; inset: 0; }
+  .cielo-juego i { position: absolute; display: block; background: #FFFFFF;
+    border-radius: 999px; opacity: .8; }
+  .cielo-juego i.chispa { background: var(--nino-yellow); width: 6px; height: 6px;
+    border: 1px solid var(--nino-ink); }
+  .cohete-juego { position: absolute; left: 50%; bottom: 18px; width: 48px; height: 72px;
+    margin-left: -24px; }
+  .marcador { position: absolute; left: 12px; top: 12px; padding: 3px 9px;
+    border-radius: 999px; background: var(--nino-bg); border: 1.5px solid var(--nino-ink);
+    font-family: ui-monospace, Menlo, monospace; font-size: .64rem; color: var(--nino-ink);
+    opacity: 0; }
+
+  /* Cancha 3 · palabra y dibujo: el marco se enciende con CUALQUIER sonido. */
+  .picto { position: absolute; left: 50%; top: 22px; width: 118px; margin-left: -59px;
+    padding: 10px 10px 6px; border-radius: 14px; background: var(--nino-bg);
+    border: 3px solid var(--nino-ink); text-align: center; }
+  .picto svg { display: block; width: 76px; height: 54px; margin: 0 auto; }
+  .picto svg :is(path, rect, circle, ellipse) { fill: none; stroke: var(--nino-ink);
+    stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .picto span { display: block; margin-top: 4px; font-family: Georgia, serif;
+    font-size: 1.02rem; color: var(--nino-ink); }
+  .halo { position: absolute; left: 50%; top: 22px; width: 118px; height: 106px;
+    margin-left: -59px; border-radius: 14px; border: 3px solid var(--fiesta-verde);
+    opacity: 0; }
+  .globitos { position: absolute; left: 50%; bottom: 0; width: 2px; height: 2px; }
+  .globitos i { position: absolute; display: block; width: 14px; height: 19px;
+    border-radius: 50% 50% 45% 45%; background: var(--c); opacity: 0;
+    border: 1.5px solid var(--nino-ink); }
+
+  /* Cancha 4 · palabras gemelas: dos que suenan casi igual; el que oye eres tú. */
+  .pareja { position: absolute; inset: 16px 0 auto; display: flex; justify-content: center;
+    gap: 14px; }
+  .pareja .picto { position: static; margin: 0; width: 106px; border-width: 2.5px; }
+  .pareja .picto svg { width: 62px; height: 46px; }
+  .pareja .picto span b { font-weight: 400; color: var(--fiesta-cielo); }
+  .pareja .picto.gana { border-color: var(--fiesta-verde);
+    background: color-mix(in srgb, var(--fiesta-verde) 12%, var(--nino-bg)); }
+  .dijo { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+    padding: 4px 12px; border-radius: 999px; background: var(--nino-bg);
+    border: 1.5px solid var(--nino-ink); font-family: Georgia, serif; font-size: .84rem;
+    color: var(--nino-ink); white-space: nowrap; opacity: 0; }
+
+  /* ── Maquetas dentro de las tarjetas: la imagen donde el texto pesa. ───────── */
+  .mock { margin-top: 12px; padding: 14px; background: var(--fondo);
+    border: 1px solid var(--borde); border-radius: var(--radio-chico); }
+  .mock-rotulo { font-family: ui-monospace, Menlo, monospace; font-size: .6rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave);
+    margin: 0 0 8px; }
+  .mock-linea { font-family: Georgia, serif; font-style: italic; font-size: 1.06rem;
+    color: var(--tinta); margin: 0; }
+  .mock-pie { display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin-top: 12px; }
+  .mock-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+    border-radius: 999px; font-size: .8rem; background: var(--acento);
+    color: var(--fondo); }
+  .mock-pill svg { width: 14px; height: 14px; }
+  .mock-pill svg path { fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round; }
+  .mock-dato { font-size: .8rem; color: var(--tinta-suave); }
+
+  /* El hilo del Estudio: grabas → se queda aquí → suena en el juego. */
+  .hilera { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start;
+    gap: 6px; text-align: center; }
+  .hilera .paso { display: grid; justify-items: center; gap: 6px; font-size: .74rem;
+    line-height: 1.3; color: var(--tinta-suave); }
+  .hilera .caja { width: 40px; height: 40px; display: grid; place-items: center;
+    border-radius: var(--radio-chico); border: 1px solid var(--borde);
+    background: var(--superficie); color: var(--acento); }
+  .hilera .caja svg { width: 21px; height: 21px; }
+  .hilera .caja svg :is(path, rect, circle) { fill: none; stroke: currentColor;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hilera .flecha { align-self: start; margin-top: 19px; color: var(--tinta-suave);
+    font-size: .9rem; }
+
+  /* Los tres estados del objetivo: color + FORMA + palabras (daltonismo). */
+  .estados { display: grid; gap: 8px; }
+  .estados div { display: flex; align-items: flex-start; gap: 9px; padding: 9px 11px;
+    border-radius: 10px; border: 1px solid var(--borde); border-left-width: 4px;
+    background: var(--superficie); font-size: .82rem; line-height: 1.4; }
+  .estados div:nth-child(1) { border-left-color: #527947; }
+  .estados div:nth-child(2) { border-left-color: #4A6E84; }
+  .estados div:nth-child(3) { border-left-color: #B14B3D; }
+  .estados svg { flex: none; width: 17px; height: 17px; margin-top: 2px; }
+  .estados svg :is(path, circle) { fill: none; stroke: currentColor; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round; }
+
+  /* El rumbo: semanas medidas, sin notas ni porcentajes. */
+  .semanas { display: flex; align-items: flex-end; gap: 10px; height: 62px; }
+  .semanas i { flex: 1; display: block; background: var(--acento-suave);
+    border-top: 2px solid var(--acento); border-radius: 4px 4px 0 0; height: var(--h); }
+  .semanas-pie { display: flex; gap: 10px; margin-top: 6px; }
+  .semanas-pie span { flex: 1; text-align: center;
+    font-family: ui-monospace, Menlo, monospace; font-size: .6rem;
+    color: var(--tinta-suave); }
 
   /* ═══════════════════════════════════════════════════════════════════════════
      E06 · EL CLÍMAX — la noche de la pieza. Único acto con paleta propia, porque es
@@ -403,26 +511,76 @@
     .tarjeta[data-abierta] .escenario .llama { animation: hervir .34s steps(2) 4; }
     @keyframes hervir { 50% { transform: translate(.6px, -.6px) scaleY(1.06); } }
 
-    /* E05 · la corrida: cruza, toca la línea, una vuelta de confeti que cae y se va. */
+    /* ── E05 · LAS CUATRO CANCHAS. Cada una corre UNA vez, al verse de verdad: es
+          una demostración, no un letrero de neón. Medidas en cqw: el recorrido se
+          mide contra la cancha, no contra la ventana. ────────────────────────── */
+
+    /* 1 · el globo: cruza, toca la línea, una vuelta de confeti que cae y se va. */
     .cancha.corre .globo-juego { animation: cruzar 2.9s var(--ease-suave) forwards; }
     @keyframes cruzar {
-      0%   { transform: translateX(-70px) translateY(0); }
-      50%  { transform: translateX(38vw) translateY(-8px); }
-      100% { transform: translateX(calc(83vw - 40px)) translateY(0); }
-    }
-    @media (min-width: 800px) {
-      @keyframes cruzar {
-        0%   { transform: translateX(-70px) translateY(0); }
-        50%  { transform: translateX(300px) translateY(-8px); }
-        100% { transform: translateX(600px) translateY(0); }
-      }
+      0%   { transform: translateX(-56px) translateY(0); }
+      50%  { transform: translateX(42cqw) translateY(-9px); }
+      100% { transform: translateX(calc(83cqw - 21px)) translateY(0); }
     }
     .cancha.corre .confeti i { animation: caer 1.5s ease-in forwards;
-      animation-delay: calc(2.55s + var(--d)); }
+      animation-delay: calc(var(--t, 2.55s) + var(--d)); }
     @keyframes caer {
       0%   { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--r)); }
-      100% { opacity: 0; transform: translate3d(var(--x), 118px, 0) rotate(calc(var(--r) * 3)); }
+      100% { opacity: 0; transform: translate3d(var(--x), 104px, 0) rotate(calc(var(--r) * 3)); }
     }
+
+    /* 2 · el cohete: la voz sube y baja como una sirena; el cielo pasa hacia abajo
+          mientras él sube, y al completar la subida-y-bajada llega el hito. */
+    .cancha.corre .cohete-juego { animation: sirena 3.4s var(--ease-suave) forwards; }
+    @keyframes sirena {
+      0%   { transform: translateY(0); }
+      26%  { transform: translateY(-66px); }
+      46%  { transform: translateY(-14px); }
+      72%  { transform: translateY(-78px); }
+      100% { transform: translateY(-30px); }
+    }
+    .cancha.corre .cielo-juego i { animation: pasar 3.4s linear forwards;
+      animation-delay: var(--d); }
+    @keyframes pasar {
+      0%   { opacity: 0; transform: translateY(-30px); }
+      18%  { opacity: .75; }
+      100% { opacity: 0; transform: translateY(140px); }
+    }
+    .cancha.corre .marcador { animation: llega 2s var(--ease-cine) 2.5s forwards; }
+    @keyframes llega { from { opacity: 0; transform: translateY(-6px); }
+                       to   { opacity: 1; transform: none; } }
+
+    /* 3 · palabra y dibujo: el marco se enciende con cualquier sonido (pop + halo),
+          y los globos suben solo cuando TÚ dices que sí dijo la palabra.
+          Va atado a SU cancha: sin el selector, encendía también los dos dibujos de
+          las gemelas, donde el verde significa otra cosa (lo que TÚ marcaste). */
+    .cancha[data-juego="dibujo"].corre .picto { animation: encender 700ms var(--ease-cine) 900ms both; }
+    @keyframes encender {
+      0%   { transform: scale(1); border-color: var(--nino-ink); }
+      40%  { transform: scale(1.06); border-color: var(--fiesta-verde); }
+      100% { transform: scale(1); border-color: var(--fiesta-verde); }
+    }
+    .cancha.corre .halo { animation: expandir 900ms var(--ease-cine) 900ms forwards; }
+    @keyframes expandir {
+      0%   { opacity: .9; transform: scale(1); }
+      100% { opacity: 0;  transform: scale(1.28); }
+    }
+    .cancha.corre .globitos i { animation: subir-globo 2.1s var(--ease-suave) forwards;
+      animation-delay: calc(2.2s + var(--d)); }
+    @keyframes subir-globo {
+      0%   { opacity: 0; transform: translate3d(var(--x), 0, 0) scale(.6); }
+      18%  { opacity: 1; }
+      100% { opacity: 0; transform: translate3d(var(--x), -168px, 0) scale(1); }
+    }
+
+    /* 4 · palabras gemelas: el dibujo festeja lo que TÚ marcaste. Sin micrófono. */
+    .cancha[data-juego="gemelas"].corre .picto.gana { animation: marcar 620ms var(--ease-cine) 1.2s both; }
+    @keyframes marcar {
+      0%   { transform: scale(1); }
+      45%  { transform: scale(1.07); }
+      100% { transform: scale(1); }
+    }
+    .cancha.corre .dijo { animation: llega 1.6s var(--ease-cine) 1.5s forwards; }
 
     /* E06 · el loop de la promesa (el único de la pieza; se pausa fuera de pantalla). */
     .clima.mira .barra { animation: bailar 4.6s var(--ease-suave) infinite;
@@ -466,9 +624,15 @@
     .revela { opacity: 1; transform: none; }
     .detalle, .chevron, .acto-cabeza .raya { transition: none; }
     .acto-cabeza .raya { transform: scaleX(1); }
-    /* El globo del juego espera junto a su meta: el cuadro final de la jugada. */
-    .globo-juego { transform: translateX(calc(83vw - 40px)); }
-    @media (min-width: 800px) { .globo-juego { transform: translateX(600px); } }
+    /* Las cuatro canchas se quedan en su CUADRO FINAL: la jugada ya contada, quieta.
+       El globo junto a su meta, el cohete arriba con su hito, el dibujo encendido y
+       la pareja con su elegido marcado — sin un solo frame de movimiento. */
+    .globo-juego { transform: translateX(calc(83cqw - 21px)); }
+    .cohete-juego { transform: translateY(-30px); }
+    .marcador, .dijo { opacity: 1; }
+    .cancha[data-juego="dibujo"] .picto { border-color: var(--fiesta-verde); }
+    .halo, .globitos { display: none; }
+    .cielo-juego i { opacity: .75; }
     /* Las barras de la promesa, quietas a media altura dentro del marco. */
     .aparato .barra { transform: scaleY(.55); }
     .marquesina div { animation: none; }
@@ -567,6 +731,18 @@
                 juntos. Cada día trae una distinta, no se repite hasta que se acaben todas,
                 y la de hoy no cambia aunque cierres y vuelvas a abrir. Si te da curiosidad,
                 en «¿De dónde sale esto?» está el estudio que la respalda.</p>
+              <!-- Así se ve la cápsula de hoy en su pantalla. -->
+              <div class="mock" aria-hidden="true">
+                <p class="mock-rotulo"><span class="chip" style="padding:2px 8px">Modelar</span></p>
+                <p class="mock-rotulo" style="margin-bottom:4px">Tu línea de hoy</p>
+                <p class="mock-linea">«Mira: un carro rojo. Rojo.»</p>
+                <p class="mock-pie">
+                  <span class="mock-pill">
+                    <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                    Sí, ya lo hicimos</span>
+                  <span class="mock-dato">12 días juntos</span>
+                </p>
+              </div>
               <p class="tip"><strong>Tip:</strong> son cosas de 5 a 10 minutos, pensadas
                 para la comida, el baño o el juego — el habla se estimula todo el día, no
                 solo frente a la pantalla.</p>
@@ -788,6 +964,25 @@
                 y mientras tu voz grabada suena, el juego espera: el globo no vuela con una
                 grabación, solo con la voz de verdad. ¿Quieres apagarla un rato? El
                 interruptor «Usar la voz de la familia» la apaga sin borrar nada.</p>
+              <!-- El hilo completo, de un vistazo. -->
+              <div class="mock" aria-hidden="true">
+                <div class="hilera">
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/>
+                      <path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4M9 21h6"/></svg>
+                    </span>Grabas «perro»<br>una vez</span>
+                  <span class="flecha">→</span>
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/>
+                      <path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                    </span>Se queda<br>en este aparato</span>
+                  <span class="flecha">→</span>
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z"/>
+                      <path d="M16 9a3.5 3.5 0 0 1 0 6"/></svg>
+                    </span>Suena en los<br>cuatro juegos</span>
+                </div>
+              </div>
               <p class="tip"><strong>Importante:</strong> se graba TU voz, la del adulto.
                 La del niño nunca — ni aquí ni en ningún juego.</p>
             </div>
@@ -844,23 +1039,26 @@
             </div>
             <div class="feature" style="--j:2">
               <h4>La tarjeta te dice el estado — con tres señales</h4>
-              <p class="como">Color, forma y palabras a la vez (pensado también para
-                daltonismo): <strong><svg class="ic ic-exito" viewBox="0 0 24 24"
-                aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle
-                cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> verde con la
-                diana</strong> cuando los juegos van a cambiar, con el desglose real
-                («Alineando ahora: 4 cápsulas · 6 dibujos»); <strong><svg class="ic ic-info"
-                viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12"
-                cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5v.5"/></svg> azul con el
-                círculo de info</strong> cuando hay que ponerle atención — la cápsula sí,
-                pero ese tema no está entre los elegidos—; y <strong><svg class="ic
-                ic-peligro" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path
-                d="M12 4L21 19.5H3L12 4z"/><path d="M12 10v4.5"/><path d="M12 17v.5"/></svg>
-                rojo con el triángulo</strong> cuando la app aún no tiene contenido de eso:
-                te lo dice de frente en vez de fingir. Y en el Estudio, las grabaciones que
-                le sirven al objetivo llevan una diana <svg class="ic" viewBox="0 0 24 24"
-                aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle
-                cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> al lado.</p>
+              <p class="como">Cada estado habla con tres señales a la vez —color,
+                <strong>forma</strong> y palabras—, pensado también para daltonismo:</p>
+              <!-- Los tres estados, tal como se ven. -->
+              <div class="mock" aria-hidden="true">
+                <div class="estados">
+                  <div><svg class="ic-exito" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                    <span>Alineando ahora: <strong>4 cápsulas · 6 dibujos</strong></span></div>
+                  <div><svg class="ic-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>
+                    <path d="M12 11v5"/><path d="M12 7.5v.5"/></svg>
+                    <span>La cápsula de hoy sí; los dibujos no cambian: ese tema no está
+                      entre los elegidos</span></div>
+                  <div><svg class="ic-peligro" viewBox="0 0 24 24"><path d="M12 4L21 19.5H3L12 4z"/>
+                    <path d="M12 10v4.5"/><path d="M12 17v.5"/></svg>
+                    <span>Priorizado, a la espera de contenido</span></div>
+                </div>
+              </div>
+              <p class="como">Y en el Estudio, las grabaciones que le sirven al objetivo
+                llevan una diana al lado: de un vistazo ves cuáles ya apuntan a lo que
+                pidieron en las terapias.</p>
             </div>
           </div></div>
         </div>
@@ -898,6 +1096,22 @@
                 palabras que tú le oíste y los segundos de su voz (el total y el rato más
                 largo sin cortarse). Cada línea aparece solo cuando tiene algo que contar.
                 Al principio estará vacío: jueguen unos días y cobra vida.</p>
+              <!-- Números medidos, sin notas: una semana floja es un número pequeño. -->
+              <div class="mock" aria-hidden="true">
+                <p class="mock-rotulo">Días que practicaron juntos</p>
+                <div class="semanas">
+                  <i style="--h:38%"></i><i style="--h:72%"></i>
+                  <i style="--h:24%"></i><i style="--h:88%"></i>
+                </div>
+                <div class="semanas-pie">
+                  <span>sem 1</span><span>sem 2</span><span>sem 3</span><span>sem 4</span>
+                </div>
+                <p class="mock-pie" style="margin-top:11px">
+                  <span class="mock-pill">
+                    <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                    Hito: su primera palabra que tú oíste</span>
+                </p>
+              </div>
               <p class="tip"><strong>Tip:</strong> el rumbo cuenta lo que llegó a la
                 celebración — terminen con «Ya jugamos» para que el intento quede.</p>
             </div>
@@ -999,24 +1213,124 @@
         <span class="eyebrow">La vuelta</span><span class="raya"></span></p>
       <h2 id="t-vuelta" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">
         Así se ve <em>jugar</em>.</h2>
-      <div class="cancha revela" aria-hidden="true">
-        <span class="suelo"></span>
-        <span class="meta"></span>
-        <span class="globo-juego">
-          <svg viewBox="0 0 64 96" focusable="false">
-            <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="var(--nino-ink)"
-              stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
-            <path d="M28 62h8l-4 5z" fill="var(--nino-ink)" opacity=".55"/>
-            <ellipse cx="32" cy="32" rx="25" ry="31" fill="var(--nino-peach)"
-              stroke="var(--nino-ink)" stroke-width="1.5"/>
-            <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity=".4"/>
-          </svg>
-        </span>
-        <span class="confeti"></span>
+      <p class="suave revela">Los cuatro juegos, tal como se ven en su pantalla. Ninguno le
+        exige palabras.</p>
+
+      <div class="galeria">
+
+        <!-- 1 · el globo -->
+        <div class="juego revela">
+          <h3><span class="num">01</span>El globo</h3>
+          <div class="cancha" data-juego="globo" aria-hidden="true">
+            <span class="suelo"></span>
+            <span class="meta"></span>
+            <span class="globo-juego">
+              <svg viewBox="0 0 64 96" focusable="false">
+                <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="var(--nino-ink)"
+                  stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+                <path d="M28 62h8l-4 5z" fill="var(--nino-ink)" opacity=".55"/>
+                <ellipse cx="32" cy="32" rx="25" ry="31" fill="var(--nino-peach)"
+                  stroke="var(--nino-ink)" stroke-width="1.5"/>
+                <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity=".4"/>
+              </svg>
+            </span>
+            <span class="confeti"></span>
+          </div>
+          <p class="leyenda"><b>3 s</b> <span>Su voz sostenida hace avanzar el globo. Cada
+            tres segundos acumulados cruza la línea, da una vuelta y el confeti cae una vez
+            y se va. No se acaba solo.</span></p>
+        </div>
+
+        <!-- 2 · el cohete -->
+        <div class="juego revela">
+          <h3><span class="num">02</span>El cohete</h3>
+          <div class="cancha" data-juego="cohete" aria-hidden="true">
+            <span class="cielo-juego">
+              <i style="--d:0s;left:14%;top:26%;width:26px;height:10px"></i>
+              <i style="--d:.5s;left:66%;top:14%;width:32px;height:12px"></i>
+              <i class="chispa" style="--d:.9s;left:38%;top:48%"></i>
+              <i style="--d:1.4s;left:76%;top:58%;width:20px;height:9px"></i>
+              <i class="chispa" style="--d:1.9s;left:20%;top:16%"></i>
+              <i style="--d:2.4s;left:44%;top:70%;width:24px;height:10px"></i>
+            </span>
+            <span class="cohete-juego">
+              <svg viewBox="0 0 64 96" focusable="false">
+                <path d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z" fill="var(--nino-yellow)"
+                  stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M20 68c-6 2-8 6-8 10 5 0 9-2 12-5zM44 68c6 2 8 6 8 10-5 0-9-2-12-5z"
+                  fill="var(--nino-sage)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M32 6c9 9 13 22 13 36v28H19V42C19 28 23 15 32 6z" fill="var(--nino-peach)"
+                  stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="32" cy="36" r="8" fill="var(--nino-sky)" stroke="var(--nino-ink)" stroke-width="1.5"/>
+                <path d="M28 32a5 5 0 0 1 4-2" fill="none" stroke="#FFFFFF" stroke-width="2"
+                  stroke-linecap="round" opacity=".7"/>
+              </svg>
+            </span>
+            <span class="marcador">¡Ya subió y bajó 2 veces!</span>
+            <span class="confeti" style="left:50%;top:26px"></span>
+          </div>
+          <p class="leyenda"><b>tono</b> <span>Cuando la voz sube, el cohete sube; cuando
+            baja, baja. Una vocal estirada como sirena («aaaAAAaaa») es exactamente lo que
+            se busca — y el cielo pasa hacia abajo para que se sienta la altura.</span></p>
+        </div>
+
+        <!-- 3 · palabra y dibujo -->
+        <div class="juego revela">
+          <h3><span class="num">03</span>Palabra y dibujo</h3>
+          <div class="cancha" data-juego="dibujo" aria-hidden="true">
+            <span class="halo"></span>
+            <span class="picto">
+              <svg viewBox="0 0 80 52" focusable="false">
+                <path d="M10 34v-6l9-12h27l9 12h9a5 5 0 0 1 5 5v1H10z"/>
+                <path d="M25 16v10M46 16v10M19 26h48"/>
+                <circle cx="23" cy="38" r="6"/>
+                <circle cx="57" cy="38" r="6"/>
+              </svg>
+              <span>carro</span>
+            </span>
+            <span class="globitos"></span>
+          </div>
+          <p class="leyenda"><b>tú</b> <span>Nómbralo una vez y espera. El dibujo se
+            enciende con <em>cualquier</em> sonido —un intento, un «ca»—; los globos suben
+            solo cuando tú tocas «¿Dijo ‹carro›?». La app no reconoce palabras y no finge
+            que sí.</span></p>
+        </div>
+
+        <!-- 4 · palabras gemelas -->
+        <div class="juego revela">
+          <h3><span class="num">04</span>Palabras gemelas</h3>
+          <div class="cancha" data-juego="gemelas" aria-hidden="true">
+            <span class="pareja">
+              <span class="picto gana">
+                <svg viewBox="0 0 60 52" focusable="false">
+                  <ellipse cx="24" cy="34" rx="16" ry="10"/>
+                  <path d="M35 28c2-6 5-9 8-9"/>
+                  <circle cx="45" cy="15" r="6.5"/>
+                  <path d="M51 14h7l-3.5 4.5H51"/>
+                  <path d="M43.5 13v.6"/>
+                  <path d="M9 31c-4-.5-5 3.5-1 5.5"/>
+                </svg>
+                <span><b>p</b>ato</span>
+              </span>
+              <span class="picto">
+                <svg viewBox="0 0 60 52" focusable="false">
+                  <circle cx="30" cy="27" r="13"/>
+                  <path d="M20 18l-3-9 9.5 5M40 18l3-9-9.5 5"/>
+                  <path d="M25.5 25v.6M34.5 25v.6"/>
+                  <path d="M30 30l-2.5 2.5h5z"/>
+                  <path d="M15 27l-7-2M15 31l-7 2M45 27l7-2M45 31l7 2"/>
+                </svg>
+                <span><b>g</b>ato</span>
+              </span>
+            </span>
+            <span class="dijo">¡Dijo «pato»!</span>
+          </div>
+          <p class="leyenda"><b>sin mic</b> <span>Dos palabras que se diferencian por un
+            solo sonido. Él dice una, y <em>tú</em> marcas la que oíste: este juego no usa
+            micrófono ni analiza nada. Es co-uso puro.</span></p>
+        </div>
+
       </div>
-      <p class="leyenda revela"><b>3 s</b> <span>Cada tres segundos de voz acumulada, el
-        globo cruza la línea y completa una vuelta. El confeti cae una vez y se va — el
-        juego no se detiene, y no se acaba solo.</span></p>
     </div>
   </section>
 
@@ -1196,29 +1510,43 @@
     if (dentro) { el.classList.add("visto"); }
   }, true, 0.5);
 
-  /* ── E05 · el respiro: la corrida arranca UNA vez, cuando se ve de verdad. ─── */
-  var cancha = document.querySelector(".cancha");
-  if (cancha) {
-    var CONFETI = [
-      [-58, 0, "-24deg", "coral"], [-34, .07, "18deg", "sol"], [-14, .02, "-8deg", "verde"],
-      [8, .12, "32deg", "cielo"], [30, .05, "-40deg", "uva"], [52, .16, "12deg", "coral"],
-      [-46, .21, "44deg", "verde"], [-6, .26, "-16deg", "sol"], [22, .19, "26deg", "coral"],
-      [44, .3, "-30deg", "cielo"], [-24, .34, "8deg", "uva"], [14, .38, "-22deg", "verde"],
-      [-40, .43, "36deg", "sol"], [36, .47, "-12deg", "coral"]
-    ];
-    var caja = cancha.querySelector(".confeti");
-    CONFETI.forEach(function (c) {
+  /* ── E05 · las cuatro canchas. Cada jugada arranca UNA vez, cuando la cancha se
+        ve de verdad. Las partículas llevan variación PRECALCULADA (nada de azar en
+        runtime): misma entrada, mismos fotogramas — el determinismo del estudio. ── */
+  var CONFETI = [
+    [-58, 0, "-24deg", "coral"], [-34, .07, "18deg", "sol"], [-14, .02, "-8deg", "verde"],
+    [8, .12, "32deg", "cielo"], [30, .05, "-40deg", "uva"], [52, .16, "12deg", "coral"],
+    [-46, .21, "44deg", "verde"], [-6, .26, "-16deg", "sol"], [22, .19, "26deg", "coral"],
+    [44, .3, "-30deg", "cielo"], [-24, .34, "8deg", "uva"], [14, .38, "-22deg", "verde"],
+    [-40, .43, "36deg", "sol"], [36, .47, "-12deg", "coral"]
+  ];
+  var GLOBITOS = [[-46, 0, "peach"], [-16, .18, "sol"], [14, .09, "cielo"], [42, .27, "coral"]];
+
+  function sembrar(caja, filas, aplicar) {
+    if (!caja) { return; }
+    filas.forEach(function (f) {
       var i = document.createElement("i");
+      aplicar(i, f);
+      caja.appendChild(i);
+    });
+  }
+
+  [].slice.call(document.querySelectorAll(".cancha")).forEach(function (cancha) {
+    sembrar(cancha.querySelector(".confeti"), CONFETI, function (i, c) {
       i.style.setProperty("--x", c[0] + "px");
       i.style.setProperty("--d", c[1] + "s");
       i.style.setProperty("--r", c[2]);
       i.style.setProperty("--c", "var(--fiesta-" + c[3] + ")");
-      caja.appendChild(i);
+    });
+    sembrar(cancha.querySelector(".globitos"), GLOBITOS, function (i, g) {
+      i.style.setProperty("--x", g[0] + "px");
+      i.style.setProperty("--d", g[1] + "s");
+      i.style.setProperty("--c", "var(--nino-" + g[2] + ")");
     });
     vigilar([cancha], function (el, dentro) {
       if (dentro) { el.classList.add("corre"); }
-    }, true, 0.45);
-  }
+    }, true, 0.4);
+  });
 
   /* ── E06 · el clímax: el único loop de la pieza. Se pausa fuera de pantalla y
         con la pestaña oculta — un brochure no gasta batería a escondidas.  ────── */
