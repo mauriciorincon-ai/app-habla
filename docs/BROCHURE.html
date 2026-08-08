@@ -545,6 +545,11 @@
   .conteo { display: block; font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.5rem, 5.4vw, 2.1rem); line-height: 1.1; margin: 0 0 6px; }
   .conteo span { font-variant-numeric: tabular-nums; color: var(--acento); }
+  /* El historial vive en su propio bloque, con aire y su propia raya: es OTRO tema
+     (la vida del documento), no el remate del conteo. */
+  .historial-doc { margin-top: 26px; padding-top: 16px;
+    border-top: 1px dashed var(--borde); }
+  .historial-doc details { margin-top: 6px; }
   footer summary { cursor: pointer; }
   footer summary:focus-visible { outline: 3px solid var(--acento-vivo); outline-offset: 2px;
     border-radius: 6px; }
@@ -1771,19 +1776,26 @@
     </details>
   </section>
 
-  <!-- ══ E08 · EL CIERRE ══ -->
+  <!-- ══ E08 · EL CIERRE. Dos piezas DISTINTAS, cada una en su bloque (gate del
+       usuario: juntas parecían una sola y el número prometía un listado que no venía):
+       el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
+       hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
     <strong class="conteo"><span data-contador>24</span> funcionalidades</strong>
-    <p class="chica suave" style="margin-top:0">Están todas aquí, agrupadas para que las
-      descubras a tu ritmo. Ninguna se quedó por fuera.</p>
-    <details class="chica">
-      <summary>Historial del brochure</summary>
-      <ul>
-        <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
-          recorrido completo de la app al cierre de su primer ciclo (las 24
-          funcionalidades de los sprints 1 a 4).</li>
-      </ul>
-    </details>
+    <p class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
+      todas están repartidas arriba, entre las seis puertas, los cuatro juegos y lo fino.
+      Este número existe como promesa: aquí no se escogieron las bonitas; está todo.</p>
+    <div class="historial-doc">
+      <p class="eyebrow">Este documento crece con la app</p>
+      <details class="chica">
+        <summary>Historial de versiones</summary>
+        <ul>
+          <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
+            recorrido completo de la app al cierre de su primer ciclo (las 24
+            funcionalidades de los sprints 1 a 4).</li>
+        </ul>
+      </details>
+    </div>
   </footer>
   </div>
 
@@ -1805,13 +1817,19 @@
   var suavizar = function (e0, e1, v) { var x = clamp((v - e0) / (e1 - e0)); return x * x * (3 - 2 * x); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
-  /* ── E04 · G2: abrir y cerrar. Dos formas de mando, y una gana siempre:
-        · EL RECORRIDO: al BAJAR, la tarjeta que llega a la banda alta se abre sola y
-          la anterior se cierra — una a la vez, como pasar páginas. Al SUBIR no se
-          abre ninguna: la que se deja atrás se cierra y el camino de vuelta queda
-          limpio (regreso ≠ lectura; volver a abrirlas al subir estorbaba).
-        · TU TOQUE: en cuanto tocas una, esa queda bajo tu mando (`data-manual`) y el
-          recorrido no vuelve a moverla. Nada se cierra en tus narices mientras lees.
+  /* ── E04 · G2: abrir y cerrar. REGLA DE ORO: nada cambia de alto donde tus ojos
+        están. La versión anterior cerraba la tarjeta previa (por ENCIMA de tu vista) y
+        lo compensaba con scrollBy — pero ahí competían tres manos en el mismo volante:
+        esa compensación, el anclaje de scroll NATIVO del navegador y el impulso del
+        trackpad. En uso real (grabando el video) daba saltos erráticos hacia adelante y
+        hacia atrás. Ahora:
+        · BAJANDO: la tarjeta que llega a la banda alta se ABRE — crecer hacia abajo no
+          te mueve nada. Nunca se cierra nada mientras bajas.
+        · SUBIENDO: la que dejaste atrás se cierra SOLO cuando ya salió entera de
+          pantalla por abajo — quitar alto fuera de la vista no mueve ni un pixel. Así
+          el camino de vuelta queda limpio sin un solo scrollBy.
+        · TU TOQUE: en cuanto tocas una, queda bajo tu mando (`data-manual`) y el
+          recorrido no vuelve a moverla.
      ────────────────────────────────────────────────────────────────────────────── */
   var tarjetas = [].slice.call(document.querySelectorAll(".tarjetas .tarjeta"));
 
@@ -1828,76 +1846,33 @@
     });
   });
 
-  /* El paso de páginas avanza de a UNA por cuadro. Abrir una tarjeta cambia el alto de
-     todo lo que sigue, así que decidir de golpe con medidas viejas se saltaba tarjetas
-     (se veía 1 → 2 → 6). Un paso por cuadro mide siempre el layout que de verdad hay.
-     El índice `n` es el "ya pasamos": ahí no queda ninguna abierta. */
-  var respiro = document.querySelector(".respiro");
-  var indice = -1;
-  /* `indice` es el "por dónde vamos"; `abierta` es cuál se muestra. Se separan porque
-     al subir seguimos contando tarjetas pero no abrimos ninguna (abierta = -1). */
-  var abierta = -1;
-
-  function topeDe(i) {
-    if (i >= tarjetas.length) {
-      return respiro ? respiro.getBoundingClientRect().top : -1;
-    }
-    return tarjetas[i].querySelector(".tarjeta-cabeza").getBoundingClientRect().top;
-  }
-
-  /* La referencia que NO se debe mover. Mientras quedan tarjetas es la que entra; al
-     pasar la última no se abre ninguna y lo que estás mirando ya es lo que sigue —la
-     galería—, así que la referencia pasa a ser ella. Sin esto, cerrar la última le
-     quitaba su alto de golpe a todo lo de abajo y el recorrido caía dos juegos más
-     adelante: había que devolverse para ver el globo y el cohete. */
-  function anclaDe(i) {
-    if (i >= tarjetas.length) { return respiro || tarjetas[tarjetas.length - 1]; }
-    return tarjetas[Math.max(0, i)];
-  }
+  var yAcordeon = -1;
 
   function acordeon() {
     if (!tarjetas.length) { return; }
+    var y = window.scrollY || window.pageYOffset;
+    /* Solo abre BAJANDO: al subir, un encabezado que cruza la banda no debe reabrirse.
+       (El micro-rebote del trackpad no rompe nada: abrir es idempotente y cerrar solo
+       ocurre fuera de pantalla — no hay frontera donde algo pueda aletear.) */
+    var bajando = yAcordeon >= 0 && y > yAcordeon;
+    yAcordeon = y;
     var linea = window.innerHeight * .3;
-    var antes = indice;
-    if (indice + 1 <= tarjetas.length && topeDe(indice + 1) <= linea) {
-      indice++; abierta = indice;      /* bajando: se abre la que llega */
-    } else if (indice >= 0 && topeDe(indice) > linea) {
-      indice--; abierta = -1;          /* subiendo: no se abre ninguna */
-    }
-    if (indice === antes) { return; }
 
-    /* ANCLAJE: cerrar la tarjeta anterior le quita alto a lo que ya pasó, y sin
-       compensarlo el contenido se va hacia arriba bajo el dedo — se sentía un tirón y
-       además disparaba una cascada que se saltaba tarjetas. Se fija la que entra: mide
-       antes, aplica, mide después y devuelve el scroll a su sitio. */
-    var ancla = anclaDe(indice);
-    var y0 = ancla.getBoundingClientRect().top;
-
-    tarjetas.forEach(function (t, i) {
+    tarjetas.forEach(function (t) {
       if (t.hasAttribute("data-manual")) { return; }   /* tu toque no se toca */
-      var debe = i === abierta;
-      if (debe === t.hasAttribute("data-abierta")) { return; }
-      if (debe) {
-        fijar(t, true);        /* abrir SÍ se anima: crece hacia abajo, no te mueve nada */
-      } else {
-        /* Cerrar es instantáneo a propósito: si se animara, el alto todavía no habría
-           cambiado cuando medimos para compensar, y el ajuste llegaría tarde (era la
-           causa del salto de tarjetas). Se cierra, se fuerza el cálculo y se compensa. */
+      var r = t.getBoundingClientRect();
+      var abierta = t.hasAttribute("data-abierta");
+      if (!abierta && bajando && r.top <= linea && r.bottom > 0) {
+        fijar(t, true);        /* llega a la banda: se abre, crece hacia abajo */
+      } else if (abierta && r.top > window.innerHeight + 40) {
+        /* Quedó atrás, entera bajo el viewport: se cierra donde nadie la ve.
+           Instantáneo (sin transición) para que ni su animación asome por el borde. */
         t.setAttribute("data-sin-transicion", "");
         fijar(t, false);
         void t.offsetHeight;
         t.removeAttribute("data-sin-transicion");
       }
     });
-
-    var y1 = ancla.getBoundingClientRect().top;
-    if (Math.abs(y1 - y0) > .5) {
-      var suaveAntes = raiz.style.scrollBehavior;
-      raiz.style.scrollBehavior = "auto";   /* el ajuste es invisible, no un viaje */
-      window.scrollBy(0, y1 - y0);
-      raiz.style.scrollBehavior = suaveAntes;
-    }
-    pedir();   /* deja que el siguiente cuadro siga acomodando */
   }
 
   /* ── E03 · G3: reveals. Con movimiento reducido el CSS ya muestra todo; la clase
