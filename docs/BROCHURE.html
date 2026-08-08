@@ -545,6 +545,11 @@
   .conteo { display: block; font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.5rem, 5.4vw, 2.1rem); line-height: 1.1; margin: 0 0 6px; }
   .conteo span { font-variant-numeric: tabular-nums; color: var(--acento); }
+  /* El historial vive en su propio bloque, con aire y su propia raya: es OTRO tema
+     (la vida del documento), no el remate del conteo. */
+  .historial-doc { margin-top: 26px; padding-top: 16px;
+    border-top: 1px dashed var(--borde); }
+  .historial-doc details { margin-top: 6px; }
   footer summary { cursor: pointer; }
   footer summary:focus-visible { outline: 3px solid var(--acento-vivo); outline-offset: 2px;
     border-radius: 6px; }
@@ -1771,19 +1776,26 @@
     </details>
   </section>
 
-  <!-- ══ E08 · EL CIERRE ══ -->
+  <!-- ══ E08 · EL CIERRE. Dos piezas DISTINTAS, cada una en su bloque (gate del
+       usuario: juntas parecían una sola y el número prometía un listado que no venía):
+       el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
+       hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
     <strong class="conteo"><span data-contador>24</span> funcionalidades</strong>
-    <p class="chica suave" style="margin-top:0">Están todas aquí, agrupadas para que las
-      descubras a tu ritmo. Ninguna se quedó por fuera.</p>
-    <details class="chica">
-      <summary>Historial del brochure</summary>
-      <ul>
-        <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
-          recorrido completo de la app al cierre de su primer ciclo (las 24
-          funcionalidades de los sprints 1 a 4).</li>
-      </ul>
-    </details>
+    <p class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
+      todas están repartidas arriba, entre las seis puertas, los cuatro juegos y lo fino.
+      Este número existe como promesa: aquí no se escogieron las bonitas; está todo.</p>
+    <div class="historial-doc">
+      <p class="eyebrow">Este documento crece con la app</p>
+      <details class="chica">
+        <summary>Historial de versiones</summary>
+        <ul>
+          <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
+            recorrido completo de la app al cierre de su primer ciclo (las 24
+            funcionalidades de los sprints 1 a 4).</li>
+        </ul>
+      </details>
+    </div>
   </footer>
   </div>
 
