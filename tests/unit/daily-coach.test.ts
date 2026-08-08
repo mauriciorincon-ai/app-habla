@@ -10,6 +10,7 @@ import {
 } from "@content/schema";
 import {
   claveFechaLocal,
+  diasPracticados,
   marcarCompletada,
   realinearObjetivo,
   seleccionarCapsula,
@@ -237,6 +238,71 @@ describe("daily-coach: la cápsula de hoy (dentro de la etapa activa)", () => {
     expect(() => seleccionarCapsula(HOY, PROGRESO_INICIAL, [], PS)).toThrow(
       /etapa/,
     );
+  });
+
+  // El bug de la medianoche (2026-08-08, cazado grabando un video): la pestaña quedó
+  // abierta de un día para otro, la asignación guardada era la de AYER, y cada toque de
+  // «Sí, ya lo hicimos» completaba una selección efímera — el selector la excluía, servía
+  // OTRA cápsula con el botón virgen, y los «días» crecían por clic. La garantía: marcar
+  // SELLA la asignación del día marcado, y desde ahí todo es idempotente.
+  it("marcar con la asignación quedada en AYER sella el día y no vuelve a ofrecer el botón", () => {
+    const AYER = "2026-07-10";
+    const asignadaAyer = seleccionarCapsula(
+      AYER,
+      PROGRESO_INICIAL,
+      CAPSULAS,
+      PS,
+    );
+
+    // Amanece: la pestaña sigue viva con el progreso de ayer. El render de HOY
+    // re-selecciona (efímero, sin persistir) — así estaba la pantalla del video.
+    const renderHoy = seleccionarCapsula(
+      HOY,
+      asignadaAyer.progreso,
+      CAPSULAS,
+      PS,
+    );
+    expect(renderHoy.completada).toBe(false);
+
+    // El padre toca «Sí, ya lo hicimos» sobre lo que VE. Nota: se marca sobre el progreso
+    // GUARDADO (el de ayer) — exactamente lo que hace marcarCapsulaHecha en el cliente.
+    const marcado = marcarCompletada(
+      HOY,
+      renderHoy.capsula.id,
+      PS,
+      asignadaAyer.progreso,
+    );
+
+    // La marca selló la asignación de HOY: el siguiente render devuelve LA MISMA cápsula,
+    // completada — el botón no renace, no hay bucle.
+    const siguienteRender = seleccionarCapsula(HOY, marcado, CAPSULAS, PS);
+    expect(siguienteRender.capsula.id).toBe(renderHoy.capsula.id);
+    expect(siguienteRender.completada).toBe(true);
+
+    // Y la asignación vieja rotó a "ayer", como lo habría hecho el selector.
+    expect(marcado.porEtapa[PS]?.asignacionHoy).toEqual({
+      fecha: HOY,
+      capsulaId: renderHoy.capsula.id,
+    });
+    expect(marcado.porEtapa[PS]?.asignacionAyer).toEqual(
+      asignadaAyer.progreso.porEtapa[PS]?.asignacionHoy,
+    );
+
+    // Dos toques siguen sin ensuciar nada: un solo día en el historial (ayer no se marcó).
+    const otraVez = marcarCompletada(HOY, renderHoy.capsula.id, PS, marcado);
+    expect(otraVez).toBe(marcado);
+    expect(marcado.historial).toHaveLength(1);
+  });
+
+  it("diasPracticados cuenta fechas únicas: dos cápsulas el mismo día son UN día", () => {
+    expect(diasPracticados([])).toBe(0);
+    expect(
+      diasPracticados([
+        { capsulaId: "a", fecha: "2026-08-07" },
+        { capsulaId: "b", fecha: "2026-08-08" },
+        { capsulaId: "c", fecha: "2026-08-08" },
+      ]),
+    ).toBe(2);
   });
 });
 
