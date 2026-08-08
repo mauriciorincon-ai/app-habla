@@ -150,10 +150,11 @@
   .portada .baja { margin-top: 34px; font-size: .8rem; color: var(--tinta-suave);
     font-family: ui-monospace, Menlo, monospace; letter-spacing: .12em;
     text-transform: uppercase; }
-  .portada .baja .riel { display: block; width: 1px; height: 34px; margin: 10px auto 0;
-    background: var(--borde); overflow: hidden; }
-  .portada .baja .riel i { display: block; width: 1px; height: 12px;
-    background: var(--acento); }
+  .portada .baja .flecha { display: block; width: 26px; height: 26px; margin: 8px auto 0;
+    color: var(--acento); }
+  .portada .baja .flecha svg { display: block; width: 100%; height: 100%; }
+  .portada .baja .flecha path { fill: none; stroke: currentColor; stroke-width: 1.8;
+    stroke-linecap: round; stroke-linejoin: round; }
 
   /* ═══════════════════════════════════════════════════════════════════════════
      Cabeceras de acto — el recorrido está numerado porque ES una secuencia.
@@ -218,6 +219,7 @@
     transition: grid-template-rows var(--dur-lenta) var(--ease-suave),
                 visibility var(--dur-lenta); }
   .tarjeta[data-abierta] .detalle { grid-template-rows: 1fr; visibility: visible; }
+  .tarjeta[data-sin-transicion] .detalle { transition: none; }
   .detalle-interior { overflow: hidden; }
   .detalle-cuerpo { padding: 2px 18px 20px; border-top: 1px solid var(--borde); }
   .feature { padding: 14px 0; border-top: 1px solid var(--borde); }
@@ -325,10 +327,21 @@
     border: 1.5px solid var(--nino-ink); }
 
   /* Cancha 4 · palabras gemelas: dos que suenan casi igual; el que oye eres tú. */
-  .pareja { position: absolute; inset: 16px 0 auto; display: flex; justify-content: center;
+  /* La pareja necesita más aire que un dibujo solo: dos marcos, sus dos altavoces y
+     abajo las DOS teclas del adulto. El altavoz va DENTRO del marco (afuera se salía
+     de la cancha y pisaba al vecino). */
+  .cancha[data-juego="gemelas"] { height: 218px; }
+  .pareja { position: absolute; inset: 14px 0 auto; display: flex; justify-content: center;
     gap: 14px; }
-  .pareja .picto { position: static; margin: 0; width: 106px; border-width: 2.5px; }
-  .pareja .picto svg { width: 62px; height: 46px; }
+  /* `relative` para que el altavoz se ancle DENTRO, pero reseteando el left/top que
+     el picto suelto usa para centrarse: en la pareja los coloca el flex, no el offset. */
+  .pareja .picto { position: relative; left: auto; top: auto; margin: 0; width: 108px;
+    border-width: 2.5px; }
+  .pareja .picto svg { width: 60px; height: 44px; }
+  .pareja .altavoz, .pareja .onda { top: auto; right: 5px; bottom: 5px;
+    width: 25px; height: 25px; }
+  .pareja .altavoz svg { width: 13px; height: 13px; }
+  .cancha[data-juego="gemelas"] .dijo { top: 116px; bottom: auto; }
   .pareja .picto span b { font-weight: 400; color: var(--fiesta-cielo); }
   .pareja .picto.gana { border-color: var(--fiesta-verde);
     background: color-mix(in srgb, var(--fiesta-verde) 12%, var(--nino-bg)); }
@@ -336,6 +349,67 @@
     padding: 4px 12px; border-radius: 999px; background: var(--nino-bg);
     border: 1.5px solid var(--nino-ink); font-family: Georgia, serif; font-size: .84rem;
     color: var(--nino-ink); white-space: nowrap; opacity: 0; }
+
+  /* ── El enlace directo: que ella entre AHÍ, no que busque. ─────────────────
+     (Funciona en la app desplegada; el archivo suelto del repo es el respaldo.) */
+  .enlace { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
+    padding: 9px 15px; border-radius: 999px; border: 1px solid var(--acento);
+    color: var(--acento); text-decoration: none; font-size: .86rem;
+    min-height: 44px; box-sizing: border-box;
+    transition: background var(--dur-media) var(--ease-suave),
+                color var(--dur-media) var(--ease-suave); }
+  .enlace:hover { background: var(--acento); color: var(--fondo); }
+  .enlace:focus-visible { outline: 3px solid var(--acento-vivo); outline-offset: 2px; }
+  .enlace .punta { transition: transform var(--dur-media) var(--ease-cine); }
+  .enlace:hover .punta { transform: translateX(3px); }
+  .leyenda .enlace { margin-top: 9px; }
+
+  /* El altavoz de la voz de la familia: en los dibujos, grande, y él lo puede tocar. */
+  .altavoz { position: absolute; top: -9px; right: -9px; width: 30px; height: 30px;
+    display: grid; place-items: center; border-radius: 50%; background: var(--nino-yellow);
+    border: 2px solid var(--nino-ink); color: var(--nino-ink); }
+  .altavoz svg { display: block; width: 15px; height: 15px; }
+  .altavoz svg path { fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round; }
+  .onda { position: absolute; top: -9px; right: -9px; width: 30px; height: 30px;
+    border-radius: 50%; border: 2px solid var(--nino-ink); opacity: 0; }
+
+  /* Las teclas de «¿Cuál oíste?»: son DOS, y son del adulto — discretas a propósito. */
+  .cual { position: absolute; left: 0; right: 0; bottom: 12px; display: grid;
+    justify-items: center; gap: 6px; }
+  .cual-rotulo { font-family: ui-monospace, Menlo, monospace; font-size: .6rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: color-mix(in srgb, var(--nino-ink) 82%, transparent); }
+  .teclas { display: flex; gap: 8px; }
+  .tecla { padding: 4px 14px; border-radius: 999px; background: var(--nino-bg);
+    border: 1.5px solid color-mix(in srgb, var(--nino-ink) 45%, transparent);
+    font-family: Georgia, serif; font-size: .86rem; color: var(--nino-ink); }
+  /* La tecla marcada usa el verde de «éxito» del operador, no el de fiesta: el de
+     fiesta es para los instantes del niño y con texto blanco encima daba 2,97:1. */
+  .tecla.marcada { background: #527947; border-color: var(--nino-ink); color: #FFFFFF; }
+
+  /* ── E06 · EL TALLER: grabas una vez y tu voz queda en los cuatro juegos. ──── */
+  .taller-svg { display: block; width: 100%; height: auto; }
+  .taller-svg .traza { fill: none; stroke: var(--borde-n); stroke-width: 1.5; }
+  .taller-svg .via { fill: none; stroke: var(--borde-n); stroke-width: 1.5;
+    stroke-dasharray: 3 5; }
+  .taller-svg .tv-barra { fill: var(--acento-n); transform-box: fill-box;
+    transform-origin: 50% 100%; transform: scaleY(.25); }
+  .taller-svg .tv-tarjeta { transform-box: fill-box; transform-origin: 50% 50%; }
+  .taller-svg .tv-caja { fill: color-mix(in srgb, var(--acento-n) 16%, transparent);
+    stroke: var(--acento-n); stroke-width: 1.5; }
+  .taller-svg .tv-texto { fill: #F4EFE6; font-family: Georgia, serif; font-size: 15px; }
+  .taller-svg .tv-rotulo { fill: var(--tinta-suave-n);
+    font-family: ui-monospace, Menlo, monospace; font-size: 8px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .taller-svg .tv-punto { fill: var(--acento-n); opacity: 0; }
+  .taller-svg .tv-pantalla { transform-box: fill-box; transform-origin: 50% 50%;
+    opacity: .38; }
+  .taller-svg .tv-pantalla rect { fill: none; stroke: var(--acento-n); stroke-width: 1.5; }
+  .taller-svg .tv-pantalla path { fill: none; stroke: var(--acento-n); stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round; }
+  .taller-svg .mic { fill: none; stroke: var(--acento-n); stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round; }
 
   /* ── Maquetas dentro de las tarjetas: la imagen donde el texto pesa. ───────── */
   .mock { margin-top: 12px; padding: 14px; background: var(--fondo);
@@ -394,9 +468,16 @@
      E06 · EL CLÍMAX — la noche de la pieza. Único acto con paleta propia, porque es
      la única promesa que nunca descansa. Lo que baila adentro, muere adentro.
      ═══════════════════════════════════════════════════════════════════════════ */
+  /* Las dos escenas nocturnas de la pieza. Comparten estructura y se distinguen por
+     TEMPERATURA: el taller es cálido (tu voz, la familia — el ámbar que el design
+     system reserva para la voz parental) y la promesa es fría y seria. Dos noches
+     seguidas, no dos bloques iguales. */
   .clima { margin-top: clamp(70px, 13vh, 130px); padding: clamp(48px, 9vh, 88px) 0;
     background: #14171A; color: #F2EFE8;
     --tinta-suave-n: #A9B0AA; --acento-n: #B5D5AB; --borde-n: #2A3038; }
+  .clima + .clima { margin-top: 0; }
+  .clima--taller { background: #241C12;
+    --tinta-suave-n: #C6BAA6; --acento-n: #ECC56F; --borde-n: #3C2F1E; }
   .clima .marco { max-width: 760px; margin: 0 auto; padding: 0 22px; }
   .clima .eyebrow, .clima .acto-cabeza .num { color: var(--acento-n); }
   .clima .raya { background: var(--borde-n); }
@@ -411,6 +492,8 @@
     width: 7px; height: 1px; background: var(--acento-n); }
   .clima .lista b { color: #F2EFE8; font-weight: 600; }
 
+  .clima .enlace { color: var(--acento-n); border-color: var(--acento-n); }
+  .clima .enlace:hover { background: var(--acento-n); color: #14171A; }
   .aparato { position: relative; margin: 30px auto 26px; width: min(320px, 84%); }
   .aparato svg { display: block; width: 100%; height: auto; }
   .aparato .cuerpo { fill: none; stroke: var(--borde-n); stroke-width: 1.5; }
@@ -479,8 +562,11 @@
     @keyframes alzar { from { opacity: 0; transform: translateY(16px); } }
     .globo-hero { animation: llegar 1400ms var(--ease-cine) both; }
     @keyframes llegar { from { opacity: 0; transform: translateY(38px) scale(.94); } }
-    .portada .baja .riel i { animation: bajar 1.9s ease-in-out infinite; }
-    @keyframes bajar { from { transform: translateY(-14px); } to { transform: translateY(34px); } }
+    .portada .baja .flecha { animation: bajar 1.9s var(--ease-suave) infinite; }
+    @keyframes bajar {
+      0%, 100% { transform: translateY(0); opacity: .5; }
+      50%      { transform: translateY(9px); opacity: 1; }
+    }
 
     /* Reveals con jerarquía: el orden de aparición ES narrativa. */
     .revela { opacity: 0; transform: translateY(22px) scale(.985);
@@ -582,6 +668,56 @@
     }
     .cancha.corre .dijo { animation: llega 1.6s var(--ease-cine) 1.5s forwards; }
 
+    /* El altavoz avisa que la palabra suena SOLA al aparecer el dibujo: una onda que
+       sale del botón, una vez por jugada. */
+    .cancha.corre .onda { animation: onda 1.5s var(--ease-cine) 400ms 2; }
+    @keyframes onda {
+      0%   { opacity: .8; transform: scale(1); }
+      100% { opacity: 0;  transform: scale(2.1); }
+    }
+    /* Y las teclas: TÚ marcas una de las dos, y ahí el dibujo festeja. */
+    .cancha[data-juego="gemelas"].corre .tecla.marcada {
+      animation: pulsar-tecla 500ms var(--ease-cine) 900ms both; }
+    @keyframes pulsar-tecla {
+      0%   { transform: scale(1); background: var(--nino-bg); color: var(--nino-ink); }
+      45%  { transform: scale(1.12); }
+      100% { transform: scale(1); background: #527947; color: #FFFFFF; }
+    }
+
+    /* ── E06 · EL TALLER: el ciclo de tu voz. Grabas (las barras bailan), se guarda
+          (la tarjeta llega), viaja (el punto recorre la vía) y suena en los juegos
+          (las pantallas se encienden en fila). Se pausa fuera de pantalla. ─────── */
+    .clima.mira .taller .tv-barra { animation: tv-bailar 6.4s var(--ease-suave) infinite;
+      animation-delay: calc(var(--k) * 110ms); }
+    @keyframes tv-bailar {
+      0%   { transform: scaleY(.22); }
+      5%   { transform: scaleY(.95); }
+      10%  { transform: scaleY(.45); }
+      15%  { transform: scaleY(.88); }
+      20%  { transform: scaleY(.34); }
+      26%  { transform: scaleY(.72); }
+      32%, 100% { transform: scaleY(.18); }
+    }
+    .clima.mira .taller .tv-tarjeta { animation: tv-llega 6.4s var(--ease-cine) infinite; }
+    @keyframes tv-llega {
+      0%, 30%  { opacity: 0; transform: scale(.9); }
+      40%, 100% { opacity: 1; transform: none; }
+    }
+    .clima.mira .taller .tv-punto { animation: tv-viaja 6.4s linear infinite; }
+    @keyframes tv-viaja {
+      0%, 44% { opacity: 0; transform: translateX(0); }
+      47%     { opacity: 1; transform: translateX(4px); }
+      62%     { opacity: 1; transform: translateX(58px); }
+      66%, 100% { opacity: 0; transform: translateX(58px); }
+    }
+    .clima.mira .taller .tv-pantalla { animation: tv-suena 6.4s var(--ease-suave) infinite;
+      animation-delay: calc(var(--k) * 240ms); }
+    @keyframes tv-suena {
+      0%, 62%   { opacity: .35; transform: scale(1); }
+      68%       { opacity: 1;   transform: scale(1.09); }
+      76%, 100% { opacity: 1;   transform: scale(1); }
+    }
+
     /* E06 · el loop de la promesa (el único de la pieza; se pausa fuera de pantalla). */
     .clima.mira .barra { animation: bailar 4.6s var(--ease-suave) infinite;
       animation-delay: calc(var(--k) * 130ms); }
@@ -679,7 +815,9 @@
         una respuesta concreta a la pregunta que más pesa: «¿y hoy qué puedo hacer por
         mi hijo?».</p>
       <p class="baja">Baja despacio
-        <span class="riel" aria-hidden="true"><i></i></span></p>
+        <span class="flecha" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg>
+        </span></p>
     </header>
   </div>
 </section>
@@ -774,6 +912,8 @@
                 <li class="chip">Repetir una palabra clave</li>
               </ul>
             </div>
+          
+            <a class="enlace" href="/">Ver la cápsula de hoy <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -897,6 +1037,8 @@
                 sueltas — si su etapa es «sonidos e intentos», el juego mismo te lo dice
                 con cariño.</p>
             </div>
+          
+            <a class="enlace" href="/jugar">Ver los cuatro juegos <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -986,6 +1128,8 @@
               <p class="tip"><strong>Importante:</strong> se graba TU voz, la del adulto.
                 La del niño nunca — ni aquí ni en ningún juego.</p>
             </div>
+          
+            <a class="enlace" href="/estudio">Abrir el Estudio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1060,6 +1204,8 @@
                 llevan una diana al lado: de un vistazo ves cuáles ya apuntan a lo que
                 pidieron en las terapias.</p>
             </div>
+          
+            <a class="enlace" href="/objetivo">Escribir el objetivo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1125,6 +1271,8 @@
                 castigar una semana floja. No es un boletín — es el registro cálido de lo
                 que hicieron juntos.</p>
             </div>
+          
+            <a class="enlace" href="/rumbo">Ver el rumbo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1198,6 +1346,8 @@
                 pantalla de inicio». Abre a pantalla completa y, después de la primera vez,
                 funciona sin conexión: el juego nunca necesita internet.</p>
             </div>
+          
+            <a class="enlace" href="/ajustes">Abrir Ajustes <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1239,6 +1389,7 @@
           <p class="leyenda"><b>3 s</b> <span>Su voz sostenida hace avanzar el globo. Cada
             tres segundos acumulados cruza la línea, da una vuelta y el confeti cae una vez
             y se va. No se acaba solo.</span></p>
+          <p><a class="enlace" href="/jugar/globo">Abrir el globo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
 
         <!-- 2 · el cohete -->
@@ -1272,6 +1423,7 @@
           <p class="leyenda"><b>tono</b> <span>Cuando la voz sube, el cohete sube; cuando
             baja, baja. Una vocal estirada como sirena («aaaAAAaaa») es exactamente lo que
             se busca — y el cielo pasa hacia abajo para que se sienta la altura.</span></p>
+          <p><a class="enlace" href="/jugar/cohete">Abrir el cohete <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
 
         <!-- 3 · palabra y dibujo -->
@@ -1287,13 +1439,25 @@
                 <circle cx="57" cy="38" r="6"/>
               </svg>
               <span>carro</span>
+              <span class="onda"></span>
+              <span class="altavoz">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                </svg>
+              </span>
             </span>
             <span class="globitos"></span>
           </div>
           <p class="leyenda"><b>tú</b> <span>Nómbralo una vez y espera. El dibujo se
             enciende con <em>cualquier</em> sonido —un intento, un «ca»—; los globos suben
             solo cuando tú tocas «¿Dijo ‹carro›?». La app no reconoce palabras y no finge
-            que sí.</span></p>
+            que sí. <strong>Si grabaste tu voz</strong>, la palabra suena sola al aparecer
+            el dibujo, y el altavoz —grande, él lo puede tocar— la repite.</span></p>
+          <p><a class="enlace" href="/jugar/palabras">Abrir palabra y dibujo
+            <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round"/></svg></a></p>
         </div>
 
         <!-- 4 · palabras gemelas -->
@@ -1311,6 +1475,12 @@
                   <path d="M9 31c-4-.5-5 3.5-1 5.5"/>
                 </svg>
                 <span><b>p</b>ato</span>
+                <span class="onda"></span>
+                <span class="altavoz">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                  </svg>
+                </span>
               </span>
               <span class="picto">
                 <svg viewBox="0 0 60 52" focusable="false">
@@ -1321,23 +1491,125 @@
                   <path d="M15 27l-7-2M15 31l-7 2M45 27l7-2M45 31l7 2"/>
                 </svg>
                 <span><b>g</b>ato</span>
+                <span class="altavoz">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                  </svg>
+                </span>
               </span>
             </span>
             <span class="dijo">¡Dijo «pato»!</span>
+            <!-- Las teclas del adulto son DOS: una por palabra. Tú marcas la que oíste. -->
+            <span class="cual">
+              <span class="cual-rotulo">¿Cuál oíste?</span>
+              <span class="teclas">
+                <span class="tecla marcada">pato</span>
+                <span class="tecla">gato</span>
+              </span>
+            </span>
           </div>
           <p class="leyenda"><b>sin mic</b> <span>Dos palabras que se diferencian por un
-            solo sonido. Él dice una, y <em>tú</em> marcas la que oíste: este juego no usa
-            micrófono ni analiza nada. Es co-uso puro.</span></p>
+            solo sonido. Él dice una y <em>tú</em> marcas cuál oíste — hay <strong>una tecla
+            por palabra</strong>, y son tuyas: la fiesta del niño está en los dibujos. Este
+            juego no usa micrófono ni analiza nada. Tocar un dibujo solo lo hace
+            <strong>sonar con tu voz</strong> —jamás marca nada—, y la palabra suena sola al
+            aparecer la pareja.</span></p>
+          <p><a class="enlace" href="/jugar/gemelas">Abrir palabras gemelas
+            <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round"/></svg></a></p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ══ E06 · EL CLÍMAX ══ -->
-  <section class="clima" id="privacidad" aria-labelledby="t-promesa">
+  <!-- ══ E06a · EL TALLER — la primera noche, cálida: TU voz entra a los juegos. ══ -->
+  <section class="clima clima--taller" id="estudio" aria-labelledby="t-estudio">
     <div class="marco">
       <p class="acto-cabeza revela"><span class="num">03</span>
+        <span class="eyebrow">Tu voz</span><span class="raya"></span></p>
+      <h2 id="t-estudio" class="revela">La grabas una vez.<br>Y ya está <em>en todos los
+        juegos</em>.</h2>
+
+      <div class="taller revela" aria-hidden="true">
+        <svg class="taller-svg" viewBox="0 0 320 128" focusable="false">
+          <!-- 1 · grabas: el medidor baila con tu voz mientras dices la palabra -->
+          <path class="mic" d="M30 34a6 6 0 0 1 12 0v14a6 6 0 0 1-12 0z"/>
+          <path class="mic" d="M24 46a12 12 0 0 0 24 0M36 60v8M30 68h12"/>
+          <rect class="tv-barra" style="--k:0" x="58" y="34" width="6" height="34" rx="3"/>
+          <rect class="tv-barra" style="--k:1" x="69" y="34" width="6" height="34" rx="3"/>
+          <rect class="tv-barra" style="--k:2" x="80" y="34" width="6" height="34" rx="3"/>
+          <rect class="tv-barra" style="--k:3" x="91" y="34" width="6" height="34" rx="3"/>
+          <text class="tv-rotulo" x="36" y="90" text-anchor="middle">Grabas</text>
+
+          <path class="via" d="M108 51h18"/>
+
+          <!-- 2 · se guarda: la palabra queda aquí, en este aparato -->
+          <g class="tv-tarjeta">
+            <rect class="tv-caja" x="130" y="30" width="78" height="42" rx="10"/>
+            <text class="tv-texto" x="160" y="57" text-anchor="middle">perro</text>
+            <path class="mic" d="M182 45v12M188 42v18"/>
+          </g>
+          <text class="tv-rotulo" x="169" y="90" text-anchor="middle">Se queda aquí</text>
+
+          <path class="via" d="M212 51h56"/>
+          <circle class="tv-punto" cx="214" cy="51" r="3.5"/>
+
+          <!-- 3 · suena: en los cuatro juegos, con tu voz -->
+          <g class="tv-pantalla" style="--k:0">
+            <rect x="272" y="18" width="38" height="22" rx="6"/>
+            <path d="M282 25v8h4l5 4V21l-5 4h-4M296 26a3 3 0 0 1 0 6"/>
+          </g>
+          <g class="tv-pantalla" style="--k:1">
+            <rect x="272" y="46" width="38" height="22" rx="6"/>
+            <path d="M282 53v8h4l5 4V49l-5 4h-4M296 54a3 3 0 0 1 0 6"/>
+          </g>
+          <g class="tv-pantalla" style="--k:2">
+            <rect x="272" y="74" width="38" height="22" rx="6"/>
+            <path d="M282 81v8h4l5 4V77l-5 4h-4M296 82a3 3 0 0 1 0 6"/>
+          </g>
+          <text class="tv-rotulo" x="291" y="112" text-anchor="middle">Suena allá</text>
+        </svg>
+      </div>
+      <p class="pie-aparato">grabas una vez · se queda aquí · suena en los cuatro juegos</p>
+
+      <p class="revela" style="margin-top:26px">Los juegos pueden sonar con la voz de mamá
+        o papá en vez de estar mudos. En el <strong style="color:#F4EFE6">Estudio</strong>
+        grabas de a una las palabras de los dibujos, las consignas del juego y las
+        celebraciones: tocas «Grabar», la dices, la <em>escuchas cómo quedó</em> y la
+        guardas o la regrabas sin pena. Mientras grabas, una barra baila con tu voz — si se
+        mueve cuando hablas, te está oyendo bien.</p>
+
+      <ul class="lista revela">
+        <li><b>Se graba TU voz, la del adulto.</b> La pantalla lo dice sin rodeos: «La voz
+          de tu hijo nunca se graba». El Estudio es tuyo.</li>
+        <li><b>Y entonces el nombre vive en la cosa:</b> en «palabra y dibujo» y en
+          «palabras gemelas» aparece un altavoz grande —él lo puede tocar— y la palabra
+          suena sola al aparecer el dibujo, con una voz que él conoce.</li>
+        <li><b>También en el globo y el cohete:</b> si grabaste las invitaciones, suenan
+          bajo el título. Y mientras tu voz grabada suena, <b>el juego espera</b>: el globo
+          no vuela con una grabación, solo con la voz de verdad.</li>
+        <li><b>Tú mandas sobre ella:</b> la apagas con un interruptor sin borrar nada, o
+          borras solo el banco de voz cuando quieras.</li>
+        <li><b>Un detalle honesto:</b> se graban frases fijas. La celebración que dice un
+          número —«¡Su voz sonó 7,3 segundos!»— no se puede grabar, porque el número cambia
+          cada vez; esa se queda en texto.</li>
+      </ul>
+
+      <a class="enlace" href="/estudio">Abrir el Estudio
+        <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+          focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ══ E06b · EL CLÍMAX — la segunda noche, fría: la de él nunca sale. ══ -->
+  <section class="clima" id="privacidad" aria-labelledby="t-promesa">
+    <div class="marco">
+      <p class="acto-cabeza revela"><span class="num">04</span>
         <span class="eyebrow">La promesa mayor</span><span class="raya"></span></p>
       <h2 id="t-promesa" class="revela">Lo que pasa adentro,<br><em>muere adentro</em>.</h2>
 
@@ -1385,7 +1657,7 @@
   <!-- ══ E07 · LO FINO ══ -->
   <div class="lienzo">
   <section class="acto" aria-labelledby="t-fino">
-    <p class="acto-cabeza revela"><span class="num">04</span>
+    <p class="acto-cabeza revela"><span class="num">05</span>
       <span class="eyebrow">Lo fino</span><span class="raya"></span></p>
     <h2 id="t-fino" class="revela">Lo que falta, por si <em>lo pides</em>.</h2>
 
@@ -1474,16 +1746,82 @@
   var suavizar = function (e0, e1, v) { var x = clamp((v - e0) / (e1 - e0)); return x * x * (3 - 2 * x); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
-  /* ── E04 · G2: abrir y cerrar (teclado nativo, aria-expanded honesto). ─────── */
-  document.querySelectorAll(".tarjeta-boton").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var tarjeta = btn.closest(".tarjeta");
-      var abierta = tarjeta.hasAttribute("data-abierta");
-      if (abierta) { tarjeta.removeAttribute("data-abierta"); }
-      else { tarjeta.setAttribute("data-abierta", ""); }
-      btn.setAttribute("aria-expanded", String(!abierta));
+  /* ── E04 · G2: abrir y cerrar. Dos formas de mando, y una gana siempre:
+        · EL RECORRIDO: al bajar, la tarjeta que llega a la banda alta se abre sola y
+          la anterior se cierra — una a la vez, como pasar páginas.
+        · TU TOQUE: en cuanto tocas una, esa queda bajo tu mando (`data-manual`) y el
+          recorrido no vuelve a moverla. Nada se cierra en tus narices mientras lees.
+     ────────────────────────────────────────────────────────────────────────────── */
+  var tarjetas = [].slice.call(document.querySelectorAll(".tarjetas .tarjeta"));
+
+  function fijar(tarjeta, abrir) {
+    if (abrir) { tarjeta.setAttribute("data-abierta", ""); }
+    else { tarjeta.removeAttribute("data-abierta"); }
+    tarjeta.querySelector(".tarjeta-boton").setAttribute("aria-expanded", String(abrir));
+  }
+
+  tarjetas.forEach(function (tarjeta) {
+    tarjeta.querySelector(".tarjeta-boton").addEventListener("click", function () {
+      tarjeta.setAttribute("data-manual", "");
+      fijar(tarjeta, !tarjeta.hasAttribute("data-abierta"));
     });
   });
+
+  /* El paso de páginas avanza de a UNA por cuadro. Abrir una tarjeta cambia el alto de
+     todo lo que sigue, así que decidir de golpe con medidas viejas se saltaba tarjetas
+     (se veía 1 → 2 → 6). Un paso por cuadro mide siempre el layout que de verdad hay.
+     El índice `n` es el "ya pasamos": ahí no queda ninguna abierta. */
+  var respiro = document.querySelector(".respiro");
+  var indice = -1;
+
+  function topeDe(i) {
+    if (i >= tarjetas.length) {
+      return respiro ? respiro.getBoundingClientRect().top : -1;
+    }
+    return tarjetas[i].querySelector(".tarjeta-cabeza").getBoundingClientRect().top;
+  }
+
+  function acordeon() {
+    if (!tarjetas.length) { return; }
+    var linea = window.innerHeight * .3;
+    var antes = indice;
+    if (indice + 1 <= tarjetas.length && topeDe(indice + 1) <= linea) { indice++; }
+    else if (indice >= 0 && topeDe(indice) > linea) { indice--; }
+    if (indice === antes) { return; }
+
+    /* ANCLAJE: cerrar la tarjeta anterior le quita alto a lo que ya pasó, y sin
+       compensarlo el contenido se va hacia arriba bajo el dedo — se sentía un tirón y
+       además disparaba una cascada que se saltaba tarjetas. Se fija la que entra: mide
+       antes, aplica, mide después y devuelve el scroll a su sitio. */
+    var ancla = tarjetas[Math.max(0, Math.min(indice, tarjetas.length - 1))];
+    var y0 = ancla.getBoundingClientRect().top;
+
+    tarjetas.forEach(function (t, i) {
+      if (t.hasAttribute("data-manual")) { return; }   /* tu toque no se toca */
+      var debe = i === indice;
+      if (debe === t.hasAttribute("data-abierta")) { return; }
+      if (debe) {
+        fijar(t, true);        /* abrir SÍ se anima: crece hacia abajo, no te mueve nada */
+      } else {
+        /* Cerrar es instantáneo a propósito: si se animara, el alto todavía no habría
+           cambiado cuando medimos para compensar, y el ajuste llegaría tarde (era la
+           causa del salto de tarjetas). Se cierra, se fuerza el cálculo y se compensa. */
+        t.setAttribute("data-sin-transicion", "");
+        fijar(t, false);
+        void t.offsetHeight;
+        t.removeAttribute("data-sin-transicion");
+      }
+    });
+
+    var y1 = ancla.getBoundingClientRect().top;
+    if (Math.abs(y1 - y0) > .5) {
+      var suaveAntes = raiz.style.scrollBehavior;
+      raiz.style.scrollBehavior = "auto";   /* el ajuste es invisible, no un viaje */
+      window.scrollBy(0, y1 - y0);
+      raiz.style.scrollBehavior = suaveAntes;
+    }
+    pedir();   /* deja que el siguiente cuadro siga acomodando */
+  }
 
   /* ── E03 · G3: reveals. Con movimiento reducido el CSS ya muestra todo; la clase
         se añade igual (inofensiva). Sin IntersectionObserver, todo visible.  ───── */
@@ -1543,34 +1881,38 @@
       i.style.setProperty("--d", g[1] + "s");
       i.style.setProperty("--c", "var(--nino-" + g[2] + ")");
     });
+    /* La jugada se repite CADA vez que pasas por ella: al salir se rebobina y al
+       volver a entrar arranca de cero. Una demostración que solo corre la primera
+       vez deja de demostrar en la segunda visita. */
     vigilar([cancha], function (el, dentro) {
       if (dentro) { el.classList.add("corre"); }
-    }, true, 0.4);
+      else { el.classList.remove("corre"); }
+    }, false, 0.4);
   });
 
   /* ── E06 · el clímax: el único loop de la pieza. Se pausa fuera de pantalla y
         con la pestaña oculta — un brochure no gasta batería a escondidas.  ────── */
-  var clima = document.querySelector(".clima");
-  if (clima) {
-    var GRANOS = [
-      [-46, 26, 0], [-28, 34, .05], [-12, 22, .1], [4, 32, .03], [20, 25, .08],
-      [38, 33, .13], [-38, 30, .17], [12, 28, .21]
-    ];
-    var granero = clima.querySelector(".grano");
-    GRANOS.forEach(function (g) {
-      var i = document.createElement("i");
-      i.style.setProperty("--x", g[0] + "px");
-      i.style.setProperty("--y", g[1] + "px");
-      i.style.setProperty("--d", g[2] + "s");
-      granero.appendChild(i);
+  var GRANOS = [
+    [-46, 26, 0], [-28, 34, .05], [-12, 22, .1], [4, 32, .03], [20, 25, .08],
+    [38, 33, .13], [-38, 30, .17], [12, 28, .21]
+  ];
+  sembrar(document.querySelector(".grano"), GRANOS, function (i, g) {
+    i.style.setProperty("--x", g[0] + "px");
+    i.style.setProperty("--y", g[1] + "px");
+    i.style.setProperty("--d", g[2] + "s");
+  });
+
+  var noches = [].slice.call(document.querySelectorAll(".clima"));
+  var aLaVista = [];
+  function refrescarNoches() {
+    noches.forEach(function (n, i) {
+      n.classList.toggle("mira", !!aLaVista[i] && !document.hidden);
     });
-    var aLaVista = false;
-    function refrescarClima() {
-      clima.classList.toggle("mira", aLaVista && !document.hidden);
-    }
-    vigilar([clima], function (el, dentro) { aLaVista = dentro; refrescarClima(); }, false, 0.2);
-    document.addEventListener("visibilitychange", refrescarClima);
   }
+  noches.forEach(function (n, i) {
+    vigilar([n], function (el, dentro) { aLaVista[i] = dentro; refrescarNoches(); }, false, 0.2);
+  });
+  document.addEventListener("visibilitychange", refrescarNoches);
 
   /* ── E08 · el número que se cuenta solo. El texto del DOM dice "24" desde el
         primer byte: nadie —ni un lector de pantalla ni una prueba— ve un número
@@ -1622,6 +1964,7 @@
 
   function pintar() {
     pedido = false;
+    acordeon();   /* el recorrido pasa páginas también sin coreografía */
     if (quieto.matches) { quietud(); return; }
     var y = window.scrollY || window.pageYOffset;
 
