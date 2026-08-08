@@ -21,7 +21,11 @@ test("la ruta /conoce sirve el brochure con su portada", async ({ page }) => {
   await expect(tarjetas).toHaveCount(6);
 });
 
-test("una tarjeta abre su detalle y lo vuelve a cerrar (progressive disclosure)", async ({
+// El recorrido va pasando páginas: al bajar, la tarjeta que llega a la banda alta se
+// abre sola y la anterior se cierra. Pero en cuanto la persona toca una, esa queda bajo
+// SU mando y el recorrido no vuelve a moverla — nada se cierra en sus narices mientras
+// lee. Este test protege las dos mitades de esa regla.
+test("las tarjetas se abren al bajar, y tu toque manda sobre el recorrido", async ({
   page,
 }) => {
   await page.goto("/conoce");
@@ -33,18 +37,49 @@ test("una tarjeta abre su detalle y lo vuelve a cerrar (progressive disclosure)"
     name: "La respuesta de cada día — detalle",
   });
 
-  // Cerrada: el contenido vive en el DOM (a11y), pero no se le muestra a nadie.
+  // Al llegar: cerrada. El contenido vive en el DOM, pero no se le muestra a nadie.
   await expect(tarjeta).toHaveAttribute("aria-expanded", "false");
   await expect(detalle).not.toBeVisible();
 
-  await tarjeta.click();
+  // Al bajar hasta ella, se abre sola.
+  await page.evaluate(() =>
+    document
+      .querySelector(".tarjetas .tarjeta")
+      ?.scrollIntoView({ block: "start" }),
+  );
   await expect(tarjeta).toHaveAttribute("aria-expanded", "true");
   await expect(detalle).toBeVisible();
   await expect(detalle.getByText("La cápsula del día")).toBeVisible();
 
+  // Y si la cierras a mano, se queda cerrada: tu decisión gana.
   await tarjeta.click();
   await expect(tarjeta).toHaveAttribute("aria-expanded", "false");
   await expect(detalle).not.toBeVisible();
+  await page.mouse.wheel(0, 400);
+  await expect(tarjeta).toHaveAttribute("aria-expanded", "false");
+});
+
+// Cada tarjeta lleva a su sitio en la app: la entrega no es solo entender, es llegar.
+test("cada tarjeta y cada juego enlazan a su ruta real", async ({ page }) => {
+  await page.goto("/conoce");
+
+  const rutas = [
+    "/",
+    "/jugar",
+    "/estudio",
+    "/objetivo",
+    "/rumbo",
+    "/ajustes",
+    "/jugar/globo",
+    "/jugar/cohete",
+    "/jugar/palabras",
+    "/jugar/gemelas",
+  ];
+  for (const ruta of rutas) {
+    await expect(page.locator(`a.enlace[href="${ruta}"]`).first()).toHaveCount(
+      1,
+    );
+  }
 });
 
 // La progressive disclosure también tiene que existir para quien no ve la pantalla.
@@ -64,8 +99,12 @@ test("lo cerrado no llega al lector de pantalla", async ({ page }) => {
 
   expect(await arbol()).not.toContain("La cápsula del día");
 
-  // Y al abrirla, sí llega: el contenido existe, solo estaba guardado.
-  await page.getByRole("button", { name: /La respuesta de cada día/ }).click();
+  // Y cuando el recorrido la abre, sí llega: el contenido existe, solo estaba guardado.
+  await page.evaluate(() =>
+    document
+      .querySelector(".tarjetas .tarjeta")
+      ?.scrollIntoView({ block: "start" }),
+  );
   await expect(
     page.getByRole("region", { name: "La respuesta de cada día — detalle" }),
   ).toBeVisible();
@@ -90,14 +129,22 @@ for (const esquema of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme: esquema, reducedMotion: "reduce" });
     await page.goto("/conoce");
 
-    // Todo abierto: el detalle y lo fino son la mayor parte del documento, y lo cerrado
-    // esconde su contraste de axe.
-    for (const boton of await page.getByRole("button").all()) {
-      await boton.click();
-    }
-    await page
-      .locator("details")
-      .evaluateAll((lista) => lista.forEach((d) => d.setAttribute("open", "")));
+    // Todo abierto de forma determinista (sin depender del recorrido por scroll): el
+    // detalle y lo fino son la mayor parte del documento, y lo cerrado esconde su
+    // contraste de axe.
+    await page.evaluate(() => {
+      document.querySelectorAll(".tarjeta").forEach((t) => {
+        t.setAttribute("data-abierta", "");
+        t.setAttribute("data-manual", "");
+        t.querySelector(".tarjeta-boton")?.setAttribute(
+          "aria-expanded",
+          "true",
+        );
+      });
+      document
+        .querySelectorAll("details")
+        .forEach((d) => d.setAttribute("open", ""));
+    });
 
     const { violations } = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
