@@ -156,7 +156,14 @@ export function realinearObjetivo(
     .progreso;
 }
 
-/** Marcar completada es idempotente: dos toques no ensucian el historial. */
+/** Marcar completada es idempotente: dos toques no ensucian el historial.
+ *
+ *  Y marcar SELLA la asignación del día marcado. Sin esto, una pestaña que cruza la
+ *  medianoche abierta marca sobre una selección efímera (la asignación guardada quedó en
+ *  ayer): el selector excluye la recién completada, sirve OTRA cápsula con el botón otra
+ *  vez virgen, y cada toque suma un «día» — defecto real del 2026-08-08, cazado grabando
+ *  un video pasada la medianoche. La marca es un acto del padre: manda sobre el congelado
+ *  viejo. */
 export function marcarCompletada(
   fecha: string,
   capsulaId: string,
@@ -169,6 +176,8 @@ export function marcarCompletada(
   if (yaCompletada) return progreso;
 
   const estadoEtapa = progreso.porEtapa[etapa] ?? ETAPA_VACIA;
+  const asignada = estadoEtapa.asignacionHoy;
+  const sellada = asignada?.fecha === fecha && asignada.capsulaId === capsulaId;
 
   return {
     ...progreso,
@@ -176,6 +185,12 @@ export function marcarCompletada(
       ...progreso.porEtapa,
       [etapa]: {
         ...estadoEtapa,
+        asignacionHoy: sellada ? asignada : { fecha, capsulaId },
+        // La asignación vieja rota a "ayer" (mismo giro que hace el selector), para que
+        // mañana no se repita la que quedó atrás sin completar.
+        asignacionAyer: sellada
+          ? estadoEtapa.asignacionAyer
+          : (asignada ?? estadoEtapa.asignacionAyer),
         cicloCompletadas: estadoEtapa.cicloCompletadas.includes(capsulaId)
           ? estadoEtapa.cicloCompletadas
           : [...estadoEtapa.cicloCompletadas, capsulaId],
@@ -183,4 +198,11 @@ export function marcarCompletada(
     },
     historial: [...progreso.historial, { capsulaId, fecha }],
   };
+}
+
+/** Días únicos practicados: dos cápsulas marcadas el mismo día son UN día. Es lo que el
+ *  contador de "Hoy" afirma («han practicado juntos N días»), así que se cuenta por fecha
+ *  — contar entradas del historial inflaba el número cuando un día marcaba dos etapas. */
+export function diasPracticados(historial: Progreso["historial"]): number {
+  return new Set(historial.map((h) => h.fecha)).size;
 }
