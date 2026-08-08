@@ -312,41 +312,47 @@
     opacity: 0; }
 
   /* Cancha 3 · palabra y dibujo: el marco se enciende con CUALQUIER sonido.
-     Más alta que las otras porque el altavoz es una pieza propia, bajo el dibujo. */
-  .cancha[data-juego="dibujo"] { height: 198px; }
-  .picto { position: absolute; left: 50%; top: 22px; width: 118px; margin-left: -59px;
-    padding: 10px 10px 6px; border-radius: 14px; background: var(--nino-bg);
-    border: 3px solid var(--nino-ink); text-align: center; }
+     Más alta que las otras porque el altavoz es una pieza propia, bajo la palabra.
+     El armado es el de la app y el mismo de las gemelas: MARCO (solo el dibujo) →
+     palabra → altavoz, apilados. Así ninguna pieza tiene que esquivar a otra con
+     números mágicos, y los dos juegos de la galería se leen igual. */
+  .cancha[data-juego="dibujo"] { height: 200px; }
+  .par { display: grid; justify-items: center; gap: 4px; }
+  .par-solo { position: absolute; left: 0; right: 0; top: 18px; gap: 6px; }
+  .picto { position: relative; width: 118px; padding: 10px; border-radius: 14px;
+    background: var(--nino-bg); border: 3px solid var(--nino-ink); text-align: center; }
   /* `>` a propósito: el dibujo es el hijo directo. Sin el combinador, esta medida se
      le aplicaba también al icono del altavoz y lo sacaba del marco. */
   .picto > svg { display: block; width: 76px; height: 54px; margin: 0 auto; }
   .picto > svg :is(path, rect, circle, ellipse) { fill: none; stroke: var(--nino-ink);
     stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .picto span { display: block; margin-top: 4px; font-family: Georgia, serif;
+  /* La palabra lleva clase propia: `.picto span` alcanzaba también al altavoz y a la
+     onda (los dos son spans) y le quitaba al altavoz su `display: grid` — el icono
+     quedaba descuadrado dentro del círculo. */
+  .palabra { display: block; margin-top: 4px; font-family: Georgia, serif;
     font-size: 1.02rem; color: var(--nino-ink); }
-  .halo { position: absolute; left: 50%; top: 22px; width: 118px; height: 106px;
-    margin-left: -59px; border-radius: 14px; border: 3px solid var(--fiesta-verde);
-    opacity: 0; }
+  .palabra b { font-weight: 400; color: var(--fiesta-cielo); }
+  /* El halo va DENTRO del marco, calcado sobre su borde: así no hay que repetirle las
+     medidas cada vez que el marco cambia. */
+  .halo { position: absolute; inset: -3px; border-radius: 14px;
+    border: 3px solid var(--fiesta-verde); opacity: 0; }
   .globitos { position: absolute; left: 50%; bottom: 0; width: 2px; height: 2px; }
   .globitos i { position: absolute; display: block; width: 14px; height: 19px;
     border-radius: 50% 50% 45% 45%; background: var(--c); opacity: 0;
     border: 1.5px solid var(--nino-ink); }
 
-  /* Cancha 4 · palabras gemelas: dos que suenan casi igual; el que oye eres tú. */
-  /* La pareja necesita más aire que un dibujo solo: dos marcos, sus dos altavoces y
-     abajo las DOS teclas del adulto. El altavoz va DENTRO del marco (afuera se salía
-     de la cancha y pisaba al vecino). */
+  /* Cancha 4 · palabras gemelas: dos que suenan casi igual; el que oye eres tú.
+     Como en la app: el marco lleva SOLO el dibujo, con su altavoz en la esquina de
+     abajo, y la palabra va DEBAJO del marco. Con la palabra dentro, el altavoz le caía
+     encima — no había esquina libre en un marco de 100 px que ya tenía texto. */
   .cancha[data-juego="gemelas"] { height: 218px; }
-  .pareja { position: absolute; inset: 14px 0 auto; display: flex; justify-content: center;
-    gap: 14px; }
-  /* `relative` para que el altavoz se ancle DENTRO, pero reseteando el left/top que
-     el picto suelto usa para centrarse: en la pareja los coloca el flex, no el offset. */
-  .pareja .picto { position: relative; left: auto; top: auto; margin: 0; width: 108px;
-    border-width: 2.5px; }
+  .pareja { position: absolute; inset: 12px 0 auto; display: flex; justify-content: center;
+    gap: 16px; }
+  .pareja .picto { width: 100px; padding: 9px; border-width: 2.5px; }
   .pareja .picto > svg { width: 60px; height: 44px; }
   .pareja .altavoz, .pareja .onda { right: 5px; bottom: 5px; width: 26px; height: 26px; }
-  .cancha[data-juego="gemelas"] .dijo { top: 116px; bottom: auto; }
-  .pareja .picto span b { font-weight: 400; color: var(--fiesta-cielo); }
+  .pareja .palabra { margin-top: 0; }
+  .cancha[data-juego="gemelas"] .dijo { top: 114px; bottom: auto; }
   .pareja .picto.gana { border-color: var(--fiesta-verde);
     background: color-mix(in srgb, var(--fiesta-verde) 12%, var(--nino-bg)); }
   .dijo { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
@@ -380,9 +386,8 @@
     stroke-linecap: round; stroke-linejoin: round; }
   .onda { position: absolute; border-radius: 50%; border: 2px solid var(--nino-ink);
     opacity: 0; }
-  /* a · el botón suelto de «palabra y dibujo»: bajo el dibujo, centrado, en su cancha. */
-  .boton-voz { position: absolute; left: 50%; top: 140px; width: 40px; height: 40px;
-    margin-left: -20px; }
+  /* a · el botón suelto de «palabra y dibujo»: va apilado bajo la palabra. */
+  .boton-voz { position: relative; width: 40px; height: 40px; }
   .boton-voz .altavoz, .boton-voz .onda { inset: 0; }
 
   /* Las teclas de «¿Cuál oíste?»: son DOS, y son del adulto — discretas a propósito. */
@@ -699,7 +704,12 @@
       45%  { transform: scale(1.07); }
       100% { transform: scale(1); }
     }
-    .cancha.corre .dijo { animation: llega 1.6s var(--ease-cine) 1.5s forwards; }
+    /* La chip tiene keyframes propios: `llega` termina en `transform: none` y le
+       borraba el `translateX(-50%)` que la centra — quedaba corrida a la derecha. */
+    .cancha.corre .dijo { animation: llega-centrada 1.6s var(--ease-cine) 1.5s forwards; }
+    @keyframes llega-centrada {
+      from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+      to   { opacity: 1; transform: translateX(-50%); } }
 
     /* El altavoz avisa que la palabra suena SOLA al aparecer el dibujo: una onda que
        sale del botón, una vez por jugada. */
@@ -1463,23 +1473,25 @@
         <div class="juego revela">
           <h3><span class="num">03</span>Palabra y dibujo</h3>
           <div class="cancha" data-juego="dibujo" aria-hidden="true">
-            <span class="halo"></span>
-            <span class="picto">
-              <svg viewBox="0 0 80 52" focusable="false">
-                <path d="M10 34v-6l9-12h27l9 12h9a5 5 0 0 1 5 5v1H10z"/>
-                <path d="M25 16v10M46 16v10M19 26h48"/>
-                <circle cx="23" cy="38" r="6"/>
-                <circle cx="57" cy="38" r="6"/>
-              </svg>
-              <span>carro</span>
-            </span>
-            <!-- El altavoz, como en la app: un botón redondo bajo la palabra. -->
-            <span class="boton-voz">
-              <span class="onda"></span>
-              <span class="altavoz">
-                <svg viewBox="0 0 24 24" focusable="false">
-                  <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+            <!-- Como en la app: marco (solo el dibujo) → palabra → altavoz. -->
+            <span class="par par-solo">
+              <span class="picto">
+                <span class="halo"></span>
+                <svg viewBox="0 0 80 52" focusable="false">
+                  <path d="M10 34v-6l9-12h27l9 12h9a5 5 0 0 1 5 5v1H10z"/>
+                  <path d="M25 16v10M46 16v10M19 26h48"/>
+                  <circle cx="23" cy="38" r="6"/>
+                  <circle cx="57" cy="38" r="6"/>
                 </svg>
+              </span>
+              <span class="palabra">carro</span>
+              <span class="boton-voz">
+                <span class="onda"></span>
+                <span class="altavoz">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                  </svg>
+                </span>
               </span>
             </span>
             <span class="globitos"></span>
@@ -1501,37 +1513,42 @@
           <h3><span class="num">04</span>Palabras gemelas</h3>
           <div class="cancha" data-juego="gemelas" aria-hidden="true">
             <span class="pareja">
-              <span class="picto gana">
-                <svg viewBox="0 0 60 52" focusable="false">
-                  <ellipse cx="24" cy="34" rx="16" ry="10"/>
-                  <path d="M35 28c2-6 5-9 8-9"/>
-                  <circle cx="45" cy="15" r="6.5"/>
-                  <path d="M51 14h7l-3.5 4.5H51"/>
-                  <path d="M43.5 13v.6"/>
-                  <path d="M9 31c-4-.5-5 3.5-1 5.5"/>
-                </svg>
-                <span><b>p</b>ato</span>
-                <span class="onda"></span>
-                <span class="altavoz">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+              <!-- Como en la app: marco (dibujo + altavoz) y la palabra abajo, fuera. -->
+              <span class="par">
+                <span class="picto gana">
+                  <svg viewBox="0 0 60 52" focusable="false">
+                    <ellipse cx="24" cy="34" rx="16" ry="10"/>
+                    <path d="M35 28c2-6 5-9 8-9"/>
+                    <circle cx="45" cy="15" r="6.5"/>
+                    <path d="M51 14h7l-3.5 4.5H51"/>
+                    <path d="M43.5 13v.6"/>
+                    <path d="M9 31c-4-.5-5 3.5-1 5.5"/>
                   </svg>
+                  <span class="onda"></span>
+                  <span class="altavoz">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                    </svg>
+                  </span>
                 </span>
+                <span class="palabra"><b>p</b>ato</span>
               </span>
-              <span class="picto">
-                <svg viewBox="0 0 60 52" focusable="false">
-                  <circle cx="30" cy="27" r="13"/>
-                  <path d="M20 18l-3-9 9.5 5M40 18l3-9-9.5 5"/>
-                  <path d="M25.5 25v.6M34.5 25v.6"/>
-                  <path d="M30 30l-2.5 2.5h5z"/>
-                  <path d="M15 27l-7-2M15 31l-7 2M45 27l7-2M45 31l7 2"/>
-                </svg>
-                <span><b>g</b>ato</span>
-                <span class="altavoz">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+              <span class="par">
+                <span class="picto">
+                  <svg viewBox="0 0 60 52" focusable="false">
+                    <circle cx="30" cy="27" r="13"/>
+                    <path d="M20 18l-3-9 9.5 5M40 18l3-9-9.5 5"/>
+                    <path d="M25.5 25v.6M34.5 25v.6"/>
+                    <path d="M30 30l-2.5 2.5h5z"/>
+                    <path d="M15 27l-7-2M15 31l-7 2M45 27l7-2M45 31l7 2"/>
                   </svg>
+                  <span class="altavoz">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9a3.5 3.5 0 0 1 0 6"/>
+                    </svg>
+                  </span>
                 </span>
+                <span class="palabra"><b>g</b>ato</span>
               </span>
             </span>
             <span class="dijo">¡Dijo «pato»!</span>
@@ -1823,6 +1840,16 @@
     return tarjetas[i].querySelector(".tarjeta-cabeza").getBoundingClientRect().top;
   }
 
+  /* La referencia que NO se debe mover. Mientras quedan tarjetas es la que entra; al
+     pasar la última no se abre ninguna y lo que estás mirando ya es lo que sigue —la
+     galería—, así que la referencia pasa a ser ella. Sin esto, cerrar la última le
+     quitaba su alto de golpe a todo lo de abajo y el recorrido caía dos juegos más
+     adelante: había que devolverse para ver el globo y el cohete. */
+  function anclaDe(i) {
+    if (i >= tarjetas.length) { return respiro || tarjetas[tarjetas.length - 1]; }
+    return tarjetas[Math.max(0, i)];
+  }
+
   function acordeon() {
     if (!tarjetas.length) { return; }
     var linea = window.innerHeight * .3;
@@ -1838,7 +1865,7 @@
        compensarlo el contenido se va hacia arriba bajo el dedo — se sentía un tirón y
        además disparaba una cascada que se saltaba tarjetas. Se fija la que entra: mide
        antes, aplica, mide después y devuelve el scroll a su sitio. */
-    var ancla = tarjetas[Math.max(0, Math.min(indice, tarjetas.length - 1))];
+    var ancla = anclaDe(indice);
     var y0 = ancla.getBoundingClientRect().top;
 
     tarjetas.forEach(function (t, i) {
@@ -1903,7 +1930,9 @@
     [44, .3, "-30deg", "cielo"], [-24, .34, "8deg", "uva"], [14, .38, "-22deg", "verde"],
     [-40, .43, "36deg", "sol"], [36, .47, "-12deg", "coral"]
   ];
-  var GLOBITOS = [[-46, 0, "peach"], [-16, .18, "sol"], [14, .09, "cielo"], [42, .27, "coral"]];
+  /* Los globos suben por FUERA de la columna del dibujo: por el centro pasaban encima
+     de la palabra y del altavoz. */
+  var GLOBITOS = [[-72, 0, "peach"], [-44, .18, "sol"], [44, .09, "cielo"], [72, .27, "coral"]];
 
   function sembrar(caja, filas, aplicar) {
     if (!caja) { return; }
