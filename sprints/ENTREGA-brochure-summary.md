@@ -118,16 +118,18 @@ con el grano del manual. Son dos conteos distintos, ambos correctos, y conviene 
 | ---------------------------------- | ------------------------------------------------------------------- |
 | `pnpm typecheck` · `pnpm lint`     | limpios                                                             |
 | `pnpm test` (unit)                 | **249 verdes** (intactos: no se tocó código de la app)              |
-| `pnpm test:e2e`                    | **161 verdes** (149 heredados + 12 nuevos de `/conoce`)             |
+| `pnpm test:e2e`                    | **165 verdes** (149 heredados + 16 nuevos de `/conoce`)             |
 | Lighthouse local en `/conoce`      | **100 / 100 / 100 / 100** (perf · a11y · best-practices · SEO)      |
 | Presupuestos de `perf-budget.json` | FCP 0,8 s (tope 1,5) · LCP 0,9 s (tope 3,8) · TBT 0 ms · CLS 0      |
 | Autocontenido                      | grep: cero `src`/`href`/`@import`/`url(`/`http`/`fetch`             |
 | Higiene de contenido               | cero emojis · cero datos del menor · cero "manual" en texto visible |
 
-**Los 12 e2e:** la ruta responde 200 con su portada · las 6 tarjetas llegan cerradas · una abre y
-cierra con `aria-expanded` correcto y su detalle visible · **lo cerrado no llega al lector de
-pantalla** (se mira el árbol de accesibilidad real por CDP, no el pixel) · el conteo del pie está
-presente · axe limpio en los dos temas con todo el detalle abierto.
+**Los 16 e2e (8 × 2 proyectos):** la ruta responde 200 con su portada · las 6 tarjetas llegan
+cerradas · **el recorrido abre al bajar y tu toque manda sobre él** · **al volver hacia arriba se
+quedan cerradas** (la regla de dirección, que es fácil de romper sin darse cuenta) · **las 10 rutas
+enlazadas existen** · **lo cerrado no llega al lector de pantalla** (se mira el árbol de
+accesibilidad real por CDP, no el pixel) · el conteo del pie está presente · axe limpio en los dos
+temas con todo el detalle abierto.
 
 ## Lo que encontró el `/self-review` (y se corrigió)
 
@@ -204,6 +206,36 @@ globo cruza y da su vuelta con confeti; y la privacidad dejó de ser un acordeó
 lección): (1) con `prefers-reduced-motion` el rig colapsado daba progreso 1 y **desvanecía el
 hero**: la experiencia alterna quedaba en blanco, justo lo que la regla prohíbe; (2) un token
 del acto claro se coló en la escena nocturna (contraste 1,73:1) — ese sí lo cazó axe.
+
+### Después de la v2: tres rondas de gate visual (v3 · v4 · v5)
+
+La v2 pasó el gate («está espectacular el resultado»), y a partir de ahí el usuario corrigió
+**en frío**, tres veces. Cada ronda es la misma lección repetida: **lo que el molde no puede
+verificar es justo lo que hay que enseñar al ojo.** Ninguna de estas 11 correcciones la habría
+producido un test.
+
+| Ronda  | Lo que él vio                                                                                                | Lo que se hizo                                                                                                                                                                                                                                                       |
+| ------ | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **v3** | «Seis puertas» era un muro de texto; solo el globo mostraba cómo se juega                                    | Maquetas dentro de las tarjetas + las **cuatro canchas** de la galería (globo · cohete · palabra y dibujo · gemelas), no una                                                                                                                                         |
+| **v4** | La línea bajo «baja despacio»; las tarjetas no acompañaban; gemelas mentía                                   | Flecha que respira · el recorrido **pasa páginas** al bajar (con anclaje) · **10 enlaces directos** · gemelas con sus **dos teclas** · el altavoz de la voz grabada en los dos juegos que lo tienen · el **acto del Estudio**, antes del clímax de privacidad        |
+| **v5** | La apertura no se anunciaba; al subir se reabrían; el altavoz se salía del marco; el taller cambiaba de piso | Destello de apertura (marco + cabecera + telón) · el recorrido **abre bajando y no al subir** · el altavoz de «palabra y dibujo» pasa a ser **botón bajo la palabra, como en la app** · **un solo fondo** para las dos noches · «Suena allá» → «Suena en los juegos» |
+
+**Tres defectos propios de esta tanda, cazados MIRANDO capturas** (ninguno lo veía la CI):
+
+1. **La jugada de gemelas mentía sobre el juego real** — mostraba una sola tecla («¡Dijo pato!»)
+   cuando en la app hay **una por palabra**. Lo cazó él, no yo: una demostración puede estar
+   perfectamente animada y ser **falsa**.
+2. **El altavoz colgaba de la esquina del marco** (`top:-9px; right:-9px`) y se salía de la cancha,
+   pisando al vecino. Al moverlo, la app real dio la respuesta mejor: allá es un **botón redondo
+   bajo la palabra** (≥64 px, el niño lo toca). Fidelidad y arreglo, el mismo cambio.
+3. **Y al arreglarlo, el icono heredó el tamaño del pictograma** (`.pareja .picto svg` sin
+   combinador hijo alcanzaba al `svg` del altavoz): 60×44 px de bocina fuera del marco. Invisible
+   en el código, obvio en la captura. Corregido con `>` y comentado en el sitio.
+
+**Lección de método que va al molde:** _la captura es un gate, no un lujo._ Este piloto cerró
+con **9 defectos** que ni Playwright ni axe ni Lighthouse podían ver, todos hallados abriendo la
+imagen. El molde debería pedir explícitamente una pasada de capturas por bloque antes de dar
+la entrega por lista.
 
 ## Feedback del molde v1.9.0 — para la planeadora
 
@@ -293,10 +325,13 @@ nació muerta y la v2 no. **Recomendación: el brochure no se estampa, se PRODUC
       una sonda propia, no asumida.
 - [x] A11y: teclado completo, `aria-expanded`/`aria-controls` correctos, contraste AA en los dos
       temas, lo cerrado fuera del árbol de accesibilidad y el LCP naciendo pintado.
-- [x] `/self-review` corrido; 4 defectos hallados y corregidos en total (2 del molde en la v1,
-      2 propios en la v2).
+- [x] **Tres rondas de corrección del gate visual (v3 · v4 · v5)**: las cuatro canchas jugando,
+      el recorrido que pasa páginas al bajar y las deja cerradas al subir, los 10 enlaces
+      directos, el acto del Estudio y el altavoz donde la app lo tiene.
+- [x] `/self-review` + pasada de capturas; **13 defectos hallados y corregidos** en total (2 del
+      molde en la v1, 2 propios en la v2, 9 que solo se veían mirando la imagen).
 - [x] Cero cambios de comportamiento en la app.
-- [x] **CI verde en el PR #7** (quality · e2e · lighthouse · Vercel) con la v2.
-- [ ] **Gate visual del usuario sobre la preview** — la v1 lo reprobó; este es el segundo
-      intento, y sella el molde v2 con el caso real enfrente.
+- [x] **CI verde en el PR #7** (quality · e2e · lighthouse · Vercel).
+- [ ] **Gate visual del usuario sobre la v5** — la v1 lo reprobó; de la v2 en adelante fue puliendo
+      ronda a ronda, y esta cierra sus cinco últimas correcciones.
 - [ ] Merge a la orden del usuario → él envía el link de producción a la mamá.

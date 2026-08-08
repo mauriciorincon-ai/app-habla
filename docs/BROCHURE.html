@@ -176,7 +176,8 @@
   .tarjetas { display: grid; gap: 14px; margin-top: 26px; }
   .tarjeta { position: relative; background: var(--superficie);
     border: 1px solid var(--borde); border-radius: var(--radio); overflow: hidden; }
-  .tarjeta-cabeza { margin: 0; }
+  /* `relative` para que el destello de apertura viva DENTRO de la cabecera. */
+  .tarjeta-cabeza { position: relative; margin: 0; }
   .tarjeta-boton { position: relative; display: flex; align-items: center; gap: 14px;
     width: 100%; padding: 18px; font: inherit; text-align: left; color: inherit;
     background: none; border: 0; cursor: pointer; z-index: 1; }
@@ -221,7 +222,8 @@
   .tarjeta[data-abierta] .detalle { grid-template-rows: 1fr; visibility: visible; }
   .tarjeta[data-sin-transicion] .detalle { transition: none; }
   .detalle-interior { overflow: hidden; }
-  .detalle-cuerpo { padding: 2px 18px 20px; border-top: 1px solid var(--borde); }
+  .detalle-cuerpo { position: relative; padding: 2px 18px 20px;
+    border-top: 1px solid var(--borde); }
   .feature { padding: 14px 0; border-top: 1px solid var(--borde); }
   .feature:first-of-type { border-top: 0; }
   .feature h4 { margin: 0; font-size: 1rem; display: flex; align-items: center; gap: 9px; }
@@ -309,12 +311,16 @@
     font-family: ui-monospace, Menlo, monospace; font-size: .64rem; color: var(--nino-ink);
     opacity: 0; }
 
-  /* Cancha 3 · palabra y dibujo: el marco se enciende con CUALQUIER sonido. */
+  /* Cancha 3 · palabra y dibujo: el marco se enciende con CUALQUIER sonido.
+     Más alta que las otras porque el altavoz es una pieza propia, bajo el dibujo. */
+  .cancha[data-juego="dibujo"] { height: 198px; }
   .picto { position: absolute; left: 50%; top: 22px; width: 118px; margin-left: -59px;
     padding: 10px 10px 6px; border-radius: 14px; background: var(--nino-bg);
     border: 3px solid var(--nino-ink); text-align: center; }
-  .picto svg { display: block; width: 76px; height: 54px; margin: 0 auto; }
-  .picto svg :is(path, rect, circle, ellipse) { fill: none; stroke: var(--nino-ink);
+  /* `>` a propósito: el dibujo es el hijo directo. Sin el combinador, esta medida se
+     le aplicaba también al icono del altavoz y lo sacaba del marco. */
+  .picto > svg { display: block; width: 76px; height: 54px; margin: 0 auto; }
+  .picto > svg :is(path, rect, circle, ellipse) { fill: none; stroke: var(--nino-ink);
     stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   .picto span { display: block; margin-top: 4px; font-family: Georgia, serif;
     font-size: 1.02rem; color: var(--nino-ink); }
@@ -337,10 +343,8 @@
      el picto suelto usa para centrarse: en la pareja los coloca el flex, no el offset. */
   .pareja .picto { position: relative; left: auto; top: auto; margin: 0; width: 108px;
     border-width: 2.5px; }
-  .pareja .picto svg { width: 60px; height: 44px; }
-  .pareja .altavoz, .pareja .onda { top: auto; right: 5px; bottom: 5px;
-    width: 25px; height: 25px; }
-  .pareja .altavoz svg { width: 13px; height: 13px; }
+  .pareja .picto > svg { width: 60px; height: 44px; }
+  .pareja .altavoz, .pareja .onda { right: 5px; bottom: 5px; width: 26px; height: 26px; }
   .cancha[data-juego="gemelas"] .dijo { top: 116px; bottom: auto; }
   .pareja .picto span b { font-weight: 400; color: var(--fiesta-cielo); }
   .pareja .picto.gana { border-color: var(--fiesta-verde);
@@ -364,15 +368,22 @@
   .enlace:hover .punta { transform: translateX(3px); }
   .leyenda .enlace { margin-top: 9px; }
 
-  /* El altavoz de la voz de la familia: en los dibujos, grande, y él lo puede tocar. */
-  .altavoz { position: absolute; top: -9px; right: -9px; width: 30px; height: 30px;
-    display: grid; place-items: center; border-radius: 50%; background: var(--nino-yellow);
-    border: 2px solid var(--nino-ink); color: var(--nino-ink); }
-  .altavoz svg { display: block; width: 15px; height: 15px; }
+  /* El altavoz de la voz de la familia. Va en DOS sitios y cada uno es el de la app de
+     verdad: en «palabra y dibujo» es un botón redondo DEBAJO de la palabra (grande, él
+     lo puede tocar) y en «palabras gemelas» es una insignia dentro del marco de cada
+     dibujo. Antes colgaba de la esquina del marco y se salía de la cancha. */
+  .altavoz { position: absolute; display: grid; place-items: center; border-radius: 50%;
+    background: var(--nino-yellow); border: 2px solid var(--nino-ink);
+    color: var(--nino-ink); }
+  .altavoz svg { display: block; width: 58%; height: 58%; }
   .altavoz svg path { fill: none; stroke: currentColor; stroke-width: 2;
     stroke-linecap: round; stroke-linejoin: round; }
-  .onda { position: absolute; top: -9px; right: -9px; width: 30px; height: 30px;
-    border-radius: 50%; border: 2px solid var(--nino-ink); opacity: 0; }
+  .onda { position: absolute; border-radius: 50%; border: 2px solid var(--nino-ink);
+    opacity: 0; }
+  /* a · el botón suelto de «palabra y dibujo»: bajo el dibujo, centrado, en su cancha. */
+  .boton-voz { position: absolute; left: 50%; top: 140px; width: 40px; height: 40px;
+    margin-left: -20px; }
+  .boton-voz .altavoz, .boton-voz .onda { inset: 0; }
 
   /* Las teclas de «¿Cuál oíste?»: son DOS, y son del adulto — discretas a propósito. */
   .cual { position: absolute; left: 0; right: 0; bottom: 12px; display: grid;
@@ -468,16 +479,14 @@
      E06 · EL CLÍMAX — la noche de la pieza. Único acto con paleta propia, porque es
      la única promesa que nunca descansa. Lo que baila adentro, muere adentro.
      ═══════════════════════════════════════════════════════════════════════════ */
-  /* Las dos escenas nocturnas de la pieza. Comparten estructura y se distinguen por
-     TEMPERATURA: el taller es cálido (tu voz, la familia — el ámbar que el design
-     system reserva para la voz parental) y la promesa es fría y seria. Dos noches
-     seguidas, no dos bloques iguales. */
+  /* Las dos escenas nocturnas de la pieza. Comparten EL MISMO FONDO —la página no
+     cambia de piso de un bloque a otro— y se distinguen solo por el acento: el taller
+     lleva el ámbar que el design system reserva para la voz parental. */
   .clima { margin-top: clamp(70px, 13vh, 130px); padding: clamp(48px, 9vh, 88px) 0;
     background: #14171A; color: #F2EFE8;
     --tinta-suave-n: #A9B0AA; --acento-n: #B5D5AB; --borde-n: #2A3038; }
   .clima + .clima { margin-top: 0; }
-  .clima--taller { background: #241C12;
-    --tinta-suave-n: #C6BAA6; --acento-n: #ECC56F; --borde-n: #3C2F1E; }
+  .clima--taller { --acento-n: #ECC56F; }
   .clima .marco { max-width: 760px; margin: 0 auto; padding: 0 22px; }
   .clima .eyebrow, .clima .acto-cabeza .num { color: var(--acento-n); }
   .clima .raya { background: var(--borde-n); }
@@ -585,6 +594,30 @@
     .tarjeta .icono svg [pathLength]:nth-child(2) { transition-delay: 130ms; }
     .tarjeta .icono svg [pathLength]:nth-child(3) { transition-delay: 260ms; }
     .tarjeta.visto .icono svg [pathLength] { stroke-dashoffset: 0; }
+
+    /* ── La APERTURA se anuncia. Tres cosas a la vez, un solo disparo por apertura,
+          todo sobre `opacity`/`transform`: el marco se enciende un instante (dice
+          "esta fue la que se abrió"), la cabecera se aclara y se apaga, y la línea
+          del telón corre de izquierda a derecha antes de que entre el contenido.
+          Sin esto, la tarjeta que el recorrido abre solo "aparecía" sin avisar. ── */
+    .tarjeta::after { content: ""; position: absolute; inset: 0; z-index: 3;
+      border-radius: inherit; border: 2px solid var(--acento-vivo);
+      pointer-events: none; opacity: 0; }
+    .tarjeta[data-abierta]::after { animation: marco-vivo 880ms var(--ease-cine) both; }
+    @keyframes marco-vivo { 0% { opacity: 0; } 18% { opacity: 1; } 100% { opacity: 0; } }
+
+    .tarjeta-cabeza::after { content: ""; position: absolute; inset: 0; z-index: 0;
+      background: var(--acento-suave); pointer-events: none; opacity: 0; }
+    .tarjeta[data-abierta] .tarjeta-cabeza::after {
+      animation: destello 820ms var(--ease-suave) both; }
+    @keyframes destello { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+    .detalle-cuerpo::before { content: ""; position: absolute; left: 0; right: 0;
+      top: -1px; height: 1px; background: var(--acento);
+      transform-origin: 0 50%; transform: scaleX(0); }
+    .tarjeta[data-abierta] .detalle-cuerpo::before {
+      animation: correr-telon 680ms var(--ease-cine) both; }
+    @keyframes correr-telon { to { transform: scaleX(1); } }
 
     /* El interior se sirve en orden de lectura. */
     .tarjeta[data-abierta] .feature { animation: alzar 460ms var(--ease-cine) both;
@@ -767,7 +800,7 @@
     .cohete-juego { transform: translateY(-30px); }
     .marcador, .dijo { opacity: 1; }
     .cancha[data-juego="dibujo"] .picto { border-color: var(--fiesta-verde); }
-    .halo, .globitos { display: none; }
+    .halo, .globitos, .onda { display: none; }
     .cielo-juego i { opacity: .75; }
     /* Las barras de la promesa, quietas a media altura dentro del marco. */
     .aparato .barra { transform: scaleY(.55); }
@@ -1439,6 +1472,9 @@
                 <circle cx="57" cy="38" r="6"/>
               </svg>
               <span>carro</span>
+            </span>
+            <!-- El altavoz, como en la app: un botón redondo bajo la palabra. -->
+            <span class="boton-voz">
               <span class="onda"></span>
               <span class="altavoz">
                 <svg viewBox="0 0 24 24" focusable="false">
@@ -1570,7 +1606,8 @@
             <rect x="272" y="74" width="38" height="22" rx="6"/>
             <path d="M282 81v8h4l5 4V77l-5 4h-4M296 82a3 3 0 0 1 0 6"/>
           </g>
-          <text class="tv-rotulo" x="291" y="112" text-anchor="middle">Suena allá</text>
+          <text class="tv-rotulo" x="289" y="108" text-anchor="middle"><tspan
+            x="289">Suena en</tspan><tspan x="289" dy="11">los juegos</tspan></text>
         </svg>
       </div>
       <p class="pie-aparato">grabas una vez · se queda aquí · suena en los cuatro juegos</p>
@@ -1747,8 +1784,10 @@
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
   /* ── E04 · G2: abrir y cerrar. Dos formas de mando, y una gana siempre:
-        · EL RECORRIDO: al bajar, la tarjeta que llega a la banda alta se abre sola y
-          la anterior se cierra — una a la vez, como pasar páginas.
+        · EL RECORRIDO: al BAJAR, la tarjeta que llega a la banda alta se abre sola y
+          la anterior se cierra — una a la vez, como pasar páginas. Al SUBIR no se
+          abre ninguna: la que se deja atrás se cierra y el camino de vuelta queda
+          limpio (regreso ≠ lectura; volver a abrirlas al subir estorbaba).
         · TU TOQUE: en cuanto tocas una, esa queda bajo tu mando (`data-manual`) y el
           recorrido no vuelve a moverla. Nada se cierra en tus narices mientras lees.
      ────────────────────────────────────────────────────────────────────────────── */
@@ -1773,6 +1812,9 @@
      El índice `n` es el "ya pasamos": ahí no queda ninguna abierta. */
   var respiro = document.querySelector(".respiro");
   var indice = -1;
+  /* `indice` es el "por dónde vamos"; `abierta` es cuál se muestra. Se separan porque
+     al subir seguimos contando tarjetas pero no abrimos ninguna (abierta = -1). */
+  var abierta = -1;
 
   function topeDe(i) {
     if (i >= tarjetas.length) {
@@ -1785,8 +1827,11 @@
     if (!tarjetas.length) { return; }
     var linea = window.innerHeight * .3;
     var antes = indice;
-    if (indice + 1 <= tarjetas.length && topeDe(indice + 1) <= linea) { indice++; }
-    else if (indice >= 0 && topeDe(indice) > linea) { indice--; }
+    if (indice + 1 <= tarjetas.length && topeDe(indice + 1) <= linea) {
+      indice++; abierta = indice;      /* bajando: se abre la que llega */
+    } else if (indice >= 0 && topeDe(indice) > linea) {
+      indice--; abierta = -1;          /* subiendo: no se abre ninguna */
+    }
     if (indice === antes) { return; }
 
     /* ANCLAJE: cerrar la tarjeta anterior le quita alto a lo que ya pasó, y sin
@@ -1798,7 +1843,7 @@
 
     tarjetas.forEach(function (t, i) {
       if (t.hasAttribute("data-manual")) { return; }   /* tu toque no se toca */
-      var debe = i === indice;
+      var debe = i === abierta;
       if (debe === t.hasAttribute("data-abierta")) { return; }
       if (debe) {
         fijar(t, true);        /* abrir SÍ se anima: crece hacia abajo, no te mueve nada */
