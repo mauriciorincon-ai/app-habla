@@ -219,8 +219,9 @@ producido un test.
 | **v3** | «Seis puertas» era un muro de texto; solo el globo mostraba cómo se juega                                    | Maquetas dentro de las tarjetas + las **cuatro canchas** de la galería (globo · cohete · palabra y dibujo · gemelas), no una                                                                                                                                         |
 | **v4** | La línea bajo «baja despacio»; las tarjetas no acompañaban; gemelas mentía                                   | Flecha que respira · el recorrido **pasa páginas** al bajar (con anclaje) · **10 enlaces directos** · gemelas con sus **dos teclas** · el altavoz de la voz grabada en los dos juegos que lo tienen · el **acto del Estudio**, antes del clímax de privacidad        |
 | **v5** | La apertura no se anunciaba; al subir se reabrían; el altavoz se salía del marco; el taller cambiaba de piso | Destello de apertura (marco + cabecera + telón) · el recorrido **abre bajando y no al subir** · el altavoz de «palabra y dibujo» pasa a ser **botón bajo la palabra, como en la app** · **un solo fondo** para las dos noches · «Suena allá» → «Suena en los juegos» |
+| **v6** | Al pasar la última tarjeta el recorrido **saltaba dos juegos**; los altavoces de gemelas mal dispuestos      | La referencia de anclaje pasa a ser la galería cuando ya no queda tarjeta abierta (**1291 px de salto → 119 px**, medido contra la versión anterior) · las dos canchas se rearman como en la app (marco → palabra → altavoz)                                         |
 
-**Tres defectos propios de esta tanda, cazados MIRANDO capturas** (ninguno lo veía la CI):
+**Seis defectos propios de esta tanda, cazados MIRANDO capturas** (ninguno lo veía la CI):
 
 1. **La jugada de gemelas mentía sobre el juego real** — mostraba una sola tecla («¡Dijo pato!»)
    cuando en la app hay **una por palabra**. Lo cazó él, no yo: una demostración puede estar
@@ -231,9 +232,28 @@ producido un test.
 3. **Y al arreglarlo, el icono heredó el tamaño del pictograma** (`.pareja .picto svg` sin
    combinador hijo alcanzaba al `svg` del altavoz): 60×44 px de bocina fuera del marco. Invisible
    en el código, obvio en la captura. Corregido con `>` y comentado en el sitio.
+4. **`.picto span` alcanzaba también al altavoz y a la onda** (los tres son `span`) y le quitaba
+   al altavoz su `display: grid`: el icono quedaba descuadrado dentro del círculo. El usuario lo
+   vio en la imagen y lo reportó como "los botones de audio están mal dispuestos" — tenía razón
+   dos veces, por la posición **y** por el interior. La palabra ahora lleva clase propia.
+5. **La chip «¡Dijo ‹pato›!» estaba corrida a la derecha** desde la v4: comparte los keyframes
+   `llega` con el marcador del cohete, y esos terminan en `transform: none` — que le borraba el
+   `translateX(-50%)` que la centra. Un caso de libro de **animación que pisa el layout**: la
+   pose final de un keyframe no es "lo de antes", es lo que el keyframe diga.
+6. **Los globos subían por encima de la palabra y del altavoz.** Se les corrió el recorrido a los
+   costados de la columna.
+
+**El salto del recorrido, medido y no opinado.** El usuario reportó que al terminar las tarjetas
+la página "salta hasta los dos últimos juegos". La causa: al cerrarse la última tarjeta, la
+referencia de anclaje seguía siendo **esa tarjeta**, cuando lo que la persona ya estaba mirando
+era la galería — así que el alto que desaparecía se lo llevaba todo lo de abajo. Se corrigió
+moviendo la referencia a la galería, y se **verificó con una sonda contra la versión anterior**:
+**1291 px → 119 px** (y lo que queda ya no es un salto hacia adelante, sino una pausa de un paso
+mientras la última tarjeta abre). Sin la medición comparada, "creo que mejoró" habría sido todo
+lo que podía decir.
 
 **Lección de método que va al molde:** _la captura es un gate, no un lujo._ Este piloto cerró
-con **9 defectos** que ni Playwright ni axe ni Lighthouse podían ver, todos hallados abriendo la
+con **12 defectos** que ni Playwright ni axe ni Lighthouse podían ver, todos hallados abriendo la
 imagen. El molde debería pedir explícitamente una pasada de capturas por bloque antes de dar
 la entrega por lista.
 
@@ -325,13 +345,13 @@ nació muerta y la v2 no. **Recomendación: el brochure no se estampa, se PRODUC
       una sonda propia, no asumida.
 - [x] A11y: teclado completo, `aria-expanded`/`aria-controls` correctos, contraste AA en los dos
       temas, lo cerrado fuera del árbol de accesibilidad y el LCP naciendo pintado.
-- [x] **Tres rondas de corrección del gate visual (v3 · v4 · v5)**: las cuatro canchas jugando,
-      el recorrido que pasa páginas al bajar y las deja cerradas al subir, los 10 enlaces
-      directos, el acto del Estudio y el altavoz donde la app lo tiene.
-- [x] `/self-review` + pasada de capturas; **13 defectos hallados y corregidos** en total (2 del
-      molde en la v1, 2 propios en la v2, 9 que solo se veían mirando la imagen).
+- [x] **Cuatro rondas de corrección del gate visual (v3 · v4 · v5 · v6)**: las cuatro canchas
+      jugando, el recorrido que pasa páginas al bajar y las deja cerradas al subir sin saltar al
+      salir, los 10 enlaces directos, el acto del Estudio y las canchas armadas como la app.
+- [x] `/self-review` + pasada de capturas; **16 defectos hallados y corregidos** en total (2 del
+      molde en la v1, 2 propios en la v2, 12 que solo se veían mirando la imagen).
 - [x] Cero cambios de comportamiento en la app.
 - [x] **CI verde en el PR #7** (quality · e2e · lighthouse · Vercel).
-- [ ] **Gate visual del usuario sobre la v5** — la v1 lo reprobó; de la v2 en adelante fue puliendo
-      ronda a ronda, y esta cierra sus cinco últimas correcciones.
+- [ ] **Gate visual del usuario sobre la v6** — la v1 lo reprobó; de la v2 en adelante fue puliendo
+      ronda a ronda, y esta cierra sus dos últimas correcciones.
 - [ ] Merge a la orden del usuario → él envía el link de producción a la mamá.
