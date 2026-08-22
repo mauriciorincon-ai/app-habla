@@ -96,7 +96,7 @@
     <rect class="caja caja-principal" x="330" y="140" width="250" height="116" rx="10"/>
     <text class="titulo-caja" x="455" y="170" text-anchor="middle">Vercel (Hobby · free)</text>
     <text class="detalle-caja" x="455" y="190" text-anchor="middle">app-habla · Next.js 16 (Turbopack)</text>
-    <text class="detalle-caja" x="455" y="207" text-anchor="middle">PWA estática · *.vercel.app</text>
+    <text class="detalle-caja" x="455" y="207" text-anchor="middle">PWA estática · subdominio de Vercel</text>
     <text class="detalle-caja" x="455" y="224" text-anchor="middle">preview por PR · prod desde main</text>
 
     <!-- Contenido servido + observabilidad -->
@@ -156,7 +156,7 @@
     <tbody>
       <tr><td>Código / versionamiento</td><td>GitHub <code>mauriciorincon-ai/app-habla</code> (privado)</td><td>Rama <code>main</code>; PR con CI verde. Sin push directo a main (hook local lo bloquea). Merge por el usuario.</td></tr>
       <tr><td>CI/CD</td><td>GitHub Actions</td><td>Jobs que gatean: typecheck · lint · test+cobertura · build · <code>pnpm audit</code> · e2e (Playwright, mic falso) · Lighthouse vs <code>perf-budget.json</code>.</td></tr>
-      <tr><td>Hosting / publicación</td><td>Vercel (Hobby · free)</td><td><code>*.vercel.app</code> · preview por PR, prod desde <code>main</code>. PWA estática (Next.js 16, Turbopack). Uso <strong>personal, no comercial</strong>.</td></tr>
+      <tr><td>Hosting / publicación</td><td>Vercel (Hobby · free)</td><td>Subdominio de Vercel · preview por PR, prod desde <code>main</code>. PWA estática (Next.js 16, Turbopack). Uso <strong>personal, no comercial</strong>. <em>Las direcciones no se escriben aquí (regla de cero enlaces): viven en el registro privado de la planeadora.</em></td></tr>
       <tr class="critica"><td>Base de datos</td><td><strong>SIN BD — local-first (ADR-002)</strong></td><td>No hay servidor ni base de datos. El estado vive en el dispositivo: <code>localStorage</code> (perfil, ajustes, progreso, juicios de gemelas, sesiones del Rumbo, objetivo de la semana) e <code>IndexedDB</code> (banco de voz familiar).</td></tr>
       <tr><td>Auth</td><td>No aplica</td><td>Sin cuentas, sin login (ADR-002). La app es de un dispositivo, para una familia.</td></tr>
       <tr><td>Almacenamiento de archivos</td><td>IndexedDB local (ADR-010)</td><td>Banco de voz familiar (voz de los ADULTOS, con consentimiento) — <strong>SOLO en el dispositivo, nunca a la red ni al repo</strong> (regla dura 2-bis). Sin backup por decisión consciente (ADR-011). Pictogramas ARASAAC: estáticos del repo.</td></tr>
@@ -165,7 +165,7 @@
       <tr><td>Observabilidad</td><td>Sentry (client-only, metadata-only, <strong>INERTE sin DSN</strong>) · Pino (build)</td><td>Cableado pero apagado: sin DSN no sale nada. Jamás audio ni contenido — solo <code>kind</code> + conteos si algún día se enciende.</td></tr>
       <tr><td>Crons / keep-alives</td><td>Ninguno</td><td>No hay backend que mantener despierto.</td></tr>
       <tr><td>Secretos</td><td><code>.env.local</code> (gitignored) + Vercel env vars</td><td>Ninguno en el repo. Doble candado gitleaks (hook PreToolUse + <code>githooks/pre-commit</code> activo, 100755). Hoy la app no necesita ningún secreto.</td></tr>
-      <tr><td>Dominio</td><td>Subdominio de Vercel (<code>*.vercel.app</code>)</td><td>Administrado en Vercel. Sin dominio propio (app personal).</td></tr>
+      <tr><td>Dominio</td><td>Subdominio de Vercel</td><td>Administrado en Vercel. Sin dominio propio (app personal).</td></tr>
       <tr class="critica"><td>Costo real / mes</td><td><strong>US$0</strong></td><td>Vercel Hobby (free) · GitHub (free) · sin BD · sin IA · sin servicios pagos. El techo de IA (≤US$10/mes) solo aplicaría al futuro cuentero.</td></tr>
       <tr class="critica"><td>Punto único de falla</td><td><strong>EL DISPOSITIVO</strong></td><td>Progreso, banco de voz, objetivo y sesiones viven SOLO ahí (ADR-002/010). Si se pierde o se limpia el navegador, se pierden esos datos. Mitigación: la cobertura visible del banco + re-grabar toma &lt;10 min; NO hay backup por decisión consciente (ADR-011 — un backup que puede no restaurar en otro dispositivo sería promesa falsa). El código y el deploy SÍ están replicados (GitHub + Vercel).</td></tr>
     </tbody>
