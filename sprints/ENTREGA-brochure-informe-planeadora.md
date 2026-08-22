@@ -8,8 +8,9 @@
 > este repo: el summary (`ENTREGA-brochure-summary.md`), el storyboard con su adenda
 > (`ENTREGA-brochure-storyboard.md`) y los 14 commits del PR #7.
 >
-> Escrito el 2026-08-08, con la entrega ya en producción pública:
-> `https://hablemos-san.vercel.app/conoce`.
+> Escrito el 2026-08-08, con la entrega ya en producción pública, en la ruta `/conoce`
+> (URL de producción — registro privado en la planeadora; por la regla de cero enlaces no
+> se escribe en este repo).
 
 ---
 
@@ -116,8 +117,9 @@ así desde su creación (`Vercel Authentication: all_except_custom_domains`) y N
 visto: la CI corre adentro, el usuario navega logueado, Lighthouse corre local. Solo
 apareció al verificar **como lo verificaría la destinataria: desde afuera, sin sesión**
 (curl/incógnito). Se corrigió a modo `preview` (producción pública, previews protegidas) y
-de paso se reclamó el dominio con nombre real (`hablemos-san.vercel.app` — el sufijo `-rho`
-existía porque `app-habla.vercel.app` es de otra cuenta). **Ninguna entrega a usuario final
+de paso se reclamó un subdominio con el nombre real de la app — el que había traía un sufijo
+aleatorio porque el nombre limpio pertenece a otra cuenta (URLs en el registro privado de la
+planeadora). **Ninguna entrega a usuario final
 está cerrada hasta que el link se probó sin sesión** — y el dominio/protección deben estar
 en el BLUEPRINT (en habla aún no están: deuda anotada para H2).
 
@@ -159,16 +161,16 @@ la versión anterior** (la sonda del salto). «Mejoró» sin número es una opin
 
 ## 6 · Números finales de la entrega
 
-| Métrica                 | Valor                                                                                               |
-| ----------------------- | --------------------------------------------------------------------------------------------------- |
-| Rondas de gate visual   | v1 rechazada · v2 aprobada · v3–v6 de corrección · v6 sellada («nos vamos así»)                     |
-| Defectos corregidos     | **16** (2 del molde en v1 · 2 propios en v2 · 12 solo visibles en imagen)                           |
-| Tests                   | 249 unit (intactos) · **165 e2e** (149 heredados + 16 nuevos de `/conoce`)                          |
-| Lighthouse en `/conoce` | **100 / 100 / 100 / 100** · FCP 0,2 s · LCP 0,2 s · TBT 0 ms · CLS 0                                |
-| Peso                    | 1 archivo autocontenido (~120 KB, cero peticiones externas, abre con doble clic)                    |
-| Conteo                  | 24 funcionalidades, con tabla de mapeo verificable en el summary                                    |
-| Auditoría pre-merge     | 9 hallazgos (1 media + 4 bajas corregidas, 4 observaciones aceptadas) · datos factuales: 0 errores  |
-| Infraestructura         | Producción pública en `hablemos-san.vercel.app` · previews protegidas · PR #7 mergeado con CI verde |
+| Métrica                 | Valor                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Rondas de gate visual   | v1 rechazada · v2 aprobada · v3–v6 de corrección · v6 sellada («nos vamos así»)                                      |
+| Defectos corregidos     | **16** (2 del molde en v1 · 2 propios en v2 · 12 solo visibles en imagen)                                            |
+| Tests                   | 249 unit (intactos) · **165 e2e** (149 heredados + 16 nuevos de `/conoce`)                                           |
+| Lighthouse en `/conoce` | **100 / 100 / 100 / 100** · FCP 0,2 s · LCP 0,2 s · TBT 0 ms · CLS 0                                                 |
+| Peso                    | 1 archivo autocontenido (~120 KB, cero peticiones externas, abre con doble clic)                                     |
+| Conteo                  | 24 funcionalidades, con tabla de mapeo verificable en el summary                                                     |
+| Auditoría pre-merge     | 9 hallazgos (1 media + 4 bajas corregidas, 4 observaciones aceptadas) · datos factuales: 0 errores                   |
+| Infraestructura         | Producción pública (URL en el registro privado de la planeadora) · previews protegidas · PR #7 mergeado con CI verde |
 
 ## 7 · Dónde vive cada evidencia
 
