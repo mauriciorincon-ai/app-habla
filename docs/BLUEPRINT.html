@@ -154,7 +154,7 @@
   <table>
     <thead><tr><th>Pieza</th><th>Servicio + plan</th><th>Detalle operativo</th></tr></thead>
     <tbody>
-      <tr><td>Código / versionamiento</td><td>GitHub <code>mauriciorincon-ai/app-habla</code> (privado)</td><td>Rama <code>main</code>; PR con CI verde. Sin push directo a main (hook local lo bloquea). Merge por el usuario.</td></tr>
+      <tr><td>Código / versionamiento</td><td>GitHub <code>mauriciorincon-ai/app-habla</code> (<strong>público</strong>)</td><td>Rama <code>main</code>; PR con CI verde. Sin push directo a main (hook local lo bloquea). Merge por el usuario. Al ser público rige la regla de <strong>cero enlaces</strong>: ningún archivo del repo publica direcciones de acceso.</td></tr>
       <tr><td>CI/CD</td><td>GitHub Actions</td><td>Jobs que gatean: typecheck · lint · test+cobertura · build · <code>pnpm audit</code> · e2e (Playwright, mic falso) · Lighthouse vs <code>perf-budget.json</code>.</td></tr>
       <tr><td>Hosting / publicación</td><td>Vercel (Hobby · free)</td><td>Subdominio de Vercel · preview por PR, prod desde <code>main</code>. PWA estática (Next.js 16, Turbopack). Uso <strong>personal, no comercial</strong>. <em>Las direcciones no se escriben aquí (regla de cero enlaces): viven en el registro privado de la planeadora.</em></td></tr>
       <tr class="critica"><td>Base de datos</td><td><strong>SIN BD — local-first (ADR-002)</strong></td><td>No hay servidor ni base de datos. El estado vive en el dispositivo: <code>localStorage</code> (perfil, ajustes, progreso, juicios de gemelas, sesiones del Rumbo, objetivo de la semana) e <code>IndexedDB</code> (banco de voz familiar).</td></tr>

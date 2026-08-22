@@ -150,13 +150,51 @@ verificó que **de verdad caza** lo que dice cazar, mutando el JSON a propósito
 | `pnpm typecheck`                  | ✅ limpio                                                |
 | `pnpm lint`                       | ✅ limpio                                                |
 | `pnpm build`                      | ✅ exitoso                                               |
+| `pnpm audit --audit-level high`   | ✅ sin vulnerabilidades conocidas (ver abajo)            |
 | Conteo del export cuadrado        | ✅ 24 = 24 = 24, y con test que lo vigila                |
 | Producción intacta                | ✅ cero cambios al `BROCHURE.html`, a `src/` y a los e2e |
 
-**Observación (no bloquea, preexistente):** `pnpm audit --audit-level high` reporta 1 alta en
-`nanoid`, transitiva por `@sentry/nextjs > next > postcss`. **Esta entrega no tocó
-dependencias** (`package.json` y el lockfile idénticos a `main`): venía de antes y se anota
-como deuda para H2, junto con la del blueprint (dominio y protección aún sin documentar).
+### La CI se puso roja por algo que no era de esta entrega — y se arregló
+
+El primer `quality` del PR falló en `pnpm audit`: una **alta en `nanoid`** (`<3.3.18`,
+GHSA-2v37-7h3g-55p8), transitiva por `postcss` (que llega por `next`, `@sentry/nextjs`,
+`@tailwindcss/postcss` y `vite` — 7 caminos). **No la introdujo esta entrega:** el PR no había
+tocado `package.json` ni el lockfile, y el último `main` (2026-08-08) estaba verde — la
+advisory se publicó después, así que `main` habría fallado igual en su próximo run.
+
+Arreglo mínimo: `pnpm update nanoid -r` → **3.3.17 → 3.3.18**, dentro del rango que ya pedía
+`postcss` (solo cambia `pnpm-lock.yaml`, ninguna dependencia declarada). Verificado después:
+261 unit, 169 e2e, typecheck, lint y build limpios, y `pnpm audit` sin vulnerabilidades.
+
+### Dos hallazgos del `/self-review`
+
+1. **El blueprint declaraba el repositorio como «privado» y es PÚBLICO** (`gh repo view` →
+   `PUBLIC`). Era un dato factual falso publicado, y justo sobre el hecho que da sentido a
+   todo este barrido: se corrigió, y la fila ahora dice por qué rige la regla de cero enlaces.
+2. **El comando del gate se cazaba a sí mismo** al escribirlo en el `CLAUDE.md`: se documenta
+   con el nombre del subdominio como clase de carácter, regex equivalente que deja el gate
+   utilizable sin dejarlo en rojo permanente.
+3. **El export publicaba 251 pruebas unitarias y ya eran 261**: el JSON se escribió antes que
+   el test del contrato, y el propio test lo desactualizó al nacer. Corregido a 261 / 20
+   archivos. **Vale como advertencia para el portafolio:** el test del contrato vigila que las
+   métricas tengan `fuente`, pero **no puede verificar que su valor siga siendo cierto** — eso
+   solo lo caza volver a correr el comando. De ahí que la regla 12 diga «medida al generarla,
+   jamás de memoria»: la última medición manda, y va de última.
+
+### Un flake e2e, identificado y descartado como regresión
+
+Tras actualizar `nanoid`, una pasada local de e2e dio **168/169**: falló
+`objetivo.spec.ts:169` («guardar «animles» pregunta ¿Quisiste decir animales?») en
+`mobile-chromium`. Se verificó antes de seguir: **aislado pasa en 263 ms**, y **la suite
+completa vuelve a dar 169/169** en la siguiente pasada. No es regresión de la actualización
+—esta entrega no tocó ningún e2e ni `src/`— sino un flake de arranque: esa pantalla carga el
+diccionario de 10 000 palabras bajo demanda y, con los workers en paralelo, el primer render
+puede llegar tarde. La CI lo absorbe (`retries: 2` en CI, 0 en local, que es justo por qué
+apareció aquí y no allá). **Queda anotado como flake conocido para H2**, no se parchea en
+una entrega que no toca el producto.
+
+Deuda que sigue abierta para H2: el blueprint aún no documenta dominio y protección (heredada
+del cierre del brochure), y este flake.
 
 ---
 
