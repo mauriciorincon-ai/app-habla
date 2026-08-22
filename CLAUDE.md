@@ -159,6 +159,30 @@ decisions/NNN-titulo.md   (ADRs de implementación)
     usuario, re-ratificada 2026-07-12). Todo entregable —guías, reportes, documentos visuales—
     es un ARCHIVO DEL REPO (HTML autocontenido o Markdown) que el usuario pueda abrir, versionar
     y llevarse. Sin excepciones, ni "para verlo rápido".
+12. **Brochure vivo + su export (`docs/BROCHURE.html` en `/conoce` + `docs/brochure-export.json`
+    — refleja la regla 13 del kit).** El brochure es el entregable de PRESENTACIÓN para usuarios
+    finales (el anti-manual, distinto del `MANUAL-DE-USO.md`); en habla **ya está SELLADO**
+    (gate visual aprobado y producción verificada el 2026-08-08). **El sello NO lo congela:
+    todo sprint que cambie features ajusta el HTML _y_ el export EN EL MISMO PR** — es DoD, no
+    tarea aparte. El export sigue el **contrato `brochure-export-v1.0.0`** de la planeadora
+    (`portafolio/_template/`, RO): bloque `_schema` copiado TAL CUAL, **toda cifra de
+    `metricas[]` con su `fuente`** (`medido`/`calculada`/`declarado`/`estimacion`) medida al
+    generarla —jamás de memoria—, y el `total` cuadrado contra `docs/MANUAL-DE-USO.md` con la
+    tabla de mapeo. Lo consume la vitrina de hoja-de-vida, que lo re-expresa en SU diseño.
+    `tests/unit/brochure-export.test.ts` es el guardián: falla si el conteo se desincroniza del
+    pie del brochure, si una métrica pierde su fuente o si se cuela un enlace.
+13. **CERO ENLACES: la producción se MUESTRA, jamás se ENTREGA (refleja la regla 17 del kit;
+    barrido hecho el 2026-08-21).** Este repo es **público**: ningún archivo suyo ni campo de
+    GitHub publica la URL de producción ni de previews — ni el README, ni el campo
+    About/website (va **vacío**; ojo: **la integración de Vercel lo vuelve a llenar tras un
+    deploy — re-verificarlo después de cada merge a `main`**), ni el `BLUEPRINT.html` (documenta
+    hosting, dominio y protección **sin escribir la URL**), ni el manual, ni los summaries, ni
+    `package.json`. El campo de URL de `GUIA-DE-PRUEBA.html` se llena **EN USO**, desde la orden
+    de prueba, y nunca se commitea con una dirección adentro. El CTA público es la **lista de
+    espera**, sin promesa de otorgamiento. **El link que tiene la familia SIGUE VIVO** — vive en
+    el registro privado de la planeadora, no aquí. Gate (debe salir VACÍO — el nombre del
+    subdominio va como clase de carácter para que el comando no se cace a sí mismo):
+    `grep -rn "vercel\.app\|workers\.dev\|hablemos[-]san" --include="*.md" --include="*.html" --include="*.json" .`
 
 ## Estándares (los 6+1, gates en CI)
 
