@@ -51,10 +51,28 @@ $ gh repo view --json homepageUrl
 {"homepageUrl":""}
 ```
 
-⚠️ **Pendiente post-merge (lección de ds, anticipada):** la integración de Vercel **vuelve a
-llenar el campo homepage tras el deploy de producción**. Se re-verifica DESPUÉS del merge; si
-volvió, se limpia de nuevo y se anota aquí. Quedó escrito en la regla 13 del `CLAUDE.md` para
-que no dependa de la memoria de nadie.
+### ✅ Post-merge: pasó exactamente lo que ds advirtió — verificado en vivo
+
+La lección de ds decía que **la integración de Vercel vuelve a llenar el campo homepage tras
+el deploy de producción**. Se comprobó, no se asumió:
+
+| Momento                             | `gh repo view --json homepageUrl` |
+| ----------------------------------- | --------------------------------- |
+| Antes del barrido                   | la URL vieja del subdominio       |
+| Después del barrido (en el PR)      | `""`                              |
+| Justo al mergear (antes del deploy) | `""`                              |
+| **Tras el deploy de producción**    | **volvió a llenarse solo**        |
+| Después de limpiarlo otra vez       | `""`                              |
+
+**Es reescritura automática de la GitHub App de Vercel, no un descuido humano** — así que
+volverá en cada deploy a `main` hasta que se desactive en origen. Por eso la regla 13 del
+`CLAUDE.md` obliga a **re-verificarlo después de cada merge**, y no depende de que alguien se
+acuerde.
+
+**Pendiente para H2 (no se hizo aquí):** buscar el interruptor que apaga esa reescritura en la
+integración de Vercel, para que el gate deje de necesitar una limpieza manual recurrente. No
+se intentó en esta entrega porque el token local de la CLI de Vercel está vencido y tocar la
+configuración de la integración excede el alcance de la orden.
 
 **Detalle del gate:** el comando documentado en el `CLAUDE.md` escribe el nombre del
 subdominio como clase de carácter (`hablemos[-]san`) — regex equivalente que evita que el
