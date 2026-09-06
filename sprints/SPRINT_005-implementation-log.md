@@ -20,8 +20,8 @@
 - [x] `/audita-sprint` Fase 1 (solo lectura) — **aprobada por el usuario**; sin Críticos ni
       Altos (1 Medio, 5 Bajos). **G-Contenido: aprobado** («muy bien, apropiadas, orientadas al
       juego»); su pedido de más cápsulas → 24 (el techo de la evidencia).
-- [ ] `/audita-sprint` Fase 2 (M1 · B2 · B3 · B5 propuestos; B1 · B4 como deuda) — espera su
-      «ejecuta»
+- [x] `/audita-sprint` Fase 2 — «ejecuta» del usuario: M1 · B2 · B3 · B5 pagados; B1 · B4
+      quedan como deuda declarada (van al summary)
 - [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
       re-verificado tras el deploy)
 
@@ -205,3 +205,18 @@
   en la casa»; el nivel 1 dice «contigo esto ya pasa». **«Enviar a papá» se queda**: es el resumen
   que la mamá le manda a él. Dos «qué no hacer» quedaron por encima de 200 caracteres y el unit lo
   cazó (rojo real): se acortaron. Regenerado, 303 unit, 14/14 e2e, gate verde, captura leída.
+- 2026-09-06 · **G-Contenido cerrado.** «Excelente» sobre las cinco cápsulas del hermano. El hermano
+  tiene 16 años: las instrucciones de una frase se quedan tal cual (no hace falta guiarle las manos).
+- 2026-09-06 · **Auditoría Fase 2 — ejecutada al pie del plan aprobado.**
+  **M1** `leer()` del documento solo acepta entradas con la forma del contrato y de la versión
+  actual (`entradaValida`), y la pintura inicial del panel pasó al final del script en `try/catch`:
+  una entrada rota ya no tumba el registro ni sus vías de rescate. E2e nuevo (mobile + desktop):
+  siembra una entrada válida más tres basuras → el panel muestra 1 y «Guardar registro» descarga
+  un archivo válido con 1 entrada. **Rojo demostrado** sobre el catálogo anterior (falló en el
+  conteo), verde sobre el nuevo. **B2** el id de cápsula es kebab-case estricto en el schema del
+  dominio (unit con cinco ids malos en rojo; las 24 reales pasan). **B3** el comentario del schema
+  ya no nombra un símbolo inexistente. **B5** la PROPUESTA anota, en el ítem del registro, que la
+  enmienda lo superó (formato A/B/C). Deuda declarada, sin pagar: **B1** el compartir no cae al
+  portapapeles si el compartir del teléfono rechaza por algo distinto a cancelar; **B4** los scripts
+  `.mjs` que importan `.ts` exigen Node ≥ 22.18 (local 24; la CI no los corre) sin documentarlo.
+  Verificación: 304 unit · 16/16 e2e de `/mirada` · typecheck · lint · gate verde · cero enlaces.

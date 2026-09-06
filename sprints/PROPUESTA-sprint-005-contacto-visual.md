@@ -118,7 +118,9 @@ personas, más momentos del día.
    imprimible. Con las **preguntas de juicio** para la revisión previa del usuario.
 4. **El registro diario — propuesta concreta (2b):** *el registro vive dentro del mismo
    documento.* Cada cápsula tiene un «Hoy lo hicimos» y una observación de **tres toques** (la
-   mirada hoy: *casi nada · por instantes · bastante*) con nota opcional de una línea. Se guarda
+   mirada hoy: *casi nada · por instantes · bastante*) con nota opcional de una línea. **[Superado
+   por la enmienda del 2026-09-06: no se puntúa al niño; el registro quedó en formato A/B/C —
+   lo que hice yo · lo que vi en él · cómo estuvo él.]** Se guarda
    **solo en el teléfono de la mamá** (localStorage, como las casillas de la guía de prueba) — sin
    cuentas, sin nube, sin backend. Un botón **«Enviar a papá»** arma un resumen de texto (qué se
    hizo esta semana, cómo estuvo la mirada, las notas) y abre el compartir del teléfono

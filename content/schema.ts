@@ -149,7 +149,7 @@ export const BibliotecaSchema = z
 // DOMINIO «CONTACTO VISUAL» (Sprint 005 — documento primero, app después).
 //
 // Un segundo dominio de cápsulas, para la mamá y sin pantallas. Las 50 cápsulas de habla de
-// arriba NO cambian: el dominio del habla se declara a nivel de biblioteca (BIBLIOTECAS) y las
+// arriba NO cambian: su dominio queda implícito en su propia biblioteca (capsulas.ts) y las
 // cápsulas de contacto visual llevan `dominio` literal como discriminante. Todo lo que se lee
 // aquí es COMPORTAMIENTO OBSERVABLE — lo que una mamá ve en su casa — jamás una etiqueta.
 //
@@ -308,7 +308,8 @@ export type ConQuien = (typeof CON_QUIEN)[number];
 const FUENTE_PUBLICA = /^[^;]+?, (19|20)\d{2}(, [^;]+)?$/;
 
 export const CapsulaContactoVisualSchema = z.object({
-  id: z.string().min(1),
+  /** kebab-case estricto: el id viaja a anclas y selectores de atributo del documento generado. */
+  id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
   dominio: z.literal("contacto-visual"),
   tecnica: z.enum(TECNICAS_CONTACTO_VISUAL),
   nivel: z.enum(NIVELES_CONTACTO_VISUAL),

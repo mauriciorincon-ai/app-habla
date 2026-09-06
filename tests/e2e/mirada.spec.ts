@@ -105,6 +105,26 @@ test("«Enviar a papá» arma ejemplos, no números, y usa el compartir del tel�
   expect(compartido.text).not.toMatch(/\d+ (veces|de \d+)|%/);
 });
 
+test("una entrada rota en el teléfono no tumba el panel: se ignora, y exportar sigue funcionando", async ({ page }) => {
+  // Auditoría S5 (M1): antes, una entrada sin forma lanzaba al pintar el panel ANTES de conectar
+  // «Guardar registro» y «Borrar» — y dejaba el registro entero muerto, sin vía de rescate.
+  await page.goto("/mirada");
+  await registrarPrimerMomento(page);
+  await page.evaluate(() => {
+    const clave = "registro-mirada-v1";
+    const j = JSON.parse(localStorage.getItem(clave) ?? "{}");
+    j.entradas.push({}, { id: "rota", fecha: "2026-09-06" }, null);
+    localStorage.setItem(clave, JSON.stringify(j));
+  });
+  await page.reload();
+  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
+  const descarga = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Guardar registro" }).click();
+  const archivo = JSON.parse(readFileSync(await (await descarga).path(), "utf8"));
+  expect(RegistroExportSchema.safeParse(archivo).success).toBe(true);
+  expect(archivo.entradas).toHaveLength(1);
+});
+
 test("borrar todo pide un segundo toque y deja el panel vacío", async ({ page }) => {
   await page.goto("/mirada");
   await registrarPrimerMomento(page);

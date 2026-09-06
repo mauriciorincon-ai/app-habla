@@ -99,6 +99,15 @@ describe("CapsulaContactoVisualSchema — cada cápsula", () => {
   });
 });
 
+describe("el id de la cápsula es kebab-case estricto (viaja a anclas y selectores del documento)", () => {
+  it("rechaza comillas, espacios y mayúsculas; acepta kebab-case", () => {
+    for (const malo of ['con"comillas', "con espacio", "Mayuscula", "doble--guion", "-inicial"]) {
+      expect(CapsulaContactoVisualSchema.safeParse({ ...base, id: malo }).success, malo).toBe(false);
+    }
+    expect(CapsulaContactoVisualSchema.safeParse({ ...base, id: "dos-juguetes-iguales" }).success).toBe(true);
+  });
+});
+
 describe("BibliotecaContactoVisualSchema — la escalera completa", () => {
   it("acepta 18–24 cápsulas con 3–4 por técnica, niveles distintos y los seis niveles", () => {
     expect(BibliotecaContactoVisualSchema.safeParse(biblioteca(22)).success).toBe(

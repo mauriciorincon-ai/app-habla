@@ -380,9 +380,21 @@ ${PALETA_CSS}
   document.querySelectorAll("[data-capsula-id]").forEach(function (el) { TITULOS[el.dataset.capsulaId] = el.dataset.titulo; });
 
   // ── storage, siempre en try/catch: el documento debe funcionar aunque el navegador no guarde ──
+  // Solo entran entradas con la forma del contrato y de esta versión: una entrada rota (o de otra
+  // versión) se ignora en vez de tumbar el panel — y con él, exportar y borrar (auditoría S5, M1).
+  function entradaValida(e) {
+    return !!(e && typeof e === "object" && typeof e.id === "string" && typeof e.fecha === "string" && typeof e.hora === "string"
+      && typeof e.capsulaId === "string" && e.a && typeof e.a === "object" && e.b && typeof e.b === "object" && e.c && typeof e.c === "object"
+      && ITEMS_A.every(function (k) { return typeof e.a[k] === "string" && NOMBRE_A[e.a[k]]; })
+      && ITEMS_B.every(function (k) { return typeof e.b[k] === "boolean"; })
+      && typeof e.c.comoEstuvo === "string" && NOMBRE_C[e.c.comoEstuvo] && typeof e.c.paramos === "boolean");
+  }
   function leer() {
-    try { var v = localStorage.getItem(CLAVE); var j = v ? JSON.parse(v) : null; return (j && Array.isArray(j.entradas)) ? j.entradas : []; }
-    catch (e) { return []; }
+    try {
+      var v = localStorage.getItem(CLAVE); var j = v ? JSON.parse(v) : null;
+      if (!j || j.version !== VERSION || !Array.isArray(j.entradas)) return [];
+      return j.entradas.filter(entradaValida);
+    } catch (e) { return []; }
   }
   function escribir(entradas) {
     try { localStorage.setItem(CLAVE, JSON.stringify({ version: VERSION, entradas: entradas })); return true; }
@@ -473,7 +485,6 @@ ${PALETA_CSS}
       lista.appendChild(li);
     });
   }
-  pintarPanel();
 
   // ── «Enviar a papá»: ejemplos, no números. Web Share; si no hay, al portapapeles ──
   function textoResumen() {
@@ -537,6 +548,9 @@ ${PALETA_CSS}
     });
     pintarRev();
   }
+
+  // La pintura inicial va de última y protegida: si algo falla aquí, los botones ya están conectados.
+  try { pintarPanel(); } catch (e) { vacio.hidden = false; }
 })();
 </script>
 </body>
