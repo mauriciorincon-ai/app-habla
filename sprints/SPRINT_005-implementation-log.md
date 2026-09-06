@@ -128,3 +128,9 @@
   registro en el teléfono real del usuario, sobre la preview del PR (bloque P de la guía), y
   queda una decisión suya: la cita pública cuando la revista describe a quién se estudió
   («Autor, año», provisional). Fase 2 solo tras su «continúa».
+- 2026-09-06 · **CI roja por algo que no era del sprint — arreglada.** `pnpm audit` en el PR
+  cazó una alta nueva en `browserslist` (≤4.28.6), transitiva por Sentry/Babel/webpack (7
+  caminos), publicada después del último merge a `main`; el sprint no había tocado
+  `package.json` ni el lockfile. `pnpm update browserslist -r` → 4.28.7 dentro del rango (solo
+  cambia el lockfile). Verificado: audit limpio, 300 unit, build. Mismo patrón que la entrega del
+  export (`nanoid`): las advisories llegan solas entre merges.
