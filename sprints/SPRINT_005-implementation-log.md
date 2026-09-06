@@ -79,3 +79,33 @@
   imagen** (9): portada, escalera, maneras, cápsula, formulario vacío y lleno, panel, impresión con
   cuadrícula, oscuro. Un falso positivo descartado: el cuerpo parecía sans en oscuro por residuo
   de la emulación de impresión; en contexto limpio la fuente es Georgia.
+- 2026-09-06 · **F0.8 — Gate de sensibilidad por hashes (regla 15: rojo en el mismo commit).**
+  `scripts/lib/sensibilidad.ts` (normalización compartida: minúsculas · sin acentos · todo lo no
+  alfanumérico → espacio · n-gramas) · `scripts/gen-sensibilidad-hashes.mjs` (lee la lista de la
+  planeadora en RO —ruta por env o la de la casa— y escribe `tests/fixtures/sensibilidad-hashes.json`:
+  105 términos activos → 92 huellas SHA-256; los comentados «para REVISAR» no entran) ·
+  `tests/unit/sensibilidad.test.ts` (modo gate: 24 pruebas — normalización + un test por archivo
+  del alcance del sprint) · `scripts/sensibilidad-informe.mjs` (modo informe: el resto del repo,
+  solo reporta). **Ni el test, ni el informe, ni esta bitácora escriben un término: archivo, línea
+  y tamaño del n-grama, nada más.**
+  **Desviación declarada:** la orden pedía n-gramas de 1 a 3; la lista aprobada trae un término de
+  4 palabras, así que van de 1 a 4 (con 1–3 ese término no se cazaría).
+  **El gate se ganó el sueldo antes de la demo:** su primera corrida cazó fugas reales en lo que yo
+  mismo había escrito — (a) **los nombres de algunas revistas describen a quién se estudió** y la
+  lista los marca (la orden asumió que solo los títulos lo hacían); (b) la propuesta del sprint
+  nombraba métodos y una palabra de jerga; (c) un fixture del test usaba una de esas revistas.
+  Decisión provisional, **para el usuario en el cierre de la fase 0:** cuando la revista describe
+  a quién se estudió, la cita pública es «Autor, año» (el schema lo admite; la referencia completa
+  vive en la investigación privada); en los demás casos «Autor, año, Revista». La propuesta se
+  reescribió describiendo sin nombrar. **La historia de la rama se reconstruyó desde el árbol
+  limpio** (tres commits, mismos mensajes) porque los commits ya hechos —no empujados— llevaban
+  esas revistas: un repo público también publica su historia. Verificado con el propio gate sobre
+  cada archivo de cada commit: lo único que queda son 2 comentarios previos al sprint en la parte
+  de habla de `schema.ts` y 2 líneas del comando del kit copiado tal cual — fuera del alcance por
+  diseño, reportados en el informe. Bug propio cazado por su test: `recortar` incluía el marcador
+  de inicio. **Demo en rojo:** el término de prueba de la lista, puesto en una cápsula de prueba y
+  regenerado el catálogo, tumba exactamente 2 pruebas (catálogo línea 341 y contenido línea 27,
+  n-grama de 2); retirado de la cápsula —no de la lista— y regenerado: 24 verdes, árbol idéntico.
+  **Informe del resto del repo:** 111 coincidencias en 31 archivos previos al sprint (skills del
+  kit, cápsulas de habla, bitácoras, el diccionario de 10 000 palabras, componentes…) — se
+  reportan aparte para decisión del usuario, sin tocarlas.
