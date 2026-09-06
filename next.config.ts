@@ -5,10 +5,16 @@ const nextConfig: NextConfig = {
   // móvil e intercepta taps en los e2e (visto en nutri-kids S1) — apagado por default.
   devIndicators: false,
 
-  // /conoce sirve el brochure (docs/BROCHURE.html, copiado a public/ por build:brochure).
-  // Es una URL limpia para compartir: el link que recibe la familia no dice ".html".
+  // Documentos canónicos de docs/, copiados a public/ por build:documentos
+  // (scripts/copiar-documentos.mjs) y servidos en URL limpia — el link que recibe la
+  // familia no dice ".html":
+  //   /conoce → el brochure (docs/BROCHURE.html)
+  //   /mirada → el documento de contacto visual de la mamá (docs/CATALOGO-CONTACTO-VISUAL.html)
   async rewrites() {
-    return [{ source: "/conoce", destination: "/conoce.html" }];
+    return [
+      { source: "/conoce", destination: "/conoce.html" },
+      { source: "/mirada", destination: "/mirada.html" },
+    ];
   },
 };
 

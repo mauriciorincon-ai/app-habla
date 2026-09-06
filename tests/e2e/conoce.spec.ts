@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 // El brochure vivo servido en /conoce (entrega puntual ENTREGA-BROCHURE, kit v1.9.0).
-// La fuente es docs/BROCHURE.html; build:brochure lo copia a public/conoce.html y el
+// La fuente es docs/BROCHURE.html; build:documentos lo copia a public/conoce.html y el
 // rewrite de next.config lo sirve sin ".html". Esta suite protege lo que de verdad
 // importa del entregable: que la ruta EXISTA (el link que recibe la familia), que la
 // progressive disclosure funcione (nada de la capa 2 visible sin abrir su tarjeta) y
