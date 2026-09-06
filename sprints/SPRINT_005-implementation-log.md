@@ -109,3 +109,13 @@
   **Informe del resto del repo:** 111 coincidencias en 31 archivos previos al sprint (skills del
   kit, cápsulas de habla, bitácoras, el diccionario de 10 000 palabras, componentes…) — se
   reportan aparte para decisión del usuario, sin tocarlas.
+- 2026-09-06 · **F0.9–F0.10 — Guía y manual.** `docs/GUIA-DE-PRUEBA.html` v5 (acumulativa): cabecera
+  «al cierre del Sprint 005», chip `Nuevo · S5` (el S4 pasa a heredado), **bloque P «El documento
+  de la mirada, en tu teléfono»** — 7 pruebas ⭐ en el teléfono real (portada legible · registrar
+  con validación y ≤6 toques · cerrar y volver · «Enviar a papá» con ejemplos · «Guardar registro»
+  descarga · imprimir muestra la cuadrícula · `?revision`), historial del pie. Todas las pruebas
+  del S4 se heredan enteras; eliminadas: ninguna. `docs/MANUAL-DE-USO.md`: sección «El documento
+  de contacto visual — para trabajar sin pantallas», FAQ e historial 005. Las secciones nuevas de
+  ambos van entre marcadores `s5:inicio`/`s5:fin` para que el gate de sensibilidad las vigile sin
+  tocar el texto previo. El brochure y su export **no se tocan**: el documento no es una feature del
+  producto (se declara, criterio de la orden).

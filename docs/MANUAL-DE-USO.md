@@ -303,6 +303,36 @@ Con un objetivo activo, en el Estudio las grabaciones de **"Lo que ya grabaste"*
 al objetivo llevan una **diana** junto a la palabra: de un vistazo ve cuáles del reto ya apuntan
 a lo que pidieron en las terapias.
 
+<!-- s5:inicio -->
+### El documento de contacto visual — para trabajar sin pantallas (nuevo)
+
+Además de la app, existe un **documento aparte para la mamá**, pensado para los meses en que el
+niño no usa pantallas: **"Mirarse jugando"**. Se abre en el teléfono de ella (o impreso) en la
+página `/mirada` de la app, y él nunca lo ve: es para el adulto.
+
+Qué trae:
+
+- **Una escalera de seis peldaños**, descrita por lo que usted ve en su casa: desde "mira cuando
+  le interesa, con quien confía" hasta "en más momentos del día". Ningún peldaño tiene plazo.
+- **Seis maneras de jugar** que le sacan la mirada sin pedírsela —copiar lo que él hace, la pausa
+  antes de lo mejor, turnos cortos con lo que él eligió, esperar en silencio, cantar a su ritmo,
+  y la misma rutina con otra persona— cada una con qué tan fuerte es la evidencia que la respalda.
+- **Las cápsulas**, peldaño a peldaño: qué hacer, la línea que dice tal cual, la actividad, y un
+  "ojo" con lo que no se hace. Momentos cortos, repartidos en el día; nunca sesiones.
+- **Qué no hacer**, en una lista corta. La regla de fondo: la mirada nunca se pide ni se premia;
+  lo que sigue a su mirada es que el juego sigue. Y el único semáforo: si él aparta la vista, se
+  tapa la cara o se irrita, se para.
+- **El registro diario**: en dos minutos y pocos toques, la mamá anota **lo que hizo ella**, marca
+  **lo que vio en él** (sin contar cuántas veces) y **cómo estuvo él**. No hay puntajes, totales
+  ni metas. "Enviar a papá" arma un resumen con ejemplos, nunca con números; "Guardar registro"
+  descarga un archivo para leerlo después. Al imprimir, sale una cuadrícula semanal para llenar a
+  lápiz.
+
+**Privacidad del registro:** lo que la mamá anota vive **solo en su teléfono**, igual que todo lo
+demás de esta app. No hay cuenta ni nube. Sale de ahí únicamente cuando ella decide enviarlo o
+guardarlo.
+
+<!-- s5:fin -->
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -377,6 +407,14 @@ Porque sería mentira. La tecnología que reconoce voz infantil se equivoca dema
 una app que finge saber terminaría diciéndole "¡bien!" a un niño que no dijo nada. Preferimos
 decirle solo lo que de verdad medimos.
 
+<!-- s5:inicio -->
+**¿Qué es "Mirarse jugando" y por qué no está dentro de la app?**
+Es el documento de contacto visual para la mamá, para trabajar sin pantallas. Vive en la página
+`/mirada` de la app, pero es un documento, no un juego: él no lo usa, lo usa el adulto. Está
+aparte a propósito, para los meses sin pantallas; más adelante, cuando el niño vuelva a usar la
+app, se verá cómo traer esas cápsulas a "Hoy".
+
+<!-- s5:fin -->
 **¿Funciona sin internet?**
 Sí, después de la primera vez que la abra (si la instaló como app). El juego nunca necesita
 internet.
@@ -409,3 +447,6 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                                                                      |
 | 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
+<!-- s5:inicio -->
+| 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. |
+<!-- s5:fin -->

@@ -65,7 +65,8 @@
   .o-s1 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
-  .o-s4 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
+  .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s5 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
   .o-clave { color: var(--pendiente); border-color: var(--pendiente); background: var(--pendiente-suave); font-weight: 700; }
 
@@ -153,7 +154,7 @@
 <body>
 <div class="pagina">
   <header>
-    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 004 (y del ciclo H1) · 2026-07-19</p>
+    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 005 (primero de H2) · 2026-09-06</p>
     <h1>Guía de prueba</h1>
     <p class="suave">Cada línea responde las tres preguntas: <strong>qué probar</strong>, <strong>cómo</strong> y —lo más importante— <strong>qué esperar</strong> como resultado correcto. Donde hay una forma clara de fallar, también dice cuál. La guía es <strong>acumulativa</strong>: contiene todas las pruebas vigentes de la app, con el sprint del que viene cada una. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono); lo que necesita la tablet está al final.</p>
 
@@ -172,13 +173,14 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s4">Nuevo · S4</span> Nació en este sprint (el Rumbo y el Objetivo de la semana). <span class="suave">Nunca lo has probado.</span></li>
-        <li><span class="origen o-mejora">Mejorado en S4</span> Venía de antes y <strong>este sprint lo cambió</strong>. <span class="suave">Hay que volver a mirarlo.</span> <span class="suave">(Verás también “Mejorado en S3”: cambió en aquel sprint y se hereda igual.)</span></li>
+        <li><span class="origen o-s5">Nuevo · S5</span> Nació en este sprint (el documento de la mirada en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s4">S4</span> Del Sprint 4, sin cambios. <span class="suave">Regresión: que el Rumbo y el Objetivo de la semana sigan.</span></li>
+        <li><span class="origen o-mejora">Mejorado en S4</span> Venía de antes y <strong>el S4 lo cambió</strong>; se hereda igual. <span class="suave">(Verás también “Mejorado en S3”.)</span></li>
         <li><span class="origen o-s3">S3</span> Del Sprint 3, sin cambios. <span class="suave">Regresión: que la voz de la familia y las gemelas sigan.</span></li>
         <li><span class="origen o-s2">S2</span> Del Sprint 2, sin cambios. <span class="suave">Regresión: que lo del S2 siga funcionando.</span></li>
         <li><span class="origen o-s1">S1</span> Del Sprint 1, sin cambios. <span class="suave">Regresión: que lo más viejo siga en pie.</span></li>
       </ul>
-      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día.</p>
+      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S5 añade su gate acotado:</strong> el bloque P —el registro en tu teléfono real— son <strong>7 pruebas</strong>, unos <strong>10 minutos</strong>, y son las que ninguna máquina puede hacer por ti (tu teléfono, tu compartir, tu impresora).</p>
       <div class="recorrido">
         <p style="margin:0 0 6px"><strong>Recorrido del gate ⭐ ACUMULADO (S1+S2+S3+S4)</strong> — orden sugerido para hacerlo de una vez, en el computador y con micrófono:</p>
         <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong> — pega esa ruta al final de la dirección de la app (p. ej. <code>…<strong>/spike/audio</strong></code>) y arrancas a la segura, sin buscar el camino. <em>(Mejora nacida del gate S4.)</em></p>
@@ -785,6 +787,50 @@
     </ul>
   </section>
 
+<!-- s5:inicio -->
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">P</span><h2>El documento de la mirada, en tu teléfono (S5)</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/mirada</code> — <strong>en tu teléfono</strong>, no en el computador (la dirección de la app te la sabes; esta guía no la escribe)</p>
+    <p class="meta-bloque chica suave">Este sprint no toca la app del niño: produce el <strong>documento que la mamá va a trabajar sin pantallas</strong>, servido en su propia página, con el <strong>registro diario</strong> adentro. Lo único que ninguna máquina puede verificar es que ese registro quede <strong>fácil de verdad en un teléfono real</strong> — y esa es tu condición: si no queda fácil, se descarta. Cuando lo hagas, las cápsulas son todavía <strong>de prueba</strong> (el documento lo dice arriba): aquí pruebas el envase, no el contenido. El contenido lo apruebas después, en el modo revisión (P7).</p>
+    <ul class="pasos">
+      <li data-origen="s5"><input type="checkbox" id="v5-p1"><div>
+        <label for="v5-p1">Abre <code>/mirada</code> en tu teléfono y lee la portada completa. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Título <strong>“Mirarse jugando”</strong>, la caja <strong>“Esto no es una prueba.”</strong>, la del <strong>semáforo</strong>, “Cómo se usa”, la escalera de <strong>seis peldaños</strong>, “Las seis maneras” con su chip de evidencia, y “Qué no hacer”. Todo legible sin hacer zoom; ningún texto cortado.</p>
+        <p class="esperar"><span class="et">Mal</span> Hay que hacer zoom para leer, o algo se sale de la pantalla a lo ancho.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p2"><div>
+        <label for="v5-p2">En una cápsula toca <strong>“Registrar este momento”</strong> y toca <strong>“Guardar en este teléfono”</strong> sin marcar nada. Luego marca las <strong>tres</strong> de “A · Lo que hice yo”, una de “B”, escribe un ejemplo, elige cómo estuvo él en “C”, y guarda. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Primero, el aviso <strong>“Falta marcar las tres de «lo que hice yo» y cómo estuvo él.”</strong> Después, el mensaje <strong>“Guardado en este teléfono”</strong>, el formulario se cierra y abajo, en <strong>“Mis registros”</strong>, aparece tu momento escrito en frases (“Yo: …”, “Vi: …”, “Él: …”). Cuenta los toques: deberían ser <strong>seis o menos</strong> y menos de dos minutos.</p>
+        <p class="esperar"><span class="et">Mal</span> Los botones quedan pequeños para el dedo, o hay que hacer más de seis toques, o no aparece en “Mis registros”.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p3"><div>
+        <label for="v5-p3"><strong>Cierra el navegador del todo</strong> y vuelve a abrir <code>/mirada</code>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Tu registro <strong>sigue ahí</strong> en “Mis registros”. Vive en el teléfono: no hay cuenta, ni nube, ni nada que iniciar.</p>
+        <p class="esperar"><span class="et">Mal</span> El panel dice “Todavía no has registrado ningún momento”: el teléfono no guardó. Dime qué navegador es.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p4"><div>
+        <label for="v5-p4">Toca <strong>“Enviar a papá”</strong>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Se abre el <strong>compartir del teléfono</strong> (WhatsApp entre las opciones). El texto es la semana en frases: cada momento con “Yo:”, “Vi:” (con tu ejemplo entre comillas) y “Él:”, y termina con <strong>“Sin números a propósito: son ejemplos.”</strong> Ningún total, ningún porcentaje. Mándatelo a ti mismo y léelo.</p>
+        <p class="esperar"><span class="et">Mal</span> No pasa nada al tocar, o el texto trae conteos.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p5"><div>
+        <label for="v5-p5">Toca <strong>“Guardar registro”</strong>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Mensaje <strong>“Archivo guardado en el teléfono”</strong> y en tus descargas un archivo <strong>“registro-mirada-<em>fecha</em>.json”</strong>. Ábrelo o mándamelo: es el que leeremos en noviembre.</p>
+        <p class="esperar"><span class="et">Mal</span> El teléfono no descarga nada o el archivo no abre.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p6"><div>
+        <label for="v5-p6">Desde el menú del navegador, <strong>Imprimir</strong> (basta la vista previa). <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Desaparecen los botones y los formularios; al final aparece <strong>“Mi semana, a mano”</strong>: la cuadrícula de lunes a domingo para llenar con lápiz (el respaldo en papel).</p>
+        <p class="esperar"><span class="et">Mal</span> Salen botones impresos, o la cuadrícula no aparece.</p>
+      </div></li>
+      <li data-origen="s5"><input type="checkbox" id="v5-p7"><div>
+        <label for="v5-p7">Abre <code>/mirada?revision</code> (solo tú, para el G-Contenido). <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con las preguntas de juicio y cada cápsula gana su casilla <strong>“Revisada”</strong>, con el conteo “N de M revisadas”. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
+      </div></li>
+    </ul>
+  </section>
+<!-- s5:fin -->
+
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
     <div class="bloque-cabeza"><span class="letra">→</span><h2>Validaciones pendientes en la tablet Android</h2></div>
@@ -862,6 +908,9 @@
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
+<!-- s5:inicio -->
+    <p class="chica suave"><strong>Sprint 005 (2026-09-06) — primero de H2, bifurcación “Contacto visual”:</strong> la app del niño <strong>no cambia</strong> (cero pantallas por indicación, hasta la observación en vivo de noviembre). Llega el <strong>documento de la mamá</strong> —las cápsulas de contacto visual como escalera de seis peldaños, servido en <code>/mirada</code>— con el <strong>registro diario</strong> adentro (lo que hizo ella, lo que vio en él sin contar, cómo estuvo él; solo en su teléfono; “Enviar a papá” con ejemplos, “Guardar registro” en archivo; cuadrícula impresa de respaldo). <strong>Nuevo:</strong> bloque P (7 pruebas ⭐, ~10 min, en el teléfono real). Toda prueba del S4 se <strong>hereda entera</strong> como regresión (ya no “Nuevo · S4”). <strong>Eliminado:</strong> nada. Además, un gate nuevo del repo: ningún archivo público del sprint puede contener términos de una lista que vive en la planeadora (viajan solo sus huellas) — y ya cazó lo suyo antes de estrenarse.</p>
+<!-- s5:fin -->
     <p class="chica suave"><strong>Sprint 004 (2026-07-19) — cierre del ciclo H1:</strong> llegan <strong>“El rumbo”</strong> (progreso honesto: tendencias por semana + hitos funcionales de lo que DE VERDAD se midió o marcaste — cero puntajes, cero %, cero culpa) y el <strong>“Objetivo de la semana”</strong> (escribes qué trabajar y la app alinea, de forma determinista, la cápsula de hoy + los dibujos + el lote de grabación). Toda prueba del S3 se <strong>hereda entera</strong>, ahora como <strong>regresión</strong> (ya no “Nuevo · S3”). <strong>Nuevo:</strong> bloques N (rumbo) y O (objetivo), y dos ítems de tablet (iconos reales, rumbo/objetivo en el aparato). <strong>Mejorado:</strong> el encabezado de “Hoy” abre <strong>tres</strong> cuartos del padre (rumbo, objetivo, ajustes) — O5. Gate ⭐ ACUMULADO: <strong>25 pruebas</strong> (~40 min). <strong>Eliminado:</strong> nada. Además, endurecimiento del cierre: se pagaron las deudas del remate (dedup, tests del estudio, cap-500, revoke al navegar) e iconos PWA reales (ADR-011 rechaza el backup .zip por ahora).<br>
     <strong>Ajustes de auditoría (2026-07-19):</strong> la auditoría final en dos fases cazó que el preview del objetivo contaba contra los bancos COMPLETOS (prometía dibujos que el mazo del niño no trae) y que esa pantalla cargaba de más (el gate de Lighthouse del PR la frenó). Se corrigió: el preview cuenta <strong>solo lo que él verá</strong> y nace la prueba <strong>O6</strong> (el caso “existe pero fuera de su alcance”). También: singular/plural en los datos del rumbo (“1 palabra distinta”, no “1 palabras”), el hito de voz dice <strong>“5 segundos seguidos”</strong> (sin el “más de” que mentía en el borde exacto), el aviso de guardado ahora lo anuncian los lectores de pantalla, y el candado e2e de privacidad corre también <strong>después</strong> de que la app escribe de verdad.<br>
     <strong>Gate ⭐ ACUMULADO en curso (2026-07-19):</strong> bloque A ejecutado (11/11, el oído sano). Dos pruebas heredadas del S1 se reescribieron con lo aprendido: <strong>A2/A6</strong> — el “piso (mín. sesión)” es un MÍNIMO corrido (0,0000 es sano y jamás sube dentro de la misma sesión; el ruido de fondo se mide arrancando una sesión NUEVA con la música sonando; el juego calibra distinto: percentil 75 + piso 0,002) — y <strong>A5</strong> gana la nota Safari-vs-Chrome (Safari no reporta <code>noiseSuppression</code>/<code>autoGainControl</code>; se verifican en Chrome). Y una mejora general pedida por el usuario en pleno gate: <strong>cada bloque ahora abre con “Empieza en:”</strong> — la ruta exacta donde arranca su primera prueba — para entrar a la segura sin buscar el camino (propuesta al kit para TODAS las apps, va en el informe de cierre a la planeadora).</p>
