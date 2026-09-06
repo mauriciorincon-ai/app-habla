@@ -22,8 +22,8 @@
       juego»); su pedido de más cápsulas → 24 (el techo de la evidencia).
 - [x] `/audita-sprint` Fase 2 — «ejecuta» del usuario: M1 · B2 · B3 · B5 pagados; B1 · B4
       quedan como deuda declarada (van al summary)
-- [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
-      re-verificado tras el deploy)
+- [x] Cierre: `/deploy-check` MERGE OK · ADR 015 · `SPRINT_005-summary.md` EN el PR
+- [ ] Merge a orden del usuario → homepage de GitHub re-verificado tras el deploy → `/cierre-sprint`
 
 ## Los tres outcomes (del plan del sprint)
 
@@ -220,3 +220,12 @@
   portapapeles si el compartir del teléfono rechaza por algo distinto a cancelar; **B4** los scripts
   `.mjs` que importan `.ts` exigen Node ≥ 22.18 (local 24; la CI no los corre) sin documentarlo.
   Verificación: 304 unit · 16/16 e2e de `/mirada` · typecheck · lint · gate verde · cero enlaces.
+- 2026-09-06 · **Cierre — `/deploy-check` MERGE OK.** 304 unit (cobertura 91/86) · **185 e2e** ·
+  typecheck · lint · build (la app sin diff: bundles idénticos a `main`) · audit limpio · cero
+  `@ts-ignore`/`any` nuevos · la única env nueva (`SENSIBILIDAD_LISTA`, solo scripts locales, con
+  default) documentada en `.env.example` · axe en `/mirada` · manual y guía al día · **ADR 015**
+  (dominio como schema hermano + gate por hashes + regla de citas) — el gate cazó una palabra en
+  el borrador de la ADR y se reescribió sin ella · **`SPRINT_005-summary.md`** en el PR (lo
+  desplazado con nombre, lo pendiente visible, la decisión del registro, 24 cápsulas y por qué,
+  la auditoría registrada, desviaciones, deuda). Gate de sensibilidad y cero enlaces verdes sobre
+  el árbol completo. **Merge solo a orden del usuario**; tras el deploy, re-verificar el homepage.
