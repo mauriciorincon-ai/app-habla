@@ -333,6 +333,7 @@ demás de esta app. No hay cuenta ni nube. Sale de ahí únicamente cuando ella 
 guardarlo.
 
 <!-- s5:fin -->
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -439,6 +440,7 @@ Los pictogramas del juego "Palabra y dibujo" son obra de **Sergio Palao** para
 licencia **Creative Commons BY-NC-SA**. Esta app es personal y sin fines comerciales. Los dibujos
 viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 
+<!-- s5:inicio -->
 ## Historial
 
 | Sprint | Features añadidas a este manual                                                                                                                                                                                                                                                                                       |
@@ -447,6 +449,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                                                                      |
 | 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
-<!-- s5:inicio -->
 | 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. |
 <!-- s5:fin -->
