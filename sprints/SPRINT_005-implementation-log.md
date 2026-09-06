@@ -1,0 +1,81 @@
+# Sprint 005 — «Contacto visual» (documento primero, app después) · Bitácora de implementación
+
+> Orden: `portafolio/habla/ordenes/SPRINT_005-orden.md` + enmienda 2026-09-06 (planeadora, RO) ·
+> Plan aprobado por el usuario 2026-09-06 (plan mode) · «construye» dado con modelo Fable 5.1
+> `[1m]`. Branch `sprint-005/contacto-visual` desde `main` (post-merge PR #12, `d3c3baa`).
+> **Primer sprint de H2 — bifurcación → sprint inmediato** (método v1.26.0): lo planeado del
+> backlog del S4 se corre un turno. Documento para la mamá; **cero pantallas para el niño;
+> ninguna feature de la app**.
+
+## Estado por fase
+
+- [ ] F0 — Estructura (branch · delta del kit `audita-sprint` · dominio en el schema · generador
+      del catálogo · ruta propia · registro A/B/C · gate de sensibilidad por hashes con rojo en el
+      mismo commit · guía · manual) → **STOP: prueba del registro en el teléfono real del usuario**
+- [ ] F2 — Contenido (cápsulas como progresión · catálogo real · gate en verde · `/audita-sprint`
+      · **G-Contenido**)
+- [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
+      re-verificado tras el deploy)
+
+## Los tres outcomes (del plan del sprint)
+
+- **O1 — Investigación aprobada** (vive en la planeadora, privada): G-Investigación ✅ 2026-09-06.
+- **O2 — Cápsulas de contacto visual como progresión** en dominio propio + catálogo generado
+  servido en ruta propia + registro diario en el teléfono de la mamá (o descartado con razón),
+  aprobado en G-Contenido.
+- **O3 — Gate de sensibilidad por hashes**, verificable por comando, demostrado en rojo.
+
+## Decisiones de diseño (declaradas en el plan aprobado)
+
+1. **Dominio sin tocar `capsulas.ts`.** Añadir `dominio` al schema de habla cambiaría el tipo
+   `Capsula` y `capsulas.ts` está tipado con `Omit<Capsula, "etiquetas">` → obligaría a tocar las
+   50. El dominio nuevo tiene su schema propio con `dominio` literal como discriminante; el de
+   habla se declara a nivel de biblioteca. Las 50 quedan byte a byte iguales.
+2. **Catálogo hermano** (`gen-catalogo-contacto-visual.mjs`) con módulo común pequeño: el
+   catálogo del S4 es el instrumento de revisión del padre; el de la mamá es OTRO documento.
+3. **Ruta `/mirada`** (observable, corta; patrón de `/conoce`).
+4. **Registro A/B/C** de la enmienda: sin puntaje del niño; solo `localStorage`; «Enviar a papá»
+   con ejemplos, no números; «Guardar registro» JSON versionado; cuadrícula impresa de respaldo.
+5. **Gate de sensibilidad acotado por diseño:** modo gate (falla) sobre contenido y docs del S5;
+   modo informe (solo reporta archivo + línea + tamaño del n-grama, jamás el término) sobre el
+   resto. `CLAUDE.md` excluido, como dice la lista.
+6. **Regla 15:** el rojo del gate nace en el mismo commit que lo introduce.
+
+## Bitácora
+
+- 2026-09-06 · **F0 arranca.** Branch creado. Delta del kit adoptado: `.claude/commands/audita-sprint.md`
+  (la orden lo exige como obligatorio y esta app no lo tenía — hallazgo de la exploración). La
+  propuesta del sprint (`PROPUESTA-sprint-005-contacto-visual.md`, escrita el 2026-09-06 antes de
+  la orden) entra al repo con este commit.
+- 2026-09-06 · **F0.2 — Dominio en el schema.** `content/schema.ts` gana el dominio «contacto
+  visual»: 6 técnicas (con nombre para la mamá, descripción de una frase y fuerza de evidencia a
+  la vista), 6 niveles descritos por lo que ella ve, momentos del día, `conQuien`, y el schema de
+  cápsula (cero pantalla por literal; fuente «autor, año, revista» por regex, sin título) + el de
+  biblioteca (18–24 · 3–4 por técnica · niveles distintos por técnica · seis niveles cubiertos ·
+  N5 con otra persona · ids únicos). `capsulas.ts` (las 50 de habla) **no se tocó** — decisión 1.
+  `content/registro-contacto-visual.ts`: el contrato del archivo que descarga «Guardar
+  registro» (versión 1; bloques A/B/C de la enmienda — sin puntaje del niño). Contenido de
+  prueba: 3 cápsulas marcadas DE PRUEBA en `content/contacto-visual.ts` (se reemplazan en F2;
+  `BIBLIOTECA_COMPLETA=false` lo declara). Tests: 11 del schema (cada constraint con su fixture
+  inválido) + 4 del registro. **Rojo demostrado:** al quitar la constraint «niveles distintos
+  dentro de la técnica», cae exactamente el test que la vigila (1 de 11); restaurada, 11 verdes.
+- 2026-09-06 · **F0.3–F0.7 — Generador, ruta y registro.** `scripts/gen-catalogo-contacto-visual.mjs`
+  (+ `scripts/lib/catalogo-comun.mjs` con lo compartido: escape, fecha, paleta del design system
+  light/dark) genera `docs/CATALOGO-CONTACTO-VISUAL.html` del contenido real: portada con el
+  encuadre («esto no es una prueba», dosis en momentos cortos, «descansar también cuenta»), el
+  semáforo, cómo se usa, la escalera N1–N6, las seis maneras con su fuerza a la vista, «qué no
+  hacer» (§6 en observable), las cápsulas peldaño a peldaño, el registro A/B/C por cápsula, el
+  panel «Mis registros» (Enviar a papá · Guardar registro · borrar con segundo toque) y la
+  cuadrícula semanal solo impresa. Modo `?revision` para el papá (preguntas de juicio + casilla
+  «Revisada»), invisible para la mamá. `scripts/copiar-brochure.mjs` → `copiar-documentos.mjs`
+  (brochure → `/conoce`, catálogo → `/mirada`); `build:brochure` → `build:documentos`;
+  `/mirada` en `lighthouse-urls.json`. Un tropiezo: un `import` de valor sin extensión no
+  resuelve bajo Node con tipos quitados — el contenido solo importa tipos (como `capsulas.ts`) y
+  el generador decide si la biblioteca está completa. **e2e `mirada.spec.ts` (7 × móvil y
+  escritorio = 14 verdes):** ruta 200 · falta algo → lo dice · registro sobrevive a recargar ·
+  «Guardar registro» descarga un JSON que **valida contra el schema del repo** (el cable, no solo
+  la pieza) · «Enviar a papá» arma ejemplos sin números (share stubeado) · borrar con segundo
+  toque · `?revision` · axe limpio con el formulario abierto. **Capturas en Pixel 7 leídas como
+  imagen** (9): portada, escalera, maneras, cápsula, formulario vacío y lleno, panel, impresión con
+  cuadrícula, oscuro. Un falso positivo descartado: el cuerpo parecía sans en oscuro por residuo
+  de la emulación de impresión; en contexto limpio la fuente es Georgia.

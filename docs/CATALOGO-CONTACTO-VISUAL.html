@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Hablemos San — Mirarse jugando</title>
+<style>
+
+  :root {
+    --fondo:#FBF8F2; --superficie:#F5F0E5; --borde:#ECE4D2; --tinta:#1F2420; --suave:#5A615C;
+    --acento:#2E4628; --acento-hover:#3F5F37; --acento-suave:#DCE6D8; --exito:#527947;
+    --aviso:#C99432; --aviso-suave:#F8E9C8; --peligro:#B14B3D; --info:#4A6E84; --celebracion:#DD7B5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo:#14171A; --superficie:#1B1F22; --borde:#232830; --tinta:#F2EFE8; --suave:#969994;
+      --acento:#B5D5AB; --acento-hover:#94BB89; --acento-suave:#233022; --exito:#A8C9A0;
+      --aviso:#ECC56F; --aviso-suave:#3A2F14; --peligro:#E08A7C; --info:#8FB3C7; --celebracion:#DD7B5E;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; padding: 1.25rem 1rem 5rem; background: var(--fondo); color: var(--tinta);
+    font: 17px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width: 42rem; margin: 0 auto; }
+  h1 { font-size: 2rem; line-height: 1.12; margin: .3rem 0 .6rem; }
+  h2 { font-size: 1.35rem; line-height: 1.2; margin: 2.4rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde); }
+  h3 { font-size: 1.12rem; margin: 1.8rem 0 .3rem; color: var(--acento); display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  h4 { margin: .1rem 0 .4rem; font-size: 1.08rem; line-height: 1.3; }
+  p { margin: .45rem 0; }
+  .eyebrow { font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  .suave { color: var(--suave); }
+  .conteo { font-weight: normal; font-size: .85em; color: var(--suave); }
+  .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; }
+  .aviso-prueba { border-color: var(--aviso); background: var(--aviso-suave); }
+  .encuadre { border-left: 4px solid var(--acento); }
+  .semaforo { border-left: 4px solid var(--peligro); }
+  ul.lista { padding-left: 1.2rem; } ul.lista li { margin: .35rem 0; }
+  ol.pasos { padding-left: 1.3rem; } ol.pasos li { margin: .4rem 0; }
+  .escalera { list-style: none; padding: 0; margin: .5rem 0; }
+  .escalera li { display: flex; gap: .75rem; align-items: flex-start; padding: .6rem 0; border-bottom: 1px dashed var(--borde); }
+  .escalera li p { margin: .15rem 0 0; font-size: .95rem; }
+  .peldano { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem;
+    border-radius: 999px; background: var(--acento); color: var(--fondo); font: 700 .95rem/1 system-ui, sans-serif; }
+  .tecnicas { list-style: none; padding: 0; margin: .5rem 0; }
+  .tecnica { padding: .7rem 0; border-bottom: 1px dashed var(--borde); }
+  .tecnica-nombre { margin: 0; font-weight: 700; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .tecnica .suave { margin: .2rem 0 0; font-size: .95rem; }
+  .chips { margin: .2rem 0 .6rem; line-height: 1.9; }
+  .chip { display: inline-block; font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .03em; background: var(--acento-suave);
+    color: var(--acento); border-radius: 999px; padding: .32rem .62rem; margin: 0 .3rem .3rem 0; vertical-align: middle; }
+  .chip.suave { background: transparent; border: 1px solid var(--borde); color: var(--suave); }
+  .chip-fuerte { background: var(--acento); color: var(--fondo); }
+  .chip-moderada { background: var(--acento-suave); color: var(--acento); }
+  .chip-otra { background: var(--aviso-suave); color: var(--tinta); }
+  .capsula { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: .9rem 0; position: relative; }
+  .capsula.lista { opacity: .55; }
+  .revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
+  .solo-revision { display: none; }
+  body.revision .solo-revision { display: block; }
+  body.revision .capsula h4 { margin-right: 6rem; }
+  blockquote { margin: .6rem 0; padding: .55rem .9rem; border-left: 4px solid var(--acento); background: var(--fondo); border-radius: 0 10px 10px 0; font-style: italic; }
+  blockquote strong, .actividad strong, .ojo strong { font-style: normal; }
+  .ojo { font-size: .95rem; padding: .5rem .8rem; background: var(--fondo); border-radius: 10px; border: 1px dashed var(--borde); }
+  .fuente { font: .78rem system-ui, sans-serif; color: var(--suave); margin: .5rem 0 .2rem; }
+  .vacio { color: var(--suave); font-style: italic; }
+  .boton { font: 600 1rem system-ui, sans-serif; min-height: 48px; padding: .7rem 1.1rem; border-radius: 12px; border: 2px solid var(--acento);
+    background: var(--acento); color: var(--fondo); cursor: pointer; }
+  .boton:focus-visible, input:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
+  .boton-suave { background: transparent; color: var(--acento); }
+  .boton-peligro { background: transparent; color: var(--peligro); border-color: var(--peligro); }
+  .boton-registrar { margin-top: .6rem; width: 100%; }
+  .registro { margin-top: .8rem; padding: .9rem; background: var(--fondo); border: 2px solid var(--acento-suave); border-radius: 14px; }
+  .registro-titulo { margin: 0 0 .3rem; font: 700 1rem system-ui, sans-serif; }
+  fieldset { border: 0; padding: 0; margin: .8rem 0 0; }
+  legend { font: 700 .95rem system-ui, sans-serif; padding: 0; margin-bottom: .4rem; }
+  .fila { margin: .45rem 0 .7rem; }
+  .fila-texto { margin: 0 0 .3rem; font-size: .98rem; }
+  .segmentos { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .segmentos label { flex: 1 1 5.5rem; }
+  .segmentos input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .segmentos span { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: .4rem .6rem; border-radius: 12px;
+    border: 2px solid var(--borde); background: var(--superficie); font: 600 .92rem system-ui, sans-serif; text-align: center; cursor: pointer; }
+  .segmentos input:checked + span { border-color: var(--acento); background: var(--acento-suave); color: var(--acento); }
+  .segmentos input:focus-visible + span { outline: 3px solid var(--info); outline-offset: 2px; }
+  .marca { display: flex; align-items: center; gap: .6rem; min-height: 46px; padding: .3rem .2rem; font: .98rem system-ui, sans-serif; cursor: pointer; }
+  .marca input { width: 1.4rem; height: 1.4rem; accent-color: var(--acento); flex: 0 0 auto; }
+  .ejemplo { display: block; margin-top: .5rem; font: .9rem system-ui, sans-serif; color: var(--suave); }
+  .ejemplo input { display: block; width: 100%; margin-top: .3rem; min-height: 46px; padding: .5rem .7rem; font: 1rem Georgia, serif; color: var(--tinta);
+    background: var(--superficie); border: 2px solid var(--borde); border-radius: 12px; }
+  .registro-error { color: var(--peligro); font: .92rem system-ui, sans-serif; }
+  .acciones { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem; }
+  .acciones .boton { flex: 1 1 10rem; }
+  .panel { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem; }
+  .entradas { list-style: none; padding: 0; margin: .5rem 0 0; }
+  .entradas li { padding: .6rem 0; border-top: 1px dashed var(--borde); font-size: .95rem; }
+  .entradas .cuando { font: 600 .8rem system-ui, sans-serif; color: var(--suave); letter-spacing: .03em; }
+  .entradas .quitar { font: .8rem system-ui, sans-serif; color: var(--peligro); background: none; border: 0; padding: .4rem 0; cursor: pointer; min-height: 40px; }
+  .toast { position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%); background: var(--tinta); color: var(--fondo);
+    padding: .7rem 1rem; border-radius: 12px; font: 600 .92rem system-ui, sans-serif; max-width: 90vw; text-align: center; z-index: 9; }
+  .toast[hidden] { display: none; }
+  .cuadricula { display: none; }
+  footer { margin-top: 3rem; font-size: .8rem; color: var(--suave); border-top: 1px solid var(--borde); padding-top: 1rem; }
+  @media (prefers-reduced-motion: no-preference) { .capsula { transition: opacity .2s; } }
+  @media print {
+    body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
+    .boton, .registro, .panel, .toast, .solo-revision, .no-imprimir { display: none !important; }
+    .capsula { break-inside: avoid; border: 1px solid #999; background: #fff; }
+    .cuadricula { display: block; break-before: page; }
+    .cuadricula table { width: 100%; border-collapse: collapse; font: 9pt system-ui, sans-serif; }
+    .cuadricula th, .cuadricula td { border: 1px solid #999; padding: .25rem .3rem; text-align: left; vertical-align: top; }
+    .cuadricula td.dia { width: 4.5rem; height: 3.2rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
+    <h1>Mirarse jugando</h1>
+    <p>Él <strong>ya mira</strong>: cuando algo le interesa, y a las personas en quienes confía. Lo que sigue no es enseñarle a mirar.
+    Es <strong>estirar</strong> lo que ya hace — que la mirada aguante dentro de un turno de juego, y que pase también con papá, con la
+    abuela, en el baño, en la mesa. Todo lo de aquí sale de lo que ya le saca la mirada: las cosquillas, algunas canciones, el juego físico, y tú.</p>
+    
+  <p class="aviso aviso-prueba"><strong>Versión de prueba.</strong> Estas cápsulas existen para probar el documento y el
+  registro en el teléfono. Las cápsulas reales llegan cuando el papá apruebe el contenido.</p>
+    <div class="aviso encuadre">
+      <p><strong>Esto no es una prueba.</strong> Ni para él ni para ti. No hay forma correcta o incorrecta de jugar, no hay totales
+      ni metas con número, y ningún nivel tiene plazo. La mirada nunca es una condición para nada: lo que sigue a su mirada es que
+      el juego sigue.</p>
+      <p><strong>La dosis son momentos cortos</strong> — de 5 a 30 minutos, repartidos en el día: en el baño, en la mesa, jugando, al
+      acostarlo. No son sesiones. Y <strong>descansar también cuenta</strong>: una mamá cansada juega peor que una mamá que paró a tiempo.</p>
+    </div>
+    <div class="aviso semaforo">
+      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita cuando le pides algo con la mirada, <strong>se para</strong>.
+      Si está muy acelerado, suavizas. Se vuelve a intentar más tarde, o mañana.</p>
+    </div>
+  </header>
+
+  <h2>Cómo se usa</h2>
+  <ol class="pasos">
+    <li><strong>Elige un momento corto</strong> en que él ya esté contento, y una cápsula del peldaño donde va.</li>
+    <li><strong>Lee la cápsula</strong> — treinta segundos: qué hacer, tu línea, y el «ojo».</li>
+    <li><strong>Hazla.</strong> Ponte a su altura y de frente, sigue lo que él eligió, y espera.</li>
+    <li>Si quieres, <strong>registra ese momento</strong> — dos minutos, en este mismo teléfono. Lo que hiciste tú, lo que viste en él y cómo estuvo. Sin contar nada.</li>
+  </ol>
+
+  <h2>La escalera: por dónde va y por dónde sigue</h2>
+  <p>Seis peldaños, descritos por lo que tú ves. <strong>Con mamá y papá ya está en el 1</strong>, y con las cosquillas y algunas canciones ya
+  asoma el 2. Se sube un peldaño cuando el anterior pasa <em>la mayoría de las veces</em> contigo — sin fecha. Dos atajos: si un juguete lo
+  absorbe, entra por el 3 (turnos con ese juguete); si hay poco interés, por el 2 (juego físico o canción).</p>
+  <ol class="escalera">
+      <li>
+        <span class="peldano">1</span>
+        <div><strong>Mira cuando le interesa, con quien confía</strong>
+          <p class="suave">Gira y te mira cuando lo imitas o le hablas; se acerca. Con mamá y papá esto ya pasa.</p></div>
+      </li>
+      <li>
+        <span class="peldano">2</span>
+        <div><strong>Anticipa y pide que siga</strong>
+          <p class="suave">En la pausa del juego te mira, abre los brazos o la boca, o hace un sonido para que sigas. Con las cosquillas y algunas canciones ya asoma: aquí empieza.</p></div>
+      </li>
+      <li>
+        <span class="peldano">3</span>
+        <div><strong>Mira dentro del turno</strong>
+          <p class="suave">Al pasar el turno, su mirada va del juguete a tu cara y vuelve al juguete; cada vez la sostiene un poquito más. Es el corazón de todo esto.</p></div>
+      </li>
+      <li>
+        <span class="peldano">4</span>
+        <div><strong>Él arranca el juego</strong>
+          <p class="suave">Trae las manos o el juguete, dice «otra», te muestra o señala algo para arrancar el juego él.</p></div>
+      </li>
+      <li>
+        <span class="peldano">5</span>
+        <div><strong>Con más personas</strong>
+          <p class="suave">Lo de los niveles 2 a 4, pero con papá, la abuela, el hermano — o alguien que conoce menos.</p></div>
+      </li>
+      <li>
+        <span class="peldano">6</span>
+        <div><strong>En más momentos del día</strong>
+          <p class="suave">Lo mismo, en el baño, en la mesa, en la calle, sin haberlo preparado.</p></div>
+      </li>
+  </ol>
+
+  <h2>Las seis maneras</h2>
+  <p>Cada cápsula usa una. Al lado de cada una va qué tan fuerte es la evidencia que la respalda.</p>
+  <ul class="tecnicas">
+      <li class="tecnica">
+        <p class="tecnica-nombre">Hago lo que él hace
+          <span class="chip chip-fuerte">Evidencia fuerte</span></p>
+        <p class="suave">Copias en el momento lo que él hace con un juguete igual al suyo, sus movimientos y sus sonidos. Sin pedirle nada.</p>
+      </li>
+      <li class="tecnica">
+        <p class="tecnica-nombre">La pausa antes de lo mejor
+          <span class="chip chip-moderada">Evidencia moderada</span></p>
+        <p class="suave">Un juego cara a cara que se repite —cosquillas, avión, cucú, una canción— y se detiene justo antes de lo mejor. Ese hueco lo llena él.</p>
+      </li>
+      <li class="tecnica">
+        <p class="tecnica-nombre">Un turno tú, un turno yo
+          <span class="chip chip-fuerte">Evidencia fuerte</span></p>
+        <p class="suave">Un juego corto alrededor de lo que él eligió, en turnos cortos y parejos. Aquí nace la mirada que va del juguete a tu cara y vuelve.</p>
+      </li>
+      <li class="tecnica">
+        <p class="tecnica-nombre">Espero en silencio
+          <span class="chip chip-moderada">Evidencia moderada</span></p>
+        <p class="suave">Con el juguete o la continuación a la vista, esperas con cara de «¿y ahora?» antes de ayudar o repetir. La espera se alarga de a poquito.</p>
+      </li>
+      <li class="tecnica">
+        <p class="tecnica-nombre">Canto a su ritmo
+          <span class="chip chip-moderada">Evidencia moderada</span></p>
+        <p class="suave">Cantas o tamborileas siguiendo su ritmo y sus sonidos, y luego paras. Canciones con gestos, una estrofa más cada semana.</p>
+      </li>
+      <li class="tecnica">
+        <p class="tecnica-nombre">La misma rutina con otra persona
+          <span class="chip chip-moderada">Evidencia moderada</span></p>
+        <p class="suave">Exactamente la misma rutina, con las mismas palabras y la misma pausa, ahora con papá, la abuela o el hermano — y en más momentos del día.</p>
+      </li>
+  </ul>
+
+  <h2>Qué no hacer</h2>
+  <ul class="lista">
+    <li>No le digas «mírame» ni le pidas la mirada. Y no le retengas el juguete hasta que mire.</li>
+    <li>Ningún premio por mirar. Lo que sigue a su mirada es que el juego sigue.</li>
+    <li>Si aparta la vista, se tapa la cara o se irrita, paras. Ese es el único semáforo que vale. Si está muy acelerado, suavizas.</li>
+    <li>Con un juguete que lo absorbe, no compitas: métete en el juguete y haz turnos con él.</li>
+    <li>Durante el juego, sin preguntas de examen ni órdenes. Tus turnos, cortos.</li>
+    <li>Persona nueva o juego nuevo — nunca los dos el mismo día.</li>
+    <li>No «gastes» su nombre: llámalo solo cuando venga algo que valga la pena.</li>
+    <li>Sin plazos, sin metas con número, sin comparar con otros niños. Y tú también descansas.</li>
+  </ul>
+
+  <section class="solo-revision aviso" aria-label="Preguntas de juicio para la revisión">
+    <p class="eyebrow">Modo revisión · para el papá, antes de que llegue a la mamá</p>
+    <ul class="lista">
+      <li>¿Lo puede hacer la mamá en su día real, en un momento corto, sin preparar nada?</li>
+      <li>¿Reconoces al niño en la línea de base y en el nivel donde arranca cada cápsula?</li>
+      <li>¿Alguna cápsula le pediría forzarlo, aunque sea un poquito? Si sí, cuál.</li>
+      <li>¿La línea la diría ella tal cual? ¿Le suena a jugar con él y no a una tarea?</li>
+    </ul>
+    <p class="suave"><span id="revisadas">0</span> de 3 revisadas · tu avance queda guardado en este navegador.</p>
+  </section>
+
+  <h2>Las cápsulas, peldaño a peldaño</h2>
+  
+  <section class="nivel" id="nivel-1">
+    <h3><span class="peldano">1</span> Mira cuando le interesa, con quien confía
+      <span class="conteo">(1 cápsula)</span></h3>
+    <p class="suave">Gira y te mira cuando lo imitas o le hablas; se acerca. Con mamá y papá esto ya pasa.</p>
+    
+    <article class="capsula" id="prueba-dos-juguetes-iguales" data-capsula-id="prueba-dos-juguetes-iguales" data-titulo="Dos carros iguales: tú haces lo que él hace">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-dos-juguetes-iguales"> Revisada</label>
+      <h4>Dos carros iguales: tú haces lo que él hace</h4>
+      <p class="chips">
+        <span class="chip">Hago lo que él hace</span>
+        <span class="chip chip-fuerte">Evidencia fuerte</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+      </p>
+      <p class="explicacion">Cuando alguien copia exactamente lo que hacemos, nos volvemos visibles para él sin que nadie nos lo pida. Con un juguete igual al suyo, copias en el momento lo que hace: si lo rueda, lo ruedas; si lo golpea, lo golpeas; si hace un sonido, lo haces. Nada más. En unos minutos suele voltear a mirar quién es ese que hace lo mismo que él.</p>
+      <blockquote><strong>Tu línea:</strong> Sin decir nada al principio. Cuando te mire: «¡Igual que tú!»</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Consigue dos juguetes iguales (dos carros, dos cucharas, dos bloques). Siéntate a su altura, de frente o al lado, y durante tres minutos copia todo lo que hace con el suyo. Cuando te mire, sonríe y sigue copiando. Si se levanta, copia también.</p>
+      <p class="ojo"><strong>Ojo:</strong> No conviertas la copia en una clase («ahora haz tú esto»): hoy copias tú, nada más.</p>
+      <p class="fuente">Field, 2001 · Sanefuji, 2013, Infant Ment Health J</p>
+      <button type="button" class="boton boton-registrar" data-abrir-registro="prueba-dos-juguetes-iguales">Registrar este momento</button>
+      
+      <form class="registro" data-registro data-capsula="prueba-dos-juguetes-iguales" hidden>
+        <p class="registro-titulo">Este momento, en dos minutos</p>
+        <fieldset>
+          <legend>A · Lo que hice yo</legend>
+          <div class="fila" role="group" aria-label="Me puse a su altura y de frente">
+            <p class="fila-texto">Me puse a su altura y de frente</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-dos-juguetes-iguales" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-dos-juguetes-iguales" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-dos-juguetes-iguales" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Seguí lo que él eligió y esperé">
+            <p class="fila-texto">Seguí lo que él eligió y esperé</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-dos-juguetes-iguales" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-dos-juguetes-iguales" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-dos-juguetes-iguales" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Hice la pausa o lo imité, sin pedirle nada">
+            <p class="fila-texto">Hice la pausa o lo imité, sin pedirle nada</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-dos-juguetes-iguales" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-dos-juguetes-iguales" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-dos-juguetes-iguales" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>B · Lo que vi en él <span class="suave">(marca lo que pasó; no hay que contar)</span></legend>
+          <label class="marca"><input type="checkbox" name="b-miroDeMiAlJugueteYDeVuelta-prueba-dos-juguetes-iguales"><span>Miró de mí al juguete y de vuelta</span></label>
+          <label class="marca"><input type="checkbox" name="b-meBuscoParaQueSiguiera-prueba-dos-juguetes-iguales"><span>Me buscó para que siguiera</span></label>
+          <label class="marca"><input type="checkbox" name="b-meMostroOSenaloAlgo-prueba-dos-juguetes-iguales"><span>Me mostró o señaló algo</span></label>
+          <label class="marca"><input type="checkbox" name="b-loHizoConOtraPersona-prueba-dos-juguetes-iguales"><span>Lo hizo con otra persona</span></label>
+          <label class="ejemplo"><span>Un ejemplo, si quieres («hoy señaló el avión»)</span>
+            <input type="text" name="ejemplo-prueba-dos-juguetes-iguales" maxlength="200" autocomplete="off"></label>
+        </fieldset>
+        <fieldset>
+          <legend>C · Cómo estuvo él</legend>
+          <div class="segmentos">
+            <label><input type="radio" name="c-prueba-dos-juguetes-iguales" value="a-gusto"><span>A gusto</span></label>
+            <label><input type="radio" name="c-prueba-dos-juguetes-iguales" value="neutro"><span>Neutro</span></label>
+            <label><input type="radio" name="c-prueba-dos-juguetes-iguales" value="incomodo"><span>Incómodo</span></label>
+          </div>
+          <label class="marca"><input type="checkbox" name="paramos-prueba-dos-juguetes-iguales"><span>Paramos</span></label>
+        </fieldset>
+        <p class="registro-error" role="alert" hidden>Falta marcar las tres de «lo que hice yo» y cómo estuvo él.</p>
+        <div class="acciones">
+          <button type="submit" class="boton">Guardar en este teléfono</button>
+          <button type="button" class="boton boton-suave" data-cancelar>Ahora no</button>
+        </div>
+      </form>
+    </article>
+  </section>
+  <section class="nivel" id="nivel-2">
+    <h3><span class="peldano">2</span> Anticipa y pide que siga
+      <span class="conteo">(1 cápsula)</span></h3>
+    <p class="suave">En la pausa del juego te mira, abre los brazos o la boca, o hace un sonido para que sigas. Con las cosquillas y algunas canciones ya asoma: aquí empieza.</p>
+    
+    <article class="capsula" id="prueba-cosquillas-con-pausa" data-capsula-id="prueba-cosquillas-con-pausa" data-titulo="Cosquillas que se detienen justo antes">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-cosquillas-con-pausa"> Revisada</label>
+      <h4>Cosquillas que se detienen justo antes</h4>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip chip-moderada">Evidencia moderada</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al acostarlo</span>
+        
+      </p>
+      <p class="explicacion">Las cosquillas ya le sacan la mirada. Hoy solo les agregas un hueco: cuando ya va a llegar la parte que más le gusta, te detienes con las manos listas y la cara de «¿y ahora?». Ese instante lo llena él — con la mirada, con un brazo, con un sonido. Cuando aparece cualquiera de esas señales, sigues. No hace falta pedirle nada.</p>
+      <blockquote><strong>Tu línea:</strong> «¡Ahí vienen las cosquillas!… (pausa, manos listas, cara de espera)… ¡Aquí van!»</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> En un momento en que ya esté contento, haz la ronda de cosquillas dos o tres veces igual. A la siguiente, detente justo antes de lo mejor: manos en el aire, cara expectante, tres segunditos. Si te mira, hace un gesto o un sonido, sigues de inmediato. Si nada, sigues igual y lo intentas otra vez más tarde.</p>
+      <p class="ojo"><strong>Ojo:</strong> No le pidas que te mire ni alargues la pausa hasta que se frustre: tres segundos y sigues, mire o no mire.</p>
+      <p class="fuente">Nomikou, 2017, Front Psychol · Muuvila, 2022</p>
+      <button type="button" class="boton boton-registrar" data-abrir-registro="prueba-cosquillas-con-pausa">Registrar este momento</button>
+      
+      <form class="registro" data-registro data-capsula="prueba-cosquillas-con-pausa" hidden>
+        <p class="registro-titulo">Este momento, en dos minutos</p>
+        <fieldset>
+          <legend>A · Lo que hice yo</legend>
+          <div class="fila" role="group" aria-label="Me puse a su altura y de frente">
+            <p class="fila-texto">Me puse a su altura y de frente</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-cosquillas-con-pausa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-cosquillas-con-pausa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-cosquillas-con-pausa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Seguí lo que él eligió y esperé">
+            <p class="fila-texto">Seguí lo que él eligió y esperé</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-cosquillas-con-pausa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-cosquillas-con-pausa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-cosquillas-con-pausa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Hice la pausa o lo imité, sin pedirle nada">
+            <p class="fila-texto">Hice la pausa o lo imité, sin pedirle nada</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-cosquillas-con-pausa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-cosquillas-con-pausa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-cosquillas-con-pausa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>B · Lo que vi en él <span class="suave">(marca lo que pasó; no hay que contar)</span></legend>
+          <label class="marca"><input type="checkbox" name="b-miroDeMiAlJugueteYDeVuelta-prueba-cosquillas-con-pausa"><span>Miró de mí al juguete y de vuelta</span></label>
+          <label class="marca"><input type="checkbox" name="b-meBuscoParaQueSiguiera-prueba-cosquillas-con-pausa"><span>Me buscó para que siguiera</span></label>
+          <label class="marca"><input type="checkbox" name="b-meMostroOSenaloAlgo-prueba-cosquillas-con-pausa"><span>Me mostró o señaló algo</span></label>
+          <label class="marca"><input type="checkbox" name="b-loHizoConOtraPersona-prueba-cosquillas-con-pausa"><span>Lo hizo con otra persona</span></label>
+          <label class="ejemplo"><span>Un ejemplo, si quieres («hoy señaló el avión»)</span>
+            <input type="text" name="ejemplo-prueba-cosquillas-con-pausa" maxlength="200" autocomplete="off"></label>
+        </fieldset>
+        <fieldset>
+          <legend>C · Cómo estuvo él</legend>
+          <div class="segmentos">
+            <label><input type="radio" name="c-prueba-cosquillas-con-pausa" value="a-gusto"><span>A gusto</span></label>
+            <label><input type="radio" name="c-prueba-cosquillas-con-pausa" value="neutro"><span>Neutro</span></label>
+            <label><input type="radio" name="c-prueba-cosquillas-con-pausa" value="incomodo"><span>Incómodo</span></label>
+          </div>
+          <label class="marca"><input type="checkbox" name="paramos-prueba-cosquillas-con-pausa"><span>Paramos</span></label>
+        </fieldset>
+        <p class="registro-error" role="alert" hidden>Falta marcar las tres de «lo que hice yo» y cómo estuvo él.</p>
+        <div class="acciones">
+          <button type="submit" class="boton">Guardar en este teléfono</button>
+          <button type="button" class="boton boton-suave" data-cancelar>Ahora no</button>
+        </div>
+      </form>
+    </article>
+  </section>
+  <section class="nivel" id="nivel-3">
+    <h3><span class="peldano">3</span> Mira dentro del turno
+      <span class="conteo">(0 cápsulas)</span></h3>
+    <p class="suave">Al pasar el turno, su mirada va del juguete a tu cara y vuelve al juguete; cada vez la sostiene un poquito más. Es el corazón de todo esto.</p>
+    <p class="vacio">Todavía no hay cápsulas en este peldaño.</p>
+  </section>
+  <section class="nivel" id="nivel-4">
+    <h3><span class="peldano">4</span> Él arranca el juego
+      <span class="conteo">(0 cápsulas)</span></h3>
+    <p class="suave">Trae las manos o el juguete, dice «otra», te muestra o señala algo para arrancar el juego él.</p>
+    <p class="vacio">Todavía no hay cápsulas en este peldaño.</p>
+  </section>
+  <section class="nivel" id="nivel-5">
+    <h3><span class="peldano">5</span> Con más personas
+      <span class="conteo">(1 cápsula)</span></h3>
+    <p class="suave">Lo de los niveles 2 a 4, pero con papá, la abuela, el hermano — o alguien que conoce menos.</p>
+    
+    <article class="capsula" id="prueba-misma-rutina-con-papa" data-capsula-id="prueba-misma-rutina-con-papa" data-titulo="Las mismas cosquillas, ahora con papá">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-misma-rutina-con-papa"> Revisada</label>
+      <h4>Las mismas cosquillas, ahora con papá</h4>
+      <p class="chips">
+        <span class="chip">La misma rutina con otra persona</span>
+        <span class="chip chip-moderada">Evidencia moderada</span>
+        <span class="chip suave">5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al acostarlo</span>
+        <span class="chip chip-otra">con otra persona</span>
+      </p>
+      <p class="explicacion">Lo que ya funciona contigo no pasa solo a otras personas: hay que llevarlo. La regla de oro es cambiar UNA sola cosa a la vez: la persona nueva hace exactamente el mismo juego, con las mismas palabras y la misma pausa que tú. Persona nueva o juego nuevo, nunca los dos juntos.</p>
+      <blockquote><strong>Tu línea:</strong> Le explicas a papá: «Igualito que yo: dos rondas, y en la tercera te detienes antes de lo mejor».</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> Elige la rutina que mejor le funciona contigo. Hazla tú primero una vez, con papá al lado mirando. Luego papá la hace igual, con tus mismas palabras y tu misma pausa, mientras tú te quedas cerca. Si él busca tu cara en la pausa, no pasa nada: papá sigue.</p>
+      <p class="ojo"><strong>Ojo:</strong> No estrenes un juego nuevo con una persona nueva el mismo día: una sola cosa cambia a la vez.</p>
+      <p class="fuente">Stokes, 1977, J Appl Behav Anal · Kasari, 2015, J Consult Clin Psychol</p>
+      <button type="button" class="boton boton-registrar" data-abrir-registro="prueba-misma-rutina-con-papa">Registrar este momento</button>
+      
+      <form class="registro" data-registro data-capsula="prueba-misma-rutina-con-papa" hidden>
+        <p class="registro-titulo">Este momento, en dos minutos</p>
+        <fieldset>
+          <legend>A · Lo que hice yo</legend>
+          <div class="fila" role="group" aria-label="Me puse a su altura y de frente">
+            <p class="fila-texto">Me puse a su altura y de frente</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-misma-rutina-con-papa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-misma-rutina-con-papa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-alturaYDeFrente-prueba-misma-rutina-con-papa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Seguí lo que él eligió y esperé">
+            <p class="fila-texto">Seguí lo que él eligió y esperé</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-misma-rutina-con-papa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-misma-rutina-con-papa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-seguiLoQueEligioYEspere-prueba-misma-rutina-con-papa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+          <div class="fila" role="group" aria-label="Hice la pausa o lo imité, sin pedirle nada">
+            <p class="fila-texto">Hice la pausa o lo imité, sin pedirle nada</p>
+            <div class="segmentos">
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-misma-rutina-con-papa" value="lo-hice"><span>Lo hice</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-misma-rutina-con-papa" value="a-medias"><span>A medias</span></label>
+              <label><input type="radio" name="a-pausaOImitacionSinPedirNada-prueba-misma-rutina-con-papa" value="hoy-no"><span>Hoy no</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>B · Lo que vi en él <span class="suave">(marca lo que pasó; no hay que contar)</span></legend>
+          <label class="marca"><input type="checkbox" name="b-miroDeMiAlJugueteYDeVuelta-prueba-misma-rutina-con-papa"><span>Miró de mí al juguete y de vuelta</span></label>
+          <label class="marca"><input type="checkbox" name="b-meBuscoParaQueSiguiera-prueba-misma-rutina-con-papa"><span>Me buscó para que siguiera</span></label>
+          <label class="marca"><input type="checkbox" name="b-meMostroOSenaloAlgo-prueba-misma-rutina-con-papa"><span>Me mostró o señaló algo</span></label>
+          <label class="marca"><input type="checkbox" name="b-loHizoConOtraPersona-prueba-misma-rutina-con-papa"><span>Lo hizo con otra persona</span></label>
+          <label class="ejemplo"><span>Un ejemplo, si quieres («hoy señaló el avión»)</span>
+            <input type="text" name="ejemplo-prueba-misma-rutina-con-papa" maxlength="200" autocomplete="off"></label>
+        </fieldset>
+        <fieldset>
+          <legend>C · Cómo estuvo él</legend>
+          <div class="segmentos">
+            <label><input type="radio" name="c-prueba-misma-rutina-con-papa" value="a-gusto"><span>A gusto</span></label>
+            <label><input type="radio" name="c-prueba-misma-rutina-con-papa" value="neutro"><span>Neutro</span></label>
+            <label><input type="radio" name="c-prueba-misma-rutina-con-papa" value="incomodo"><span>Incómodo</span></label>
+          </div>
+          <label class="marca"><input type="checkbox" name="paramos-prueba-misma-rutina-con-papa"><span>Paramos</span></label>
+        </fieldset>
+        <p class="registro-error" role="alert" hidden>Falta marcar las tres de «lo que hice yo» y cómo estuvo él.</p>
+        <div class="acciones">
+          <button type="submit" class="boton">Guardar en este teléfono</button>
+          <button type="button" class="boton boton-suave" data-cancelar>Ahora no</button>
+        </div>
+      </form>
+    </article>
+  </section>
+  <section class="nivel" id="nivel-6">
+    <h3><span class="peldano">6</span> En más momentos del día
+      <span class="conteo">(0 cápsulas)</span></h3>
+    <p class="suave">Lo mismo, en el baño, en la mesa, en la calle, sin haberlo preparado.</p>
+    <p class="vacio">Todavía no hay cápsulas en este peldaño.</p>
+  </section>
+
+  <h2 id="mis-registros">Mis registros</h2>
+  <section class="panel" aria-labelledby="mis-registros">
+    <p class="suave">Lo que anotas vive <strong>solo en este teléfono</strong>. Sale de aquí únicamente si tú lo envías o lo guardas.
+    «Enviar a papá» arma un resumen con ejemplos — nunca números.</p>
+    <div class="acciones">
+      <button type="button" class="boton" data-enviar>Enviar a papá</button>
+      <button type="button" class="boton boton-suave" data-guardar>Guardar registro</button>
+    </div>
+    <p class="suave" data-vacio>Todavía no has registrado ningún momento. Cada cápsula tiene su botón «Registrar este momento».</p>
+    <ul class="entradas" data-entradas></ul>
+    <div class="acciones no-imprimir" data-borrar-todo hidden>
+      <button type="button" class="boton boton-peligro" data-borrar>Borrar todos mis registros</button>
+    </div>
+  </section>
+
+  <section class="cuadricula" aria-label="Cuadrícula semanal para llenar a mano">
+    <h2>Mi semana, a mano</h2>
+    <p>Por si prefieres papel: una fila por momento. Marca lo que hiciste tú y lo que viste en él; una foto de esta hoja se la mandas a papá.</p>
+    <table>
+      <thead><tr><th>Día y momento</th><th>Cápsula</th><th>Lo que hice yo</th><th>Lo que vi en él (un ejemplo)</th><th>Cómo estuvo él</th></tr></thead>
+      <tbody>
+        <tr><td class="dia">Lunes</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Martes</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Miércoles</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Jueves</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Viernes</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Sábado</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+        <tr><td class="dia">Domingo</td><td></td><td>altura y de frente ☐ · seguí y esperé ☐ · pausa o imité ☐</td><td></td><td>a gusto ☐ · neutro ☐ · incómodo ☐</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>Hablemos San — el documento de contacto visual de la mamá. 3 cápsulas, generadas del contenido real el 2026-09-06.
+  Cada cápsula cita la investigación que la respalda (autor, año y revista). Esto es práctica en casa, con juego: acompaña, nunca reemplaza,
+  las terapias del niño. Nada de lo que anotes aquí sale de tu teléfono si tú no lo envías.</footer>
+</main>
+<div class="toast" role="status" aria-live="polite" hidden data-toast></div>
+
+<script>
+(function () {
+  "use strict";
+  var CLAVE = "registro-mirada-v1";
+  var VERSION = 1;
+  var ITEMS_A = ["alturaYDeFrente","seguiLoQueEligioYEspere","pausaOImitacionSinPedirNada"];
+  var ITEMS_B = ["miroDeMiAlJugueteYDeVuelta","meBuscoParaQueSiguiera","meMostroOSenaloAlgo","loHizoConOtraPersona"];
+  var NOMBRE_ITEM_A = {"alturaYDeFrente":"Me puse a su altura y de frente","seguiLoQueEligioYEspere":"Seguí lo que él eligió y esperé","pausaOImitacionSinPedirNada":"Hice la pausa o lo imité, sin pedirle nada"};
+  var NOMBRE_ITEM_B = {"miroDeMiAlJugueteYDeVuelta":"Miró de mí al juguete y de vuelta","meBuscoParaQueSiguiera":"Me buscó para que siguiera","meMostroOSenaloAlgo":"Me mostró o señaló algo","loHizoConOtraPersona":"Lo hizo con otra persona"};
+  var NOMBRE_A = {"lo-hice":"Lo hice","a-medias":"A medias","hoy-no":"Hoy no"};
+  var NOMBRE_C = {"a-gusto":"A gusto","neutro":"Neutro","incomodo":"Incómodo"};
+  var TITULOS = {};
+  document.querySelectorAll("[data-capsula-id]").forEach(function (el) { TITULOS[el.dataset.capsulaId] = el.dataset.titulo; });
+
+  // ── storage, siempre en try/catch: el documento debe funcionar aunque el navegador no guarde ──
+  function leer() {
+    try { var v = localStorage.getItem(CLAVE); var j = v ? JSON.parse(v) : null; return (j && Array.isArray(j.entradas)) ? j.entradas : []; }
+    catch (e) { return []; }
+  }
+  function escribir(entradas) {
+    try { localStorage.setItem(CLAVE, JSON.stringify({ version: VERSION, entradas: entradas })); return true; }
+    catch (e) { return false; }
+  }
+  var toastEl = document.querySelector("[data-toast]"), toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toastEl.hidden = true; }, 2600);
+  }
+  function dos(n) { return (n < 10 ? "0" : "") + n; }
+  function fechaLocal(d) { return d.getFullYear() + "-" + dos(d.getMonth() + 1) + "-" + dos(d.getDate()); }
+  function horaLocal(d) { return dos(d.getHours()) + ":" + dos(d.getMinutes()); }
+  function idNuevo() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return "e" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+  }
+
+  // ── abrir / cerrar el formulario de cada cápsula ──
+  document.querySelectorAll("[data-abrir-registro]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var form = document.querySelector('[data-registro][data-capsula="' + b.dataset.abrirRegistro + '"]');
+      form.hidden = !form.hidden; b.hidden = !form.hidden;
+      if (!form.hidden) { var primero = form.querySelector("input"); if (primero) primero.focus(); }
+    });
+  });
+  document.querySelectorAll("[data-registro]").forEach(function (form) {
+    var id = form.dataset.capsula;
+    var boton = document.querySelector('[data-abrir-registro="' + id + '"]');
+    var error = form.querySelector(".registro-error");
+    function cerrar() { form.reset(); form.hidden = true; boton.hidden = false; error.hidden = true; }
+    form.querySelector("[data-cancelar]").addEventListener("click", cerrar);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var a = {}, faltan = false;
+      ITEMS_A.forEach(function (item) {
+        var r = form.querySelector('input[name="a-' + item + "-" + id + '"]:checked');
+        if (!r) faltan = true; else a[item] = r.value;
+      });
+      var c = form.querySelector('input[name="c-' + id + '"]:checked');
+      if (!c) faltan = true;
+      if (faltan) { error.hidden = false; return; }
+      var b = {};
+      ITEMS_B.forEach(function (item) { b[item] = !!form.querySelector('input[name="b-' + item + "-" + id + '"]').checked; });
+      b.ejemplo = (form.querySelector('input[name="ejemplo-' + id + '"]').value || "").trim().slice(0, 200);
+      var ahora = new Date();
+      var entrada = { id: idNuevo(), fecha: fechaLocal(ahora), hora: horaLocal(ahora), capsulaId: id, a: a, b: b,
+        c: { comoEstuvo: c.value, paramos: !!form.querySelector('input[name="paramos-' + id + '"]').checked } };
+      var entradas = leer(); entradas.push(entrada);
+      if (escribir(entradas)) { toast("Guardado en este teléfono"); } else { toast("Este navegador no deja guardar. Anótalo en la hoja de la semana."); }
+      cerrar(); pintarPanel();
+    });
+  });
+
+  // ── el panel «Mis registros» ──
+  var lista = document.querySelector("[data-entradas]"), vacio = document.querySelector("[data-vacio]");
+  var borrarTodo = document.querySelector("[data-borrar-todo]");
+  var DIAS = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+  var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  function cuando(e) {
+    var p = e.fecha.split("-"); var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return DIAS[d.getDay()] + " " + (+p[2]) + " " + MESES[d.getMonth()] + " · " + e.hora;
+  }
+  function frasesA(e) {
+    return ITEMS_A.map(function (item) { return NOMBRE_ITEM_A[item].toLowerCase() + ": " + NOMBRE_A[e.a[item]].toLowerCase(); }).join(" · ");
+  }
+  function frasesB(e) {
+    var vistas = ITEMS_B.filter(function (item) { return e.b[item]; }).map(function (item) { return NOMBRE_ITEM_B[item].toLowerCase(); });
+    return vistas.length ? vistas.join(" · ") : "nada de lo de la lista, y está bien";
+  }
+  function fraseC(e) { return NOMBRE_C[e.c.comoEstuvo].toLowerCase() + (e.c.paramos ? " — paramos" : ""); }
+  function pintarPanel() {
+    var entradas = leer().slice().sort(function (x, y) { return (y.fecha + y.hora).localeCompare(x.fecha + x.hora); });
+    lista.innerHTML = "";
+    vacio.hidden = entradas.length > 0; borrarTodo.hidden = entradas.length === 0;
+    entradas.forEach(function (e) {
+      var li = document.createElement("li");
+      var h = document.createElement("p"); h.className = "cuando"; h.textContent = cuando(e) + " · " + (TITULOS[e.capsulaId] || e.capsulaId);
+      var p1 = document.createElement("p"); p1.textContent = "Yo: " + frasesA(e) + ".";
+      var p2 = document.createElement("p"); p2.textContent = "Vi: " + frasesB(e) + (e.b.ejemplo ? ". «" + e.b.ejemplo + "»" : ".");
+      var p3 = document.createElement("p"); p3.textContent = "Él: " + fraseC(e) + ".";
+      var q = document.createElement("button"); q.type = "button"; q.className = "quitar"; q.textContent = "Quitar este registro";
+      q.addEventListener("click", function () {
+        if (q.dataset.seguro !== "1") { q.dataset.seguro = "1"; q.textContent = "¿Seguro? Toca otra vez"; setTimeout(function () { q.dataset.seguro = ""; q.textContent = "Quitar este registro"; }, 3000); return; }
+        escribir(leer().filter(function (x) { return x.id !== e.id; })); pintarPanel(); toast("Registro quitado");
+      });
+      li.appendChild(h); li.appendChild(p1); li.appendChild(p2); li.appendChild(p3); li.appendChild(q);
+      lista.appendChild(li);
+    });
+  }
+  pintarPanel();
+
+  // ── «Enviar a papá»: ejemplos, no números. Web Share; si no hay, al portapapeles ──
+  function textoResumen() {
+    var todas = leer().slice().sort(function (x, y) { return (x.fecha + x.hora).localeCompare(y.fecha + y.hora); });
+    if (!todas.length) return "";
+    var hace7 = new Date(); hace7.setDate(hace7.getDate() - 7);
+    var corte = fechaLocal(hace7);
+    var recientes = todas.filter(function (e) { return e.fecha >= corte; });
+    if (!recientes.length) recientes = todas.slice(-7);
+    var lineas = ["Mirarse jugando — lo que hicimos esta semana", ""];
+    recientes.forEach(function (e) {
+      lineas.push("• " + cuando(e) + " — " + (TITULOS[e.capsulaId] || e.capsulaId));
+      lineas.push("  Yo: " + frasesA(e) + ".");
+      lineas.push("  Vi: " + frasesB(e) + (e.b.ejemplo ? ". «" + e.b.ejemplo + "»" : "."));
+      lineas.push("  Él: " + fraseC(e) + ".");
+      lineas.push("");
+    });
+    lineas.push("(Anotado en el documento de la mamá. Sin números a propósito: son ejemplos.)");
+    return lineas.join("\n");
+  }
+  document.querySelector("[data-enviar]").addEventListener("click", function () {
+    var texto = textoResumen();
+    if (!texto) { toast("Todavía no hay nada que enviar"); return; }
+    if (navigator.share) {
+      navigator.share({ title: "Mirarse jugando — esta semana", text: texto }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(function () { toast("Copiado: pégalo en WhatsApp"); }, function () { toast("No se pudo copiar"); });
+    } else { toast("Este navegador no deja compartir ni copiar"); }
+  });
+
+  // ── «Guardar registro»: el JSON versionado que el papá lee en noviembre ──
+  document.querySelector("[data-guardar]").addEventListener("click", function () {
+    var entradas = leer();
+    if (!entradas.length) { toast("Todavía no hay nada que guardar"); return; }
+    var archivo = JSON.stringify({ version: VERSION, generado: new Date().toISOString(), entradas: entradas }, null, 2);
+    var blob = new Blob([archivo], { type: "application/json" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "registro-mirada-" + fechaLocal(new Date()) + ".json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    toast("Archivo guardado en el teléfono");
+  });
+
+  // ── borrar todo, con segundo toque ──
+  var bBorrar = document.querySelector("[data-borrar]");
+  bBorrar.addEventListener("click", function () {
+    if (bBorrar.dataset.seguro !== "1") { bBorrar.dataset.seguro = "1"; bBorrar.textContent = "¿Seguro? Toca otra vez para borrar todo"; setTimeout(function () { bBorrar.dataset.seguro = ""; bBorrar.textContent = "Borrar todos mis registros"; }, 4000); return; }
+    escribir([]); bBorrar.dataset.seguro = ""; bBorrar.textContent = "Borrar todos mis registros"; pintarPanel(); toast("Registros borrados");
+  });
+
+  // ── modo revisión (?revision): casillas «Revisada» para el papá, guardadas aparte ──
+  if (/[?&]revision/.test(location.search)) {
+    document.body.classList.add("revision");
+    var CLAVE_REV = "catalogo-mirada-revision:"; var cajas = document.querySelectorAll("[data-revision]"); var contador = document.getElementById("revisadas");
+    function pintarRev() { var n = 0; cajas.forEach(function (c) { if (c.checked) n++; c.closest(".capsula").classList.toggle("lista", c.checked); }); contador.textContent = n; }
+    cajas.forEach(function (c) {
+      try { c.checked = localStorage.getItem(CLAVE_REV + c.dataset.revision) === "1"; } catch (e) {}
+      c.addEventListener("change", function () { try { if (c.checked) localStorage.setItem(CLAVE_REV + c.dataset.revision, "1"); else localStorage.removeItem(CLAVE_REV + c.dataset.revision); } catch (e) {} pintarRev(); });
+    });
+    pintarRev();
+  }
+})();
+</script>
+</body>
+</html>
