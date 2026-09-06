@@ -12,7 +12,8 @@ import type { CapsulaContactoVisual } from "./schema";
  *
  * Reglas que atraviesan todas: parten de lo que YA le saca la mirada · nadie le pide que mire ·
  * lo que sigue a la mirada es que el juego sigue · persona nueva O juego nuevo, nunca ambos ·
- * el nombre no se «gasta» · el semáforo (aparta la vista, se tapa la cara, se irrita → parar).
+ * el nombre no se «gasta» · el semáforo (aparta la vista, se tapa la cara, se irrita → parar) ·
+ * la «otra persona» es EL HERMANO: papá no está hasta noviembre (corrección del usuario, G-Contenido).
  *
  * (Solo `import type` desde ./schema, como en capsulas.ts: el generador corre con Node
  * quitando tipos y un import de valor sin extensión no resuelve ahí.)
@@ -83,24 +84,24 @@ export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
     fuente: "Ingersoll, 2010 · Contaldo, 2016, Front Psychol",
   },
   {
-    id: "papa-lo-copia",
+    id: "el-hermano-lo-copia",
     dominio: "contacto-visual",
     tecnica: "hago-lo-que-el-hace",
     nivel: "n5",
-    titulo: "Papá lo copia: la entrada más suave",
+    titulo: "El hermano lo copia: la entrada más suave",
     explicacion:
-      "Con una persona nueva, copiarlo es la manera de entrar sin pedirle nada: la persona se vuelve visible para él por ser igual, no por hablarle. Papá, la abuela o el hermano hacen exactamente lo que tú hiciste al principio: dos juguetes iguales y copiar todo, callados, a su altura. Tú te quedas cerca, sin intervenir.",
-    guion: "Para papá: «Copia todo lo que haga, sin hablarle. Cuando te mire, sonríe y sigue.»",
+      "Con otra persona, copiarlo es la manera de entrar sin pedirle nada: esa persona se vuelve visible para él por ser igual, no por hablarle. Aquí la otra persona es su hermano. Le explicas el juego en una frase —«haz todo lo que él haga, calladito»— y lo dejas hacer, con el segundo juguete y a la altura del niño. Tú te quedas cerca, sin intervenir.",
+    guion: "Al hermano: «Haz todo lo que él haga, sin hablarle. Cuando te mire, sonríe y sigue.»",
     actividad: {
       texto:
-        "Elige una persona que lo conozca bien y un momento en que él ya esté tranquilo. Esa persona se sienta a su altura con el segundo juguete y lo copia tres a cinco minutos, tal como tú: acciones, sonidos, movimientos. Si él te busca a ti, sonríes desde donde estás y no te metes. Si se va, se acabó; se intenta otro día.",
+        "Un momento en que los dos estén tranquilos. El hermano se sienta frente a él con el segundo juguete y lo copia tres a cinco minutos, tal como tú: acciones, sonidos, movimientos. Si le da risa, mejor: la risa también se copia. Si el niño te busca a ti, sonríes desde donde estás y no te metes. Si se va, se acabó; se intenta otro día.",
       duracion: "3–5 min",
       momentos: ["juego"],
       conPantalla: false,
     },
     conQuien: "otra-persona",
     queNoHacer:
-      "No estrenes juguetes nuevos con la persona nueva: los mismos dos de siempre. Y la persona no le habla ni le pregunta nada al principio: solo copia.",
+      "No estrenen juguetes nuevos ese día: los mismos dos de siempre. Y el hermano no le habla ni le pide nada al principio: solo copia. Si el hermano se cansa, se acabó, sin regaño.",
     fuente: "Sanefuji, 2013, Infant Ment Health J · Stokes, 1977, J Appl Behav Anal",
   },
 
@@ -255,24 +256,24 @@ export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
     fuente: "Kasari, 2010 · Whalen, 2003, J Child Psychol Psychiatry",
   },
   {
-    id: "los-mismos-turnos-con-papa",
+    id: "los-mismos-turnos-con-el-hermano",
     dominio: "contacto-visual",
     tecnica: "un-turno-tu-un-turno-yo",
     nivel: "n5",
-    titulo: "Los mismos turnos, ahora con papá",
+    titulo: "Los mismos turnos, ahora con el hermano",
     explicacion:
-      "En los estudios, el juego por turnos que se aprendió con una persona pasó a la mamá solo cuando se hizo a propósito: la misma rutina, con el mismo juguete y las mismas palabras. Eso es lo que hace papá aquí: el «¡alto!… ¡ya!» calcado, con el carro de siempre. Tú lo haces primero una ronda para que él vea, y luego te haces a un lado.",
-    guion: "Para papá: «El carro se para en tu mano: ‘¡alto!’, un segundo, ‘¡ya!’. Cuando te mire, sueltas.»",
+      "En los estudios, el juego por turnos que se aprendió con una persona pasó a otra solo cuando se hizo a propósito: la misma rutina, con el mismo juguete y las mismas palabras. Eso es lo que hace el hermano aquí: el «¡alto!… ¡ya!» calcado, con el carro de siempre. Tú lo haces primero una ronda para que los dos vean, y luego te haces a un lado.",
+    guion: "Al hermano: «El carro se para en tu mano: ‘¡alto!’, un segundo, ‘¡ya!’. Cuando te mire, sueltas.»",
     actividad: {
       texto:
-        "Un momento tranquilo, el juguete de los turnos. Tú haces dos rondas con él, papá al lado mirando. Luego papá toma tu lugar y hace exactamente lo mismo, con tus palabras y tu segundo de pausa; tú te quedas cerca pero fuera. Tres minutos. Si él te busca a ti en el «alto», papá suelta igual y sigue: no pasa nada.",
+        "Un momento tranquilo, el juguete de los turnos. Tú haces dos rondas con el niño, el hermano al lado mirando. Luego el hermano toma tu lugar y hace exactamente lo mismo, con tus palabras y tu segundo de pausa; tú te quedas cerca pero fuera. Tres minutos. Si el niño te busca a ti en el «alto», el hermano suelta igual y sigue: no pasa nada.",
       duracion: "3 min",
       momentos: ["juego"],
       conPantalla: false,
     },
     conQuien: "otra-persona",
     queNoHacer:
-      "Papá no estrena juguete ni juego nuevo: es el mismo de siempre. Y no lo hacen los dos a la vez sobre el mismo carro: uno juega, la otra mira.",
+      "El hermano no estrena juguete ni juego nuevo: el mismo de siempre. No juegan los dos sobre el mismo carro a la vez: uno juega, la otra mira. Si sostiene el carro de más, se lo recuerdas: un segundo.",
     fuente: "Kasari, 2006, J Child Psychol Psychiatry · Kasari, 2015, J Consult Clin Psychol",
   },
 
@@ -450,66 +451,66 @@ export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
 
   // ── La misma rutina con otra persona ────────────────────────────────────────────────────
   {
-    id: "papa-al-lado-un-turno-cada-uno",
+    id: "el-hermano-al-lado-un-turno-cada-uno",
     dominio: "contacto-visual",
     tecnica: "misma-rutina-otra-persona",
     nivel: "n3",
-    titulo: "Papá al lado: un turno tú, un turno papá",
+    titulo: "El hermano al lado: un turno tú, un turno él",
     explicacion:
-      "Antes de que otra persona haga la rutina sola, hay un paso intermedio: los dos juntos. Tú haces una ronda del juego de siempre; papá, la siguiente, con tus mismas palabras; tú otra vez. Él ve el mismo juego salir de dos caras, y su mirada empieza a ir también hacia la otra. En los estudios, lo que se aprendió con una persona no pasó solo a otra: hubo que hacerlo así, a propósito.",
-    guion: "«Ahora mamá… ¡cosquillas!… Ahora papá… ¡cosquillas!»",
+      "Antes de que otra persona haga la rutina sola, hay un paso intermedio: los dos juntos. Tú haces una ronda del juego de siempre; el hermano, la siguiente, con tus mismas palabras; tú otra vez. El niño ve el mismo juego salir de dos caras, y su mirada empieza a ir también hacia la otra. En los estudios, lo que se aprendió con una persona no pasó solo a otra: hubo que hacerlo así, a propósito.",
+    guion: "«Ahora mamá… ¡cosquillas!… Ahora tu hermano… ¡cosquillas!»",
     actividad: {
       texto:
-        "El juego que mejor le funciona contigo (cosquillas, «alto y ya», la canción). Papá se sienta a tu lado, a su altura. Tú haces una ronda completa con su pausa; papá hace la siguiente, calcada; tú otra. Cuatro o cinco rondas. Si él solo te mira a ti, no pasa nada: papá sigue haciendo su ronda igual.",
+        "El juego que mejor le funciona contigo (cosquillas, «alto y ya», la canción). El hermano se sienta a tu lado, a la altura del niño. Tú haces una ronda completa con su pausa; el hermano hace la siguiente, calcada; tú otra. Cuatro o cinco rondas. Si el niño solo te mira a ti, no pasa nada: el hermano sigue haciendo su ronda igual.",
       duracion: "3–5 min",
       momentos: ["juego"],
       conPantalla: false,
     },
     conQuien: "otra-persona",
     queNoHacer:
-      "No cambien el juego ni las palabras entre uno y otro: la gracia es que sea exactamente el mismo. Y no le pidan que mire a papá.",
+      "No cambien el juego ni las palabras entre uno y otro: la gracia es que sea exactamente el mismo. Y nadie le pide al niño que mire al hermano.",
     fuente: "Stokes, 1977, J Appl Behav Anal · Whalen, 2003, J Child Psychol Psychiatry",
   },
   {
-    id: "le-lleva-el-juego-a-papa",
+    id: "le-lleva-el-juego-al-hermano",
     dominio: "contacto-visual",
     tecnica: "misma-rutina-otra-persona",
     nivel: "n4",
-    titulo: "Le lleva el juego a papá: arrancó él con otra persona",
+    titulo: "Le lleva el juego al hermano: arrancó él con otra persona",
     explicacion:
-      "Cuando papá ya hace la rutina y él la acepta, queda el paso que de verdad muestra que la mirada es suya: que sea él quien la arranque con papá. Le trae las manos, le pone el carro en la mano, se le planta enfrente con cara de «¿y?». En los estudios, lo que el niño empieza solo con otra persona es lo que dura después de que la práctica termina; y no llega solo: hay que dejarle el hueco.",
-    guion: "Para papá: «Si te trae las manos o el carro, ahí mismo arrancas, sin preguntarle nada.»",
+      "Cuando el hermano ya hace la rutina y el niño la acepta, queda el paso que de verdad muestra que la mirada es suya: que sea él quien la arranque con el hermano. Le trae las manos, le pone el carro en la mano, se le planta enfrente con cara de «¿y?». En los estudios, lo que el niño empieza solo con otra persona es lo que dura después de que la práctica termina; y no llega solo: hay que dejarle el hueco.",
+    guion: "Al hermano: «Si te trae las manos o el carro, ahí mismo arrancas, sin preguntarle nada.»",
     actividad: {
       texto:
-        "Papá cerca, sin proponer nada, en un rato en que él ya jugó esa rutina contigo hoy. Si él le lleva las manos, el juguete, o se le planta enfrente, papá responde al instante con la rutina completa y su pausa de siempre. Si no pasa, papá hace una ronda normal y lo deja ahí: mañana otra vez. Tú miras desde lejos.",
+        "El hermano cerca, sin proponer nada, en un rato en que el niño ya jugó esa rutina contigo hoy. Si el niño le lleva las manos, el juguete, o se le planta enfrente, el hermano responde al instante con la rutina completa y su pausa de siempre. Si no pasa, el hermano hace una ronda normal y lo deja ahí: mañana otra vez. Tú miras desde lejos.",
       duracion: "3–5 min",
       momentos: ["juego", "transiciones"],
       conPantalla: false,
     },
     conQuien: "otra-persona",
     queNoHacer:
-      "Papá no le pregunta «¿quieres jugar?» ni lo persigue con el juego: el hueco es de él. Y no lo mandes tú («ve donde papá»): si lo mandas, no arrancó él.",
+      "El hermano no le pregunta «¿quieres jugar?» ni lo persigue con el juego: el hueco es del niño. Y no lo mandes tú («ve donde tu hermano»): si lo mandas, no arrancó él.",
     fuente: "Stokes, 1977, J Appl Behav Anal · Kasari, 2006, J Child Psychol Psychiatry",
   },
   {
-    id: "las-mismas-cosquillas-con-papa",
+    id: "las-mismas-cosquillas-con-el-hermano",
     dominio: "contacto-visual",
     tecnica: "misma-rutina-otra-persona",
     nivel: "n5",
-    titulo: "Las mismas cosquillas, ahora con papá",
+    titulo: "Las mismas cosquillas, ahora con el hermano",
     explicacion:
-      "Lo que ya funciona contigo no pasa solo a otras personas: hay que llevarlo. La regla de oro es cambiar UNA sola cosa a la vez: la persona nueva hace exactamente el mismo juego, con las mismas palabras y la misma pausa que tú. Persona nueva o juego nuevo, nunca los dos juntos. Y sirve con papá, con la abuela, con el hermano, y después con alguien que conozca menos.",
-    guion: "Para papá: «Igualito que yo: dos rondas, y en la tercera te detienes antes de lo mejor».",
+      "Lo que ya funciona contigo no pasa solo a otras personas: hay que llevarlo. La regla de oro es cambiar UNA sola cosa a la vez: la persona nueva hace exactamente el mismo juego, con las mismas palabras y la misma pausa que tú. Persona nueva o juego nuevo, nunca los dos juntos. Empieza por el hermano; después, quien viva o venga a la casa; y cuando papá vuelva, papá.",
+    guion: "Al hermano: «Igualito que yo: dos rondas, y en la tercera te detienes antes de lo mejor».",
     actividad: {
       texto:
-        "Elige la rutina que mejor le funciona contigo. Hazla tú primero una vez, con papá al lado mirando. Luego papá la hace igual, con tus mismas palabras y tu misma pausa, mientras tú te quedas cerca. Si él busca tu cara en la pausa, no pasa nada: papá sigue. Cuando con papá ya salga la mayoría de las veces, la siguiente persona.",
+        "Elige la rutina que mejor le funciona contigo. Hazla tú primero una vez, con el hermano al lado mirando. Luego el hermano la hace igual, con tus mismas palabras y tu misma pausa, mientras tú te quedas cerca. Si el niño busca tu cara en la pausa, no pasa nada: el hermano sigue. Cuando con el hermano ya salga la mayoría de las veces, la siguiente persona.",
       duracion: "5 min",
       momentos: ["juego", "dormir"],
       conPantalla: false,
     },
     conQuien: "otra-persona",
     queNoHacer:
-      "No estrenes un juego nuevo con una persona nueva el mismo día: una sola cosa cambia a la vez.",
+      "No estrenes un juego nuevo con una persona nueva el mismo día: una sola cosa cambia a la vez. Si el hermano hace la pausa muy larga o muy corta, se la muestras tú otra vez, sin regañarlo.",
     fuente: "Stokes, 1977, J Appl Behav Anal · Kasari, 2015, J Consult Clin Psychol",
   },
   {

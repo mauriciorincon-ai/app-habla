@@ -207,7 +207,7 @@ export const DESCRIPCION_TECNICA_CONTACTO_VISUAL: Record<
   "canto-a-su-ritmo":
     "Cantas o tamborileas siguiendo su ritmo y sus sonidos, y luego paras. Canciones con gestos, una estrofa más cada semana.",
   "misma-rutina-otra-persona":
-    "Exactamente la misma rutina, con las mismas palabras y la misma pausa, ahora con papá, la abuela o el hermano — y en más momentos del día.",
+    "Exactamente la misma rutina, con las mismas palabras y la misma pausa, ahora con el hermano (o quien viva en la casa) — y en más momentos del día.",
 };
 
 /** Fuerza de la evidencia de cada técnica, a la vista (graduación de la investigación). */
@@ -263,11 +263,11 @@ export const DESCRIPCION_NIVEL_CONTACTO_VISUAL: Record<
   NivelContactoVisual,
   string
 > = {
-  n1: "Gira y te mira cuando lo imitas o le hablas; se acerca. Con mamá y papá esto ya pasa.",
+  n1: "Gira y te mira cuando lo imitas o le hablas; se acerca. Contigo esto ya pasa.",
   n2: "En la pausa del juego te mira, abre los brazos o la boca, o hace un sonido para que sigas. Con las cosquillas y algunas canciones ya asoma: aquí empieza.",
   n3: "Al pasar el turno, su mirada va del juguete a tu cara y vuelve al juguete; cada vez la sostiene un poquito más. Es el corazón de todo esto.",
   n4: "Trae las manos o el juguete, dice «otra», te muestra o señala algo para arrancar el juego él.",
-  n5: "Lo de los niveles 2 a 4, pero con papá, la abuela, el hermano — o alguien que conoce menos.",
+  n5: "Lo de los niveles 2 a 4, pero con el hermano, con quien viva en la casa — o con alguien que conoce menos.",
   n6: "Lo mismo, en el baño, en la mesa, en la calle, sin haberlo preparado.",
 };
 

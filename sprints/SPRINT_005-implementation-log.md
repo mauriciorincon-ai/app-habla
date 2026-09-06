@@ -150,12 +150,12 @@
 
   | Técnica | Peldaños | Actividades ancla |
   |---|---|---|
-  | Hago lo que él hace (fuerte) | N1 · N2 · N4 · N5 | dos juguetes iguales · él prueba si lo copias · te trae el otro juguete · papá lo copia |
+  | Hago lo que él hace (fuerte) | N1 · N2 · N4 · N5 | dos juguetes iguales · él prueba si lo copias · te trae el otro juguete · el hermano lo copia |
   | La pausa antes de lo mejor (moderada) | N1 · N2 · N3 · N4 | el avión cara a cara (rutina sin pausa) · cosquillas con pausa (y «corre que te atrapo») · el globo en la boca · cucú cuando se tapa él |
-  | Un turno tú, un turno yo (fuerte) | N2 · N3 · N4 · N5 | me meto en su juguete · «¡alto!… ¡ya!» con el carro · él me pasa el turno · los mismos turnos con papá |
+  | Un turno tú, un turno yo (fuerte) | N2 · N3 · N4 · N5 | me meto en su juguete · «¡alto!… ¡ya!» con el carro · él me pasa el turno · los mismos turnos con el hermano |
   | Espero en silencio (moderada) | N2 · N3 · N4 · N6 | burbujas y espero · el frasco que no abre (la espera se estira) · lo dejo a medias · una media puesta |
   | Canto a su ritmo (moderada) | N1 · N2 · N3 · N6 | sigo su ritmo · su canción con hueco · una estrofa más cada semana · la canción de siempre al vestirlo |
-  | La misma rutina con otra persona (moderada) | N3 · N4 · N5 · N6 | papá al lado, un turno cada uno · le lleva el juego a papá · las mismas cosquillas con papá · la loción después del baño |
+  | La misma rutina con otra persona (moderada) | N3 · N4 · N5 · N6 | el hermano al lado, un turno cada uno · le lleva el juego al hermano · las mismas cosquillas con el hermano · la loción después del baño |
 
   **Por qué 24 y no más:** es el techo que fija la investigación (§4: más de 24 «empieza a ser
   variaciones sin evidencia propia») y el schema lo hace cumplir. La 24.ª llegó en el G-Contenido
@@ -195,3 +195,13 @@
   a papá: arrancó él con otra persona»** (Stokes 1977 · Kasari 2006): las otras dos de papá las
   arranca papá; esta la arranca él, que es el objetivo literal del sprint. Biblioteca en 24 (el
   máximo del schema). Catálogo regenerado, gate verde, capturas leídas, guía ajustada (24).
+- 2026-09-06 · **F2.5 — Corrección del usuario en el G-Contenido: la «otra persona» es el
+  HERMANO, no papá.** Papá no está con el niño hasta noviembre; en la casa están la mamá y el
+  hermano (hijo de la mamá). Las cinco cápsulas donde papá hacía la rutina pasan al hermano,
+  guiado por la mamá en una frase (ids nuevos: `el-hermano-lo-copia`,
+  `los-mismos-turnos-con-el-hermano`, `el-hermano-al-lado-un-turno-cada-uno`,
+  `le-lleva-el-juego-al-hermano`, `las-mismas-cosquillas-con-el-hermano`); la descripción de la
+  técnica 6 y del nivel 5 en el schema, y la portada del catálogo, dicen «el hermano, quien viva
+  en la casa»; el nivel 1 dice «contigo esto ya pasa». **«Enviar a papá» se queda**: es el resumen
+  que la mamá le manda a él. Dos «qué no hacer» quedaron por encima de 200 caracteres y el unit lo
+  cazó (rojo real): se acortaron. Regenerado, 303 unit, 14/14 e2e, gate verde, captura leída.

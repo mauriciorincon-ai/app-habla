@@ -281,8 +281,8 @@ ${PALETA_CSS}
     <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
     <h1>Mirarse jugando</h1>
     <p>Él <strong>ya mira</strong>: cuando algo le interesa, y a las personas en quienes confía. Lo que sigue no es enseñarle a mirar.
-    Es <strong>estirar</strong> lo que ya hace — que la mirada aguante dentro de un turno de juego, y que pase también con papá, con la
-    abuela, en el baño, en la mesa. Todo lo de aquí sale de lo que ya le saca la mirada: las cosquillas, algunas canciones, el juego físico, y tú.</p>
+    Es <strong>estirar</strong> lo que ya hace — que la mirada aguante dentro de un turno de juego, y que pase también con su hermano, con
+    quien viva en la casa, en el baño, en la mesa. Todo lo de aquí sale de lo que ya le saca la mirada: las cosquillas, algunas canciones, el juego físico, y tú.</p>
     ${avisoPrueba}
     <div class="aviso encuadre">
       <p><strong>Esto no es una prueba.</strong> Ni para él ni para ti. No hay forma correcta o incorrecta de jugar, no hay totales
@@ -306,7 +306,7 @@ ${PALETA_CSS}
   </ol>
 
   <h2>La escalera: por dónde va y por dónde sigue</h2>
-  <p>Seis peldaños, descritos por lo que tú ves. <strong>Con mamá y papá ya está en el 1</strong>, y con las cosquillas y algunas canciones ya
+  <p>Seis peldaños, descritos por lo que tú ves. <strong>Contigo ya está en el 1</strong>, y con las cosquillas y algunas canciones ya
   asoma el 2. Se sube un peldaño cuando el anterior pasa <em>la mayoría de las veces</em> contigo — sin fecha. Dos atajos: si un juguete lo
   absorbe, entra por el 3 (turnos con ese juguete); si hay poco interés, por el 2 (juego físico o canción).</p>
   <ol class="escalera">${escaleraHtml}
