@@ -9,9 +9,11 @@
 
 ## Estado por fase
 
-- [ ] F0 — Estructura (branch · delta del kit `audita-sprint` · dominio en el schema · generador
+- [x] F0 — Estructura (branch · delta del kit `audita-sprint` · dominio en el schema · generador
       del catálogo · ruta propia · registro A/B/C · gate de sensibilidad por hashes con rojo en el
-      mismo commit · guía · manual) → **STOP: prueba del registro en el teléfono real del usuario**
+      mismo commit · guía · manual) — 300 unit · 183 e2e · build · PR #13
+- [ ] **STOP F0 → prueba del registro en el teléfono real del usuario** (bloque P de la guía sobre
+      la preview del PR) + decisión sobre las citas cuya revista describe a quién se estudió
 - [ ] F2 — Contenido (cápsulas como progresión · catálogo real · gate en verde · `/audita-sprint`
       · **G-Contenido**)
 - [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
@@ -119,3 +121,10 @@
   ambos van entre marcadores `s5:inicio`/`s5:fin` para que el gate de sensibilidad las vigile sin
   tocar el texto previo. El brochure y su export **no se tocan**: el documento no es una feature del
   producto (se declara, criterio de la orden).
+- 2026-09-06 · **F0 CERRADA.** Verificación: `pnpm test` 300 (261 + 39 nuevos) · `pnpm test:e2e`
+  **183** (169 + 14 de `/mirada`) · build · typecheck · lint · cero enlaces vacío · gate de
+  sensibilidad verde (y la historia de la rama, verificada commit a commit con el mismo gate).
+  PR #13 abierto con la fase 0. **Se detiene aquí** (contrato de fases): el ⭐ acotado es el
+  registro en el teléfono real del usuario, sobre la preview del PR (bloque P de la guía), y
+  queda una decisión suya: la cita pública cuando la revista describe a quién se estudió
+  («Autor, año», provisional). Fase 2 solo tras su «continúa».
