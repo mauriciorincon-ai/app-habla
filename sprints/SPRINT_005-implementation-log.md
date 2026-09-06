@@ -23,7 +23,8 @@
 - [x] `/audita-sprint` Fase 2 — «ejecuta» del usuario: M1 · B2 · B3 · B5 pagados; B1 · B4
       quedan como deuda declarada (van al summary)
 - [x] Cierre: `/deploy-check` MERGE OK · ADR 015 · `SPRINT_005-summary.md` EN el PR
-- [ ] Merge a orden del usuario → homepage de GitHub re-verificado tras el deploy → `/cierre-sprint`
+- [x] **Mergeado por el usuario** (PR #13, 2026-09-06) → producción sirve `/mirada` → homepage de GitHub re-llenado por Vercel a los 30 s y limpiado
+- [ ] **Remate del mismo día** (PR aparte, a pedido del usuario): «Enviar a papá» solo lo nuevo · las 50 de habla en el documento · «Qué hacer con lo que le llega» — merge a su orden → `/cierre-sprint`
 
 ## Los tres outcomes (del plan del sprint)
 
@@ -229,3 +230,27 @@
   desplazado con nombre, lo pendiente visible, la decisión del registro, 24 cápsulas y por qué,
   la auditoría registrada, desviaciones, deuda). Gate de sensibilidad y cero enlaces verdes sobre
   el árbol completo. **Merge solo a orden del usuario**; tras el deploy, re-verificar el homepage.
+- 2026-09-06 · **Mergeado y en producción.** El usuario mergeó el PR #13 (CI verde en todo).
+  Producción sirve las 24 cápsulas en `/mirada` a los 30 s del deploy. El homepage de GitHub
+  volvió a llenarse a los 30 s (tercera vez confirmada) y se limpió. Rama local borrada.
+- 2026-09-06 · **Remate del mismo día — dos pedidos del usuario tras ver el documento en
+  producción.** (1) *«¿Puede enviar parciales, de a 2 o de a 5?»* → **«Enviar a papá» manda solo
+  lo nuevo desde la última vez**: los ids enviados se guardan aparte (`registro-mirada-v1:enviados`,
+  el contrato del archivo no cambia); el envío se marca solo cuando el compartir del teléfono se
+  completa (cancelar no marca; si falla por otra cosa cae al portapapeles y marca — **paga B1** de la
+  auditoría); cada registro enviado lleva la marquita «enviado» en el panel; sin nada nuevo, lo dice
+  y ofrece **«Enviar otra vez esta semana»** (los últimos 7 días, enviados o no, por si un mensaje se
+  perdió); borrar todo también limpia lo enviado. E2e: solo lo nuevo → repetir → cancelar no marca →
+  fallo cae al portapapeles. (2) *«No veo las 50 que teníamos; todas deben ir allí»* → **las 50
+  cápsulas de habla entran al mismo documento**, en su propia sección por etapa («Palabras sueltas»
+  con el chip «aquí está él»), con técnica, línea y actividad, chip «necesita la app» en las 5 que
+  usan el juego de voz, **sin la cita** (la bibliografía de habla nombra métodos e instrumentos que
+  el documento de la mamá no puede llevar; vive en el catálogo del papá), y con el mismo botón de
+  registro. **Gate:** la sección va entre `<!-- habla:inicio -->`/`<!-- habla:fin -->` y el alcance
+  del catálogo pasa a `excepto` esos marcadores (variante nueva de `Alcance`, con unit): esos textos
+  son previos al sprint, ya públicos en la app, y los cubre el informe (el gate cazó en ellos una
+  sílaba de balbuceo idéntica a una sigla de la lista — un falso positivo que no se toca). Manual:
+  la sección **«Qué hacer con lo que le llega (para el papá)»** con las tres lecturas (Él → Vi →
+  Yo) y lo que no se hace; guía: P4 mejorada, P8 y P9 nuevas (bloque P = 9). Un error real cazado
+  por el e2e antes del commit: un `\n` mal escapado en el script generado tumbaba todo el registro
+  («Invalid or unexpected token»); los 24 e2e lo demostraron en rojo y luego en verde.
