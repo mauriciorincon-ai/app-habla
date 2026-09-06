@@ -161,6 +161,19 @@ que la enmienda superó el registro de tres toques. **Deuda declarada:** B1 · B
 - El gate debe correr también sobre el árbol de cada commit antes del push: la historia pública
   cuenta tanto como el HEAD.
 
+## Remate del mismo día (PR aparte, tras el merge — pedidos del usuario al ver producción)
+
+- **«Enviar a papá» manda solo lo nuevo desde la última vez** (ids enviados aparte; el contrato
+  del archivo no cambia; cancelar no marca; fallo → portapapeles, lo que **paga B1**), marquita
+  «enviado» en el panel, y **«Enviar otra vez esta semana»** por si un mensaje se perdió.
+- **Las 50 cápsulas de habla entran al mismo documento**, por etapa y con el mismo registro, sin
+  la cita (métodos e instrumentos de la bibliografía de habla no van al documento de la mamá). El
+  gate del catálogo excluye esa sección por marcadores (`excepto`, variante nueva con unit): texto
+  previo al sprint, cubierto por el informe.
+- **Manual:** «Qué hacer con lo que le llega (para el papá)» — las tres lecturas. **Guía:** P4
+  mejorada, P8 y P9 nuevas.
+- Deuda que queda: **B4** (Node ≥ 22.18 en los scripts). B1 quedó pagada aquí.
+
 ## Lo que falta para cerrar (acciones del usuario)
 
 1. **«Mergea»** el PR #13 (CI verde). 2. Tras el deploy, se re-verifica y limpia el homepage de

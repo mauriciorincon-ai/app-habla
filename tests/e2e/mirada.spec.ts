@@ -105,6 +105,100 @@ test("«Enviar a papá» arma ejemplos, no números, y usa el compartir del tel�
   expect(compartido.text).not.toMatch(/\d+ (veces|de \d+)|%/);
 });
 
+function stubCompartir(page: Page, modo: "ok" | "cancela" | "falla") {
+  return page.addInitScript((modo) => {
+    const w = window as unknown as { __compartidos: { title: string; text: string }[] };
+    w.__compartidos = [];
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: (datos: { title: string; text: string }) => {
+        if (modo === "cancela") return Promise.reject(Object.assign(new Error("cancelado"), { name: "AbortError" }));
+        if (modo === "falla") return Promise.reject(Object.assign(new Error("no se pudo"), { name: "NotAllowedError" }));
+        w.__compartidos.push(datos);
+        return Promise.resolve();
+      },
+    });
+  }, modo);
+}
+const compartidos = (page: Page) =>
+  page.evaluate(() => (window as unknown as { __compartidos: { title: string; text: string }[] }).__compartidos);
+
+test("«Enviar a papá» manda solo lo nuevo desde la última vez; «otra vez esta semana» lo repite todo", async ({ page }) => {
+  await stubCompartir(page, "ok");
+  await page.goto("/mirada");
+  await registrarPrimerMomento(page, "primer momento");
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.getByRole("status")).toContainText("Enviado");
+  await expect(page.locator("[data-entradas] li").first()).toContainText("enviado");
+
+  // Nada nuevo → lo dice, sin mandar nada.
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.getByRole("status")).toContainText("Nada nuevo desde la última vez");
+  expect(await compartidos(page)).toHaveLength(1);
+
+  // Un segundo momento → el envío lleva solo ese.
+  await page.getByRole("button", { name: "Ahora no" }).count(); // el formulario ya está cerrado
+  await registrarPrimerMomento(page, "segundo momento");
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.getByRole("status")).toContainText("Enviado");
+  const envios = await compartidos(page);
+  expect(envios).toHaveLength(2);
+  expect(envios[1].title).toContain("lo nuevo desde la última vez");
+  expect(envios[1].text).toContain("«segundo momento»");
+  expect(envios[1].text).not.toContain("«primer momento»");
+
+  // «Enviar otra vez esta semana» repite los dos.
+  await page.getByRole("button", { name: "Enviar otra vez esta semana" }).click();
+  const todos = await compartidos(page);
+  expect(todos).toHaveLength(3);
+  expect(todos[2].text).toContain("«primer momento»");
+  expect(todos[2].text).toContain("«segundo momento»");
+});
+
+test("si la mamá cancela el compartir, nada queda marcado como enviado", async ({ page }) => {
+  await stubCompartir(page, "cancela");
+  await page.goto("/mirada");
+  await registrarPrimerMomento(page, "no lo mandé");
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.locator("[data-entradas] li").first()).not.toContainText("enviado");
+  // Sigue siendo «nuevo»: el próximo envío lo lleva.
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.getByRole("status")).not.toContainText("Nada nuevo");
+});
+
+test("si el compartir falla por otra cosa, cae al portapapeles y marca como enviado", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await stubCompartir(page, "falla");
+  await page.goto("/mirada");
+  await registrarPrimerMomento(page, "por el portapapeles");
+  await page.getByRole("button", { name: "Enviar a papá" }).click();
+  await expect(page.getByRole("status")).toContainText("Copiado: pégalo en WhatsApp");
+  await expect(page.locator("[data-entradas] li").first()).toContainText("enviado");
+});
+
+test("las 50 cápsulas de habla están en el documento, por etapa, y también se registran", async ({ page }) => {
+  await page.goto("/mirada");
+  await expect(page.getByRole("heading", { name: /El habla: las 50 cápsulas/ })).toBeVisible();
+  expect(await page.locator("article.capsula").count()).toBe(74);
+  for (const etapa of ["sonidos-e-intentos", "palabras-sueltas", "primeras-frases"]) {
+    await expect(page.locator(`#habla-${etapa}`)).toBeAttached();
+  }
+  await expect(page.locator("#habla-palabras-sueltas .chip-otra")).toHaveText("aquí está él");
+  // Las que usan el juego de voz lo dicen; ninguna cápsula de habla trae la cita (esa vive en el catálogo del papá).
+  expect(await page.locator("#habla-palabras-sueltas .chip-app").count()).toBeGreaterThan(0);
+  expect(await page.locator("#el-habla ~ section .fuente").count()).toBe(0);
+  // Registrar sobre una cápsula de habla usa el mismo formulario y el mismo registro.
+  const capsula = page.locator("#habla-palabras-sueltas article.capsula").first();
+  await capsula.getByRole("button", { name: "Registrar este momento" }).click();
+  const form = capsula.locator("form[data-registro]");
+  await form.getByRole("group", { name: "Me puse a su altura y de frente" }).getByText("Lo hice").click();
+  await form.getByRole("group", { name: "Seguí lo que él eligió y esperé" }).getByText("Lo hice").click();
+  await form.getByRole("group", { name: "Hice la pausa o lo imité, sin pedirle nada" }).getByText("A medias").click();
+  await form.getByText("Neutro", { exact: true }).click();
+  await form.getByRole("button", { name: "Guardar en este teléfono" }).click();
+  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
+});
+
 test("una entrada rota en el teléfono no tumba el panel: se ignora, y exportar sigue funcionando", async ({ page }) => {
   // Auditoría S5 (M1): antes, una entrada sin forma lanzaba al pintar el panel ANTES de conectar
   // «Guardar registro» y «Borrar» — y dejaba el registro entero muerto, sin vía de rescate.

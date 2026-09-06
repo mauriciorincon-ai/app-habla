@@ -39,6 +39,12 @@ describe("normalización (idéntica a la del generador de hashes)", () => {
     expect(recortar("a <!-- s5:inicio --> b <!-- s5:fin --> c", { archivo: "x", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] }).trim()).toBe("b");
     expect(recortar("a MARCA b", { archivo: "x", desde: "MARCA" })).toBe("MARCA b");
   });
+  it("recortar con «excepto» devuelve todo MENOS lo que está entre los marcadores", () => {
+    const alcance = { archivo: "x", excepto: ["<!-- h:i -->", "<!-- h:f -->"] as [string, string] };
+    expect(recortar("a <!-- h:i --> b <!-- h:f --> c", alcance).replace(/\s+/g, " ").trim()).toBe("a c");
+    expect(recortar("a <!-- h:i --> b", alcance).trim()).toBe("a");
+    expect(recortar("sin marcadores", alcance)).toBe("sin marcadores");
+  });
 });
 
 describe("gate: cero coincidencias en lo que el sprint publica", () => {
