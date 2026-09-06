@@ -131,6 +131,10 @@
 - 2026-09-06 · **CI roja por algo que no era del sprint — arreglada.** `pnpm audit` en el PR
   cazó una alta nueva en `browserslist` (≤4.28.6), transitiva por Sentry/Babel/webpack (7
   caminos), publicada después del último merge a `main`; el sprint no había tocado
-  `package.json` ni el lockfile. `pnpm update browserslist -r` → 4.28.7 dentro del rango (solo
-  cambia el lockfile). Verificado: audit limpio, 300 unit, build. Mismo patrón que la entrega del
-  export (`nanoid`): las advisories llegan solas entre merges.
+  `package.json` ni el lockfile. **Primer intento fallido y declarado:** `pnpm update browserslist -r`
+  movió solo la raíz de Babel (4.28.9) y dejó la de webpack en 4.28.5 — y el audit destapó además
+  cuatro altas nuevas en `fast-uri` (<3.1.6; el candado del S4 lo fijaba en ^3.1.5). **Arreglo
+  real:** candados en `pnpm-workspace.yaml`, el patrón del S4 — `browserslist@4` → ^4.28.7 y
+  `fast-uri@3` → ^3.1.6 (caret, nunca `>=`). Verificado: audit sin vulnerabilidades, 300 unit,
+  build. Mismo patrón que la entrega del export (`nanoid`): las advisories llegan solas entre
+  merges.
