@@ -144,3 +144,250 @@ export const BibliotecaSchema = z
         "Cada etapa necesita su mínimo de cápsulas: ningún día puede quedarse sin respuesta, sea cual sea la etapa activa.",
     },
   );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DOMINIO «CONTACTO VISUAL» (Sprint 005 — documento primero, app después).
+//
+// Un segundo dominio de cápsulas, para la mamá y sin pantallas. Las 50 cápsulas de habla de
+// arriba NO cambian: el dominio del habla se declara a nivel de biblioteca (BIBLIOTECAS) y las
+// cápsulas de contacto visual llevan `dominio` literal como discriminante. Todo lo que se lee
+// aquí es COMPORTAMIENTO OBSERVABLE — lo que una mamá ve en su casa — jamás una etiqueta.
+//
+// Las seis técnicas y los seis niveles son los valores aprobados en la investigación del
+// sprint (planeadora, G-Investigación 2026-09-06). Cada técnica lleva la fuerza de su evidencia
+// a la vista, y cada cápsula cita su fuente como autor · año · revista.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const DOMINIOS = ["habla", "contacto-visual"] as const;
+
+export type Dominio = (typeof DOMINIOS)[number];
+
+export const NOMBRE_DOMINIO: Record<Dominio, string> = {
+  habla: "Habla",
+  "contacto-visual": "Contacto visual",
+};
+
+/** Las seis técnicas con evidencia del dominio. El nombre es el que lee la mamá. */
+export const TECNICAS_CONTACTO_VISUAL = [
+  "hago-lo-que-el-hace",
+  "pausa-antes-de-lo-mejor",
+  "un-turno-tu-un-turno-yo",
+  "espero-en-silencio",
+  "canto-a-su-ritmo",
+  "misma-rutina-otra-persona",
+] as const;
+
+export type TecnicaContactoVisual = (typeof TECNICAS_CONTACTO_VISUAL)[number];
+
+export const NOMBRE_TECNICA_CONTACTO_VISUAL: Record<
+  TecnicaContactoVisual,
+  string
+> = {
+  "hago-lo-que-el-hace": "Hago lo que él hace",
+  "pausa-antes-de-lo-mejor": "La pausa antes de lo mejor",
+  "un-turno-tu-un-turno-yo": "Un turno tú, un turno yo",
+  "espero-en-silencio": "Espero en silencio",
+  "canto-a-su-ritmo": "Canto a su ritmo",
+  "misma-rutina-otra-persona": "La misma rutina con otra persona",
+};
+
+/** Qué es cada técnica, en una frase que se entiende sin leer nada más. */
+export const DESCRIPCION_TECNICA_CONTACTO_VISUAL: Record<
+  TecnicaContactoVisual,
+  string
+> = {
+  "hago-lo-que-el-hace":
+    "Copias en el momento lo que él hace con un juguete igual al suyo, sus movimientos y sus sonidos. Sin pedirle nada.",
+  "pausa-antes-de-lo-mejor":
+    "Un juego cara a cara que se repite —cosquillas, avión, cucú, una canción— y se detiene justo antes de lo mejor. Ese hueco lo llena él.",
+  "un-turno-tu-un-turno-yo":
+    "Un juego corto alrededor de lo que él eligió, en turnos cortos y parejos. Aquí nace la mirada que va del juguete a tu cara y vuelve.",
+  "espero-en-silencio":
+    "Con el juguete o la continuación a la vista, esperas con cara de «¿y ahora?» antes de ayudar o repetir. La espera se alarga de a poquito.",
+  "canto-a-su-ritmo":
+    "Cantas o tamborileas siguiendo su ritmo y sus sonidos, y luego paras. Canciones con gestos, una estrofa más cada semana.",
+  "misma-rutina-otra-persona":
+    "Exactamente la misma rutina, con las mismas palabras y la misma pausa, ahora con papá, la abuela o el hermano — y en más momentos del día.",
+};
+
+/** Fuerza de la evidencia de cada técnica, a la vista (graduación de la investigación). */
+export const FUERZAS_EVIDENCIA = ["fuerte", "moderada"] as const;
+
+export type FuerzaEvidencia = (typeof FUERZAS_EVIDENCIA)[number];
+
+export const NOMBRE_FUERZA: Record<FuerzaEvidencia, string> = {
+  fuerte: "Evidencia fuerte",
+  moderada: "Evidencia moderada",
+};
+
+export const FUERZA_TECNICA_CONTACTO_VISUAL: Record<
+  TecnicaContactoVisual,
+  FuerzaEvidencia
+> = {
+  "hago-lo-que-el-hace": "fuerte",
+  "pausa-antes-de-lo-mejor": "moderada",
+  "un-turno-tu-un-turno-yo": "fuerte",
+  "espero-en-silencio": "moderada",
+  "canto-a-su-ritmo": "moderada",
+  "misma-rutina-otra-persona": "moderada",
+};
+
+/**
+ * La progresión: seis niveles descritos por lo que la mamá VE. No tienen plazo. Se avanza
+ * cuando el nivel anterior pasa la mayoría de las veces con ella; con un juguete que lo absorbe
+ * se entra por el nivel 3 (turnos con ese juguete), con poco interés por el 2 (juego físico o
+ * canción).
+ */
+export const NIVELES_CONTACTO_VISUAL = [
+  "n1",
+  "n2",
+  "n3",
+  "n4",
+  "n5",
+  "n6",
+] as const;
+
+export type NivelContactoVisual = (typeof NIVELES_CONTACTO_VISUAL)[number];
+
+export const NOMBRE_NIVEL_CONTACTO_VISUAL: Record<NivelContactoVisual, string> =
+  {
+    n1: "Mira cuando le interesa, con quien confía",
+    n2: "Anticipa y pide que siga",
+    n3: "Mira dentro del turno",
+    n4: "Él arranca el juego",
+    n5: "Con más personas",
+    n6: "En más momentos del día",
+  };
+
+export const DESCRIPCION_NIVEL_CONTACTO_VISUAL: Record<
+  NivelContactoVisual,
+  string
+> = {
+  n1: "Gira y te mira cuando lo imitas o le hablas; se acerca. Con mamá y papá esto ya pasa.",
+  n2: "En la pausa del juego te mira, abre los brazos o la boca, o hace un sonido para que sigas. Con las cosquillas y algunas canciones ya asoma: aquí empieza.",
+  n3: "Al pasar el turno, su mirada va del juguete a tu cara y vuelve al juguete; cada vez la sostiene un poquito más. Es el corazón de todo esto.",
+  n4: "Trae las manos o el juguete, dice «otra», te muestra o señala algo para arrancar el juego él.",
+  n5: "Lo de los niveles 2 a 4, pero con papá, la abuela, el hermano — o alguien que conoce menos.",
+  n6: "Lo mismo, en el baño, en la mesa, en la calle, sin haberlo preparado.",
+};
+
+/** Momentos del día donde cabe una cápsula: la dosis son momentos cortos, no sesiones. */
+export const MOMENTOS_DEL_DIA = [
+  "juego",
+  "baño",
+  "comida",
+  "vestirse",
+  "calle",
+  "dormir",
+  "transiciones",
+] as const;
+
+export type MomentoDelDia = (typeof MOMENTOS_DEL_DIA)[number];
+
+export const NOMBRE_MOMENTO: Record<MomentoDelDia, string> = {
+  juego: "jugando",
+  baño: "en el baño",
+  comida: "en la mesa",
+  vestirse: "al vestirse",
+  calle: "en la calle",
+  dormir: "al acostarlo",
+  transiciones: "entre una cosa y otra",
+};
+
+/** Con quién se hace la cápsula. «otra-persona» es la esencia del nivel 5. */
+export const CON_QUIEN = ["mama", "otra-persona"] as const;
+
+export type ConQuien = (typeof CON_QUIEN)[number];
+
+/**
+ * Cita pública: «Autor, año, Revista» (varias separadas por « · »). Sin título a propósito —
+ * la referencia completa vive en la investigación de la planeadora. Y cuando el nombre de la
+ * revista describe a quién se estudió, se cita solo «Autor, año»: el gate de sensibilidad
+ * también corre sobre las citas (hallazgo de la fase 0). Una fuente con título no entra.
+ */
+const FUENTE_PUBLICA = /^[^;]+?, (19|20)\d{2}(, [^;]+)?$/;
+
+export const CapsulaContactoVisualSchema = z.object({
+  id: z.string().min(1),
+  dominio: z.literal("contacto-visual"),
+  tecnica: z.enum(TECNICAS_CONTACTO_VISUAL),
+  nivel: z.enum(NIVELES_CONTACTO_VISUAL),
+  /** Titular corto y cálido, en es-CO. */
+  titulo: z.string().min(1).max(70),
+  /** La técnica y por qué funciona, para leerse en ~30 segundos. */
+  explicacion: z.string().min(1),
+  /** UNA línea que la mamá puede decir tal cual, hoy. */
+  guion: z.string().min(1).max(140),
+  actividad: z.object({
+    texto: z.string().min(1),
+    /** Cuánto dura un momento de esta cápsula («3–5 min»). Momentos cortos, no sesiones. */
+    duracion: z.string().regex(/^\d+(–\d+)? min$/),
+    momentos: z.array(z.enum(MOMENTOS_DEL_DIA)).min(1),
+    /** Este dominio es cero pantalla por diseño: el literal lo garantiza. */
+    conPantalla: z.literal(false),
+  }),
+  conQuien: z.enum(CON_QUIEN),
+  /** Lo que NO se hace en esta cápsula, en una línea y en observable. */
+  queNoHacer: z.string().min(1).max(200),
+  /** Cita corta y verificable: autor · año · revista. Obligatoria. */
+  fuente: z
+    .string()
+    .max(220)
+    .refine((f) => f.split(" · ").every((s) => FUENTE_PUBLICA.test(s)), {
+      message:
+        "La fuente va como «Autor, año, Revista» —o «Autor, año» si la revista describe a quién se estudió—, sin título.",
+    }),
+});
+
+export type CapsulaContactoVisual = z.infer<typeof CapsulaContactoVisualSchema>;
+
+/** Cualquier cápsula de cualquier dominio (el segundo paso —la app— lo consumirá). */
+export type CapsulaDeDominio =
+  | (Capsula & { dominio: "habla" })
+  | CapsulaContactoVisual;
+
+/**
+ * La biblioteca de contacto visual: entre 18 y 24 cápsulas (lo que la evidencia justifica),
+ * 3–4 por técnica, cada una en un nivel distinto dentro de su técnica, y los seis niveles
+ * cubiertos — así ninguna técnica se queda sin su escalera y ningún nivel sin cápsula.
+ */
+export const MIN_POR_TECNICA_CONTACTO_VISUAL = 3;
+export const MAX_POR_TECNICA_CONTACTO_VISUAL = 4;
+
+export const BibliotecaContactoVisualSchema = z
+  .array(CapsulaContactoVisualSchema)
+  .min(18)
+  .max(24)
+  .refine((cs) => new Set(cs.map((c) => c.id)).size === cs.length, {
+    message: "Los ids de las cápsulas deben ser únicos.",
+  })
+  .refine(
+    (cs) =>
+      TECNICAS_CONTACTO_VISUAL.every((t) => {
+        const n = cs.filter((c) => c.tecnica === t).length;
+        return (
+          n >= MIN_POR_TECNICA_CONTACTO_VISUAL &&
+          n <= MAX_POR_TECNICA_CONTACTO_VISUAL
+        );
+      }),
+    { message: "Cada técnica necesita entre 3 y 4 cápsulas: su escalera completa." },
+  )
+  .refine(
+    (cs) =>
+      TECNICAS_CONTACTO_VISUAL.every((t) => {
+        const niveles = cs.filter((c) => c.tecnica === t).map((c) => c.nivel);
+        return new Set(niveles).size === niveles.length;
+      }),
+    {
+      message:
+        "Dentro de una técnica, cada cápsula va en un nivel distinto: son peldaños, no variaciones.",
+    },
+  )
+  .refine(
+    (cs) => NIVELES_CONTACTO_VISUAL.every((n) => cs.some((c) => c.nivel === n)),
+    { message: "Los seis niveles necesitan al menos una cápsula." },
+  )
+  .refine(
+    (cs) => cs.every((c) => c.nivel !== "n5" || c.conQuien === "otra-persona"),
+    { message: "El nivel 5 es con otra persona: es su esencia." },
+  );
