@@ -16,8 +16,14 @@
 // juicio y la casilla «Revisada» por cápsula. La mamá no lo ve.
 
 import { writeFileSync } from "node:fs";
+import { CAPSULAS } from "../content/capsulas.ts";
 import { CAPSULAS_CONTACTO_VISUAL } from "../content/contacto-visual.ts";
 import {
+  DESCRIPCION_ETAPA,
+  ETAPAS,
+  ETAPA_DEFECTO,
+  NOMBRE_ETAPA,
+  NOMBRE_TECNICA,
   BibliotecaContactoVisualSchema,
   DESCRIPCION_NIVEL_CONTACTO_VISUAL,
   DESCRIPCION_TECNICA_CONTACTO_VISUAL,
@@ -153,6 +159,35 @@ function capsulaHtml(c) {
     </article>`;
 }
 
+/** Las 50 cápsulas de habla (S1–S4), en el mismo documento y con el mismo registro. Sin la cita:
+ *  la mamá lee la técnica, no la bibliografía (esa vive en el catálogo del papá). */
+function capsulaHablaHtml(c) {
+  return `
+    <article class="capsula" id="${esc(c.id)}" data-capsula-id="${esc(c.id)}" data-titulo="${esc(c.titulo)}">
+      <h4>${esc(c.titulo)}</h4>
+      <p class="chips">
+        <span class="chip">${esc(NOMBRE_TECNICA[c.tecnica])}</span>
+        ${c.actividad.conPantalla ? `<span class="chip chip-app">necesita la app</span>` : `<span class="chip suave">sin pantalla</span>`}
+      </p>
+      <p class="explicacion">${esc(c.explicacion)}</p>
+      <blockquote><strong>Tu línea:</strong> ${esc(c.guion)}</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> ${esc(c.actividad.texto)}</p>
+      <button type="button" class="boton boton-registrar" data-abrir-registro="${esc(c.id)}">Registrar este momento</button>
+      ${formularioRegistro(c)}
+    </article>`;
+}
+
+let habla = "";
+for (const etapa of ETAPAS) {
+  const deEtapa = CAPSULAS.filter((c) => c.etapa === etapa);
+  habla += `
+  <section class="nivel etapa" id="habla-${esc(etapa)}">
+    <h3>${esc(NOMBRE_ETAPA[etapa])} <span class="conteo">(${deEtapa.length} cápsulas)</span>${etapa === ETAPA_DEFECTO ? ` <span class="chip chip-otra">aquí está él</span>` : ""}</h3>
+    <p class="suave">${esc(DESCRIPCION_ETAPA[etapa])}</p>
+    ${deEtapa.map(capsulaHablaHtml).join("")}
+  </section>`;
+}
+
 let cuerpo = "";
 for (const nivel of NIVELES_CONTACTO_VISUAL) {
   const deNivel = capsulas.filter((c) => c.nivel === nivel);
@@ -215,6 +250,10 @@ ${PALETA_CSS}
   .chip-fuerte { background: var(--acento); color: var(--fondo); }
   .chip-moderada { background: var(--acento-suave); color: var(--acento); }
   .chip-otra { background: var(--aviso-suave); color: var(--tinta); }
+  .chip-app { background: var(--tinta); color: var(--fondo); }
+  .indice { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
+  .indice a { font: 600 .8rem/1 system-ui, sans-serif; text-decoration: none; color: var(--acento); border: 1px solid var(--borde); border-radius: 999px; padding: .55rem .8rem; min-height: 40px; display: inline-flex; align-items: center; }
+  .entradas .enviado { font: 600 .68rem/1 system-ui, sans-serif; letter-spacing: .04em; color: var(--suave); border: 1px solid var(--borde); border-radius: 999px; padding: .2rem .5rem; margin-left: .4rem; vertical-align: middle; }
   .capsula { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: .9rem 0; position: relative; }
   .capsula.lista { opacity: .55; }
   .revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
@@ -284,6 +323,11 @@ ${PALETA_CSS}
     Es <strong>estirar</strong> lo que ya hace — que la mirada aguante dentro de un turno de juego, y que pase también con su hermano, con
     quien viva en la casa, en el baño, en la mesa. Todo lo de aquí sale de lo que ya le saca la mirada: las cosquillas, algunas canciones, el juego físico, y tú.</p>
     ${avisoPrueba}
+    <nav class="indice" aria-label="Partes del documento">
+      <a href="#la-mirada">La mirada · ${capsulas.length} cápsulas</a>
+      <a href="#el-habla">El habla · ${CAPSULAS.length} cápsulas</a>
+      <a href="#mis-registros">Mis registros</a>
+    </nav>
     <div class="aviso encuadre">
       <p><strong>Esto no es una prueba.</strong> Ni para él ni para ti. No hay forma correcta o incorrecta de jugar, no hay totales
       ni metas con número, y ningún nivel tiene plazo. La mirada nunca es una condición para nada: lo que sigue a su mirada es que
@@ -297,7 +341,7 @@ ${PALETA_CSS}
     </div>
   </header>
 
-  <h2>Cómo se usa</h2>
+  <h2 id="la-mirada">Cómo se usa</h2>
   <ol class="pasos">
     <li><strong>Elige un momento corto</strong> en que él ya esté contento, y una cápsula del peldaño donde va.</li>
     <li><strong>Lee la cápsula</strong> — treinta segundos: qué hacer, tu línea, y el «ojo».</li>
@@ -333,13 +377,25 @@ ${PALETA_CSS}
   <h2>Las cápsulas, peldaño a peldaño</h2>
   ${cuerpo}
 
+<!-- habla:inicio -->
+  <h2 id="el-habla">El habla: las ${CAPSULAS.length} cápsulas de la app, aquí mismo</h2>
+  <p>Son las mismas cápsulas de habla que trae la app, para que todo esté en un solo lugar. Van por etapa; <strong>él está en
+  «Palabras sueltas»</strong>: las de «Sonidos e intentos» sirven en los días difíciles, y las de «Primeras frases» se guardan para
+  cuando junte dos palabras — sin apurarlo. Las que dicen <strong>«necesita la app»</strong> usan el juego de voz de la pantalla:
+  esas esperan a que él vuelva a la app; las demás son de casa, sin pantalla. Todas tienen su botón «Registrar este momento»:
+  lo que miras en él es lo mismo, se hable o se juegue.</p>
+  ${habla}
+<!-- habla:fin -->
+
   <h2 id="mis-registros">Mis registros</h2>
   <section class="panel" aria-labelledby="mis-registros">
     <p class="suave">Lo que anotas vive <strong>solo en este teléfono</strong>. Sale de aquí únicamente si tú lo envías o lo guardas.
-    «Enviar a papá» arma un resumen con ejemplos — nunca números.</p>
+    «Enviar a papá» arma un resumen con ejemplos — nunca números — y manda <strong>solo lo nuevo desde la última vez</strong>:
+    puedes enviar cuando quieras, de a uno, de a cinco, sin repetir nada. Si un mensaje se perdió, «Enviar otra vez esta semana».</p>
     <div class="acciones">
       <button type="button" class="boton" data-enviar>Enviar a papá</button>
       <button type="button" class="boton boton-suave" data-guardar>Guardar registro</button>
+      <button type="button" class="boton boton-suave" data-enviar-todo>Enviar otra vez esta semana</button>
     </div>
     <p class="suave" data-vacio>Todavía no has registrado ningún momento. Cada cápsula tiene su botón «Registrar este momento».</p>
     <ul class="entradas" data-entradas></ul>
@@ -359,8 +415,8 @@ ${PALETA_CSS}
     </table>
   </section>
 
-  <footer>Hablemos San — el documento de contacto visual de la mamá. ${capsulas.length} cápsulas, generadas del contenido real el ${fecha}.
-  Cada cápsula cita la investigación que la respalda (autor, año y revista). Esto es práctica en casa, con juego: acompaña, nunca reemplaza,
+  <footer>Hablemos San — el documento de la mamá. ${capsulas.length} cápsulas de contacto visual y ${CAPSULAS.length} de habla, generadas del contenido real el ${fecha}.
+  Cada cápsula de contacto visual cita la investigación que la respalda (autor, año y revista); las de habla la citan en el catálogo de la app. Esto es práctica en casa, con juego: acompaña, nunca reemplaza,
   las terapias del niño. Nada de lo que anotes aquí sale de tu teléfono si tú no lo envías.</footer>
 </main>
 <div class="toast" role="status" aria-live="polite" hidden data-toast></div>
@@ -395,6 +451,14 @@ ${PALETA_CSS}
       if (!j || j.version !== VERSION || !Array.isArray(j.entradas)) return [];
       return j.entradas.filter(entradaValida);
     } catch (e) { return []; }
+  }
+  // Qué ya se envió a papá (solo ids), aparte del registro: así «Enviar a papá» manda solo lo nuevo.
+  var CLAVE_ENV = CLAVE + ":enviados";
+  function leerEnviados() {
+    try { var v = localStorage.getItem(CLAVE_ENV); var j = v ? JSON.parse(v) : null; return Array.isArray(j) ? j : []; } catch (e) { return []; }
+  }
+  function marcarEnviados(ids) {
+    try { var todos = leerEnviados(); ids.forEach(function (i) { if (todos.indexOf(i) === -1) todos.push(i); }); localStorage.setItem(CLAVE_ENV, JSON.stringify(todos)); } catch (e) {}
   }
   function escribir(entradas) {
     try { localStorage.setItem(CLAVE, JSON.stringify({ version: VERSION, entradas: entradas })); return true; }
@@ -467,12 +531,14 @@ ${PALETA_CSS}
   }
   function fraseC(e) { return NOMBRE_C[e.c.comoEstuvo].toLowerCase() + (e.c.paramos ? " — paramos" : ""); }
   function pintarPanel() {
+    var enviados = leerEnviados();
     var entradas = leer().slice().sort(function (x, y) { return (y.fecha + y.hora).localeCompare(x.fecha + x.hora); });
     lista.innerHTML = "";
     vacio.hidden = entradas.length > 0; borrarTodo.hidden = entradas.length === 0;
     entradas.forEach(function (e) {
       var li = document.createElement("li");
       var h = document.createElement("p"); h.className = "cuando"; h.textContent = cuando(e) + " · " + (TITULOS[e.capsulaId] || e.capsulaId);
+      if (enviados.indexOf(e.id) !== -1) { var tag = document.createElement("span"); tag.className = "enviado"; tag.textContent = "enviado"; h.appendChild(tag); }
       var p1 = document.createElement("p"); p1.textContent = "Yo: " + frasesA(e) + ".";
       var p2 = document.createElement("p"); p2.textContent = "Vi: " + frasesB(e) + (e.b.ejemplo ? ". «" + e.b.ejemplo + "»" : ".");
       var p3 = document.createElement("p"); p3.textContent = "Él: " + fraseC(e) + ".";
@@ -486,16 +552,25 @@ ${PALETA_CSS}
     });
   }
 
-  // ── «Enviar a papá»: ejemplos, no números. Web Share; si no hay, al portapapeles ──
-  function textoResumen() {
+  // ── «Enviar a papá»: ejemplos, no números. Solo lo nuevo desde la última vez; «otra vez» = la semana.
+  //    Web Share; si no hay (o falla por algo distinto a cancelar), al portapapeles ──
+  function armarResumen(soloNuevo) {
     var todas = leer().slice().sort(function (x, y) { return (x.fecha + x.hora).localeCompare(y.fecha + y.hora); });
-    if (!todas.length) return "";
-    var hace7 = new Date(); hace7.setDate(hace7.getDate() - 7);
-    var corte = fechaLocal(hace7);
-    var recientes = todas.filter(function (e) { return e.fecha >= corte; });
-    if (!recientes.length) recientes = todas.slice(-7);
-    var lineas = ["Mirarse jugando — lo que hicimos esta semana", ""];
-    recientes.forEach(function (e) {
+    var enviados = leerEnviados();
+    var seleccion, titulo;
+    if (soloNuevo) {
+      seleccion = todas.filter(function (e) { return enviados.indexOf(e.id) === -1; });
+      titulo = enviados.length ? "Mirarse jugando — lo nuevo desde la última vez" : "Mirarse jugando — lo que hicimos";
+    } else {
+      var hace7 = new Date(); hace7.setDate(hace7.getDate() - 7);
+      var corte = fechaLocal(hace7);
+      seleccion = todas.filter(function (e) { return e.fecha >= corte; });
+      if (!seleccion.length) seleccion = todas.slice(-7);
+      titulo = "Mirarse jugando — esta semana, otra vez";
+    }
+    if (!seleccion.length) return null;
+    var lineas = [titulo, ""];
+    seleccion.forEach(function (e) {
       lineas.push("• " + cuando(e) + " — " + (TITULOS[e.capsulaId] || e.capsulaId));
       lineas.push("  Yo: " + frasesA(e) + ".");
       lineas.push("  Vi: " + frasesB(e) + (e.b.ejemplo ? ". «" + e.b.ejemplo + "»" : "."));
@@ -503,18 +578,32 @@ ${PALETA_CSS}
       lineas.push("");
     });
     lineas.push("(Anotado en el documento de la mamá. Sin números a propósito: son ejemplos.)");
-    return lineas.join("\\n");
+    return { texto: lineas.join("\\n"), titulo: titulo, ids: seleccion.map(function (e) { return e.id; }) };
   }
-  document.querySelector("[data-enviar]").addEventListener("click", function () {
-    var texto = textoResumen();
-    if (!texto) { toast("Todavía no hay nada que enviar"); return; }
+  function copiar(resumen) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(resumen.texto).then(function () { marcarEnviados(resumen.ids); pintarPanel(); toast("Copiado: pégalo en WhatsApp"); }, function () { toast("No se pudo copiar"); });
+    } else { toast("Este navegador no deja compartir ni copiar"); }
+  }
+  function enviar(resumen) {
     if (navigator.share) {
-      navigator.share({ title: "Mirarse jugando — esta semana", text: texto }).catch(function () {});
+      navigator.share({ title: resumen.titulo, text: resumen.texto })
+        .then(function () { marcarEnviados(resumen.ids); pintarPanel(); toast("Enviado"); })
+        .catch(function (err) { if (!err || err.name !== "AbortError") copiar(resumen); });
       return;
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(function () { toast("Copiado: pégalo en WhatsApp"); }, function () { toast("No se pudo copiar"); });
-    } else { toast("Este navegador no deja compartir ni copiar"); }
+    copiar(resumen);
+  }
+  document.querySelector("[data-enviar]").addEventListener("click", function () {
+    if (!leer().length) { toast("Todavía no hay nada que enviar"); return; }
+    var r = armarResumen(true);
+    if (!r) { toast("Nada nuevo desde la última vez. Si quieres, «Enviar otra vez esta semana»."); return; }
+    enviar(r);
+  });
+  document.querySelector("[data-enviar-todo]").addEventListener("click", function () {
+    var r = armarResumen(false);
+    if (!r) { toast("Todavía no hay nada que enviar"); return; }
+    enviar(r);
   });
 
   // ── «Guardar registro»: el JSON versionado que el papá lee en noviembre ──
@@ -534,7 +623,8 @@ ${PALETA_CSS}
   var bBorrar = document.querySelector("[data-borrar]");
   bBorrar.addEventListener("click", function () {
     if (bBorrar.dataset.seguro !== "1") { bBorrar.dataset.seguro = "1"; bBorrar.textContent = "¿Seguro? Toca otra vez para borrar todo"; setTimeout(function () { bBorrar.dataset.seguro = ""; bBorrar.textContent = "Borrar todos mis registros"; }, 4000); return; }
-    escribir([]); bBorrar.dataset.seguro = ""; bBorrar.textContent = "Borrar todos mis registros"; pintarPanel(); toast("Registros borrados");
+    escribir([]); try { localStorage.removeItem(CLAVE_ENV); } catch (e) {}
+    bBorrar.dataset.seguro = ""; bBorrar.textContent = "Borrar todos mis registros"; pintarPanel(); toast("Registros borrados");
   });
 
   // ── modo revisión (?revision): casillas «Revisada» para el papá, guardadas aparte ──
@@ -558,4 +648,4 @@ ${PALETA_CSS}
 `;
 
 writeFileSync(new URL("../docs/CATALOGO-CONTACTO-VISUAL.html", import.meta.url), html);
-console.log(`docs/CATALOGO-CONTACTO-VISUAL.html generado — ${capsulas.length} cápsulas${BIBLIOTECA_COMPLETA ? "" : " (VERSIÓN DE PRUEBA)"}.`);
+console.log(`docs/CATALOGO-CONTACTO-VISUAL.html generado — ${capsulas.length} cápsulas de contacto visual + ${CAPSULAS.length} de habla${BIBLIOTECA_COMPLETA ? "" : " (VERSIÓN DE PRUEBA)"}.`);

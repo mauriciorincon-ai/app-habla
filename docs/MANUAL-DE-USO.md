@@ -322,15 +322,41 @@ Qué trae:
 - **Qué no hacer**, en una lista corta. La regla de fondo: la mirada nunca se pide ni se premia;
   lo que sigue a su mirada es que el juego sigue. Y el único semáforo: si él aparta la vista, se
   tapa la cara o se irrita, se para.
+- **Las 50 cápsulas de habla de la app, en el mismo documento**, por etapa (él está en
+  "Palabras sueltas"), con su técnica, su línea y su actividad. Las que usan el juego de voz dicen
+  "necesita la app" y esperan a que él vuelva a la pantalla; las demás se hacen en casa. Todas se
+  registran igual que las de la mirada.
 - **El registro diario**: en dos minutos y pocos toques, la mamá anota **lo que hizo ella**, marca
   **lo que vio en él** (sin contar cuántas veces) y **cómo estuvo él**. No hay puntajes, totales
-  ni metas. "Enviar a papá" arma un resumen con ejemplos, nunca con números; "Guardar registro"
-  descarga un archivo para leerlo después. Al imprimir, sale una cuadrícula semanal para llenar a
-  lápiz.
+  ni metas. "Enviar a papá" arma un resumen con ejemplos, nunca con números, y manda **solo lo
+  nuevo desde la última vez**: ella puede enviar cuando quiera —de a uno, de a cinco— sin repetir
+  nada; "Enviar otra vez esta semana" repite los últimos siete días por si un mensaje se perdió.
+  "Guardar registro" descarga un archivo completo para leerlo después. Al imprimir, sale una
+  cuadrícula semanal para llenar a lápiz.
 
 **Privacidad del registro:** lo que la mamá anota vive **solo en su teléfono**, igual que todo lo
 demás de esta app. No hay cuenta ni nube. Sale de ahí únicamente cuando ella decide enviarlo o
 guardarlo.
+
+**Qué hacer con lo que le llega (para el papá).** Lo que recibe es una descripción, no una nota.
+Tres lecturas, en este orden, y una sola respuesta corta a la mamá:
+
+1. **Primero "Él:".** Si en la misma cápsula aparece "incómodo" o "paramos" dos o tres veces, esa
+   cápsula se retira por ahora o se baja un peldaño ("la del globo la dejamos; sigue con las
+   cosquillas"). Si casi siempre dice "a gusto", no hay nada que cambiar.
+2. **Luego "Vi:", a lo largo de varios mensajes.** Es lo que dice por dónde va la escalera: se
+   sube un peldaño cuando lo del peldaño actual pasa **la mayoría de las veces** con la mamá. Sin
+   contar: si "miró de mí al juguete y de vuelta" sale seguido, el peldaño 3 está; si "me buscó
+   para que siguiera" sale seguido, el 2 está firme; si "lo hizo con otra persona" empieza a
+   aparecer, el 5 arranca. Ahí se le dice: "ya puedes probar las del peldaño 4".
+3. **Por último "Yo:", sin regañar.** Si "hoy no" sale mucho en "me puse a su altura" o en "hice
+   la pausa sin pedirle nada", lo que falta es del adulto, no del niño: se le recuerda **una** cosa,
+   en positivo ("la próxima, la pausa de tres segundos"). Y si lleva muchos días seguidos, que
+   descanse: descansar también cuenta.
+
+Lo que **no** se hace: sumar, comparar semanas, poner metas ni fechas, ni cambiar más de una cosa a
+la vez en la respuesta. Los mensajes quedan en WhatsApp; el archivo de "Guardar registro" es el
+respaldo para cuando el niño vuelva a la app.
 
 <!-- s5:fin -->
 
@@ -449,5 +475,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 002    | Biblioteca de cápsulas por etapas del habla; segundo juego "el cohete" (tono de la voz); tercer juego "palabra y dibujo" (el padre juzga la palabra, celebración de globos); cambiar apodo/temas y claro-u-oscuro desde Ajustes.                                                                                      |
 | 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
-| 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. |
+| 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. Remate del mismo día: "Enviar a papá" manda solo lo nuevo desde la última vez (+ "Enviar otra vez esta semana"); las 50 cápsulas de habla entran al mismo documento, por etapa y con el mismo registro; sección "Qué hacer con lo que le llega" para el papá. |
 <!-- s5:fin -->

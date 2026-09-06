@@ -65,13 +65,29 @@ export function buscarCoincidencias(
 export type Alcance =
   | string
   | { archivo: string; desde: string }
-  | { archivo: string; entre: [string, string] };
+  | { archivo: string; entre: [string, string] }
+  /** Todo el archivo MENOS lo que va entre los marcadores (p. ej. contenido previo al sprint embebido). */
+  | { archivo: string; excepto: [string, string] };
 
 export function recortar(texto: string, alcance: Alcance): string {
   if (typeof alcance === "string") return texto;
   if ("desde" in alcance) {
     const i = texto.indexOf(alcance.desde);
     return i === -1 ? "" : texto.slice(i);
+  }
+  if ("excepto" in alcance) {
+    const [ini, fin] = alcance.excepto;
+    let out = "";
+    let desde = 0;
+    for (;;) {
+      const i = texto.indexOf(ini, desde);
+      if (i === -1) break;
+      const j = texto.indexOf(fin, i + ini.length);
+      out += texto.slice(desde, i) + "\n";
+      if (j === -1) return out; // marcador sin cierre: lo que sigue no entra
+      desde = j + fin.length;
+    }
+    return out + texto.slice(desde);
   }
   const [ini, fin] = alcance.entre;
   let out = "";
@@ -101,7 +117,9 @@ export function archivoDe(alcance: Alcance): string {
  * El resto del repo lo cubre el INFORME (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
-  "docs/CATALOGO-CONTACTO-VISUAL.html",
+  // El documento de la mamá entero, MENOS la sección con las 50 cápsulas de habla: son texto
+  // previo al sprint (S1–S4, ya público en la app) y lo cubre el informe, no el gate.
+  { archivo: "docs/CATALOGO-CONTACTO-VISUAL.html", excepto: ["<!-- habla:inicio -->", "<!-- habla:fin -->"] },
   "content/contacto-visual.ts",
   "content/registro-contacto-visual.ts",
   { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
