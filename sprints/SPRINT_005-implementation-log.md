@@ -15,10 +15,13 @@
 - [x] **STOP F0 → prueba del registro en el teléfono real del usuario** — «Resultado del teléfono
       es bueno»: **el registro se queda**. Citas: regla **A** fijada («Autor, año, Revista» cuando
       la revista es neutra; «Autor, año» cuando su nombre describe a quién se estudió).
-- [x] F2 — Contenido: **23 cápsulas** reales · catálogo regenerado · gate en verde · unit de
+- [x] F2 — Contenido: **24 cápsulas** reales · catálogo regenerado · gate en verde · unit de
       biblioteca activado — 303 unit · 14/14 e2e de `/mirada`
-- [ ] `/audita-sprint` (Fase 1 solo lectura → aprobación → Fase 2) · **G-Contenido** sobre
-      `/mirada?revision`
+- [x] `/audita-sprint` Fase 1 (solo lectura) — **aprobada por el usuario**; sin Críticos ni
+      Altos (1 Medio, 5 Bajos). **G-Contenido: aprobado** («muy bien, apropiadas, orientadas al
+      juego»); su pedido de más cápsulas → 24 (el techo de la evidencia).
+- [ ] `/audita-sprint` Fase 2 (M1 · B2 · B3 · B5 propuestos; B1 · B4 como deuda) — espera su
+      «ejecuta»
 - [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
       re-verificado tras el deploy)
 
@@ -152,14 +155,13 @@
   | Un turno tú, un turno yo (fuerte) | N2 · N3 · N4 · N5 | me meto en su juguete · «¡alto!… ¡ya!» con el carro · él me pasa el turno · los mismos turnos con papá |
   | Espero en silencio (moderada) | N2 · N3 · N4 · N6 | burbujas y espero · el frasco que no abre (la espera se estira) · lo dejo a medias · una media puesta |
   | Canto a su ritmo (moderada) | N1 · N2 · N3 · N6 | sigo su ritmo · su canción con hueco · una estrofa más cada semana · la canción de siempre al vestirlo |
-  | La misma rutina con otra persona (moderada) | N3 · N5 · N6 | papá al lado, un turno cada uno · las mismas cosquillas con papá · la loción después del baño |
+  | La misma rutina con otra persona (moderada) | N3 · N4 · N5 · N6 | papá al lado, un turno cada uno · le lleva el juego a papá · las mismas cosquillas con papá · la loción después del baño |
 
-  **Por qué 23 y no 24:** la sexta técnica tiene tres peldaños con evidencia propia (el paso
-  intermedio con la otra persona al lado, la persona nueva sola, el momento nuevo); un cuarto
-  sería una variación sin fuente propia, que es justo lo que la investigación pide no hacer (§4).
-  Y «corre que te atrapo» (Vanderbilt: retrocede y espera la mirada rápida) va como variante
-  dentro de las cosquillas N2, no como cápsula aparte: misma técnica, mismo nivel. Todas las N5
-  son con otra persona (el schema lo exige); ninguna escalera arranca en el 4 (test nuevo).
+  **Por qué 24 y no más:** es el techo que fija la investigación (§4: más de 24 «empieza a ser
+  variaciones sin evidencia propia») y el schema lo hace cumplir. La 24.ª llegó en el G-Contenido
+  (ver F2.4). «Corre que te atrapo» (Vanderbilt: retrocede y espera la mirada rápida) va como
+  variante dentro de las cosquillas N2, no como cápsula aparte: misma técnica, mismo nivel. Todas
+  las N5 son con otra persona (el schema lo exige); ninguna escalera arranca en el 4 (test nuevo).
   Regla transversal visible en cada cápsula: nadie pide la mirada; lo que sigue a la mirada es
   que el juego sigue; persona nueva o juego nuevo; el nombre no se «gasta» (los guiones del
   cucú dicen «¿dónde está mamá?», no su nombre).
@@ -174,3 +176,22 @@
   `tests/e2e/mirada.spec.ts` 14/14 sobre el contenido real. Guía: la nota del bloque P deja de
   hablar de cápsulas de prueba (P1–P6 = envase; P7 = contenido). Typecheck · lint · cero enlaces
   vacío. **Sigue:** `/audita-sprint` Fase 1 y el G-Contenido del usuario sobre `/mirada?revision`.
+- 2026-09-06 · **Auditoría Fase 1 (solo lectura) — aprobada por el usuario.** Alcance: todo
+  completo o completo con desviación declarada (dominio como discriminante literal · registro
+  A/B/C por la enmienda · n-gramas 1–4 · gate acotado al S5 con informe del resto). Hallazgos:
+  **M1** el panel del registro no tolera una entrada malformada (`leer()` sin validar y la pintura
+  inicial antes de conectar exportar/borrar) · **B1** el compartir no cae al portapapeles si el
+  compartir del teléfono rechaza · **B2** ids de cápsula sin alfabeto restringido y usados en
+  selectores · **B3** comentario del schema que nombra un símbolo inexistente · **B4** dependencia
+  de Node ≥ 22.18 de los scripts no documentada · **B5** la PROPUESTA describe el registro viejo
+  sin nota de la enmienda. Frases caducadas: ninguna afirmación pública se volvió falsa. Campos
+  sin consumidor: el contrato del registro no tiene importador fuera del e2e **por diseño**
+  (segundo paso, la app); se declara pendiente visible. Sin librerías nuevas. Recomendación:
+  listo para cierre, condicionado al G-Contenido.
+- 2026-09-06 · **F2.4 — G-Contenido aprobado; la 24.ª cápsula.** El usuario leyó las 23 en
+  `/mirada?revision`: «muy bien, apropiadas, orientadas al juego». Pidió revisar si cabían más
+  sin repetir. Contra la investigación: el techo es 24 (§4). Cabía exactamente una con anclaje
+  propio y sin repetir: el peldaño 4 de «La misma rutina con otra persona» — **«Le lleva el juego
+  a papá: arrancó él con otra persona»** (Stokes 1977 · Kasari 2006): las otras dos de papá las
+  arranca papá; esta la arranca él, que es el objetivo literal del sprint. Biblioteca en 24 (el
+  máximo del schema). Catálogo regenerado, gate verde, capturas leídas, guía ajustada (24).

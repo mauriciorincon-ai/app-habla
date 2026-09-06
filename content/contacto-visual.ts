@@ -3,7 +3,7 @@ import type { CapsulaContactoVisual } from "./schema";
 /**
  * Biblioteca de CONTACTO VISUAL (Sprint 005) — el documento que la mamá trabaja sin pantallas.
  *
- * 23 cápsulas: seis maneras (las técnicas con evidencia de la investigación aprobada), cada una
+ * 24 cápsulas: seis maneras (las técnicas con evidencia de la investigación aprobada), cada una
  * con su escalera de 3–4 peldaños en niveles distintos, y los seis niveles cubiertos. Cada
  * cápsula está anclada a una actividad que describen sus fuentes (anexo C de la investigación)
  * y cita autor · año · revista — o solo autor · año cuando el nombre de la revista describe a
@@ -469,6 +469,27 @@ export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
     queNoHacer:
       "No cambien el juego ni las palabras entre uno y otro: la gracia es que sea exactamente el mismo. Y no le pidan que mire a papá.",
     fuente: "Stokes, 1977, J Appl Behav Anal · Whalen, 2003, J Child Psychol Psychiatry",
+  },
+  {
+    id: "le-lleva-el-juego-a-papa",
+    dominio: "contacto-visual",
+    tecnica: "misma-rutina-otra-persona",
+    nivel: "n4",
+    titulo: "Le lleva el juego a papá: arrancó él con otra persona",
+    explicacion:
+      "Cuando papá ya hace la rutina y él la acepta, queda el paso que de verdad muestra que la mirada es suya: que sea él quien la arranque con papá. Le trae las manos, le pone el carro en la mano, se le planta enfrente con cara de «¿y?». En los estudios, lo que el niño empieza solo con otra persona es lo que dura después de que la práctica termina; y no llega solo: hay que dejarle el hueco.",
+    guion: "Para papá: «Si te trae las manos o el carro, ahí mismo arrancas, sin preguntarle nada.»",
+    actividad: {
+      texto:
+        "Papá cerca, sin proponer nada, en un rato en que él ya jugó esa rutina contigo hoy. Si él le lleva las manos, el juguete, o se le planta enfrente, papá responde al instante con la rutina completa y su pausa de siempre. Si no pasa, papá hace una ronda normal y lo deja ahí: mañana otra vez. Tú miras desde lejos.",
+      duracion: "3–5 min",
+      momentos: ["juego", "transiciones"],
+      conPantalla: false,
+    },
+    conQuien: "otra-persona",
+    queNoHacer:
+      "Papá no le pregunta «¿quieres jugar?» ni lo persigue con el juego: el hueco es de él. Y no lo mandes tú («ve donde papá»): si lo mandas, no arrancó él.",
+    fuente: "Stokes, 1977, J Appl Behav Anal · Kasari, 2006, J Child Psychol Psychiatry",
   },
   {
     id: "las-mismas-cosquillas-con-papa",
