@@ -12,10 +12,13 @@
 - [x] F0 — Estructura (branch · delta del kit `audita-sprint` · dominio en el schema · generador
       del catálogo · ruta propia · registro A/B/C · gate de sensibilidad por hashes con rojo en el
       mismo commit · guía · manual) — 300 unit · 183 e2e · build · PR #13
-- [ ] **STOP F0 → prueba del registro en el teléfono real del usuario** (bloque P de la guía sobre
-      la preview del PR) + decisión sobre las citas cuya revista describe a quién se estudió
-- [ ] F2 — Contenido (cápsulas como progresión · catálogo real · gate en verde · `/audita-sprint`
-      · **G-Contenido**)
+- [x] **STOP F0 → prueba del registro en el teléfono real del usuario** — «Resultado del teléfono
+      es bueno»: **el registro se queda**. Citas: regla **A** fijada («Autor, año, Revista» cuando
+      la revista es neutra; «Autor, año» cuando su nombre describe a quién se estudió).
+- [x] F2 — Contenido: **23 cápsulas** reales · catálogo regenerado · gate en verde · unit de
+      biblioteca activado — 303 unit · 14/14 e2e de `/mirada`
+- [ ] `/audita-sprint` (Fase 1 solo lectura → aprobación → Fase 2) · **G-Contenido** sobre
+      `/mirada?revision`
 - [ ] Cierre (`/deploy-check` · summary EN el PR · CI · merge a orden del usuario · homepage
       re-verificado tras el deploy)
 
@@ -138,3 +141,36 @@
   `fast-uri@3` → ^3.1.6 (caret, nunca `>=`). Verificado: audit sin vulnerabilidades, 300 unit,
   build. Mismo patrón que la entrega del export (`nanoid`): las advisories llegan solas entre
   merges.
+- 2026-09-06 · **F2.1 — Las 23 cápsulas** (`content/contacto-visual.ts`, las 3 de prueba
+  reemplazadas enteras). Seis técnicas × su escalera, cada cápsula anclada a UNA actividad que
+  describe el anexo C y citada según la regla A:
+
+  | Técnica | Peldaños | Actividades ancla |
+  |---|---|---|
+  | Hago lo que él hace (fuerte) | N1 · N2 · N4 · N5 | dos juguetes iguales · él prueba si lo copias · te trae el otro juguete · papá lo copia |
+  | La pausa antes de lo mejor (moderada) | N1 · N2 · N3 · N4 | el avión cara a cara (rutina sin pausa) · cosquillas con pausa (y «corre que te atrapo») · el globo en la boca · cucú cuando se tapa él |
+  | Un turno tú, un turno yo (fuerte) | N2 · N3 · N4 · N5 | me meto en su juguete · «¡alto!… ¡ya!» con el carro · él me pasa el turno · los mismos turnos con papá |
+  | Espero en silencio (moderada) | N2 · N3 · N4 · N6 | burbujas y espero · el frasco que no abre (la espera se estira) · lo dejo a medias · una media puesta |
+  | Canto a su ritmo (moderada) | N1 · N2 · N3 · N6 | sigo su ritmo · su canción con hueco · una estrofa más cada semana · la canción de siempre al vestirlo |
+  | La misma rutina con otra persona (moderada) | N3 · N5 · N6 | papá al lado, un turno cada uno · las mismas cosquillas con papá · la loción después del baño |
+
+  **Por qué 23 y no 24:** la sexta técnica tiene tres peldaños con evidencia propia (el paso
+  intermedio con la otra persona al lado, la persona nueva sola, el momento nuevo); un cuarto
+  sería una variación sin fuente propia, que es justo lo que la investigación pide no hacer (§4).
+  Y «corre que te atrapo» (Vanderbilt: retrocede y espera la mirada rápida) va como variante
+  dentro de las cosquillas N2, no como cápsula aparte: misma técnica, mismo nivel. Todas las N5
+  son con otra persona (el schema lo exige); ninguna escalera arranca en el 4 (test nuevo).
+  Regla transversal visible en cada cápsula: nadie pide la mirada; lo que sigue a la mirada es
+  que el juego sigue; persona nueva o juego nuevo; el nombre no se «gasta» (los guiones del
+  cucú dicen «¿dónde está mamá?», no su nombre).
+- 2026-09-06 · **F2.2 — Garantías activadas.** `tests/unit/contacto-visual-schema.test.ts`:
+  `BibliotecaContactoVisualSchema` sobre la biblioteca real (18–24 · 3–4 por técnica en niveles
+  distintos · seis niveles · N5 con otra persona) + «ninguna es de prueba» + «ninguna técnica
+  arranca en N4». 303 unit (300 + 3). El gate de sensibilidad corrió sobre las 23 y sobre el
+  catálogo regenerado: **verde a la primera** (24/24), sin ajustes al texto.
+- 2026-09-06 · **F2.3 — Catálogo real.** `pnpm gen:catalogo-mirada` → 23 cápsulas, el aviso de
+  «versión de prueba» desaparece solo (lo dispara el schema). Capturas en Pixel 7 **leídas como
+  imagen** (portada, escalera, cápsulas N3/N5/N6): nada cortado, chips y citas completas.
+  `tests/e2e/mirada.spec.ts` 14/14 sobre el contenido real. Guía: la nota del bloque P deja de
+  hablar de cápsulas de prueba (P1–P6 = envase; P7 = contenido). Typecheck · lint · cero enlaces
+  vacío. **Sigue:** `/audita-sprint` Fase 1 y el G-Contenido del usuario sobre `/mirada?revision`.

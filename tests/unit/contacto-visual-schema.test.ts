@@ -142,6 +142,22 @@ describe("la biblioteca real del repo", () => {
       CAPSULAS_CONTACTO_VISUAL.length,
     );
   });
-  // FASE 0: la biblioteca es de prueba (3 cápsulas). La garantía de biblioteca completa
-  // (BibliotecaContactoVisualSchema sobre CAPSULAS_CONTACTO_VISUAL) se activa en la fase 2.
+  it("la biblioteca completa cumple su contrato: 18–24, 3–4 por técnica en niveles distintos, los seis niveles, N5 con otra persona", () => {
+    const r = BibliotecaContactoVisualSchema.safeParse(CAPSULAS_CONTACTO_VISUAL);
+    expect(r.success, r.success ? "" : JSON.stringify(r.error.issues)).toBe(true);
+  });
+
+  it("ninguna cápsula es de prueba ni menciona pantallas como utilería", () => {
+    for (const c of CAPSULAS_CONTACTO_VISUAL) {
+      expect(c.id, c.id).not.toMatch(/^prueba-/);
+      expect(c.actividad.conPantalla).toBe(false);
+    }
+  });
+
+  it("cada técnica arranca en un nivel que el niño ya tiene o casi (N1–N3): ninguna escalera empieza en el 4", () => {
+    for (const t of TECNICAS_CONTACTO_VISUAL) {
+      const niveles = CAPSULAS_CONTACTO_VISUAL.filter((c) => c.tecnica === t).map((c) => c.nivel);
+      expect(niveles.sort()[0], t).toMatch(/^n[123]$/);
+    }
+  });
 });
