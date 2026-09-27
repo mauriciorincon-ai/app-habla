@@ -1,5 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
+/** El origen propio de la app, tomado del baseURL de la config (el puerto puede moverse con
+ *  E2E_PORT): todo lo que no empiece por aquí es red hacia afuera. */
+const origen = () => new URL(test.info().project.use.baseURL ?? "http://localhost:3000").origin;
+
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.
 // Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los TRES juegos.
@@ -31,7 +35,7 @@ for (const juego of JUEGOS) {
     const violacionesCrossOrigin: string[] = [];
     await context.route("**/*", async (route) => {
       const url = route.request().url();
-      if (!url.startsWith("http://localhost:3000")) {
+      if (!url.startsWith(origen())) {
         violacionesCrossOrigin.push(url);
         await route.abort();
         return;
@@ -77,7 +81,7 @@ for (const juego of JUEGOS) {
     page.removeAllListeners("request");
 
     const soloPictogramasLocales = peticionesDuranteElJuego.filter(
-      (url) => !url.startsWith("http://localhost:3000/pictogramas/"),
+      (url) => !url.startsWith(`${origen()}/pictogramas/`),
     );
 
     expect(
@@ -113,7 +117,7 @@ test("cero red al grabar y reproducir en el estudio (banco 100 % local)", async 
   const violacionesCrossOrigin: string[] = [];
   await context.route("**/*", async (route) => {
     const url = route.request().url();
-    if (!url.startsWith("http://localhost:3000")) {
+    if (!url.startsWith(origen())) {
       violacionesCrossOrigin.push(url);
       await route.abort();
       return;
@@ -176,7 +180,12 @@ async function leerAlmacenamiento(page: Page) {
         .filter(([clave]) => !clave.startsWith("__next"))
         .map(([, valor]) => String(valor))
         .join(" "),
-      basesDeDatos: bases.map((b) => b.name ?? ""),
+      // Next 16.3 movió ese mismo canal de depuración también a IndexedDB
+      // (`__next_debug_channel`, solo en dev: verificado en el S6 que la build de producción no
+      // la crea). Se excluye ESE nombre exacto; cualquier otra base de la app sigue fallando aquí.
+      basesDeDatos: bases
+        .map((b) => b.name ?? "")
+        .filter((nombre) => nombre !== "__next_debug_channel"),
     };
   });
 }

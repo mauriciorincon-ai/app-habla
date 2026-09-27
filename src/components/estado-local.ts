@@ -148,6 +148,10 @@ export function borrarTodoYRecargar(): void {
   void import("@/lib/storage/local").then(async ({ borrarTodo }) => {
     const gracia = new Promise<void>((res) => setTimeout(res, 2000));
     await Promise.race([borrarTodo().catch(() => undefined), gracia]);
+    // Recarga COMPLETA a propósito: tras borrar todo, el estado en memoria (stores, módulos
+    // cargados) tiene que morir con los datos; router.push lo conservaría (regla nueva de
+    // eslint-config-next 16.3, vista en el S6).
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = "/";
   });
 }

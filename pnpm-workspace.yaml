@@ -20,12 +20,14 @@ ignoredBuiltDependencies:
 # mayor (brace-expansion@1 → 5 rompió minimatch@3 en el primer intento).
 overrides:
   "fast-uri@3": "^3.1.6"
-  "sharp": "^0.35.0"
+  "sharp": "^0.35.4"
   "postcss@8": "^8.5.18"
   "brace-expansion@1": "^1.1.18"
   "brace-expansion@5": "^5.0.9"
   "undici@7": "^7.29.0"
-  "js-yaml@4": "^4.3.1"
+  "js-yaml@4": "^4.3.2"
   # 2026-09-06 (S5): advisories nuevas entre merges — browserslist (≤4.28.6, vía webpack y
   # update-browserslist-db) y fast-uri (<3.1.6, sube el candado del S4).
   "browserslist@4": "^4.28.7"
+  # 2026-09-27 (S6): advisories nuevas entre merges — next (<16.3.3, dos críticas; se sube a
+  # 16.3.6), sharp (<0.35.4) y js-yaml (<4.3.2): suben sus candados.

@@ -76,3 +76,19 @@
   sin registro), preguntas frecuentes, historial 006. ADR 016; la ADR 015 anota que el contrato
   del registro se retiró.
 - 2026-09-27 · **F0 cerrada.** 326 unit · 14/14 e2e de `/mirada` · typecheck · lint · gate verde.
+- 2026-09-27 · **CI roja por algo que no era del sprint — arreglada.** El primer push cayó en
+  `quality`: `pnpm audit` cazó advisories publicadas después del último merge — **dos críticas en
+  `next`** (<16.3.3), una alta en `sharp` (<0.35.4) y otra en `js-yaml` (<4.3.2), todas transitivas
+  o del framework. Arreglo: `next` y `eslint-config-next` 16.2.11 → **16.3.6** (la línea parcheada
+  más reciente; el aviso del kit sobre 16.3.6 es solo para `output: export`, que esta app no usa) y
+  candados `sharp` ^0.35.4 y `js-yaml@4` ^4.3.2; `vitest` ^4.1.11 cerró las dos moderadas que
+  quedaban. `pnpm audit` en **cero, todos los niveles**. La versión nueva trajo dos efectos,
+  resueltos sin tocar el comportamiento: (1) una regla nueva de lint sobre `window.location.href`
+  en «Borrar mis datos» — la recarga completa es a propósito (el estado en memoria debe morir con
+  los datos) y queda con una excepción justificada en línea; (2) en modo desarrollo Next crea la
+  base IndexedDB `__next_debug_channel`, que hacía fallar el candado de almacenamiento del e2e de
+  privacidad — **verificado que la build de producción no la crea** (los 10 e2e de privacidad en
+  verde contra `pnpm start`), se excluye ese nombre exacto, igual que ya se hacía con el canal
+  `__next*` de `sessionStorage`. Además, el e2e de privacidad tenía el origen `localhost:3000`
+  escrito a mano: ahora lo toma del `baseURL` de la config. Verificado: audit limpio · lint ·
+  typecheck · 326 unit · build · **183 e2e**.
