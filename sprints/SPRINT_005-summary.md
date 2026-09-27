@@ -57,7 +57,7 @@ La cuadrícula impresa queda como respaldo en papel.
 
 ## Corrección del usuario en el G-Contenido
 
-**La «otra persona» es el hermano (16 años), no papá:** papá no está con el niño hasta noviembre;
+**La «otra persona» es el hermano, no papá:** papá no está con el niño hasta noviembre;
 en la casa están la mamá y el hermano. Las cinco cápsulas donde papá hacía la rutina pasaron al
 hermano, guiado por la mamá en una frase; la técnica 6, el nivel 5 y la portada dicen «el hermano,
 quien viva en la casa». «Enviar a papá» se queda: es el resumen que la mamá le manda a él.

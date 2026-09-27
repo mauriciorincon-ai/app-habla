@@ -87,7 +87,7 @@
   toque · `?revision` · axe limpio con el formulario abierto. **Capturas en Pixel 7 leídas como
   imagen** (9): portada, escalera, maneras, cápsula, formulario vacío y lleno, panel, impresión con
   cuadrícula, oscuro. Un falso positivo descartado: el cuerpo parecía sans en oscuro por residuo
-  de la emulación de impresión; en contexto limpio la fuente es Georgia.
+  del modo de impresión simulado; en contexto limpio la fuente es Georgia.
 - 2026-09-06 · **F0.8 — Gate de sensibilidad por hashes (regla 15: rojo en el mismo commit).**
   `scripts/lib/sensibilidad.ts` (normalización compartida: minúsculas · sin acentos · todo lo no
   alfanumérico → espacio · n-gramas) · `scripts/gen-sensibilidad-hashes.mjs` (lee la lista de la
@@ -207,7 +207,7 @@
   que la mamá le manda a él. Dos «qué no hacer» quedaron por encima de 200 caracteres y el unit lo
   cazó (rojo real): se acortaron. Regenerado, 303 unit, 14/14 e2e, gate verde, captura leída.
 - 2026-09-06 · **G-Contenido cerrado.** «Excelente» sobre las cinco cápsulas del hermano. El hermano
-  tiene 16 años: las instrucciones de una frase se quedan tal cual (no hace falta guiarle las manos).
+  entiende instrucciones de una frase: se quedan tal cual (no hace falta guiarle las manos).
 - 2026-09-06 · **Auditoría Fase 2 — ejecutada al pie del plan aprobado.**
   **M1** `leer()` del documento solo acepta entradas con la forma del contrato y de la versión
   actual (`entradaValida`), y la pintura inicial del panel pasó al final del script en `try/catch`:

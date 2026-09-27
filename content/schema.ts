@@ -392,3 +392,289 @@ export const BibliotecaContactoVisualSchema = z
     (cs) => cs.every((c) => c.nivel !== "n5" || c.conQuien === "otra-persona"),
     { message: "El nivel 5 es con otra persona: es su esencia." },
   );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LA PIRÁMIDE (Sprint 006) — las FICHAS DE ACTIVIDAD del documento de la mamá.
+//
+// Una biblioteca propia (content/fichas.ts), organizada por los seis grupos de la pirámide que
+// la mamá trajo: señalar · imitación · comprender · atención conjunta · intención comunicativa ·
+// juego. No son pisos: se trabajan todos a la vez. Cada ficha es una actividad en instrucción
+// directa (qué tener a la mano, qué hacer, qué decir, qué ver, cómo saber que funcionó y qué
+// hacer si no pasa). Las 50 cápsulas de habla de la app y las 24 del S5 NO cambian: son las
+// fuentes de las que estas fichas derivan, y `origen` lo deja trazable para noviembre.
+//
+// Todo lo que se lee aquí es COMPORTAMIENTO OBSERVABLE; el gate de sensibilidad lo vigila.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Los seis grupos de la pirámide, en el orden de la imagen de la mamá (de la base a la punta). */
+export const GRUPOS = [
+  "senalar",
+  "imitacion",
+  "comprender",
+  "atencion-conjunta",
+  "intencion-comunicativa",
+  "juego",
+] as const;
+
+export type Grupo = (typeof GRUPOS)[number];
+
+export const NOMBRE_GRUPO: Record<Grupo, string> = {
+  senalar: "Señalar",
+  imitacion: "Imitación",
+  comprender: "Comprender",
+  "atencion-conjunta": "Atención conjunta",
+  "intencion-comunicativa": "Intención comunicativa",
+  juego: "Juego",
+};
+
+/** Una frase por grupo: qué es, en lo que la mamá ve. */
+export const DESCRIPCION_GRUPO: Record<Grupo, string> = {
+  senalar:
+    "Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.",
+  imitacion:
+    "Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.",
+  comprender:
+    "Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.",
+  "atencion-conjunta":
+    "Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.",
+  "intencion-comunicativa":
+    "Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.",
+  juego:
+    "Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.",
+};
+
+/** Los tres grupos que más trabajo necesitan ahora (decisión del usuario, sostenida por la evidencia). */
+export const GRUPOS_PRIORITARIOS: readonly Grupo[] = [
+  "imitacion",
+  "atencion-conjunta",
+  "juego",
+];
+
+/** Orden del documento: primero lo que más se necesita ahora; la pirámide sigue siendo un mapa. */
+export const ORDEN_DOCUMENTO: readonly Grupo[] = [
+  "imitacion",
+  "atencion-conjunta",
+  "juego",
+  "senalar",
+  "intencion-comunicativa",
+  "comprender",
+];
+
+export const PRIORIDADES = ["alta", "normal"] as const;
+export type Prioridad = (typeof PRIORIDADES)[number];
+
+/** La manera de jugar de cada ficha, con el nombre que lee la mamá. Es una etiqueta, no un grupo. */
+export const TECNICAS_FICHA = [
+  "lo-copio",
+  "ahora-yo-ahora-tu",
+  "pausa-antes-de-lo-mejor",
+  "un-turno-cada-uno",
+  "espero-en-silencio",
+  "canto-a-su-ritmo",
+  "nombro-lo-que-mira",
+  "su-palabra-mas-una",
+  "la-respuesta-completa",
+  "algo-que-mostrar",
+  "le-doy-a-elegir",
+  "misma-rutina-otra-persona",
+] as const;
+
+export type TecnicaFicha = (typeof TECNICAS_FICHA)[number];
+
+export const NOMBRE_TECNICA_FICHA: Record<TecnicaFicha, string> = {
+  "lo-copio": "Lo copio",
+  "ahora-yo-ahora-tu": "Ahora yo, ahora tú",
+  "pausa-antes-de-lo-mejor": "La pausa antes de lo mejor",
+  "un-turno-cada-uno": "Un turno cada uno",
+  "espero-en-silencio": "Espero en silencio",
+  "canto-a-su-ritmo": "Canto a su ritmo",
+  "nombro-lo-que-mira": "Nombro lo que él mira",
+  "su-palabra-mas-una": "Su palabra, más una",
+  "la-respuesta-completa": "La respuesta completa",
+  "algo-que-mostrar": "Algo que valga la pena mostrar",
+  "le-doy-a-elegir": "Le doy a elegir",
+  "misma-rutina-otra-persona": "La misma rutina con otra persona",
+};
+
+/**
+ * Las progresiones APROBADAS (G-Investigación del S6). Son ETIQUETAS OPCIONALES para ubicarse,
+ * nunca metas: cada cosa puede ir en un paso distinto el mismo día y un mal día no baja ningún
+ * paso. Intención comunicativa no tiene pasos (la evidencia no da una escalera para enseñar).
+ * La clave de cada paso lleva la letra de su grupo, así el schema puede exigir que coincidan.
+ */
+export const PROGRESIONES: Record<Grupo, Record<string, string>> = {
+  senalar: {
+    S1: "Sigue tu dedo",
+    S2: "Pide con la mano",
+    S3: "Muestra o da",
+    S4: "Señala para compartir",
+    S5: "El ida y vuelta sigue después del gesto",
+    S6: "Con otra persona, sin preparar",
+  },
+  imitacion: {
+    I1: "Se da cuenta de que lo copias",
+    I2: "Copia con ayuda",
+    I3: "Copia cuando le muestras",
+    I4: "Copia sin que se lo muestres",
+    I5: "Ida y vuelta que dura",
+    I6: "Con otra persona, y al otro día",
+  },
+  comprender: {
+    P1: "Responde a la costumbre con el gesto",
+    P2: "Responde a la palabra sola, dentro de la costumbre",
+    P3: "Responde a la palabra fuera de la costumbre o con otra persona",
+    P4: "La palabra vuelve como suya",
+  },
+  "atencion-conjunta": {
+    N1: "Mira cuando le interesa, con quien confía",
+    N2: "Anticipa y pide que siga",
+    N3: "Mira dentro del turno",
+    N4a: "Arranca el juego para pedir o seguir",
+    N4b: "Te muestra o te señala algo para compartirlo",
+    N5: "Con más personas",
+    N6: "En más momentos del día",
+  },
+  "intencion-comunicativa": {},
+  juego: {
+    O1: "Con objetos: agarra, suelta, golpea, mete y saca",
+    O2: "Con objetos: junta, apila, encaja",
+    T1: "Una vuelta con pausa",
+    T2: "Dos o tres vueltas iguales",
+    T3: "Las vueltas aguantan un cambio pequeño",
+    T4: "Él propone el cambio",
+    T5: "Los papeles al revés, dos veces seguidas",
+    T6: "Los papeles al revés, con un objeto",
+    T7: "Lo mismo con el hermano",
+  },
+};
+
+export const CON_QUIEN_FICHA = ["mama", "hermano"] as const;
+export type ConQuienFicha = (typeof CON_QUIEN_FICHA)[number];
+
+/**
+ * De dónde viene cada ficha (condición A de la orden del S6: trazable para reconciliar en
+ * noviembre). `refs` usa tres prefijos: `mirada:<id>` (una de las 24 del S5), `habla:<id>` (una
+ * de las 50 de la app) y `anexo:<X-Yn>` (una actividad de la investigación privada del S6).
+ *   de: "mirada" | "habla"  → la primera ref es esa cápsula; puede absorber otras.
+ *   de: "nueva"             → la primera ref es un anexo.
+ *   de: "fusion"            → nace de juntar dos o más cápsulas existentes.
+ */
+export const ORIGENES = ["mirada", "habla", "nueva", "fusion"] as const;
+export type OrigenFicha = (typeof ORIGENES)[number];
+
+const REF_ORIGEN = /^(mirada:[a-z0-9-]+|habla:[a-z0-9à-ÿ-]+|anexo:[A-F]-[A-F]\d{1,2})$/;
+
+const OrigenSchema = z
+  .object({
+    de: z.enum(ORIGENES),
+    refs: z.array(z.string().regex(REF_ORIGEN)).min(1),
+  })
+  .refine(
+    (o) => {
+      const primera = o.refs[0];
+      if (primera === undefined) return false; // zod corre el refine aunque min(1) ya falló
+      if (o.de === "mirada") return primera.startsWith("mirada:");
+      if (o.de === "habla") return primera.startsWith("habla:");
+      if (o.de === "nueva") return primera.startsWith("anexo:");
+      return o.refs.filter((r) => !r.startsWith("anexo:")).length >= 2;
+    },
+    {
+      message:
+        "El origen no cuadra: «mirada»/«habla» empiezan por esa cápsula, «nueva» por un anexo y «fusion» junta al menos dos cápsulas existentes.",
+    },
+  );
+
+export const FichaSchema = z
+  .object({
+    /** kebab-case estricto: viaja a anclas y selectores del documento generado. */
+    id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
+    grupo: z.enum(GRUPOS),
+    prioridad: z.enum(PRIORIDADES),
+    tecnica: z.enum(TECNICAS_FICHA),
+    titulo: z.string().min(1).max(70),
+    /** Lo que hay que tener listo antes de empezar. */
+    tenALaMano: z.array(z.string().min(1)).min(1).max(5),
+    /** Los pasos, en orden, uno por acción. */
+    haz: z.array(z.string().min(1)).min(3).max(5),
+    /** UNA línea que la mamá dice tal cual. */
+    tuLinea: z.string().min(1).max(140),
+    /** Lo que es probable que pase. */
+    esperaVer: z.string().min(1).max(260),
+    /** La señal observable de que funcionó — sin número, sin plazo, sin puntaje. */
+    funcionoSi: z.string().min(1).max(220),
+    /** Qué hacer si no pasa: siempre bajar la exigencia, nunca insistir. */
+    siNoPasa: z.string().min(1).max(260),
+    duracion: z.string().regex(/^\d+(–\d+)? min$/),
+    momentos: z.array(z.enum(MOMENTOS_DEL_DIA)).min(1),
+    conQuien: z.enum(CON_QUIEN_FICHA),
+    /** Etiqueta opcional de la progresión de su grupo (nunca meta). */
+    progresion: z.string().optional(),
+    origen: OrigenSchema,
+    fuente: z
+      .string()
+      .max(220)
+      .refine((f) => f.split(" · ").every((s) => FUENTE_PUBLICA.test(s)), {
+        message:
+          "La fuente va como «Autor, año, Revista» —o «Autor, año» si la revista describe a quién se estudió—, sin título.",
+      }),
+  })
+  .refine((f) => !/\d/.test(f.funcionoSi), {
+    message: "«Funcionó si» describe lo que se ve, sin números: ni conteos, ni plazos, ni porcentajes.",
+    path: ["funcionoSi"],
+  })
+  .refine(
+    // hasOwnProperty, no `in`: `in` mira el prototipo y dejaría pasar «constructor» o «toString».
+    (f) =>
+      f.progresion === undefined ||
+      Object.prototype.hasOwnProperty.call(PROGRESIONES[f.grupo], f.progresion),
+    {
+      message:
+        "La progresión tiene que ser un paso aprobado de SU grupo (intención comunicativa no tiene pasos).",
+      path: ["progresion"],
+    },
+  )
+  .refine(
+    (f) => (f.prioridad === "alta") === GRUPOS_PRIORITARIOS.includes(f.grupo),
+    {
+      message: "La prioridad alta es de imitación, atención conjunta y juego — y solo de ellos.",
+      path: ["prioridad"],
+    },
+  )
+  .refine(
+    (f) =>
+      f.conQuien !== "hermano" ||
+      [...f.haz, f.tuLinea].some((t) => t.toLowerCase().includes("hermano")),
+    {
+      message: "Una ficha con el hermano dice qué hace él: los pasos o la línea lo nombran.",
+      path: ["conQuien"],
+    },
+  );
+
+export type Ficha = z.infer<typeof FichaSchema>;
+
+/** Piso de la biblioteca (decisión del usuario: calidad sobre cantidad, «no menos de 20»). */
+export const MIN_FICHAS = 20;
+/** Cada grupo tiene al menos este número de fichas: ninguno se deja sin fortalecer. */
+export const MIN_POR_GRUPO = 2;
+
+export const BibliotecaFichasSchema = z
+  .array(FichaSchema)
+  .min(MIN_FICHAS)
+  .refine((fs) => new Set(fs.map((f) => f.id)).size === fs.length, {
+    message: "Los ids de las fichas deben ser únicos.",
+  })
+  .refine(
+    (fs) => GRUPOS.every((g) => fs.filter((f) => f.grupo === g).length >= MIN_POR_GRUPO),
+    { message: "Los seis grupos se trabajan a la vez: cada uno necesita sus fichas." },
+  )
+  .refine(
+    (fs) => {
+      const n = (gs: readonly Grupo[]) => fs.filter((f) => gs.includes(f.grupo)).length;
+      const resto = GRUPOS.filter((g) => !GRUPOS_PRIORITARIOS.includes(g));
+      return n(GRUPOS_PRIORITARIOS) > n(resto);
+    },
+    {
+      message:
+        "Imitación, atención conjunta y juego son la prioridad: juntos llevan más fichas que los otros tres juntos.",
+    },
+  );

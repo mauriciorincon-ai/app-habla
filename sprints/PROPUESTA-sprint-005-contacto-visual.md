@@ -25,7 +25,7 @@ estado: PENDIENTE de estructurar en la planeadora
   (las 50 cápsulas de habla), que le pasará a la mamá para trabajarlas a diario.
 - La mamá quiere trabajar, **incluso por encima del habla, el contacto visual**. El usuario pide
   una investigación muy profunda y todas las cápsulas que la evidencia justifique, de alto
-  impacto o potencial impacto, para un niño de 4–5 años.
+  impacto o potencial impacto, para un niño en la etapa de palabras sueltas.
 
 ## 2 · Lo que se desplaza y lo que queda pendiente (visible)
 
@@ -82,7 +82,7 @@ con lo que las terapias ya trabajan (turnos).
 sobre niños con dificultades de contacto visual hay dos escuelas: *entrenar la mirada* (pedir
 «mírame», reforzar el instante) y *atención conjunta y compromiso social* (rutinas de juego por
 turnos, seguir su interés, expectativa y pausa, imitación, juego físico con pausa), donde el
-contacto visual aparece como consecuencia. La segunda tiene mejor evidencia en intervenciones
+contacto visual aparece como consecuencia. La segunda tiene mejor evidencia en los estudios
 mediadas por padres y menos riesgo de volver la mirada aversiva. **Pero se investigan las dos**
 y cada una queda graduada por fuerza de evidencia; la biblioteca se arma con lo que resista.
 
@@ -97,7 +97,7 @@ personas, más momentos del día.
    por fuerza (FUERTE / MODERADA / DÉBIL / CONTRA), con fuente citada y verificable, qué
    mecanismo explica cada técnica, para qué perfil observable sirve, y **qué NO hacer** (con su
    razón). Incluye una sección explícita sobre el debate «forzar vs. emerger».
-   Puntos de partida a verificar (no afirmados aún): intervenciones mediadas por padres para la
+   Puntos de partida a verificar (no afirmados aún): programas guiados por los padres para la
    comunicación social temprana y sus revisiones sistemáticas; los modelos de atención conjunta
    y juego por turnos con mejor evidencia y sus ensayos de seguimiento (se nombran en la
    investigación, que vive en la planeadora); la literatura sobre respuesta al nombre; las rutinas sociales sensoriales
