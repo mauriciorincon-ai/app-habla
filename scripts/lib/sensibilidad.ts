@@ -115,8 +115,9 @@ export function archivoDe(alcance: Alcance): string {
  * LO QUE EL GATE VIGILA (falla el test): todo lo que los sprints del documento de la mamá
  * producen y publican — contenido, documento generado, scripts, tests, bitácoras, summaries,
  * auditoría, propuestas, ADR, y las secciones S5/S6 de la guía y el manual (entre marcadores).
- * CLAUDE.md queda fuera (lo dice la lista). El resto del repo —incluidas las 50 cápsulas de la
- * app y las 24 del S5, que son las FUENTES de las fichas y no se tocan— lo cubre el INFORME
+ * CLAUDE.md queda fuera (lo dice la lista). Las 24 del S5 siguen vigiladas aunque ya no se
+ * publiquen en el documento (son la fuente de las fichas y el repo es público). El resto del repo
+ * —incluidas las 50 cápsulas de la app, que no se tocan— lo cubre el INFORME
  * (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
@@ -135,6 +136,7 @@ export const ALCANCE_GATE: Alcance[] = [
   { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
   // S5 «Contacto visual» y lo compartido (el schema desde el dominio del S5 incluye el del S6)
   { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
+  "content/contacto-visual.ts",
   "scripts/copiar-documentos.mjs",
   "scripts/lib/catalogo-comun.mjs",
   "scripts/lib/sensibilidad.ts",

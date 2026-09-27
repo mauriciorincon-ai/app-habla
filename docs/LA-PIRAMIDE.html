@@ -34,7 +34,6 @@
   .suave { color: var(--suave); }
   .conteo { font: 400 .85rem system-ui, sans-serif; color: var(--suave); }
   .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; margin: .9rem 0; }
-  .aviso-prueba { border-color: var(--aviso); background: var(--aviso-suave); }
   .encuadre { border-left: 4px solid var(--acento); }
   .semaforo { border-left: 4px solid var(--peligro); }
   .favoritos { border-left: 4px solid var(--celebracion); }
@@ -43,6 +42,7 @@
   .indice a { font: 600 .82rem/1.2 system-ui, sans-serif; text-decoration: none; color: var(--acento); border: 1px solid var(--borde);
     border-radius: 999px; padding: .55rem .8rem; min-height: 44px; display: inline-flex; align-items: center; }
   .indice a.prioritario { border: 2px solid var(--acento); }
+  .solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .piramide { list-style: none; padding: 0; margin: .5rem 0; }
   .piramide li { padding: .6rem 0; border-bottom: 1px dashed var(--borde); }
   .grupo-nombre { margin: 0; font-weight: 700; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
@@ -91,14 +91,13 @@
   <header>
     <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
     <h1>La pirámide, en casa</h1>
-    <p>Antes de hablar se necesitan seis cosas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
+    <p>La pirámide tiene seis piezas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
     juego</strong>. No son pisos que se suben uno por uno: <strong>se construyen todas a la vez</strong>, en los mismos juegos. Aquí
     cada una está convertida en actividades cortas, hechas con lo que a él ya le gusta.</p>
-    
     <nav class="indice" aria-label="Grupos de fichas">
-      <a href="#grupo-imitacion" class="prioritario">Imitación · 12</a>
-      <a href="#grupo-atencion-conjunta" class="prioritario">Atención conjunta · 7</a>
-      <a href="#grupo-juego" class="prioritario">Juego · 13</a>
+      <a href="#grupo-imitacion" class="prioritario">Imitación · 12<span class="solo-lector"> · prioridad ahora</span></a>
+      <a href="#grupo-atencion-conjunta" class="prioritario">Atención conjunta · 7<span class="solo-lector"> · prioridad ahora</span></a>
+      <a href="#grupo-juego" class="prioritario">Juego · 13<span class="solo-lector"> · prioridad ahora</span></a>
       <a href="#grupo-senalar">Señalar · 4</a>
       <a href="#grupo-intencion-comunicativa">Intención comunicativa · 10</a>
       <a href="#grupo-comprender">Comprender · 10</a>
@@ -114,13 +113,13 @@
       sesiones. Y <strong>descansar también cuenta</strong>.</p>
     </div>
     <div class="aviso semaforo">
-      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita, <strong>se para</strong>. Se vuelve a
-      intentar más tarde, o mañana.</p>
+      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita <strong>para salirse del juego</strong>,
+      <strong>se para</strong>. Se vuelve a intentar más tarde, o mañana. (En el cucú, taparse es el juego, no el semáforo.)</p>
     </div>
   </header>
 
   <h2>La pirámide: un mapa, no una escalera</h2>
-  <p>Las seis, con lo que ya hace y lo que viene. Las tres marcadas son las que más trabajo necesitan ahora; las otras tres también
+  <p>Las seis, en una frase cada una. Las marcadas «prioridad ahora» son las que más trabajo necesitan ahora; las demás también
   van, todos los días.</p>
   <ul class="piramide">
       <li>
@@ -182,10 +181,10 @@
     <li>Cuando te muestre algo, te lo señale o te diga «tú»: mira lo que te muestra, vuelve a su cara con emoción y ponle la palabra. Una respuesta a medias apaga el gesto.</li>
     <li>El objeto entra dentro del juego que ya le gusta —la marcha, la persecución, las cosquillas—, nunca en frío en una mesa. Y un cambio a la vez: persona nueva o juego nuevo, nunca los dos.</li>
     <li>Ni más rápido ni más lento que él: sigue su ritmo.</li>
-    <li>Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas.</li>
+    <li>Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas. Las preguntas que respondes tú enseguida («¿Más?… ¡más!», «¿Dónde está mamá?… ¡Aquí está!») son parte del juego. Y «Funcionó si» vale solo cuando pasó dentro de un juego de verdad, nunca armado para ver si entiende.</li>
     <li>Ningún premio por hacerlo, nunca le pidas que te mire, y no le exijas decirlo de una forma: vale el gesto, el sonido o la palabra.</li>
-    <li>El hermano juega con él; no le enseña. Tres reglas para el hermano: una cosa a la vez, esperar cinco segundos, copiarlo.</li>
-    <li>Si aparta la vista, se tapa la cara o se irrita: se para. «Se acabó» cierra el juego; no lo persigas para seguir.</li>
+    <li>El hermano juega con él; no le enseña. Sus reglas de siempre: una cosa a la vez, esperar cinco segundos, copiarlo. Si una ficha le da otras, son solo para ese juego.</li>
+    <li>Si aparta la vista, se tapa la cara o se irrita para salirse del juego: se para. «Se acabó» cierra el juego; no lo persigas para seguir.</li>
     <li>Sin contar, sin plazos, sin metas con número. Nada de esto promete que hable en una fecha: cada ficha dice qué ver, y ya.</li>
     <li>Momentos cortos, nunca sesiones. Un mal día no borra nada. Y tú también descansas.</li>
   </ul>
@@ -199,6 +198,20 @@
       <li>¿Alguna ficha le pediría forzarlo, aunque sea un poco?</li>
     </ul>
     <p class="suave"><span id="revisadas">0</span> de 56 revisadas · tu avance queda guardado en este navegador.</p>
+    <p class="suave">Quedaron fuera del documento (11); siguen en la app:</p>
+    <ul class="lista">
+      <li>app · interes-voz-mueve — necesita la pantalla</li>
+      <li>app · interes-co-uso — necesita la pantalla</li>
+      <li>app · sonidos-cualquier-sonido-cuenta — necesita la pantalla</li>
+      <li>app · interes-cohete-de-la-voz — necesita la pantalla</li>
+      <li>app · interes-palabra-y-objeto — necesita la pantalla</li>
+      <li>app · frases-dos-palabras-utiles — es de la etapa siguiente</li>
+      <li>app · frases-el-hueco-de-la-segunda — es de la etapa siguiente</li>
+      <li>app · frases-narra-con-dos — es de la etapa siguiente</li>
+      <li>app · frases-cuenta-cuentos-con-huecos — es de la etapa siguiente</li>
+      <li>app · focalizada-sin-examen — quedó como regla del «Qué no hacer»</li>
+      <li>app · focalizada-no-preguntes-nombra — quedó como regla del «Qué no hacer»</li>
+    </ul>
   </section>
 
   <section class="grupo" id="grupo-imitacion" aria-labelledby="titulo-imitacion">
@@ -208,7 +221,7 @@
     <p class="suave">Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.</p>
     
     <article class="ficha" id="dos-juguetes-iguales">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-juguetes-iguales"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-juguetes-iguales" aria-label="Revisada: Dos iguales: tú lo copias a él"> Revisada</label>
       <h3>Dos iguales: tú lo copias a él</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -219,7 +232,7 @@
       </p>
       <div class="parte">
         <p class="rotulo">Ten a la mano</p>
-        <ul><li>Dos juguetes iguales que le gusten: dos carros, dos tambores o dos cucharas de palo.</li><li>Nada nuevo el primer día.</li></ul>
+        <ul><li>Dos juguetes iguales que ya le gusten (nada nuevo el primer día): dos carros, dos tambores o dos cucharas de palo.</li></ul>
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
@@ -242,7 +255,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · dos-juguetes-iguales + investigación · B-A1</p>
     </article>
     <article class="ficha" id="el-prueba-si-lo-copias">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-prueba-si-lo-copias"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-prueba-si-lo-copias" aria-label="Revisada: Él prueba si lo copias"> Revisada</label>
       <h3>Él prueba si lo copias</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -276,7 +289,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-prueba-si-lo-copias</p>
     </article>
     <article class="ficha" id="sigo-su-ritmo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sigo-su-ritmo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sigo-su-ritmo" aria-label="Revisada: Sigo su ritmo: él golpea, yo golpeo"> Revisada</label>
       <h3>Sigo su ritmo: él golpea, yo golpeo</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -310,7 +323,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · sigo-su-ritmo + investigación · D-A3</p>
     </article>
     <article class="ficha" id="una-estrofa-mas">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-estrofa-mas"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-estrofa-mas" aria-label="Revisada: Canción con gestos: una estrofa más cada semana"> Revisada</label>
       <h3>Canción con gestos: una estrofa más cada semana</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -344,7 +357,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · una-estrofa-mas</p>
     </article>
     <article class="ficha" id="ahora-yo-ahora-tu">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ahora-yo-ahora-tu"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ahora-yo-ahora-tu" aria-label="Revisada: Ahora yo, ahora tú: una acción nueva con el juguete"> Revisada</label>
       <h3>Ahora yo, ahora tú: una acción nueva con el juguete</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -359,7 +372,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Empieza copiándolo a él un rato, y di en una o dos palabras lo que hace: «golpea», «rueda».</li><li>De vez en cuando, haz tú una acción nueva con tu juguete, bien visible, con una palabra —«¡a rodar!»— y espera.</li><li>Si la copia, celébralo con la voz y la cara, y vuelve a copiarlo tú a él.</li><li>Si no la copia después de mostrársela dos o tres veces, llévale las manos con suavidad para hacerla una vez, celébralo igual y vuelve a copiarlo.</li><li>La mayor parte del rato eres tú quien lo copia; la acción nueva es de vez en cuando.</li></ol>
+        <ol><li>Empieza copiándolo a él un rato, y di en una o dos palabras lo que hace: «golpea», «rueda».</li><li>De vez en cuando, haz tú una acción nueva con tu juguete, bien visible, con una palabra —«¡a rodar!»— y espera.</li><li>Si la copia, celébralo con la voz y la cara, y vuelve a copiarlo tú a él.</li><li>Si no la copia después de verla unas veces, llévale las manos con suavidad, una sola vez, y celébralo igual.</li><li>La mayor parte del rato eres tú quien lo copia; la acción nueva es de vez en cuando.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Ahora yo!… ¡ahora tú!» — igual que en las cosquillas.</blockquote>
       <div class="parte">
@@ -378,7 +391,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A2 + investigación · D-A10</p>
     </article>
     <article class="ficha" id="eco-de-voz">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="eco-de-voz"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="eco-de-voz" aria-label="Revisada: Eco de voz: le devuelves su sonido"> Revisada</label>
       <h3>Eco de voz: le devuelves su sonido</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -412,7 +425,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A3 + app · sonidos-habla-como-el</p>
     </article>
     <article class="ficha" id="marchar-con-algo-en-la-mano">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-algo-en-la-mano"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-algo-en-la-mano" aria-label="Revisada: Marchar con algo en la mano"> Revisada</label>
       <h3>Marchar con algo en la mano</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -423,11 +436,11 @@
       </p>
       <div class="parte">
         <p class="rotulo">Ten a la mano</p>
-        <ul><li>Dos cucharas de palo, o dos botellas con arroz que suenen.</li><li>Dos ollas para golpear al final.</li></ul>
+        <ul><li>Dos cucharas de palo, o dos botellas con arroz que suenen: la suya, a su alcance, sin dársela.</li><li>Dos ollas para golpear al final.</li></ul>
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Arranca la marcha de siempre, sin nada en las manos.</li><li>En la segunda vuelta, toma tu cuchara y márchala arriba y abajo al ritmo; deja la suya a su alcance, sin dársela.</li><li>Si la toma, copia lo que haga con ella.</li><li>Cambia tú la acción con la cuchara (golpear la olla, apuntar al techo, dar vueltas) y espera.</li><li>Si te copia, celébralo y vuelvan a marchar.</li></ol>
+        <ol><li>Arranca la marcha de siempre, sin nada en las manos.</li><li>En la segunda vuelta, marcha con tu cuchara arriba y abajo, al ritmo.</li><li>Si la toma, copia lo que haga con ella.</li><li>Cambia tú la acción con la cuchara (golpear la olla, apuntar al techo, dar vueltas) y espera.</li><li>Si te copia, celébralo y vuelvan a marchar.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Marcha, marcha… y pum!»</blockquote>
       <div class="parte">
@@ -446,7 +459,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A4 + investigación · F-F5</p>
     </article>
     <article class="ficha" id="cosquillas-con-sonido">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-con-sonido"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-con-sonido" aria-label="Revisada: Cosquillas con sonido, sonido sin cosquillas"> Revisada</label>
       <h3>Cosquillas con sonido, sonido sin cosquillas</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -480,7 +493,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A5</p>
     </article>
     <article class="ficha" id="gestos-que-dicen-algo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="gestos-que-dicen-algo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="gestos-que-dicen-algo" aria-label="Revisada: Gestos que dicen algo"> Revisada</label>
       <h3>Gestos que dicen algo</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -514,7 +527,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A6</p>
     </article>
     <article class="ficha" id="sonidos-de-las-cosas">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sonidos-de-las-cosas"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sonidos-de-las-cosas" aria-label="Revisada: Sonidos de las cosas: el avión hace «uuuh»"> Revisada</label>
       <h3>Sonidos de las cosas: el avión hace «uuuh»</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -548,7 +561,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A7 + app · sonidos-ponle-sonido-al-mundo + app · sonidos-su-sonido-tu-palabra</p>
     </article>
     <article class="ficha" id="espejo-por-turnos">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espejo-por-turnos"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espejo-por-turnos" aria-label="Revisada: Espejo por turnos: el ida y vuelta que dura"> Revisada</label>
       <h3>Espejo por turnos: el ida y vuelta que dura</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -582,7 +595,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · B-A8 + app · sonidos-turnos-de-sonidos</p>
     </article>
     <article class="ficha" id="dos-pasos-y-lo-de-ayer">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-pasos-y-lo-de-ayer"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-pasos-y-lo-de-ayer" aria-label="Revisada: Dos pasos, y lo de ayer"> Revisada</label>
       <h3>Dos pasos, y lo de ayer</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -593,11 +606,11 @@
       </p>
       <div class="parte">
         <p class="rotulo">Ten a la mano</p>
-        <ul><li>Cosas con dos pasos naturales: meter la pelota y tapar; llenar el vaso y vaciarlo; subir el muñeco al carro y empujar.</li></ul>
+        <ul><li>Cosas con dos pasos naturales: meter la pelota y tapar; llenar el vaso y vaciarlo; subir el muñeco al carro y empujar.</li><li>Que «Ahora yo, ahora tú» ya salga con una acción; si no, empieza por esa ficha.</li></ul>
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Úsala solo cuando «Ahora yo, ahora tú» ya salga con una acción.</li><li>Haz dos acciones seguidas con tu juguete, cada una con su palabra —«meto… ¡tapo!»— y espera.</li><li>Si hace un paso, celébralo y haz tú el segundo; si hace los dos, celébralo en grande.</li><li>Al día siguiente, deja las cosas a la vista sin mostrarle nada, y mira qué hace.</li><li>Si repite la cadena de ayer, cópialo y ponle las palabras.</li></ol>
+        <ol><li>Haz dos acciones seguidas con tu juguete, cada una con su palabra —«meto… ¡tapo!»— y espera.</li><li>Si hace un paso, celébralo y haz tú el segundo; si hace los dos, celébralo en grande.</li><li>Al día siguiente, deja las cosas a la vista sin mostrarle nada, y mira qué hace.</li><li>Si repite la cadena de ayer, cópialo y ponle las palabras.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «Meto… ¡y tapo!»</blockquote>
       <div class="parte">
@@ -623,7 +636,7 @@
     <p class="suave">Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.</p>
     
     <article class="ficha" id="te-trae-el-otro-juguete">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="te-trae-el-otro-juguete"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="te-trae-el-otro-juguete" aria-label="Revisada: Te trae el otro juguete: arranca él"> Revisada</label>
       <h3>Te trae el otro juguete: arranca él</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -657,7 +670,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · te-trae-el-otro-juguete</p>
     </article>
     <article class="ficha" id="el-globo-en-la-boca">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-globo-en-la-boca"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-globo-en-la-boca" aria-label="Revisada: El globo en la boca: su mirada sube a tu cara"> Revisada</label>
       <h3>El globo en la boca: su mirada sube a tu cara</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -691,7 +704,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-globo-en-la-boca</p>
     </article>
     <article class="ficha" id="cucu-cuando-se-tapa-el">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cucu-cuando-se-tapa-el"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cucu-cuando-se-tapa-el" aria-label="Revisada: Cucú: cuando se tapa él"> Revisada</label>
       <h3>Cucú: cuando se tapa él</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -719,13 +732,13 @@
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
-        <p>Si hoy no arranca él, juega una ronda normal y déjalo ahí. No le tapes la cara a él si no le gusta, y no alargues la espera al principio.</p>
+        <p>Aquí taparse es el juego, no el semáforo. Si hoy no arranca él, juega una ronda normal y déjalo ahí. No le tapes la cara a él si no le gusta, y no alargues la espera al principio.</p>
       </div>
       <p class="fuente">Nomikou, 2017, Front Psychol · Halle, 1981, J Appl Behav Anal</p>
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · cucu-cuando-se-tapa-el</p>
     </article>
     <article class="ficha" id="se-lo-lleva-al-hermano">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="se-lo-lleva-al-hermano"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="se-lo-lleva-al-hermano" aria-label="Revisada: Se lo lleva al hermano: arranca o muestra él"> Revisada</label>
       <h3>Se lo lleva al hermano: arranca o muestra él</h3>
       <p class="chips">
         <span class="chip">La misma rutina con otra persona</span>
@@ -736,11 +749,11 @@
       </p>
       <div class="parte">
         <p class="rotulo">Ten a la mano</p>
-        <ul><li>El hermano cerca, unos minutos, y tres reglas dichas antes: mira lo que él te muestre · di «¡uy!» y míralo a la cara · sigue su dedo cuando señale.</li><li>Un juego que ya sale contigo.</li></ul>
+        <ul><li>El hermano cerca, unos minutos. Además de sus reglas de siempre, para este juego: mira lo que él te muestre · di «¡uy!» y míralo a la cara · sigue su dedo cuando señale.</li><li>Un juego que ya sale contigo.</li></ul>
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Juega con él lo que ya funciona contigo, con el hermano cerca, sin proponer nada.</li><li>Si él levanta o señala algo, gira tu cuerpo hacia el hermano: «¡muéstraselo!».</li><li>El hermano responde con sus tres reglas; tú te quedas un paso atrás, sin hablar.</li><li>Si le lleva las manos o el juguete al hermano, o se le planta enfrente, el hermano arranca el juego al instante.</li><li>Cierra antes de que alguno se canse y agradécele al hermano algo concreto: «seguiste su dedo».</li></ol>
+        <ol><li>Juega con él lo que ya funciona contigo, con el hermano cerca, sin proponer nada.</li><li>Si él levanta o señala algo, gira tu cuerpo hacia el hermano: «¡muéstraselo!».</li><li>El hermano responde como le dijiste; tú te quedas un paso atrás, sin hablar.</li><li>Si le lleva las manos o el juguete al hermano, o se le planta enfrente, el hermano arranca el juego al instante.</li><li>Cierra antes de que alguno se canse y agradécele al hermano algo concreto: «seguiste su dedo».</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> Al hermano: «Si te trae algo o te busca, ahí mismo le respondes, sin preguntarle nada.»</blockquote>
       <div class="parte">
@@ -759,7 +772,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · le-lleva-el-juego-al-hermano + investigación · D-A7 + investigación · A-A7</p>
     </article>
     <article class="ficha" id="comento-no-pregunto">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="comento-no-pregunto"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="comento-no-pregunto" aria-label="Revisada: Comento, no pregunto"> Revisada</label>
       <h3>Comento, no pregunto</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -793,7 +806,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · D-A5</p>
     </article>
     <article class="ficha" id="lo-que-hace-contigo-tiene-nombre">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-hace-contigo-tiene-nombre"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-hace-contigo-tiene-nombre" aria-label="Revisada: Lo que hace contigo tiene nombre"> Revisada</label>
       <h3>Lo que hace contigo tiene nombre</h3>
       <p class="chips">
         <span class="chip">La respuesta completa</span>
@@ -827,7 +840,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · D-A6</p>
     </article>
     <article class="ficha" id="en-el-piso-con-su-juguete">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="en-el-piso-con-su-juguete"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="en-el-piso-con-su-juguete" aria-label="Revisada: En el piso, con el juguete que él eligió"> Revisada</label>
       <h3>En el piso, con el juguete que él eligió</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -842,7 +855,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Espera a ver qué agarra él, y siéntate en el piso frente a él, cara a cara.</li><li>No propongas otro juego: métete en el suyo.</li><li>Nombra lo que él hace con el juguete, de a una palabra: «rueda», «tapa», «¡pum!».</li><li>Si te aparta, retrocede un poco y sigue nombrando desde ahí.</li></ol>
+        <ol><li>Espera a ver qué agarra él, y siéntate en el piso frente a él, cara a cara.</li><li>No propongas otro juego: métete en el suyo.</li><li>Nombra lo que él hace con el juguete, de a una palabra, como en «Comento, no pregunto»: «rueda», «tapa», «¡pum!».</li><li>Si te aparta, retrocede un poco y sigue nombrando desde ahí.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Tapa! Suena la tapa… ¡pum!»</blockquote>
       <div class="parte">
@@ -868,7 +881,7 @@
     <p class="suave">Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.</p>
     
     <article class="ficha" id="el-avion-cara-a-cara">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-avion-cara-a-cara"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-avion-cara-a-cara" aria-label="Revisada: El avión, cara a cara"> Revisada</label>
       <h3>El avión, cara a cara</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -902,7 +915,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-avion-cara-a-cara</p>
     </article>
     <article class="ficha" id="cosquillas-que-se-detienen">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-que-se-detienen"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-que-se-detienen" aria-label="Revisada: Cosquillas y «corre que te atrapo» que se detienen justo antes"> Revisada</label>
       <h3>Cosquillas y «corre que te atrapo» que se detienen justo antes</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -936,7 +949,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · cosquillas-que-se-detienen + investigación · E-A1 + investigación · A-A6</p>
     </article>
     <article class="ficha" id="me-meto-en-su-juguete">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="me-meto-en-su-juguete"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="me-meto-en-su-juguete" aria-label="Revisada: Me meto en su juguete"> Revisada</label>
       <h3>Me meto en su juguete</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -970,7 +983,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · me-meto-en-su-juguete</p>
     </article>
     <article class="ficha" id="alto-y-ya-con-el-carro">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="alto-y-ya-con-el-carro"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="alto-y-ya-con-el-carro" aria-label="Revisada: «¡Alto!… ¡ya!»: el carro se detiene en tu mano"> Revisada</label>
       <h3>«¡Alto!… ¡ya!»: el carro se detiene en tu mano</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1004,7 +1017,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · alto-y-ya-con-el-carro</p>
     </article>
     <article class="ficha" id="el-me-pasa-el-turno">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-me-pasa-el-turno"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-me-pasa-el-turno" aria-label="Revisada: Él me pasa el turno"> Revisada</label>
       <h3>Él me pasa el turno</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1038,7 +1051,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-me-pasa-el-turno</p>
     </article>
     <article class="ficha" id="la-marcha-que-cambia">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-marcha-que-cambia"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-marcha-que-cambia" aria-label="Revisada: La marcha que cambia"> Revisada</label>
       <h3>La marcha que cambia</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1072,7 +1085,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F1 + investigación · D-A8</p>
     </article>
     <article class="ficha" id="cosquillas-al-reves">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-al-reves"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-al-reves" aria-label="Revisada: Cosquillas al revés, con ida y vuelta"> Revisada</label>
       <h3>Cosquillas al revés, con ida y vuelta</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1106,7 +1119,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F2</p>
     </article>
     <article class="ficha" id="corre-que-te-atrapo-con-base">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-base"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-base" aria-label="Revisada: Corre que te atrapo, con base"> Revisada</label>
       <h3>Corre que te atrapo, con base</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1140,7 +1153,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F3</p>
     </article>
     <article class="ficha" id="el-carro-va-y-viene">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-carro-va-y-viene"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-carro-va-y-viene" aria-label="Revisada: El carro va y viene"> Revisada</label>
       <h3>El carro va y viene</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1155,7 +1168,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Rueda el carro hacia él con su sonido: «¡brrrum!».</li><li>Espera con las manos abiertas; si no lo devuelve, acércate, empújalo apenas hacia ti y agradécelo en grande.</li><li>Cada vez que vuelva, devuélvelo igual, a su velocidad.</li><li>Cuando ya vaya y venga, agrega una sola cosa: el carro choca con tu rodilla —«¡pum!»— o pasa por el túnel de tus piernas.</li><li>En tu turno, señala con el dedo lo que pasa —«¡mira, se cayó!»— y míralo.</li></ol>
+        <ol><li>Rueda el carro hacia él con su sonido: «¡brrrum!».</li><li>Espera con las manos abiertas a que lo devuelva.</li><li>Cada vez que vuelva, devuélvelo igual, a su velocidad.</li><li>Cuando ya vaya y venga, agrega una sola cosa: el carro choca con tu rodilla —«¡pum!»— o pasa por el túnel de tus piernas.</li><li>En tu turno, señala con el dedo lo que pasa —«¡mira, se cayó!»— y míralo.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Brrrum!… ¡pum, en la rodilla!»</blockquote>
       <div class="parte">
@@ -1168,13 +1181,13 @@
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
-        <p>Acércate más y usa lo que él prefiera rodar. Si se queda con el carro, no se lo quites: rueda otro igual y espera a que te mire. Si lo nuevo rompe el juego, vuelve a lo simple.</p>
+        <p>Si no lo devuelve, acércate, empújalo apenas hacia ti y agradécelo en grande. Usa lo que él prefiera rodar. Si se queda con el carro, no se lo quites: rueda otro igual y espera a que te mire. Si lo nuevo rompe el juego, vuelve a lo simple.</p>
       </div>
       <p class="fuente">Kasari, 2014, Pediatrics · Gulsrud, 2016, J Child Psychol Psychiatry</p>
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F4 + investigación · A-A5</p>
     </article>
     <article class="ficha" id="un-paso-mas">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="un-paso-mas"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="un-paso-mas" aria-label="Revisada: Un paso más: de meter a tapar, de apilar a tumbar"> Revisada</label>
       <h3>Un paso más: de meter a tapar, de apilar a tumbar</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1208,7 +1221,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F6</p>
     </article>
     <article class="ficha" id="de-mentira-conmigo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-mentira-conmigo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-mentira-conmigo" aria-label="Revisada: De mentira, conmigo: la taza vacía"> Revisada</label>
       <h3>De mentira, conmigo: la taza vacía</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1223,7 +1236,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>En la merienda, haz de mentira sobre ti: bebe de la taza vacía con «glu-glu» y ríete.</li><li>Ofrécele la taza y espera.</li><li>Si «bebe» de mentira, hazlo tú otra vez: ya es un turno.</li><li>Cuando eso salga, acerca la taza a tu boca y luego pásasela para que él te dé de beber; después, al hermano.</li><li>Solo cuando eso exista, invita al peluche.</li></ol>
+        <ol><li>En la merienda, haz de mentira sobre ti: bebe de la taza vacía con «glu-glu» y ríete.</li><li>Ofrécele la taza y espera.</li><li>Si «bebe» de mentira, hazlo tú otra vez: ya es un turno.</li><li>Cuando eso salga, pásale la taza y acerca tu boca: que él te dé de beber.</li><li>Solo cuando eso exista, invita al peluche.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «Glu-glu-glu… ¡ahh!» — y le pasas la taza.</blockquote>
       <div class="parte">
@@ -1236,13 +1249,13 @@
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
-        <p>Todavía no es su momento: deja la taza a la vista en las meriendas y jueguen «Un paso más». No insistas con lo de mentira.</p>
+        <p>Hoy no le llamó la atención: deja la taza a la vista en las meriendas y jueguen «Un paso más». No insistas con lo de mentira.</p>
       </div>
       <p class="fuente">Lifter, 2011, Infants Young Child · Kasari, 2014, Pediatrics</p>
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F7</p>
     </article>
     <article class="ficha" id="lucha-suave-con-senal">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lucha-suave-con-senal"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lucha-suave-con-senal" aria-label="Revisada: Lucha suave con señal de «¡ya!» y de «¡alto!»"> Revisada</label>
       <h3>Lucha suave con señal de «¡ya!» y de «¡alto!»</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1257,7 +1270,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Muéstrale las dos señales: brazos arriba y «¡ya!» para empezar; manos abiertas y «¡alto!» para parar.</li><li>Haz la señal de «¡ya!», empújalo suave con la almohada y deja que te tumbe; cae exagerando, en cámara lenta.</li><li>Al rato, haz la señal de «¡alto!» y quédate sin moverte, mirándolo.</li><li>Espera su señal para seguir —la mirada, los brazos, un sonido o su «¡ya!»— y arranca otra vez.</li><li>Cambien los papeles: ahora lo tumbas tú, suave; luego él a ti. Unas rondas y se cierra.</li></ol>
+        <ol><li>Muéstrale las dos señales: brazos arriba y «¡ya!» para empezar; manos abiertas y «¡alto!» para parar.</li><li>Haz la señal de «¡ya!», empújalo suave con la almohada y deja que te tumbe; cae exagerando, en cámara lenta.</li><li>Al rato, haz la señal de «¡alto!» y quédate sin moverte, mirándolo.</li><li>Espera su señal para seguir —la mirada, los brazos, un sonido o su «¡ya!»— y arranca otra vez; si no llega, arranca igual.</li><li>Cambien los papeles: ahora lo tumbas tú, suave; luego él a ti. Unas rondas y se cierra.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Ya!» (brazos arriba) … «¡Alto!» (manos abiertas, sin moverte)</blockquote>
       <div class="parte">
@@ -1276,7 +1289,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · F-F10</p>
     </article>
     <article class="ficha" id="con-el-hermano-la-misma-rutina">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="con-el-hermano-la-misma-rutina"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="con-el-hermano-la-misma-rutina" aria-label="Revisada: Con el hermano: la misma rutina, con las mismas palabras"> Revisada</label>
       <h3>Con el hermano: la misma rutina, con las mismas palabras</h3>
       <p class="chips">
         <span class="chip">La misma rutina con otra persona</span>
@@ -1287,7 +1300,7 @@
       </p>
       <div class="parte">
         <p class="rotulo">Ten a la mano</p>
-        <ul><li>El hermano, cinco minutos, y tres reglas dichas antes: haz una sola cosa · espera cinco segundos · cópialo a él.</li><li>El juego que mejor le sale contigo: la marcha, las cosquillas, «¡alto!… ¡ya!» o los dos juguetes iguales.</li></ul>
+        <ul><li>El hermano, cinco minutos, y sus reglas de siempre, dichas antes: haz una sola cosa · espera cinco segundos · cópialo a él.</li><li>El juego que mejor le sale contigo: la marcha, las cosquillas, «¡alto!… ¡ya!» o los dos juguetes iguales.</li></ul>
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
@@ -1317,7 +1330,7 @@
     <p class="suave">Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.</p>
     
     <article class="ficha" id="mama-senala-el-mundo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mama-senala-el-mundo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mama-senala-el-mundo" aria-label="Revisada: Mamá señala el mundo"> Revisada</label>
       <h3>Mamá señala el mundo</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1351,7 +1364,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · A-A1</p>
     </article>
     <article class="ficha" id="la-respuesta-completa">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-respuesta-completa"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-respuesta-completa" aria-label="Revisada: La respuesta completa: cada vez que señala o dice «tú»"> Revisada</label>
       <h3>La respuesta completa: cada vez que señala o dice «tú»</h3>
       <p class="chips">
         <span class="chip">La respuesta completa</span>
@@ -1385,7 +1398,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · A-A2 + investigación · C-C4 + investigación · D-A1 + app · sonidos-senalar-ya-es-hablar</p>
     </article>
     <article class="ficha" id="mira-lo-que-traigo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mira-lo-que-traigo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mira-lo-que-traigo" aria-label="Revisada: Mira lo que traigo: mostrar y dar"> Revisada</label>
       <h3>Mira lo que traigo: mostrar y dar</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1400,7 +1413,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Al terminar una ronda de persecución o de marcha, saca una y levántala a la altura de tu cara: «¡mira!».</li><li>Espera a que la mire, y dásela.</li><li>Cuando la tenga, extiende la mano abierta y espera: si te la da, muéstrala otra vez y devuélvesela.</li><li>Si te la muestra o la señala por su cuenta, nómbrala y celébralo como un tesoro; no pidas nada más.</li><li>Gira tu cuerpo hacia el hermano —«¡muéstrasela!»— y que él responda: mira la cosa, mira su cara y la nombra.</li></ol>
+        <ol><li>Al terminar una ronda de persecución o de marcha, saca una y levántala a la altura de tu cara: «¡mira!».</li><li>Espera a que la mire, y dásela.</li><li>Cuando la tenga, extiende la mano abierta y espera: si te la da, devuélvesela enseguida.</li><li>Si te la muestra o la señala por su cuenta, nómbrala y celébralo como un tesoro; no pidas nada más.</li><li>Si el hermano está cerca, gira tu cuerpo hacia él —«¡muéstrasela!»— y que él responda: mira la cosa, mira su cara y la nombra.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Mira!…» (a la altura de tu cara) «…¡la pluma!»</blockquote>
       <div class="parte">
@@ -1419,7 +1432,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · A-A3 + investigación · D-A4 + investigación · F-F8 + investigación · E-A7</p>
     </article>
     <article class="ficha" id="la-sorpresa-en-la-ruta">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-sorpresa-en-la-ruta"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-sorpresa-en-la-ruta" aria-label="Revisada: La sorpresa en la ruta"> Revisada</label>
       <h3>La sorpresa en la ruta</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1447,7 +1460,7 @@
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
-        <p>Una sorpresa más grande, que se mueva y suene, y menos espera. Si la pide con la mano, dásela y muéstrensela juntos al hermano. Nunca la misma dos veces seguidas.</p>
+        <p>Una sorpresa más grande, que se mueva y suene, y menos espera. Si la pide con la mano, dásela y, si el hermano está cerca, muéstrensela juntos. Nunca la misma dos veces seguidas.</p>
       </div>
       <p class="fuente">Gulsrud, 2007 · Liszkowski, 2004, Dev Sci</p>
       <p class="origen solo-revision">Viene de (nueva): investigación · A-A4 + investigación · D-A2 + investigación · D-A9</p>
@@ -1460,7 +1473,7 @@
     <p class="suave">Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.</p>
     
     <article class="ficha" id="burbujas-y-espero">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="burbujas-y-espero"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="burbujas-y-espero" aria-label="Revisada: Burbujas: soplo, cierro el frasco y espero"> Revisada</label>
       <h3>Burbujas: soplo, cierro el frasco y espero</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1494,7 +1507,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · burbujas-y-espero</p>
     </article>
     <article class="ficha" id="lo-dejo-a-medias">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-dejo-a-medias"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-dejo-a-medias" aria-label="Revisada: Lo dejo a medias para que él lo traiga"> Revisada</label>
       <h3>Lo dejo a medias para que él lo traiga</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1528,7 +1541,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · lo-dejo-a-medias</p>
     </article>
     <article class="ficha" id="una-media-puesta">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-media-puesta"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-media-puesta" aria-label="Revisada: Una media puesta, la otra en la mano"> Revisada</label>
       <h3>Una media puesta, la otra en la mano</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1562,7 +1575,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · una-media-puesta + app · espera-el-hueco-de-la-rutina</p>
     </article>
     <article class="ficha" id="de-a-poquitos">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-a-poquitos"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-a-poquitos" aria-label="Revisada: De a poquitos: cada pedacito es un turno"> Revisada</label>
       <h3>De a poquitos: cada pedacito es un turno</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1577,7 +1590,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Dale una parte pequeña.</li><li>Espera, mirándolo, a que pida la siguiente: te mira, estira la mano, hace un sonido o dice «más».</li><li>Dale la siguiente y nómbrala: «¡más! ¡más galleta!».</li><li>Sigan así unas vueltas; cada vez espera un instante más.</li><li>A la última: «¡se acabó!», con las manos abiertas, y «chao».</li></ol>
+        <ol><li>Dale una parte pequeña.</li><li>Espera, mirándolo, a que pida la siguiente: te mira, estira la mano, hace un sonido o dice «más»; si no pide, dásela igual.</li><li>Dale la siguiente y nómbrala: «¡más! ¡más galleta!».</li><li>Sigan así unas vueltas; cada vez espera un instante más.</li><li>A la última: «¡se acabó!», con las manos abiertas, y «chao».</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¿Más?… ¡más!»</blockquote>
       <div class="parte">
@@ -1596,7 +1609,7 @@
       <p class="origen solo-revision">Viene de (de la app): app · espera-de-a-poquitos + investigación · E-A8</p>
     </article>
     <article class="ficha" id="espera-con-cara-de-pregunta">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espera-con-cara-de-pregunta"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espera-con-cara-de-pregunta" aria-label="Revisada: Espera con cara de pregunta"> Revisada</label>
       <h3>Espera con cara de pregunta</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1611,7 +1624,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Sostén lo que quiere a la vista, míralo con las cejas arriba y cierra la boca.</li><li>Cuenta hasta cinco por dentro, sin adivinar lo que quiere; y luego un poco más, aunque se sienta eterno.</li><li>Lo que salga —un sonido, un gesto, un jalón—, respóndelo nombrando y dáselo: «¿jugo? ¡jugo!».</li><li>Si no sale nada, dáselo igual y nómbralo.</li><li>Si le pides algo, dilo una sola vez y espera; si no, muéstraselo con tu cuerpo; y si no, háganlo juntos, sin comentario.</li></ol>
+        <ol><li>Sostén lo que quiere a la vista, míralo con las cejas arriba y cierra la boca.</li><li>Cuenta hasta cinco por dentro, sin adivinar lo que quiere.</li><li>Lo que salga —un sonido, un gesto, un jalón—, respóndelo nombrando y dáselo: «¿jugo? ¡jugo!».</li><li>Si no sale nada, dáselo igual y nómbralo.</li><li>Si le pides algo, dilo una sola vez y espera.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> (cejas arriba, boca cerrada, contando por dentro)… «¿Jugo? ¡Jugo!»</blockquote>
       <div class="parte">
@@ -1624,13 +1637,13 @@
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
-        <p>Nunca lo dejes sin la cosa por no pedir: se la das igual. Si te descubres repitiendo «dame, dame, dame», vuelve a decirlo una sola vez.</p>
+        <p>Nunca lo dejes sin la cosa por no pedir: se la das igual. Si te descubres repitiendo «dame, dame, dame», vuelve a decirlo una sola vez. Si le pides algo y no responde, muéstraselo con tu cuerpo; y si tampoco, háganlo juntos.</p>
       </div>
       <p class="fuente">Kaiser, 2013, J Speech Lang Hear Res · Halle, 1981, J Appl Behav Anal</p>
       <p class="origen solo-revision">Viene de (fusión): app · sonidos-espera-con-cara-de-pregunta + app · espera-cuenta-cinco + app · espera-no-adivines + app · espera-tres-segundos-mas + investigación · C-C7</p>
     </article>
     <article class="ficha" id="el-frasco-que-no-abre">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-frasco-que-no-abre"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-frasco-que-no-abre" aria-label="Revisada: El frasco que no abre"> Revisada</label>
       <h3>El frasco que no abre</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1654,7 +1667,7 @@
       </div>
       <div class="parte funciono">
         <p class="rotulo">Funcionó si</p>
-        <p>te pide ayuda con dos cosas a la vez: el frasco hacia ti y la mirada, o un gesto y un sonido.</p>
+        <p>te pide ayuda juntando el frasco hacia ti con la mirada, o un gesto con un sonido.</p>
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
@@ -1664,7 +1677,7 @@
       <p class="origen solo-revision">Viene de (fusión): mirada · la-espera-se-estira + app · espera-el-frasco-dificil + app · focalizada-palabra-abre + investigación · E-A3</p>
     </article>
     <article class="ficha" id="marchar-con-tropiezo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-tropiezo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-tropiezo" aria-label="Revisada: Marchar con tropiezo"> Revisada</label>
       <h3>Marchar con tropiezo</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1679,7 +1692,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Marchen como siempre, con el tambor: golpea y di «pum» a cada paso.</li><li>Cuando esté copiando, equivócate: para de golpe, marcha hacia atrás o golpea sin sonido.</li><li>Espera unos segundos, mirándolo.</li><li>A cualquier protesta o pedido —te mira, te jala, hace «pum», dice «no»—: «¡ah, pum! ¡vamos!», y siguen.</li><li>Cierra con «chao, tambor» y la mano de chao.</li></ol>
+        <ol><li>Marchen como siempre, con el tambor: golpea y di «pum» a cada paso.</li><li>Cuando esté copiando, equivócate: para de golpe, marcha hacia atrás o golpea sin sonido.</li><li>Espera unos segundos, mirándolo; si no reacciona, vuelve a marchar igual.</li><li>A cualquier protesta o pedido —te mira, te jala, hace «pum», dice «no»—: «¡ah, pum! ¡vamos!», y siguen.</li><li>Cierra con «chao, tambor» y la mano de chao.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «Pum, pum, pum…» (paras en seco) «…¡ah, pum! ¡vamos!»</blockquote>
       <div class="parte">
@@ -1698,7 +1711,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · E-A2</p>
     </article>
     <article class="ficha" id="dos-cosas-una-eleccion">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-cosas-una-eleccion"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-cosas-una-eleccion" aria-label="Revisada: Dos cosas, una elección"> Revisada</label>
       <h3>Dos cosas, una elección</h3>
       <p class="chips">
         <span class="chip">Le doy a elegir</span>
@@ -1732,7 +1745,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · E-A4 + app · frases-elige-tu-o-yo</p>
     </article>
     <article class="ficha" id="chao-a-tres-silencio-al-cuarto">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="chao-a-tres-silencio-al-cuarto"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="chao-a-tres-silencio-al-cuarto" aria-label="Revisada: «Chao» a tres, silencio al cuarto"> Revisada</label>
       <h3>«Chao» a tres, silencio al cuarto</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1766,7 +1779,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · E-A5</p>
     </article>
     <article class="ficha" id="lo-que-no-le-gusta">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-no-le-gusta"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-no-le-gusta" aria-label="Revisada: Lo que no le gusta: su «no» se escucha"> Revisada</label>
       <h3>Lo que no le gusta: su «no» se escucha</h3>
       <p class="chips">
         <span class="chip">Le doy a elegir</span>
@@ -1807,7 +1820,7 @@
     <p class="suave">Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.</p>
     
     <article class="ficha" id="lo-que-el-mira-yo-lo-nombro">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-el-mira-yo-lo-nombro"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-el-mira-yo-lo-nombro" aria-label="Revisada: Lo que él mira, yo lo nombro, donde estemos"> Revisada</label>
       <h3>Lo que él mira, yo lo nombro, donde estemos</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1841,7 +1854,7 @@
       <p class="origen solo-revision">Viene de (fusión): app · modelado-nombra-su-mundo + app · interes-el-manda + app · focalizada-el-nombre-vive-en-la-cosa + app · modelado-en-el-carro + app · modelado-mercado + app · modelado-parque + app · modelado-la-calle + app · interes-nombra-lo-que-el-hace + investigación · C-C1</p>
     </article>
     <article class="ficha" id="las-mismas-palabras">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="las-mismas-palabras"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="las-mismas-palabras" aria-label="Revisada: Las mismas palabras, en los mismos momentos"> Revisada</label>
       <h3>Las mismas palabras, en los mismos momentos</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1865,7 +1878,7 @@
       </div>
       <div class="parte funciono">
         <p class="rotulo">Funcionó si</p>
-        <p>hace el paso al oír la frase, antes de que muevas las manos o muestres el objeto; y también cuando la dice el hermano.</p>
+        <p>hace el paso al oír la frase, antes de que muevas las manos o muestres el objeto.</p>
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>
@@ -1875,7 +1888,7 @@
       <p class="origen solo-revision">Viene de (fusión): app · modelado-mismas-palabras-rutina + app · modelado-hora-de-dormir + investigación · C-C2</p>
     </article>
     <article class="ficha" id="su-palabra-mas-una">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-palabra-mas-una"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-palabra-mas-una" aria-label="Revisada: Su palabra, más una, sin corregir"> Revisada</label>
       <h3>Su palabra, más una, sin corregir</h3>
       <p class="chips">
         <span class="chip">Su palabra, más una</span>
@@ -1909,7 +1922,7 @@
       <p class="origen solo-revision">Viene de (fusión): app · modelado-habla-a-su-tamano + app · recast-devuelve-la-palabra + app · recast-su-palabra-mas-una + app · recast-repite-bien-sin-corregir + app · frases-una-palabra-mas-una + app · frases-recast-sin-corregir + investigación · C-C6</p>
     </article>
     <article class="ficha" id="una-palabra-muchas-veces">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-palabra-muchas-veces"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-palabra-muchas-veces" aria-label="Revisada: Una palabra o un sonido, muchas veces, en muchos lugares"> Revisada</label>
       <h3>Una palabra o un sonido, muchas veces, en muchos lugares</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1943,7 +1956,7 @@
       <p class="origen solo-revision">Viene de (fusión): app · focalizada-palabra-semana + app · sonidos-un-solo-sonido-todo-el-dia + app · focalizada-misma-palabra-cinco-lugares + investigación · C-C3</p>
     </article>
     <article class="ficha" id="la-cancion-de-siempre-al-vestirlo">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-cancion-de-siempre-al-vestirlo"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-cancion-de-siempre-al-vestirlo" aria-label="Revisada: La canción de siempre, al vestirlo y en el baño"> Revisada</label>
       <h3>La canción de siempre, al vestirlo y en el baño</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -1958,7 +1971,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Cántala tal cual en un momento distinto: mientras lo vistes, en la tina, caminando a la tienda.</li><li>Con su hueco de siempre antes de lo mejor.</li><li>Al vestirlo, levanta cada prenda, espera a que la mire y nómbrala: «¡media!».</li><li>Si te mira o hace la señal, sigues; si no, sigues igual.</li><li>Un momento nuevo por semana, no todos a la vez.</li></ol>
+        <ol><li>Cántala tal cual en un momento distinto: mientras lo vistes, en la tina, caminando a la tienda.</li><li>Deja su hueco de siempre antes de lo mejor, y espera.</li><li>Al vestirlo, levanta cada prenda, espera a que la mire y nómbrala: «¡media!».</li><li>Si te mira o hace la señal, sigues; si no, sigues igual.</li><li>Un momento nuevo por semana, no todos a la vez.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> (al ponerle la camiseta) «Las ruedas del bus van…» (pausa) «…¡ruedan y ruedan!»</blockquote>
       <div class="parte">
@@ -1977,7 +1990,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · la-cancion-de-siempre-al-vestirlo + app · modelado-vestirse + app · modelado-cancion-de-la-rutina</p>
     </article>
     <article class="ficha" id="la-locion-despues-del-bano">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-locion-despues-del-bano"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-locion-despues-del-bano" aria-label="Revisada: La loción después del baño"> Revisada</label>
       <h3>La loción después del baño</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -2011,7 +2024,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · la-locion-despues-del-bano</p>
     </article>
     <article class="ficha" id="su-cancion-con-hueco">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-cancion-con-hueco"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-cancion-con-hueco" aria-label="Revisada: Su canción, con un hueco antes de lo mejor"> Revisada</label>
       <h3>Su canción, con un hueco antes de lo mejor</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -2045,7 +2058,7 @@
       <p class="origen solo-revision">Viene de (del documento anterior): mirada · su-cancion-con-hueco + app · espera-pausa-canciones</p>
     </article>
     <article class="ficha" id="ponle-nombre-a-lo-que-siente">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ponle-nombre-a-lo-que-siente"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ponle-nombre-a-lo-que-siente" aria-label="Revisada: Ponle nombre a lo que siente"> Revisada</label>
       <h3>Ponle nombre a lo que siente</h3>
       <p class="chips">
         <span class="chip">Su palabra, más una</span>
@@ -2065,7 +2078,7 @@
       <blockquote><span class="rotulo">Tu línea</span> «¡Susto!… Ya pasó.»</blockquote>
       <div class="parte">
         <p class="rotulo">Espera ver</p>
-        <p>Que se calme más rápido cuando lo nombras, y que te busque la cara cuando siente algo.</p>
+        <p>Que se quede cerca de ti mientras nombras lo que siente, y que a veces repita tu sonido o tu cara.</p>
       </div>
       <div class="parte funciono">
         <p class="rotulo">Funcionó si</p>
@@ -2079,7 +2092,7 @@
       <p class="origen solo-revision">Viene de (de la app): app · recast-nombra-lo-que-siente</p>
     </article>
     <article class="ficha" id="acciones-en-tres-palabras">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="acciones-en-tres-palabras"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="acciones-en-tres-palabras" aria-label="Revisada: Acciones con objetos, en tres palabras"> Revisada</label>
       <h3>Acciones con objetos, en tres palabras</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -2113,7 +2126,7 @@
       <p class="origen solo-revision">Viene de (nueva): investigación · C-C5</p>
     </article>
     <article class="ficha" id="corre-que-te-atrapo-con-palabras">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-palabras"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-palabras" aria-label="Revisada: Corre que te atrapo, con palabras"> Revisada</label>
       <h3>Corre que te atrapo, con palabras</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -2128,7 +2141,7 @@
       </div>
       <div class="parte">
         <p class="rotulo">Haz</p>
-        <ol><li>Arranca el juego que ya funciona.</li><li>Mete cuatro palabras fijas, siempre las mismas: «¡ya!» (arranca), «¡para!» (todos quietos), «¡despacio!» (cámara lenta), «¡otra vez!».</li><li>Al principio, cada palabra va con su gesto, y tú lo haces al decirla.</li><li>Después, di la palabra y quédate sin moverte un segundo antes de hacerlo.</li><li>El hermano usa las mismas cuatro palabras.</li></ol>
+        <ol><li>Arranca el juego que ya funciona.</li><li>Mete cuatro palabras fijas, siempre las mismas: «¡ya!» (arranca), «¡para!» (todos quietos), «¡despacio!» (cámara lenta), «¡otra vez!».</li><li>Al principio, cada palabra va con su gesto, y tú lo haces al decirla.</li><li>Después, di la palabra y quédate sin moverte un segundo antes de hacerlo.</li><li>Si el hermano juega, usa las mismas cuatro palabras.</li></ol>
       </div>
       <blockquote><span class="rotulo">Tu línea</span> «¡Ya!…» (corren) «…¡para!» (todos quietos) «…¡otra vez!»</blockquote>
       <div class="parte">
@@ -2137,7 +2150,7 @@
       </div>
       <div class="parte funciono">
         <p class="rotulo">Funcionó si</p>
-        <p>se queda quieto al oír «¡para!» antes que tú, o arranca con «¡ya!» mientras tú sigues sin moverte; también cuando la dice el hermano.</p>
+        <p>se queda quieto al oír «¡para!» antes que tú, o arranca con «¡ya!» mientras tú sigues sin moverte.</p>
       </div>
       <div class="parte si-no">
         <p class="rotulo">Si no pasa</p>

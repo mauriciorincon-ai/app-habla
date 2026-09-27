@@ -1,4 +1,4 @@
-// Lo que comparten los generadores de catálogos (S4: el del padre; S5: el de la mamá).
+// Lo que comparten los generadores de catálogos (S4: el del padre; S6: el de la mamá, «La pirámide»).
 // Pequeño a propósito: escapar HTML, la fecha del build y la paleta del design-system.md
 // (cream / sage / ink — capa semántica, light y dark) como CSS listo para incrustar.
 

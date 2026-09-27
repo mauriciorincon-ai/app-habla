@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { CAPSULAS } from "@content/capsulas";
 import { CAPSULAS_CONTACTO_VISUAL } from "@content/contacto-visual";
@@ -7,6 +9,7 @@ import {
   FichaSchema,
   GRUPOS,
   GRUPOS_PRIORITARIOS,
+  NOMBRE_GRUPO,
   PROGRESIONES,
   type Ficha,
   type Grupo,
@@ -14,6 +17,16 @@ import {
 
 // LA PIRÁMIDE (S6): las garantías de la ficha de actividad y de la biblioteca viven en el schema,
 // y este test las demuestra UNA a una con fixtures — cada constraint se vio en rojo.
+
+const RAIZ = join(__dirname, "..", "..");
+const leer = (ruta: string) => readFileSync(join(RAIZ, ruta), "utf8");
+
+/** El mapa aprobado en G-Investigación se hizo sobre estas cápsulas: las 24 del S5 + las 50 de la app. */
+const CAPSULAS_DEL_MAPA = 74;
+
+/** El mismo escape que usa el generador (scripts/lib/catalogo-comun.mjs). */
+const esc = (t: string) =>
+  t.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 
 const base: Ficha = {
   id: "x",
@@ -101,6 +114,23 @@ describe("FichaSchema — la ficha de actividad", () => {
         progresion: "N2",
       }),
     ).toBe(false);
+    // Las claves del prototipo de un objeto no son pasos, en ningún grupo.
+    for (const clave of [
+      "constructor",
+      "toString",
+      "__proto__",
+      "hasOwnProperty",
+    ]) {
+      expect(valida({ progresion: clave }), clave).toBe(false);
+      expect(
+        valida({
+          grupo: "intencion-comunicativa",
+          prioridad: "normal",
+          progresion: clave,
+        }),
+        clave,
+      ).toBe(false);
+    }
   });
   it("una ficha con el hermano dice qué hace él", () => {
     expect(valida({ conQuien: "hermano" })).toBe(false);
@@ -229,7 +259,30 @@ describe("la biblioteca real del repo", () => {
         mirada.has(c.id) ? `mirada:${c.id}` : `habla:${c.id}`,
       ),
     ];
-    expect(todas).toHaveLength(74);
+    expect(todas).toHaveLength(CAPSULAS_DEL_MAPA);
     expect([...usos].sort()).toEqual([...todas].sort());
   });
 });
+
+describe("el documento y los textos no se quedan atrás de la biblioteca", () => {
+  it("docs/LA-PIRAMIDE.html está regenerado: cada ficha, con su id y su «Funcionó si», y ninguna de más", () => {
+    const html = leer("docs/LA-PIRAMIDE.html");
+    expect(html.split('<article class="ficha"').length - 1).toBe(FICHAS.length);
+    for (const f of FICHAS) {
+      expect(html, `falta la ficha ${f.id} (¿se corrió pnpm gen:piramide?)`).toContain(`id="${f.id}"`);
+      expect(html, `la ficha ${f.id} cambió y el documento no (¿pnpm gen:piramide?)`).toContain(esc(f.funcionoSi));
+    }
+  });
+
+  it("el manual y la guía dicen cuántas fichas hay, y el reparto por grupo, como la biblioteca", () => {
+    const manual = leer("docs/MANUAL-DE-USO.md").replace(/\s+/g, " ");
+    expect(manual).toContain(`**${FICHAS.length} fichas de actividad**`);
+    for (const g of GRUPOS) {
+      const n = FICHAS.filter((f) => f.grupo === g).length;
+      expect(manual, `reparto de ${g} en el manual`).toContain(`${NOMBRE_GRUPO[g].toLowerCase()} ${n}`);
+    }
+    const guia = leer("docs/GUIA-DE-PRUEBA.html").replace(/\s+/g, " ");
+    expect(guia).toContain(`las ${FICHAS.length} fichas`);
+  });
+});
+

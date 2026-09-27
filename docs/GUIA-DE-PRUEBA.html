@@ -156,7 +156,7 @@
   <header>
     <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 006 (segundo de H2) · 2026-09-27</p>
     <h1>Guía de prueba</h1>
-    <p class="suave">Cada línea responde las tres preguntas: <strong>qué probar</strong>, <strong>cómo</strong> y —lo más importante— <strong>qué esperar</strong> como resultado correcto. Donde hay una forma clara de fallar, también dice cuál. La guía es <strong>acumulativa</strong>: contiene todas las pruebas vigentes de la app, con el sprint del que viene cada una. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono); lo que necesita la tablet está al final.</p>
+    <p class="suave">Cada línea responde las tres preguntas: <strong>qué probar</strong>, <strong>cómo</strong> y —lo más importante— <strong>qué esperar</strong> como resultado correcto. Donde hay una forma clara de fallar, también dice cuál. La guía es <strong>acumulativa</strong>: contiene todas las pruebas vigentes de la app, con el sprint del que viene cada una. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono), salvo el bloque Q, que va <strong>en tu teléfono</strong>; lo que necesita la tablet está al final.</p>
 
     <div class="url-caja">
       <p class="eyebrow" style="margin:0 0 6px">URL de prueba (Chrome del computador)</p>
@@ -180,7 +180,7 @@
         <li><span class="origen o-s2">S2</span> Del Sprint 2, sin cambios. <span class="suave">Regresión: que lo del S2 siga funcionando.</span></li>
         <li><span class="origen o-s1">S1</span> Del Sprint 1, sin cambios. <span class="suave">Regresión: que lo más viejo siga en pie.</span></li>
       </ul>
-      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S6 añade su gate acotado:</strong> el bloque Q —la pirámide en tu teléfono real y tu lectura de todas las fichas— son <strong>6 pruebas</strong>, unos <strong>10 minutos</strong> más la lectura (tu teléfono, tu impresora, tu juicio de padre).</p>
+      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>23</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S6 añade su gate acotado:</strong> el bloque Q —la pirámide en tu teléfono real y tu lectura de todas las fichas— son <strong>6 pruebas</strong>, unos <strong>10 minutos</strong> más la lectura (tu teléfono, tu impresora, tu juicio de padre).</p>
       <div class="recorrido">
         <p style="margin:0 0 6px"><strong>Recorrido del gate ⭐ ACUMULADO (S1+S2+S3+S4)</strong> — orden sugerido para hacerlo de una vez, en el computador y con micrófono:</p>
         <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong> — pega esa ruta al final de la dirección de la app (p. ej. <code>…<strong>/spike/audio</strong></code>) y arrancas a la segura, sin buscar el camino. <em>(Mejora nacida del gate S4.)</em></p>
@@ -820,7 +820,7 @@
       </div></li>
       <li data-origen="mejora"><input type="checkbox" id="v6-q6"><div>
         <label for="v6-q6">Abre <code>/mirada?revision</code> (solo tú). Marca <strong>“Revisada”</strong> en una ficha y recarga. <span class="origen o-mejora">Mejorado en S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con cuatro preguntas; cada ficha gana su casilla <strong>“Revisada”</strong> y una línea azul <strong>“Viene de (…)”</strong> que dice de qué cápsula o de qué parte de la investigación salió. El conteo <strong>“N de M revisadas”</strong> sube y <strong>sigue marcado al recargar</strong>. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
+        <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con cuatro preguntas; cada ficha gana su casilla <strong>“Revisada”</strong> y una línea azul <strong>“Viene de (…)”</strong> que dice de qué cápsula o de qué parte de la investigación salió. El conteo <strong>“N de M revisadas”</strong> sube y <strong>sigue marcado al recargar</strong>. Al final de la caja, <strong>“Quedaron fuera del documento (11); siguen en la app:”</strong> con cada cápsula y su razón. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
         <p class="esperar"><span class="et">Mal</span> Con <code>?revision</code> las fichas cambian de letra, de tamaño o de color, o algo se monta encima del texto: el modo revisión solo agrega, no cambia cómo se ve.</p>
       </div></li>
       <li data-origen="s6"><input type="checkbox" id="v6-q7"><div>

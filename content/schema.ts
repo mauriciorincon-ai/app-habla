@@ -623,7 +623,10 @@ export const FichaSchema = z
     path: ["funcionoSi"],
   })
   .refine(
-    (f) => f.progresion === undefined || f.progresion in PROGRESIONES[f.grupo],
+    // hasOwnProperty, no `in`: `in` mira el prototipo y dejaría pasar «constructor» o «toString».
+    (f) =>
+      f.progresion === undefined ||
+      Object.prototype.hasOwnProperty.call(PROGRESIONES[f.grupo], f.progresion),
     {
       message:
         "La progresión tiene que ser un paso aprobado de SU grupo (intención comunicativa no tiene pasos).",

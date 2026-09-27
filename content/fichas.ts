@@ -27,8 +27,7 @@ export const FICHAS: Ficha[] = [
     tecnica: "lo-copio",
     titulo: "Dos iguales: tú lo copias a él",
     tenALaMano: [
-      "Dos juguetes iguales que le gusten: dos carros, dos tambores o dos cucharas de palo.",
-      "Nada nuevo el primer día.",
+      "Dos juguetes iguales que ya le gusten (nada nuevo el primer día): dos carros, dos tambores o dos cucharas de palo.",
     ],
     haz: [
       "Pon un juguete frente a él y el gemelo frente a ti, y siéntate de frente, a su altura.",
@@ -146,7 +145,7 @@ export const FICHAS: Ficha[] = [
       "Empieza copiándolo a él un rato, y di en una o dos palabras lo que hace: «golpea», «rueda».",
       "De vez en cuando, haz tú una acción nueva con tu juguete, bien visible, con una palabra —«¡a rodar!»— y espera.",
       "Si la copia, celébralo con la voz y la cara, y vuelve a copiarlo tú a él.",
-      "Si no la copia después de mostrársela dos o tres veces, llévale las manos con suavidad para hacerla una vez, celébralo igual y vuelve a copiarlo.",
+      "Si no la copia después de verla unas veces, llévale las manos con suavidad, una sola vez, y celébralo igual.",
       "La mayor parte del rato eres tú quien lo copia; la acción nueva es de vez en cuando.",
     ],
     tuLinea: "«¡Ahora yo!… ¡ahora tú!» — igual que en las cosquillas.",
@@ -196,12 +195,12 @@ export const FICHAS: Ficha[] = [
     tecnica: "ahora-yo-ahora-tu",
     titulo: "Marchar con algo en la mano",
     tenALaMano: [
-      "Dos cucharas de palo, o dos botellas con arroz que suenen.",
+      "Dos cucharas de palo, o dos botellas con arroz que suenen: la suya, a su alcance, sin dársela.",
       "Dos ollas para golpear al final.",
     ],
     haz: [
       "Arranca la marcha de siempre, sin nada en las manos.",
-      "En la segunda vuelta, toma tu cuchara y márchala arriba y abajo al ritmo; deja la suya a su alcance, sin dársela.",
+      "En la segunda vuelta, marcha con tu cuchara arriba y abajo, al ritmo.",
       "Si la toma, copia lo que haga con ella.",
       "Cambia tú la acción con la cuchara (golpear la olla, apuntar al techo, dar vueltas) y espera.",
       "Si te copia, celébralo y vuelvan a marchar.",
@@ -342,9 +341,9 @@ export const FICHAS: Ficha[] = [
     titulo: "Dos pasos, y lo de ayer",
     tenALaMano: [
       "Cosas con dos pasos naturales: meter la pelota y tapar; llenar el vaso y vaciarlo; subir el muñeco al carro y empujar.",
+      "Que «Ahora yo, ahora tú» ya salga con una acción; si no, empieza por esa ficha.",
     ],
     haz: [
-      "Úsala solo cuando «Ahora yo, ahora tú» ya salga con una acción.",
       "Haz dos acciones seguidas con tu juguete, cada una con su palabra —«meto… ¡tapo!»— y espera.",
       "Si hace un paso, celébralo y haz tú el segundo; si hace los dos, celébralo en grande.",
       "Al día siguiente, deja las cosas a la vista sin mostrarle nada, y mira qué hace.",
@@ -435,7 +434,7 @@ export const FICHAS: Ficha[] = [
       "Que se ría antes de que aparezcas, que intente destaparte, y un día que arranque el juego él.",
     funcionoSi: "se tapa, tapa al muñeco o te trae el pañuelo para que jueguen.",
     siNoPasa:
-      "Si hoy no arranca él, juega una ronda normal y déjalo ahí. No le tapes la cara a él si no le gusta, y no alargues la espera al principio.",
+      "Aquí taparse es el juego, no el semáforo. Si hoy no arranca él, juega una ronda normal y déjalo ahí. No le tapes la cara a él si no le gusta, y no alargues la espera al principio.",
     duracion: "2–3 min",
     momentos: ["juego", "vestirse"],
     conQuien: "mama",
@@ -450,13 +449,13 @@ export const FICHAS: Ficha[] = [
     tecnica: "misma-rutina-otra-persona",
     titulo: "Se lo lleva al hermano: arranca o muestra él",
     tenALaMano: [
-      "El hermano cerca, unos minutos, y tres reglas dichas antes: mira lo que él te muestre · di «¡uy!» y míralo a la cara · sigue su dedo cuando señale.",
+      "El hermano cerca, unos minutos. Además de sus reglas de siempre, para este juego: mira lo que él te muestre · di «¡uy!» y míralo a la cara · sigue su dedo cuando señale.",
       "Un juego que ya sale contigo.",
     ],
     haz: [
       "Juega con él lo que ya funciona contigo, con el hermano cerca, sin proponer nada.",
       "Si él levanta o señala algo, gira tu cuerpo hacia el hermano: «¡muéstraselo!».",
-      "El hermano responde con sus tres reglas; tú te quedas un paso atrás, sin hablar.",
+      "El hermano responde como le dijiste; tú te quedas un paso atrás, sin hablar.",
       "Si le lleva las manos o el juguete al hermano, o se le planta enfrente, el hermano arranca el juego al instante.",
       "Cierra antes de que alguno se canse y agradécele al hermano algo concreto: «seguiste su dedo».",
     ],
@@ -534,7 +533,7 @@ export const FICHAS: Ficha[] = [
     haz: [
       "Espera a ver qué agarra él, y siéntate en el piso frente a él, cara a cara.",
       "No propongas otro juego: métete en el suyo.",
-      "Nombra lo que él hace con el juguete, de a una palabra: «rueda», «tapa», «¡pum!».",
+      "Nombra lo que él hace con el juguete, de a una palabra, como en «Comento, no pregunto»: «rueda», «tapa», «¡pum!».",
       "Si te aparta, retrocede un poco y sigue nombrando desde ahí.",
     ],
     tuLinea: "«¡Tapa! Suena la tapa… ¡pum!»",
@@ -790,7 +789,7 @@ export const FICHAS: Ficha[] = [
     ],
     haz: [
       "Rueda el carro hacia él con su sonido: «¡brrrum!».",
-      "Espera con las manos abiertas; si no lo devuelve, acércate, empújalo apenas hacia ti y agradécelo en grande.",
+      "Espera con las manos abiertas a que lo devuelva.",
       "Cada vez que vuelva, devuélvelo igual, a su velocidad.",
       "Cuando ya vaya y venga, agrega una sola cosa: el carro choca con tu rodilla —«¡pum!»— o pasa por el túnel de tus piernas.",
       "En tu turno, señala con el dedo lo que pasa —«¡mira, se cayó!»— y míralo.",
@@ -801,7 +800,7 @@ export const FICHAS: Ficha[] = [
     funcionoSi:
       "el carro va y vuelve varias veces seguidas sin que tengas que recogerlo, o él lo empuja hacia ti para que hagas el «¡pum!».",
     siNoPasa:
-      "Acércate más y usa lo que él prefiera rodar. Si se queda con el carro, no se lo quites: rueda otro igual y espera a que te mire. Si lo nuevo rompe el juego, vuelve a lo simple.",
+      "Si no lo devuelve, acércate, empújalo apenas hacia ti y agradécelo en grande. Usa lo que él prefiera rodar. Si se queda con el carro, no se lo quites: rueda otro igual y espera a que te mire. Si lo nuevo rompe el juego, vuelve a lo simple.",
     duracion: "5 min",
     momentos: ["juego"],
     conQuien: "mama",
@@ -850,7 +849,7 @@ export const FICHAS: Ficha[] = [
       "En la merienda, haz de mentira sobre ti: bebe de la taza vacía con «glu-glu» y ríete.",
       "Ofrécele la taza y espera.",
       "Si «bebe» de mentira, hazlo tú otra vez: ya es un turno.",
-      "Cuando eso salga, acerca la taza a tu boca y luego pásasela para que él te dé de beber; después, al hermano.",
+      "Cuando eso salga, pásale la taza y acerca tu boca: que él te dé de beber.",
       "Solo cuando eso exista, invita al peluche.",
     ],
     tuLinea: "«Glu-glu-glu… ¡ahh!» — y le pasas la taza.",
@@ -858,7 +857,7 @@ export const FICHAS: Ficha[] = [
     funcionoSi:
       "hace de mentira algo con la taza sobre sí mismo o sobre ti, aunque sea un momento y riéndose.",
     siNoPasa:
-      "Todavía no es su momento: deja la taza a la vista en las meriendas y jueguen «Un paso más». No insistas con lo de mentira.",
+      "Hoy no le llamó la atención: deja la taza a la vista en las meriendas y jueguen «Un paso más». No insistas con lo de mentira.",
     duracion: "1–2 min",
     momentos: ["comida", "juego"],
     conQuien: "mama",
@@ -877,7 +876,7 @@ export const FICHAS: Ficha[] = [
       "Muéstrale las dos señales: brazos arriba y «¡ya!» para empezar; manos abiertas y «¡alto!» para parar.",
       "Haz la señal de «¡ya!», empújalo suave con la almohada y deja que te tumbe; cae exagerando, en cámara lenta.",
       "Al rato, haz la señal de «¡alto!» y quédate sin moverte, mirándolo.",
-      "Espera su señal para seguir —la mirada, los brazos, un sonido o su «¡ya!»— y arranca otra vez.",
+      "Espera su señal para seguir —la mirada, los brazos, un sonido o su «¡ya!»— y arranca otra vez; si no llega, arranca igual.",
       "Cambien los papeles: ahora lo tumbas tú, suave; luego él a ti. Unas rondas y se cierra.",
     ],
     tuLinea: "«¡Ya!» (brazos arriba) … «¡Alto!» (manos abiertas, sin moverte)",
@@ -901,7 +900,7 @@ export const FICHAS: Ficha[] = [
     tecnica: "misma-rutina-otra-persona",
     titulo: "Con el hermano: la misma rutina, con las mismas palabras",
     tenALaMano: [
-      "El hermano, cinco minutos, y tres reglas dichas antes: haz una sola cosa · espera cinco segundos · cópialo a él.",
+      "El hermano, cinco minutos, y sus reglas de siempre, dichas antes: haz una sola cosa · espera cinco segundos · cópialo a él.",
       "El juego que mejor le sale contigo: la marcha, las cosquillas, «¡alto!… ¡ya!» o los dos juguetes iguales.",
     ],
     haz: [
@@ -1008,9 +1007,9 @@ export const FICHAS: Ficha[] = [
     haz: [
       "Al terminar una ronda de persecución o de marcha, saca una y levántala a la altura de tu cara: «¡mira!».",
       "Espera a que la mire, y dásela.",
-      "Cuando la tenga, extiende la mano abierta y espera: si te la da, muéstrala otra vez y devuélvesela.",
+      "Cuando la tenga, extiende la mano abierta y espera: si te la da, devuélvesela enseguida.",
       "Si te la muestra o la señala por su cuenta, nómbrala y celébralo como un tesoro; no pidas nada más.",
-      "Gira tu cuerpo hacia el hermano —«¡muéstrasela!»— y que él responda: mira la cosa, mira su cara y la nombra.",
+      "Si el hermano está cerca, gira tu cuerpo hacia él —«¡muéstrasela!»— y que él responda: mira la cosa, mira su cara y la nombra.",
     ],
     tuLinea: "«¡Mira!…» (a la altura de tu cara) «…¡la pluma!»",
     esperaVer:
@@ -1051,7 +1050,7 @@ export const FICHAS: Ficha[] = [
     funcionoSi:
       "te mira a ti y a la sorpresa antes de que tú hagas nada, o la señala sin querer que se la den.",
     siNoPasa:
-      "Una sorpresa más grande, que se mueva y suene, y menos espera. Si la pide con la mano, dásela y muéstrensela juntos al hermano. Nunca la misma dos veces seguidas.",
+      "Una sorpresa más grande, que se mueva y suene, y menos espera. Si la pide con la mano, dásela y, si el hermano está cerca, muéstrensela juntos. Nunca la misma dos veces seguidas.",
     duracion: "1 min",
     momentos: ["juego", "calle"],
     conQuien: "mama",
@@ -1155,7 +1154,7 @@ export const FICHAS: Ficha[] = [
     ],
     haz: [
       "Dale una parte pequeña.",
-      "Espera, mirándolo, a que pida la siguiente: te mira, estira la mano, hace un sonido o dice «más».",
+      "Espera, mirándolo, a que pida la siguiente: te mira, estira la mano, hace un sonido o dice «más»; si no pide, dásela igual.",
       "Dale la siguiente y nómbrala: «¡más! ¡más galleta!».",
       "Sigan así unas vueltas; cada vez espera un instante más.",
       "A la última: «¡se acabó!», con las manos abiertas, y «chao».",
@@ -1181,16 +1180,16 @@ export const FICHAS: Ficha[] = [
     tenALaMano: ["Nada: lo que él quiera en ese momento (el jugo, la puerta, el juguete)."],
     haz: [
       "Sostén lo que quiere a la vista, míralo con las cejas arriba y cierra la boca.",
-      "Cuenta hasta cinco por dentro, sin adivinar lo que quiere; y luego un poco más, aunque se sienta eterno.",
+      "Cuenta hasta cinco por dentro, sin adivinar lo que quiere.",
       "Lo que salga —un sonido, un gesto, un jalón—, respóndelo nombrando y dáselo: «¿jugo? ¡jugo!».",
       "Si no sale nada, dáselo igual y nómbralo.",
-      "Si le pides algo, dilo una sola vez y espera; si no, muéstraselo con tu cuerpo; y si no, háganlo juntos, sin comentario.",
+      "Si le pides algo, dilo una sola vez y espera.",
     ],
     tuLinea: "(cejas arriba, boca cerrada, contando por dentro)… «¿Jugo? ¡Jugo!»",
     esperaVer: "Que en tu silencio aparezca algo suyo: un sonido, un gesto, un jalón, una mirada a tu cara.",
     funcionoSi: "en tu silencio pide él, a su manera, antes de que tú hables o adivines.",
     siNoPasa:
-      "Nunca lo dejes sin la cosa por no pedir: se la das igual. Si te descubres repitiendo «dame, dame, dame», vuelve a decirlo una sola vez.",
+      "Nunca lo dejes sin la cosa por no pedir: se la das igual. Si te descubres repitiendo «dame, dame, dame», vuelve a decirlo una sola vez. Si le pides algo y no responde, muéstraselo con tu cuerpo; y si tampoco, háganlo juntos.",
     duracion: "1 min",
     momentos: ["comida", "juego", "transiciones"],
     conQuien: "mama",
@@ -1225,7 +1224,7 @@ export const FICHAS: Ficha[] = [
     tuLinea: "«Uy, no abre…» (silencio, cara de espera) «…¡abre! ¡Abre!»",
     esperaVer: "Que te entregue el frasco mirándote, o lo empuje hacia ti con un sonido.",
     funcionoSi:
-      "te pide ayuda con dos cosas a la vez: el frasco hacia ti y la mirada, o un gesto y un sonido.",
+      "te pide ayuda juntando el frasco hacia ti con la mirada, o un gesto con un sonido.",
     siNoPasa:
       "Muéstrale tú «abre» con el gesto de girar, y ábrelo. Si lo deja y se va, no lo persigas con el frasco. Si lo ves frustrado, la espera fue larga: vuelve a una corta.",
     duracion: "2–3 min",
@@ -1252,7 +1251,7 @@ export const FICHAS: Ficha[] = [
     haz: [
       "Marchen como siempre, con el tambor: golpea y di «pum» a cada paso.",
       "Cuando esté copiando, equivócate: para de golpe, marcha hacia atrás o golpea sin sonido.",
-      "Espera unos segundos, mirándolo.",
+      "Espera unos segundos, mirándolo; si no reacciona, vuelve a marchar igual.",
       "A cualquier protesta o pedido —te mira, te jala, hace «pum», dice «no»—: «¡ah, pum! ¡vamos!», y siguen.",
       "Cierra con «chao, tambor» y la mano de chao.",
     ],
@@ -1410,7 +1409,7 @@ export const FICHAS: Ficha[] = [
     esperaVer:
       "Al principio hace el paso porque la rutina lo anuncia; después, empieza a adelantarse a tu frase.",
     funcionoSi:
-      "hace el paso al oír la frase, antes de que muevas las manos o muestres el objeto; y también cuando la dice el hermano.",
+      "hace el paso al oír la frase, antes de que muevas las manos o muestres el objeto.",
     siNoPasa:
       "Las frases cambiaron de un día a otro o son largas: recórtalas a dos o tres palabras, siempre bien dichas. Una rutina a la vez.",
     duracion: "1–2 min",
@@ -1512,7 +1511,7 @@ export const FICHAS: Ficha[] = [
     ],
     haz: [
       "Cántala tal cual en un momento distinto: mientras lo vistes, en la tina, caminando a la tienda.",
-      "Con su hueco de siempre antes de lo mejor.",
+      "Deja su hueco de siempre antes de lo mejor, y espera.",
       "Al vestirlo, levanta cada prenda, espera a que la mire y nómbrala: «¡media!».",
       "Si te mira o hace la señal, sigues; si no, sigues igual.",
       "Un momento nuevo por semana, no todos a la vez.",
@@ -1610,7 +1609,8 @@ export const FICHAS: Ficha[] = [
       "Si él hace un sonido, devuélveselo con la palabra: «¡aaay! ¡susto!».",
     ],
     tuLinea: "«¡Susto!… Ya pasó.»",
-    esperaVer: "Que se calme más rápido cuando lo nombras, y que te busque la cara cuando siente algo.",
+    esperaVer:
+      "Que se quede cerca de ti mientras nombras lo que siente, y que a veces repita tu sonido o tu cara.",
     funcionoSi:
       "te busca o te mira cuando siente algo fuerte, o hace el sonido o la cara que acompañan tu palabra.",
     siNoPasa:
@@ -1662,12 +1662,12 @@ export const FICHAS: Ficha[] = [
       "Mete cuatro palabras fijas, siempre las mismas: «¡ya!» (arranca), «¡para!» (todos quietos), «¡despacio!» (cámara lenta), «¡otra vez!».",
       "Al principio, cada palabra va con su gesto, y tú lo haces al decirla.",
       "Después, di la palabra y quédate sin moverte un segundo antes de hacerlo.",
-      "El hermano usa las mismas cuatro palabras.",
+      "Si el hermano juega, usa las mismas cuatro palabras.",
     ],
     tuLinea: "«¡Ya!…» (corren) «…¡para!» (todos quietos) «…¡otra vez!»",
     esperaVer: "Risa; al principio copia tu cuerpo; después se mueve por la palabra.",
     funcionoSi:
-      "se queda quieto al oír «¡para!» antes que tú, o arranca con «¡ya!» mientras tú sigues sin moverte; también cuando la dice el hermano.",
+      "se queda quieto al oír «¡para!» antes que tú, o arranca con «¡ya!» mientras tú sigues sin moverte.",
     siNoPasa: "Demasiadas palabras, o cambiaron: quédate solo con «¡ya!» y «¡para!».",
     duracion: "2–3 min",
     momentos: ["juego"],

@@ -15,13 +15,12 @@
 // dónde viene cada ficha y la casilla «Revisada». La mamá no lo ve.
 
 import { writeFileSync } from "node:fs";
-import { FICHAS } from "../content/fichas.ts";
+import { CAEN_DEL_DOCUMENTO, FICHAS } from "../content/fichas.ts";
 import {
   BibliotecaFichasSchema,
   DESCRIPCION_GRUPO,
   FichaSchema,
   GRUPOS,
-  GRUPOS_PRIORITARIOS,
   NOMBRE_GRUPO,
   NOMBRE_MOMENTO,
   NOMBRE_TECNICA_FICHA,
@@ -35,10 +34,12 @@ for (const f of FICHAS) {
   const r = FichaSchema.safeParse(f);
   if (!r.success) throw new Error(`Ficha inválida «${f.id}»: ${JSON.stringify(r.error.issues)}`);
 }
-// Mientras la biblioteca no cumpla su schema completo (fase 0), el documento se marca de prueba.
-const BIBLIOTECA_COMPLETA = BibliotecaFichasSchema.safeParse(FICHAS).success;
+// Una biblioteca que no cumple su contrato completo no se publica: el generador falla.
+const biblioteca = BibliotecaFichasSchema.safeParse(FICHAS);
+if (!biblioteca.success) throw new Error(`La biblioteca no cumple la pirámide: ${JSON.stringify(biblioteca.error.issues)}`);
 const deGrupo = (g) => FICHAS.filter((f) => f.grupo === g);
-const esPrioritario = (g) => GRUPOS_PRIORITARIOS.includes(g);
+// La prioridad sale de las fichas mismas (el schema garantiza que coincide con GRUPOS_PRIORITARIOS).
+const esPrioritario = (g) => deGrupo(g).length > 0 && deGrupo(g).every((f) => f.prioridad === "alta");
 
 // ── Lo que le gusta (en observable: sin nombres, edades ni lugares) ──────────────────────────
 const FAVORITOS = [
@@ -56,10 +57,10 @@ const QUE_NO_HACER = [
   "Cuando te muestre algo, te lo señale o te diga «tú»: mira lo que te muestra, vuelve a su cara con emoción y ponle la palabra. Una respuesta a medias apaga el gesto.",
   "El objeto entra dentro del juego que ya le gusta —la marcha, la persecución, las cosquillas—, nunca en frío en una mesa. Y un cambio a la vez: persona nueva o juego nuevo, nunca los dos.",
   "Ni más rápido ni más lento que él: sigue su ritmo.",
-  "Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas.",
+  "Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas. Las preguntas que respondes tú enseguida («¿Más?… ¡más!», «¿Dónde está mamá?… ¡Aquí está!») son parte del juego. Y «Funcionó si» vale solo cuando pasó dentro de un juego de verdad, nunca armado para ver si entiende.",
   "Ningún premio por hacerlo, nunca le pidas que te mire, y no le exijas decirlo de una forma: vale el gesto, el sonido o la palabra.",
-  "El hermano juega con él; no le enseña. Tres reglas para el hermano: una cosa a la vez, esperar cinco segundos, copiarlo.",
-  "Si aparta la vista, se tapa la cara o se irrita: se para. «Se acabó» cierra el juego; no lo persigas para seguir.",
+  "El hermano juega con él; no le enseña. Sus reglas de siempre: una cosa a la vez, esperar cinco segundos, copiarlo. Si una ficha le da otras, son solo para ese juego.",
+  "Si aparta la vista, se tapa la cara o se irrita para salirse del juego: se para. «Se acabó» cierra el juego; no lo persigas para seguir.",
   "Sin contar, sin plazos, sin metas con número. Nada de esto promete que hable en una fecha: cada ficha dice qué ver, y ya.",
   "Momentos cortos, nunca sesiones. Un mal día no borra nada. Y tú también descansas.",
 ];
@@ -73,6 +74,11 @@ const JUICIO = [
 ];
 
 // ── Piezas ──────────────────────────────────────────────────────────────────────────────────
+const RAZON_LEGIBLE = {
+  "necesita-la-app": "necesita la pantalla",
+  "etapa-siguiente": "es de la etapa siguiente",
+  "va-a-que-no-hacer": "quedó como regla del «Qué no hacer»",
+};
 const ORIGEN_LEGIBLE = { mirada: "del documento anterior", habla: "de la app", nueva: "nueva", fusion: "fusión" };
 const refLegible = (r) =>
   r.replace(/^mirada:/, "mirada · ").replace(/^habla:/, "app · ").replace(/^anexo:/, "investigación · ");
@@ -81,7 +87,7 @@ function fichaHtml(f) {
   const paso = f.progresion ? PROGRESIONES[f.grupo][f.progresion] : null;
   return `
     <article class="ficha" id="${esc(f.id)}">
-      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="${esc(f.id)}"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="${esc(f.id)}" aria-label="Revisada: ${esc(f.titulo)}"> Revisada</label>
       <h3>${esc(f.titulo)}</h3>
       <p class="chips">
         <span class="chip">${esc(NOMBRE_TECNICA_FICHA[f.tecnica])}</span>
@@ -127,7 +133,10 @@ const piramideHtml = GRUPOS.map(
 ).join("");
 
 const indiceHtml = ORDEN_DOCUMENTO.map(
-  (g) => `<a href="#grupo-${g}"${esPrioritario(g) ? ` class="prioritario"` : ""}>${esc(NOMBRE_GRUPO[g])} · ${deGrupo(g).length}</a>`,
+  (g) =>
+    `<a href="#grupo-${g}"${esPrioritario(g) ? ` class="prioritario"` : ""}>${esc(NOMBRE_GRUPO[g])} · ${deGrupo(g).length}${
+      esPrioritario(g) ? `<span class="solo-lector"> · prioridad ahora</span>` : ""
+    }</a>`,
 ).join("\n      ");
 
 const gruposHtml = ORDEN_DOCUMENTO.map(
@@ -140,12 +149,6 @@ const gruposHtml = ORDEN_DOCUMENTO.map(
     ${deGrupo(g).map(fichaHtml).join("")}
   </section>`,
 ).join("");
-
-const avisoPrueba = BIBLIOTECA_COMPLETA
-  ? ""
-  : `
-    <p class="aviso aviso-prueba"><strong>Versión de prueba.</strong> Estas fichas existen para probar el documento.
-    Las fichas reales llegan cuando el papá apruebe el contenido.</p>`;
 
 const html = `<!doctype html>
 <html lang="es-CO">
@@ -170,7 +173,6 @@ ${PALETA_CSS}
   .suave { color: var(--suave); }
   .conteo { font: 400 .85rem system-ui, sans-serif; color: var(--suave); }
   .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; margin: .9rem 0; }
-  .aviso-prueba { border-color: var(--aviso); background: var(--aviso-suave); }
   .encuadre { border-left: 4px solid var(--acento); }
   .semaforo { border-left: 4px solid var(--peligro); }
   .favoritos { border-left: 4px solid var(--celebracion); }
@@ -179,6 +181,7 @@ ${PALETA_CSS}
   .indice a { font: 600 .82rem/1.2 system-ui, sans-serif; text-decoration: none; color: var(--acento); border: 1px solid var(--borde);
     border-radius: 999px; padding: .55rem .8rem; min-height: 44px; display: inline-flex; align-items: center; }
   .indice a.prioritario { border: 2px solid var(--acento); }
+  .solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .piramide { list-style: none; padding: 0; margin: .5rem 0; }
   .piramide li { padding: .6rem 0; border-bottom: 1px dashed var(--borde); }
   .grupo-nombre { margin: 0; font-weight: 700; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
@@ -227,10 +230,9 @@ ${PALETA_CSS}
   <header>
     <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
     <h1>La pirámide, en casa</h1>
-    <p>Antes de hablar se necesitan seis cosas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
+    <p>La pirámide tiene seis piezas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
     juego</strong>. No son pisos que se suben uno por uno: <strong>se construyen todas a la vez</strong>, en los mismos juegos. Aquí
     cada una está convertida en actividades cortas, hechas con lo que a él ya le gusta.</p>
-    ${avisoPrueba}
     <nav class="indice" aria-label="Grupos de fichas">
       ${indiceHtml}
       <a href="#que-no-hacer">Qué no hacer</a>
@@ -245,13 +247,13 @@ ${PALETA_CSS}
       sesiones. Y <strong>descansar también cuenta</strong>.</p>
     </div>
     <div class="aviso semaforo">
-      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita, <strong>se para</strong>. Se vuelve a
-      intentar más tarde, o mañana.</p>
+      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita <strong>para salirse del juego</strong>,
+      <strong>se para</strong>. Se vuelve a intentar más tarde, o mañana. (En el cucú, taparse es el juego, no el semáforo.)</p>
     </div>
   </header>
 
   <h2>La pirámide: un mapa, no una escalera</h2>
-  <p>Las seis, con lo que ya hace y lo que viene. Las tres marcadas son las que más trabajo necesitan ahora; las otras tres también
+  <p>Las seis, en una frase cada una. Las marcadas «prioridad ahora» son las que más trabajo necesitan ahora; las demás también
   van, todos los días.</p>
   <ul class="piramide">${piramideHtml}
   </ul>
@@ -282,6 +284,10 @@ ${PALETA_CSS}
       <li>${esc(q)}</li>`).join("")}
     </ul>
     <p class="suave"><span id="revisadas">0</span> de ${FICHAS.length} revisadas · tu avance queda guardado en este navegador.</p>
+    <p class="suave">Quedaron fuera del documento (${CAEN_DEL_DOCUMENTO.length}); siguen en la app:</p>
+    <ul class="lista">${CAEN_DEL_DOCUMENTO.map((c) => `
+      <li>app · ${esc(c.id)} — ${esc(RAZON_LEGIBLE[c.razon])}</li>`).join("")}
+    </ul>
   </section>
 ${gruposHtml}
 
@@ -318,5 +324,5 @@ ${gruposHtml}
 
 writeFileSync(new URL("../docs/LA-PIRAMIDE.html", import.meta.url), html);
 console.log(
-  `docs/LA-PIRAMIDE.html generado — ${FICHAS.length} fichas${BIBLIOTECA_COMPLETA ? "" : " (VERSIÓN DE PRUEBA)"}.`,
+  `docs/LA-PIRAMIDE.html generado — ${FICHAS.length} fichas.`,
 );

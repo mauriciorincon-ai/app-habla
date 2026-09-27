@@ -207,7 +207,7 @@
   que la mamá le manda a él. Dos «qué no hacer» quedaron por encima de 200 caracteres y el unit lo
   cazó (rojo real): se acortaron. Regenerado, 303 unit, 14/14 e2e, gate verde, captura leída.
 - 2026-09-06 · **G-Contenido cerrado.** «Excelente» sobre las cinco cápsulas del hermano. El hermano
-  tiene 16 años: las instrucciones de una frase se quedan tal cual (no hace falta guiarle las manos).
+  entiende instrucciones de una frase: se quedan tal cual (no hace falta guiarle las manos).
 - 2026-09-06 · **Auditoría Fase 2 — ejecutada al pie del plan aprobado.**
   **M1** `leer()` del documento solo acepta entradas con la forma del contrato y de la versión
   actual (`entradaValida`), y la pintura inicial del panel pasó al final del script en `try/catch`:

@@ -11,7 +11,7 @@
       generador y `/mirada` · gate ampliado con su rojo en el mismo commit · B4 · guía (bloque P
       fuera, bloque Q) · manual · ADR 016
 - [x] F2 — Contenido: el mapa de las 74 ejecutado · 56 fichas · capturas y medida de desborde
-- [ ] `/audita-sprint` (auditor independiente · todo pagado)
+- [x] `/audita-sprint` (auditor independiente · todo pagado · casilla 4 dos veces)
 - [ ] STOP → G-Contenido del usuario (lee TODO el documento)
 - [ ] Cierre: `/deploy-check` · summary EN el PR · CI por check · merge a su orden · homepage
 
@@ -23,7 +23,7 @@
 2. **Prioridad por agregado:** el mapa aprobado pone 7 fichas en atención conjunta y 10 en
    comprender (señalar vive junto a atención conjunta). La regla «cada prioritario ≥ cada no
    prioritario» contradecía el mapa; queda **«los tres prioritarios, juntos, llevan más fichas que
-   los otros tres juntos»** (la lectura del mapa: 32 contra 23).
+   los otros tres juntos»** (la lista ejecutada: 32 contra 24).
 3. **Orden del documento:** la pirámide de la portada va en el orden de la imagen de la mamá (de
    la base a la punta); las secciones de fichas van **primero las tres de prioridad ahora**.
 4. **Generador nuevo** `scripts/gen-la-piramide.mjs` → `docs/LA-PIRAMIDE.html`, servido en
@@ -48,6 +48,14 @@
   «Cucú: cuando se tapa él» (juego · atención conjunta) va a **atención conjunta**, y «Su canción,
   con un hueco antes de lo mejor» (intención comunicativa · comprender) va a **comprender**. El
   contenido no cambia por eso; el mapa ya las daba por dobles.
+- **Tres fichas más cambiaron de grupo respecto del plan aprobado** (declaradas en la auditoría,
+  B14): «Lo dejo a medias» (el plan la ponía en atención conjunta) va a **intención comunicativa**,
+  «La loción después del baño» (plan: atención conjunta) va a **comprender**, y «Me meto en su
+  juguete» (plan: imitación) va a **juego**. Las tres siguen el grupo PRINCIPAL que les da el mapa;
+  el plan las había listado por su segundo grupo.
+- **La progresión de juego llega a T7** («lo mismo con el hermano»): la enmienda resumía la escalera
+  de los turnos hasta «papeles al revés con un objeto»; el anexo aprobado trae un séptimo escalón,
+  el de otra persona, y es el que etiqueta la ficha del hermano. Igual que I6 en imitación.
 
 ## Bitácora
 
@@ -132,3 +140,17 @@
   decía «no lo usó» / «anotar no le servía»; el usuario dijo que **a la mamá no le resultó factible
   llevarlo**. Corregido en guía, manual y ADR 016 (que además anota el conteo final y las 11 que
   caen).
+- 2026-09-27 · **Auditoría Fase 1 — auditor independiente** (subagente con el diff `main...HEAD`, la orden,
+  el plan y el mapa; la bitácora como fuente secundaria). Reporte en `sprints/SPRINT_006-auditoria.md`:
+  0 críticos · 1 alto · 6 medios · 21 bajos, cada uno con `archivo:línea`. El alto: **edades escritas**
+  en cinco líneas de cuatro documentos del sprint y del S5, que el gate de términos no podía ver.
+- 2026-09-27 · **Auditoría Fase 2 — los 28 pagados, sin deuda.** La orden de fase 2 del usuario ya
+  pedía «todos los hallazgos pagados», así que no hubo parada entre fases. Tres guardias nuevas con su
+  rojo: **edades** (rojo con los archivos viejos, 5 líneas), **claves del prototipo en la progresión**
+  (rojo con `in`) y **documento desfasado de la biblioteca** (rojo con el documento viejo); más el gate
+  que ya no pasa en silencio si falta un archivo o un marcador (rojo al romper un marcador). Las 24 del
+  S5 vuelven al gate. En el copy: el semáforo pide que se aparte «para salirse del juego» (en el cucú,
+  taparse es el juego); una sola lista de reglas para el hermano; nueve pasos que eran dos acciones,
+  partidos; las fichas de la mamá ya no exigen al hermano. **Casilla 4 dos veces:** la segunda, sobre
+  el diff de los pagos, cazó tres frases hermanas (ver el reporte). 359 unit · 16/16 e2e de `/mirada`.
+

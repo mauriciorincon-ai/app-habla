@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { GRUPOS, GRUPOS_PRIORITARIOS } from "../../content/schema";
 
 // El documento de la mamá, «La pirámide, en casa», servido en /mirada (Sprint 006). La fuente es
 // docs/LA-PIRAMIDE.html (generado de content/fichas.ts); build:documentos lo copia a
@@ -10,14 +11,6 @@ import { expect, test } from "@playwright/test";
 // exista (se retiró entero: ni formularios, ni «Enviar a papá», ni cuadrícula); que el modo
 // revisión sea solo para el papá; que nada desborde a lo ancho en el teléfono; y axe limpio.
 
-const GRUPOS = [
-  "senalar",
-  "imitacion",
-  "comprender",
-  "atencion-conjunta",
-  "intencion-comunicativa",
-  "juego",
-];
 const PARTES = [
   "Ten a la mano",
   "Haz",
@@ -46,8 +39,9 @@ test("la ruta /mirada sirve «La pirámide, en casa» con su portada", async ({
   await expect(
     page.getByRole("heading", { name: "Qué no hacer" }),
   ).toBeVisible();
-  // El modo revisión (para el papá) NO se ve por defecto.
+  // El modo revisión (para el papá) NO se ve por defecto, ni la lista de lo que quedó fuera.
   await expect(page.getByText("Modo revisión")).toBeHidden();
+  await expect(page.getByText(/Quedaron fuera del documento/)).toBeHidden();
 });
 
 test("las fichas van por los seis grupos, y el índice lleva a cada uno", async ({
@@ -68,9 +62,9 @@ test("las fichas van por los seis grupos, y el índice lleva a cada uno", async 
     total += n;
   }
   expect(total).toBe(await page.locator("article.ficha").count());
-  // Tres grupos llevan la marca de prioridad en su título.
+  // Los grupos de prioridad ahora llevan la marca en su título, y solo ellos.
   expect(await page.locator("section.grupo h2 .chip-prioridad").count()).toBe(
-    3,
+    GRUPOS_PRIORITARIOS.length,
   );
   await page
     .getByRole("navigation", { name: "Grupos de fichas" })
@@ -116,6 +110,8 @@ test("?revision muestra las preguntas de juicio, de dónde viene cada ficha y la
 }) => {
   await page.goto("/mirada?revision");
   await expect(page.getByText("Modo revisión")).toBeVisible();
+  // Lo que el mapa dejó fuera del documento, con su razón (sigue en la app).
+  await expect(page.getByText(/Quedaron fuera del documento/)).toBeVisible();
   const primera = page.locator("article.ficha").first();
   await expect(primera.locator(".origen")).toBeVisible();
   await primera.getByLabel("Revisada").check();

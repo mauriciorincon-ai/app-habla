@@ -50,7 +50,7 @@ hacer con las dos bibliotecas en la app es decisión de la observación de novie
 
 **Los favoritos del niño (para personalizar):** marchar e imitar movimientos grandes · «corre que
 te atrapo» · las cosquillas con su sonido propio · señalar y decir «tú» · «hola» y «chao» con la
-mano · las vocales. Todo con la mamá; el hermano (16) sigue siendo la «otra persona» hasta
+mano · las vocales. Todo con la mamá; el hermano sigue siendo la «otra persona» hasta
 noviembre.
 
 **Objetivo del sprint, en observable:** que él **imite acciones con objetos y sonidos** (no solo
@@ -61,7 +61,7 @@ intención comunicativa, no después.
 ## 4 · Lo que se le pide a la planeadora
 
 1. **Investigación nueva, profunda, con anexos** (casa privada): por cada grupo de la pirámide,
-   las actividades concretas con evidencia para un niño de 4–5 años **que ya tiene lo de la §3**
+   las actividades concretas con evidencia para un niño en la etapa de palabras sueltas **que ya tiene lo de la §3**
    —qué las hace funcionar, qué no hacer, dosis— con énfasis en **imitación (objetos y sonidos,
    ida y vuelta), atención conjunta iniciada por el niño (mostrar, señalar para compartir) y
    turnos que se sostienen**. Que incluya cómo se **mide en casa sin puntaje** cada actividad

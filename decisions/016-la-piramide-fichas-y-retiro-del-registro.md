@@ -55,7 +55,10 @@ en G-Investigación.
 
 ## Consecuencias
 
-- La app y sus 50 cápsulas no cambian; tampoco las 24 del S5, que quedan como fuente.
+- La app y sus 50 cápsulas no cambian; tampoco las 24 del S5, que quedan como fuente. Por eso su
+  comentario de cabecera (`content/contacto-visual.ts`) sigue hablando del documento del S5: desde
+  el S6 ningún generador las importa y solo las leen los tests de trazabilidad; el gate las sigue
+  vigilando.
 - El mapa ejecutado da **56 fichas** (imitación 12 · atención conjunta 7 · juego 13 · señalar 4 ·
   intención comunicativa 10 · comprender 10) y **11 cápsulas de la app caen del documento**
   (5 necesitan la pantalla · 4 son de la etapa siguiente · 2 quedaron como reglas del «Qué no

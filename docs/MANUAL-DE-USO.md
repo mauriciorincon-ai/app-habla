@@ -310,7 +310,7 @@ Además de la app, existe un **documento aparte para la mamá**, para los meses 
 usa pantallas: **"La pirámide, en casa"**. Se abre en el teléfono de ella (o impreso) en la página
 `/mirada` de la app; él nunca lo ve: es para el adulto.
 
-Está organizado por las **seis cosas que se necesitan antes de hablar**: señalar, imitación,
+Está organizado por las **seis piezas de la pirámide**: señalar, imitación,
 comprender, atención conjunta, intención comunicativa y juego. **No son pisos**: se trabajan todas
 a la vez, en los mismos juegos. Tres llevan la marca **"prioridad ahora"** —imitación, atención
 conjunta y juego— y van primero en el documento.
@@ -319,18 +319,19 @@ Qué trae:
 
 - **Lo que ya le gusta al niño** —marchar, la persecución, las cosquillas con su sonido, señalar y
   decir "tú", saludar con la mano y la voz, las vocales—: las fichas entran por ahí a propósito.
-- **La pirámide como mapa**: una frase por grupo, con lo que ya hace y lo que viene.
+- **La pirámide como mapa**: una frase por grupo, en lo que se ve.
 - **56 fichas de actividad** (imitación 12 · atención conjunta 7 · juego 13 · señalar 4 · intención
   comunicativa 10 · comprender 10), cada una con seis partes, siempre en el mismo orden: **Ten a la mano ·
   Haz · Tu línea · Espera ver · Funcionó si · Si no pasa**. Algunas dicen en qué **paso** sirven;
   es para ubicarse, nunca una meta.
 - **Qué no hacer**, en diez reglas cortas. La de fondo: primero se copia al niño, se comenta en vez
   de preguntar, y al final siempre se le da lo que quería.
-- **El semáforo**: si aparta la vista, se tapa la cara o se irrita, se para.
+- **El semáforo**: si aparta la vista, se tapa la cara o se irrita para salirse del juego, se para
+  (en el cucú, taparse es el juego).
 
 **Sin registro.** El documento del Sprint 005 traía un registro diario en el teléfono; a la mamá no
 le resultó factible llevarlo y se retiró entero en el Sprint 006. La señal de que una actividad sirvió está **dentro de
-cada ficha** ("Funcionó si…"), para verla en el momento: no hay nada que anotar, enviar ni guardar,
+cada ficha** ("Funcionó si…"), para verla mientras juegan —algunas, en los días siguientes—: no hay nada que anotar, enviar ni guardar,
 y el documento no guarda nada en el teléfono de la mamá.
 
 **De dónde salen las fichas:** de las cápsulas de contacto visual del documento anterior y de las

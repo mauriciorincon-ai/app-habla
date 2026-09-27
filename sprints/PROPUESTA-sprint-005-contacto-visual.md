@@ -25,7 +25,7 @@ estado: PENDIENTE de estructurar en la planeadora
   (las 50 cápsulas de habla), que le pasará a la mamá para trabajarlas a diario.
 - La mamá quiere trabajar, **incluso por encima del habla, el contacto visual**. El usuario pide
   una investigación muy profunda y todas las cápsulas que la evidencia justifique, de alto
-  impacto o potencial impacto, para un niño de 4–5 años.
+  impacto o potencial impacto, para un niño en la etapa de palabras sueltas.
 
 ## 2 · Lo que se desplaza y lo que queda pendiente (visible)
 
