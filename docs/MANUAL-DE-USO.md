@@ -303,62 +303,41 @@ Con un objetivo activo, en el Estudio las grabaciones de **"Lo que ya grabaste"*
 al objetivo llevan una **diana** junto a la palabra: de un vistazo ve cuáles del reto ya apuntan
 a lo que pidieron en las terapias.
 
-<!-- s5:inicio -->
-### El documento de contacto visual — para trabajar sin pantallas (nuevo)
+<!-- s6:inicio -->
+### El documento de la mamá: "La pirámide, en casa" — para jugar sin pantallas
 
-Además de la app, existe un **documento aparte para la mamá**, pensado para los meses en que el
-niño no usa pantallas: **"Mirarse jugando"**. Se abre en el teléfono de ella (o impreso) en la
-página `/mirada` de la app, y él nunca lo ve: es para el adulto.
+Además de la app, existe un **documento aparte para la mamá**, para los meses en que el niño no
+usa pantallas: **"La pirámide, en casa"**. Se abre en el teléfono de ella (o impreso) en la página
+`/mirada` de la app; él nunca lo ve: es para el adulto.
+
+Está organizado por las **seis cosas que se necesitan antes de hablar**: señalar, imitación,
+comprender, atención conjunta, intención comunicativa y juego. **No son pisos**: se trabajan todas
+a la vez, en los mismos juegos. Tres llevan la marca **"prioridad ahora"** —imitación, atención
+conjunta y juego— y van primero en el documento.
 
 Qué trae:
 
-- **Una escalera de seis peldaños**, descrita por lo que usted ve en su casa: desde "mira cuando
-  le interesa, con quien confía" hasta "en más momentos del día". Ningún peldaño tiene plazo.
-- **Seis maneras de jugar** que le sacan la mirada sin pedírsela —copiar lo que él hace, la pausa
-  antes de lo mejor, turnos cortos con lo que él eligió, esperar en silencio, cantar a su ritmo,
-  y la misma rutina con otra persona— cada una con qué tan fuerte es la evidencia que la respalda.
-- **Las cápsulas**, peldaño a peldaño: qué hacer, la línea que dice tal cual, la actividad, y un
-  "ojo" con lo que no se hace. Momentos cortos, repartidos en el día; nunca sesiones.
-- **Qué no hacer**, en una lista corta. La regla de fondo: la mirada nunca se pide ni se premia;
-  lo que sigue a su mirada es que el juego sigue. Y el único semáforo: si él aparta la vista, se
-  tapa la cara o se irrita, se para.
-- **Las 50 cápsulas de habla de la app, en el mismo documento**, por etapa (él está en
-  "Palabras sueltas"), con su técnica, su línea y su actividad. Las que usan el juego de voz dicen
-  "necesita la app" y esperan a que él vuelva a la pantalla; las demás se hacen en casa. Todas se
-  registran igual que las de la mirada.
-- **El registro diario**: en dos minutos y pocos toques, la mamá anota **lo que hizo ella**, marca
-  **lo que vio en él** (sin contar cuántas veces) y **cómo estuvo él**. No hay puntajes, totales
-  ni metas. "Enviar a papá" arma un resumen con ejemplos, nunca con números, y manda **solo lo
-  nuevo desde la última vez**: ella puede enviar cuando quiera —de a uno, de a cinco— sin repetir
-  nada; "Enviar otra vez esta semana" repite los últimos siete días por si un mensaje se perdió.
-  "Guardar registro" descarga un archivo completo para leerlo después. Al imprimir, sale una
-  cuadrícula semanal para llenar a lápiz.
+- **Lo que ya le gusta al niño** —marchar, la persecución, las cosquillas con su sonido, señalar y
+  decir "tú", saludar con la mano y la voz, las vocales—: las fichas entran por ahí a propósito.
+- **La pirámide como mapa**: una frase por grupo, con lo que ya hace y lo que viene.
+- **Fichas de actividad**, cada una con seis partes, siempre en el mismo orden: **Ten a la mano ·
+  Haz · Tu línea · Espera ver · Funcionó si · Si no pasa**. Algunas dicen en qué **paso** sirven;
+  es para ubicarse, nunca una meta.
+- **Qué no hacer**, en diez reglas cortas. La de fondo: primero se copia al niño, se comenta en vez
+  de preguntar, y al final siempre se le da lo que quería.
+- **El semáforo**: si aparta la vista, se tapa la cara o se irrita, se para.
 
-**Privacidad del registro:** lo que la mamá anota vive **solo en su teléfono**, igual que todo lo
-demás de esta app. No hay cuenta ni nube. Sale de ahí únicamente cuando ella decide enviarlo o
-guardarlo.
+**Sin registro.** El documento del Sprint 005 traía un registro diario en el teléfono; la mamá no
+lo usó y se retiró entero en el Sprint 006. La señal de que una actividad sirvió está **dentro de
+cada ficha** ("Funcionó si…"), para verla en el momento: no hay nada que anotar, enviar ni guardar,
+y el documento no guarda nada en el teléfono de la mamá.
 
-**Qué hacer con lo que le llega (para el papá).** Lo que recibe es una descripción, no una nota.
-Tres lecturas, en este orden, y una sola respuesta corta a la mamá:
+**De dónde salen las fichas:** de las cápsulas de contacto visual del documento anterior y de las
+50 de habla de la app, revisadas una por una contra una investigación nueva: unas quedaron, otras
+se unieron en una sola, otras son nuevas, y las que necesitan la pantalla o son de la etapa
+siguiente quedaron solo en la app. **En la app no cambió nada.**
 
-1. **Primero "Él:".** Si en la misma cápsula aparece "incómodo" o "paramos" dos o tres veces, esa
-   cápsula se retira por ahora o se baja un peldaño ("la del globo la dejamos; sigue con las
-   cosquillas"). Si casi siempre dice "a gusto", no hay nada que cambiar.
-2. **Luego "Vi:", a lo largo de varios mensajes.** Es lo que dice por dónde va la escalera: se
-   sube un peldaño cuando lo del peldaño actual pasa **la mayoría de las veces** con la mamá. Sin
-   contar: si "miró de mí al juguete y de vuelta" sale seguido, el peldaño 3 está; si "me buscó
-   para que siguiera" sale seguido, el 2 está firme; si "lo hizo con otra persona" empieza a
-   aparecer, el 5 arranca. Ahí se le dice: "ya puedes probar las del peldaño 4".
-3. **Por último "Yo:", sin regañar.** Si "hoy no" sale mucho en "me puse a su altura" o en "hice
-   la pausa sin pedirle nada", lo que falta es del adulto, no del niño: se le recuerda **una** cosa,
-   en positivo ("la próxima, la pausa de tres segundos"). Y si lleva muchos días seguidos, que
-   descanse: descansar también cuenta.
-
-Lo que **no** se hace: sumar, comparar semanas, poner metas ni fechas, ni cambiar más de una cosa a
-la vez en la respuesta. Los mensajes quedan en WhatsApp; el archivo de "Guardar registro" es el
-respaldo para cuando el niño vuelva a la app.
-
-<!-- s5:fin -->
+<!-- s6:fin -->
 
 ### Qué mide y qué NO mide la app (importante)
 
@@ -434,14 +413,18 @@ Porque sería mentira. La tecnología que reconoce voz infantil se equivoca dema
 una app que finge saber terminaría diciéndole "¡bien!" a un niño que no dijo nada. Preferimos
 decirle solo lo que de verdad medimos.
 
-<!-- s5:inicio -->
-**¿Qué es "Mirarse jugando" y por qué no está dentro de la app?**
-Es el documento de contacto visual para la mamá, para trabajar sin pantallas. Vive en la página
-`/mirada` de la app, pero es un documento, no un juego: él no lo usa, lo usa el adulto. Está
-aparte a propósito, para los meses sin pantallas; más adelante, cuando el niño vuelva a usar la
-app, se verá cómo traer esas cápsulas a "Hoy".
+<!-- s6:inicio -->
+**¿Qué es "La pirámide, en casa" y por qué no está dentro de la app?**
+Es el documento de la mamá para jugar sin pantallas. Vive en la página `/mirada` de la app, pero es
+un documento, no un juego: él no lo usa, lo usa el adulto. Está aparte a propósito, para los meses
+sin pantallas; cuando el niño vuelva a la app, con la observación en vivo se decide qué fichas
+pasan a "Hoy".
 
-<!-- s5:fin -->
+**¿Dónde quedó el registro diario?**
+Se retiró en el Sprint 006: la mamá no lo usaba, y anotar no le servía. Cada ficha trae su
+"Funcionó si…", que se mira en el momento.
+
+<!-- s6:fin -->
 **¿Funciona sin internet?**
 Sí, después de la primera vez que la abra (si la instaló como app). El juego nunca necesita
 internet.
@@ -476,4 +459,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
 | 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. Remate del mismo día: "Enviar a papá" manda solo lo nuevo desde la última vez (+ "Enviar otra vez esta semana"); las 50 cápsulas de habla entran al mismo documento, por etapa y con el mismo registro; sección "Qué hacer con lo que le llega" para el papá. |
+| 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (la mamá no lo usó). La app del niño no cambia. |
 <!-- s5:fin -->

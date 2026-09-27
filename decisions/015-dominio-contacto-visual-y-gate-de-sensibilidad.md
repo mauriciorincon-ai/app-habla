@@ -56,8 +56,8 @@ bitácoras, ni en las citas (los títulos y algunas revistas nombran poblaciones
 ## Consecuencias
 
 - El segundo paso (traer las cápsulas a «Hoy» en la app, tras la observación de noviembre)
-  consume `CapsulaDeDominio` y el contrato del registro (`RegistroExportSchema`) sin cambiar el
-  schema de habla.
+  consume `CapsulaDeDominio` sin cambiar el schema de habla. *(El contrato del registro que
+  mencionaba esta línea se retiró con el registro en el Sprint 006 — ver ADR 016.)*
 - Cuando la lista de términos cambie, se regenera el fixture con `scripts/gen-sensibilidad-hashes.mjs`
   (la lista sigue en la planeadora); los scripts `.mjs` que importan `.ts` exigen Node ≥ 22.18.
 - El gate se documenta sin escribir jamás un término: esta ADR tampoco.

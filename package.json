@@ -2,12 +2,15 @@
   "name": "app-habla",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "pnpm build:worklet && pnpm build:documentos && next dev",
     "build": "pnpm build:worklet && pnpm build:documentos && next build",
     "build:worklet": "tsc -p tsconfig.worklet.json",
     "build:documentos": "node scripts/copiar-documentos.mjs",
-    "gen:catalogo-mirada": "node scripts/gen-catalogo-contacto-visual.mjs",
+    "gen:piramide": "node scripts/gen-la-piramide.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

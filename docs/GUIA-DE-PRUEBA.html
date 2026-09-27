@@ -66,7 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
-  .o-s5 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
+  .o-s6 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
   .o-clave { color: var(--pendiente); border-color: var(--pendiente); background: var(--pendiente-suave); font-weight: 700; }
 
@@ -154,7 +154,7 @@
 <body>
 <div class="pagina">
   <header>
-    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 005 (primero de H2) · 2026-09-06</p>
+    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 006 (segundo de H2) · 2026-09-27</p>
     <h1>Guía de prueba</h1>
     <p class="suave">Cada línea responde las tres preguntas: <strong>qué probar</strong>, <strong>cómo</strong> y —lo más importante— <strong>qué esperar</strong> como resultado correcto. Donde hay una forma clara de fallar, también dice cuál. La guía es <strong>acumulativa</strong>: contiene todas las pruebas vigentes de la app, con el sprint del que viene cada una. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono); lo que necesita la tablet está al final.</p>
 
@@ -173,14 +173,14 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s5">Nuevo · S5</span> Nació en este sprint (el documento de la mirada en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s6">Nuevo · S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s4">S4</span> Del Sprint 4, sin cambios. <span class="suave">Regresión: que el Rumbo y el Objetivo de la semana sigan.</span></li>
-        <li><span class="origen o-mejora">Mejorado en S4</span> Venía de antes y <strong>el S4 lo cambió</strong>; se hereda igual. <span class="suave">(Verás también “Mejorado en S3”.)</span></li>
+        <li><span class="origen o-mejora">Mejorado en S6</span> Venía de antes y <strong>un sprint posterior lo cambió</strong>; se hereda igual. <span class="suave">(Verás también “Mejorado en S4” y “Mejorado en S3”.)</span></li>
         <li><span class="origen o-s3">S3</span> Del Sprint 3, sin cambios. <span class="suave">Regresión: que la voz de la familia y las gemelas sigan.</span></li>
         <li><span class="origen o-s2">S2</span> Del Sprint 2, sin cambios. <span class="suave">Regresión: que lo del S2 siga funcionando.</span></li>
         <li><span class="origen o-s1">S1</span> Del Sprint 1, sin cambios. <span class="suave">Regresión: que lo más viejo siga en pie.</span></li>
       </ul>
-      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S5 añade su gate acotado:</strong> el bloque P —el registro en tu teléfono real— son <strong>7 pruebas</strong>, unos <strong>10 minutos</strong>, y son las que ninguna máquina puede hacer por ti (tu teléfono, tu compartir, tu impresora).</p>
+      <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>25</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S6 añade su gate acotado:</strong> el bloque Q —la pirámide en tu teléfono real y tu lectura de todas las fichas— son <strong>6 pruebas</strong>, unos <strong>10 minutos</strong> más la lectura (tu teléfono, tu impresora, tu juicio de padre).</p>
       <div class="recorrido">
         <p style="margin:0 0 6px"><strong>Recorrido del gate ⭐ ACUMULADO (S1+S2+S3+S4)</strong> — orden sugerido para hacerlo de una vez, en el computador y con micrófono:</p>
         <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong> — pega esa ruta al final de la dirección de la app (p. ej. <code>…<strong>/spike/audio</strong></code>) y arrancas a la segura, sin buscar el camino. <em>(Mejora nacida del gate S4.)</em></p>
@@ -197,7 +197,8 @@
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
-        <button type="button" data-filtro="s4" aria-pressed="false">Solo lo nuevo del S4</button>
+        <button type="button" data-filtro="s6" aria-pressed="false">Solo lo nuevo del S6</button>
+        <button type="button" data-filtro="s4" aria-pressed="false">Solo regresión del S4</button>
         <button type="button" data-filtro="mejora" aria-pressed="false">Solo lo mejorado</button>
         <button type="button" data-filtro="s3" aria-pressed="false">Solo regresión del S3</button>
         <button type="button" data-filtro="s2" aria-pressed="false">Solo regresión del S2</button>
@@ -787,58 +788,48 @@
     </ul>
   </section>
 
-<!-- s5:inicio -->
+<!-- s6:inicio -->
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">P</span><h2>El documento de la mirada, en tu teléfono (S5)</h2></div>
+    <div class="bloque-cabeza"><span class="letra">Q</span><h2>La pirámide, en tu teléfono (S6)</h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/mirada</code> — <strong>en tu teléfono</strong>, no en el computador (la dirección de la app te la sabes; esta guía no la escribe)</p>
-    <p class="meta-bloque chica suave">Este sprint no toca la app del niño: produce el <strong>documento que la mamá va a trabajar sin pantallas</strong>, servido en su propia página, con el <strong>registro diario</strong> adentro. Lo único que ninguna máquina puede verificar es que ese registro quede <strong>fácil de verdad en un teléfono real</strong> — y esa es tu condición: si no queda fácil, se descarta. Las pruebas P1–P6 son del <strong>envase</strong> (el documento y el registro); el <strong>contenido</strong> —las 24 cápsulas reales de la fase 2— lo apruebas aparte, en el modo revisión (P7).</p>
+    <p class="meta-bloque chica suave">Este sprint no toca la app del niño: rehace el <strong>documento de la mamá</strong> por los seis grupos de la pirámide, con fichas de actividad, y <strong>retira el registro</strong> (ella no lo usó). Q1–Q6 son de <strong>forma</strong> —cómo se ve y se lee en un teléfono real—; Q7 es el <strong>contenido</strong>: tu G-Contenido, que ninguna máquina puede hacer por ti.</p>
     <ul class="pasos">
-      <li data-origen="s5"><input type="checkbox" id="v5-p1"><div>
-        <label for="v5-p1">Abre <code>/mirada</code> en tu teléfono y lee la portada completa. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Título <strong>“Mirarse jugando”</strong>, la caja <strong>“Esto no es una prueba.”</strong>, la del <strong>semáforo</strong>, “Cómo se usa”, la escalera de <strong>seis peldaños</strong>, “Las seis maneras” con su chip de evidencia, y “Qué no hacer”. Todo legible sin hacer zoom; ningún texto cortado.</p>
-        <p class="esperar"><span class="et">Mal</span> Hay que hacer zoom para leer, o algo se sale de la pantalla a lo ancho.</p>
+      <li data-origen="mejora"><input type="checkbox" id="v6-q1"><div>
+        <label for="v6-q1">Abre <code>/mirada</code> en tu teléfono y lee la portada completa, sin tocar nada. <span class="origen o-mejora">Mejorado en S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Título <strong>“La pirámide, en casa”</strong>; debajo, el índice con los <strong>seis grupos</strong> (imitación, atención conjunta y juego con el borde más marcado) y <strong>“Qué no hacer”</strong>; las cajas <strong>“Lo que ya le gusta”</strong>, <strong>“Esto no es una prueba.”</strong> y <strong>“El único semáforo:”</strong>; luego <strong>“La pirámide: un mapa, no una escalera”</strong> con una frase por grupo, <strong>“Cómo se lee una ficha”</strong> y <strong>“Qué no hacer”</strong>. Todo legible sin zoom.</p>
+        <p class="esperar"><span class="et">Mal</span> Hay que hacer zoom para leer, un texto sale cortado, o la página se mueve a lo ancho con el dedo.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p2"><div>
-        <label for="v5-p2">En una cápsula toca <strong>“Registrar este momento”</strong> y toca <strong>“Guardar en este teléfono”</strong> sin marcar nada. Luego marca las <strong>tres</strong> de “A · Lo que hice yo”, una de “B”, escribe un ejemplo, elige cómo estuvo él en “C”, y guarda. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Primero, el aviso <strong>“Falta marcar las tres de «lo que hice yo» y cómo estuvo él.”</strong> Después, el mensaje <strong>“Guardado en este teléfono”</strong>, el formulario se cierra y abajo, en <strong>“Mis registros”</strong>, aparece tu momento escrito en frases (“Yo: …”, “Vi: …”, “Él: …”). Cuenta los toques: deberían ser <strong>seis o menos</strong> y menos de dos minutos.</p>
-        <p class="esperar"><span class="et">Mal</span> Los botones quedan pequeños para el dedo, o hay que hacer más de seis toques, o no aparece en “Mis registros”.</p>
+      <li data-origen="s6"><input type="checkbox" id="v6-q2"><div>
+        <label for="v6-q2">Toca <strong>“Imitación”</strong> en el índice y lee la primera ficha entera. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Arriba, sus etiquetas (la manera de jugar, los minutos, el momento del día). Después, <strong>seis partes siempre en el mismo orden</strong>, cada una con su rótulo en mayúsculas: <strong>TEN A LA MANO</strong>, <strong>HAZ</strong> (pasos numerados), <strong>TU LÍNEA</strong>, <strong>ESPERA VER</strong>, <strong>FUNCIONÓ SI</strong> (en un recuadro) y <strong>SI NO PASA</strong>. Al final, la cita en letra pequeña.</p>
+        <p class="esperar"><span class="et">Mal</span> Falta una parte, van en otro orden, o los pasos no tienen número.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p3"><div>
-        <label for="v5-p3"><strong>Cierra el navegador del todo</strong> y vuelve a abrir <code>/mirada</code>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Tu registro <strong>sigue ahí</strong> en “Mis registros”. Vive en el teléfono: no hay cuenta, ni nube, ni nada que iniciar.</p>
-        <p class="esperar"><span class="et">Mal</span> El panel dice “Todavía no has registrado ningún momento”: el teléfono no guardó. Dime qué navegador es.</p>
+      <li data-origen="s6"><input type="checkbox" id="v6-q3"><div>
+        <label for="v6-q3">Busca una ficha con la etiqueta <strong>“con el hermano”</strong>. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Sus pasos o su línea dicen <strong>qué hace el hermano</strong> (“Al hermano: …”) y qué hace la mamá mientras tanto. Se entiende quién hace qué sin preguntar.</p>
+        <p class="esperar"><span class="et">Mal</span> No se sabe si un paso es de la mamá o del hermano.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p4"><div>
-        <label for="v5-p4">Toca <strong>“Enviar a papá”</strong>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Se abre el <strong>compartir del teléfono</strong> (WhatsApp entre las opciones). El texto trae <strong>solo lo que no has enviado</strong> (la primera vez, todo): cada momento con “Yo:”, “Vi:” (con tu ejemplo entre comillas) y “Él:”, y termina con <strong>“Sin números a propósito: son ejemplos.”</strong> Ningún total, ningún porcentaje. Mándatelo a ti mismo y léelo. Al volver, ese registro lleva la marquita <strong>“enviado”</strong>, y si tocas otra vez sin registrar nada nuevo dice <strong>“Nada nuevo desde la última vez. Si quieres, «Enviar otra vez esta semana».”</strong></p>
-        <p class="esperar"><span class="et">Mal</span> No pasa nada al tocar, el texto trae conteos, o el segundo envío repite lo que ya enviaste.</p>
+      <li data-origen="s6"><input type="checkbox" id="v6-q4"><div>
+        <label for="v6-q4">Busca una ficha con la etiqueta <strong>“Paso: …”</strong> (con borde punteado). <span class="origen o-s6">Nuevo · S6</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El paso es una frase de lo que se ve (p. ej. <strong>“Paso: Copia cuando le muestras”</strong>), y en la portada, bajo “Cómo se lee una ficha”, está dicho que el paso <strong>es para ubicarse, no una meta</strong>. Las fichas de intención comunicativa no llevan paso.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p5"><div>
-        <label for="v5-p5">Toca <strong>“Guardar registro”</strong>. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Mensaje <strong>“Archivo guardado en el teléfono”</strong> y en tus descargas un archivo <strong>“registro-mirada-<em>fecha</em>.json”</strong>. Ábrelo o mándamelo: es el que leeremos en noviembre.</p>
-        <p class="esperar"><span class="et">Mal</span> El teléfono no descarga nada o el archivo no abre.</p>
+      <li data-origen="s6"><input type="checkbox" id="v6-q5"><div>
+        <label for="v6-q5">Desde el menú del navegador, <strong>Imprimir</strong> (basta la vista previa). <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Las fichas salen <strong>completas, sin partirse</strong> entre dos hojas, sin el índice y sin casillas. No hay cuadrícula ni botones: el registro ya no existe.</p>
+        <p class="esperar"><span class="et">Mal</span> Una ficha queda partida entre dos páginas, o sale algo para tocar.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p6"><div>
-        <label for="v5-p6">Desde el menú del navegador, <strong>Imprimir</strong> (basta la vista previa). <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Desaparecen los botones y los formularios; al final aparece <strong>“Mi semana, a mano”</strong>: la cuadrícula de lunes a domingo para llenar con lápiz (el respaldo en papel).</p>
-        <p class="esperar"><span class="et">Mal</span> Salen botones impresos, o la cuadrícula no aparece.</p>
+      <li data-origen="mejora"><input type="checkbox" id="v6-q6"><div>
+        <label for="v6-q6">Abre <code>/mirada?revision</code> (solo tú). Marca <strong>“Revisada”</strong> en una ficha y recarga. <span class="origen o-mejora">Mejorado en S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con cuatro preguntas; cada ficha gana su casilla <strong>“Revisada”</strong> y una línea azul <strong>“Viene de (…)”</strong> que dice de qué cápsula o de qué parte de la investigación salió. El conteo <strong>“N de M revisadas”</strong> sube y <strong>sigue marcado al recargar</strong>. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
       </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p8"><div>
-        <label for="v5-p8">Registra otro momento y toca <strong>“Enviar otra vez esta semana”</strong>. <span class="origen o-s5">Nuevo · S5</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El compartir se abre con <strong>todos</strong> los momentos de los últimos 7 días, enviados o no (el título dice “esta semana, otra vez”). Es para cuando un mensaje se perdió. “Enviar a papá” sigue mandando solo lo nuevo.</p>
-      </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p9"><div>
-        <label for="v5-p9">Toca <strong>“El habla · 50 cápsulas”</strong> en el índice de arriba. <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Sección <strong>“El habla: las 50 cápsulas de la app, aquí mismo”</strong> con las tres etapas —<strong>“Palabras sueltas”</strong> lleva el chip <strong>“aquí está él”</strong>—, cada cápsula con su técnica, su línea y su actividad, <strong>sin la cita</strong> (esa vive en tu catálogo). Las que usan el juego de voz llevan el chip <strong>“necesita la app”</strong>. Todas tienen “Registrar este momento” y funciona igual.</p>
-        <p class="esperar"><span class="et">Mal</span> Faltan cápsulas (deben ser 50), aparece alguna cita, o el registro no guarda en una de habla.</p>
-      </div></li>
-      <li data-origen="s5"><input type="checkbox" id="v5-p7"><div>
-        <label for="v5-p7">Abre <code>/mirada?revision</code> (solo tú, para el G-Contenido). <span class="origen o-s5">Nuevo · S5</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con las preguntas de juicio y cada cápsula gana su casilla <strong>“Revisada”</strong>, con el conteo “N de M revisadas”. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
+      <li data-origen="s6"><input type="checkbox" id="v6-q7"><div>
+        <label for="v6-q7"><strong>Tu G-Contenido:</strong> en <code>/mirada?revision</code>, lee <strong>todas</strong> las fichas con las cuatro preguntas de la caja. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Cada ficha la puede hacer la mamá <strong>tal cual</strong>, en un momento corto; cada paso es <strong>una sola acción</strong> y se entiende sin ti; y en todas reconoces <strong>a tu hijo y su casa</strong>. Ninguna le pide forzarlo.</p>
+        <p class="esperar"><span class="et">Mal</span> Una ficha que ella no podría hacer así, un paso que necesita tu explicación, o algo que no es él — repórtala <strong>por su título</strong>.</p>
       </div></li>
     </ul>
   </section>
-<!-- s5:fin -->
+<!-- s6:fin -->
 
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
@@ -917,6 +908,9 @@
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
+<!-- s6:inicio -->
+    <p class="chica suave"><strong>Sprint 006 (2026-09-27) — segundo de H2, «La pirámide»:</strong> la app del niño <strong>no cambia</strong>. El documento de la mamá se rehace por los <strong>seis grupos de la pirámide</strong> (todos a la vez) con <strong>fichas de actividad</strong> en instrucción directa, y <strong>se retira el registro diario</strong>. <strong>Nuevo:</strong> bloque Q (Q2–Q5 y Q7, tu G-Contenido). <strong>Mejoradas:</strong> P1 → <strong>Q1</strong> (la portada nueva) y P7 → <strong>Q6</strong> (el modo revisión, ahora con el origen de cada ficha). <strong>Eliminadas — feature muerta, el registro</strong> (la mamá no lo usó en tres semanas; la señal de que algo sirvió vive ahora dentro de cada ficha): <strong>P2</strong> registrar un momento · <strong>P3</strong> cerrar y volver · <strong>P4</strong> “Enviar a papá” · <strong>P5</strong> “Guardar registro” · <strong>P8</strong> “Enviar otra vez esta semana”. <strong>Eliminadas por reemplazo del documento:</strong> <strong>P6</strong> (la cuadrícula impresa ya no existe; imprimir se prueba en Q5) y <strong>P9</strong> (la sección con las 50 de habla: sus cápsulas viven ahora como fichas dentro de su grupo, y las que necesitan pantalla siguen solo en la app). Gate mínimo del S6: <strong>6 pruebas</strong> (Q1–Q3, Q5–Q7), unos 10 minutos más la lectura del G-Contenido.</p>
+<!-- s6:fin -->
 <!-- s5:inicio -->
     <p class="chica suave"><strong>Sprint 005 (2026-09-06) — primero de H2, bifurcación “Contacto visual”:</strong> la app del niño <strong>no cambia</strong> (cero pantallas por indicación, hasta la observación en vivo de noviembre). Llega el <strong>documento de la mamá</strong> —las cápsulas de contacto visual como escalera de seis peldaños, servido en <code>/mirada</code>— con el <strong>registro diario</strong> adentro (lo que hizo ella, lo que vio en él sin contar, cómo estuvo él; solo en su teléfono; “Enviar a papá” con ejemplos, “Guardar registro” en archivo; cuadrícula impresa de respaldo). <strong>Nuevo:</strong> bloque P (7 pruebas ⭐, ~10 min, en el teléfono real). Toda prueba del S4 se <strong>hereda entera</strong> como regresión (ya no “Nuevo · S4”). <strong>Eliminado:</strong> nada. Además, un gate nuevo del repo: ningún archivo público del sprint puede contener términos de una lista que vive en la planeadora (viajan solo sus huellas) — y ya cazó lo suyo antes de estrenarse. <strong>Remate del mismo día (tras el merge, a pedido del usuario):</strong> “Enviar a papá” manda <strong>solo lo nuevo desde la última vez</strong> (P4 mejorada) + <strong>“Enviar otra vez esta semana”</strong> (P8) + <strong>las 50 cápsulas de habla dentro del mismo documento</strong>, por etapa y con el mismo registro (P9). Bloque P: 9 pruebas.</p>
 <!-- s5:fin -->

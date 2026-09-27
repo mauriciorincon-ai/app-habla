@@ -82,7 +82,7 @@ con lo que las terapias ya trabajan (turnos).
 sobre niños con dificultades de contacto visual hay dos escuelas: *entrenar la mirada* (pedir
 «mírame», reforzar el instante) y *atención conjunta y compromiso social* (rutinas de juego por
 turnos, seguir su interés, expectativa y pausa, imitación, juego físico con pausa), donde el
-contacto visual aparece como consecuencia. La segunda tiene mejor evidencia en intervenciones
+contacto visual aparece como consecuencia. La segunda tiene mejor evidencia en los estudios
 mediadas por padres y menos riesgo de volver la mirada aversiva. **Pero se investigan las dos**
 y cada una queda graduada por fuerza de evidencia; la biblioteca se arma con lo que resista.
 
@@ -97,7 +97,7 @@ personas, más momentos del día.
    por fuerza (FUERTE / MODERADA / DÉBIL / CONTRA), con fuente citada y verificable, qué
    mecanismo explica cada técnica, para qué perfil observable sirve, y **qué NO hacer** (con su
    razón). Incluye una sección explícita sobre el debate «forzar vs. emerger».
-   Puntos de partida a verificar (no afirmados aún): intervenciones mediadas por padres para la
+   Puntos de partida a verificar (no afirmados aún): programas guiados por los padres para la
    comunicación social temprana y sus revisiones sistemáticas; los modelos de atención conjunta
    y juego por turnos con mejor evidencia y sus ensayos de seguimiento (se nombran en la
    investigación, que vive en la planeadora); la literatura sobre respuesta al nombre; las rutinas sociales sensoriales

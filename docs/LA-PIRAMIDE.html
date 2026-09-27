@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Hablemos San — La pirámide, en casa</title>
+<style>
+
+  :root {
+    --fondo:#FBF8F2; --superficie:#F5F0E5; --borde:#ECE4D2; --tinta:#1F2420; --suave:#5A615C;
+    --acento:#2E4628; --acento-hover:#3F5F37; --acento-suave:#DCE6D8; --exito:#527947;
+    --aviso:#C99432; --aviso-suave:#F8E9C8; --peligro:#B14B3D; --info:#4A6E84; --celebracion:#DD7B5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo:#14171A; --superficie:#1B1F22; --borde:#232830; --tinta:#F2EFE8; --suave:#969994;
+      --acento:#B5D5AB; --acento-hover:#94BB89; --acento-suave:#233022; --exito:#A8C9A0;
+      --aviso:#ECC56F; --aviso-suave:#3A2F14; --peligro:#E08A7C; --info:#8FB3C7; --celebracion:#DD7B5E;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; padding: 1.25rem 1rem 4rem; background: var(--fondo); color: var(--tinta);
+    font: 17px/1.55 Georgia, "Times New Roman", serif; overflow-wrap: break-word; }
+  main { max-width: 42rem; margin: 0 auto; }
+  h1 { font-size: 2rem; line-height: 1.12; margin: .3rem 0 .6rem; }
+  h2 { font-size: 1.35rem; line-height: 1.25; margin: 2.6rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
+  h3 { margin: .1rem 0 .4rem; font-size: 1.12rem; line-height: 1.3; }
+  p { margin: .45rem 0; }
+  .eyebrow { font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  .suave { color: var(--suave); }
+  .conteo { font: 400 .85rem system-ui, sans-serif; color: var(--suave); }
+  .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; margin: .9rem 0; }
+  .aviso-prueba { border-color: var(--aviso); background: var(--aviso-suave); }
+  .encuadre { border-left: 4px solid var(--acento); }
+  .semaforo { border-left: 4px solid var(--peligro); }
+  .favoritos { border-left: 4px solid var(--celebracion); }
+  .favoritos ul, ul.lista { padding-left: 1.2rem; margin: .4rem 0; } .favoritos li, ul.lista li { margin: .3rem 0; }
+  .indice { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
+  .indice a { font: 600 .82rem/1.2 system-ui, sans-serif; text-decoration: none; color: var(--acento); border: 1px solid var(--borde);
+    border-radius: 999px; padding: .55rem .8rem; min-height: 44px; display: inline-flex; align-items: center; }
+  .indice a.prioritario { border: 2px solid var(--acento); }
+  .piramide { list-style: none; padding: 0; margin: .5rem 0; }
+  .piramide li { padding: .6rem 0; border-bottom: 1px dashed var(--borde); }
+  .grupo-nombre { margin: 0; font-weight: 700; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
+  .grupo-nombre a { color: var(--tinta); }
+  .piramide .suave { margin: .2rem 0 0; font-size: .95rem; }
+  .lectura { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .35rem; }
+  .lectura li { font-size: .97rem; }
+  .chips { margin: .2rem 0 .7rem; line-height: 1.9; }
+  .chip { display: inline-block; font: 600 .72rem/1.2 system-ui, sans-serif; letter-spacing: .03em; background: var(--acento-suave);
+    color: var(--acento); border-radius: 999px; padding: .3rem .62rem; margin: 0 .3rem .3rem 0; vertical-align: middle; }
+  .chip.suave { background: transparent; border: 1px solid var(--borde); color: var(--suave); }
+  .chip-prioridad { background: var(--acento); color: var(--fondo); }
+  .chip-hermano { background: var(--aviso-suave); color: var(--tinta); }
+  .chip-paso { background: transparent; border: 1px dashed var(--acento); color: var(--acento); }
+  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: 1rem 0; position: relative; }
+  .ficha.lista { opacity: .55; }
+  .parte { margin: .7rem 0; }
+  .parte ul, .parte ol { margin: .25rem 0 0; padding-left: 1.3rem; }
+  .parte li { margin: .25rem 0; }
+  .parte p:not(.rotulo) { margin: .2rem 0 0; }
+  .rotulo { font: 700 .74rem/1.2 system-ui, sans-serif; letter-spacing: .07em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  blockquote { margin: .7rem 0; padding: .55rem .9rem; border-left: 4px solid var(--acento); background: var(--fondo); border-radius: 0 10px 10px 0; font-style: italic; }
+  blockquote .rotulo { display: block; font-style: normal; margin-bottom: .15rem; }
+  .funciono { padding: .55rem .8rem; background: var(--fondo); border-radius: 10px; border: 2px solid var(--acento-suave); }
+  .funciono .rotulo { color: var(--acento); }
+  .si-no { padding: .55rem .8rem; background: var(--fondo); border-radius: 10px; border: 1px dashed var(--borde); font-size: .96rem; }
+  .fuente { font: .78rem system-ui, sans-serif; color: var(--suave); margin: .7rem 0 0; }
+  .origen { font: .76rem system-ui, sans-serif; color: var(--info); margin: .3rem 0 0; }
+  .revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
+  .solo-revision { display: none; }
+  body.revision .solo-revision { display: block; }
+  body.revision .ficha h3 { margin-right: 6rem; }
+  a:focus-visible, input:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
+  footer { margin-top: 3rem; font-size: .8rem; color: var(--suave); border-top: 1px solid var(--borde); padding-top: 1rem; }
+  @media (prefers-reduced-motion: no-preference) { .ficha { transition: opacity .2s; } }
+  @media print {
+    body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
+    .solo-revision, .indice { display: none !important; }
+    .ficha { break-inside: avoid; border: 1px solid #999; background: #fff; }
+    .grupo h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
+    <h1>La pirámide, en casa</h1>
+    <p>Antes de hablar se necesitan seis cosas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
+    juego</strong>. No son pisos que se suben uno por uno: <strong>se construyen todas a la vez</strong>, en los mismos juegos. Aquí
+    cada una está convertida en actividades cortas, hechas con lo que a él ya le gusta.</p>
+    
+    <p class="aviso aviso-prueba"><strong>Versión de prueba.</strong> Estas fichas existen para probar el documento.
+    Las fichas reales llegan cuando el papá apruebe el contenido.</p>
+    <nav class="indice" aria-label="Grupos de fichas">
+      <a href="#grupo-imitacion" class="prioritario">Imitación · 1</a>
+      <a href="#grupo-atencion-conjunta" class="prioritario">Atención conjunta · 0</a>
+      <a href="#grupo-juego" class="prioritario">Juego · 1</a>
+      <a href="#grupo-senalar">Señalar · 0</a>
+      <a href="#grupo-intencion-comunicativa">Intención comunicativa · 1</a>
+      <a href="#grupo-comprender">Comprender · 0</a>
+      <a href="#que-no-hacer">Qué no hacer</a>
+    </nav>
+    <div class="aviso favoritos">
+      <p><strong>Lo que ya le gusta</strong> — las fichas entran por aquí a propósito:</p>
+      <ul><li>Marchar y copiar movimientos grandes de brazos y piernas.</li><li>«Corre que te atrapo»: voltea a ver si lo sigues, sonríe y corre.</li><li>Las cosquillas, con su propio sonido — y ya te las hace a ti.</li><li>Seguir tu dedo cuando señalas, y señalar diciendo «tú».</li><li>«Hola» y «chao» con la mano y la voz juntas.</li><li>Repetir las vocales.</li></ul>
+    </div>
+    <div class="aviso encuadre">
+      <p><strong>Esto no es una prueba.</strong> Ni para él ni para ti. No hay puntajes, ni metas con número, ni plazos.</p>
+      <p><strong>Momentos cortos</strong> — de 5 a 30 minutos repartidos en el día: jugando, en el baño, en la mesa, al vestirlo. Nunca
+      sesiones. Y <strong>descansar también cuenta</strong>.</p>
+    </div>
+    <div class="aviso semaforo">
+      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita, <strong>se para</strong>. Se vuelve a
+      intentar más tarde, o mañana.</p>
+    </div>
+  </header>
+
+  <h2>La pirámide: un mapa, no una escalera</h2>
+  <p>Las seis, con lo que ya hace y lo que viene. Las tres marcadas son las que más trabajo necesitan ahora; las otras tres también
+  van, todos los días.</p>
+  <ul class="piramide">
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-senalar">Señalar</a>
+          
+          <span class="conteo">0 fichas</span></p>
+        <p class="suave">Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-imitacion">Imitación</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">1 ficha</span></p>
+        <p class="suave">Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-comprender">Comprender</a>
+          
+          <span class="conteo">0 fichas</span></p>
+        <p class="suave">Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-atencion-conjunta">Atención conjunta</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">0 fichas</span></p>
+        <p class="suave">Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-intencion-comunicativa">Intención comunicativa</a>
+          
+          <span class="conteo">1 ficha</span></p>
+        <p class="suave">Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-juego">Juego</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">1 ficha</span></p>
+        <p class="suave">Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.</p>
+      </li>
+  </ul>
+  <p>Lo único que tiene orden es lo que pasa <strong>dentro de un mismo rato de juego</strong>: primero lo copias tú y después le
+  muestras algo nuevo; primero un juego que dure y después mostrar o señalar; y el objeto entra dentro del juego de moverse, nunca en
+  frío en una mesa. Cada ficha ya trae ese orden en sus pasos.</p>
+
+  <h2>Cómo se lee una ficha</h2>
+  <ul class="lectura">
+    <li><strong>Ten a la mano</strong> — lo que necesitas listo.</li>
+    <li><strong>Haz</strong> — los pasos, uno por acción.</li>
+    <li><strong>Tu línea</strong> — lo que dices, tal cual.</li>
+    <li><strong>Espera ver</strong> — lo que es probable que pase.</li>
+    <li><strong>Funcionó si</strong> — la señal de que sirvió. No hay que contar nada.</li>
+    <li><strong>Si no pasa</strong> — cómo hacerlo más fácil. Nunca es insistir.</li>
+  </ul>
+  <p class="suave">Algunas fichas dicen en qué <strong>paso</strong> sirven. Es para ubicarte, no una meta: cada cosa puede ir en un
+  paso distinto el mismo día, y un mal día no baja ningún paso.</p>
+
+  <h2 id="que-no-hacer">Qué no hacer</h2>
+  <ul class="lista">
+    <li>Primero lo copias tú; después le muestras algo nuevo. Comenta lo que hace en vez de preguntarle. Y al final dale siempre lo que quería: la pausa dura segundos, nunca «hasta que lo pida bien».</li>
+    <li>Cuando te muestre algo, te lo señale o te diga «tú»: mira lo que te muestra, vuelve a su cara con emoción y ponle la palabra. Una respuesta a medias apaga el gesto.</li>
+    <li>El objeto entra dentro del juego que ya le gusta —la marcha, la persecución, las cosquillas—, nunca en frío en una mesa. Y un cambio a la vez: persona nueva o juego nuevo, nunca los dos.</li>
+    <li>Ni más rápido ni más lento que él: sigue su ritmo.</li>
+    <li>Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas.</li>
+    <li>Ningún premio por hacerlo, nunca le pidas que te mire, y no le exijas decirlo de una forma: vale el gesto, el sonido o la palabra.</li>
+    <li>El hermano juega con él; no le enseña. Tres reglas para el hermano: una cosa a la vez, esperar cinco segundos, copiarlo.</li>
+    <li>Si aparta la vista, se tapa la cara o se irrita: se para. «Se acabó» cierra el juego; no lo persigas para seguir.</li>
+    <li>Sin contar, sin plazos, sin metas con número. Nada de esto promete que hable en una fecha: cada ficha dice qué ver, y ya.</li>
+    <li>Momentos cortos, nunca sesiones. Un mal día no borra nada. Y tú también descansas.</li>
+  </ul>
+
+  <section class="solo-revision aviso" aria-label="Preguntas de juicio para la revisión">
+    <p class="eyebrow">Modo revisión · para el papá, antes de que llegue a la mamá</p>
+    <ul class="lista">
+      <li>¿Lo puede hacer la mamá tal cual, en un momento corto, sin preparar nada?</li>
+      <li>¿Se entiende sin ti? ¿Cada paso es una sola acción?</li>
+      <li>¿Hay algo que no es él — algo que no le gusta, que no hace o que no va con su casa?</li>
+      <li>¿Alguna ficha le pediría forzarlo, aunque sea un poco?</li>
+    </ul>
+    <p class="suave"><span id="revisadas">0</span> de 3 revisadas · tu avance queda guardado en este navegador.</p>
+  </section>
+
+  <section class="grupo" id="grupo-imitacion" aria-labelledby="titulo-imitacion">
+    <h2 id="titulo-imitacion">Imitación
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(1 ficha)</span></h2>
+    <p class="suave">Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.</p>
+    
+    <article class="ficha" id="prueba-dos-iguales">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-dos-iguales"> Revisada</label>
+      <h3>Prueba: dos carros iguales</h3>
+      <p class="chips">
+        <span class="chip">Lo copio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Se da cuenta de que lo copias</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos carros iguales.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Siéntate frente a él, a su altura.</li><li>Dale un carro y quédate con el otro.</li><li>Copia todo lo que él haga con el suyo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Igual que tú!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que voltee a mirarte cuando lo copias.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te mira mientras lo copias, sin que se lo pidas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Copia más grande y más cerca de su cara. Mañana otra vez.</p>
+      </div>
+      <p class="fuente">Field, 2001 · Sanefuji, 2013, Infant Ment Health J</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · dos-juguetes-iguales</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-atencion-conjunta" aria-labelledby="titulo-atencion-conjunta">
+    <h2 id="titulo-atencion-conjunta">Atención conjunta
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(0 fichas)</span></h2>
+    <p class="suave">Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.</p>
+    
+  </section>
+  <section class="grupo" id="grupo-juego" aria-labelledby="titulo-juego">
+    <h2 id="titulo-juego">Juego
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(1 ficha)</span></h2>
+    <p class="suave">Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.</p>
+    
+    <article class="ficha" id="prueba-con-el-hermano">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-con-el-hermano"> Revisada</label>
+      <h3>Prueba: la misma rutina con el hermano</h3>
+      <p class="chips">
+        <span class="chip">La misma rutina con otra persona</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        <span class="chip chip-hermano">con el hermano</span>
+        <span class="chip chip-paso">Paso: Lo mismo con el hermano</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>La rutina que mejor le funciona contigo.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Haz tú la rutina una vez, con el hermano al lado.</li><li>El hermano la repite igual, con tus mismas palabras.</li><li>Tú te quedas cerca, sin intervenir.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Al hermano: «Igualito que yo».</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que acepte la rutina con el hermano.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>sigue jugando cuando el hermano toma tu lugar.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Vuelve a hacerla tú y deja que el hermano solo mire. Otro día.</p>
+      </div>
+      <p class="fuente">Stokes, 1977, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (fusión): mirada · el-hermano-lo-copia + mirada · las-mismas-cosquillas-con-el-hermano</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-senalar" aria-labelledby="titulo-senalar">
+    <h2 id="titulo-senalar">Señalar
+      
+      <span class="conteo">(0 fichas)</span></h2>
+    <p class="suave">Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.</p>
+    
+  </section>
+  <section class="grupo" id="grupo-intencion-comunicativa" aria-labelledby="titulo-intencion-comunicativa">
+    <h2 id="titulo-intencion-comunicativa">Intención comunicativa
+      
+      <span class="conteo">(1 ficha)</span></h2>
+    <p class="suave">Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.</p>
+    
+    <article class="ficha" id="prueba-dos-cosas">
+      <label class="revision solo-revision"><input type="checkbox" data-revision="prueba-dos-cosas"> Revisada</label>
+      <h3>Prueba: dos cosas, una elección</h3>
+      <p class="chips">
+        <span class="chip">Le doy a elegir</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos cosas que le gusten, una en cada mano.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Muéstrale las dos a la altura de tu cara.</li><li>Nombra cada una mientras la levantas.</li><li>Espera a que elija con la mano, la mirada o la voz.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Esta o esta?»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que estire la mano hacia una.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>elige una con la mano, la mirada o un sonido.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Dale la que miró más. La próxima vez, dos cosas más distintas.</p>
+      </div>
+      <p class="fuente">Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · E-A4</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-comprender" aria-labelledby="titulo-comprender">
+    <h2 id="titulo-comprender">Comprender
+      
+      <span class="conteo">(0 fichas)</span></h2>
+    <p class="suave">Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.</p>
+    
+  </section>
+
+  <footer>Hablemos San — el documento de la mamá: 3 fichas de actividad, generadas del contenido real el 2026-09-27.
+  Cada ficha cita la investigación que la respalda (autor, año y revista). Esto es juego en casa: acompaña, nunca reemplaza,
+  las terapias del niño.</footer>
+</main>
+<script>
+(function () {
+  // Modo revisión (?revision): casillas «Revisada» para el papá, guardadas aparte en su navegador.
+  if (!/[?&]revision/.test(location.search)) return;
+  document.body.classList.add("revision");
+  var CLAVE = "piramide-revision:";
+  var cajas = document.querySelectorAll("[data-revision]");
+  var contador = document.getElementById("revisadas");
+  function pintar() {
+    var n = 0;
+    cajas.forEach(function (c) { if (c.checked) n++; c.closest(".ficha").classList.toggle("lista", c.checked); });
+    contador.textContent = n;
+  }
+  cajas.forEach(function (c) {
+    try { c.checked = localStorage.getItem(CLAVE + c.dataset.revision) === "1"; } catch (e) {}
+    c.addEventListener("change", function () {
+      try { if (c.checked) localStorage.setItem(CLAVE + c.dataset.revision, "1"); else localStorage.removeItem(CLAVE + c.dataset.revision); } catch (e) {}
+      pintar();
+    });
+  });
+  pintar();
+})();
+</script>
+</body>
+</html>

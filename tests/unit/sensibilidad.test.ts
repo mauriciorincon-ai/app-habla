@@ -4,13 +4,15 @@ import { describe, expect, it } from "vitest";
 import {
   ALCANCE_GATE,
   archivoDe,
+  N_MAX,
+  nombreDe,
   buscarCoincidencias,
   hashDeTermino,
   normalizar,
   recortar,
 } from "../../scripts/lib/sensibilidad";
 
-// EL GATE DE SENSIBILIDAD (S5). Este repo es público y la app es sobre un niño real: lo que se
+// EL GATE DE SENSIBILIDAD (S5, ampliado en el S6). Este repo es público y la app es sobre un niño real: lo que se
 // publica del sprint no puede contener ninguno de los términos de la lista privada de la
 // planeadora. Aquí solo viven sus hashes (tests/fixtures/sensibilidad-hashes.json). Si hay una
 // coincidencia, el fallo dice archivo, línea y tamaño del n-grama — jamás el término.
@@ -20,7 +22,7 @@ import {
 const RAIZ = join(__dirname, "..", "..");
 const FIXTURE = JSON.parse(
   readFileSync(join(RAIZ, "tests", "fixtures", "sensibilidad-hashes.json"), "utf8"),
-) as { hashes: string[]; terminos: number };
+) as { hashes: string[]; terminos: number; n_max: number };
 const HASHES = new Set(FIXTURE.hashes);
 
 describe("normalización (idéntica a la del generador de hashes)", () => {
@@ -53,11 +55,15 @@ describe("gate: cero coincidencias en lo que el sprint publica", () => {
     expect(HASHES.size).toBe(FIXTURE.hashes.length);
   });
 
+  it("el fixture se generó con el mismo tamaño de n-grama que usa el gate", () => {
+    expect(FIXTURE.n_max).toBe(N_MAX);
+  });
+
   for (const alcance of ALCANCE_GATE) {
     const archivo = archivoDe(alcance);
-    it(`${archivo}`, () => {
+    it(`${nombreDe(alcance)}`, () => {
       const ruta = join(RAIZ, archivo);
-      if (!existsSync(ruta)) return; // aún no existe (p. ej. el summary antes del cierre)
+      if (!existsSync(ruta)) return; // aún no existe (p. ej. el summary o la auditoría antes del cierre)
       const texto = recortar(readFileSync(ruta, "utf8"), alcance);
       const c = buscarCoincidencias(texto, HASHES);
       const detalle = c.map((x) => `línea ${x.linea} (n-grama de ${x.n})`).join(" · ");

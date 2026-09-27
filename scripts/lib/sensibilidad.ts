@@ -9,12 +9,13 @@
 // hay coincidencia se reporta archivo, línea y tamaño del n-grama, nada más.
 //
 // Normalización (idéntica a ambos lados): minúsculas · sin acentos · todo lo que no sea letra o
-// número se vuelve espacio (así «p-algo» y «p algo» son lo mismo) · n-gramas de 1 a 4 palabras
-// (la lista aprobada trae un término de 4 palabras; con 1–3 no se cazaría).
+// número se vuelve espacio (así «p-algo» y «p algo» son lo mismo) · n-gramas de 1 a 5 palabras
+// (S5: la lista traía un término de 4 palabras; S6: la lista ampliada trae tres de 5 — con menos
+// no se cazarían).
 
 import { createHash } from "node:crypto";
 
-export const N_MAX = 4;
+export const N_MAX = 5;
 
 export function normalizar(texto: string): string[] {
   return texto
@@ -111,19 +112,29 @@ export function archivoDe(alcance: Alcance): string {
 }
 
 /**
- * LO QUE EL GATE VIGILA (falla el test): todo lo que este sprint produce y se publica —
- * contenido, catálogo generado, scripts, tests, bitácora, summary, propuesta, y las secciones
- * S5 de la guía y el manual (entre marcadores). CLAUDE.md queda fuera (lo dice la lista).
- * El resto del repo lo cubre el INFORME (scripts/sensibilidad-informe.mjs), que solo reporta.
+ * LO QUE EL GATE VIGILA (falla el test): todo lo que los sprints del documento de la mamá
+ * producen y publican — contenido, documento generado, scripts, tests, bitácoras, summaries,
+ * auditoría, propuestas, ADR, y las secciones S5/S6 de la guía y el manual (entre marcadores).
+ * CLAUDE.md queda fuera (lo dice la lista). El resto del repo —incluidas las 50 cápsulas de la
+ * app y las 24 del S5, que son las FUENTES de las fichas y no se tocan— lo cubre el INFORME
+ * (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
-  // El documento de la mamá entero, MENOS la sección con las 50 cápsulas de habla: son texto
-  // previo al sprint (S1–S4, ya público en la app) y lo cubre el informe, no el gate.
-  { archivo: "docs/CATALOGO-CONTACTO-VISUAL.html", excepto: ["<!-- habla:inicio -->", "<!-- habla:fin -->"] },
-  "content/contacto-visual.ts",
-  "content/registro-contacto-visual.ts",
+  // S6 «La pirámide»
+  "content/fichas.ts",
+  "docs/LA-PIRAMIDE.html",
+  "scripts/gen-la-piramide.mjs",
+  "tests/unit/fichas.test.ts",
+  "tests/e2e/mirada.spec.ts",
+  "sprints/SPRINT_006-implementation-log.md",
+  "sprints/SPRINT_006-summary.md",
+  "sprints/SPRINT_006-auditoria.md",
+  "sprints/PROPUESTA-sprint-006-piramide.md",
+  "decisions/016-la-piramide-fichas-y-retiro-del-registro.md",
+  { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
+  { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
+  // S5 «Contacto visual» y lo compartido (el schema desde el dominio del S5 incluye el del S6)
   { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
-  "scripts/gen-catalogo-contacto-visual.mjs",
   "scripts/copiar-documentos.mjs",
   "scripts/lib/catalogo-comun.mjs",
   "scripts/lib/sensibilidad.ts",
@@ -131,11 +142,18 @@ export const ALCANCE_GATE: Alcance[] = [
   "scripts/sensibilidad-informe.mjs",
   "tests/unit/sensibilidad.test.ts",
   "tests/unit/contacto-visual-schema.test.ts",
-  "tests/unit/registro-contacto-visual.test.ts",
-  "tests/e2e/mirada.spec.ts",
   "sprints/SPRINT_005-implementation-log.md",
   "sprints/SPRINT_005-summary.md",
   "sprints/PROPUESTA-sprint-005-contacto-visual.md",
+  "decisions/015-dominio-contacto-visual-y-gate-de-sensibilidad.md",
   { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
   { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
 ];
+
+/** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
+export function nombreDe(alcance: Alcance): string {
+  if (typeof alcance === "string") return alcance;
+  if ("desde" in alcance) return `${alcance.archivo} (desde su marcador)`;
+  if ("excepto" in alcance) return `${alcance.archivo} (salvo ${alcance.excepto[0]})`;
+  return `${alcance.archivo} (${alcance.entre[0]})`;
+}

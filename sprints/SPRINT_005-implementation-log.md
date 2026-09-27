@@ -87,7 +87,7 @@
   toque · `?revision` · axe limpio con el formulario abierto. **Capturas en Pixel 7 leídas como
   imagen** (9): portada, escalera, maneras, cápsula, formulario vacío y lleno, panel, impresión con
   cuadrícula, oscuro. Un falso positivo descartado: el cuerpo parecía sans en oscuro por residuo
-  de la emulación de impresión; en contexto limpio la fuente es Georgia.
+  del modo de impresión simulado; en contexto limpio la fuente es Georgia.
 - 2026-09-06 · **F0.8 — Gate de sensibilidad por hashes (regla 15: rojo en el mismo commit).**
   `scripts/lib/sensibilidad.ts` (normalización compartida: minúsculas · sin acentos · todo lo no
   alfanumérico → espacio · n-gramas) · `scripts/gen-sensibilidad-hashes.mjs` (lee la lista de la

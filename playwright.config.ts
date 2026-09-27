@@ -15,6 +15,12 @@ const fakeMic = (wav: string) => ({
 
 // Config que el ci.yml del kit ya asume (job e2e: "pnpm test:e2e").
 // Patrón validado en app-nutri-kids S1. Móvil primero: las apps del pipeline son mobile-first.
+// Puerto del servidor de los e2e. Por defecto 3000 (lo que usa la CI); en local se puede mover con
+// E2E_PORT cuando otra app ya ocupa el 3000 (visto en el S6: un servidor de otra app del portafolio
+// respondía en el 3000 y los e2e le preguntaban a ella).
+const PUERTO = process.env.E2E_PORT ?? "3000";
+const BASE = `http://localhost:${PUERTO}`;
+
 export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
@@ -22,7 +28,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: BASE,
     trace: "on-first-retry",
     // Micrófono falso para los e2e del juego de voz: Chromium "captura" el WAV sintético
     // (silencio → voz sostenida → silencio; ver scripts/gen-voz-sintetica.mjs) y lo loopea.
@@ -53,8 +59,10 @@ export default defineConfig({
   ],
   webServer: {
     // El job e2e del CI no hace build previo → en CI se construye aquí; local usa dev server.
-    command: process.env.CI ? "pnpm build && pnpm start" : "pnpm dev",
-    url: "http://localhost:3000",
+    command: process.env.CI
+      ? `pnpm build && pnpm start --port ${PUERTO}`
+      : `pnpm dev --port ${PUERTO}`,
+    url: BASE,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
