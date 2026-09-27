@@ -18,22 +18,41 @@ const GRUPOS = [
   "intencion-comunicativa",
   "juego",
 ];
-const PARTES = ["Ten a la mano", "Haz", "Tu línea", "Espera ver", "Funcionó si", "Si no pasa"];
+const PARTES = [
+  "Ten a la mano",
+  "Haz",
+  "Tu línea",
+  "Espera ver",
+  "Funcionó si",
+  "Si no pasa",
+];
 
-test("la ruta /mirada sirve «La pirámide, en casa» con su portada", async ({ page }) => {
+test("la ruta /mirada sirve «La pirámide, en casa» con su portada", async ({
+  page,
+}) => {
   const respuesta = await page.goto("/mirada");
   expect(respuesta?.status()).toBe(200);
-  await expect(page.getByRole("heading", { level: 1, name: "La pirámide, en casa" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "La pirámide, en casa" }),
+  ).toBeVisible();
   await expect(page.getByText("Esto no es una prueba.")).toBeVisible();
   await expect(page.getByText("El único semáforo:")).toBeVisible();
   await expect(page.getByText("Lo que ya le gusta")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "La pirámide: un mapa, no una escalera" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Qué no hacer" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "La pirámide: un mapa, no una escalera",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Qué no hacer" }),
+  ).toBeVisible();
   // El modo revisión (para el papá) NO se ve por defecto.
   await expect(page.getByText("Modo revisión")).toBeHidden();
 });
 
-test("las fichas van por los seis grupos, y el índice lleva a cada uno", async ({ page }) => {
+test("las fichas van por los seis grupos, y el índice lleva a cada uno", async ({
+  page,
+}) => {
   await page.goto("/mirada");
   // Cada sección muestra exactamente las fichas que anuncia su título (que cada grupo TENGA fichas
   // lo garantiza el schema de la biblioteca en el unit; aquí se prueba el cable dato → documento).
@@ -41,15 +60,22 @@ test("las fichas van por los seis grupos, y el índice lleva a cada uno", async 
   for (const g of GRUPOS) {
     const seccion = page.locator(`#grupo-${g}`);
     await expect(seccion).toBeAttached();
-    const anunciadas = Number((await seccion.locator("h2 .conteo").textContent())?.match(/\d+/)?.[0]);
+    const anunciadas = Number(
+      (await seccion.locator("h2 .conteo").textContent())?.match(/\d+/)?.[0],
+    );
     const n = await seccion.locator("article.ficha").count();
     expect(n, g).toBe(anunciadas);
     total += n;
   }
   expect(total).toBe(await page.locator("article.ficha").count());
   // Tres grupos llevan la marca de prioridad en su título.
-  expect(await page.locator("section.grupo h2 .chip-prioridad").count()).toBe(3);
-  await page.getByRole("navigation", { name: "Grupos de fichas" }).getByRole("link", { name: /^Juego/ }).click();
+  expect(await page.locator("section.grupo h2 .chip-prioridad").count()).toBe(
+    3,
+  );
+  await page
+    .getByRole("navigation", { name: "Grupos de fichas" })
+    .getByRole("link", { name: /^Juego/ })
+    .click();
   await expect(page).toHaveURL(/#grupo-juego$/);
 });
 
@@ -60,12 +86,20 @@ test("cada ficha trae sus seis partes, en orden", async ({ page }) => {
   expect(n).toBeGreaterThan(0);
   for (let i = 0; i < n; i++) {
     const rotulos = await fichas.nth(i).locator(".rotulo").allTextContents();
-    expect(rotulos.map((r) => r.trim()), `ficha ${i}`).toEqual(PARTES);
-    expect(await fichas.nth(i).locator("ol li").count(), `pasos de la ficha ${i}`).toBeGreaterThanOrEqual(3);
+    expect(
+      rotulos.map((r) => r.trim()),
+      `ficha ${i}`,
+    ).toEqual(PARTES);
+    expect(
+      await fichas.nth(i).locator("ol li").count(),
+      `pasos de la ficha ${i}`,
+    ).toBeGreaterThanOrEqual(3);
   }
 });
 
-test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula", async ({ page }) => {
+test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula", async ({
+  page,
+}) => {
   await page.goto("/mirada");
   expect(await page.locator("form").count()).toBe(0);
   expect(await page.locator("button").count()).toBe(0);
@@ -77,7 +111,9 @@ test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula
   expect(await page.evaluate(() => localStorage.length)).toBe(0);
 });
 
-test("?revision muestra las preguntas de juicio, de dónde viene cada ficha y la casilla (solo para el papá)", async ({ page }) => {
+test("?revision muestra las preguntas de juicio, de dónde viene cada ficha y la casilla (solo para el papá)", async ({
+  page,
+}) => {
   await page.goto("/mirada?revision");
   await expect(page.getByText("Modo revisión")).toBeVisible();
   const primera = page.locator("article.ficha").first();
@@ -85,24 +121,57 @@ test("?revision muestra las preguntas de juicio, de dónde viene cada ficha y la
   await primera.getByLabel("Revisada").check();
   await expect(page.locator("#revisadas")).toHaveText("1");
   await page.reload();
-  await expect(page.locator("article.ficha").first().getByLabel("Revisada")).toBeChecked();
+  await expect(
+    page.locator("article.ficha").first().getByLabel("Revisada"),
+  ).toBeChecked();
 });
 
-test("nada desborda a lo ancho: ni el documento ni ninguna ficha", async ({ page }) => {
+test("?revision no le cambia la cara al documento: misma letra, mismo tamaño, mismo flujo", async ({
+  page,
+}) => {
+  const estilo = () =>
+    page.evaluate(() => {
+      const b = getComputedStyle(document.body);
+      const p = getComputedStyle(
+        document.querySelector("article.ficha .funciono")!,
+      );
+      return {
+        fuente: b.fontFamily,
+        tamano: b.fontSize,
+        posicion: b.position,
+        color: p.color,
+        letra: p.fontSize,
+      };
+    });
+  await page.goto("/mirada");
+  const normal = await estilo();
+  await page.goto("/mirada?revision");
+  await expect(page.getByText("Modo revisión")).toBeVisible();
+  expect(await estilo()).toEqual(normal);
+});
+
+test("nada desborda a lo ancho: ni el documento ni ninguna ficha", async ({
+  page,
+}) => {
   await page.goto("/mirada");
   const desbordes = await page.evaluate(() => {
     const ancho = document.documentElement.clientWidth;
     const fuera: string[] = [];
     if (document.documentElement.scrollWidth > ancho) fuera.push("documento");
-    document.querySelectorAll<HTMLElement>("article.ficha, header, nav, .aviso").forEach((el) => {
-      if (el.scrollWidth > el.clientWidth + 1) fuera.push(el.id || el.className);
-    });
+    document
+      .querySelectorAll<HTMLElement>("article.ficha, header, nav, .aviso")
+      .forEach((el) => {
+        if (el.scrollWidth > el.clientWidth + 1)
+          fuera.push(el.id || el.className);
+      });
     return fuera;
   });
   expect(desbordes).toEqual([]);
 });
 
-test("axe: el documento no tiene violaciones de accesibilidad, también en modo revisión", async ({ page }) => {
+test("axe: el documento no tiene violaciones de accesibilidad, también en modo revisión", async ({
+  page,
+}) => {
   for (const ruta of ["/mirada", "/mirada?revision"]) {
     await page.goto(ruta);
     const resultados = await new AxeBuilder({ page }).analyze();

@@ -81,7 +81,7 @@ function fichaHtml(f) {
   const paso = f.progresion ? PROGRESIONES[f.grupo][f.progresion] : null;
   return `
     <article class="ficha" id="${esc(f.id)}">
-      <label class="revision solo-revision"><input type="checkbox" data-revision="${esc(f.id)}"> Revisada</label>
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="${esc(f.id)}"> Revisada</label>
       <h3>${esc(f.titulo)}</h3>
       <p class="chips">
         <span class="chip">${esc(NOMBRE_TECNICA_FICHA[f.tecnica])}</span>
@@ -166,7 +166,7 @@ ${PALETA_CSS}
     display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
   h3 { margin: .1rem 0 .4rem; font-size: 1.12rem; line-height: 1.3; }
   p { margin: .45rem 0; }
-  .eyebrow { font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  .eyebrow { font: 600 .72rem/1.35 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
   .suave { color: var(--suave); }
   .conteo { font: 400 .85rem system-ui, sans-serif; color: var(--suave); }
   .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; margin: .9rem 0; }
@@ -207,7 +207,7 @@ ${PALETA_CSS}
   .si-no { padding: .55rem .8rem; background: var(--fondo); border-radius: 10px; border: 1px dashed var(--borde); font-size: .96rem; }
   .fuente { font: .78rem system-ui, sans-serif; color: var(--suave); margin: .7rem 0 0; }
   .origen { font: .76rem system-ui, sans-serif; color: var(--info); margin: .3rem 0 0; }
-  .revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
+  .casilla-revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
   .solo-revision { display: none; }
   body.revision .solo-revision { display: block; }
   body.revision .ficha h3 { margin-right: 6rem; }

@@ -13,8 +13,8 @@ Tres semanas después del documento del S5, la mamá trae una pirámide de seis 
 hablar se necesita: señalar · imitación · comprender · atención conjunta · intención comunicativa ·
 juego») y el usuario pide revisar TODAS las cápsulas —las 24 de la mirada y las 50 de habla—,
 organizarlas por esos seis grupos, reescribirlas como actividades en instrucción directa y
-personalizarlas con lo que al niño ya le gusta. Además: **la mamá no usó el registro diario** (cero
-registros en tres semanas). La investigación privada del S6 y su mapa de las 74 fueron aprobados
+personalizarlas con lo que al niño ya le gusta. Además: **a la mamá no le resultó factible llevar el
+registro diario**, y no hay registros. La investigación privada del S6 y su mapa de las 74 fueron aprobados
 en G-Investigación.
 
 ## Decisión
@@ -56,6 +56,10 @@ en G-Investigación.
 ## Consecuencias
 
 - La app y sus 50 cápsulas no cambian; tampoco las 24 del S5, que quedan como fuente.
+- El mapa ejecutado da **56 fichas** (imitación 12 · atención conjunta 7 · juego 13 · señalar 4 ·
+  intención comunicativa 10 · comprender 10) y **11 cápsulas de la app caen del documento**
+  (5 necesitan la pantalla · 4 son de la etapa siguiente · 2 quedaron como reglas del «Qué no
+  hacer»); siguen intactas en la app.
 - El documento de la mamá no guarda datos en su teléfono: no hay nada que exportar ni perder.
 - Cuando la lista de términos cambie, se regenera el fixture con `scripts/gen-sensibilidad-hashes.mjs`.
 - Los scripts `.mjs` que importan `.ts` exigen Node ≥ 22.18 (`engines` en `package.json`).

@@ -320,15 +320,16 @@ Qué trae:
 - **Lo que ya le gusta al niño** —marchar, la persecución, las cosquillas con su sonido, señalar y
   decir "tú", saludar con la mano y la voz, las vocales—: las fichas entran por ahí a propósito.
 - **La pirámide como mapa**: una frase por grupo, con lo que ya hace y lo que viene.
-- **Fichas de actividad**, cada una con seis partes, siempre en el mismo orden: **Ten a la mano ·
+- **56 fichas de actividad** (imitación 12 · atención conjunta 7 · juego 13 · señalar 4 · intención
+  comunicativa 10 · comprender 10), cada una con seis partes, siempre en el mismo orden: **Ten a la mano ·
   Haz · Tu línea · Espera ver · Funcionó si · Si no pasa**. Algunas dicen en qué **paso** sirven;
   es para ubicarse, nunca una meta.
 - **Qué no hacer**, en diez reglas cortas. La de fondo: primero se copia al niño, se comenta en vez
   de preguntar, y al final siempre se le da lo que quería.
 - **El semáforo**: si aparta la vista, se tapa la cara o se irrita, se para.
 
-**Sin registro.** El documento del Sprint 005 traía un registro diario en el teléfono; la mamá no
-lo usó y se retiró entero en el Sprint 006. La señal de que una actividad sirvió está **dentro de
+**Sin registro.** El documento del Sprint 005 traía un registro diario en el teléfono; a la mamá no
+le resultó factible llevarlo y se retiró entero en el Sprint 006. La señal de que una actividad sirvió está **dentro de
 cada ficha** ("Funcionó si…"), para verla en el momento: no hay nada que anotar, enviar ni guardar,
 y el documento no guarda nada en el teléfono de la mamá.
 
@@ -421,7 +422,7 @@ sin pantallas; cuando el niño vuelva a la app, con la observación en vivo se d
 pasan a "Hoy".
 
 **¿Dónde quedó el registro diario?**
-Se retiró en el Sprint 006: la mamá no lo usaba, y anotar no le servía. Cada ficha trae su
+Se retiró en el Sprint 006: a la mamá no le resultó factible llevarlo. Cada ficha trae su
 "Funcionó si…", que se mira en el momento.
 
 <!-- s6:fin -->
@@ -459,5 +460,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 003    | Cuarto juego "palabras gemelas" (parejas mínimas, sin micrófono, co-uso puro); "La voz de la familia": grabar la voz del adulto en el Estudio para que los juegos suenen con ella (banco 100 % local, con altavoz y apagado opcional); privacidad ampliada al banco de voz.                                           |
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
 | 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. Remate del mismo día: "Enviar a papá" manda solo lo nuevo desde la última vez (+ "Enviar otra vez esta semana"); las 50 cápsulas de habla entran al mismo documento, por etapa y con el mismo registro; sección "Qué hacer con lo que le llega" para el papá. |
-| 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (la mamá no lo usó). La app del niño no cambia. |
+| 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (a la mamá no le resultó factible llevarlo). La app del niño no cambia. |
 <!-- s5:fin -->

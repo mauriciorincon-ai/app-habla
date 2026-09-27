@@ -10,7 +10,8 @@
 - [x] F0 — Estructura: delta del kit v1.31.0 · registro retirado entero · schema de la ficha ·
       generador y `/mirada` · gate ampliado con su rojo en el mismo commit · B4 · guía (bloque P
       fuera, bloque Q) · manual · ADR 016
-- [ ] F2 — Contenido: ejecutar el mapa de las 74 · fichas · capturas · `/audita-sprint` (todo pagado)
+- [x] F2 — Contenido: el mapa de las 74 ejecutado · 56 fichas · capturas y medida de desborde
+- [ ] `/audita-sprint` (auditor independiente · todo pagado)
 - [ ] STOP → G-Contenido del usuario (lee TODO el documento)
 - [ ] Cierre: `/deploy-check` · summary EN el PR · CI por check · merge a su orden · homepage
 
@@ -40,6 +41,13 @@
   G-Contenido.
 - **`playwright.config.ts` acepta `E2E_PORT`** (por defecto 3000, la CI no cambia): en local, otra
   app del portafolio tenía un servidor en el 3000 y los e2e le preguntaban a ella (404).
+- **56 fichas, no 55.** El resumen del mapa dice «~56» y reparte «intención comunicativa 9 ·
+  comprender 10» (suma 55); su propia lista, ficha por ficha, da **intención comunicativa 10**. Se
+  ejecutó la lista, no el resumen. Los tres prioritarios suman 32 contra 24.
+- **Dos cápsulas van a su segundo grupo del mapa** para que los conteos del mapa se cumplan:
+  «Cucú: cuando se tapa él» (juego · atención conjunta) va a **atención conjunta**, y «Su canción,
+  con un hueco antes de lo mejor» (intención comunicativa · comprender) va a **comprender**. El
+  contenido no cambia por eso; el mapa ya las daba por dobles.
 
 ## Bitácora
 
@@ -92,3 +100,35 @@
   `__next*` de `sessionStorage`. Además, el e2e de privacidad tenía el origen `localhost:3000`
   escrito a mano: ahora lo toma del `baseURL` de la config. Verificado: audit limpio · lint ·
   typecheck · 326 unit · build · **183 e2e**.
+- 2026-09-27 · **F2.1 — El mapa de las 74, ejecutado: 56 fichas.** Imitación 12 · atención conjunta
+  7 · juego 13 · señalar 4 · intención comunicativa 10 · comprender 10. De la mirada: 19 quedan
+  (con otra forma) y 4 se unen en «Con el hermano: la misma rutina, con las mismas palabras»; 1 se
+  une a «El frasco que no abre». De la app: 2 quedan, 27 se funden en 7 fichas, 10 entran dentro de
+  otras fichas, y **11 caen del documento** (`CAEN_DEL_DOCUMENTO`, siguen intactas en la app): 5 necesitan la pantalla, 4 son de
+  la etapa siguiente, 2 quedaron como reglas del «Qué no hacer». 28 salen de los anexos A–F.
+  Cada ficha en instrucción directa, con los favoritos del niño en observable, «Funcionó si» sin
+  números ni conteos (el schema lo exige) y «Si no pasa» que siempre baja la exigencia. Dos
+  decisiones de copy: el hermano va sin edad y sin «mayor»; y **papá no aparece en ninguna ficha**
+  (no está hasta noviembre), aunque un anexo lo nombraba en dos ejemplos.
+- 2026-09-27 · **F2.2 — El gate cazó tres líneas antes del commit.** El checker local (los mismos
+  hashes que la CI) marcó una **sílaba de balbuceo** que, normalizada, coincide con un término de la
+  lista (dos líneas; se cambió por otra sílaba) y el **nombre de una revista** en una cita (se citó
+  como «Autor, año», la regla A). Limpio después; el documento generado, también.
+- 2026-09-27 · **F2.3 — Tests del contenido.** `BibliotecaFichasSchema` activado sobre la biblioteca
+  real (ninguna ficha de prueba queda) y **test «el mapa quedó ejecutado»**: cada una de las 74
+  aparece exactamente una vez, en las refs de una ficha o en las que caen. El documento deja de
+  marcarse «Versión de prueba» solo, porque la biblioteca ya cumple su contrato. 328 unit.
+- 2026-09-27 · **F2.4 — Miradas de FORMA, en Pixel 7 (leídas como imagen).** Portada, pirámide,
+  una ficha de imitación, la del hermano, una de comprender, la respuesta completa, impresión y
+  `?revision`. Medida: `scrollWidth` 412 = ancho 412, ninguna ficha ni bloque se sale; en
+  impresión, cero casillas, cero índice, cero botones. **La mirada cazó un defecto de la fase 0
+  que la CI no veía:** la clase `revision` era a la vez la de la casilla y la del `body` en modo
+  revisión, así que con `?revision` TODO el documento heredaba la letra de la casilla (sin serifa,
+  0.8rem, gris) y `position: absolute`. La casilla pasa a `casilla-revision`; e2e nuevo «?revision
+  no le cambia la cara al documento» — **en rojo contra el documento viejo** (letra y posición
+  distintas) y verde después. Además, el rótulo del modo revisión se partía en dos líneas pegadas:
+  interlineado 1 → 1.35. Guía: Q6 gana su señal de «Mal»; Q7 dice «las 56 fichas».
+- 2026-09-27 · **F2.5 — Texto fiel a lo que dijo el usuario.** La razón del retiro del registro
+  decía «no lo usó» / «anotar no le servía»; el usuario dijo que **a la mamá no le resultó factible
+  llevarlo**. Corregido en guía, manual y ADR 016 (que además anota el conteo final y las 11 que
+  caen).

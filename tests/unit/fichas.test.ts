@@ -34,7 +34,8 @@ const base: Ficha = {
   fuente: "Halle, 1981, J Appl Behav Anal",
 };
 
-const valida = (f: Partial<Ficha>) => FichaSchema.safeParse({ ...base, ...f }).success;
+const valida = (f: Partial<Ficha>) =>
+  FichaSchema.safeParse({ ...base, ...f }).success;
 
 /** Una biblioteca válida de n fichas: los prioritarios juntos pesan más que el resto. */
 function biblioteca(reparto: Partial<Record<Grupo, number>>): Ficha[] {
@@ -71,7 +72,9 @@ describe("FichaSchema — la ficha de actividad", () => {
   });
   it("los pasos son entre tres y cinco, uno por acción", () => {
     expect(valida({ haz: ["Uno.", "Dos."] })).toBe(false);
-    expect(valida({ haz: ["1", "2", "3", "4", "5", "6"].map((n) => `Paso ${n}.`) })).toBe(false);
+    expect(
+      valida({ haz: ["1", "2", "3", "4", "5", "6"].map((n) => `Paso ${n}.`) }),
+    ).toBe(false);
   });
   it("siempre hay algo que tener a la mano, y la línea cabe en una frase", () => {
     expect(valida({ tenALaMano: [] })).toBe(false);
@@ -92,20 +95,42 @@ describe("FichaSchema — la ficha de actividad", () => {
     expect(valida({ progresion: "I9" })).toBe(false);
     expect(Object.keys(PROGRESIONES["intencion-comunicativa"])).toEqual([]);
     expect(
-      valida({ grupo: "intencion-comunicativa", prioridad: "normal", progresion: "N2" }),
+      valida({
+        grupo: "intencion-comunicativa",
+        prioridad: "normal",
+        progresion: "N2",
+      }),
     ).toBe(false);
   });
   it("una ficha con el hermano dice qué hace él", () => {
     expect(valida({ conQuien: "hermano" })).toBe(false);
-    expect(valida({ conQuien: "hermano", tuLinea: "Al hermano: «Igualito que yo»." })).toBe(true);
+    expect(
+      valida({
+        conQuien: "hermano",
+        tuLinea: "Al hermano: «Igualito que yo».",
+      }),
+    ).toBe(true);
   });
   it("el origen es trazable y cuadra con su tipo", () => {
-    expect(valida({ origen: { de: "mirada", refs: ["mirada:dos-juguetes-iguales", "anexo:B-A1"] } })).toBe(true);
-    expect(valida({ origen: { de: "mirada", refs: ["anexo:B-A1"] } })).toBe(false);
+    expect(
+      valida({
+        origen: {
+          de: "mirada",
+          refs: ["mirada:dos-juguetes-iguales", "anexo:B-A1"],
+        },
+      }),
+    ).toBe(true);
+    expect(valida({ origen: { de: "mirada", refs: ["anexo:B-A1"] } })).toBe(
+      false,
+    );
     expect(valida({ origen: { de: "nueva", refs: ["habla:x"] } })).toBe(false);
     expect(valida({ origen: { de: "fusion", refs: ["habla:x"] } })).toBe(false);
-    expect(valida({ origen: { de: "fusion", refs: ["habla:x", "habla:y"] } })).toBe(true);
-    expect(valida({ origen: { de: "nueva", refs: ["anexo:Z-A1"] } })).toBe(false);
+    expect(
+      valida({ origen: { de: "fusion", refs: ["habla:x", "habla:y"] } }),
+    ).toBe(true);
+    expect(valida({ origen: { de: "nueva", refs: ["anexo:Z-A1"] } })).toBe(
+      false,
+    );
     expect(valida({ origen: { de: "nueva", refs: [] } })).toBe(false);
   });
   it("la fuente va como autor · año · revista (o autor · año), sin título; la duración en minutos", () => {
@@ -118,14 +143,22 @@ describe("FichaSchema — la ficha de actividad", () => {
 
 describe("BibliotecaFichasSchema — la pirámide completa", () => {
   it("un reparto válido pasa", () => {
-    expect(BibliotecaFichasSchema.safeParse(biblioteca(REPARTO_VALIDO)).success).toBe(true);
+    expect(
+      BibliotecaFichasSchema.safeParse(biblioteca(REPARTO_VALIDO)).success,
+    ).toBe(true);
   });
   it("menos de veinte fichas no alcanza (calidad sobre cantidad, pero con piso)", () => {
-    expect(BibliotecaFichasSchema.safeParse(biblioteca({ ...REPARTO_VALIDO, imitacion: 4 })).success).toBe(false);
+    expect(
+      BibliotecaFichasSchema.safeParse(
+        biblioteca({ ...REPARTO_VALIDO, imitacion: 4 }),
+      ).success,
+    ).toBe(false);
   });
   it("los seis grupos se trabajan a la vez: ninguno se queda sin fichas", () => {
     expect(
-      BibliotecaFichasSchema.safeParse(biblioteca({ ...REPARTO_VALIDO, senalar: 0, juego: 7 })).success,
+      BibliotecaFichasSchema.safeParse(
+        biblioteca({ ...REPARTO_VALIDO, senalar: 0, juego: 7 }),
+      ).success,
     ).toBe(false);
   });
   it("los tres prioritarios, juntos, llevan más fichas que los otros tres juntos", () => {
@@ -150,7 +183,10 @@ describe("la biblioteca real del repo", () => {
   it("cada ficha que existe hoy cumple el schema, y sus ids son únicos", () => {
     for (const f of FICHAS) {
       const r = FichaSchema.safeParse(f);
-      expect(r.success, `ficha ${f.id}: ${r.success ? "" : JSON.stringify(r.error.issues)}`).toBe(true);
+      expect(
+        r.success,
+        `ficha ${f.id}: ${r.success ? "" : JSON.stringify(r.error.issues)}`,
+      ).toBe(true);
     }
     expect(new Set(FICHAS.map((f) => f.id)).size).toBe(FICHAS.length);
   });
@@ -160,12 +196,40 @@ describe("la biblioteca real del repo", () => {
     const habla = new Set(CAPSULAS.map((c) => c.id));
     for (const f of FICHAS) {
       for (const r of f.origen.refs) {
-        if (r.startsWith("mirada:")) expect(mirada.has(r.slice(7)), `${f.id} → ${r}`).toBe(true);
-        if (r.startsWith("habla:")) expect(habla.has(r.slice(6)), `${f.id} → ${r}`).toBe(true);
+        if (r.startsWith("mirada:"))
+          expect(mirada.has(r.slice(7)), `${f.id} → ${r}`).toBe(true);
+        if (r.startsWith("habla:"))
+          expect(habla.has(r.slice(6)), `${f.id} → ${r}`).toBe(true);
       }
     }
     for (const c of CAEN_DEL_DOCUMENTO) {
       expect(mirada.has(c.id) || habla.has(c.id), `cae ${c.id}`).toBe(true);
     }
+  });
+
+  it("la biblioteca completa cumple la pirámide, y ya no queda ninguna ficha de prueba", () => {
+    const r = BibliotecaFichasSchema.safeParse(FICHAS);
+    expect(r.success, r.success ? "" : JSON.stringify(r.error.issues)).toBe(
+      true,
+    );
+    expect(FICHAS.filter((f) => f.id.startsWith("prueba-"))).toEqual([]);
+  });
+
+  it("el mapa quedó ejecutado: cada una de las 74 aparece exactamente una vez (en una ficha o en las que caen)", () => {
+    const todas = [
+      ...CAPSULAS_CONTACTO_VISUAL.map((c) => `mirada:${c.id}`),
+      ...CAPSULAS.map((c) => `habla:${c.id}`),
+    ];
+    const mirada = new Set(CAPSULAS_CONTACTO_VISUAL.map((c) => c.id));
+    const usos = [
+      ...FICHAS.flatMap((f) =>
+        f.origen.refs.filter((r) => !r.startsWith("anexo:")),
+      ),
+      ...CAEN_DEL_DOCUMENTO.map((c) =>
+        mirada.has(c.id) ? `mirada:${c.id}` : `habla:${c.id}`,
+      ),
+    ];
+    expect(todas).toHaveLength(74);
+    expect([...usos].sort()).toEqual([...todas].sort());
   });
 });
