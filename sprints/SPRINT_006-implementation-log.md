@@ -12,8 +12,9 @@
       fuera, bloque Q) · manual · ADR 016
 - [x] F2 — Contenido: el mapa de las 74 ejecutado · 56 fichas · capturas y medida de desborde
 - [x] `/audita-sprint` (auditor independiente · todo pagado · casilla 4 dos veces)
-- [ ] STOP → G-Contenido del usuario (lee TODO el documento)
-- [ ] Cierre: `/deploy-check` · summary EN el PR · CI por check · merge a su orden · homepage
+- [x] STOP → G-Contenido del usuario: APROBADO
+- [x] Cierre: `/deploy-check` (MERGE OK) · summary EN el PR · CI por check
+- [ ] Merge (squash) a su orden · borrar la rama · homepage
 
 ## Decisiones de diseño (declaradas en el plan aprobado)
 
@@ -153,4 +154,13 @@
   taparse es el juego); una sola lista de reglas para el hermano; nueve pasos que eran dos acciones,
   partidos; las fichas de la mamá ya no exigen al hermano. **Casilla 4 dos veces:** la segunda, sobre
   el diff de los pagos, cazó tres frases hermanas (ver el reporte). 359 unit · 16/16 e2e de `/mirada`.
+- 2026-09-27 · **G-Contenido — APROBADO.** El usuario revisó las 56 en la preview: «Ya las revisé y
+  las veo bien, esto se juzga es en la práctica». Sin ajustes de contenido.
+- 2026-09-27 · **`/deploy-check` — MERGE OK.** 359 unit (91 % stmts) · typecheck · lint · build ·
+  **185/185 e2e** · audit en cero · sin secrets ni variables nuevas · axe limpio · Lighthouse verde en la
+  CI · README, manual, ADR 016 y bitácora al día. **Bundle medido contra `main`** (construido hoy en un
+  worktree aparte, con su propio lockfile): JS 1,9 % más liviano en la rama.
+- 2026-09-27 · **Summary** `sprints/SPRINT_006-summary.md` en el PR, con el mapa ejecutado ficha por
+  ficha (generado del contenido, no a mano). Casilla 4 sobre el summary (tercera pasada): ninguna
+  promesa aplazada; se corrigió una afirmación que no estaba respaldada (dónde leyó el usuario).
 
