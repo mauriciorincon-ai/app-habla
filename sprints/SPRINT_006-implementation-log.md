@@ -163,4 +163,14 @@
 - 2026-09-27 · **Summary** `sprints/SPRINT_006-summary.md` en el PR, con el mapa ejecutado ficha por
   ficha (generado del contenido, no a mano). Casilla 4 sobre el summary (tercera pasada): ninguna
   promesa aplazada; se corrigió una afirmación que no estaba respaldada (dónde leyó el usuario).
+- 2026-09-27 · **Merge (squash) `140512a`**, rama borrada, producción verificada (56 fichas, cero registro), homepage limpiado.
+- 2026-09-27 · **Remate del mismo día — pedido del usuario al ver producción** (rama `sprint-006/remate-titulos`,
+  PR aparte): «cada cápsula debería tener el título más grande: no se identifica bien dónde empieza una y
+  dónde termina otra». Medido: el título de la ficha iba a ~18 px contra 17 px del texto, y el borde entre
+  fichas era de 1 px color crema. Cambio: título de ficha a 1.45rem (~23 px), el nombre del grupo encima
+  en pequeño, **franja de 6 px arriba** de cada ficha (4 px negra al imprimir), el doble de aire entre
+  fichas; el título de grupo sube a 1.75rem para seguir por encima de la ficha. E2e nuevo que mide la
+  jerarquía en las 56 fichas: **rojo contra el documento de producción** (título 1,05× el texto) y verde
+  después. Capturas en Pixel 7 leídas: claro, oscuro, modo revisión (el título deja lugar a la casilla) e
+  impresión; sin desborde. Guía: Q2 lo dice en su «Esperado» y su «Mal».
 
