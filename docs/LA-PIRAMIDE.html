@@ -1,0 +1,2192 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Hablemos San — La pirámide, en casa</title>
+<style>
+
+  :root {
+    --fondo:#FBF8F2; --superficie:#F5F0E5; --borde:#ECE4D2; --tinta:#1F2420; --suave:#5A615C;
+    --acento:#2E4628; --acento-hover:#3F5F37; --acento-suave:#DCE6D8; --exito:#527947;
+    --aviso:#C99432; --aviso-suave:#F8E9C8; --peligro:#B14B3D; --info:#4A6E84; --celebracion:#DD7B5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo:#14171A; --superficie:#1B1F22; --borde:#232830; --tinta:#F2EFE8; --suave:#969994;
+      --acento:#B5D5AB; --acento-hover:#94BB89; --acento-suave:#233022; --exito:#A8C9A0;
+      --aviso:#ECC56F; --aviso-suave:#3A2F14; --peligro:#E08A7C; --info:#8FB3C7; --celebracion:#DD7B5E;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; padding: 1.25rem 1rem 4rem; background: var(--fondo); color: var(--tinta);
+    font: 17px/1.55 Georgia, "Times New Roman", serif; overflow-wrap: break-word; }
+  main { max-width: 42rem; margin: 0 auto; }
+  h1 { font-size: 2rem; line-height: 1.12; margin: .3rem 0 .6rem; }
+  h2 { font-size: 1.35rem; line-height: 1.25; margin: 2.6rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
+  h3 { margin: .1rem 0 .4rem; font-size: 1.12rem; line-height: 1.3; }
+  p { margin: .45rem 0; }
+  .eyebrow { font: 600 .72rem/1.35 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  .suave { color: var(--suave); }
+  .conteo { font: 400 .85rem system-ui, sans-serif; color: var(--suave); }
+  .aviso { background: var(--superficie); border: 1px solid var(--borde); border-radius: 14px; padding: .9rem 1rem; margin: .9rem 0; }
+  .encuadre { border-left: 4px solid var(--acento); }
+  .semaforo { border-left: 4px solid var(--peligro); }
+  .favoritos { border-left: 4px solid var(--celebracion); }
+  .favoritos ul, ul.lista { padding-left: 1.2rem; margin: .4rem 0; } .favoritos li, ul.lista li { margin: .3rem 0; }
+  .indice { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
+  .indice a { font: 600 .82rem/1.2 system-ui, sans-serif; text-decoration: none; color: var(--acento); border: 1px solid var(--borde);
+    border-radius: 999px; padding: .55rem .8rem; min-height: 44px; display: inline-flex; align-items: center; }
+  .indice a.prioritario { border: 2px solid var(--acento); }
+  .solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .piramide { list-style: none; padding: 0; margin: .5rem 0; }
+  .piramide li { padding: .6rem 0; border-bottom: 1px dashed var(--borde); }
+  .grupo-nombre { margin: 0; font-weight: 700; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
+  .grupo-nombre a { color: var(--tinta); }
+  .piramide .suave { margin: .2rem 0 0; font-size: .95rem; }
+  .lectura { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .35rem; }
+  .lectura li { font-size: .97rem; }
+  .chips { margin: .2rem 0 .7rem; line-height: 1.9; }
+  .chip { display: inline-block; font: 600 .72rem/1.2 system-ui, sans-serif; letter-spacing: .03em; background: var(--acento-suave);
+    color: var(--acento); border-radius: 999px; padding: .3rem .62rem; margin: 0 .3rem .3rem 0; vertical-align: middle; }
+  .chip.suave { background: transparent; border: 1px solid var(--borde); color: var(--suave); }
+  .chip-prioridad { background: var(--acento); color: var(--fondo); }
+  .chip-hermano { background: var(--aviso-suave); color: var(--tinta); }
+  .chip-paso { background: transparent; border: 1px dashed var(--acento); color: var(--acento); }
+  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: 1rem 0; position: relative; }
+  .ficha.lista { opacity: .55; }
+  .parte { margin: .7rem 0; }
+  .parte ul, .parte ol { margin: .25rem 0 0; padding-left: 1.3rem; }
+  .parte li { margin: .25rem 0; }
+  .parte p:not(.rotulo) { margin: .2rem 0 0; }
+  .rotulo { font: 700 .74rem/1.2 system-ui, sans-serif; letter-spacing: .07em; text-transform: uppercase; color: var(--suave); margin: 0; }
+  blockquote { margin: .7rem 0; padding: .55rem .9rem; border-left: 4px solid var(--acento); background: var(--fondo); border-radius: 0 10px 10px 0; font-style: italic; }
+  blockquote .rotulo { display: block; font-style: normal; margin-bottom: .15rem; }
+  .funciono { padding: .55rem .8rem; background: var(--fondo); border-radius: 10px; border: 2px solid var(--acento-suave); }
+  .funciono .rotulo { color: var(--acento); }
+  .si-no { padding: .55rem .8rem; background: var(--fondo); border-radius: 10px; border: 1px dashed var(--borde); font-size: .96rem; }
+  .fuente { font: .78rem system-ui, sans-serif; color: var(--suave); margin: .7rem 0 0; }
+  .origen { font: .76rem system-ui, sans-serif; color: var(--info); margin: .3rem 0 0; }
+  .casilla-revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
+  .solo-revision { display: none; }
+  body.revision .solo-revision { display: block; }
+  body.revision .ficha h3 { margin-right: 6rem; }
+  a:focus-visible, input:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
+  footer { margin-top: 3rem; font-size: .8rem; color: var(--suave); border-top: 1px solid var(--borde); padding-top: 1rem; }
+  @media (prefers-reduced-motion: no-preference) { .ficha { transition: opacity .2s; } }
+  @media print {
+    body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
+    .solo-revision, .indice { display: none !important; }
+    .ficha { break-inside: avoid; border: 1px solid #999; background: #fff; }
+    .grupo h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Hablemos San · Para la mamá · sin pantallas</p>
+    <h1>La pirámide, en casa</h1>
+    <p>La pirámide tiene seis piezas: <strong>señalar, imitar, comprender, atención conjunta, intención comunicativa y
+    juego</strong>. No son pisos que se suben uno por uno: <strong>se construyen todas a la vez</strong>, en los mismos juegos. Aquí
+    cada una está convertida en actividades cortas, hechas con lo que a él ya le gusta.</p>
+    <nav class="indice" aria-label="Grupos de fichas">
+      <a href="#grupo-imitacion" class="prioritario">Imitación · 12<span class="solo-lector"> · prioridad ahora</span></a>
+      <a href="#grupo-atencion-conjunta" class="prioritario">Atención conjunta · 7<span class="solo-lector"> · prioridad ahora</span></a>
+      <a href="#grupo-juego" class="prioritario">Juego · 13<span class="solo-lector"> · prioridad ahora</span></a>
+      <a href="#grupo-senalar">Señalar · 4</a>
+      <a href="#grupo-intencion-comunicativa">Intención comunicativa · 10</a>
+      <a href="#grupo-comprender">Comprender · 10</a>
+      <a href="#que-no-hacer">Qué no hacer</a>
+    </nav>
+    <div class="aviso favoritos">
+      <p><strong>Lo que ya le gusta</strong> — las fichas entran por aquí a propósito:</p>
+      <ul><li>Marchar y copiar movimientos grandes de brazos y piernas.</li><li>«Corre que te atrapo»: voltea a ver si lo sigues, sonríe y corre.</li><li>Las cosquillas, con su propio sonido — y ya te las hace a ti.</li><li>Seguir tu dedo cuando señalas, y señalar diciendo «tú».</li><li>«Hola» y «chao» con la mano y la voz juntas.</li><li>Repetir las vocales.</li></ul>
+    </div>
+    <div class="aviso encuadre">
+      <p><strong>Esto no es una prueba.</strong> Ni para él ni para ti. No hay puntajes, ni metas con número, ni plazos.</p>
+      <p><strong>Momentos cortos</strong> — de 5 a 30 minutos repartidos en el día: jugando, en el baño, en la mesa, al vestirlo. Nunca
+      sesiones. Y <strong>descansar también cuenta</strong>.</p>
+    </div>
+    <div class="aviso semaforo">
+      <p><strong>El único semáforo:</strong> si aparta la vista, se tapa la cara o se irrita <strong>para salirse del juego</strong>,
+      <strong>se para</strong>. Se vuelve a intentar más tarde, o mañana. (En el cucú, taparse es el juego, no el semáforo.)</p>
+    </div>
+  </header>
+
+  <h2>La pirámide: un mapa, no una escalera</h2>
+  <p>Las seis, en una frase cada una. Las marcadas «prioridad ahora» son las que más trabajo necesitan ahora; las demás también
+  van, todos los días.</p>
+  <ul class="piramide">
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-senalar">Señalar</a>
+          
+          <span class="conteo">4 fichas</span></p>
+        <p class="suave">Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-imitacion">Imitación</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">12 fichas</span></p>
+        <p class="suave">Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-comprender">Comprender</a>
+          
+          <span class="conteo">10 fichas</span></p>
+        <p class="suave">Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-atencion-conjunta">Atención conjunta</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">7 fichas</span></p>
+        <p class="suave">Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-intencion-comunicativa">Intención comunicativa</a>
+          
+          <span class="conteo">10 fichas</span></p>
+        <p class="suave">Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.</p>
+      </li>
+      <li>
+        <p class="grupo-nombre"><a href="#grupo-juego">Juego</a>
+          <span class="chip chip-prioridad">prioridad ahora</span>
+          <span class="conteo">13 fichas</span></p>
+        <p class="suave">Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.</p>
+      </li>
+  </ul>
+  <p>Lo único que tiene orden es lo que pasa <strong>dentro de un mismo rato de juego</strong>: primero lo copias tú y después le
+  muestras algo nuevo; primero un juego que dure y después mostrar o señalar; y el objeto entra dentro del juego de moverse, nunca en
+  frío en una mesa. Cada ficha ya trae ese orden en sus pasos.</p>
+
+  <h2>Cómo se lee una ficha</h2>
+  <ul class="lectura">
+    <li><strong>Ten a la mano</strong> — lo que necesitas listo.</li>
+    <li><strong>Haz</strong> — los pasos, uno por acción.</li>
+    <li><strong>Tu línea</strong> — lo que dices, tal cual.</li>
+    <li><strong>Espera ver</strong> — lo que es probable que pase.</li>
+    <li><strong>Funcionó si</strong> — la señal de que sirvió. No hay que contar nada.</li>
+    <li><strong>Si no pasa</strong> — cómo hacerlo más fácil. Nunca es insistir.</li>
+  </ul>
+  <p class="suave">Algunas fichas dicen en qué <strong>paso</strong> sirven. Es para ubicarte, no una meta: cada cosa puede ir en un
+  paso distinto el mismo día, y un mal día no baja ningún paso.</p>
+
+  <h2 id="que-no-hacer">Qué no hacer</h2>
+  <ul class="lista">
+    <li>Primero lo copias tú; después le muestras algo nuevo. Comenta lo que hace en vez de preguntarle. Y al final dale siempre lo que quería: la pausa dura segundos, nunca «hasta que lo pida bien».</li>
+    <li>Cuando te muestre algo, te lo señale o te diga «tú»: mira lo que te muestra, vuelve a su cara con emoción y ponle la palabra. Una respuesta a medias apaga el gesto.</li>
+    <li>El objeto entra dentro del juego que ya le gusta —la marcha, la persecución, las cosquillas—, nunca en frío en una mesa. Y un cambio a la vez: persona nueva o juego nuevo, nunca los dos.</li>
+    <li>Ni más rápido ni más lento que él: sigue su ritmo.</li>
+    <li>Sin examen: ni «¿qué es?», ni «¿dónde está?», ni «¿cómo se dice?», ni «haz esto» sentados en una mesa. Nómbrale las cosas en vez de preguntarle por ellas. Las preguntas que respondes tú enseguida («¿Más?… ¡más!», «¿Dónde está mamá?… ¡Aquí está!») son parte del juego. Y «Funcionó si» vale solo cuando pasó dentro de un juego de verdad, nunca armado para ver si entiende.</li>
+    <li>Ningún premio por hacerlo, nunca le pidas que te mire, y no le exijas decirlo de una forma: vale el gesto, el sonido o la palabra.</li>
+    <li>El hermano juega con él; no le enseña. Sus reglas de siempre: una cosa a la vez, esperar cinco segundos, copiarlo. Si una ficha le da otras, son solo para ese juego.</li>
+    <li>Si aparta la vista, se tapa la cara o se irrita para salirse del juego: se para. «Se acabó» cierra el juego; no lo persigas para seguir.</li>
+    <li>Sin contar, sin plazos, sin metas con número. Nada de esto promete que hable en una fecha: cada ficha dice qué ver, y ya.</li>
+    <li>Momentos cortos, nunca sesiones. Un mal día no borra nada. Y tú también descansas.</li>
+  </ul>
+
+  <section class="solo-revision aviso" aria-label="Preguntas de juicio para la revisión">
+    <p class="eyebrow">Modo revisión · para el papá, antes de que llegue a la mamá</p>
+    <ul class="lista">
+      <li>¿Lo puede hacer la mamá tal cual, en un momento corto, sin preparar nada?</li>
+      <li>¿Se entiende sin ti? ¿Cada paso es una sola acción?</li>
+      <li>¿Hay algo que no es él — algo que no le gusta, que no hace o que no va con su casa?</li>
+      <li>¿Alguna ficha le pediría forzarlo, aunque sea un poco?</li>
+    </ul>
+    <p class="suave"><span id="revisadas">0</span> de 56 revisadas · tu avance queda guardado en este navegador.</p>
+    <p class="suave">Quedaron fuera del documento (11); siguen en la app:</p>
+    <ul class="lista">
+      <li>app · interes-voz-mueve — necesita la pantalla</li>
+      <li>app · interes-co-uso — necesita la pantalla</li>
+      <li>app · sonidos-cualquier-sonido-cuenta — necesita la pantalla</li>
+      <li>app · interes-cohete-de-la-voz — necesita la pantalla</li>
+      <li>app · interes-palabra-y-objeto — necesita la pantalla</li>
+      <li>app · frases-dos-palabras-utiles — es de la etapa siguiente</li>
+      <li>app · frases-el-hueco-de-la-segunda — es de la etapa siguiente</li>
+      <li>app · frases-narra-con-dos — es de la etapa siguiente</li>
+      <li>app · frases-cuenta-cuentos-con-huecos — es de la etapa siguiente</li>
+      <li>app · focalizada-sin-examen — quedó como regla del «Qué no hacer»</li>
+      <li>app · focalizada-no-preguntes-nombra — quedó como regla del «Qué no hacer»</li>
+    </ul>
+  </section>
+
+  <section class="grupo" id="grupo-imitacion" aria-labelledby="titulo-imitacion">
+    <h2 id="titulo-imitacion">Imitación
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(12 fichas)</span></h2>
+    <p class="suave">Copiar lo que el otro hace. Ya copia tu cuerpo cuando marchan; lo que viene es copiar lo que haces con un objeto y los sonidos que haces.</p>
+    
+    <article class="ficha" id="dos-juguetes-iguales">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-juguetes-iguales" aria-label="Revisada: Dos iguales: tú lo copias a él"> Revisada</label>
+      <h3>Dos iguales: tú lo copias a él</h3>
+      <p class="chips">
+        <span class="chip">Lo copio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Se da cuenta de que lo copias</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos juguetes iguales que ya le gusten (nada nuevo el primer día): dos carros, dos tambores o dos cucharas de palo.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Pon un juguete frente a él y el gemelo frente a ti, y siéntate de frente, a su altura.</li><li>Copia en el momento todo lo que haga con el suyo: si golpea, golpeas; si lo tira, lo tiras; si hace un sonido, lo haces.</li><li>No le pidas nada, no le preguntes nada, no le enseñes nada.</li><li>Cuando te mire, sonríe y sigue copiando.</li><li>Para antes de que se aburra.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Sin palabras al principio. Cuando te mire: «¡Igual que tú!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Primero mira lo que haces con tu juguete; luego te mira a ti. Puede repetir algo mirándote, para ver si lo copias otra vez, y acercarse.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace algo con su juguete mirándote para ver si lo copias, o cambia de acción y espera tu copia.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Copia más grande y más rápido, con el juguete que él eligió. Deja un solo par de juguetes. Y prueba en otro momento del día.</p>
+      </div>
+      <p class="fuente">Sanefuji, 2013, Infant Ment Health J · Contaldo, 2016, Front Psychol</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · dos-juguetes-iguales + investigación · B-A1</p>
+    </article>
+    <article class="ficha" id="el-prueba-si-lo-copias">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-prueba-si-lo-copias" aria-label="Revisada: Él prueba si lo copias"> Revisada</label>
+      <h3>Él prueba si lo copias</h3>
+      <p class="chips">
+        <span class="chip">Lo copio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Los dos juguetes iguales de siempre.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega a copiarlo como en «Dos iguales».</li><li>Fíjate en el momento en que él hace algo y voltea a verte.</li><li>Cópialo en ese mismo segundo, más grande que él y con cara de fiesta.</li><li>Si cambia de juguete o de movimiento, cambia tú también.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Y ahora?… ¡Igualito!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que haga un movimiento y se quede mirándote para ver si lo repites. Es la primera vez que la mirada la pone él.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>repite algo o cambia de movimiento y se queda mirándote hasta que lo copias.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No busques la prueba: sigue copiándolo sin esperar nada. Si voltea a verte y no pasa nada, deja de probar; por eso, cópialo siempre.</p>
+      </div>
+      <p class="fuente">Escalona, 2002 · Field, 2013, Infant Child Dev</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-prueba-si-lo-copias</p>
+    </article>
+    <article class="ficha" id="sigo-su-ritmo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sigo-su-ritmo" aria-label="Revisada: Sigo su ritmo: él golpea, yo golpeo"> Revisada</label>
+      <h3>Sigo su ritmo: él golpea, yo golpeo</h3>
+      <p class="chips">
+        <span class="chip">Canto a su ritmo</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span>
+        
+        <span class="chip chip-paso">Paso: Se da cuenta de que lo copias</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada; si quieres, una olla y una cuchara para ti.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando lo veas golpear, marchar o hacer un sonido que se repite, ponte de frente, a su altura.</li><li>Sigue su ritmo con las manos, con la olla o con la voz, a su velocidad.</li><li>Si acelera, aceleras; si para, paras.</li><li>Después de un rato igual a él, cambia una sola cosa (un golpe más fuerte, un paso de gigante) y vuelve a seguirlo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Pum, pum, pum… ¡así, así!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que voltee a ver de dónde sale el eco de su ritmo, y que te mire cuando cambias algo.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te mira cuando lo sigues o cuando cambias algo, y el juego termina porque él lo decide, no porque se fue.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Estabas marcando tú el ritmo: vuelve a seguirlo exacto, ni más rápido ni más lento que él. Y nada de música grabada.</p>
+      </div>
+      <p class="fuente">Kim, 2008 · Gulsrud, 2016, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · sigo-su-ritmo + investigación · D-A3</p>
+    </article>
+    <article class="ficha" id="una-estrofa-mas">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-estrofa-mas" aria-label="Revisada: Canción con gestos: una estrofa más cada semana"> Revisada</label>
+      <h3>Canción con gestos: una estrofa más cada semana</h3>
+      <p class="chips">
+        <span class="chip">Canto a su ritmo</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al acostarlo</span>
+        
+        <span class="chip chip-paso">Paso: Copia cuando le muestras</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una canción con gestos que ya conozca: «este dedito», «la araña» o «abre y cierra».</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Siéntate de frente, a su altura.</li><li>Canta solo la primera estrofa, con los gestos grandes.</li><li>Antes de cada gesto, para un instante y espera a que lo haga él o te mire.</li><li>Repite esa estrofa unas veces y termina.</li><li>La semana siguiente, agrega la segunda estrofa; no antes.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Este dedito compró un huevito…» (pausa, manos listas) «…¡y este gordito se lo comió!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que haga el gesto contigo o justo después de ti, y que te mire en la pausa para saber cuándo sigue.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace un gesto de la canción cuando tú lo haces, o lo hace él primero en la pausa.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Una estrofa, una sola vez, y lo dejas. Nunca le muevas tú las manos para hacer el gesto.</p>
+      </div>
+      <p class="fuente">Kim, 2009 · Stephens, 2008</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · una-estrofa-mas</p>
+    </article>
+    <article class="ficha" id="ahora-yo-ahora-tu">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ahora-yo-ahora-tu" aria-label="Revisada: Ahora yo, ahora tú: una acción nueva con el juguete"> Revisada</label>
+      <h3>Ahora yo, ahora tú: una acción nueva con el juguete</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">5–10 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Copia cuando le muestras</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Los dos juguetes iguales.</li><li>Tres o cuatro acciones sencillas pensadas de antemano: rodar, golpear, meter, tapar, sacudir.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Empieza copiándolo a él un rato, y di en una o dos palabras lo que hace: «golpea», «rueda».</li><li>De vez en cuando, haz tú una acción nueva con tu juguete, bien visible, con una palabra —«¡a rodar!»— y espera.</li><li>Si la copia, celébralo con la voz y la cara, y vuelve a copiarlo tú a él.</li><li>Si no la copia después de verla unas veces, llévale las manos con suavidad, una sola vez, y celébralo igual.</li><li>La mayor parte del rato eres tú quien lo copia; la acción nueva es de vez en cuando.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ahora yo!… ¡ahora tú!» — igual que en las cosquillas.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Primero copia con tus manos guiando; después, cuando le muestras; con el tiempo, cosas que te vio hacer sin que se las mostraras a propósito.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>repite con su juguete la acción que tú acabas de hacer, sin que le lleves las manos, aunque sea a medias.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Una acción más fácil (solo una parte del movimiento), o la que él ya hace con el cuerpo pasada al juguete. Menos acciones nuevas y más copiarlo tú. Si retira las manos, suéltalo.</p>
+      </div>
+      <p class="fuente">Ingersoll, 2010 · Ingersoll, 2012</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A2 + investigación · D-A10</p>
+    </article>
+    <article class="ficha" id="eco-de-voz">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="eco-de-voz" aria-label="Revisada: Eco de voz: le devuelves su sonido"> Revisada</label>
+      <h3>Eco de voz: le devuelves su sonido</h3>
+      <p class="chips">
+        <span class="chip">Lo copio</span>
+        <span class="chip suave">1–3 min</span>
+        <span class="chip suave">en el baño</span><span class="chip suave">en la calle</span><span class="chip suave">entre una cosa y otra</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada. Los momentos en que él suena solo: en el baño, en el carro, al despertar.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando haga un sonido o una vocal, repítelo igual y enseguida, mirándolo: mismo tono, mismo largo.</li><li>Espera en silencio a que vuelva a sonar.</li><li>Si suena, vuelve a copiarlo: eso ya es un turno.</li><li>Después de varios turnos, cambia un poquito tu eco (más largo, otra vocal) y espera.</li><li>Para cuando él pare.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Él: «aaa». Tú, igualito: «aaa»… y esperas.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que suene después de tu eco y espere el tuyo: él, tú, él, tú. Luego, que copie tus pequeños cambios.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>después de tu eco vuelve a sonar y se queda esperando el tuyo: ya hay ida y vuelta.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No cambies nada: solo el eco exacto, hasta que el ida y vuelta exista. Hazlo cuando más suena, nunca cuando está metido en un juguete.</p>
+      </div>
+      <p class="fuente">Ishizuka, 2016 · Gazdag, 2000, J Early Interv</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A3 + app · sonidos-habla-como-el</p>
+    </article>
+    <article class="ficha" id="marchar-con-algo-en-la-mano">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-algo-en-la-mano" aria-label="Revisada: Marchar con algo en la mano"> Revisada</label>
+      <h3>Marchar con algo en la mano</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Copia cuando le muestras</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos cucharas de palo, o dos botellas con arroz que suenen: la suya, a su alcance, sin dársela.</li><li>Dos ollas para golpear al final.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Arranca la marcha de siempre, sin nada en las manos.</li><li>En la segunda vuelta, marcha con tu cuchara arriba y abajo, al ritmo.</li><li>Si la toma, copia lo que haga con ella.</li><li>Cambia tú la acción con la cuchara (golpear la olla, apuntar al techo, dar vueltas) y espera.</li><li>Si te copia, celébralo y vuelvan a marchar.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Marcha, marcha… y pum!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que tome la cuchara y la mueva como movía los brazos, y que copie el golpe en la olla.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace con su cuchara lo que tú hiciste con la tuya, no solo la lleva en la mano.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Deja la cuchara a la vista varias vueltas sin insistir. Usa algo que suene: el sonido es la gracia. Y sigue marchando tú, exagerado.</p>
+      </div>
+      <p class="fuente">Stone, 1997 · Ingersoll, 2010</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A4 + investigación · F-F5</p>
+    </article>
+    <article class="ficha" id="cosquillas-con-sonido">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-con-sonido" aria-label="Revisada: Cosquillas con sonido, sonido sin cosquillas"> Revisada</label>
+      <h3>Cosquillas con sonido, sonido sin cosquillas</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al vestirse</span>
+        
+        <span class="chip chip-paso">Paso: Copia cuando le muestras</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: el juego de cosquillas, con su sonido de siempre.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega cosquillas como siempre, con el sonido del juego.</li><li>Cuando él haga el sonido, cópialo igualito antes de la siguiente ronda.</li><li>Haz el sonido sin cosquillas: manos quietas, cara de espera.</li><li>Si él hace el sonido, llegan las cosquillas: su sonido pide el juego.</li><li>Cuando él te haga cosquillas a ti, haz tú el sonido y espera a que lo repita.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Su sonido, tal cual… (manos quietas, cara de espera)… ¡y cosquillas!</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que haga su sonido para pedir la ronda, y que lo haga en los dos papeles: cuando las recibe y cuando las da.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace el sonido cuando tú lo haces sin cosquillas, o lo usa para pedirlas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>La espera, cortita: tres segundos y sigues. Vuelve a una ronda completa y lo intentas otra vez. Copia su sonido más veces antes de esperar.</p>
+      </div>
+      <p class="fuente">Ishizuka, 2016 · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A5</p>
+    </article>
+    <article class="ficha" id="gestos-que-dicen-algo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="gestos-que-dicen-algo" aria-label="Revisada: Gestos que dicen algo"> Revisada</label>
+      <h3>Gestos que dicen algo</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">2–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">entre una cosa y otra</span>
+        
+        <span class="chip chip-paso">Paso: Copia sin que se lo muestres</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Cuatro o cinco gestos fijos, siempre con la misma palabra: «grande» (brazos abiertos), «se cayó» (manos abajo), «rápido» (la mano que corre), «arriba», «no hay» (palmas arriba).</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Mientras juegan, cada vez que pase algo, haz el gesto con su palabra: «¡se cayó!» con las manos abajo.</li><li>Usa siempre el mismo gesto con la misma palabra.</li><li>Después del gesto, espera un instante.</li><li>Si lo copia, di la palabra otra vez y sigue jugando; si no, sigue igual: el gesto vuelve a aparecer solo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Se cayó!» (manos abajo) · «¡Chao, carro!» (la mano de chao)</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que copie el gesto, y más adelante que lo haga él antes que tú cuando pasa lo mismo.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace uno de los gestos por su cuenta cuando pasa lo que el gesto dice (se cae el carro y baja las manos), con o sin palabra.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Solo dos gestos, más grandes, pegados a lo que más le gusta: «¡rápido!» en la persecución. Nunca se los pidas.</p>
+      </div>
+      <p class="fuente">Ingersoll, 2010, J Speech Lang Hear Res · Stone, 1997</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A6</p>
+    </article>
+    <article class="ficha" id="sonidos-de-las-cosas">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sonidos-de-las-cosas" aria-label="Revisada: Sonidos de las cosas: el avión hace «uuuh»"> Revisada</label>
+      <h3>Sonidos de las cosas: el avión hace «uuuh»</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Copia cuando le muestras</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Tres cosas con su sonido de siempre: el avión («uuuh»), el carro («brrum»), el tambor («pum»). Dos de cada una, si se puede.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega a copiarlo con los juguetes, como en «Dos iguales».</li><li>Cada vez que muevas el tuyo, ponle su sonido, siempre el mismo.</li><li>Cuando él mueva el suyo, ponle tú el sonido.</li><li>Haz la acción con su sonido y espera.</li><li>Si él hace solo el sonido o solo la acción, celébralo y completa tú la otra mitad.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «El avión… ¡uuuuh!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Primero la acción sin sonido, o el sonido sin acción; después, los dos juntos.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace el sonido mientras mueve el juguete, o hace el sonido para que tú muevas el tuyo.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Empieza por el sonido más parecido a los que ya hace: la «uuuh» larga del avión antes que el «brrum». Un solo juguete con su sonido por semana.</p>
+      </div>
+      <p class="fuente">Van de Vyver, 2026, J Speech Lang Hear Res · Ishizuka, 2021</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A7 + app · sonidos-ponle-sonido-al-mundo + app · sonidos-su-sonido-tu-palabra</p>
+    </article>
+    <article class="ficha" id="espejo-por-turnos">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espejo-por-turnos" aria-label="Revisada: Espejo por turnos: el ida y vuelta que dura"> Revisada</label>
+      <h3>Espejo por turnos: el ida y vuelta que dura</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Ida y vuelta que dura</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Los dos juguetes iguales, o nada: también sirve en la persecución.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Él hace algo y tú lo copias.</li><li>Haz tú un cambio pequeñito de lo mismo (más fuerte, más lento, al revés) y espera.</li><li>Si copia tu cambio, cópialo otra vez agregando otro cambio mínimo.</li><li>Cuando él cambie de acción, vuelves a copiarlo a él.</li><li>Nombra cada turno siempre igual: «ahora yo… ahora tú».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Ahora yo… ahora tú.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Cadenas cada vez más largas alrededor de la misma acción, con él mirándote entre un turno y el otro.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>el ida y vuelta sigue varias veces seguidas sobre la misma acción, sin que le lleves las manos.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Cambios todavía más pequeños y turnos tuyos más cortos. Vuelve un rato a solo copiarlo. Empieza por la persecución: corre, para, mira; tú corres, paras, miras.</p>
+      </div>
+      <p class="fuente">Field, 2013, Infant Child Dev · Ishizuka, 2016</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A8 + app · sonidos-turnos-de-sonidos</p>
+    </article>
+    <article class="ficha" id="dos-pasos-y-lo-de-ayer">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-pasos-y-lo-de-ayer" aria-label="Revisada: Dos pasos, y lo de ayer"> Revisada</label>
+      <h3>Dos pasos, y lo de ayer</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Con otra persona, y al otro día</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Cosas con dos pasos naturales: meter la pelota y tapar; llenar el vaso y vaciarlo; subir el muñeco al carro y empujar.</li><li>Que «Ahora yo, ahora tú» ya salga con una acción; si no, empieza por esa ficha.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Haz dos acciones seguidas con tu juguete, cada una con su palabra —«meto… ¡tapo!»— y espera.</li><li>Si hace un paso, celébralo y haz tú el segundo; si hace los dos, celébralo en grande.</li><li>Al día siguiente, deja las cosas a la vista sin mostrarle nada, y mira qué hace.</li><li>Si repite la cadena de ayer, cópialo y ponle las palabras.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Meto… ¡y tapo!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Primero un paso; luego los dos; con el tiempo, la cadena de ayer sin que se la muestres.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace los dos pasos en orden después de verte, o repite al día siguiente una cadena que solo vio el día anterior.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Vuelve a un solo paso. Que el segundo paso se oiga o se vea (tapar suena, vaciar se ve). Una cadena nueva por semana, no más.</p>
+      </div>
+      <p class="fuente">Toth, 2006 · Van de Vyver, 2026, J Speech Lang Hear Res</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · B-A10</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-atencion-conjunta" aria-labelledby="titulo-atencion-conjunta">
+    <h2 id="titulo-atencion-conjunta">Atención conjunta
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(7 fichas)</span></h2>
+    <p class="suave">Mirar lo mismo que el otro y saber que el otro también lo mira. Ya te busca para que el juego siga; lo que viene es que te busque para mostrarte algo.</p>
+    
+    <article class="ficha" id="te-trae-el-otro-juguete">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="te-trae-el-otro-juguete" aria-label="Revisada: Te trae el otro juguete: arranca él"> Revisada</label>
+      <h3>Te trae el otro juguete: arranca él</h3>
+      <p class="chips">
+        <span class="chip">Lo copio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Arranca el juego para pedir o seguir</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Los dos juguetes iguales, en su sitio de siempre y a su alcance.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Deja los dos juguetes a la vista y no arranques tú.</li><li>Si él te trae el tuyo o empieza algo mirándote, juega a copiarlo como siempre.</li><li>A mitad del juego, una sola vez, haz tú algo nuevo y espera con cara de «¿lo haces?».</li><li>Si te copia, celébralo copiándolo tú de vuelta; si no, sigue copiándolo a él.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ah, quieres que juguemos igual! Dale, tú primero.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que un día te traiga el juguete o te busque para empezar: el juego arranca porque lo pidió él.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te trae el juguete, te pone la mano o empieza un movimiento mirándote para que lo sigas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No lo sientes a jugar ni le pongas el juguete en la mano. Si hoy no arranca él, no pasa nada: mañana lo dejas a la vista otra vez.</p>
+      </div>
+      <p class="fuente">Ingersoll, 2010 · Contaldo, 2016, Front Psychol</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · te-trae-el-otro-juguete</p>
+    </article>
+    <article class="ficha" id="el-globo-en-la-boca">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-globo-en-la-boca" aria-label="Revisada: El globo en la boca: su mirada sube a tu cara"> Revisada</label>
+      <h3>El globo en la boca: su mirada sube a tu cara</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Mira dentro del turno</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Un globo (o burbujas, o un molinillo).</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Infla el globo y suéltalo para que vuele por el cuarto, dos veces seguidas.</li><li>A la tercera, deja el globo en la boca sin soplar, mirándolo.</li><li>Espera tres segundos.</li><li>Cuando su mirada llegue a tu cara, o haga un gesto o un sonido, sopla.</li><li>Unas pocas rondas y se acabó.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Lo inflo?…» (globo en la boca, ojos en él) «…¡Fffff!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que su mirada vaya del globo a tu cara en la pausa, y vuelva al globo cuando vuela.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en la pausa mira del globo a tu cara, o hace un gesto o un sonido para que soples.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Sopla igual y acorta la pausa. El globo siempre a la vista: nunca lo escondas ni se lo retengas hasta que mire.</p>
+      </div>
+      <p class="fuente">Muuvila, 2022 · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-globo-en-la-boca</p>
+    </article>
+    <article class="ficha" id="cucu-cuando-se-tapa-el">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cucu-cuando-se-tapa-el" aria-label="Revisada: Cucú: cuando se tapa él"> Revisada</label>
+      <h3>Cucú: cuando se tapa él</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al vestirse</span>
+        
+        <span class="chip chip-paso">Paso: Arranca el juego para pedir o seguir</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Un pañuelo, o tus manos.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega cucú: tápate, espera dos o tres segundos mirándolo entre los dedos, y destápate.</li><li>Repítelo unas veces igual, con las mismas palabras.</li><li>Deja el pañuelo a su alcance y no arranques tú.</li><li>Si se tapa, tapa al muñeco o te trae el pañuelo, responde al instante con el juego completo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Dónde está mamá?… ¡Aquí está!» · Si se tapa él: «¿Y ahora dónde estás?»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que se ría antes de que aparezcas, que intente destaparte, y un día que arranque el juego él.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>se tapa, tapa al muñeco o te trae el pañuelo para que jueguen.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Aquí taparse es el juego, no el semáforo. Si hoy no arranca él, juega una ronda normal y déjalo ahí. No le tapes la cara a él si no le gusta, y no alargues la espera al principio.</p>
+      </div>
+      <p class="fuente">Nomikou, 2017, Front Psychol · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · cucu-cuando-se-tapa-el</p>
+    </article>
+    <article class="ficha" id="se-lo-lleva-al-hermano">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="se-lo-lleva-al-hermano" aria-label="Revisada: Se lo lleva al hermano: arranca o muestra él"> Revisada</label>
+      <h3>Se lo lleva al hermano: arranca o muestra él</h3>
+      <p class="chips">
+        <span class="chip">La misma rutina con otra persona</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">entre una cosa y otra</span>
+        <span class="chip chip-hermano">con el hermano</span>
+        <span class="chip chip-paso">Paso: Con más personas</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El hermano cerca, unos minutos. Además de sus reglas de siempre, para este juego: mira lo que él te muestre · di «¡uy!» y míralo a la cara · sigue su dedo cuando señale.</li><li>Un juego que ya sale contigo.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega con él lo que ya funciona contigo, con el hermano cerca, sin proponer nada.</li><li>Si él levanta o señala algo, gira tu cuerpo hacia el hermano: «¡muéstraselo!».</li><li>El hermano responde como le dijiste; tú te quedas un paso atrás, sin hablar.</li><li>Si le lleva las manos o el juguete al hermano, o se le planta enfrente, el hermano arranca el juego al instante.</li><li>Cierra antes de que alguno se canse y agradécele al hermano algo concreto: «seguiste su dedo».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Al hermano: «Si te trae algo o te busca, ahí mismo le respondes, sin preguntarle nada.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que le muestre o le señale algo al hermano como te lo hace a ti, y que lo mire esperando su reacción.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>le muestra, le señala o le lleva el juego al hermano sin que tú se lo indiques, y espera su reacción.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Es normal que primero pase solo contigo. Usa el juego que más le sale y no estrenen nada con el hermano: persona nueva o juego nuevo, nunca los dos.</p>
+      </div>
+      <p class="fuente">Ferraioli, 2011 · Stokes, 1977, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · le-lleva-el-juego-al-hermano + investigación · D-A7 + investigación · A-A7</p>
+    </article>
+    <article class="ficha" id="comento-no-pregunto">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="comento-no-pregunto" aria-label="Revisada: Comento, no pregunto"> Revisada</label>
+      <h3>Comento, no pregunto</h3>
+      <p class="chips">
+        <span class="chip">Nombro lo que él mira</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span><span class="chip suave">en el baño</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: es una forma de hablar mientras juegan.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Durante un rato de juego, di solo lo que él está mirando o haciendo, en una o dos palabras: «corre», «arriba», «tambor».</li><li>Nada de preguntas, nada de «di…», nada de «mira».</li><li>Cuando haga un sonido, repite su sonido y agrega una palabra: «aaa… ¡avión!».</li><li>Si señala, nombra lo que señala.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Corre… ¡corre el carro!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Más sonidos dirigidos a ti, y más miradas a tu cara mientras le hablas.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace un sonido mirándote después de un comentario tuyo, o repite tu palabra.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Fíjate en tus propias preguntas, no en él: cámbialas por el nombre de lo que mira. Menos palabras tuyas, más espacio para él.</p>
+      </div>
+      <p class="fuente">McDuffie, 2010, J Speech Lang Hear Res · Tomasello, 1986, Child Dev</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · D-A5</p>
+    </article>
+    <article class="ficha" id="lo-que-hace-contigo-tiene-nombre">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-hace-contigo-tiene-nombre" aria-label="Revisada: Lo que hace contigo tiene nombre"> Revisada</label>
+      <h3>Lo que hace contigo tiene nombre</h3>
+      <p class="chips">
+        <span class="chip">La respuesta completa</span>
+        <span class="chip suave">2–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada; sale mejor en las cosquillas y en la persecución.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando te mire, te sonría o venga hacia ti, nombra eso que hizo contigo: «¡me miraste!», «¡viniste!», «¡me lo mostraste!».</li><li>Acompáñalo con el gesto que él ya usa: la mano de «hola».</li><li>Si hay un juguete, déjalo en segundo plano: no lo nombres primero.</li><li>Una vez por juego; que no se vuelva un coro.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Me miraste!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que repita lo que nombraste: que te vuelva a mirar, o vuelva a venir.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>repite dentro del mismo juego lo que nombraste: te vuelve a mirar después de «¡me miraste!».</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Seguramente nombraste el juguete: baja el juguete y sube tu cara.</p>
+      </div>
+      <p class="fuente">Schertz, 2022 · Schertz, 2013, Early Child Res Q</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · D-A6</p>
+    </article>
+    <article class="ficha" id="en-el-piso-con-su-juguete">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="en-el-piso-con-su-juguete" aria-label="Revisada: En el piso, con el juguete que él eligió"> Revisada</label>
+      <h3>En el piso, con el juguete que él eligió</h3>
+      <p class="chips">
+        <span class="chip">Nombro lo que él mira</span>
+        <span class="chip suave">5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Mira cuando le interesa, con quien confía</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El juguete que él agarre hoy. Nada que traigas tú.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Espera a ver qué agarra él, y siéntate en el piso frente a él, cara a cara.</li><li>No propongas otro juego: métete en el suyo.</li><li>Nombra lo que él hace con el juguete, de a una palabra, como en «Comento, no pregunto»: «rueda», «tapa», «¡pum!».</li><li>Si te aparta, retrocede un poco y sigue nombrando desde ahí.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Tapa! Suena la tapa… ¡pum!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que te deje estar en su juego y que, de vez en cuando, levante la mirada del juguete a tu cara.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>sigue jugando contigo al lado y te mira alguna vez mientras nombras lo que hace.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Deja lo que trajiste y vuelve a lo suyo. Menos palabras. Si el juguete lo absorbe, no compitas: haz una sola cosa pequeña con su juguete y retira las manos.</p>
+      </div>
+      <p class="fuente">Carter, 2011, J Child Psychol Psychiatry · Tomasello, 1986, Child Dev</p>
+      <p class="origen solo-revision">Viene de (fusión): app · interes-siéntate-en-el-piso + app · interes-el-juguete-que-el-eligio</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-juego" aria-labelledby="titulo-juego">
+    <h2 id="titulo-juego">Juego
+      <span class="chip chip-prioridad">prioridad ahora</span>
+      <span class="conteo">(13 fichas)</span></h2>
+    <p class="suave">Un juego de dos que dura: tú, él, tú, él. Ya pide que siga y ya cambia los papeles en las cosquillas; lo que viene es que el ida y vuelta dure varias veces.</p>
+    
+    <article class="ficha" id="el-avion-cara-a-cara">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-avion-cara-a-cara" aria-label="Revisada: El avión, cara a cara"> Revisada</label>
+      <h3>El avión, cara a cara</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al acostarlo</span>
+        
+        <span class="chip chip-paso">Paso: Una vuelta con pausa</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: tus brazos, y un rato en que él no tenga nada en las manos.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Escoge un juego de cuerpo que ya le guste: el avión, levantarlo, mecerlo.</li><li>Ponte de frente, a su altura, y hazlo con las mismas palabras, empezando y terminando igual.</li><li>Cuando se ría o se acerque, repítelo igual.</li><li>Cuando ya lo reconozca, antes de despegar detente un segundo con los brazos listos; si te mira o estira los brazos, despega.</li><li>Ciérralo siempre igual: «se acabó el avión».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Avión, avión!… ¡Aterrizó!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que se ría, se acerque o estire los brazos cuando empiezas, y que con los días espere el despegue mirándote.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>se acerca o estira los brazos para que el avión vuelva a empezar, o te mira en el instante antes de despegar.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Cambia de juego, no de insistencia: prueba mecerlo o levantarlo. Hazlo solo cuando no tenga nada en las manos, y más corto.</p>
+      </div>
+      <p class="fuente">Rogers, 2012, J Am Acad Child Adolesc Psychiatry · Binns, 2022</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-avion-cara-a-cara</p>
+    </article>
+    <article class="ficha" id="cosquillas-que-se-detienen">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-que-se-detienen" aria-label="Revisada: Cosquillas y «corre que te atrapo» que se detienen justo antes"> Revisada</label>
+      <h3>Cosquillas y «corre que te atrapo» que se detienen justo antes</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al vestirse</span>
+        
+        <span class="chip chip-paso">Paso: Una vuelta con pausa</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: las cosquillas con su sonido de siempre, o espacio para correr.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Haz la ronda completa dos veces igual: cosquillas con su sonido, o dos persecuciones.</li><li>A la siguiente, detente justo antes de lo mejor: manos en el aire y cara de «¿y ahora?»; en la persecución, quédate de estatua cuando voltee a ver si lo sigues.</li><li>Espera en silencio, tres segundos.</li><li>A lo primero que haga para ti —te mira, acerca las manos, te jala, hace su sonido, dice «tú»— sigue enseguida y ponle la palabra: «¡otra vez!».</li><li>De vez en cuando, en la pausa, mira hacia dos lados como si no supieras a dónde ir: si señala un lugar o una persona, el juego va para allá.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ahí vienen las cosquillas!…» (manos quietas, cara de espera) «…¡otra vez!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que llene la pausa con algo dirigido a ti: la mirada, las manos, su sonido, un jalón, «tú». Con el tiempo, que señale a dónde sigue el juego.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en la pausa es él quien hace seguir el juego con algo dirigido a ti, sin quedarse quieto esperando ni irse.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Acorta la pausa a un segundo, di tú «¡otra!» con el gesto y sigue. Nunca termines una pausa sin seguir el juego. Si se acelera de más, baja el ritmo.</p>
+      </div>
+      <p class="fuente">Halle, 1981, J Appl Behav Anal · Charlop, 1985, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · cosquillas-que-se-detienen + investigación · E-A1 + investigación · A-A6</p>
+    </article>
+    <article class="ficha" id="me-meto-en-su-juguete">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="me-meto-en-su-juguete" aria-label="Revisada: Me meto en su juguete"> Revisada</label>
+      <h3>Me meto en su juguete</h3>
+      <p class="chips">
+        <span class="chip">Un turno cada uno</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El juguete que lo tiene metido. Nada que traigas tú.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Siéntate a su altura, frente a lo que está jugando.</li><li>Haz una sola acción pequeña con su juguete —empujar el carro un poquito, poner un bloque en su torre— y retira las manos.</li><li>Deja que él siga.</li><li>Si te aguanta, otra acción corta, y otra vez las manos atrás.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Me toca un poquito a mí… ¡y ahora a ti!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Al principio quizá te aparte la mano; después, que espere tu jugada y levante la mirada para ver cuándo llega.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>deja tu jugada en su juego y se queda esperando la siguiente, o te mira para ver cuándo llega.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si te aparta la mano, retírate y prueba otro día con una jugada más chiquita. No le quites el juguete ni le digas dónde ponerlo.</p>
+      </div>
+      <p class="fuente">Carter, 2011, J Child Psychol Psychiatry · Kasari, 2006, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · me-meto-en-su-juguete</p>
+    </article>
+    <article class="ficha" id="alto-y-ya-con-el-carro">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="alto-y-ya-con-el-carro" aria-label="Revisada: «¡Alto!… ¡ya!»: el carro se detiene en tu mano"> Revisada</label>
+      <h3>«¡Alto!… ¡ya!»: el carro se detiene en tu mano</h3>
+      <p class="chips">
+        <span class="chip">Un turno cada uno</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Dos o tres vueltas iguales</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El carro, la pelota o lo que él esté rodando.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Deja que lo empuje dos veces sin meterte.</li><li>A la tercera, detén el carro con la mano y cara de travesura: «¡alto!».</li><li>Espera un segundo, di «¡ya!» y suéltalo.</li><li>Repítelo unas veces; cuando su mirada llegue a tu cara en el «alto», suelta de inmediato.</li><li>Al final, devuélvele el carro.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Alto!…» (mano en el carro, ojos en él) «…¡ya!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que su mirada suba del carro a tu cara en el «alto» y vuelva al carro en el «ya», un poquito más cada ronda.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en el «alto» mira del carro a tu cara, o te empuja la mano para que sueltes, y el juego sigue varias rondas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si se enoja, suelta enseguida y haz menos «alto». Nunca sostengas el carro más de un par de segundos.</p>
+      </div>
+      <p class="fuente">Ingersoll, 2013 · Kasari, 2006, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · alto-y-ya-con-el-carro</p>
+    </article>
+    <article class="ficha" id="el-me-pasa-el-turno">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-me-pasa-el-turno" aria-label="Revisada: Él me pasa el turno"> Revisada</label>
+      <h3>Él me pasa el turno</h3>
+      <p class="chips">
+        <span class="chip">Un turno cada uno</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El juguete de los turnos de siempre.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Jueguen los turnos de siempre un rato.</li><li>Después de una ronda buena, haz tu turno y quédate sin moverte: manos abiertas sobre las piernas, cara de espera.</li><li>Espera hasta cinco segundos.</li><li>Si te pasa el juguete, te toma la mano o te lo acerca, responde al instante y con ganas.</li><li>Si no, haz tú una ronda más y déjalo para otro día.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Me toca? ¡Dale, me toca!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que un día te empuje el carro, te ponga el bloque en la mano o te tome la mano: te pasó el turno.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te pasa el juguete, te toma la mano o te lo acerca para que hagas tu turno, sin que se lo pidas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No le pongas el juguete en la mano para que «te lo dé» ni le preguntes «¿me lo das?». Una espera, y si no viene, sigan jugando.</p>
+      </div>
+      <p class="fuente">Kasari, 2010 · Whalen, 2003, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · el-me-pasa-el-turno</p>
+    </article>
+    <article class="ficha" id="la-marcha-que-cambia">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-marcha-que-cambia" aria-label="Revisada: La marcha que cambia"> Revisada</label>
+      <h3>La marcha que cambia</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Las vueltas aguantan un cambio pequeño</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada. Espacio para marchar en fila.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Arranca la marcha que él ya copia, unas vueltas iguales.</li><li>En la siguiente, detente un segundo mirándolo y cambia una sola cosa: brazos arriba, paso de gigante o cámara lenta.</li><li>Vuelve a la marcha de siempre un par de vueltas.</li><li>Cambia otra cosa distinta; nunca dos cambios a la vez.</li><li>Si él cambia algo por su cuenta, cópialo de inmediato y exagéralo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Marcha, marcha…» (un segundo, mirándolo) «…¡de gigante!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que te mire antes del cambio, que lo copie, y que un día proponga uno suyo y mire si lo copias. A veces, que pida seguir cuando tú ibas a parar.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>la marcha sigue después de un cambio sin que se vaya y él copia el cambio; mejor aún si cambia algo él y mira si lo copias.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>El cambio fue grande o rápido: hazlo mínimo (un solo brazo) y anúncialo con el sonido de siempre. Para antes de que se canse.</p>
+      </div>
+      <p class="fuente">Ratner, 1978, J Child Lang · Gulsrud, 2016, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F1 + investigación · D-A8</p>
+    </article>
+    <article class="ficha" id="cosquillas-al-reves">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-al-reves" aria-label="Revisada: Cosquillas al revés, con ida y vuelta"> Revisada</label>
+      <h3>Cosquillas al revés, con ida y vuelta</h3>
+      <p class="chips">
+        <span class="chip">Un turno cada uno</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al vestirse</span>
+        
+        <span class="chip chip-paso">Paso: Los papeles al revés, dos veces seguidas</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada al principio; después, una pluma o un peluche pequeño.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Hazle cosquillas con el sonido del juego.</li><li>Para y ofrécele tu brazo estirado —«¿a mí?»— y espera.</li><li>Cuando te haga cosquillas, reacciona en grande y hazle tú enseguida: esa es la vuelta.</li><li>Sigan alternando, siempre con la pausa del «¿a mí?» en medio.</li><li>Cuando ya salga con las manos, dale la pluma y ofrécele el brazo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿A mí?…» (brazo estirado) «¡ay, ay, ay!… ¡ahora a ti!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Las cosquillas al revés que ya hace, ahora encadenadas; más adelante, que te haga cosquillas con la pluma en la mano.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hay ida y vuelta seguida —él a ti, tú a él, otra vez él— sin cortar el juego; o te hace cosquillas con la pluma, aunque sea un momento.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>La pausa fue larga y se fue: acórtala y ofrécele el brazo más cerca. Si con la pluma no lo hace, vuelve a las manos y deja la pluma solo a la vista.</p>
+      </div>
+      <p class="fuente">Carpenter, 2005, Infancy · Ratner, 1978, J Child Lang</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F2</p>
+    </article>
+    <article class="ficha" id="corre-que-te-atrapo-con-base">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-base" aria-label="Revisada: Corre que te atrapo, con base"> Revisada</label>
+      <h3>Corre que te atrapo, con base</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">5–8 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Los papeles al revés, dos veces seguidas</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Un cojín o una alfombra pequeña: esa es la base.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Persíguelo como siempre.</li><li>Al atraparlo, llévalo a la base y quédate ahí: cara de espera, manos listas, sin hablar.</li><li>Cuando te mire o haga un sonido, arranca otra vez.</li><li>Cada tanto, en la base, cambien los papeles: tápate la cara y corre tú para que él te persiga; celebra cuando te toque.</li><li>Termina en la base con «se acabó» y las manos abiertas.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Te atrapé!…» (en la base, manos listas) «…¡corre!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>En la base, su señal para seguir: la mirada, un sonido, los brazos. Cuando cambian los papeles, que te persiga y te toque. Un día, que vaya él a la base para pedir otra.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>el juego sigue varias rondas seguidas con parada en la base, y alguna vez es él quien persigue.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si en la base se desconecta, acorta la parada a un segundo. Si no te persigue, muévete lento y déjate atrapar cerquita. Para antes de que se acelere de más.</p>
+      </div>
+      <p class="fuente">Binns, 2022 · Carpenter, 2005, Infancy</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F3</p>
+    </article>
+    <article class="ficha" id="el-carro-va-y-viene">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-carro-va-y-viene" aria-label="Revisada: El carro va y viene"> Revisada</label>
+      <h3>El carro va y viene</h3>
+      <p class="chips">
+        <span class="chip">Un turno cada uno</span>
+        <span class="chip suave">5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Las vueltas aguantan un cambio pequeño</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Un carro o una pelota que ruede bien, piso liso, y los dos sentados de frente, a un metro o dos.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Rueda el carro hacia él con su sonido: «¡brrrum!».</li><li>Espera con las manos abiertas a que lo devuelva.</li><li>Cada vez que vuelva, devuélvelo igual, a su velocidad.</li><li>Cuando ya vaya y venga, agrega una sola cosa: el carro choca con tu rodilla —«¡pum!»— o pasa por el túnel de tus piernas.</li><li>En tu turno, señala con el dedo lo que pasa —«¡mira, se cayó!»— y míralo.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Brrrum!… ¡pum, en la rodilla!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que el carro vuelva cada vez más; su mirada del carro a tu cara en el hueco; risa con el «¡pum!» y espera de que se repita.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>el carro va y vuelve varias veces seguidas sin que tengas que recogerlo, o él lo empuja hacia ti para que hagas el «¡pum!».</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si no lo devuelve, acércate, empújalo apenas hacia ti y agradécelo en grande. Usa lo que él prefiera rodar. Si se queda con el carro, no se lo quites: rueda otro igual y espera a que te mire. Si lo nuevo rompe el juego, vuelve a lo simple.</p>
+      </div>
+      <p class="fuente">Kasari, 2014, Pediatrics · Gulsrud, 2016, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F4 + investigación · A-A5</p>
+    </article>
+    <article class="ficha" id="un-paso-mas">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="un-paso-mas" aria-label="Revisada: Un paso más: de meter a tapar, de apilar a tumbar"> Revisada</label>
+      <h3>Un paso más: de meter a tapar, de apilar a tumbar</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Con objetos: junta, apila, encaja</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Lo que él ya use solo —un tarro para meter cosas, dos bloques para apilar— y una pieza más del mismo tipo.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Mira qué hace él solo con el objeto y hazlo tú igual, a su lado.</li><li>Cuando esté metido, agrega una vez el paso siguiente: si mete, tú tapas y sacudes; si apila, tú pones otro y lo tumbas con «¡pum!».</li><li>Espera.</li><li>Si repite tu paso, haz otra vez el suyo: ya es un turno.</li><li>Un solo paso nuevo por rato de juego.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Arriba… arriba… ¡y pum!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que meta tu paso en su juego —tumba la torre, sacude el tarro— y te mire al hacerlo; el juego dura más porque ahora tiene dos partes.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace él las dos partes seguidas (meter y sacudir, apilar y tumbar), o te pasa la pieza para que hagas la tuya.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>El paso quedó lejos de lo que él hace: baja a algo con la misma acción (otro tarro, otra pieza), no a otra acción.</p>
+      </div>
+      <p class="fuente">Lifter, 1993, J Early Interv · Kasari, 2014, Pediatrics</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F6</p>
+    </article>
+    <article class="ficha" id="de-mentira-conmigo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-mentira-conmigo" aria-label="Revisada: De mentira, conmigo: la taza vacía"> Revisada</label>
+      <h3>De mentira, conmigo: la taza vacía</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Los papeles al revés, con un objeto</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una taza vacía y una cuchara; más adelante, un peluche grande.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>En la merienda, haz de mentira sobre ti: bebe de la taza vacía con «glu-glu» y ríete.</li><li>Ofrécele la taza y espera.</li><li>Si «bebe» de mentira, hazlo tú otra vez: ya es un turno.</li><li>Cuando eso salga, pásale la taza y acerca tu boca: que él te dé de beber.</li><li>Solo cuando eso exista, invita al peluche.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Glu-glu-glu… ¡ahh!» — y le pasas la taza.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que «beba» de la taza vacía con el sonido; después, que te dé de beber a ti.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace de mentira algo con la taza sobre sí mismo o sobre ti, aunque sea un momento y riéndose.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Hoy no le llamó la atención: deja la taza a la vista en las meriendas y jueguen «Un paso más». No insistas con lo de mentira.</p>
+      </div>
+      <p class="fuente">Lifter, 2011, Infants Young Child · Kasari, 2014, Pediatrics</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F7</p>
+    </article>
+    <article class="ficha" id="lucha-suave-con-senal">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lucha-suave-con-senal" aria-label="Revisada: Lucha suave con señal de «¡ya!» y de «¡alto!»"> Revisada</label>
+      <h3>Lucha suave con señal de «¡ya!» y de «¡alto!»</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Dos o tres vueltas iguales</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos almohadas o una manta, y piso blando.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Muéstrale las dos señales: brazos arriba y «¡ya!» para empezar; manos abiertas y «¡alto!» para parar.</li><li>Haz la señal de «¡ya!», empújalo suave con la almohada y deja que te tumbe; cae exagerando, en cámara lenta.</li><li>Al rato, haz la señal de «¡alto!» y quédate sin moverte, mirándolo.</li><li>Espera su señal para seguir —la mirada, los brazos, un sonido o su «¡ya!»— y arranca otra vez; si no llega, arranca igual.</li><li>Cambien los papeles: ahora lo tumbas tú, suave; luego él a ti. Unas rondas y se cierra.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ya!» (brazos arriba) … «¡Alto!» (manos abiertas, sin moverte)</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que pare en el «alto», o casi; que pida seguir con algo; y un día, que haga él la señal de empezar.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>el juego para y vuelve a arrancar varias veces, y alguna vez él da la señal de empezar antes que tú.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si no para, las rondas fueron largas: hazlas más cortas. Si se acelera de más, cambia a mecerlo despacio y termina. Nunca antes de dormir.</p>
+      </div>
+      <p class="fuente">StGeorge, 2017, Infant Ment Health J · Binns, 2022</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · F-F10</p>
+    </article>
+    <article class="ficha" id="con-el-hermano-la-misma-rutina">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="con-el-hermano-la-misma-rutina" aria-label="Revisada: Con el hermano: la misma rutina, con las mismas palabras"> Revisada</label>
+      <h3>Con el hermano: la misma rutina, con las mismas palabras</h3>
+      <p class="chips">
+        <span class="chip">La misma rutina con otra persona</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        <span class="chip chip-hermano">con el hermano</span>
+        <span class="chip chip-paso">Paso: Lo mismo con el hermano</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El hermano, cinco minutos, y sus reglas de siempre, dichas antes: haz una sola cosa · espera cinco segundos · cópialo a él.</li><li>El juego que mejor le sale contigo: la marcha, las cosquillas, «¡alto!… ¡ya!» o los dos juguetes iguales.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Juega tú una ronda, con el hermano al lado mirando.</li><li>Luego alternen: una ronda tú, una ronda el hermano, calcada, con tus mismas palabras y tu misma pausa.</li><li>Cuando salga, el hermano juega solo con él; tú te quedas detrás del hermano, sin hablar.</li><li>Si el hermano manda, corrige o apura, tócale el hombro: «espera».</li><li>Cierra corto y agradécele al hermano algo concreto: «esperaste, y te miró».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Al hermano: «Igualito que yo: haz una cosa, espera, y copia lo que él haga.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que mire al hermano como te mira a ti en el juego, que siga su marcha o corra para que lo persiga, que haga pruebas para ver si lo copia, y que le haga cosquillas también a él.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace con el hermano algo que ya hacía contigo —adelantarse, copiar, pedir que siga— sin que tú dirijas el juego.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>El hermano fue rápido o hizo de maestro: vuelvan a un solo juego que ya le sale, más corto. Persona nueva o juego nuevo, nunca los dos el mismo día.</p>
+      </div>
+      <p class="fuente">Walton, 2012 · Bene, 2020 · Stokes, 1977, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (fusión): mirada · el-hermano-lo-copia + mirada · los-mismos-turnos-con-el-hermano + mirada · el-hermano-al-lado-un-turno-cada-uno + mirada · las-mismas-cosquillas-con-el-hermano + investigación · B-A9 + investigación · F-F9</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-senalar" aria-labelledby="titulo-senalar">
+    <h2 id="titulo-senalar">Señalar
+      
+      <span class="conteo">(4 fichas)</span></h2>
+    <p class="suave">Usar la mano y el dedo para decir «mira esto». Ya sigue tu dedo; lo que viene es que él te muestre algo porque sí, para compartirlo.</p>
+    
+    <article class="ficha" id="mama-senala-el-mundo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mama-senala-el-mundo" aria-label="Revisada: Mamá señala el mundo"> Revisada</label>
+      <h3>Mamá señala el mundo</h3>
+      <p class="chips">
+        <span class="chip">Algo que valga la pena mostrar</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la calle</span><span class="chip suave">entre una cosa y otra</span>
+        
+        <span class="chip chip-paso">Paso: Sigue tu dedo</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: lo que haya en la casa o en la ruta de la marcha.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Mientras marchan o caminan, para en seco y señala con el dedo algo que se mueva o suene.</li><li>Di su nombre con voz de sorpresa: «¡mira! ¡el avión!».</li><li>Mira la cosa, luego su cara, luego la cosa otra vez.</li><li>Espera unos segundos a que él mire lo que señalas.</li><li>Cuando mire, celébralo en dos palabras y sigan marchando. Cada vez, algo distinto.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Mira!… ¡el avión!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que mire lo que señalas y vuelva a tu cara; con los días, que se adelante a buscar qué vas a señalar.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>frena cuando tú frenas, mira lo que señalas y te mira a ti antes de seguir; o saca el dedo hacia algo por su cuenta y te mira.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Baja a su altura para que tu dedo le quede a la vista, y señala algo más cerca que se mueva o suene.</p>
+      </div>
+      <p class="fuente">Matthews, 2012, Dev Sci · Rowe, 2009, Science</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · A-A1</p>
+    </article>
+    <article class="ficha" id="la-respuesta-completa">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-respuesta-completa" aria-label="Revisada: La respuesta completa: cada vez que señala o dice «tú»"> Revisada</label>
+      <h3>La respuesta completa: cada vez que señala o dice «tú»</h3>
+      <p class="chips">
+        <span class="chip">La respuesta completa</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span><span class="chip suave">en la calle</span><span class="chip suave">en el baño</span>
+        
+        <span class="chip chip-paso">Paso: Señala para compartir</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: es una forma de responder, todo el día.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando señale, te muestre algo o diga «tú» señalando, deja lo que estás haciendo.</li><li>Mira lo que señala, luego su cara con emoción —«¡uy, sí!»—, y otra vez la cosa.</li><li>Nómbralo en una o dos palabras y agrega su sonido o lo que hace: «¡el carro! brrum».</li><li>Si pide algo con el dedo, nómbralo y dáselo enseguida, sin pedirle que lo repita.</li><li>Si vuelve a señalar, dale la respuesta entera otra vez, sin acortarla.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Tú! Sí… ¡te toca a ti!» · «¡Uy, el carro!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que sostenga el gesto más tiempo, que lo repita mirándote a la cara, y que aparezcan sonidos pegados al dedo.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>después de señalar busca tu cara y espera, o señala enseguida otra cosa para volver a recibir la respuesta.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Revisa qué mitad faltó: ¿miraste solo la cosa? ¿le sonreíste solo a él? Hacen falta las dos. Y nada de «¿qué es eso?»: la frase corta, sin pregunta.</p>
+      </div>
+      <p class="fuente">Liszkowski, 2004, Dev Sci · Dimitrova, 2016</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · A-A2 + investigación · C-C4 + investigación · D-A1 + app · sonidos-senalar-ya-es-hablar</p>
+    </article>
+    <article class="ficha" id="mira-lo-que-traigo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mira-lo-que-traigo" aria-label="Revisada: Mira lo que traigo: mostrar y dar"> Revisada</label>
+      <h3>Mira lo que traigo: mostrar y dar</h3>
+      <p class="chips">
+        <span class="chip">Algo que valga la pena mostrar</span>
+        <span class="chip suave">1–3 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Muestra o da</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Tres o cuatro cosas pequeñas que le gusten (algo que suene, algo que gire, la pluma de las cosquillas), en tu bolsillo o en una bolsa.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Al terminar una ronda de persecución o de marcha, saca una y levántala a la altura de tu cara: «¡mira!».</li><li>Espera a que la mire, y dásela.</li><li>Cuando la tenga, extiende la mano abierta y espera: si te la da, devuélvesela enseguida.</li><li>Si te la muestra o la señala por su cuenta, nómbrala y celébralo como un tesoro; no pidas nada más.</li><li>Si el hermano está cerca, gira tu cuerpo hacia él —«¡muéstrasela!»— y que él responda: mira la cosa, mira su cara y la nombra.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Mira!…» (a la altura de tu cara) «…¡la pluma!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que mire la cosa y tu cara, que te la dé y la reciba; un día, que te la muestre o la levante hacia alguien sin que se lo pidan.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te levanta o te extiende algo hacia la cara mirándote, sin que le hayas extendido la mano, aunque no lo suelte.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Empieza por dar, que es más fácil que mostrar, con su cosa favorita. Toma como muestra cualquier brazo extendido. Nunca se lo quites de la mano.</p>
+      </div>
+      <p class="fuente">Cameron-Faulkner, 2015, Infancy · Kasari, 2006, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · A-A3 + investigación · D-A4 + investigación · F-F8 + investigación · E-A7</p>
+    </article>
+    <article class="ficha" id="la-sorpresa-en-la-ruta">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-sorpresa-en-la-ruta" aria-label="Revisada: La sorpresa en la ruta"> Revisada</label>
+      <h3>La sorpresa en la ruta</h3>
+      <p class="chips">
+        <span class="chip">Algo que valga la pena mostrar</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la calle</span>
+        
+        <span class="chip chip-paso">Paso: Señala para compartir</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Algo que aparezca de golpe: un globo, una linterna, un muñeco bajo un trapo; o un zapato para ponerte en la cabeza.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>En medio de la marcha o de la persecución, deja que la sorpresa aparezca donde él la vea y tú no: mira hacia otro lado.</li><li>Quédate sin moverte unos segundos: es su oportunidad de mostrártela.</li><li>Si la señala, hace un sonido o te jala, dale la respuesta completa, con sorpresa grande.</li><li>Si no, «descúbrela» tú: señálala, nómbrala y míralo.</li><li>Otro día, la variante: marcha con el zapato en la cabeza, sin decir nada y seria, y espera.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Uy!… ¡un globo!» · «¿El zapato… en la cabeza?»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que mire la sorpresa, te mire a ti y haga algo para que tú la veas; con el zapato, risa dirigida a ti.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te mira a ti y a la sorpresa antes de que tú hagas nada, o la señala sin querer que se la den.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Una sorpresa más grande, que se mueva y suene, y menos espera. Si la pide con la mano, dásela y, si el hermano está cerca, muéstrensela juntos. Nunca la misma dos veces seguidas.</p>
+      </div>
+      <p class="fuente">Gulsrud, 2007 · Liszkowski, 2004, Dev Sci</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · A-A4 + investigación · D-A2 + investigación · D-A9</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-intencion-comunicativa" aria-labelledby="titulo-intencion-comunicativa">
+    <h2 id="titulo-intencion-comunicativa">Intención comunicativa
+      
+      <span class="conteo">(10 fichas)</span></h2>
+    <p class="suave">Tener para qué comunicarse: pedir, rechazar, elegir, saludar, contar. Ya pide y saluda; lo que viene es elegir, decir que no y compartir.</p>
+    
+    <article class="ficha" id="burbujas-y-espero">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="burbujas-y-espero" aria-label="Revisada: Burbujas: soplo, cierro el frasco y espero"> Revisada</label>
+      <h3>Burbujas: soplo, cierro el frasco y espero</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en el baño</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Un frasco de burbujas.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Sopla dos rondas seguidas para que se enganche.</li><li>Cierra la varita en el frasco y sostenlo a la altura de tu cara.</li><li>Espera en silencio, mirándolo, unos segundos.</li><li>Cuando te mire, señale, estire la mano o haga un sonido, sopla al instante: «¡más burbujas!».</li><li>Si no pasa nada, sopla igual.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> (nada: cara de espera, frasco a la vista)… «¡Más burbujas!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que llene el silencio con algo: la mirada, un gesto, un sonido, la mano estirada.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en el silencio te pide que soples con la mirada, un gesto o un sonido dirigido a ti.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No preguntes «¿quieres más?» ni «¿qué dices?». Acorta la espera y sopla igual: el silencio vuelve a funcionar otro día.</p>
+      </div>
+      <p class="fuente">Halle, 1981, J Appl Behav Anal · Muuvila, 2022</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · burbujas-y-espero</p>
+    </article>
+    <article class="ficha" id="lo-dejo-a-medias">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-dejo-a-medias" aria-label="Revisada: Lo dejo a medias para que él lo traiga"> Revisada</label>
+      <h3>Lo dejo a medias para que él lo traiga</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">entre una cosa y otra</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El juego que acaba de gustarle, a la vista y a su alcance: el frasco cerrado, el globo desinflado, el carro en su sitio.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Al terminar un juego que le gustó, deja las cosas a la vista y a su alcance.</li><li>Sigue con lo tuyo cerca de él, sin mirarlo fijamente.</li><li>Si trae el objeto, te toma la mano o te llama desde el juego, responde con el juego entero y con ganas.</li><li>Si hoy no pasa, mañana lo dejas otra vez.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ah, quieres burbujas! Dale, aquí vamos.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que un día te traiga el objeto, te lo ponga en la mano o te lleve hasta el juego.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te trae el objeto, te lleva de la mano o te llama para que el juego vuelva a empezar.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No le preguntes «¿quieres jugar?» ni le acerques tú el objeto. Y no lo dejes a medias cuando está cansado o con hambre.</p>
+      </div>
+      <p class="fuente">Charlop, 1985, J Appl Behav Anal · Ingersoll, 2013</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · lo-dejo-a-medias</p>
+    </article>
+    <article class="ficha" id="una-media-puesta">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-media-puesta" aria-label="Revisada: Una media puesta, la otra en la mano"> Revisada</label>
+      <h3>Una media puesta, la otra en la mano</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">al vestirse</span><span class="chip suave">en la mesa</span><span class="chip suave">en el baño</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: una rutina del día que ya se sepa (vestirse, la comida, la toalla) o un juego de memoria («uno, dos… ¡y!»).</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Haz la primera parte de la rutina normal.</li><li>Antes de la segunda, detente con lo que sigue a la vista: la otra media en tu mano, la cuchara a medio camino, la toalla lista.</li><li>Espera en silencio, con cara de «¿y ahora?», unos segundos.</li><li>Si te mira, hace un gesto o un sonido, sigue de inmediato y nómbralo: «¡la otra!».</li><li>Si no, sigue igual. Una o dos veces al día, nunca con prisa.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Una media…» (la otra en la mano, silencio) «…¡y la otra!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que llene el hueco con la mirada, un gesto o un sonido, en momentos del día que nadie preparó.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en la pausa de una rutina de todos los días te pide que sigas, con la mirada, un gesto o un sonido.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si la rutina está tensa o van tarde, ese día no hay pausa. La ropa o la comida nunca se retienen como premio.</p>
+      </div>
+      <p class="fuente">Halle, 1981, J Appl Behav Anal · Stokes, 1977, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · una-media-puesta + app · espera-el-hueco-de-la-rutina</p>
+    </article>
+    <article class="ficha" id="de-a-poquitos">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-a-poquitos" aria-label="Revisada: De a poquitos: cada pedacito es un turno"> Revisada</label>
+      <h3>De a poquitos: cada pedacito es un turno</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Algo que quiera y se pueda dar en partes: una galleta partida, uvas, bloques de a uno, un sorbo en el vaso.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Dale una parte pequeña.</li><li>Espera, mirándolo, a que pida la siguiente: te mira, estira la mano, hace un sonido o dice «más»; si no pide, dásela igual.</li><li>Dale la siguiente y nómbrala: «¡más! ¡más galleta!».</li><li>Sigan así unas vueltas; cada vez espera un instante más.</li><li>A la última: «¡se acabó!», con las manos abiertas, y «chao».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Más?… ¡más!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Una cadena: pide, recibe, pide, recibe, con la mirada en cada vuelta.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>pide cada pedacito varias veces seguidas, cada vez con algo dirigido a ti, sin frustrarse.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Pedazos más grandes y menos vueltas. Si se frustra, dale el resto y cierra con calma. Nunca lo hagas esperar por castigo.</p>
+      </div>
+      <p class="fuente">Ostrosky, 1991 · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (de la app): app · espera-de-a-poquitos + investigación · E-A8</p>
+    </article>
+    <article class="ficha" id="espera-con-cara-de-pregunta">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espera-con-cara-de-pregunta" aria-label="Revisada: Espera con cara de pregunta"> Revisada</label>
+      <h3>Espera con cara de pregunta</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span><span class="chip suave">entre una cosa y otra</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: lo que él quiera en ese momento (el jugo, la puerta, el juguete).</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Sostén lo que quiere a la vista, míralo con las cejas arriba y cierra la boca.</li><li>Cuenta hasta cinco por dentro, sin adivinar lo que quiere.</li><li>Lo que salga —un sonido, un gesto, un jalón—, respóndelo nombrando y dáselo: «¿jugo? ¡jugo!».</li><li>Si no sale nada, dáselo igual y nómbralo.</li><li>Si le pides algo, dilo una sola vez y espera.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> (cejas arriba, boca cerrada, contando por dentro)… «¿Jugo? ¡Jugo!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que en tu silencio aparezca algo suyo: un sonido, un gesto, un jalón, una mirada a tu cara.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en tu silencio pide él, a su manera, antes de que tú hables o adivines.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Nunca lo dejes sin la cosa por no pedir: se la das igual. Si te descubres repitiendo «dame, dame, dame», vuelve a decirlo una sola vez. Si le pides algo y no responde, muéstraselo con tu cuerpo; y si tampoco, háganlo juntos.</p>
+      </div>
+      <p class="fuente">Kaiser, 2013, J Speech Lang Hear Res · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (fusión): app · sonidos-espera-con-cara-de-pregunta + app · espera-cuenta-cinco + app · espera-no-adivines + app · espera-tres-segundos-mas + investigación · C-C7</p>
+    </article>
+    <article class="ficha" id="el-frasco-que-no-abre">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-frasco-que-no-abre" aria-label="Revisada: El frasco que no abre"> Revisada</label>
+      <h3>El frasco que no abre</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Lo que le gusta, en un frasco transparente con tapa apretada o en su bolsa cerrada: burbujas, una galleta, su carro en una caja con tapa.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Sopla burbujas o cómanse un pedacito, dos veces.</li><li>Cierra bien el frasco y pónselo en la mano.</li><li>Espera cerca, en silencio, con cara de «¿y ahora?».</li><li>Cuando te lo devuelva, te mire, lo empuje hacia ti o haga un sonido, di «¡abre!» y ábrelo ya.</li><li>Cuando ya le salga, estira un poquito la espera, un día a la vez. Cierra con «chao, burbujas».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Uy, no abre…» (silencio, cara de espera) «…¡abre! ¡Abre!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que te entregue el frasco mirándote, o lo empuje hacia ti con un sonido.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te pide ayuda juntando el frasco hacia ti con la mirada, o un gesto con un sonido.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Muéstrale tú «abre» con el gesto de girar, y ábrelo. Si lo deja y se va, no lo persigas con el frasco. Si lo ves frustrado, la espera fue larga: vuelve a una corta.</p>
+      </div>
+      <p class="fuente">Charlop, 1985, J Appl Behav Anal · Wetherby, 1989, Semin Speech Lang</p>
+      <p class="origen solo-revision">Viene de (fusión): mirada · la-espera-se-estira + app · espera-el-frasco-dificil + app · focalizada-palabra-abre + investigación · E-A3</p>
+    </article>
+    <article class="ficha" id="marchar-con-tropiezo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-tropiezo" aria-label="Revisada: Marchar con tropiezo"> Revisada</label>
+      <h3>Marchar con tropiezo</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos cucharas de palo y dos ollas: un tambor para cada uno.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Marchen como siempre, con el tambor: golpea y di «pum» a cada paso.</li><li>Cuando esté copiando, equivócate: para de golpe, marcha hacia atrás o golpea sin sonido.</li><li>Espera unos segundos, mirándolo; si no reacciona, vuelve a marchar igual.</li><li>A cualquier protesta o pedido —te mira, te jala, hace «pum», dice «no»—: «¡ah, pum! ¡vamos!», y siguen.</li><li>Cierra con «chao, tambor» y la mano de chao.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Pum, pum, pum…» (paras en seco) «…¡ah, pum! ¡vamos!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que proteste o pida que sigas, dirigido a ti, y que copie el golpe con su «pum».</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>reacciona a tu «error» dirigiéndose a ti —mirada y gesto, o un sonido— y vuelve a marchar contigo.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Menos errores: uno por ronda, y más marcha normal. Si el tambor lo absorbe, hazlo sin nada en las manos.</p>
+      </div>
+      <p class="fuente">Carter, 2001 · Ingersoll, 2010, J Speech Lang Hear Res</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · E-A2</p>
+    </article>
+    <article class="ficha" id="dos-cosas-una-eleccion">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-cosas-una-eleccion" aria-label="Revisada: Dos cosas, una elección"> Revisada</label>
+      <h3>Dos cosas, una elección</h3>
+      <p class="chips">
+        <span class="chip">Le doy a elegir</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">en la mesa</span><span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos opciones que de verdad quiera, bien visibles: dos frutas, dos juguetes, o «¿cosquillas o correr?» con las manos que lo muestran.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Sostén las dos a su altura, separadas.</li><li>Nómbralas una vez: «¿uva… o pan?».</li><li>Espera.</li><li>Cuando señale, mire o toque una, dásela enseguida y nómbrala: «¡uva!».</li><li>Si agarra las dos, ofrécelas otra vez con las manos más separadas.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¿Uva… o pan?» — y esperas.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que señale o toque una mirándote; a veces, la palabra o un pedacito de ella.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>elige con algo dirigido a ti (el dedo y la mirada, o la palabra) y acepta lo que eligió.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Elige tú por él diciendo lo que ves —«¡miras la uva!»— y dásela. Mañana otra vez.</p>
+      </div>
+      <p class="fuente">Ostrosky, 1991 · Wetherby, 1989, Semin Speech Lang</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · E-A4 + app · frases-elige-tu-o-yo</p>
+    </article>
+    <article class="ficha" id="chao-a-tres-silencio-al-cuarto">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="chao-a-tres-silencio-al-cuarto" aria-label="Revisada: «Chao» a tres, silencio al cuarto"> Revisada</label>
+      <h3>«Chao» a tres, silencio al cuarto</h3>
+      <p class="chips">
+        <span class="chip">Espero en silencio</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">entre una cosa y otra</span><span class="chip suave">en el baño</span><span class="chip suave">jugando</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Tres o cuatro juguetes para guardar, los patos al final del baño, o el peluche.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Al guardar cada juguete, di «chao» con la mano y la voz, exagerado.</li><li>Repítelo con el segundo y el tercero.</li><li>Con el cuarto, guárdalo en silencio y espera, mirándolo.</li><li>Si hace «chao» —con la mano, con la voz o con las dos—, celébralo y ponle tú el gesto y la palabra encima.</li><li>Al revés, con «hola»: el peluche sale de debajo de la mesa saludando tres veces; la cuarta, sale callado.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Chao, carro!… ¡chao, pelota!… ¡chao, tambor!…» (el cuarto, en silencio)</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que haga «chao» u «hola» sin que tú lo hayas hecho justo antes: al juguete, o al hermano.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>saluda o se despide sin que tú lo hayas hecho justo antes: lo empieza él, no lo copia.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Haz un par de vueltas más con el «chao» completo y prueba otro día. Nunca «¿cómo se dice?».</p>
+      </div>
+      <p class="fuente">Charlop, 1985, J Appl Behav Anal · Wetherby, 1989, Semin Speech Lang</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · E-A5</p>
+    </article>
+    <article class="ficha" id="lo-que-no-le-gusta">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-no-le-gusta" aria-label="Revisada: Lo que no le gusta: su «no» se escucha"> Revisada</label>
+      <h3>Lo que no le gusta: su «no» se escucha</h3>
+      <p class="chips">
+        <span class="chip">Le doy a elegir</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">en la mesa</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una comida o un objeto que claramente no quiere.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Ofrécelo con naturalidad, cerca, sin insistir.</li><li>Espera.</li><li>A cualquier «no» —empuja, aparta la cara, niega con la cabeza, un sonido, «no»—, retíralo de inmediato y ponle la palabra: «¡no quieres! Listo».</li><li>Enseguida ofrécele algo que sí le gusta, y dáselo cuando lo pida.</li><li>Una sola vez por comida, y no todos los días.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡No quieres! Listo.» — y lo retiras.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Un «no» claro dirigido a ti, sin llegar al llanto.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>rechaza con algo que tú entiendes —gesto y mirada, o la palabra— y la cosa se va antes de que se enoje.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si se enoja sin avisar, lo ofreciste muy cerca o por mucho rato: la próxima vez, más lejos y más corto.</p>
+      </div>
+      <p class="fuente">Wetherby, 1989, Semin Speech Lang · Trembath, 2022</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · E-A6</p>
+    </article>
+  </section>
+  <section class="grupo" id="grupo-comprender" aria-labelledby="titulo-comprender">
+    <h2 id="titulo-comprender">Comprender
+      
+      <span class="conteo">(10 fichas)</span></h2>
+    <p class="suave">Entender la palabra sola, sin el gesto ni la costumbre que la anuncian. Se trabaja hablándole de lo que él mira, nunca preguntándole.</p>
+    
+    <article class="ficha" id="lo-que-el-mira-yo-lo-nombro">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-el-mira-yo-lo-nombro" aria-label="Revisada: Lo que él mira, yo lo nombro, donde estemos"> Revisada</label>
+      <h3>Lo que él mira, yo lo nombro, donde estemos</h3>
+      <p class="chips">
+        <span class="chip">Nombro lo que él mira</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span><span class="chip suave">en la calle</span><span class="chip suave">en el baño</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: lo que él tenga en la mano o esté mirando, en la casa, en el carro, en el mercado, en el parque o en la calle.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Mira lo que él mira o sostiene, y ponte a su altura.</li><li>Nómbralo en una frase corta: «¡el carro!», «el carro corre».</li><li>Espera en silencio unos segundos.</li><li>Si sigue con lo mismo, repite la frase una vez con lo que él hace; no traigas nada nuevo.</li><li>Fuera de la casa, igual: en el carro, «¡moto!»; en el mercado, lo que él mire del estante; en el parque, «¡sube!… ¡baja!» con el columpio.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡El carro!… el carro corre.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que siga en lo suyo, a veces te mire y vuelva a la cosa, y a veces repita la vocal o la última sílaba.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>otro día, en otro lugar, al oír la palabra sola —sin gesto, y tú mirándolo a él— busca la cosa, se voltea hacia ella o la trae.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>El momento no estaba limpio (muchas cosas, prisa, mucha agitación): nombra solo cuando una sola cosa le llene la vista. Nada de preguntas ni de «di…».</p>
+      </div>
+      <p class="fuente">Tomasello, 1986, Child Dev · McGillion, 2017, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (fusión): app · modelado-nombra-su-mundo + app · interes-el-manda + app · focalizada-el-nombre-vive-en-la-cosa + app · modelado-en-el-carro + app · modelado-mercado + app · modelado-parque + app · modelado-la-calle + app · interes-nombra-lo-que-el-hace + investigación · C-C1</p>
+    </article>
+    <article class="ficha" id="las-mismas-palabras">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="las-mismas-palabras" aria-label="Revisada: Las mismas palabras, en los mismos momentos"> Revisada</label>
+      <h3>Las mismas palabras, en los mismos momentos</h3>
+      <p class="chips">
+        <span class="chip">Nombro lo que él mira</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">en el baño</span><span class="chip suave">al vestirse</span><span class="chip suave">en la mesa</span><span class="chip suave">al acostarlo</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una rutina fija (el baño, vestirse, la mesa, la noche) y tres o cuatro frases cortas que vas a decir idénticas cada vez: «brazo arriba», «zapato… ¡pie!», «agua caliente», «a la cama».</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Escoge una sola rutina y sus frases.</li><li>Di cada frase justo antes del paso, con el objeto a la vista.</li><li>Repite las mismas frases cada día, con la misma voz.</li><li>Cuando ya las conozca, di la frase antes de mover las manos, y espera un momento.</li><li>Al terminar cada paso, el «chao» que ya hace: «chao, agua».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Brazo arriba…» (la camiseta todavía en la silla, y esperas)</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Al principio hace el paso porque la rutina lo anuncia; después, empieza a adelantarse a tu frase.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>hace el paso al oír la frase, antes de que muevas las manos o muestres el objeto.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Las frases cambiaron de un día a otro o son largas: recórtalas a dos o tres palabras, siempre bien dichas. Una rutina a la vez.</p>
+      </div>
+      <p class="fuente">Fernald, 2006, Dev Sci · Childers, 2002, Dev Psychol</p>
+      <p class="origen solo-revision">Viene de (fusión): app · modelado-mismas-palabras-rutina + app · modelado-hora-de-dormir + investigación · C-C2</p>
+    </article>
+    <article class="ficha" id="su-palabra-mas-una">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-palabra-mas-una" aria-label="Revisada: Su palabra, más una, sin corregir"> Revisada</label>
+      <h3>Su palabra, más una, sin corregir</h3>
+      <p class="chips">
+        <span class="chip">Su palabra, más una</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span><span class="chip suave">en el baño</span><span class="chip suave">al vestirse</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: sus palabras sueltas, sus vocales, su «tú», su «chao».</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando diga algo, devuélveselo bien dicho y con una palabra más: «tú» → «¡tú corres!»; «agu» → «¡agua! agua fría».</li><li>No corrijas: nada de «no», «así no», «repite» ni «se dice…».</li><li>Háblale a su tamaño: frases de dos a cuatro palabras, bien armadas.</li><li>Una frase tuya, un turno de él: deja el espacio.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> Él: «agu». Tú: «¡Agua! Agua fría.» — y se la das.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que sostenga el turno, te mire y a veces repita la última palabra.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en la rutina de siempre, con dos cosas a la vista y tú sin mirar ninguna, te da la que dice tu frase; o repite tu palabra de más.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Estás hablando de más o muy cortado: vuelve a una frase tuya por un turno suyo, con frases cortas y completas. Nunca le pidas que lo diga.</p>
+      </div>
+      <p class="fuente">Cleave, 2015, Am J Speech Lang Pathol · Roberts, 2011, Am J Speech Lang Pathol</p>
+      <p class="origen solo-revision">Viene de (fusión): app · modelado-habla-a-su-tamano + app · recast-devuelve-la-palabra + app · recast-su-palabra-mas-una + app · recast-repite-bien-sin-corregir + app · frases-una-palabra-mas-una + app · frases-recast-sin-corregir + investigación · C-C6</p>
+    </article>
+    <article class="ficha" id="una-palabra-muchas-veces">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-palabra-muchas-veces" aria-label="Revisada: Una palabra o un sonido, muchas veces, en muchos lugares"> Revisada</label>
+      <h3>Una palabra o un sonido, muchas veces, en muchos lugares</h3>
+      <p class="chips">
+        <span class="chip">Nombro lo que él mira</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en la mesa</span><span class="chip suave">en el baño</span><span class="chip suave">en la calle</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una palabra útil para él («más», «abre», «ya», «agua») o un sonido («aaah», «brum») para esta semana.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Escoge la palabra o el sonido de la semana.</li><li>Dilo cada vez que pase: en el juego, en la comida, en el baño, al despedirte, en la calle.</li><li>Si es una palabra de hacer («dame», «para», «ven»), dila primero con su gesto: la mano abierta, la palma, los brazos abiertos.</li><li>Cuando responda al gesto casi siempre, di la palabra primero, espera un momento, y solo entonces agrega el gesto.</li><li>No le pidas que la repita, ni una vez.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Agua!» en la ducha, en el vaso, en la lluvia: la misma palabra.</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que al principio responda al gesto, y poco a poco, antes de que llegue el gesto.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en un juego de verdad responde a la palabra dicha sin gesto —se para con «¡para!», viene con «¡ven!»— mientras tú sigues sin moverte.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Usa solo palabras que hagan seguir algo que le importa: la persecución, las cosquillas, la marcha. Nunca la misma consigna varias veces seguidas.</p>
+      </div>
+      <p class="fuente">Childers, 2002, Dev Psychol · McNeil, 2000</p>
+      <p class="origen solo-revision">Viene de (fusión): app · focalizada-palabra-semana + app · sonidos-un-solo-sonido-todo-el-dia + app · focalizada-misma-palabra-cinco-lugares + investigación · C-C3</p>
+    </article>
+    <article class="ficha" id="la-cancion-de-siempre-al-vestirlo">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-cancion-de-siempre-al-vestirlo" aria-label="Revisada: La canción de siempre, al vestirlo y en el baño"> Revisada</label>
+      <h3>La canción de siempre, al vestirlo y en el baño</h3>
+      <p class="chips">
+        <span class="chip">Canto a su ritmo</span>
+        <span class="chip suave">1–2 min</span>
+        <span class="chip suave">al vestirse</span><span class="chip suave">en el baño</span><span class="chip suave">en la calle</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la costumbre con el gesto</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>La canción que mejor le funciona jugando, o una cancioncita de tres palabras para un momento: «a guardar, a guardar».</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cántala tal cual en un momento distinto: mientras lo vistes, en la tina, caminando a la tienda.</li><li>Deja su hueco de siempre antes de lo mejor, y espera.</li><li>Al vestirlo, levanta cada prenda, espera a que la mire y nómbrala: «¡media!».</li><li>Si te mira o hace la señal, sigues; si no, sigues igual.</li><li>Un momento nuevo por semana, no todos a la vez.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> (al ponerle la camiseta) «Las ruedas del bus van…» (pausa) «…¡ruedan y ruedan!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que la canción le anuncie el momento: se acomoda, te mira en el hueco, a veces levanta el brazo antes de que se lo pidas.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>en un momento que no se preparó te mira en el hueco de la canción, o hace el gesto que la canción anuncia.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No estrenes canción y momento a la vez. Si en ese momento está incómodo (el agua, la ropa), ese día no hay canción.</p>
+      </div>
+      <p class="fuente">Stokes, 1977, J Appl Behav Anal · Childers, 2002, Dev Psychol</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · la-cancion-de-siempre-al-vestirlo + app · modelado-vestirse + app · modelado-cancion-de-la-rutina</p>
+    </article>
+    <article class="ficha" id="la-locion-despues-del-bano">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-locion-despues-del-bano" aria-label="Revisada: La loción después del baño"> Revisada</label>
+      <h3>La loción después del baño</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">en el baño</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la costumbre con el gesto</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>La loción, y él de frente, ya seco.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Ponte loción en las manos y frótalas: «¡frío, frío!».</li><li>Hazlo dos veces seguidas, con las mismas palabras.</li><li>A la tercera, manos en el aire, y espera tres segundos mirándolo.</li><li>Cuando te mire, se ría o se acerque, sigue: «¡en la barriga!».</li><li>Cuando se acabe: «se acabó la loción».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Loción… frío, frío…» (manos en el aire) «…¡en la barriga!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que se adelante a la loción cuando oye «frío, frío», y que te mire en la pausa.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>al oír «frío, frío» se prepara o se acerca antes de que lo toques, o te mira en la pausa para que sigas.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si el baño ya es tenso, ese día solo baño. No alargues la pausa con él mojado y con frío. Sirve igual con la toalla.</p>
+      </div>
+      <p class="fuente">Halle, 1981, J Appl Behav Anal · Childers, 2002, Dev Psychol</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · la-locion-despues-del-bano</p>
+    </article>
+    <article class="ficha" id="su-cancion-con-hueco">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-cancion-con-hueco" aria-label="Revisada: Su canción, con un hueco antes de lo mejor"> Revisada</label>
+      <h3>Su canción, con un hueco antes de lo mejor</h3>
+      <p class="chips">
+        <span class="chip">Canto a su ritmo</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">al acostarlo</span><span class="chip suave">en la calle</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la costumbre con el gesto</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Una de las canciones que ya le gustan: esa, no una nueva.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cántala una vez completa, de frente y a su altura.</li><li>La segunda vez, detente justo antes de lo mejor —el «¡pum!», el «ruedan y ruedan»— con la boca abierta y cara de espera.</li><li>Espera dos o tres segundos.</li><li>Cuando te mire, haga el gesto o un sonido, sigue cantando.</li><li>Si no llena el hueco, cántala completa y sigue: el hueco queda sembrado.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «Los pollitos dicen…» (silencio, cara de espera) «…¡pío, pío, pío!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que llene el hueco con la mirada, un gesto o un sonido; a veces, con la vocal de la palabra que falta.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>llena el hueco de la canción con algo suyo: la mirada, el gesto, un sonido o un pedacito de la palabra.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>No pruebes con una canción nueva. Y no sostengas el silencio hasta que se aburra: tres segundos y sigues.</p>
+      </div>
+      <p class="fuente">Kim, 2008 · Halle, 1981, J Appl Behav Anal</p>
+      <p class="origen solo-revision">Viene de (del documento anterior): mirada · su-cancion-con-hueco + app · espera-pausa-canciones</p>
+    </article>
+    <article class="ficha" id="ponle-nombre-a-lo-que-siente">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ponle-nombre-a-lo-que-siente" aria-label="Revisada: Ponle nombre a lo que siente"> Revisada</label>
+      <h3>Ponle nombre a lo que siente</h3>
+      <p class="chips">
+        <span class="chip">Su palabra, más una</span>
+        <span class="chip suave">1 min</span>
+        <span class="chip suave">jugando</span><span class="chip suave">en el baño</span><span class="chip suave">entre una cosa y otra</span>
+        
+        
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Nada: los momentos fuertes del día (alegría, susto, rabia, cosquillas).</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Cuando sienta algo fuerte, acércate y míralo.</li><li>Ponle una sola palabra, clara, con tu cara: «¡susto!», «¡qué risa!», «¡rabia!».</li><li>Acompáñala con tu abrazo o tu mano, sin explicaciones largas.</li><li>Si él hace un sonido, devuélveselo con la palabra: «¡aaay! ¡susto!».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Susto!… Ya pasó.»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Que se quede cerca de ti mientras nombras lo que siente, y que a veces repita tu sonido o tu cara.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>te busca o te mira cuando siente algo fuerte, o hace el sonido o la cara que acompañan tu palabra.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Si está muy alterado, primero la calma, después la palabra. Una palabra, no un discurso. Nunca «no llores» ni «no pasó nada».</p>
+      </div>
+      <p class="fuente">Heidlage, 2020, Early Child Res Q · Tomasello, 1986, Child Dev</p>
+      <p class="origen solo-revision">Viene de (de la app): app · recast-nombra-lo-que-siente</p>
+    </article>
+    <article class="ficha" id="acciones-en-tres-palabras">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="acciones-en-tres-palabras" aria-label="Revisada: Acciones con objetos, en tres palabras"> Revisada</label>
+      <h3>Acciones con objetos, en tres palabras</h3>
+      <p class="chips">
+        <span class="chip">Ahora yo, ahora tú</span>
+        <span class="chip suave">3–5 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>Dos objetos iguales (dos carros, dos cucharas, dos tambores), en el piso, a su altura, y un sonido para cada uno.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Toma uno y haz una sola acción con su sonido y su frase: «el carro corre… ¡brrrum!».</li><li>Deja el otro a su alcance y espera unos segundos.</li><li>Si lo imita, di la frase otra vez sobre lo que hace él.</li><li>Si no, repite la acción con la frase, sin llevarle la mano.</li><li>Cambia de acción solo cuando esa ya salga: «el carro duerme», «la cuchara come… ¡ñam!».</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «El carro corre… ¡brrrum!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Primero copia el sonido; después la acción; luego hace la acción cuando oye la frase.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>con el carro en la mano y tú sin moverte, al oír «el carro corre» lo hace correr, y al oír «el carro duerme» lo acuesta.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Demasiadas cosas a la vista: deja solo los dos objetos iguales, en el piso. Empieza por acciones grandes que ya copia, como marchar el muñeco.</p>
+      </div>
+      <p class="fuente">Childers, 2002, Dev Psychol · Yu, 2012</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · C-C5</p>
+    </article>
+    <article class="ficha" id="corre-que-te-atrapo-con-palabras">
+      <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-palabras" aria-label="Revisada: Corre que te atrapo, con palabras"> Revisada</label>
+      <h3>Corre que te atrapo, con palabras</h3>
+      <p class="chips">
+        <span class="chip">La pausa antes de lo mejor</span>
+        <span class="chip suave">2–3 min</span>
+        <span class="chip suave">jugando</span>
+        
+        <span class="chip chip-paso">Paso: Responde a la palabra sola, dentro de la costumbre</span>
+      </p>
+      <div class="parte">
+        <p class="rotulo">Ten a la mano</p>
+        <ul><li>El pasillo, y el hermano si quiere jugar.</li></ul>
+      </div>
+      <div class="parte">
+        <p class="rotulo">Haz</p>
+        <ol><li>Arranca el juego que ya funciona.</li><li>Mete cuatro palabras fijas, siempre las mismas: «¡ya!» (arranca), «¡para!» (todos quietos), «¡despacio!» (cámara lenta), «¡otra vez!».</li><li>Al principio, cada palabra va con su gesto, y tú lo haces al decirla.</li><li>Después, di la palabra y quédate sin moverte un segundo antes de hacerlo.</li><li>Si el hermano juega, usa las mismas cuatro palabras.</li></ol>
+      </div>
+      <blockquote><span class="rotulo">Tu línea</span> «¡Ya!…» (corren) «…¡para!» (todos quietos) «…¡otra vez!»</blockquote>
+      <div class="parte">
+        <p class="rotulo">Espera ver</p>
+        <p>Risa; al principio copia tu cuerpo; después se mueve por la palabra.</p>
+      </div>
+      <div class="parte funciono">
+        <p class="rotulo">Funcionó si</p>
+        <p>se queda quieto al oír «¡para!» antes que tú, o arranca con «¡ya!» mientras tú sigues sin moverte.</p>
+      </div>
+      <div class="parte si-no">
+        <p class="rotulo">Si no pasa</p>
+        <p>Demasiadas palabras, o cambiaron: quédate solo con «¡ya!» y «¡para!».</p>
+      </div>
+      <p class="fuente">Wetherby, 2014, Pediatrics · Carter, 2011, J Child Psychol Psychiatry</p>
+      <p class="origen solo-revision">Viene de (nueva): investigación · C-C8</p>
+    </article>
+  </section>
+
+  <footer>Hablemos San — el documento de la mamá: 56 fichas de actividad, generadas del contenido real el 2026-09-27.
+  Cada ficha cita la investigación que la respalda (autor, año y revista). Esto es juego en casa: acompaña, nunca reemplaza,
+  las terapias del niño.</footer>
+</main>
+<script>
+(function () {
+  // Modo revisión (?revision): casillas «Revisada» para el papá, guardadas aparte en su navegador.
+  if (!/[?&]revision/.test(location.search)) return;
+  document.body.classList.add("revision");
+  var CLAVE = "piramide-revision:";
+  var cajas = document.querySelectorAll("[data-revision]");
+  var contador = document.getElementById("revisadas");
+  function pintar() {
+    var n = 0;
+    cajas.forEach(function (c) { if (c.checked) n++; c.closest(".ficha").classList.toggle("lista", c.checked); });
+    contador.textContent = n;
+  }
+  cajas.forEach(function (c) {
+    try { c.checked = localStorage.getItem(CLAVE + c.dataset.revision) === "1"; } catch (e) {}
+    c.addEventListener("change", function () {
+      try { if (c.checked) localStorage.setItem(CLAVE + c.dataset.revision, "1"); else localStorage.removeItem(CLAVE + c.dataset.revision); } catch (e) {}
+      pintar();
+    });
+  });
+  pintar();
+})();
+</script>
+</body>
+</html>

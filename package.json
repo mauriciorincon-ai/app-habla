@@ -2,12 +2,15 @@
   "name": "app-habla",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "pnpm build:worklet && pnpm build:documentos && next dev",
     "build": "pnpm build:worklet && pnpm build:documentos && next build",
     "build:worklet": "tsc -p tsconfig.worklet.json",
     "build:documentos": "node scripts/copiar-documentos.mjs",
-    "gen:catalogo-mirada": "node scripts/gen-catalogo-contacto-visual.mjs",
+    "gen:piramide": "node scripts/gen-la-piramide.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
@@ -17,7 +20,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.65.0",
-    "next": "16.2.11",
+    "next": "16.3.6",
     "pino": "^10.3.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -32,15 +35,15 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9",
-    "eslint-config-next": "16.2.11",
+    "eslint-config-next": "16.3.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "fake-indexeddb": "^6.2.5",
     "jsdom": "^29.1.1",
     "prettier": "^3.9.5",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }

@@ -1,247 +1,176 @@
-import { readFileSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
-import { RegistroExportSchema } from "../../content/registro-contacto-visual";
+import { expect, test } from "@playwright/test";
+import { GRUPOS, GRUPOS_PRIORITARIOS } from "../../content/schema";
 
-// El documento de contacto visual de la mamá, servido en /mirada (Sprint 005). La fuente es
-// docs/CATALOGO-CONTACTO-VISUAL.html (generado de content/contacto-visual.ts); build:documentos
-// lo copia a public/mirada.html y el rewrite lo sirve sin ".html".
+// El documento de la mamá, «La pirámide, en casa», servido en /mirada (Sprint 006). La fuente es
+// docs/LA-PIRAMIDE.html (generado de content/fichas.ts); build:documentos lo copia a
+// public/mirada.html y el rewrite lo sirve sin ".html".
 //
-// Lo que esta suite protege: que la ruta EXISTA, que el REGISTRO funcione de punta a punta en
-// un teléfono (registrar → sobrevive a cerrar y volver → se envía como ejemplos → se guarda como
-// un JSON que cumple el contrato del repo) y que nada de eso rompa la accesibilidad.
+// Lo que esta suite protege: que la ruta EXISTA con su portada; que las fichas estén por los seis
+// grupos de la pirámide y cada una traiga sus seis partes en orden; que el REGISTRO del S5 ya no
+// exista (se retiró entero: ni formularios, ni «Enviar a papá», ni cuadrícula); que el modo
+// revisión sea solo para el papá; que nada desborde a lo ancho en el teléfono; y axe limpio.
 
-async function registrarPrimerMomento(page: Page, ejemplo = "hoy abrió los brazos en la pausa") {
-  const capsula = page.locator("article.capsula").first();
-  await capsula.getByRole("button", { name: "Registrar este momento" }).click();
-  const form = capsula.locator("form[data-registro]");
-  await expect(form).toBeVisible();
-  // A · lo que hice yo: tres respuestas.
-  await form.getByRole("group", { name: "Me puse a su altura y de frente" }).getByText("Lo hice").click();
-  await form.getByRole("group", { name: "Seguí lo que él eligió y esperé" }).getByText("A medias").click();
-  await form.getByRole("group", { name: "Hice la pausa o lo imité, sin pedirle nada" }).getByText("Lo hice").click();
-  // B · lo que vi en él: se marca, no se cuenta.
-  await form.getByText("Miró de mí al juguete y de vuelta").click();
-  await form.getByLabel(/Un ejemplo, si quieres/).fill(ejemplo);
-  // C · cómo estuvo él.
-  await form.getByText("A gusto", { exact: true }).click();
-  await form.getByRole("button", { name: "Guardar en este teléfono" }).click();
-  await expect(page.getByRole("status")).toContainText("Guardado en este teléfono");
-  return capsula;
-}
+const PARTES = [
+  "Ten a la mano",
+  "Haz",
+  "Tu línea",
+  "Espera ver",
+  "Funcionó si",
+  "Si no pasa",
+];
 
-test("la ruta /mirada sirve el documento con su encuadre y sus cápsulas", async ({ page }) => {
+test("la ruta /mirada sirve «La pirámide, en casa» con su portada", async ({
+  page,
+}) => {
   const respuesta = await page.goto("/mirada");
   expect(respuesta?.status()).toBe(200);
-  await expect(page.getByRole("heading", { name: "Mirarse jugando" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "La pirámide, en casa" }),
+  ).toBeVisible();
   await expect(page.getByText("Esto no es una prueba.")).toBeVisible();
   await expect(page.getByText("El único semáforo:")).toBeVisible();
-  expect(await page.locator("article.capsula").count()).toBeGreaterThan(0);
-  // El modo revisión (para el papá) NO se ve por defecto.
+  await expect(page.getByText("Lo que ya le gusta")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "La pirámide: un mapa, no una escalera",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Qué no hacer" }),
+  ).toBeVisible();
+  // El modo revisión (para el papá) NO se ve por defecto, ni la lista de lo que quedó fuera.
   await expect(page.getByText("Modo revisión")).toBeHidden();
+  await expect(page.getByText(/Quedaron fuera del documento/)).toBeHidden();
 });
 
-test("registrar un momento: falta algo → lo dice; completo → queda, y sobrevive a cerrar y volver", async ({ page }) => {
+test("las fichas van por los seis grupos, y el índice lleva a cada uno", async ({
+  page,
+}) => {
   await page.goto("/mirada");
-  const capsula = page.locator("article.capsula").first();
-  await capsula.getByRole("button", { name: "Registrar este momento" }).click();
-  await capsula.getByRole("button", { name: "Guardar en este teléfono" }).click();
-  await expect(capsula.getByRole("alert")).toBeVisible();
-  await capsula.getByRole("button", { name: "Ahora no" }).click();
-
-  await registrarPrimerMomento(page);
-  const panel = page.locator("[data-entradas]");
-  await expect(panel.locator("li")).toHaveCount(1);
-  await expect(panel).toContainText("Yo: me puse a su altura y de frente: lo hice");
-  await expect(panel).toContainText("Vi: miró de mí al juguete y de vuelta. «hoy abrió los brazos en la pausa»");
-  await expect(panel).toContainText("Él: a gusto.");
-
-  // Cerrar y volver: sigue ahí (localStorage del teléfono).
-  await page.reload();
-  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
-});
-
-test("«Guardar registro» descarga un JSON que cumple el contrato del repo", async ({ page }) => {
-  await page.goto("/mirada");
-  await registrarPrimerMomento(page, "señaló el avión");
-  const [descarga] = await Promise.all([
-    page.waitForEvent("download"),
-    page.getByRole("button", { name: "Guardar registro" }).click(),
-  ]);
-  expect(descarga.suggestedFilename()).toMatch(/^registro-mirada-\d{4}-\d{2}-\d{2}\.json$/);
-  const ruta = await descarga.path();
-  const archivo = JSON.parse(readFileSync(ruta!, "utf8"));
-  const r = RegistroExportSchema.safeParse(archivo);
-  expect(r.success, JSON.stringify(r.success ? null : r.error.issues)).toBe(true);
-  expect(archivo.entradas).toHaveLength(1);
-  expect(archivo.entradas[0].b.ejemplo).toBe("señaló el avión");
-  expect(archivo.entradas[0].a.seguiLoQueEligioYEspere).toBe("a-medias");
-});
-
-test("«Enviar a papá» arma ejemplos, no números, y usa el compartir del teléfono", async ({ page }) => {
-  await page.addInitScript(() => {
-    (window as unknown as { __compartido: unknown }).__compartido = null;
-    Object.defineProperty(navigator, "share", {
-      configurable: true,
-      value: (datos: unknown) => {
-        (window as unknown as { __compartido: unknown }).__compartido = datos;
-        return Promise.resolve();
-      },
-    });
-  });
-  await page.goto("/mirada");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).toContainText("Todavía no hay nada que enviar");
-
-  await registrarPrimerMomento(page, "me buscó la cara en la pausa");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  const compartido = await page.evaluate(
-    () => (window as unknown as { __compartido: { text: string } }).__compartido,
-  );
-  expect(compartido.text).toContain("Yo: me puse a su altura y de frente: lo hice");
-  expect(compartido.text).toContain("«me buscó la cara en la pausa»");
-  expect(compartido.text).toContain("Sin números a propósito");
-  // Ningún total: el texto no trae "N veces", "N de", ni porcentajes.
-  expect(compartido.text).not.toMatch(/\d+ (veces|de \d+)|%/);
-});
-
-function stubCompartir(page: Page, modo: "ok" | "cancela" | "falla") {
-  return page.addInitScript((modo) => {
-    const w = window as unknown as { __compartidos: { title: string; text: string }[] };
-    w.__compartidos = [];
-    Object.defineProperty(navigator, "share", {
-      configurable: true,
-      value: (datos: { title: string; text: string }) => {
-        if (modo === "cancela") return Promise.reject(Object.assign(new Error("cancelado"), { name: "AbortError" }));
-        if (modo === "falla") return Promise.reject(Object.assign(new Error("no se pudo"), { name: "NotAllowedError" }));
-        w.__compartidos.push(datos);
-        return Promise.resolve();
-      },
-    });
-  }, modo);
-}
-const compartidos = (page: Page) =>
-  page.evaluate(() => (window as unknown as { __compartidos: { title: string; text: string }[] }).__compartidos);
-
-test("«Enviar a papá» manda solo lo nuevo desde la última vez; «otra vez esta semana» lo repite todo", async ({ page }) => {
-  await stubCompartir(page, "ok");
-  await page.goto("/mirada");
-  await registrarPrimerMomento(page, "primer momento");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).toContainText("Enviado");
-  await expect(page.locator("[data-entradas] li").first()).toContainText("enviado");
-
-  // Nada nuevo → lo dice, sin mandar nada.
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).toContainText("Nada nuevo desde la última vez");
-  expect(await compartidos(page)).toHaveLength(1);
-
-  // Un segundo momento → el envío lleva solo ese.
-  await page.getByRole("button", { name: "Ahora no" }).count(); // el formulario ya está cerrado
-  await registrarPrimerMomento(page, "segundo momento");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).toContainText("Enviado");
-  const envios = await compartidos(page);
-  expect(envios).toHaveLength(2);
-  expect(envios[1].title).toContain("lo nuevo desde la última vez");
-  expect(envios[1].text).toContain("«segundo momento»");
-  expect(envios[1].text).not.toContain("«primer momento»");
-
-  // «Enviar otra vez esta semana» repite los dos.
-  await page.getByRole("button", { name: "Enviar otra vez esta semana" }).click();
-  const todos = await compartidos(page);
-  expect(todos).toHaveLength(3);
-  expect(todos[2].text).toContain("«primer momento»");
-  expect(todos[2].text).toContain("«segundo momento»");
-});
-
-test("si la mamá cancela el compartir, nada queda marcado como enviado", async ({ page }) => {
-  await stubCompartir(page, "cancela");
-  await page.goto("/mirada");
-  await registrarPrimerMomento(page, "no lo mandé");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.locator("[data-entradas] li").first()).not.toContainText("enviado");
-  // Sigue siendo «nuevo»: el próximo envío lo lleva.
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).not.toContainText("Nada nuevo");
-});
-
-test("si el compartir falla por otra cosa, cae al portapapeles y marca como enviado", async ({ page, context }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  await stubCompartir(page, "falla");
-  await page.goto("/mirada");
-  await registrarPrimerMomento(page, "por el portapapeles");
-  await page.getByRole("button", { name: "Enviar a papá" }).click();
-  await expect(page.getByRole("status")).toContainText("Copiado: pégalo en WhatsApp");
-  await expect(page.locator("[data-entradas] li").first()).toContainText("enviado");
-});
-
-test("las 50 cápsulas de habla están en el documento, por etapa, y también se registran", async ({ page }) => {
-  await page.goto("/mirada");
-  await expect(page.getByRole("heading", { name: /El habla: las 50 cápsulas/ })).toBeVisible();
-  expect(await page.locator("article.capsula").count()).toBe(74);
-  for (const etapa of ["sonidos-e-intentos", "palabras-sueltas", "primeras-frases"]) {
-    await expect(page.locator(`#habla-${etapa}`)).toBeAttached();
+  // Cada sección muestra exactamente las fichas que anuncia su título (que cada grupo TENGA fichas
+  // lo garantiza el schema de la biblioteca en el unit; aquí se prueba el cable dato → documento).
+  let total = 0;
+  for (const g of GRUPOS) {
+    const seccion = page.locator(`#grupo-${g}`);
+    await expect(seccion).toBeAttached();
+    const anunciadas = Number(
+      (await seccion.locator("h2 .conteo").textContent())?.match(/\d+/)?.[0],
+    );
+    const n = await seccion.locator("article.ficha").count();
+    expect(n, g).toBe(anunciadas);
+    total += n;
   }
-  await expect(page.locator("#habla-palabras-sueltas .chip-otra")).toHaveText("aquí está él");
-  // Las que usan el juego de voz lo dicen; ninguna cápsula de habla trae la cita (esa vive en el catálogo del papá).
-  expect(await page.locator("#habla-palabras-sueltas .chip-app").count()).toBeGreaterThan(0);
-  expect(await page.locator("#el-habla ~ section .fuente").count()).toBe(0);
-  // Registrar sobre una cápsula de habla usa el mismo formulario y el mismo registro.
-  const capsula = page.locator("#habla-palabras-sueltas article.capsula").first();
-  await capsula.getByRole("button", { name: "Registrar este momento" }).click();
-  const form = capsula.locator("form[data-registro]");
-  await form.getByRole("group", { name: "Me puse a su altura y de frente" }).getByText("Lo hice").click();
-  await form.getByRole("group", { name: "Seguí lo que él eligió y esperé" }).getByText("Lo hice").click();
-  await form.getByRole("group", { name: "Hice la pausa o lo imité, sin pedirle nada" }).getByText("A medias").click();
-  await form.getByText("Neutro", { exact: true }).click();
-  await form.getByRole("button", { name: "Guardar en este teléfono" }).click();
-  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
+  expect(total).toBe(await page.locator("article.ficha").count());
+  // Los grupos de prioridad ahora llevan la marca en su título, y solo ellos.
+  expect(await page.locator("section.grupo h2 .chip-prioridad").count()).toBe(
+    GRUPOS_PRIORITARIOS.length,
+  );
+  await page
+    .getByRole("navigation", { name: "Grupos de fichas" })
+    .getByRole("link", { name: /^Juego/ })
+    .click();
+  await expect(page).toHaveURL(/#grupo-juego$/);
 });
 
-test("una entrada rota en el teléfono no tumba el panel: se ignora, y exportar sigue funcionando", async ({ page }) => {
-  // Auditoría S5 (M1): antes, una entrada sin forma lanzaba al pintar el panel ANTES de conectar
-  // «Guardar registro» y «Borrar» — y dejaba el registro entero muerto, sin vía de rescate.
+test("cada ficha trae sus seis partes, en orden", async ({ page }) => {
   await page.goto("/mirada");
-  await registrarPrimerMomento(page);
-  await page.evaluate(() => {
-    const clave = "registro-mirada-v1";
-    const j = JSON.parse(localStorage.getItem(clave) ?? "{}");
-    j.entradas.push({}, { id: "rota", fecha: "2026-09-06" }, null);
-    localStorage.setItem(clave, JSON.stringify(j));
-  });
-  await page.reload();
-  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
-  const descarga = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Guardar registro" }).click();
-  const archivo = JSON.parse(readFileSync(await (await descarga).path(), "utf8"));
-  expect(RegistroExportSchema.safeParse(archivo).success).toBe(true);
-  expect(archivo.entradas).toHaveLength(1);
+  const fichas = page.locator("article.ficha");
+  const n = await fichas.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) {
+    const rotulos = await fichas.nth(i).locator(".rotulo").allTextContents();
+    expect(
+      rotulos.map((r) => r.trim()),
+      `ficha ${i}`,
+    ).toEqual(PARTES);
+    expect(
+      await fichas.nth(i).locator("ol li").count(),
+      `pasos de la ficha ${i}`,
+    ).toBeGreaterThanOrEqual(3);
+  }
 });
 
-test("borrar todo pide un segundo toque y deja el panel vacío", async ({ page }) => {
+test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula", async ({
+  page,
+}) => {
   await page.goto("/mirada");
-  await registrarPrimerMomento(page);
-  const borrar = page.getByRole("button", { name: /Borrar todos mis registros/ });
-  await borrar.click();
-  await expect(page.getByRole("button", { name: /¿Seguro\?/ })).toBeVisible();
-  await expect(page.locator("[data-entradas] li")).toHaveCount(1);
-  await page.getByRole("button", { name: /¿Seguro\?/ }).click();
-  await expect(page.locator("[data-entradas] li")).toHaveCount(0);
-  await expect(page.locator("[data-vacio]")).toBeVisible();
+  expect(await page.locator("form").count()).toBe(0);
+  expect(await page.locator("button").count()).toBe(0);
+  await expect(page.getByText("Enviar a papá")).toHaveCount(0);
+  await expect(page.getByText("Registrar este momento")).toHaveCount(0);
+  await expect(page.getByText("Mis registros")).toHaveCount(0);
+  await expect(page.getByText("Mi semana, a mano")).toHaveCount(0);
+  // Y el documento no escribe nada en el teléfono de la mamá.
+  expect(await page.evaluate(() => localStorage.length)).toBe(0);
 });
 
-test("?revision muestra las preguntas de juicio y la casilla por cápsula (solo para el papá)", async ({ page }) => {
+test("?revision muestra las preguntas de juicio, de dónde viene cada ficha y la casilla (solo para el papá)", async ({
+  page,
+}) => {
   await page.goto("/mirada?revision");
   await expect(page.getByText("Modo revisión")).toBeVisible();
-  const primera = page.locator("article.capsula").first().getByLabel("Revisada");
-  await primera.check();
+  // Lo que el mapa dejó fuera del documento, con su razón (sigue en la app).
+  await expect(page.getByText(/Quedaron fuera del documento/)).toBeVisible();
+  const primera = page.locator("article.ficha").first();
+  await expect(primera.locator(".origen")).toBeVisible();
+  await primera.getByLabel("Revisada").check();
   await expect(page.locator("#revisadas")).toHaveText("1");
+  await page.reload();
+  await expect(
+    page.locator("article.ficha").first().getByLabel("Revisada"),
+  ).toBeChecked();
 });
 
-test("axe: el documento no tiene violaciones de accesibilidad, con el registro abierto", async ({ page }) => {
+test("?revision no le cambia la cara al documento: misma letra, mismo tamaño, mismo flujo", async ({
+  page,
+}) => {
+  const estilo = () =>
+    page.evaluate(() => {
+      const b = getComputedStyle(document.body);
+      const p = getComputedStyle(
+        document.querySelector("article.ficha .funciono")!,
+      );
+      return {
+        fuente: b.fontFamily,
+        tamano: b.fontSize,
+        posicion: b.position,
+        color: p.color,
+        letra: p.fontSize,
+      };
+    });
+  await page.goto("/mirada");
+  const normal = await estilo();
   await page.goto("/mirada?revision");
-  await page.locator("article.capsula").first().getByRole("button", { name: "Registrar este momento" }).click();
-  const resultados = await new AxeBuilder({ page }).analyze();
-  expect(resultados.violations).toEqual([]);
+  await expect(page.getByText("Modo revisión")).toBeVisible();
+  expect(await estilo()).toEqual(normal);
+});
+
+test("nada desborda a lo ancho: ni el documento ni ninguna ficha", async ({
+  page,
+}) => {
+  await page.goto("/mirada");
+  const desbordes = await page.evaluate(() => {
+    const ancho = document.documentElement.clientWidth;
+    const fuera: string[] = [];
+    if (document.documentElement.scrollWidth > ancho) fuera.push("documento");
+    document
+      .querySelectorAll<HTMLElement>("article.ficha, header, nav, .aviso")
+      .forEach((el) => {
+        if (el.scrollWidth > el.clientWidth + 1)
+          fuera.push(el.id || el.className);
+      });
+    return fuera;
+  });
+  expect(desbordes).toEqual([]);
+});
+
+test("axe: el documento no tiene violaciones de accesibilidad, también en modo revisión", async ({
+  page,
+}) => {
+  for (const ruta of ["/mirada", "/mirada?revision"]) {
+    await page.goto(ruta);
+    const resultados = await new AxeBuilder({ page }).analyze();
+    expect(resultados.violations, ruta).toEqual([]);
+  }
 });

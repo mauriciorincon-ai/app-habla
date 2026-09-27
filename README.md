@@ -30,6 +30,8 @@ pnpm install          # instala y activa el hook de gitleaks (script `prepare`)
 pnpm dev              # compila el AudioWorklet y levanta el server en :3000
 ```
 
+Requiere **Node ≥ 22.18** (`engines` en `package.json`): los scripts `.mjs` importan `.ts` directamente.
+
 El micrófono requiere contexto seguro: `localhost` sirve, y en la tablet se prueba con la preview
 de Vercel (HTTPS).
 
@@ -42,6 +44,7 @@ de Vercel (HTTPS).
 | `pnpm test`                    | Vitest con cobertura (motores puros ≥80 %)                       |
 | `pnpm test:e2e`                | Playwright: happy path con **micrófono falso**, cero-red y axe   |
 | `pnpm typecheck` · `pnpm lint` | TS strict · ESLint (incluye la guardia de privacidad)            |
+| `pnpm gen:piramide`            | Regenera `docs/LA-PIRAMIDE.html` (el documento de la mamá, `/mirada`) desde `content/fichas.ts` |
 
 Regenerar fixtures (rara vez): `node scripts/gen-voz-sintetica.mjs` (el WAV que "habla" en los
 e2e) y `node scripts/gen-iconos.mjs` (iconos de la PWA).

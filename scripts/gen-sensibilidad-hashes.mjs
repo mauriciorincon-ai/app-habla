@@ -37,7 +37,7 @@ for (const cruda of lineas) {
 
 const salida = {
   _que_es:
-    "SHA-256 de cada término de la lista de sensibilidad de la planeadora (privada), normalizado: minúsculas, sin acentos, no-alfanumérico → espacio. El test compara los n-gramas (1–4 palabras) del contenido público contra este conjunto. Aquí no hay ningún término: solo sus huellas.",
+    "SHA-256 de cada término de la lista de sensibilidad de la planeadora (privada), normalizado: minúsculas, sin acentos, no-alfanumérico → espacio. El test compara los n-gramas (de 1 a n_max palabras) del contenido público contra este conjunto. Aquí no hay ningún término: solo sus huellas.",
   version: 1,
   generado: new Date().toISOString().slice(0, 10),
   n_max: N_MAX,

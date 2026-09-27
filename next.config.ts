@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   // (scripts/copiar-documentos.mjs) y servidos en URL limpia — el link que recibe la
   // familia no dice ".html":
   //   /conoce → el brochure (docs/BROCHURE.html)
-  //   /mirada → el documento de contacto visual de la mamá (docs/CATALOGO-CONTACTO-VISUAL.html)
+  //   /mirada → el documento de la mamá, «La pirámide, en casa» (docs/LA-PIRAMIDE.html)
   async rewrites() {
     return [
       { source: "/conoce", destination: "/conoce.html" },
