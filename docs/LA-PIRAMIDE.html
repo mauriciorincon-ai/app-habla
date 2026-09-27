@@ -26,9 +26,12 @@
     font: 17px/1.55 Georgia, "Times New Roman", serif; overflow-wrap: break-word; }
   main { max-width: 42rem; margin: 0 auto; }
   h1 { font-size: 2rem; line-height: 1.12; margin: .3rem 0 .6rem; }
-  h2 { font-size: 1.35rem; line-height: 1.25; margin: 2.6rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
+  h2 { font-size: 1.75rem; line-height: 1.2; margin: 2.8rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
     display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
   h3 { margin: .1rem 0 .4rem; font-size: 1.12rem; line-height: 1.3; }
+  /* El título de cada ficha manda: se ve dónde empieza una y dónde termina la otra. */
+  .ficha h3 { font-size: 1.45rem; line-height: 1.2; margin: .15rem 0 .55rem; text-wrap: balance; }
+  .ficha .grupo-ficha { color: var(--acento); }
   p { margin: .45rem 0; }
   .eyebrow { font: 600 .72rem/1.35 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
   .suave { color: var(--suave); }
@@ -57,7 +60,8 @@
   .chip-prioridad { background: var(--acento); color: var(--fondo); }
   .chip-hermano { background: var(--aviso-suave); color: var(--tinta); }
   .chip-paso { background: transparent; border: 1px dashed var(--acento); color: var(--acento); }
-  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: 1rem 0; position: relative; }
+  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-top: 6px solid var(--acento); border-radius: 16px;
+    padding: 1rem 1.1rem 1.1rem; margin: 2rem 0; position: relative; }
   .ficha.lista { opacity: .55; }
   .parte { margin: .7rem 0; }
   .parte ul, .parte ol { margin: .25rem 0 0; padding-left: 1.3rem; }
@@ -74,14 +78,14 @@
   .casilla-revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
   .solo-revision { display: none; }
   body.revision .solo-revision { display: block; }
-  body.revision .ficha h3 { margin-right: 6rem; }
+  body.revision .ficha h3, body.revision .ficha .grupo-ficha { margin-right: 6rem; }
   a:focus-visible, input:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
   footer { margin-top: 3rem; font-size: .8rem; color: var(--suave); border-top: 1px solid var(--borde); padding-top: 1rem; }
   @media (prefers-reduced-motion: no-preference) { .ficha { transition: opacity .2s; } }
   @media print {
     body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
     .solo-revision, .indice { display: none !important; }
-    .ficha { break-inside: avoid; border: 1px solid #999; background: #fff; }
+    .ficha { break-inside: avoid; border: 1px solid #999; border-top: 4px solid #000; background: #fff; margin: 1.2rem 0; }
     .grupo h2 { break-after: avoid; }
   }
 </style>
@@ -222,6 +226,7 @@
     
     <article class="ficha" id="dos-juguetes-iguales">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-juguetes-iguales" aria-label="Revisada: Dos iguales: tú lo copias a él"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Dos iguales: tú lo copias a él</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -256,6 +261,7 @@
     </article>
     <article class="ficha" id="el-prueba-si-lo-copias">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-prueba-si-lo-copias" aria-label="Revisada: Él prueba si lo copias"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Él prueba si lo copias</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -290,6 +296,7 @@
     </article>
     <article class="ficha" id="sigo-su-ritmo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sigo-su-ritmo" aria-label="Revisada: Sigo su ritmo: él golpea, yo golpeo"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Sigo su ritmo: él golpea, yo golpeo</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -324,6 +331,7 @@
     </article>
     <article class="ficha" id="una-estrofa-mas">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-estrofa-mas" aria-label="Revisada: Canción con gestos: una estrofa más cada semana"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Canción con gestos: una estrofa más cada semana</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -358,6 +366,7 @@
     </article>
     <article class="ficha" id="ahora-yo-ahora-tu">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ahora-yo-ahora-tu" aria-label="Revisada: Ahora yo, ahora tú: una acción nueva con el juguete"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Ahora yo, ahora tú: una acción nueva con el juguete</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -392,6 +401,7 @@
     </article>
     <article class="ficha" id="eco-de-voz">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="eco-de-voz" aria-label="Revisada: Eco de voz: le devuelves su sonido"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Eco de voz: le devuelves su sonido</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -426,6 +436,7 @@
     </article>
     <article class="ficha" id="marchar-con-algo-en-la-mano">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-algo-en-la-mano" aria-label="Revisada: Marchar con algo en la mano"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Marchar con algo en la mano</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -460,6 +471,7 @@
     </article>
     <article class="ficha" id="cosquillas-con-sonido">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-con-sonido" aria-label="Revisada: Cosquillas con sonido, sonido sin cosquillas"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Cosquillas con sonido, sonido sin cosquillas</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -494,6 +506,7 @@
     </article>
     <article class="ficha" id="gestos-que-dicen-algo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="gestos-que-dicen-algo" aria-label="Revisada: Gestos que dicen algo"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Gestos que dicen algo</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -528,6 +541,7 @@
     </article>
     <article class="ficha" id="sonidos-de-las-cosas">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="sonidos-de-las-cosas" aria-label="Revisada: Sonidos de las cosas: el avión hace «uuuh»"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Sonidos de las cosas: el avión hace «uuuh»</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -562,6 +576,7 @@
     </article>
     <article class="ficha" id="espejo-por-turnos">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espejo-por-turnos" aria-label="Revisada: Espejo por turnos: el ida y vuelta que dura"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Espejo por turnos: el ida y vuelta que dura</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -596,6 +611,7 @@
     </article>
     <article class="ficha" id="dos-pasos-y-lo-de-ayer">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-pasos-y-lo-de-ayer" aria-label="Revisada: Dos pasos, y lo de ayer"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Imitación</p>
       <h3>Dos pasos, y lo de ayer</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -637,6 +653,7 @@
     
     <article class="ficha" id="te-trae-el-otro-juguete">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="te-trae-el-otro-juguete" aria-label="Revisada: Te trae el otro juguete: arranca él"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>Te trae el otro juguete: arranca él</h3>
       <p class="chips">
         <span class="chip">Lo copio</span>
@@ -671,6 +688,7 @@
     </article>
     <article class="ficha" id="el-globo-en-la-boca">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-globo-en-la-boca" aria-label="Revisada: El globo en la boca: su mirada sube a tu cara"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>El globo en la boca: su mirada sube a tu cara</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -705,6 +723,7 @@
     </article>
     <article class="ficha" id="cucu-cuando-se-tapa-el">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cucu-cuando-se-tapa-el" aria-label="Revisada: Cucú: cuando se tapa él"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>Cucú: cuando se tapa él</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -739,6 +758,7 @@
     </article>
     <article class="ficha" id="se-lo-lleva-al-hermano">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="se-lo-lleva-al-hermano" aria-label="Revisada: Se lo lleva al hermano: arranca o muestra él"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>Se lo lleva al hermano: arranca o muestra él</h3>
       <p class="chips">
         <span class="chip">La misma rutina con otra persona</span>
@@ -773,6 +793,7 @@
     </article>
     <article class="ficha" id="comento-no-pregunto">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="comento-no-pregunto" aria-label="Revisada: Comento, no pregunto"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>Comento, no pregunto</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -807,6 +828,7 @@
     </article>
     <article class="ficha" id="lo-que-hace-contigo-tiene-nombre">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-hace-contigo-tiene-nombre" aria-label="Revisada: Lo que hace contigo tiene nombre"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>Lo que hace contigo tiene nombre</h3>
       <p class="chips">
         <span class="chip">La respuesta completa</span>
@@ -841,6 +863,7 @@
     </article>
     <article class="ficha" id="en-el-piso-con-su-juguete">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="en-el-piso-con-su-juguete" aria-label="Revisada: En el piso, con el juguete que él eligió"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Atención conjunta</p>
       <h3>En el piso, con el juguete que él eligió</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -882,6 +905,7 @@
     
     <article class="ficha" id="el-avion-cara-a-cara">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-avion-cara-a-cara" aria-label="Revisada: El avión, cara a cara"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>El avión, cara a cara</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -916,6 +940,7 @@
     </article>
     <article class="ficha" id="cosquillas-que-se-detienen">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-que-se-detienen" aria-label="Revisada: Cosquillas y «corre que te atrapo» que se detienen justo antes"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Cosquillas y «corre que te atrapo» que se detienen justo antes</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -950,6 +975,7 @@
     </article>
     <article class="ficha" id="me-meto-en-su-juguete">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="me-meto-en-su-juguete" aria-label="Revisada: Me meto en su juguete"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Me meto en su juguete</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -984,6 +1010,7 @@
     </article>
     <article class="ficha" id="alto-y-ya-con-el-carro">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="alto-y-ya-con-el-carro" aria-label="Revisada: «¡Alto!… ¡ya!»: el carro se detiene en tu mano"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>«¡Alto!… ¡ya!»: el carro se detiene en tu mano</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1018,6 +1045,7 @@
     </article>
     <article class="ficha" id="el-me-pasa-el-turno">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-me-pasa-el-turno" aria-label="Revisada: Él me pasa el turno"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Él me pasa el turno</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1052,6 +1080,7 @@
     </article>
     <article class="ficha" id="la-marcha-que-cambia">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-marcha-que-cambia" aria-label="Revisada: La marcha que cambia"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>La marcha que cambia</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1086,6 +1115,7 @@
     </article>
     <article class="ficha" id="cosquillas-al-reves">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="cosquillas-al-reves" aria-label="Revisada: Cosquillas al revés, con ida y vuelta"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Cosquillas al revés, con ida y vuelta</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1120,6 +1150,7 @@
     </article>
     <article class="ficha" id="corre-que-te-atrapo-con-base">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-base" aria-label="Revisada: Corre que te atrapo, con base"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Corre que te atrapo, con base</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1154,6 +1185,7 @@
     </article>
     <article class="ficha" id="el-carro-va-y-viene">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-carro-va-y-viene" aria-label="Revisada: El carro va y viene"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>El carro va y viene</h3>
       <p class="chips">
         <span class="chip">Un turno cada uno</span>
@@ -1188,6 +1220,7 @@
     </article>
     <article class="ficha" id="un-paso-mas">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="un-paso-mas" aria-label="Revisada: Un paso más: de meter a tapar, de apilar a tumbar"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Un paso más: de meter a tapar, de apilar a tumbar</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1222,6 +1255,7 @@
     </article>
     <article class="ficha" id="de-mentira-conmigo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-mentira-conmigo" aria-label="Revisada: De mentira, conmigo: la taza vacía"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>De mentira, conmigo: la taza vacía</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -1256,6 +1290,7 @@
     </article>
     <article class="ficha" id="lucha-suave-con-senal">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lucha-suave-con-senal" aria-label="Revisada: Lucha suave con señal de «¡ya!» y de «¡alto!»"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Lucha suave con señal de «¡ya!» y de «¡alto!»</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1290,6 +1325,7 @@
     </article>
     <article class="ficha" id="con-el-hermano-la-misma-rutina">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="con-el-hermano-la-misma-rutina" aria-label="Revisada: Con el hermano: la misma rutina, con las mismas palabras"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Juego</p>
       <h3>Con el hermano: la misma rutina, con las mismas palabras</h3>
       <p class="chips">
         <span class="chip">La misma rutina con otra persona</span>
@@ -1331,6 +1367,7 @@
     
     <article class="ficha" id="mama-senala-el-mundo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mama-senala-el-mundo" aria-label="Revisada: Mamá señala el mundo"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Señalar</p>
       <h3>Mamá señala el mundo</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1365,6 +1402,7 @@
     </article>
     <article class="ficha" id="la-respuesta-completa">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-respuesta-completa" aria-label="Revisada: La respuesta completa: cada vez que señala o dice «tú»"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Señalar</p>
       <h3>La respuesta completa: cada vez que señala o dice «tú»</h3>
       <p class="chips">
         <span class="chip">La respuesta completa</span>
@@ -1399,6 +1437,7 @@
     </article>
     <article class="ficha" id="mira-lo-que-traigo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="mira-lo-que-traigo" aria-label="Revisada: Mira lo que traigo: mostrar y dar"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Señalar</p>
       <h3>Mira lo que traigo: mostrar y dar</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1433,6 +1472,7 @@
     </article>
     <article class="ficha" id="la-sorpresa-en-la-ruta">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-sorpresa-en-la-ruta" aria-label="Revisada: La sorpresa en la ruta"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Señalar</p>
       <h3>La sorpresa en la ruta</h3>
       <p class="chips">
         <span class="chip">Algo que valga la pena mostrar</span>
@@ -1474,6 +1514,7 @@
     
     <article class="ficha" id="burbujas-y-espero">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="burbujas-y-espero" aria-label="Revisada: Burbujas: soplo, cierro el frasco y espero"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Burbujas: soplo, cierro el frasco y espero</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1508,6 +1549,7 @@
     </article>
     <article class="ficha" id="lo-dejo-a-medias">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-dejo-a-medias" aria-label="Revisada: Lo dejo a medias para que él lo traiga"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Lo dejo a medias para que él lo traiga</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1542,6 +1584,7 @@
     </article>
     <article class="ficha" id="una-media-puesta">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-media-puesta" aria-label="Revisada: Una media puesta, la otra en la mano"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Una media puesta, la otra en la mano</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1576,6 +1619,7 @@
     </article>
     <article class="ficha" id="de-a-poquitos">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="de-a-poquitos" aria-label="Revisada: De a poquitos: cada pedacito es un turno"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>De a poquitos: cada pedacito es un turno</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1610,6 +1654,7 @@
     </article>
     <article class="ficha" id="espera-con-cara-de-pregunta">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="espera-con-cara-de-pregunta" aria-label="Revisada: Espera con cara de pregunta"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Espera con cara de pregunta</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1644,6 +1689,7 @@
     </article>
     <article class="ficha" id="el-frasco-que-no-abre">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="el-frasco-que-no-abre" aria-label="Revisada: El frasco que no abre"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>El frasco que no abre</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1678,6 +1724,7 @@
     </article>
     <article class="ficha" id="marchar-con-tropiezo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="marchar-con-tropiezo" aria-label="Revisada: Marchar con tropiezo"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Marchar con tropiezo</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -1712,6 +1759,7 @@
     </article>
     <article class="ficha" id="dos-cosas-una-eleccion">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="dos-cosas-una-eleccion" aria-label="Revisada: Dos cosas, una elección"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Dos cosas, una elección</h3>
       <p class="chips">
         <span class="chip">Le doy a elegir</span>
@@ -1746,6 +1794,7 @@
     </article>
     <article class="ficha" id="chao-a-tres-silencio-al-cuarto">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="chao-a-tres-silencio-al-cuarto" aria-label="Revisada: «Chao» a tres, silencio al cuarto"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>«Chao» a tres, silencio al cuarto</h3>
       <p class="chips">
         <span class="chip">Espero en silencio</span>
@@ -1780,6 +1829,7 @@
     </article>
     <article class="ficha" id="lo-que-no-le-gusta">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-no-le-gusta" aria-label="Revisada: Lo que no le gusta: su «no» se escucha"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Intención comunicativa</p>
       <h3>Lo que no le gusta: su «no» se escucha</h3>
       <p class="chips">
         <span class="chip">Le doy a elegir</span>
@@ -1821,6 +1871,7 @@
     
     <article class="ficha" id="lo-que-el-mira-yo-lo-nombro">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="lo-que-el-mira-yo-lo-nombro" aria-label="Revisada: Lo que él mira, yo lo nombro, donde estemos"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Lo que él mira, yo lo nombro, donde estemos</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1855,6 +1906,7 @@
     </article>
     <article class="ficha" id="las-mismas-palabras">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="las-mismas-palabras" aria-label="Revisada: Las mismas palabras, en los mismos momentos"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Las mismas palabras, en los mismos momentos</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1889,6 +1941,7 @@
     </article>
     <article class="ficha" id="su-palabra-mas-una">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-palabra-mas-una" aria-label="Revisada: Su palabra, más una, sin corregir"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Su palabra, más una, sin corregir</h3>
       <p class="chips">
         <span class="chip">Su palabra, más una</span>
@@ -1923,6 +1976,7 @@
     </article>
     <article class="ficha" id="una-palabra-muchas-veces">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="una-palabra-muchas-veces" aria-label="Revisada: Una palabra o un sonido, muchas veces, en muchos lugares"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Una palabra o un sonido, muchas veces, en muchos lugares</h3>
       <p class="chips">
         <span class="chip">Nombro lo que él mira</span>
@@ -1957,6 +2011,7 @@
     </article>
     <article class="ficha" id="la-cancion-de-siempre-al-vestirlo">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-cancion-de-siempre-al-vestirlo" aria-label="Revisada: La canción de siempre, al vestirlo y en el baño"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>La canción de siempre, al vestirlo y en el baño</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -1991,6 +2046,7 @@
     </article>
     <article class="ficha" id="la-locion-despues-del-bano">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="la-locion-despues-del-bano" aria-label="Revisada: La loción después del baño"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>La loción después del baño</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>
@@ -2025,6 +2081,7 @@
     </article>
     <article class="ficha" id="su-cancion-con-hueco">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="su-cancion-con-hueco" aria-label="Revisada: Su canción, con un hueco antes de lo mejor"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Su canción, con un hueco antes de lo mejor</h3>
       <p class="chips">
         <span class="chip">Canto a su ritmo</span>
@@ -2059,6 +2116,7 @@
     </article>
     <article class="ficha" id="ponle-nombre-a-lo-que-siente">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="ponle-nombre-a-lo-que-siente" aria-label="Revisada: Ponle nombre a lo que siente"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Ponle nombre a lo que siente</h3>
       <p class="chips">
         <span class="chip">Su palabra, más una</span>
@@ -2093,6 +2151,7 @@
     </article>
     <article class="ficha" id="acciones-en-tres-palabras">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="acciones-en-tres-palabras" aria-label="Revisada: Acciones con objetos, en tres palabras"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Acciones con objetos, en tres palabras</h3>
       <p class="chips">
         <span class="chip">Ahora yo, ahora tú</span>
@@ -2127,6 +2186,7 @@
     </article>
     <article class="ficha" id="corre-que-te-atrapo-con-palabras">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="corre-que-te-atrapo-con-palabras" aria-label="Revisada: Corre que te atrapo, con palabras"> Revisada</label>
+      <p class="eyebrow grupo-ficha">Comprender</p>
       <h3>Corre que te atrapo, con palabras</h3>
       <p class="chips">
         <span class="chip">La pausa antes de lo mejor</span>

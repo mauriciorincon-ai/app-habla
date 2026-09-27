@@ -248,6 +248,15 @@ y el **importador del registro** desaparecen con el registro (feature retirada, 
 - El gate de sensibilidad cazó una **sílaba de balbuceo** que, normalizada, coincide con un término de
   la lista: los hashes no distinguen contexto; se cambió la sílaba.
 
+## Remate del mismo día (PR aparte, tras el merge — pedido del usuario al ver producción)
+
+«Cada cápsula debería tener el título más grande: no se identifica bien dónde empieza una y dónde
+termina otra.» El título de la ficha iba casi al tamaño del texto y el borde entre fichas apenas se
+veía. Ahora: título grande (≈1,4× el texto, siempre por debajo del título de su grupo), el grupo
+encima en pequeño, una franja arriba de cada ficha y el doble de aire entre una y otra. Un e2e mide
+esa jerarquía en las 56 (rojo contra el documento anterior); capturas en claro, oscuro, revisión e
+impresión leídas.
+
 ## Aprendizajes técnicos
 
 - `clave in objeto` mira el prototipo: para validar contra un mapa de datos, `hasOwnProperty`.
