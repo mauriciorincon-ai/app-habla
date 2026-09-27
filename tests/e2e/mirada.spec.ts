@@ -91,6 +91,46 @@ test("cada ficha trae sus seis partes, en orden", async ({ page }) => {
   }
 });
 
+test("se ve dónde empieza cada ficha: título grande, su grupo encima, franja arriba y aire entre una y otra", async ({
+  page,
+}) => {
+  // Pedido del usuario al ver producción: «no se identifica bien dónde empieza una y dónde termina otra».
+  await page.goto("/mirada");
+  const medida = await page.evaluate(() => {
+    const fichas = [...document.querySelectorAll("article.ficha")];
+    const px = (el: Element, prop: string) =>
+      parseFloat(getComputedStyle(el).getPropertyValue(prop));
+    const texto = px(
+      document.querySelector("article.ficha .parte p:not(.rotulo)")!,
+      "font-size",
+    );
+    const grupo = px(document.querySelector("section.grupo h2")!, "font-size");
+    return fichas.map((f) => ({
+      titulo: px(f.querySelector("h3")!, "font-size") / texto,
+      debajoDelGrupo: px(f.querySelector("h3")!, "font-size") < grupo,
+      grupoEncima:
+        f
+          .querySelector("h3")
+          ?.previousElementSibling?.classList.contains("grupo-ficha") ?? false,
+      franja: px(f, "border-top-width"),
+      aire: px(f, "margin-top"),
+    }));
+  });
+  for (const [i, m] of medida.entries()) {
+    expect(m.titulo, `título de la ficha ${i}`).toBeGreaterThanOrEqual(1.3);
+    expect(
+      m.debajoDelGrupo,
+      `la ficha ${i} no le gana al título del grupo`,
+    ).toBe(true);
+    expect(
+      m.grupoEncima,
+      `el grupo va encima del título en la ficha ${i}`,
+    ).toBe(true);
+    expect(m.franja, `franja de la ficha ${i}`).toBeGreaterThanOrEqual(4);
+    expect(m.aire, `aire antes de la ficha ${i}`).toBeGreaterThanOrEqual(24);
+  }
+});
+
 test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula", async ({
   page,
 }) => {

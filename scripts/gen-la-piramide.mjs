@@ -88,6 +88,7 @@ function fichaHtml(f) {
   return `
     <article class="ficha" id="${esc(f.id)}">
       <label class="casilla-revision solo-revision"><input type="checkbox" data-revision="${esc(f.id)}" aria-label="Revisada: ${esc(f.titulo)}"> Revisada</label>
+      <p class="eyebrow grupo-ficha">${esc(NOMBRE_GRUPO[f.grupo])}</p>
       <h3>${esc(f.titulo)}</h3>
       <p class="chips">
         <span class="chip">${esc(NOMBRE_TECNICA_FICHA[f.tecnica])}</span>
@@ -165,9 +166,12 @@ ${PALETA_CSS}
     font: 17px/1.55 Georgia, "Times New Roman", serif; overflow-wrap: break-word; }
   main { max-width: 42rem; margin: 0 auto; }
   h1 { font-size: 2rem; line-height: 1.12; margin: .3rem 0 .6rem; }
-  h2 { font-size: 1.35rem; line-height: 1.25; margin: 2.6rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
+  h2 { font-size: 1.75rem; line-height: 1.2; margin: 2.8rem 0 .5rem; padding-bottom: .35rem; border-bottom: 2px solid var(--borde);
     display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
   h3 { margin: .1rem 0 .4rem; font-size: 1.12rem; line-height: 1.3; }
+  /* El título de cada ficha manda: se ve dónde empieza una y dónde termina la otra. */
+  .ficha h3 { font-size: 1.45rem; line-height: 1.2; margin: .15rem 0 .55rem; text-wrap: balance; }
+  .ficha .grupo-ficha { color: var(--acento); }
   p { margin: .45rem 0; }
   .eyebrow { font: 600 .72rem/1.35 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin: 0; }
   .suave { color: var(--suave); }
@@ -196,7 +200,8 @@ ${PALETA_CSS}
   .chip-prioridad { background: var(--acento); color: var(--fondo); }
   .chip-hermano { background: var(--aviso-suave); color: var(--tinta); }
   .chip-paso { background: transparent; border: 1px dashed var(--acento); color: var(--acento); }
-  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 1rem 1.1rem 1.1rem; margin: 1rem 0; position: relative; }
+  .ficha { background: var(--superficie); border: 1px solid var(--borde); border-top: 6px solid var(--acento); border-radius: 16px;
+    padding: 1rem 1.1rem 1.1rem; margin: 2rem 0; position: relative; }
   .ficha.lista { opacity: .55; }
   .parte { margin: .7rem 0; }
   .parte ul, .parte ol { margin: .25rem 0 0; padding-left: 1.3rem; }
@@ -213,14 +218,14 @@ ${PALETA_CSS}
   .casilla-revision { position: absolute; top: .9rem; right: 1rem; font: .8rem system-ui, sans-serif; color: var(--suave); user-select: none; }
   .solo-revision { display: none; }
   body.revision .solo-revision { display: block; }
-  body.revision .ficha h3 { margin-right: 6rem; }
+  body.revision .ficha h3, body.revision .ficha .grupo-ficha { margin-right: 6rem; }
   a:focus-visible, input:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
   footer { margin-top: 3rem; font-size: .8rem; color: var(--suave); border-top: 1px solid var(--borde); padding-top: 1rem; }
   @media (prefers-reduced-motion: no-preference) { .ficha { transition: opacity .2s; } }
   @media print {
     body { padding: 0; font-size: 11pt; background: #fff; color: #000; }
     .solo-revision, .indice { display: none !important; }
-    .ficha { break-inside: avoid; border: 1px solid #999; background: #fff; }
+    .ficha { break-inside: avoid; border: 1px solid #999; border-top: 4px solid #000; background: #fff; margin: 1.2rem 0; }
     .grupo h2 { break-after: avoid; }
   }
 </style>
