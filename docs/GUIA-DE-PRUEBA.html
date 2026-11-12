@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s7 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s6 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
   .o-clave { color: var(--pendiente); border-color: var(--pendiente); background: var(--pendiente-suave); font-weight: 700; }
@@ -173,7 +174,8 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s6">Nuevo · S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s7">Nuevo · S7</span> Nació en este sprint (la app en español y English). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s6">S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s4">S4</span> Del Sprint 4, sin cambios. <span class="suave">Regresión: que el Rumbo y el Objetivo de la semana sigan.</span></li>
         <li><span class="origen o-mejora">Mejorado en S6</span> Venía de antes y <strong>un sprint posterior lo cambió</strong>; se hereda igual. <span class="suave">(Verás también “Mejorado en S4” y “Mejorado en S3”.)</span></li>
         <li><span class="origen o-s3">S3</span> Del Sprint 3, sin cambios. <span class="suave">Regresión: que la voz de la familia y las gemelas sigan.</span></li>
@@ -197,7 +199,8 @@
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
-        <button type="button" data-filtro="s6" aria-pressed="false">Solo lo nuevo del S6</button>
+        <button type="button" data-filtro="s7" aria-pressed="false">Solo lo nuevo del S7</button>
+        <button type="button" data-filtro="s6" aria-pressed="false">Solo lo del S6</button>
         <button type="button" data-filtro="s4" aria-pressed="false">Solo regresión del S4</button>
         <button type="button" data-filtro="mejora" aria-pressed="false">Solo lo mejorado</button>
         <button type="button" data-filtro="s3" aria-pressed="false">Solo regresión del S3</button>
@@ -225,13 +228,13 @@
       </div></li>
       <li data-origen="mejora"><input type="checkbox" id="v2-a2"><div>
         <label for="v2-a2">Con la casa en silencio normal, mira el <strong>“piso (mín. sesión)”</strong> durante unos segundos y <strong>anótalo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Un número pequeño y quieto, típicamente entre <strong>0,001 y 0,03</strong> — y <strong>0,0000 también es sano</strong>: es un MÍNIMO de toda la sesión, así que captura el instante más silencioso que tu micrófono entregue (hallazgo del gate S4). El juego NO usa este mínimo: calibra con 2 segundos y el percentil 75, con piso duro de 0,002.</p>
+        <p class="esperar"><span class="et">Esperado</span> Un número pequeño y quieto, normalmente entre <strong>0,001 y 0,03</strong> — y <strong>0,0000 también es sano</strong>: es un MÍNIMO de toda la sesión, así que captura el instante más silencioso que tu micrófono entregue (hallazgo del gate S4). El juego NO usa este mínimo: calibra con 2 segundos de silencio y un piso duro de 0,002.</p>
         <p class="mal"><span class="et">Mal</span> Un piso alto (&gt;0,05) en silencio: el micrófono está metiendo ruido y el juego va a costar.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-a3"><div>
         <label for="v2-a3">Haz un <strong>“aaaah” sostenido</strong> a unos 50 cm del computador. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> La barra sube <strong>en el instante</strong> en que empiezas (rms sube a ~0,1–0,5) y baja apenas te callas.</p>
-        <p class="mal"><span class="et">Mal</span> Un retraso que se siente entre tu voz y la barra (eso sería fatal para un niño de 4 años).</p>
+        <p class="mal"><span class="et">Mal</span> Un retraso que se siente entre tu voz y la barra (eso sería fatal para un niño pequeño).</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-a4"><div>
         <label for="v2-a4">Déjalo corriendo <strong>2–3 minutos</strong>, hablando de a ratos. <span class="origen o-s1">S1</span></label>
@@ -298,7 +301,7 @@
       <li data-origen="mejora"><input type="checkbox" id="v2-b3"><div>
         <label for="v2-b3">Lee <strong>la cápsula de hoy</strong> completa (es la tarjeta grande: la etiqueta, el título, la explicación, “Tu línea de hoy” y “La actividad de hoy”). <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> La línea la dirías <strong>tal cual</strong> en tu casa (sin jerga, sin culpa) y la actividad se puede hacer <strong>hoy</strong>, sin comprar nada. <strong>Visualmente</strong> (mejora del gate S4): “Tu línea de hoy” y “La actividad de hoy” son <strong>dos cajas hermanas</strong> con borde acentuado, cada una con su icono grande a la izquierda (burbuja de diálogo para lo que TÚ dices · dos figuras juntas para lo que HACEN) — la actividad ya NO se lee como una introducción al pie.</p>
-        <p class="mal"><span class="et">Mal</span> Suena a manual clínico, o te promete resultados (“en X semanas hablará”). Eso está prohibido en esta app.</p>
+        <p class="mal"><span class="et">Mal</span> Suena frío o técnico, o te promete resultados con un plazo. Eso está prohibido en esta app.</p>
       </div></li>
       <li data-origen="mejora"><input type="checkbox" id="v2-b4"><div>
         <label for="v2-b4">Abre <strong>“¿De dónde sale esto?”</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
@@ -337,8 +340,8 @@
     <ul class="pasos">
       <li data-origen="s2"><input type="checkbox" id="v2-c1"><div>
         <label for="v2-c1">Ve a <strong>Ajustes → “¿Cómo habla su hijo hoy?”</strong> y lee las tres etapas. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Describen <strong>lo que se ve en casa</strong>, no un diagnóstico (“Dice palabras de a una: agua, mamá, carro. Todavía no las junta — y no hace falta apurarlo”). <strong>“Palabras sueltas”</strong> aparece como <em>Elegida</em> y <em>Recomendada</em>. Dice claro: <strong>“Cambiarla no borra nada.”</strong></p>
-        <p class="mal"><span class="et">Mal</span> Jerga clínica, niveles con puntaje, o algo que suene a que él “va atrasado”.</p>
+        <p class="esperar"><span class="et">Esperado</span> Describen <strong>lo que se ve en casa</strong>, no una evaluación (“Dice palabras de a una: agua, mamá, carro. Todavía no las junta — y no hace falta apurarlo”). <strong>“Palabras sueltas”</strong> aparece como <em>Elegida</em> y <em>Recomendada</em>. Dice claro: <strong>“Cambiarla no borra nada.”</strong></p>
+        <p class="mal"><span class="et">Mal</span> Lenguaje técnico, niveles con número, o algo que lo compare con otros niños.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-c2"><div>
         <label for="v2-c2"><strong>La prueba clave.</strong> 1) Marca la cápsula de hoy como hecha. 2) Entra a <strong>Ajustes</strong> (el enlace del encabezado) → primera sección, <strong>“¿Cómo habla su hijo hoy?”</strong> → elige <strong>“Sonidos e intentos”</strong>. 3) Vuelve a “Hoy”. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
@@ -583,6 +586,16 @@
         <p class="esperar"><span class="et">Esperado</span> Tu elección <strong>le gana al sistema</strong> (con el computador en oscuro puedes ver la app clara) y <strong>sobrevive a la recarga sin parpadear</strong>. Con “El del sistema” vuelve a seguir a tu computador. Y pase lo que pase, <strong>los juegos del niño siguen claros SIEMPRE</strong>: su mundo no cambia de color según la hora.</p>
         <p class="mal"><span class="et">Mal</span> Al recargar parpadea del tema del sistema al tuyo · el juego del niño se pone oscuro.</p>
       </div></li>
+      <li data-origen="s7"><input type="checkbox" id="v7-h1"><div>
+        <label for="v7-h1">En <strong>Ajustes</strong>, busca <strong>“Idioma / Language”</strong> y toca <strong>English</strong>; luego recorre <strong>Hoy</strong>, <strong>Objetivo</strong>, <strong>Rumbo</strong> y <strong>Ajustes</strong>. <span class="origen o-s7">Nuevo · S7</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Todo cambia a inglés <strong>sin recargar</strong>; el botón elegido lleva una <strong>«✓»</strong> además del color; la cápsula del día es <strong>la misma</strong> que tenías en español. En Objetivo, una línea avisa que el alineador entiende palabras en español, y los chips de sugerencia escriben la palabra en español.</p>
+        <p class="mal"><span class="et">Mal</span> Queda texto en español a medias · la cápsula de hoy es otra · el cambio pide recargar.</p>
+      </div></li>
+      <li data-origen="s7"><input type="checkbox" id="v7-h2"><div>
+        <label for="v7-h2">Con English activo, abre los juegos y toca <strong>Words</strong> y <strong>Twins</strong>; después juega el <strong>globo</strong>. Vuelve a <strong>Español</strong> al terminar. <span class="origen o-s7">Nuevo · S7</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Words y Twins muestran una tarjeta honesta (esos juegos practican español) y <strong>no piden el micrófono</strong>; el globo juega igual que en español.</p>
+        <p class="mal"><span class="et">Mal</span> Esos dos juegos se abren con palabras del español sin avisar, o piden micrófono.</p>
+      </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-h7"><div>
         <label for="v2-h7"><strong>DE ÚLTIMO</strong>, cuando termines toda la guía: <strong>“Borrar mis datos”</strong> → confirma. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Vuelve al <strong>onboarding como el primer día</strong>: apodo, temas, progreso — todo se fue. Nada queda escondido.</p>
@@ -746,8 +759,8 @@
       </div></li>
       <li data-origen="s4"><input type="checkbox" id="v4-n4"><div>
         <label for="v4-n4"><strong>Lee TODO el texto</strong> de la pantalla del rumbo, despacio. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Cálido y honesto, y <strong>sin una sola palabra clínica</strong>: ni “puntaje”, ni “diagnóstico”, ni “nivel”, ni “%”, ni plazos. Solo lo que de verdad pasó.</p>
-        <p class="mal"><span class="et">Mal</span> Cualquier palabra de examen, nota o diagnóstico — incluso para decir que “no es” eso.</p>
+        <p class="esperar"><span class="et">Esperado</span> Cálido y honesto, y <strong>sin lenguaje técnico</strong>: ni números de nota, ni etiquetas, ni “%”, ni plazos. Solo lo que de verdad pasó.</p>
+        <p class="mal"><span class="et">Mal</span> Cualquier palabra de examen o de nota — incluso para decir que “no es” eso.</p>
       </div></li>
     </ul>
   </section>
@@ -896,7 +909,7 @@
       <li>Veredicto de la biblioteca <strong>por bloques</strong> (bloque I): qué sirve, qué cambiarías, qué rutina falta.</li>
       <li><strong>La voz de la familia:</strong> ¿se grabó TU voz y suena en los juegos? ¿la de tu hijo quedó fuera (nunca se graba)?</li>
       <li><strong>Palabras gemelas:</strong> ¿es claro que tú marcas y la app no juzga qué dijo?</li>
-      <li><strong>El rumbo (S4):</strong> ¿los números cuadran con lo que jugaron? ¿el texto se siente honesto y cálido, sin una sola palabra de nota o diagnóstico?</li>
+      <li><strong>El rumbo (S4):</strong> ¿los números cuadran con lo que jugaron? ¿el texto se siente honesto y cálido, sin una sola palabra de nota ni de evaluación?</li>
       <li><strong>El objetivo (S4):</strong> ¿escribir “animales” de verdad movió la cápsula de hoy, los dibujos y el lote? ¿“colores” lo dijo honesto (sin fingir)? ¿quitarlo dejó todo como antes?</li>
       <li>Cualquier <span class="et" style="color:var(--alerta)">Mal</span> que hayas visto, y cualquier cosa rara: pantalla rota, texto confuso, botón muerto.</li>
       <li>Veredicto de diseño: ¿aprobado visualmente, o qué cambiar?</li>
@@ -909,6 +922,9 @@
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
+<!-- s7:inicio -->
+    <p class="chica suave"><strong>Sprint 007 (2026-11-11) — apertura del H-2, «Habla en dos idiomas»:</strong> la app sigue al idioma del navegador y se cambia en <strong>Ajustes → Idioma / Language</strong>; Hoy, las 50 cápsulas, los juegos de voz, Estudio, Objetivo, Rumbo, Ajustes y <code>/conoce</code> existen en español y English. <strong>Nuevo:</strong> dos pruebas en el bloque H. <strong>Mejorado:</strong> Ajustes → «Qué mide» nombra el tono del cohete. <strong>Eliminado:</strong> nada. Toda prueba anterior se hereda como regresión en español.</p>
+<!-- s7:fin -->
 <!-- s6:inicio -->
     <p class="chica suave"><strong>Sprint 006 (2026-09-27) — segundo de H2, «La pirámide»:</strong> la app del niño <strong>no cambia</strong>. El documento de la mamá se rehace por los <strong>seis grupos de la pirámide</strong> (todos a la vez) con <strong>fichas de actividad</strong> en instrucción directa, y <strong>se retira el registro diario</strong>. <strong>Nuevo:</strong> bloque Q (Q2–Q5 y Q7, tu G-Contenido). <strong>Mejoradas:</strong> P1 → <strong>Q1</strong> (la portada nueva) y P7 → <strong>Q6</strong> (el modo revisión, ahora con el origen de cada ficha). <strong>Eliminadas — feature muerta, el registro</strong> (a la mamá no le resultó factible llevarlo, y no hubo registros; la señal de que algo sirvió vive ahora dentro de cada ficha): <strong>P2</strong> registrar un momento · <strong>P3</strong> cerrar y volver · <strong>P4</strong> “Enviar a papá” · <strong>P5</strong> “Guardar registro” · <strong>P8</strong> “Enviar otra vez esta semana”. <strong>Eliminadas por reemplazo del documento:</strong> <strong>P6</strong> (la cuadrícula impresa ya no existe; imprimir se prueba en Q5) y <strong>P9</strong> (la sección con las 50 de habla: sus cápsulas viven ahora como fichas dentro de su grupo, y las que necesitan pantalla siguen solo en la app). Gate mínimo del S6: <strong>6 pruebas</strong> (Q1–Q3, Q5–Q7), unos 10 minutos más la lectura del G-Contenido. <strong>Remate del mismo día</strong> (pedido del usuario al ver producción): el título de cada ficha, más grande, con su grupo encima, una franja arriba y aire entre fichas — lo dice Q2.</p>
 <!-- s6:fin -->
@@ -938,7 +954,7 @@
     <p class="chica suave">
     <strong>Bloque K (2026-08-03) — K1–K4 limpias · stopper en K5, rematado.</strong> La duda de K1 tiene respuesta de diseño, no de azar: el juego solo usa las palabras de <strong>tus temas</strong>, y el lote te propuso grabar <strong>exactamente esas primero</strong> — con 25 grabadas ya cubriste todas las del juego (por eso tampoco viste mudas en K2). El stopper de K5: llegar a las <strong>consignas</strong> exigía atravesar las 50 palabras — ahora <strong>cada grupo de “Con tu voz vas” tiene su propio botón “Grabar”</strong> que acota la tanda a ese grupo (el contador lo dice: “1 de 2 de esta tanda · Consignas del juego”), y <strong>“Lo que ya grabaste” se agrupa por los tres grupos</strong> con su conteo, numerado dentro de cada uno. El botón grande (“Grabar más”) sigue siendo el lote guiado de siempre. <strong>Mejoradas:</strong> J4, K5. K5 re-probada tras el remate: limpia (consignas grabadas por su puerta, altavoz con la voz del padre en globo y cohete, y la guarda del bucle intacta) — <strong>bloque K CERRADO</strong>.</p>
     <p class="chica suave">
-    <strong>Bloque L (2026-08-04) — stopper del usuario en L1: “el juego se siente simplón”.</strong> El diagnóstico: al marcar “Oí «pato»” <strong>no pasaba nada visible para el niño</strong> — la ronda solo avanzaba; y los dos botonezotes del juicio estaban en plena vista (bloque G: él es perspicaz). Remate con las piezas de la casa: gemelas ahora habla el idioma de palabra↔objeto — <strong>tocar un dibujo lo hace sonar con la voz del padre</strong> (la tarjeta es el botón, insignia de altavoz en la esquina; tocar JAMÁS marca), el juicio baja a la <strong>línea discreta “¿Cuál oíste?”</strong>, y al marcar <strong>el dibujo festeja</strong> (pop + halo + la palabra con tu voz + “¡Dijo «pato»!”) con <strong>“Siguiente pareja”</strong> en manos del padre y el contador honesto <strong>“Palabras que le oíste: N”</strong>. La celebración final y el registro de juicios no cambian. <strong>Mejoradas:</strong> L2, L6. Segundo hallazgo del usuario: <strong>la ronda no tenía puerta de salida</strong> (gemelas no usa el marco de los juegos de voz, que es quien trae el “Salir”) — ahora tiene su <strong>“Salir”</strong> arriba a la izquierda, que vuelve al guion y <strong>reinicia por completo</strong> (regla del bloque G). <strong>Nueva:</strong> L7. Tercer pedido del usuario: <strong>“si son pocas, necesitamos más”</strong> — las parejas pasaron de <strong>6 a 12</strong> (rana/lana, sol/sal, toro/loro, casa/cama, queso/beso, moto/mono — contrastes con valor terapéutico como la r/l; pictos ARASAAC revisados uno a uno, se descartaron “rama” y “piso” por débiles). Cada sesión sigue siendo de 6 rondas, pero ahora <strong>la mezcla cambia cada día</strong> (semilla por fecha, determinista — patrón de la cápsula diaria). Y la ampliación destapó un <strong>defecto real del motor</strong>: el barajador tenía un sesgo aritmético que desterraba al primer elemento de la lista en el 99,8 % de las semillas (“pato-gato” no habría salido JAMÁS) — se reemplazó por una mezcla uniforme, igual de determinista, y un test de cobertura garantiza que <strong>ninguna pareja queda huérfana</strong>. El banco de voz crece a <strong>58 palabras</strong> (8 nuevas por grabar).</p>
+    <strong>Bloque L (2026-08-04) — stopper del usuario en L1: “el juego se siente simplón”.</strong> La causa: al marcar “Oí «pato»” <strong>no pasaba nada visible para el niño</strong> — la ronda solo avanzaba; y los dos botonezotes del juicio estaban en plena vista (bloque G: él es perspicaz). Remate con las piezas de la casa: gemelas ahora habla el idioma de palabra↔objeto — <strong>tocar un dibujo lo hace sonar con la voz del padre</strong> (la tarjeta es el botón, insignia de altavoz en la esquina; tocar JAMÁS marca), el juicio baja a la <strong>línea discreta “¿Cuál oíste?”</strong>, y al marcar <strong>el dibujo festeja</strong> (pop + halo + la palabra con tu voz + “¡Dijo «pato»!”) con <strong>“Siguiente pareja”</strong> en manos del padre y el contador honesto <strong>“Palabras que le oíste: N”</strong>. La celebración final y el registro de juicios no cambian. <strong>Mejoradas:</strong> L2, L6. Segundo hallazgo del usuario: <strong>la ronda no tenía puerta de salida</strong> (gemelas no usa el marco de los juegos de voz, que es quien trae el “Salir”) — ahora tiene su <strong>“Salir”</strong> arriba a la izquierda, que vuelve al guion y <strong>reinicia por completo</strong> (regla del bloque G). <strong>Nueva:</strong> L7. Tercer pedido del usuario: <strong>“si son pocas, necesitamos más”</strong> — las parejas pasaron de <strong>6 a 12</strong> (rana/lana, sol/sal, toro/loro, casa/cama, queso/beso, moto/mono — contrastes con valor terapéutico como la r/l; pictos ARASAAC revisados uno a uno, se descartaron “rama” y “piso” por débiles). Cada sesión sigue siendo de 6 rondas, pero ahora <strong>la mezcla cambia cada día</strong> (semilla por fecha, determinista — patrón de la cápsula diaria). Y la ampliación destapó un <strong>defecto real del motor</strong>: el barajador tenía un sesgo aritmético que desterraba al primer elemento de la lista en el 99,8 % de las semillas (“pato-gato” no habría salido JAMÁS) — se reemplazó por una mezcla uniforme, igual de determinista, y un test de cobertura garantiza que <strong>ninguna pareja queda huérfana</strong>. El banco de voz crece a <strong>58 palabras</strong> (8 nuevas por grabar).</p>
     <p class="chica suave">
     <strong>Bloque L CERRADO (2026-08-04) — 7/7 limpias tras el rediseño.</strong> Y una alarma del usuario que resultó ser de microcopy, no de lógica: creyó que el contador de días de Hoy era una <strong>racha</strong> que se borraría al saltarse un día. Verificado en el código: es un <strong>acumulado de solo-crecer</strong> (`historial.length`) — no existe ninguna lógica de racha en la app; saltarse un día no borra nada. El culpable era el texto: decía “…lo que cuenta es volver, <em>no la racha</em>” — nombrar la racha (aunque fuera para negarla) sembraba la duda. Ahora dice <strong>“N días en total. Este número nunca baja: si un día no entran, no se pierde nada.”</strong>; el encabezado del Rumbo tenía la misma frase y recibió el mismo trato. <strong>Mejorada:</strong> la prueba del bloque B que cita ese contador.</p>
     <p class="chica suave">

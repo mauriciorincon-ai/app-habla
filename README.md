@@ -2,7 +2,7 @@
 
 > _"Su voz mueve el mundo."_
 
-App web (PWA) que ayuda a **estimular el habla de un niño de 4–6 años** mediante práctica diaria
+App web (PWA) que ayuda a **estimular el habla de un niño pequeño que apenas empieza a hablar** mediante práctica diaria
 en casa, **dirigida por el padre**. Complementaria — jamás sustituta — de la fonoaudiología real
 del niño.
 
@@ -27,7 +27,7 @@ Detalle completo en [`CLAUDE.md`](CLAUDE.md) y en [`decisions/`](decisions/).
 
 ```bash
 pnpm install          # instala y activa el hook de gitleaks (script `prepare`)
-pnpm dev              # compila el AudioWorklet y levanta el server en :3000
+pnpm dev              # compila el AudioWorklet y levanta el server en 127.0.0.1:3500
 ```
 
 Requiere **Node ≥ 22.18** (`engines` en `package.json`): los scripts `.mjs` importan `.ts` directamente.

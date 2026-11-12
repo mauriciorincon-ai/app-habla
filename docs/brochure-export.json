@@ -11,27 +11,23 @@
     "metricas[].fuente": "Una de cuatro: \"medido\" (salió de un contador o un comando), \"calculada\" (medido operado con una tarifa o una regla, y se dice cuál), \"declarado\" (lo fijó una persona), \"estimacion\" (deducido). Una cifra sin fuente no entra.",
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
-
   "schema_version": "1.0.0",
-  "actualizado": "2026-08-21",
-
+  "actualizado": "2026-10-27",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
-    "ciclo": "H1",
+    "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 4,
+    "sprints_cerrados": 6,
     "version_repo": "0.1.0"
   },
-
   "promesa": {
-    "tagline": "Su voz mueve el mundo.",
-    "intro": "Juegos que se juegan hablando — y se juegan contigo. Y cada día, una respuesta concreta a la pregunta que más pesa: «¿y hoy qué puedo hacer por mi hijo?».",
-    "para_quien": "Para el papá o la mamá de un niño de 4 a 6 años que está aprendiendo a hablar y ya va a sus terapias del lenguaje. Es la práctica de casa entre sesión y sesión: acompaña, jamás reemplaza. Se juega de a dos — no existe un «modo niño solo», a propósito.",
-    "diferencial": "La honestidad es la mecánica, no la promesa: la app solo afirma lo que de verdad midió —hubo voz, duró tanto, el tono subió— y jamás finge reconocer la palabra; quien juzga el acierto es el padre. Ninguna tecnología evalúa hoy con fiabilidad la pronunciación de un niño de 4 a 6 años en español, y esta app no lo simula. Encima de eso, dos cosas que no se ven en apps de habla: los juegos suenan con la voz de la propia familia, grabada en el aparato, y la voz del niño no se graba nunca — hay pruebas automáticas que hacen fallar el código si alguien intenta guardarla o enviarla."
+    "tagline": "Su voz mueve el mundo: tu hijo juega hablando y tú diriges a su lado.",
+    "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y cuatro juegos que se juegan hablando, donde su voz hace volar un globo, sube un cohete y enciende dibujos.",
+    "para_quien": "Para la mamá o el papá de un niño de 4 a 6 años que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
+    "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. Nunca finge reconocer la palabra: el acierto lo juzgas tú, que estabas ahí. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
-
   "funcionalidades": {
     "total": 24,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
@@ -40,19 +36,19 @@
       {
         "orden": 1,
         "estrella": true,
-        "nombre": "La respuesta de cada día",
-        "linea": "Cada mañana, una idea lista: qué decirle hoy y qué hacer con él.",
+        "nombre": "Una respuesta para cada día",
+        "linea": "Cada mañana sabes qué decirle y qué hacer con él: una idea con respaldo, lista en 30 segundos.",
         "features": [
           {
             "id": "01",
-            "nombre": "La cápsula del día",
-            "que_hace": "Cada día trae una sola idea de práctica, con el guion de qué decirle y la actividad para hacerla. La elige un motor determinista por fecha sobre una biblioteca de 50 cápsulas, sin repetir hasta agotarlas, y cada una cita la técnica de estimulación del lenguaje en la que se apoya. Sin IA y sin internet.",
+            "nombre": "La idea del día",
+            "que_hace": "Cada día recibes una idea de práctica lista para usar: la frase que puedes decirle y la actividad para hacer juntos. Sale de una biblioteca de 50 y no se repite hasta agotarlas. Cada idea cita el estudio que la respalda.",
             "seccion_manual": "La pantalla \"Hoy\""
           },
           {
             "id": "02",
-            "nombre": "«Sí, ya lo hicimos» — los días que llevan",
-            "que_hace": "Un botón sella el día practicado y lleva la cuenta de días distintos, no de clics. La cápsula del día queda fija aunque la pestaña quede abierta y cruce la medianoche.",
+            "nombre": "«Sí, ya lo hicimos»: los días que suman",
+            "que_hace": "Ves cuántos días han practicado juntos, en una cuenta que nunca baja. Un toque marca el día como hecho. Si un día no alcanzan, no pierden nada: aquí no hay rachas ni castigos, lo que cuenta es volver.",
             "seccion_manual": "La pantalla \"Hoy\""
           }
         ]
@@ -60,37 +56,37 @@
       {
         "orden": 2,
         "estrella": false,
-        "nombre": "Jugar con la voz",
-        "linea": "Cuatro juegos donde su voz es el control — y tú diriges.",
+        "nombre": "Cuatro juegos que se juegan hablando",
+        "linea": "Su voz hace que algo pase en la pantalla, con un adulto que dirige al lado. Ninguno le exige palabras.",
         "features": [
           {
             "id": "03",
-            "nombre": "Antes de jugar, tu guion",
-            "que_hace": "Cada juego arranca con lo que el adulto dice y hace primero: la pantalla es utilería del juego compartido, nunca la niñera. Después mide el ruido de la casa durante dos segundos, para que el umbral de voz sea el de esa sala y no uno de laboratorio.",
+            "nombre": "Tu guion, antes de jugar",
+            "que_hace": "Sabes qué decir antes de empezar: cada juego abre con tu frase y una nota para dirigirlo, porque tú guías y la pantalla acompaña. En los juegos que escuchan, la app mide dos segundos el ruido de tu casa para no confundirlo con su voz.",
             "seccion_manual": "Los juegos de voz (marco de co-uso)"
           },
           {
             "id": "04",
-            "nombre": "El globo — la voz que se sostiene",
-            "que_hace": "El globo sube mientras la voz se mantiene por encima del ruido de fondo, con dos umbrales para que no parpadee cuando la voz fluctúa. Al final dice el dato real: cuántos segundos se sostuvo.",
+            "nombre": "El globo: la voz que se sostiene",
+            "que_hace": "Tu hijo ve volar un globo mientras sostiene la voz, y cada tres segundos de voz el globo da una vuelta con confeti. Al terminar, la app dice el dato real: cuántos segundos sonó su voz y cuánto duró su tramo más largo.",
             "seccion_manual": "Los juegos de voz § 1"
           },
           {
             "id": "05",
-            "nombre": "El cohete — la voz que sube y baja",
-            "que_hace": "El cohete sigue el tono: sube cuando la voz se hace aguda y baja cuando se hace grave, medido en el aparato con detección de tono. Juega con la entonación, no con las palabras.",
+            "nombre": "El cohete: la voz que sube y baja",
+            "que_hace": "Tu hijo juega con la entonación: el cohete sube cuando su voz se hace aguda y baja cuando se hace grave. Cada vez que la voz sube y baja de verdad, estalla un confeti. La app cuenta cuántas veces pasó, sin pedirle una sola palabra.",
             "seccion_manual": "Los juegos de voz § 2"
           },
           {
             "id": "06",
             "nombre": "Palabra y dibujo",
-            "que_hace": "Se muestra un objeto y su palabra; cualquier sonido del niño enciende el dibujo. Nunca afirma que la palabra estuvo bien — enciende porque hubo voz, y así lo dice.",
+            "que_hace": "Un dibujo grande con su palabra escrita se enciende con cualquier sonido de tu hijo: un intento, un balbuceo, una sílaba. Si dijo la palabra, eres tú quien lo marca con un toque, y entonces sube una bandada de globos.",
             "seccion_manual": "Los juegos de voz § 3"
           },
           {
             "id": "07",
             "nombre": "Palabras gemelas",
-            "que_hace": "Dos objetos que suenan parecido, en rondas: el adulto pide uno, el niño lo intenta y el adulto marca. El acierto lo juzga la persona, no la máquina.",
+            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego no usa el micrófono: quien escucha eres tú.",
             "seccion_manual": "Los juegos de voz § 4"
           }
         ]
@@ -98,31 +94,31 @@
       {
         "orden": 3,
         "estrella": false,
-        "nombre": "Tu voz dentro de la app",
-        "linea": "Grabas «perro» una vez — y los juegos hablan con tu voz.",
+        "nombre": "Los juegos suenan con tu voz",
+        "linea": "Grabas «perro» una vez y los juegos le hablan con la voz que él conoce: la tuya.",
         "features": [
           {
             "id": "08",
-            "nombre": "El Estudio: grabar, oír, guardar",
-            "que_hace": "Un espacio para que el adulto grabe las palabras de los juegos con su propia voz, escuche antes de guardar y repita si no quedó. Las grabaciones viven solo en ese aparato.",
+            "nombre": "El Estudio: graba, escucha, guarda",
+            "que_hace": "Grabas las palabras de los juegos con tu propia voz, una por una, y las escuchas antes de guardarlas o repetirlas. Una barra se mueve con tu voz mientras grabas, para que nunca grabes a ciegas. Las grabaciones viven solo en ese aparato.",
             "seccion_manual": "La voz de la familia"
           },
           {
             "id": "09",
-            "nombre": "Ve directo a lo que quieras grabar",
-            "que_hace": "Desde cada juego se llega al Estudio con la palabra exacta ya seleccionada, sin buscarla en la lista.",
+            "nombre": "Directo a lo que quieres grabar",
+            "que_hace": "Ves cuánto llevas grabado en cada grupo (palabras, consignas del juego y celebraciones) y vas directo al que quieras con su propio botón. Si prefieres, un recorrido guiado te propone primero lo que más le sirve a tu hijo.",
             "seccion_manual": "La voz de la familia (\"Con tu voz vas\")"
           },
           {
             "id": "10",
             "nombre": "Lo que ya grabaste",
-            "que_hace": "El inventario del banco de voz: qué palabras tienen voz de la familia, cuáles faltan, y borrar o regrabar cualquiera.",
+            "que_hace": "Tienes a la vista todo tu banco de voz, ordenado por grupos y numerado, para escuchar cada grabación o borrarla. Borrar pide un segundo toque, para que un dedo apurado no se lleve nada sin querer.",
             "seccion_manual": "La voz de la familia"
           },
           {
             "id": "11",
-            "nombre": "Tu voz suena en los juegos (+ el interruptor)",
-            "que_hace": "Cuando una palabra tiene grabación de la familia, los juegos la usan en lugar de la voz del sistema; un interruptor devuelve la voz sintética cuando se quiera.",
+            "nombre": "Tu voz dentro de cada juego",
+            "que_hace": "Cuando una palabra o una consigna tiene tu grabación, los juegos la dicen con tu voz y aparece un altavoz que tu hijo puede tocar. Un interruptor en Ajustes la apaga sin borrar nada.",
             "seccion_manual": "La voz de la familia"
           }
         ]
@@ -131,24 +127,24 @@
         "orden": 4,
         "estrella": false,
         "nombre": "El objetivo de la semana",
-        "linea": "Lo que pidieron en sus terapias, puesto primero en todo.",
+        "linea": "Lo que le pidieron trabajar en sus terapias pasa al frente en las ideas, los dibujos y lo que grabas.",
         "features": [
           {
             "id": "12",
             "nombre": "Escríbelo y la app se alinea",
-            "que_hace": "Se escribe lo que la terapeuta pidió trabajar esta semana y la app pone primero el contenido que se alinea con eso, en los juegos y en las cápsulas.",
+            "que_hace": "Escribes lo que le pidieron trabajar esta semana, como «animales», y la app lo pone primero en la idea del día, en los dibujos y en lo que te toca grabar. Antes de guardar, te dice cuánto contenido encontró.",
             "seccion_manual": "El objetivo de la semana"
           },
           {
             "id": "13",
-            "nombre": "Mientras escribes, te acompaña (sugerencias + ortografía)",
-            "que_hace": "Al escribir sugiere términos que la app sabe alinear, y corrige ortografía contra un diccionario embebido de 10 000 palabras del español, distinguiendo por color lo que alinea juegos de lo que solo es una palabra bien escrita. Motor puro en el aparato: sin IA y sin red.",
+            "nombre": "Te ayuda a escribirlo bien",
+            "que_hace": "Mientras escribes, la app te sugiere los temas que sabe alinear y revisa la ortografía con un diccionario de 10 000 palabras del español que viaja dentro del aparato. Si guardas una palabra mal escrita, primero te pregunta qué quisiste decir.",
             "seccion_manual": "El objetivo de la semana"
           },
           {
             "id": "14",
-            "nombre": "La tarjeta te dice el estado — 3 señales",
-            "que_hace": "El objetivo muestra si está alineado, parcialmente alineado o sin alineación, con tres señales que se distinguen por forma y texto, no solo por color.",
+            "nombre": "El estado del objetivo, de un vistazo",
+            "que_hace": "La tarjeta del objetivo te dice si los juegos de tu hijo van a cambiar, si algo necesita tu atención o si aún no hay contenido de ese tema. Cada estado lleva color, ícono y palabras, para que se entienda sin depender del color.",
             "seccion_manual": "El objetivo de la semana"
           }
         ]
@@ -156,19 +152,19 @@
       {
         "orden": 5,
         "estrella": false,
-        "nombre": "El rumbo",
-        "linea": "Cómo van, semana a semana — sin notas y sin drama.",
+        "nombre": "Cómo van, semana a semana",
+        "linea": "Lo que de verdad pasó, sin notas, sin puntajes y sin compararlo con otros niños.",
         "features": [
           {
             "id": "15",
-            "nombre": "Tendencias de lo que de verdad pasó",
-            "que_hace": "Muestra la tendencia de lo que la app midió y de lo que el adulto marcó, sin puntajes clínicos ni comparaciones con otros niños. Si no hay datos suficientes, lo dice en vez de inventar una línea.",
+            "nombre": "Lo que de verdad pasó, por semana",
+            "que_hace": "Ves, semana a semana, los días que practicaron, las palabras que trabajaron y los segundos de voz en el globo, solo con lo que la app midió o tú marcaste. Sin notas, sin puntajes y sin compararlo con otros niños.",
             "seccion_manual": "El rumbo"
           },
           {
             "id": "16",
-            "nombre": "16 hitos que no se pierden",
-            "que_hace": "Dieciséis momentos que quedan registrados con su fecha —el primer día, la primera palabra que el adulto le oyó, la voz más larga, los umbrales de constancia— calculados de forma determinista sobre el historial local.",
+            "nombre": "Dieciséis logros para celebrar",
+            "que_hace": "Celebras dieciséis logros con su fecha, desde su primer rato de práctica juntos hasta la primera palabra que tú le oíste o los 25 días de práctica. Una vez ganados, se quedan: ninguno se pierde.",
             "seccion_manual": "El rumbo"
           }
         ]
@@ -176,43 +172,43 @@
       {
         "orden": 6,
         "estrella": false,
-        "nombre": "A su medida",
-        "linea": "Temas, etapa, calma: la app se ajusta a él, no al revés.",
+        "nombre": "Hecha a su medida",
+        "linea": "Sus temas, su etapa y su ritmo: la app se ajusta a tu hijo, no al revés.",
         "features": [
           {
             "id": "17",
-            "nombre": "Apodo y temas",
-            "que_hace": "El apodo con el que la app le habla y los temas que le interesan, para que el contenido llegue por donde él ya mira.",
+            "nombre": "Su apodo y sus temas favoritos",
+            "que_hace": "Eliges hasta tres temas que le encantan a tu hijo, como animales o el mar, y los dibujos de «Palabra y dibujo» salen de ahí. El apodo y los temas se cambian en Ajustes sin borrar nada del progreso.",
             "seccion_manual": "Primeros pasos"
           },
           {
             "id": "18",
-            "nombre": "La etapa del habla",
-            "que_hace": "La app nace calibrada a palabras sueltas —la etapa real del niño— y ese es su nivel por defecto permanente: ningún juego exige palabras, todos miden voz.",
+            "nombre": "Su etapa del habla",
+            "que_hace": "Eliges en qué etapa está hoy tu hijo (sonidos e intentos, palabras sueltas o primeras frases) y la idea del día se ajusta a eso. Ningún juego le exige palabras, y cambiar de etapa no borra nada.",
             "seccion_manual": "La etapa del habla"
           },
           {
             "id": "19",
             "nombre": "Modo calma",
-            "que_hace": "Un solo toque baja la carga sensorial de toda la app cuando el momento lo pide.",
+            "que_hace": "Cuando el momento pesa, un toque baja la pantalla a colores de atardecer, sin medidor, sin meta y sin celebración automática. El globo y el cohete solo flotan con su voz, sin carrera ni llegada.",
             "seccion_manual": "Modo calma"
           },
           {
             "id": "20",
-            "nombre": "Reducir animaciones",
-            "que_hace": "Quita el movimiento de la interfaz, y respeta también la preferencia del sistema sin que nadie tenga que configurarlo.",
+            "nombre": "Menos movimiento en pantalla",
+            "que_hace": "Con un ajuste quitas el confeti, los globos y el cielo que pasa, y el texto sigue contando cada logro. Si el aparato ya pide menos movimiento, la app lo respeta sin que toques nada.",
             "seccion_manual": "Modo calma"
           },
           {
             "id": "21",
-            "nombre": "Claro u oscuro",
-            "que_hace": "Los dos temas visuales, cada uno diseñado aparte para que el contraste y los colores funcionen en ambos.",
+            "nombre": "Claro u oscuro, para ti",
+            "que_hace": "Tu pantalla puede seguir al aparato o quedarse fija en claro u oscuro, algo útil de noche al lado de tu hijo. La pantalla del niño es clara siempre, para que su juego se vea igual todos los días.",
             "seccion_manual": "Claro u oscuro"
           },
           {
             "id": "22",
-            "nombre": "Instálala como app — y sin internet",
-            "que_hace": "Se instala en la tablet o el teléfono, abre a pantalla completa y funciona sin conexión: todo el contenido viaja dentro.",
+            "nombre": "Se instala y funciona sin internet",
+            "que_hace": "La instalas en la tablet o el teléfono como una app más y abre a pantalla completa. Después de abrirla una vez funciona sin conexión, porque todo el contenido, dibujos incluidos, viaja dentro del aparato.",
             "seccion_manual": "Primeros pasos + FAQ"
           }
         ]
@@ -220,13 +216,13 @@
       {
         "orden": 7,
         "estrella": false,
-        "nombre": "La promesa mayor",
-        "linea": "Lo que pasa adentro, muere adentro.",
+        "nombre": "Su voz no sale del aparato",
+        "linea": "Se analiza en el momento y se descarta: no se graba, no se guarda y no viaja a ningún lado.",
         "features": [
           {
             "id": "23",
             "nombre": "Qué pasa con la voz de tu hijo",
-            "que_hace": "El sonido se analiza en el momento y dentro del aparato —energía y, en el cohete, tono— y se descarta enseguida: no se graba, no se guarda, no sale. No hay servidores, cuentas ni nube; la cámara no se usa nunca; durante el juego no hay ninguna petición a internet. Pruebas automáticas permanentes hacen fallar el código si alguien intentara guardar o enviar audio, y todo se borra desde Ajustes cuando se quiera.",
+            "que_hace": "La voz de tu hijo se analiza dentro del aparato, en el momento, y se descarta enseguida: no se graba ni se envía. No hay cuentas, ni nube, ni cámara. Pruebas automáticas rompen el código si alguien intenta guardar o enviar su audio.",
             "seccion_manual": "Privacidad"
           }
         ]
@@ -234,20 +230,19 @@
       {
         "orden": 8,
         "estrella": false,
-        "nombre": "Lo fino",
-        "linea": "Lo que falta, por si lo pides.",
+        "nombre": "Honesta con lo que mide",
+        "linea": "Dice en pantalla qué mide y qué no, y nunca felicita por felicitar.",
         "features": [
           {
             "id": "24",
-            "nombre": "Qué mide — y qué no va a fingir que mide",
-            "que_hace": "La app declara en pantalla su propio alcance: mide si hay voz, cuánto se sostiene y si el tono sube o baja; no mide qué palabra dijo ni si la pronunció bien, y no lo finge. Quien juzga el acierto es el padre — aquí nadie felicita por felicitar.",
+            "nombre": "Qué mide y qué no va a fingir",
+            "que_hace": "Sabes siempre qué hay detrás de cada celebración: la app mide si hubo voz, cuánto duró y si el tono subió o bajó. No sabe qué palabra dijo ni si la pronunció bien, y lo dice en pantalla. El acierto lo juzgas tú.",
             "seccion_manual": "Qué mide y qué NO mide"
           }
         ]
       }
     ]
   },
-
   "metricas": [
     {
       "clave": "funcionalidades",
@@ -255,7 +250,7 @@
       "valor": 24,
       "unidad": "funcionalidades",
       "fuente": "medido",
-      "detalle": "Contadas contra docs/MANUAL-DE-USO.md, con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. Nada se construyó y se retiró: descartadas[] va vacío."
+      "detalle": "Contadas contra docs/MANUAL-DE-USO.md, con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
     },
     {
       "clave": "pantallas",
@@ -263,23 +258,23 @@
       "valor": 10,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (11 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. La ruta /conoce sirve este brochure por reescritura y tampoco es una pantalla."
+      "detalle": "Archivos page.tsx bajo src/app/ (11 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Verificado el 2026-10-27 sobre 6c4d113."
     },
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 261,
+      "valor": 359,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` el 2026-08-21: 20 archivos, 261 pruebas."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura, --maxWorkers=2) el 2026-10-27 sobre 6c4d113: 23 archivos, 359 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 169,
+      "valor": 187,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` el 2026-08-21 (Playwright con micrófono falso: WAV sintético inyectado como dispositivo de captura)."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, --workers=1, contra el build de producción) el 2026-10-27 sobre 6c4d113: 187 pruebas en verde en sus tres proyectos (móvil, escritorio y escritorio con voz que canta), con micrófono falso: un WAV sintético inyectado como dispositivo de captura."
     },
     {
       "clave": "cobertura_lineas",
@@ -287,7 +282,7 @@
       "valor": 94.02,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre src/lib y src/components; los motores puros (voz, cápsula diaria, hitos, objetivo) llevan la cobertura alta porque ahí viven las garantías."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz), según vitest.config.ts. Medida con `pnpm test` el 2026-10-27 sobre 6c4d113: 94,02 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -356,19 +351,21 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 14,
+      "valor": 16,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/."
+      "detalle": "Archivos de decisions/ el 2026-10-27 sobre 6c4d113."
     }
   ],
-
   "stack": [
     {
       "nombre": "Next.js",
       "papel": "la app entera, como PWA instalable y local-first: sin backend, sin cuentas y sin base de datos"
     },
-    { "nombre": "TypeScript", "papel": "modo estricto en todo el repositorio" },
+    {
+      "nombre": "TypeScript",
+      "papel": "modo estricto en todo el repositorio"
+    },
     {
       "nombre": "Web Audio API + AudioWorklet",
       "papel": "el motor de voz: energía y tono medidos en el hilo de audio, en el aparato, y descartados enseguida"
@@ -386,19 +383,17 @@
       "papel": "validación del contenido y de lo que se guarda localmente"
     }
   ],
-
   "privacidad": {
     "local_only": true,
     "red_saliente": false,
     "usa_ia": false,
-    "detalle": "La voz del niño nunca se graba, ni se guarda, ni sale del aparato: se analiza en memoria en el momento —energía y tono— y se descarta. La cámara no se usa nunca. La voz que el adulto graba en el Estudio sí se guarda, pero solo en ese aparato: no viaja a ningún servidor ni al repositorio. No hay cuentas, ni nube, ni IA. Durante el juego no sale una sola petición a internet, y pruebas permanentes en el CI hacen fallar el código si alguien intentara guardar o enviar audio del menor."
+    "detalle": "La voz de tu hijo nunca se graba, ni se guarda, ni sale del aparato: se analiza en memoria, en el momento, y se descarta. La cámara no se usa nunca. La voz que tú grabas en el Estudio sí se guarda, pero solo en ese aparato: no viaja a ningún servidor. No hay cuentas, ni nube, ni IA. Durante el juego no sale una sola petición a internet, y pruebas automáticas rompen el código si alguien intenta guardar o enviar el audio de tu hijo."
   },
-
   "enlaces": {
     "produccion": null,
-    "razon": "La app está viva y en uso por la familia para la que se construyó, pero el acceso no se entrega desde aquí: es por lista de espera.",
+    "razon": "La app nació para una familia y está en producción para ella. El acceso no se entrega desde aquí: es por lista de espera.",
     "repositorio": null,
-    "razon_repositorio": "El repositorio no se enlaza desde la vitrina (regla de cero enlaces del portafolio).",
+    "razon_repositorio": "El repositorio no se enlaza desde el Portafolio (regla de cero enlaces).",
     "brochure_archivo": "docs/BROCHURE.html",
     "brochure_ruta_local": "/conoce"
   }

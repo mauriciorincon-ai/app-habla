@@ -161,7 +161,7 @@
       <tr><td>Auth</td><td>No aplica</td><td>Sin cuentas, sin login (ADR-002). La app es de un dispositivo, para una familia.</td></tr>
       <tr><td>Almacenamiento de archivos</td><td>IndexedDB local (ADR-010)</td><td>Banco de voz familiar (voz de los ADULTOS, con consentimiento) — <strong>SOLO en el dispositivo, nunca a la red ni al repo</strong> (regla dura 2-bis). Sin backup por decisión consciente (ADR-011). Pictogramas ARASAAC: estáticos del repo.</td></tr>
       <tr><td>Email / notificaciones</td><td>No aplica</td><td>—</td></tr>
-      <tr><td>IA embebida</td><td><strong>NINGUNA</strong></td><td>Cinco sprints consecutivos con cero IA. "Determinista primero" (ADR/CLAUDE.md): el núcleo es DSP local + contenido estructurado. La IA futura (cuentero) será por LOTES, ≤US$10/mes, con fallback — y su propio ADR.</td></tr>
+      <tr><td>IA embebida</td><td><strong>NINGUNA</strong></td><td>Siete sprints consecutivos con cero IA. "Determinista primero" (ADR/CLAUDE.md): el núcleo es DSP local + contenido estructurado. La IA futura (cuentero) será por LOTES, ≤US$10/mes, con fallback — y su propio ADR.</td></tr>
       <tr><td>Observabilidad</td><td>Sentry (client-only, metadata-only, <strong>INERTE sin DSN</strong>) · Pino (build)</td><td>Cableado pero apagado: sin DSN no sale nada. Jamás audio ni contenido — solo <code>kind</code> + conteos si algún día se enciende.</td></tr>
       <tr><td>Crons / keep-alives</td><td>Ninguno</td><td>No hay backend que mantener despierto.</td></tr>
       <tr><td>Secretos</td><td><code>.env.local</code> (gitignored) + Vercel env vars</td><td>Ninguno en el repo. Doble candado gitleaks (hook PreToolUse + <code>githooks/pre-commit</code> activo, 100755). Hoy la app no necesita ningún secreto.</td></tr>
@@ -178,6 +178,7 @@
     <thead><tr><th>Fecha</th><th>Ciclo</th><th>Cambios</th></tr></thead>
     <tbody>
       <tr><td>2026-07-19</td><td>H1 (S1–S4)</td><td>Versión inicial. As-built del ciclo H1 completo: PWA local-first en Vercel, sin backend, sin BD, sin IA. Datos en localStorage + IndexedDB (banco de voz). Punto único de falla declarado: el dispositivo (ADR-011 rechaza el backup por ahora).</td></tr>
+      <tr><td>2026-11-11</td><td>H2 · S7</td><td>Sin cambio de infraestructura. Nota de <code>/mirada</code> (S5–S6): «La pirámide, en casa» es un HTML estático (<code>docs/LA-PIRAMIDE.html</code>) que <code>scripts/copiar-documentos.mjs</code> copia a <code>public/</code> y Next sirve por reescritura, igual que <code>/conoce</code>; no usa servidor, red ni base de datos. S7: la app es bilingüe (español y English); el idioma es un ajuste local (<code>habla:v1:ajustes</code>) y <code>lang</code> se fija con un script previo a la pintura. Los servidores locales de prueba escuchan en <code>127.0.0.1:3500</code>.</td></tr>
     </tbody>
   </table>
   </div>

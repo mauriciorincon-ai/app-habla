@@ -1,4 +1,5 @@
-import type { Capsula, EtiquetaCapsula } from "./schema";
+import { CAPSULAS_EN } from "./capsulas-en";
+import type { Capsula, CapsulaEs, EtiquetaCapsula } from "./schema";
 
 /**
  * Biblioteca de "Hoy" — la respuesta diaria al padre. 50 cápsulas es-CO organizadas por
@@ -28,7 +29,7 @@ import type { Capsula, EtiquetaCapsula } from "./schema";
  * no inline: así la curaduría se lee de un vistazo y se ajusta sin tocar 50 objetos. `CAPSULAS`
  * es `BASE` con sus etiquetas ya adjuntas.
  */
-const BASE: Omit<Capsula, "etiquetas">[] = [
+const BASE: Omit<CapsulaEs, "etiquetas">[] = [
   {
     id: "modelado-nombra-su-mundo",
     tecnica: "modelado",
@@ -944,7 +945,15 @@ const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
 
 /** La biblioteca con sus etiquetas adjuntas. Si a alguna cápsula le faltara etiqueta, el schema
  *  (etiquetas.min(1)) y el unit lo cazan — nunca llega al niño sin curar. */
-export const CAPSULAS: Capsula[] = BASE.map((c) => ({
-  ...c,
-  etiquetas: ETIQUETAS_POR_CAPSULA[c.id] ?? [],
-}));
+export const CAPSULAS: Capsula[] = BASE.map((c) => {
+  const en = CAPSULAS_EN[c.id];
+  if (!en) throw new Error(`Falta la cápsula en inglés: ${c.id} (content/capsulas-en/)`);
+  return {
+    ...c,
+    titulo: { es: c.titulo, en: en.titulo },
+    explicacion: { es: c.explicacion, en: en.explicacion },
+    guion: { es: c.guion, en: en.guion },
+    actividad: { texto: { es: c.actividad.texto, en: en.actividad }, conPantalla: c.actividad.conPantalla },
+    etiquetas: ETIQUETAS_POR_CAPSULA[c.id] ?? [],
+  };
+});
