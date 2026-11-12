@@ -32,9 +32,10 @@ export default function AjustesPage() {
           <div>
             <dt className="font-medium">Sí mide</dt>
             <dd className="text-tinta-suave mt-1">
-              Si hay voz (energía del sonido por encima del ruido de la casa) y
-              cuánto tiempo se sostiene. Eso es todo lo que el juego sabe, y es
-              lo único que la app va a afirmar.
+              Si hay voz (energía del sonido por encima del ruido de la casa),
+              cuánto tiempo se sostiene y, en el cohete, si el tono de la voz
+              sube o baja. Eso es todo lo que el juego sabe, y es lo único que
+              la app va a afirmar.
             </dd>
           </div>
 
