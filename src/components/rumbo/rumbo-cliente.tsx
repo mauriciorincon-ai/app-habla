@@ -17,10 +17,14 @@ import {
   type ResumenSemana,
 } from "@/lib/rumbo/tendencias";
 import { hitosAlcanzados } from "@/lib/rumbo/hitos";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import type { Idioma, Texto } from "@/lib/idioma";
+import { rumbo } from "@/lib/idioma/textos/rumbo";
 
-function segundos(ms: number): string {
+function segundos(ms: number, idioma: Idioma): string {
   const s = ms / 1000;
-  return (s >= 10 ? s.toFixed(0) : s.toFixed(1)).replace(".", ",");
+  const texto = s >= 10 ? s.toFixed(0) : s.toFixed(1);
+  return idioma === "es" ? texto.replace(".", ",") : texto;
 }
 
 /**
@@ -36,9 +40,10 @@ function Dato({
 }: {
   n: number;
   id: string;
-  singular: string;
-  plural: string;
+  singular: Texto;
+  plural: Texto;
 }) {
+  const tx = useT();
   if (n <= 0) return null;
   return (
     <li className="flex items-baseline gap-2" data-testid={`dato-${id}`}>
@@ -46,7 +51,7 @@ function Dato({
         {n}
       </span>
       <span className="text-tinta-suave text-sm">
-        {n === 1 ? singular : plural}
+        {tx(n === 1 ? singular : plural)}
       </span>
     </li>
   );
@@ -59,62 +64,66 @@ function Semana({
   semana: ResumenSemana;
   esActual: boolean;
 }) {
+  const tx = useT();
+  const idioma = useIdioma();
   return (
     <article
       className="bg-superficie shadow-tarjeta rounded-2xl p-5"
       data-testid="rumbo-semana"
     >
       <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-        {esActual ? "Esta semana" : `Semana del ${fechaLarga(semana.semana)}`}
+        {esActual
+          ? tx(rumbo.semana.esta)
+          : tx(rumbo.semana.del, { fecha: fechaLarga(semana.semana, idioma) })}
       </p>
       <ul className="mt-3 flex flex-col gap-2">
         <Dato
           n={semana.diasConPractica}
           id="dias"
-          singular="día que practicaron juntos"
-          plural="días que practicaron juntos"
+          singular={rumbo.datos.dias.uno}
+          plural={rumbo.datos.dias.otro}
         />
         <Dato
           n={semana.capsulasHechas}
           id="capsulas"
-          singular="cápsula del día completada"
-          plural="cápsulas del día completadas"
+          singular={rumbo.datos.capsulas.uno}
+          plural={rumbo.datos.capsulas.otro}
         />
         <Dato
           n={semana.palabrasDistintas}
           id="palabras"
-          singular="palabra distinta que practicaron"
-          plural="palabras distintas que practicaron"
+          singular={rumbo.datos.palabras.uno}
+          plural={rumbo.datos.palabras.otro}
         />
         <Dato
           n={semana.dibujosEncendidos}
           id="dibujos"
-          singular="dibujo que encendió con su voz"
-          plural="dibujos que encendió con su voz"
+          singular={rumbo.datos.dibujos.uno}
+          plural={rumbo.datos.dibujos.otro}
         />
         <Dato
           n={semana.vueltasGlobo}
           id="vueltas"
-          singular="vuelta completa dio el globo con su voz"
-          plural="vueltas completas dio el globo con su voz"
+          singular={rumbo.datos.vueltas.uno}
+          plural={rumbo.datos.vueltas.otro}
         />
         <Dato
           n={semana.subidasYBajadas}
           id="inversiones"
-          singular="vez que su voz subió y bajó"
-          plural="veces que su voz subió y bajó"
+          singular={rumbo.datos.inversiones.uno}
+          plural={rumbo.datos.inversiones.otro}
         />
         <Dato
           n={semana.rondasGemelas}
           id="rondas"
-          singular="ronda de gemelas"
-          plural="rondas de gemelas"
+          singular={rumbo.datos.rondas.uno}
+          plural={rumbo.datos.rondas.otro}
         />
         <Dato
           n={semana.marcadasPorTi}
           id="marcadas"
-          singular="palabra que TÚ le oíste"
-          plural="palabras que TÚ le oíste"
+          singular={rumbo.datos.marcadas.uno}
+          plural={rumbo.datos.marcadas.otro}
         />
         {/* Los segundos del globo (gate S4, N2: "si quiero ver el rumbo debería ver todo"):
             el total que sonó y, aparte, la más larga sin cortarse — las mismas dos verdades
@@ -125,20 +134,20 @@ function Semana({
             data-testid="dato-voz-total"
           >
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
-              {segundos(semana.vozMsTotal)}
+              {segundos(semana.vozMsTotal, idioma)}
             </span>
             <span className="text-tinta-suave text-sm">
-              segundos sonó su voz en el globo, sumando todos los ratos
+              {tx(rumbo.datos.vozTotal)}
             </span>
           </li>
         ) : null}
         {semana.vozMsMax >= 1000 ? (
           <li className="flex items-baseline gap-2" data-testid="dato-voz-max">
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
-              {segundos(semana.vozMsMax)}
+              {segundos(semana.vozMsMax, idioma)}
             </span>
             <span className="text-tinta-suave text-sm">
-              segundos fue su voz más larga sin cortarse
+              {tx(rumbo.datos.vozMax)}
             </span>
           </li>
         ) : null}
@@ -148,6 +157,8 @@ function Semana({
 }
 
 export function RumboCliente() {
+  const tx = useT();
+  const idioma = useIdioma();
   const hidratado = useHidratado();
   const progreso = useProgreso();
   const sesiones = useMemo(
@@ -172,18 +183,16 @@ export function RumboCliente() {
       >
         <IconoBrote className="text-acento h-14 w-14" />
         <h2 className="font-display text-2xl">
-          Todavía no hay nada que contar
+          {tx(rumbo.vacio.titulo)}
         </h2>
         <p className="text-tinta-suave max-w-prose">
-          Jueguen unos días —el globo, el cohete, los dibujos— o marquen la
-          cápsula de hoy, y aquí va a aparecer cómo van: solo lo que de verdad
-          pasó, sin comparar con nadie.
+          {tx(rumbo.vacio.texto)}
         </p>
         <Link
           href="/jugar"
           className="bg-acento text-sobre-acento inline-flex min-h-12 items-center justify-center rounded-xl px-6 font-medium"
         >
-          Ir a los juegos
+          {tx(rumbo.vacio.ir)}
         </Link>
       </section>
     );
@@ -193,7 +202,7 @@ export function RumboCliente() {
     <div className="flex flex-col gap-8" data-testid="rumbo-contenido">
       {hitos.length > 0 ? (
         <section className="flex flex-col gap-3">
-          <h2 className="font-display text-2xl">Lo que ya lograron</h2>
+          <h2 className="font-display text-2xl">{tx(rumbo.hitos.titulo)}</h2>
           <ul className="flex flex-col gap-2" data-testid="rumbo-hitos">
             {hitos.map((h) => (
               <li
@@ -202,9 +211,9 @@ export function RumboCliente() {
               >
                 <IconoHecho className="text-acento mt-0.5 h-5 w-5 shrink-0" />
                 <span>
-                  <span className="block font-medium">{h.titulo}</span>
+                  <span className="block font-medium">{tx(h.titulo)}</span>
                   <span className="text-tinta-suave text-sm">
-                    desde el {fechaLarga(h.fecha)}
+                    {tx(rumbo.hitos.desde, { fecha: fechaLarga(h.fecha, idioma) })}
                   </span>
                 </span>
               </li>
@@ -214,7 +223,7 @@ export function RumboCliente() {
       ) : null}
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl">Semana a semana</h2>
+        <h2 className="font-display text-2xl">{tx(rumbo.semanaASemana)}</h2>
         <div className="flex flex-col gap-3">
           {semanas.map((s) => (
             <Semana
@@ -227,8 +236,7 @@ export function RumboCliente() {
       </section>
 
       <p className="text-tinta-suave text-center text-sm">
-        Es el registro de lo que hicieron juntos: lo que mueve el habla es
-        volver, sin prisa.
+        {tx(rumbo.cierre)}
       </p>
     </div>
   );

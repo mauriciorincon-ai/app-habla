@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { RumboCliente } from "@/components/rumbo/rumbo-cliente";
 import { IconoBrujula } from "@/components/iconos";
+import { Tx } from "@/components/idioma/tx";
+import { comunes } from "@/lib/idioma/textos/comunes";
+import { rumbo } from "@/lib/idioma/textos/rumbo";
 
 // Patrón lcp-nace-estatico: el encabezado se renderiza ESTÁTICO en el servidor; el contenido, que
 // depende del almacenamiento local, llega tras hidratar dentro de un espacio ya reservado.
@@ -14,16 +17,14 @@ export default function RumboPage() {
           className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-sm"
           data-testid="volver-a-hoy"
         >
-          ← Hoy
+          <Tx t={comunes.volverAHoy} />
         </Link>
         <h1 className="font-display mt-4 flex items-center gap-3 text-4xl sm:text-5xl">
           <IconoBrujula className="text-acento h-9 w-9 shrink-0" />
-          El rumbo
+          <Tx t={rumbo.titulo} />
         </h1>
         <p className="text-tinta-suave mt-3 max-w-prose">
-          Cómo van, contado con lo que de verdad pasó: los días que jugaron, las
-          palabras que practicaron, lo que su voz hizo. Sin comparar con nadie y
-          sin apuros: aquí nada se pierde por saltarse un día.
+          <Tx t={rumbo.intro} />
         </p>
       </header>
 
