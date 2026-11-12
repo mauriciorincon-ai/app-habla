@@ -3,6 +3,10 @@ import { join } from "node:path";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 import { IDIOMAS, detectarIdioma, esTexto, t, textosDe, type Catalogo } from "../../src/lib/idioma";
+import { ajustes as textosAjustes } from "../../src/lib/idioma/textos/ajustes";
+import { nombreTecnica, nombreTema } from "../../src/lib/idioma/textos/nombres";
+import { TECNICAS } from "../../content/schema";
+import { TEMAS } from "../../src/lib/storage/temas";
 import { AjustesSchema, AJUSTES_DEFECTO } from "../../src/lib/storage/schemas";
 
 // PARIDAD ES/EN (S7, regla 20). Cada texto nace como { es, en } y ninguno puede tener una sola cara:
@@ -138,6 +142,25 @@ describe("cápsulas del día en los dos idiomas", () => {
         const b = seleccionarCapsula(fecha, PROGRESO_INICIAL, otra, etapa).capsula.id;
         expect(b, `${fecha} ${etapa}`).toBe(a);
       }
+    }
+  });
+});
+
+describe("lo que el adulto lee en Ajustes y en los nombres", () => {
+  it("«Sí mide» nombra el tono del cohete, en los dos idiomas (devolución 026, punto 6)", () => {
+    const texto = textosAjustes.mide.si.texto;
+    expect(texto.es).toMatch(/tono/i);
+    expect(texto.en).toMatch(/pitch/i);
+  });
+
+  it("cada técnica y cada tema tiene su nombre en los dos idiomas", () => {
+    for (const k of TECNICAS) {
+      expect(nombreTecnica[k].es.length, k).toBeGreaterThan(0);
+      expect(nombreTecnica[k].en.length, k).toBeGreaterThan(0);
+    }
+    for (const k of TEMAS) {
+      expect(nombreTema[k].es.length, k).toBeGreaterThan(0);
+      expect(nombreTema[k].en.length, k).toBeGreaterThan(0);
     }
   });
 });

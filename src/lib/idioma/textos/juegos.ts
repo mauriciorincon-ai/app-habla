@@ -127,12 +127,12 @@ export const juegos = {
       despues: { es: "juntos?", en: "together?" },
     },
   },
-  // En inglés estos dos juegos no se juegan todavía: una tarjeta honesta en su lugar.
+  // En inglés estos dos juegos practican palabras en español: una tarjeta honesta en su lugar.
   soloEspanol: {
     titulo: { es: "Juegos de palabras", en: "Word games" },
     mensaje: {
-      es: "Los juegos de palabras en inglés llegan pronto. Mientras tanto, el globo y el cohete funcionan en cualquier idioma.",
-      en: "Word games in English are coming soon. For now, the balloon and rocket games work in any language.",
+      es: "Los juegos de palabras practican palabras en español. El globo y el cohete funcionan en cualquier idioma.",
+      en: "Word games practise Spanish words. The balloon and rocket games work in any language.",
     },
     volver: { es: "← Jugar", en: "← Play" },
   },
@@ -141,8 +141,8 @@ export const juegos = {
     globo: {
       sono: { es: "¡Su voz sonó", en: "Their voice sounded for" },
       vueltasAntes: { es: "Con esa voz el globo dio", en: "With that voice the balloon went around" },
-      vuelta: { es: "{n} vuelta completa", en: "{n} full time" },
-      vueltas: { es: "{n} vueltas completas", en: "{n} full times" },
+      vuelta: { es: "{n} vuelta completa", en: "{n} full turn" },
+      vueltas: { es: "{n} vueltas completas", en: "{n} full turns" },
       rachaAntes: { es: "Y la vez más larga la sostuvo", en: "And the longest stretch, they held it for" },
       rachaDespues: { es: "seguidos, sin cortarse.", en: "in a row, without breaking." },
       medidor: {

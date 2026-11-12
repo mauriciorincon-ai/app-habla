@@ -6,12 +6,15 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { useAjustes } from "@/components/estado-local";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 
 export function SoloEnEspanol({ children }: { children: ReactNode }) {
   const idioma = useIdioma();
   const tx = useT();
+  // Antes de hidratar no se sabe el idioma real: no se monta nada (ni un juego que abra el micrófono).
+  if (useAjustes() === null) return null;
 
   if (idioma !== "en") return <>{children}</>;
 

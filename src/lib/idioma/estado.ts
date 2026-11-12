@@ -40,7 +40,7 @@ export function idiomaActual(): Idioma {
 }
 
 /** La elección del adulto: queda guardada y toda la interfaz cambia sin recargar. */
-export function elegirIdioma(idioma: Idioma): void {
+export function elegirIdioma(idioma: Idioma | null): void {
   guardarAjustesEnStore({ ...ajustesActuales(), idioma });
 }
 

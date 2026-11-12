@@ -5,9 +5,8 @@ import type { Texto } from "../index";
 export const idioma = {
   titulo: { es: "Idioma de la app", en: "App language" },
   ayuda: {
-    es: "Cambia al instante todo lo que lee el adulto. En inglés se practica en inglés: las palabras de los juegos de palabras llegan pronto.",
-    en: "Changes everything the adult reads, right away. In English you practice in English: the word games will follow soon.",
+    es: "Cambia al instante todo lo que lee el adulto. Los juegos de palabras practican palabras en español; el globo y el cohete juegan igual en los dos idiomas.",
+    en: "Changes everything the adult reads, right away. The word games practise Spanish words; the balloon and rocket play the same in both languages.",
   },
   seguirNavegador: { es: "Usar el idioma del dispositivo", en: "Use the device language" },
-  activo: { es: "Elegido", en: "Selected" },
 } satisfies Record<string, Texto>;

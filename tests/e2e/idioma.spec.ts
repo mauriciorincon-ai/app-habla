@@ -90,7 +90,7 @@ test("en inglés, palabras y gemelas muestran la línea honesta y no abren el mi
   for (const ruta of ["/jugar/palabras", "/jugar/gemelas"]) {
     await page.goto(ruta);
     await expect(page.getByTestId("solo-en-espanol")).toBeVisible();
-    await expect(page.getByTestId("solo-en-espanol")).toContainText("coming soon");
+    await expect(page.getByTestId("solo-en-espanol")).toContainText("Spanish words");
     expect(await page.evaluate(() => (window as unknown as { __mic: number }).__mic)).toBe(0);
   }
   await ctx.close();
@@ -102,5 +102,52 @@ test("a11y: Ajustes en inglés sin violaciones serias", async ({ browser }) => {
   await page.goto("/ajustes");
   const r = await new AxeBuilder({ page }).analyze();
   expect(r.violations.filter((v) => v.impact === "serious" || v.impact === "critical")).toEqual([]);
+  await ctx.close();
+});
+
+test("en inglés, el Objetivo avisa que el alineador entiende español y los chips escriben en español", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  await ctx.addInitScript(conPerfil);
+  const page = await ctx.newPage();
+  await page.goto("/objetivo");
+  await expect(page.getByTestId("objetivo-aviso-idioma")).toBeVisible();
+  await expect(page.getByTestId("sugerencia-animales")).toHaveText("animals");
+  await page.getByTestId("sugerencia-animales").click();
+  await expect(page.getByTestId("objetivo-input")).toHaveValue("animales");
+  await expect(page.getByTestId("objetivo-preview")).toBeVisible();
+  await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
+  await ctx.close();
+});
+
+test("en inglés, <html lang> nunca vuelve a es-CO durante la hidratación", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  await ctx.addInitScript(conPerfil);
+  await ctx.addInitScript(() => {
+    const vistos: string[] = [];
+    (window as unknown as { __langs: string[] }).__langs = vistos;
+    new MutationObserver(() => vistos.push(document.documentElement.lang)).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"],
+    });
+  });
+  const page = await ctx.newPage();
+  await page.goto("/ajustes");
+  await expect(page.getByTestId("idioma-en")).toHaveAttribute("aria-pressed", "true");
+  const vistos = await page.evaluate(() => (window as unknown as { __langs: string[] }).__langs);
+  expect(vistos).not.toContain("es-CO");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await ctx.close();
+});
+
+test("«Usar el idioma del dispositivo» devuelve al navegador la elección", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  await ctx.addInitScript(conPerfil);
+  const page = await ctx.newPage();
+  await page.goto("/ajustes");
+  await page.getByTestId("idioma-es").click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-CO");
+  await page.getByTestId("idioma-dispositivo").click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByTestId("idioma-dispositivo")).toHaveAttribute("aria-pressed", "true");
   await ctx.close();
 });

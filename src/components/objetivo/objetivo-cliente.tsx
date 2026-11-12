@@ -117,7 +117,7 @@ function cargarBancos(): Promise<Bancos> {
 // Sugerencias que SÍ alinean (nacen de las etiquetas reales): el padre elige una y garantiza
 // coincidencia. Escribir libre también vale — y "colores" enseña el caso honesto sin matches.
 // El testid sale de la clave en español (estable en los dos idiomas); lo que se escribe en el
-// campo es el texto del idioma de ahora.
+// campo es SIEMPRE la forma en español: el alineador y el diccionario solo entienden español.
 const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
   { testid: "animales", texto: txt.sugerencias.animales },
   { testid: "la-comida", texto: txt.sugerencias.comida },
@@ -498,6 +498,12 @@ export function ObjetivoCliente() {
           data-testid="objetivo-input"
         />
 
+        {idioma === "en" && (
+          <p className="text-tinta-suave text-sm" data-testid="objetivo-aviso-idioma">
+            {tx(txt.avisoIdioma)}
+          </p>
+        )}
+
         <div
           role="group"
           aria-label={tx(txt.sugerencias.grupo)}
@@ -507,7 +513,7 @@ export function ObjetivoCliente() {
             <button
               key={s.testid}
               type="button"
-              onClick={() => elegir(tx(s.texto))}
+              onClick={() => elegir(s.texto.es)}
               className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
               data-testid={`sugerencia-${s.testid}`}
             >

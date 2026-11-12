@@ -1,6 +1,7 @@
 "use client";
 
 import { IDIOMAS, NOMBRE_PROPIO, t, type Idioma } from "@/lib/idioma";
+import { useAjustes } from "@/components/estado-local";
 import { elegirIdioma, useIdioma } from "@/lib/idioma/estado";
 import { idioma as textos } from "@/lib/idioma/textos/idioma";
 
@@ -11,6 +12,7 @@ import { idioma as textos } from "@/lib/idioma/textos/idioma";
  */
 export function ConmutadorDeIdioma() {
   const actual = useIdioma();
+  const siguiendo = useAjustes()?.idioma == null;
   return (
     <section
       className="bg-superficie shadow-tarjeta rounded-2xl p-5"
@@ -41,6 +43,18 @@ export function ConmutadorDeIdioma() {
             </button>
           );
         })}
+        <button
+          type="button"
+          aria-pressed={siguiendo}
+          onClick={() => elegirIdioma(null)}
+          data-testid="idioma-dispositivo"
+          className={`min-h-11 rounded-xl border px-4 text-sm font-medium ${
+            siguiendo ? "border-acento bg-acento-suave" : "border-borde bg-fondo text-tinta-suave"
+          }`}
+        >
+          {siguiendo ? "✓ " : ""}
+          {t(textos.seguirNavegador, actual)}
+        </button>
       </div>
     </section>
   );
