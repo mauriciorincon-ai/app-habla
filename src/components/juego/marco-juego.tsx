@@ -14,6 +14,8 @@ import {
   IconoMicrofonoApagado,
   IconoRuido,
 } from "@/components/iconos";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import type { Sesion } from "@/lib/session-flow";
 import { CalibracionStep } from "./calibracion-step";
 import type { MedidasVivas } from "./use-voice-session";
@@ -44,6 +46,7 @@ export function MarcoJuego({
   onSalir,
   children,
 }: Props) {
+  const tx = useT();
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
 
@@ -83,7 +86,7 @@ export function MarcoJuego({
             className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
             data-testid="salir-al-guion"
           >
-            Salir
+            {tx(juegos.comun.salir)}
           </button>
           <button
             type="button"
@@ -92,7 +95,9 @@ export function MarcoJuego({
             className="border-borde text-tinta min-h-11 rounded-full border px-4 text-sm"
             data-testid="modo-calma"
           >
-            {modoCalma ? "Modo calma activado" : "Modo calma"}
+            {modoCalma
+              ? tx(juegos.comun.modoCalmaActivado)
+              : tx(juegos.comun.modoCalma)}
           </button>
         </div>
       ) : null}
@@ -103,14 +108,10 @@ export function MarcoJuego({
           data-testid="pidiendo-mic"
         >
           <IconoMicrofono className="text-acento h-16 w-16" />
-          <h2 className="font-display text-3xl">Necesito escuchar su voz</h2>
+          <h2 className="font-display text-3xl">{tx(juegos.marco.pidiendoMic.titulo)}</h2>
           <p className="text-tinta-suave">
-            El navegador va a preguntar si puede usar el micrófono. El sonido se
-            analiza aquí mismo, en este dispositivo, para saber si hay voz y
-            cómo suena.{" "}
-            <strong>
-              No se graba nada, no se guarda nada y nada sale de aquí.
-            </strong>
+            {tx(juegos.marco.pidiendoMic.antes)}{" "}
+            <strong>{tx(juegos.marco.pidiendoMic.enfasis)}</strong>
           </p>
         </section>
       ) : null}
@@ -121,24 +122,15 @@ export function MarcoJuego({
           data-testid="mic-denegado"
         >
           <IconoMicrofonoApagado className="text-tinta-suave h-16 w-16" />
-          <h2 className="font-display text-3xl">No pude abrir el micrófono</h2>
+          <h2 className="font-display text-3xl">{tx(juegos.marco.micDenegado.titulo)}</h2>
           <div className="text-tinta-suave space-y-2 text-left text-sm">
-            <p>
-              Sin micrófono, este juego no puede escuchar su voz. Para
-              habilitarlo:
-            </p>
+            <p>{tx(juegos.marco.micDenegado.intro)}</p>
             <ol className="list-decimal space-y-1 pl-5">
-              <li>
-                Toca el candado (o el ícono de la izquierda) en la barra de
-                direcciones.
-              </li>
-              <li>Busca “Micrófono” y elige “Permitir”.</li>
-              <li>Vuelve aquí y toca “Intentar de nuevo”.</li>
+              <li>{tx(juegos.marco.micDenegado.paso1)}</li>
+              <li>{tx(juegos.marco.micDenegado.paso2)}</li>
+              <li>{tx(juegos.marco.micDenegado.paso3)}</li>
             </ol>
-            <p>
-              Si prefieres no dar el micrófono, no pasa nada: la actividad de
-              hoy también se puede hacer sin pantalla.
-            </p>
+            <p>{tx(juegos.marco.micDenegado.sinMic)}</p>
           </div>
           <div className="flex w-full flex-col gap-3 sm:flex-row">
             <button
@@ -147,14 +139,14 @@ export function MarcoJuego({
               className="bg-acento text-sobre-acento min-h-14 flex-1 rounded-xl px-6 font-medium"
               data-testid="reintentar-mic"
             >
-              Intentar de nuevo
+              {tx(juegos.marco.micDenegado.reintentar)}
             </button>
             <Link
               href="/"
               prefetch={false}
               className="border-borde text-tinta flex min-h-14 flex-1 items-center justify-center rounded-xl border px-6 font-medium"
             >
-              Volver a Hoy
+              {tx(juegos.marco.micDenegado.volverAHoy)}
             </Link>
           </div>
         </section>
@@ -170,11 +162,9 @@ export function MarcoJuego({
           data-testid="ruido-alto"
         >
           <IconoRuido className="text-aviso h-16 w-16" />
-          <h2 className="font-display text-3xl">Hay bastante ruido por ahí</h2>
+          <h2 className="font-display text-3xl">{tx(juegos.marco.ruidoAlto.titulo)}</h2>
           <p className="text-tinta-suave">
-            Con este ruido de fondo me cuesta distinguir su voz. Si pueden,
-            apaguen la tele o acérquense un poco al dispositivo. Igual podemos
-            jugar así: solo tendrá que hablar más fuerte.
+            {tx(juegos.marco.ruidoAlto.cuerpo)}
           </p>
           <div className="flex w-full flex-col gap-3 sm:flex-row">
             <button
@@ -183,7 +173,7 @@ export function MarcoJuego({
               className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
               data-testid="recalibrar"
             >
-              Volver a medir
+              {tx(juegos.marco.ruidoAlto.volverAMedir)}
             </button>
             <button
               type="button"
@@ -191,7 +181,7 @@ export function MarcoJuego({
               className="border-borde text-tinta min-h-16 flex-1 rounded-2xl border px-6 text-lg font-medium"
               data-testid="continuar-asi"
             >
-              Jugar así
+              {tx(juegos.marco.ruidoAlto.jugarAsi)}
             </button>
           </div>
         </section>

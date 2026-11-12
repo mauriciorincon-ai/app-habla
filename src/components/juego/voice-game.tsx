@@ -27,6 +27,8 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { Escenario } from "./escenario";
@@ -70,6 +72,7 @@ function JuegoListo({
   modoCalmaInicial: boolean;
 }) {
   const router = useRouter();
+  const tx = useT();
 
   // Lo que mide el globo: el total de voz del intento (lo que lo hace volar) y, aparte, la racha
   // continua más larga — el único número con el que la app puede decir "la sostuviste".
@@ -145,7 +148,7 @@ function JuegoListo({
         <GuionCard
           etiqueta={NOMBRE_TECNICA[capsula.tecnica]}
           guion={capsula.guion}
-          nota="Muéstrale cómo suena tú primero. Si hoy prefiere solo mirar, también está bien."
+          nota={tx(juegos.globo.nota)}
           onEmpezar={empezar}
           listo
         />
@@ -155,8 +158,8 @@ function JuegoListo({
         <section className="flex flex-col gap-5">
           <h2 className="font-display text-center text-3xl sm:text-4xl">
             {actual.fase === "jugando"
-              ? "¡El globo está volando!"
-              : "Haz sonar tu voz: aaaaah"}
+              ? tx(juegos.globo.volando)
+              : tx(juegos.globo.invitacion)}
           </h2>
 
           {/* El logro medido, en vivo (gate S4): cada vuelta completa se celebra sin detener el
@@ -167,9 +170,11 @@ function JuegoListo({
               data-testid="vueltas"
               aria-live="polite"
             >
-              ¡Ya dio{" "}
+              {tx(juegos.globo.vueltaYa)}{" "}
               <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
-                {vueltas} {vueltas === 1 ? "vuelta" : "vueltas"}
+                {tx(vueltas === 1 ? juegos.globo.vuelta : juegos.globo.vueltas, {
+                  n: vueltas,
+                })}
               </span>
               !
             </p>
@@ -179,7 +184,7 @@ function JuegoListo({
           <AltavozConsigna
             voz={voz}
             id="consigna:aaah"
-            etiqueta="Oír “Haz sonar tu voz: aaaaah”"
+            etiqueta={tx(juegos.globo.oir)}
           />
 
           <Escenario
@@ -197,7 +202,7 @@ function JuegoListo({
               className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
               data-testid="terminar"
             >
-              Ya jugamos
+              {tx(juegos.comun.yaJugamos)}
             </button>
             <button
               type="button"
@@ -205,7 +210,7 @@ function JuegoListo({
               className="border-borde text-tinta min-h-16 rounded-2xl border px-6 text-lg font-medium"
               data-testid="recalibrar"
             >
-              Volver a medir el ruido
+              {tx(juegos.comun.volverAMedir)}
             </button>
           </div>
         </section>
@@ -223,7 +228,7 @@ function JuegoListo({
           }
           onOtraVez={otraVez}
           onTerminar={terminarYMarcar}
-          etiquetaTerminar="Marcar el día como hecho"
+          etiquetaTerminar={tx(juegos.globo.marcarHecho)}
         />
       ) : null}
     </MarcoJuego>

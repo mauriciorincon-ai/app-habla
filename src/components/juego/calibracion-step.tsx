@@ -6,6 +6,8 @@
 
 import { useEffect, useRef } from "react";
 import { IconoSilencio } from "@/components/iconos";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import type { MedidasVivas } from "./use-voice-session";
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 };
 
 export function CalibracionStep({ medidas }: Props) {
+  const tx = useT();
   const barraRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -34,10 +37,9 @@ export function CalibracionStep({ medidas }: Props) {
       aria-live="polite"
     >
       <IconoSilencio className="text-acento h-16 w-16" />
-      <h2 className="font-display text-4xl">Shhh… un momentico de silencio</h2>
+      <h2 className="font-display text-4xl">{tx(juegos.calibracion.titulo)}</h2>
       <p className="text-tinta-suave max-w-sm">
-        Estoy escuchando cómo suena su casa (el ventilador, la tele, la calle)
-        para no confundir ese ruido con su voz. Dos segundos y ya.
+        {tx(juegos.calibracion.cuerpo)}
       </p>
 
       <div className="bg-acento-suave h-4 w-full max-w-sm overflow-hidden rounded-full">

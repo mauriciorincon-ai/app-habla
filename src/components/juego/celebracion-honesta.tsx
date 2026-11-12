@@ -21,6 +21,9 @@ import { valorDeMetrica, type Metrica } from "@/lib/session-flow";
 import { construirSesion } from "@/lib/rumbo/sesion";
 import { fechaHoy } from "@/lib/fecha";
 import { registrarSesion } from "@/lib/storage/local";
+import type { Idioma } from "@/lib/idioma";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 
 type Props = {
   metrica: Metrica;
@@ -37,9 +40,11 @@ type Props = {
   vueltas?: number;
 };
 
-function segundos(ms: number): string {
+function segundos(ms: number, idioma: Idioma): string {
   const s = ms / 1000;
-  return s >= 10 ? s.toFixed(0) : s.toFixed(1).replace(".", ",");
+  if (s >= 10) return s.toFixed(0);
+  const un = s.toFixed(1);
+  return idioma === "es" ? un.replace(".", ",") : un;
 }
 
 /** ¿El medidor alcanzó a escuchar algo de verdad? Es lo único que decide qué se puede afirmar. */
@@ -58,6 +63,9 @@ function Logro({
   metrica: Metrica;
   vueltas?: number;
 }) {
+  const tx = useT();
+  const idioma = useIdioma();
+  const c = juegos.celebracion;
   const cifra = (texto: string) => (
     <span
       className="text-celebracion-fuerte font-sans font-semibold tabular-nums"
@@ -78,14 +86,16 @@ function Logro({
                 La continuidad —lo que de verdad se está entrenando— va abajo, con su número real.
                 La métrica va en sans con cifras tabulares, no en mono: la coma decimal
                 monoespaciada se lee como "3 , 1". Mono queda para etiquetas y datos en bloque. */}
-            ¡Su voz sonó {cifra(`${segundos(metrica.ms)} segundos`)}!
+            {tx(c.globo.sono)}{" "}
+            {cifra(tx(c.segundos, { n: segundos(metrica.ms, idioma) }))}!
           </h2>
           {vueltas > 0 ? (
             <p className="text-lg" data-testid="celebracion-vueltas">
-              Con esa voz el globo dio{" "}
+              {tx(c.globo.vueltasAntes)}{" "}
               <strong className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
-                {vueltas}{" "}
-                {vueltas === 1 ? "vuelta completa" : "vueltas completas"}
+                {tx(vueltas === 1 ? c.globo.vuelta : c.globo.vueltas, {
+                  n: vueltas,
+                })}
               </strong>
               .
             </p>
@@ -93,16 +103,14 @@ function Logro({
           <p className="text-tinta-suave">
             {metrica.rachaMs >= 1000 ? (
               <>
-                Y la vez más larga la sostuvo{" "}
+                {tx(c.globo.rachaAntes)}{" "}
                 <strong className="text-tinta">
-                  {segundos(metrica.rachaMs)} segundos
+                  {tx(c.segundos, { n: segundos(metrica.rachaMs, idioma) })}
                 </strong>{" "}
-                seguidos, sin cortarse.{" "}
+                {tx(c.globo.rachaDespues)}{" "}
               </>
             ) : null}
-            Eso es lo que el medidor escuchó: hubo voz y duró ese tiempo. Si
-            además dijo la palabra, el que lo sabe eres tú — celébraselo con tus
-            propias palabras.
+            {tx(c.globo.medidor)}
           </p>
         </>
       );
@@ -112,15 +120,15 @@ function Logro({
         <>
           <Cohete className="h-24 w-16" />
           <h2 className="font-display text-4xl">
-            ¡Tu voz subió y bajó{" "}
-            {cifra(`${metrica.veces} ${metrica.veces === 1 ? "vez" : "veces"}`)}
+            {tx(c.cohete.antes)}{" "}
+            {cifra(
+              tx(metrica.veces === 1 ? c.cohete.vez : c.cohete.veces, {
+                n: metrica.veces,
+              }),
+            )}
             !
           </h2>
-          <p className="text-tinta-suave">
-            Eso es lo que el medidor escuchó: el tono de su voz cambió de
-            dirección esas veces. Jugar con la voz —subirla, bajarla, estirarla—
-            es exactamente lo que queríamos.
-          </p>
+          <p className="text-tinta-suave">{tx(c.cohete.cuerpo)}</p>
         </>
       );
 
@@ -129,27 +137,24 @@ function Logro({
         <>
           <IconoPictograma className="text-acento h-20 w-20" />
           <h2 className="font-display text-4xl">
-            ¡Encendió{" "}
+            {tx(c.dibujos.antes)}{" "}
             {cifra(
-              `${metrica.veces} ${metrica.veces === 1 ? "dibujo" : "dibujos"}`,
+              tx(metrica.veces === 1 ? c.dibujos.uno : c.dibujos.varios, {
+                n: metrica.veces,
+              }),
             )}{" "}
-            con su voz!
+            {tx(c.dibujos.despues)}
           </h2>
-          <p className="text-tinta-suave">
-            Eso es lo que el medidor escuchó: su voz sonó y encendió esos
-            dibujos. Si dijo la palabra o se acercó a ella, el que lo sabe eres
-            tú — la app no juzga eso, y no va a fingir que sí.
-          </p>
+          <p className="text-tinta-suave">{tx(c.dibujos.cuerpo)}</p>
 
           {/* Lo que dijo el PADRE, dicho como suyo. La app no se cuelga esta medalla. */}
           {metrica.reconocidas > 0 ? (
             <p className="text-exito font-medium" data-testid="reconocidas">
-              Y tú oíste{" "}
+              {tx(c.dibujos.oiste)}{" "}
               {metrica.reconocidas === 1
-                ? "1 palabra"
-                : `${metrica.reconocidas} palabras`}
-              . Eso lo sabes tú, que estabas ahí — celébraselo con tus propias
-              palabras.
+                ? tx(c.dibujos.palabra)
+                : tx(c.dibujos.palabras, { n: metrica.reconocidas })}
+              {tx(c.dibujos.oisteFin)}
             </p>
           ) : null}
         </>
@@ -160,25 +165,23 @@ function Logro({
         <>
           <IconoGemelas className="text-acento h-20 w-24" />
           <h2 className="font-display text-4xl">
-            ¡Jugaron{" "}
+            {tx(c.gemelas.antes)}{" "}
             {cifra(
-              `${metrica.rondas} ${metrica.rondas === 1 ? "ronda" : "rondas"}`,
+              tx(metrica.rondas === 1 ? c.gemelas.una : c.gemelas.varias, {
+                n: metrica.rondas,
+              }),
             )}{" "}
-            de gemelas!
+            {tx(c.gemelas.despues)}
           </h2>
           <p className="text-tinta-suave">
             {metrica.participadas > 0 ? (
               <>
-                Tú marcaste lo que oíste en{" "}
-                <strong className="text-exito">{metrica.participadas}</strong>.
-                Eso lo sabes tú, que estabas ahí — la app no juzga qué palabra
-                dijo, y no va a fingir que sí.
+                {tx(c.gemelas.marcasteAntes)}{" "}
+                <strong className="text-exito">{metrica.participadas}</strong>
+                {tx(c.gemelas.marcasteDespues)}
               </>
             ) : (
-              <>
-                Estar juntos frente al juego ya cuenta. Cuando quiera intentar
-                una palabra, tú marcas la que oigas — sin apuros.
-              </>
+              tx(c.gemelas.sinMarcas)
             )}
           </p>
         </>
@@ -188,22 +191,20 @@ function Logro({
 
 /** Lo que NO pasó, dicho sin culpa (COGA: nunca hay derrota, y estar juntos ya cuenta). */
 function SinVoz({ metrica }: { metrica: Metrica }) {
+  const tx = useT();
+  const c = juegos.celebracion.sinVoz;
   const titulo =
     metrica.tipo === "inversiones"
-      ? "Hoy el cohete casi no despegó"
+      ? c.cohete
       : metrica.tipo === "activaciones"
-        ? "Hoy los dibujos se quedaron esperando"
-        : "Hoy el globo casi no voló";
+        ? c.dibujos
+        : c.globo;
 
   return (
     <>
       <IconoBrote className="text-acento h-16 w-16" />
-      <h2 className="font-display text-3xl">{titulo}</h2>
-      <p className="text-tinta-suave">
-        El micrófono no alcanzó a escuchar su voz. No pasa nada y no se perdió
-        nada: estar juntos frente al juego ya cuenta. Mañana lo intentamos otra
-        vez.
-      </p>
+      <h2 className="font-display text-3xl">{tx(titulo)}</h2>
+      <p className="text-tinta-suave">{tx(c.cuerpo)}</p>
     </>
   );
 }
@@ -216,6 +217,7 @@ export function CelebracionHonesta({
   palabrasEncendidas = [],
   vueltas = 0,
 }: Props) {
+  const tx = useT();
   // R1: un intento = una sesión registrada. Es el ÚNICO punto de escritura del Rumbo (compartido
   // por los 4 juegos). Se escribe al montar la celebración; el ref evita el doble registro del
   // doble-efecto de StrictMode. Solo números —los mismos que se muestran arriba— jamás audio.
@@ -247,7 +249,7 @@ export function CelebracionHonesta({
           className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
           data-testid="otra-vez"
         >
-          Otra vez
+          {tx(juegos.comun.otraVez)}
         </button>
         <button
           type="button"
