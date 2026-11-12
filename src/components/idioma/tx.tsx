@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { LANG_HTML, type Datos, type Texto } from "@/lib/idioma";
 import { useAjustes } from "@/components/estado-local";
 import { useIdioma, useT } from "@/lib/idioma/estado";
@@ -34,4 +34,27 @@ export function TituloDePagina({ t: texto }: { t: Texto }) {
     document.title = titulo;
   }, [titulo, hidratado]);
   return null;
+}
+
+/**
+ * Oculta (sin quitarle su sitio) lo que se pinta en español en el servidor hasta que se sabe el idioma
+ * real. Así un dispositivo en inglés no ve el destello de español ni el salto de diseño cuando el texto
+ * cambia de largo (un desplazamiento de elementos invisibles no cuenta como salto). Para pantallas
+ * de ajustes largas; el contenido ya está en el HTML, solo no se ve ese instante.
+ */
+export function OcultoHastaHidratar({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const hidratado = useAjustes() !== null;
+  return (
+    <div
+      className={`${className ?? ""} ${hidratado ? "" : "invisible"}`.trim()}
+    >
+      {children}
+    </div>
+  );
 }
