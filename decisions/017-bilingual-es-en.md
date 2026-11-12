@@ -25,7 +25,7 @@ The adult reads all the text; the child does not read. Hard rules 2, 4 and 8 mus
    English word content is the next sprint's job.
 6. **Gate**: the sensitivity gate covers `src/lib/idioma/**` and `content/capsulas-en/**` (hashes regenerated
    before writing English), the age guard also catches the English forms, and a banned-copy list in English
-   (deadlines, scores, consultancy language, «prompt» → «cue») fails the build.
+   (deadlines, scores, consultancy language and the construction-jargon word) fails the build.
 7. **Tests** — parity of keys and placeholders in every catalog, same daily id in both languages, the
    `idioma` setting, zero traffic. e2e and screenshots in ONE language per sprint (this one: Spanish);
    the other one at the milestone close.

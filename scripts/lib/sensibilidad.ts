@@ -123,8 +123,16 @@ export function archivoDe(alcance: Alcance): string {
  * (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
-  // S7 el manual en inglés (entero: nace con el gate)
+  // S7: los lotes de limpieza (README · manual · guía · brochure) quedaron en 0 coincidencias, así que
+  // esos documentos entran ENTEROS (ya no solo los tramos s5/s6), junto con lo nuevo del sprint.
+  "README.md",
+  "docs/MANUAL-DE-USO.md",
   "docs/MANUAL-DE-USO.en.md",
+  "docs/GUIA-DE-PRUEBA.html",
+  "docs/BROCHURE.html",
+  "docs/BLUEPRINT.html",
+  "docs/REGLAS-ANEXO.md",
+  "decisions/017-bilingual-es-en.md",
   // S6 «La pirámide»
   "content/fichas.ts",
   "docs/LA-PIRAMIDE.html",
@@ -136,8 +144,6 @@ export const ALCANCE_GATE: Alcance[] = [
   "sprints/SPRINT_006-auditoria.md",
   "sprints/PROPUESTA-sprint-006-piramide.md",
   "decisions/016-la-piramide-fichas-y-retiro-del-registro.md",
-  { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
-  { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
   // S5 «Contacto visual» y lo compartido (el schema desde el dominio del S5 incluye el del S6)
   { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
   "content/contacto-visual.ts",
@@ -152,8 +158,6 @@ export const ALCANCE_GATE: Alcance[] = [
   "sprints/SPRINT_005-summary.md",
   "sprints/PROPUESTA-sprint-005-contacto-visual.md",
   "decisions/015-dominio-contacto-visual-y-gate-de-sensibilidad.md",
-  { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
-  { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
 ];
 
 /**

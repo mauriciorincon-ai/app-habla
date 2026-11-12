@@ -249,7 +249,7 @@ juego, ese rato no se cuenta (a propósito: solo se registra lo que el juego ya 
 
 Lo que el rumbo **nunca** va a hacer: ponerle una nota, un puntaje, un porcentaje o un plazo; ni
 compararlo con otro niño; ni castigarlo por una semana floja (una semana con pocos días es
-simplemente un número pequeño, sin drama). No es un diagnóstico ni un boletín — es el registro
+simplemente un número pequeño, sin drama). No es una evaluación ni un boletín — es el registro
 cálido de lo que hicieron juntos. Al principio estará vacío: jueguen unos días y cobra vida.
 
 ### El objetivo de la semana — la sintonía con sus terapias (nuevo)
@@ -362,7 +362,7 @@ otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
   —en el cohete— si el **tono** de esa voz sube o baja.
 - **NO mide:** qué palabra dijo, ni si la pronunció bien. Hoy ningún sistema evalúa con fiabilidad
-  la pronunciación de un niño de 4 a 6 años en español, y por eso la app no lo finge. En "Palabra
+  la pronunciación de un niño pequeño que apenas empieza a hablar, en español, y por eso la app no lo finge. En "Palabra
   y dibujo", el dibujo se enciende con cualquier sonido — **eso no significa que la palabra estuvo
   bien**, y la app nunca va a decir que sí.
 - **Quien juzga el acierto es usted.** Si su hijo dijo la palabra, usted lo sabe: celébrelo con sus

@@ -30,7 +30,7 @@ Estado v2.0.0 (§ 5): [siempre] — sin cambio de fondo; el test de árbol y el 
    y el primer render del cliente no coinciden (React #418) y la página se regenera entera
    justo para quien el cinturón quiere cuidar. Reduced motion cambia PROPIEDADES (initial,
    variants, transition) o lo hace el CSS; dos gates: test unitario «mismo HTML con `null` /
-   `true` / `false`» sobre cada componente de motion + axe bajo emulación de reduced-motion
+   `true` / `false`» sobre cada componente de motion + axe bajo simulación de reduced-motion
    (patrón `wiki/patterns/reduced-motion-sin-ramificar-el-arbol.md` de la planeadora).
    (b) **Los tokens de tinta VETADOS como texto se declaran en `design-system.md` y FALLAN en
    lint/test, no en axe al final** (p. ej. `ink-3`, que no alcanza AA sobre superficie): un
@@ -289,7 +289,7 @@ Estado v2.0.0 (§ 17-bis): [siempre] — sin cambio de fondo; `/deploy-check` §
    DERIVADOS de todo lo demás. **(a) Un derivado JAMÁS nace menos privado que su fuente:**
    índice, cache, config, reporte o log que descienda de datos privados nace con permisos
    restrictivos (700/600 o equivalente), con test que se demostró en rojo y reparación al
-   abrir si ya existía mal *(origen: dash S2 Correctivo 001 — el índice nacía 644 con prompts
+   abrir si ya existía mal *(origen: dash S2 Correctivo 001 — el índice nacía 644 con peticiones
    reales; 531 tests verdes no lo vieron)*. **(b) Todo arnés que pueda tocar fuentes arranca
    demostrando contra qué árbol corre** (capturas, fixtures, seeds): declara su árbol al
    arrancar y ABORTA si alcanza datos reales sin confirmación explícita — comprobar, no
@@ -382,7 +382,7 @@ Estado v2.0.0 (§ 21): [cambio] — solo si la app usa la suscripción; la relec
     esta app usa la **suscripción del usuario** como proveedor de modelo (binario oficial de Claude Code en
     modo no interactivo): solo el binario sin modificar y la sesión propia del usuario · el token **jamás**
     entra a variables de entorno, trazas, LangSmith ni al repo · la invocación corre en un **directorio
-    temporal limpio con MCP vacío** (esta constitución NO entra al prompt del agente) · los lotes se corren
+    temporal limpio con MCP vacío** (esta constitución NO entra al contexto del agente) · los lotes se corren
     **fuera de CI**, pequeños y espaciados · existe un **ADR de cumplimiento** con la lectura de los términos
     vigentes, re-leídos antes de cada release, y un **interruptor a proveedor por clave** · prohibido exponer
     el patrón a terceros (para usuarios externos, siempre clave de API). *(Primera app: planlang; el spike
@@ -608,7 +608,7 @@ conmutador visible desde la maqueta de la Etapa de Diseño.
 
 ## Habla
 
-> Texto íntegro de la constitución v1 (243 líneas, kit v1.4.0, 2026-07-11), conservado tal cual al adoptar el núcleo v2.4.0 en el S7.
+> Texto íntegro de la constitución v1 (243 líneas, kit v1.4.0, 2026-07-11), conservado al adoptar el núcleo v2.4.0 en el S7 (salvo siete frases de redacción que el gate de sensibilidad ahora vigila). **Desde el S7 las frases de abajo que dicen «solo español» o «no es bilingüe» están sustituidas por el ADR-017 (la app es bilingüe ES/EN).**
 
 # Hablemos San (app-habla) — constitución de la app (Claude Code)
 
@@ -631,7 +631,7 @@ conmutador visible desde la maqueta de la Etapa de Diseño.
 ## Qué es esta app
 
 **Hablemos San** — _"Su voz mueve el mundo."_ App web (PWA) que ayuda a **estimular el habla de un
-niño de 4–6 años** (hispanohablante, perfil de neurodivergencia) mediante **práctica diaria
+niño pequeño** (hispanohablante) mediante **práctica diaria
 estructurada en casa, dirigida por el padre**. Complementaria — **jamás sustituta** — de las
 **terapias integrales del lenguaje** reales del niño (fonoaudiología, terapia ocupacional,
 psicología, pedagogía — término fijado por el usuario en el gate S4, H5; la VISION aún dice
@@ -639,7 +639,7 @@ psicología, pedagogía — término fijado por el usuario en el gate S4, H5; la
 aprobada 2026-07-11). Sprint 001: "Hoy hablamos" (la respuesta diaria + el primer juego de voz).
 
 **La tesis del producto:** la app **orquesta al padre, no lo reemplaza** — la evidencia dice que
-el motor del desarrollo del habla es la interacción adulto-niño (parent-implemented g=0.42). La
+el motor del desarrollo del habla es la interacción adulto-niño (aplicada por los padres g=0.42). La
 pantalla es utilería del juego compartido, nunca la niñera.
 
 ## ⚠️ Reglas duras de esta app (producto, no estilo)
@@ -658,11 +658,11 @@ pantalla es utilería del juego compartido, nunca la niñera.
    lo que diga el niño (es el error de la competencia). Cualquier reconocimiento de voz futuro se
    muestra como "quizás", jamás como veredicto.
 4. **No es terapia; no promete plazos.** Posicionamiento: _práctica/estimulación complementaria_.
-   Prohibido en el microcopy: "terapia", "diagnóstico", "resultados en X semanas", puntajes
+   Prohibido en el microcopy: "terapia", "evaluación", "resultados en X semanas", puntajes
    clínicos. Sin biometría, sin deepfakes, sin clonación de voz.
 5. **Co-uso siempre.** No existe "modo niño solo" en el MVP. Cada actividad se diseña para
    adulto+niño; el guion del padre precede al juego.
-6. **Diseño para 4–6 años neurodivergentes.** Sin límite de tiempo, sin game-over, sin castigo por
+6. **Diseño para un niño pequeño con sensibilidades propias.** Sin límite de tiempo, sin game-over, sin castigo por
    error; carga sensorial ajustable; **modo calma** de un toque; touch del niño ≥64 px. COGA W3C.
 7. **Palabras sueltas PRIMERO (ADR 005, ratificada por el usuario 2026-07-12).** El niño real
    dice palabras de a una: TODO contenido y feature nace calibrado a esa etapa — asociación
@@ -743,7 +743,7 @@ decisions/NNN-titulo.md   (ADRs de implementación)
    en el mismo sprint.
 9. **Diseño con gate (`design-system.md` + skill `diseno-ui`).** El **Sprint 1 CREA** el
    `design-system.md` tomando como **referencia VISUAL** los tokens del prototipo legado
-   `referencias-ui/habla/Habla Santy/design-system.md` (paleta dual operador/niño "Clínica cálida"
+   `referencias-ui/habla/Habla Santy/design-system.md` (paleta dual operador/niño "cálida y serena"
    sage/cream) — pero **sus 9 pantallas funcionales están ANULADAS** (concepto viejo): no heredes
    flujos ni features de ahí. Cada sprint con UI cierra con checklist `diseno-ui` + aprobación
    visual del usuario sobre la preview (idealmente con el niño observando). **Claude Design es BAJO
