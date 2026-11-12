@@ -6,9 +6,9 @@
 
 import { useState } from "react";
 import { useT } from "@/lib/idioma/estado";
+import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { primerUso } from "@/lib/idioma/textos/primer-uso";
 import {
-  NOMBRE_TEMA,
   TEMAS,
   type Perfil,
   type Tema,
@@ -92,7 +92,7 @@ export function PerfilForm({
                     : "border-borde text-tinta bg-fondo",
                 ].join(" ")}
               >
-                {NOMBRE_TEMA[tema]}
+                {tx(nombreTema[tema])}
               </button>
             );
           })}

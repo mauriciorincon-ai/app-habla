@@ -13,11 +13,11 @@ import { PerfilForm } from "@/components/perfil-form";
 import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
 import type { Texto } from "@/lib/idioma";
+import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import {
   AJUSTES_DEFECTO,
-  NOMBRE_TEMA,
   type Apariencia,
   type Perfil,
 } from "@/lib/storage/schemas";
@@ -172,7 +172,7 @@ function SeccionPerfil() {
             <div className="flex gap-2">
               <dt className="text-tinta-suave">{tx(textos.perfil.temas)}</dt>
               <dd data-testid="perfil-temas">
-                {perfil.temas.map((tema) => NOMBRE_TEMA[tema]).join(" · ")}
+                {perfil.temas.map((tema) => tx(nombreTema[tema])).join(" · ")}
               </dd>
             </div>
           </dl>

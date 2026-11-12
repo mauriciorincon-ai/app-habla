@@ -6,7 +6,6 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { NOMBRE_ETAPA, NOMBRE_TECNICA } from "@content/schema";
 import {
   Cohete,
   Globo,
@@ -33,6 +32,8 @@ import {
 import { diasPracticados } from "@/lib/coach/daily";
 import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
+import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
+import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { hoy } from "@/lib/idioma/textos/hoy";
 import { Onboarding } from "./onboarding";
 
@@ -103,18 +104,18 @@ export function HoyCliente() {
           className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
           data-testid="etiqueta-capsula"
         >
-          {tx(hoy.etiqueta.tecnica)} {NOMBRE_TECNICA[capsula.tecnica]} ·{" "}
+          {tx(hoy.etiqueta.tecnica)} {tx(nombreTecnica[capsula.tecnica])} ·{" "}
           {tx(hoy.etiqueta.etapa)}{" "}
           <span data-testid="etiqueta-etapa">
-            {NOMBRE_ETAPA[capsula.etapa]}
+            {tx(textosAjustes.etapa.nombre[capsula.etapa])}
           </span>
         </p>
 
         <h2 className="mt-3 text-2xl font-medium" data-testid="capsula-titulo">
-          {capsula.titulo}
+          {tx(capsula.titulo)}
         </h2>
 
-        <p className="mt-4 leading-relaxed">{capsula.explicacion}</p>
+        <p className="mt-4 leading-relaxed">{tx(capsula.explicacion)}</p>
 
         {/* El guion y la actividad son las DOS cosas que el padre va a hacer hoy: se ven como
             pareja (misma caja, mismo peso, cada una con su icono). Antes la actividad era texto
@@ -131,7 +132,7 @@ export function HoyCliente() {
               className="font-display mt-2 text-xl italic"
               data-testid="capsula-guion"
             >
-              {capsula.guion}
+              {tx(capsula.guion)}
             </p>
           </div>
         </div>
@@ -143,7 +144,7 @@ export function HoyCliente() {
               {tx(hoy.laActividad)}
             </p>
             <p className="mt-2 text-lg leading-relaxed">
-              {capsula.actividad.texto}
+              {tx(capsula.actividad.texto)}
             </p>
           </div>
         </div>

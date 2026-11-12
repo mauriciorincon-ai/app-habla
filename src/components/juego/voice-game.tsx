@@ -8,7 +8,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
-import { NOMBRE_TECNICA, type Capsula } from "@content/schema";
+import type { Capsula } from "@content/schema";
 import {
   ajustesActuales,
   guardarAjustesEnStore,
@@ -28,6 +28,7 @@ import {
   type Metrica,
 } from "@/lib/session-flow";
 import { useT } from "@/lib/idioma/estado";
+import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
@@ -146,8 +147,8 @@ function JuegoListo({
     >
       {actual.fase === "guion" ? (
         <GuionCard
-          etiqueta={NOMBRE_TECNICA[capsula.tecnica]}
-          guion={capsula.guion}
+          etiqueta={tx(nombreTecnica[capsula.tecnica])}
+          guion={tx(capsula.guion)}
           nota={tx(juegos.globo.nota)}
           onEmpezar={empezar}
           listo

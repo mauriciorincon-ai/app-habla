@@ -67,13 +67,13 @@ for (const etapa of ETAPAS) {
       cuerpo += `
     <article class="capsula" id="${esc(c.id)}">
       <label class="revision"><input type="checkbox" data-id="${esc(c.id)}"> Revisada</label>
-      <h4>${esc(c.titulo)}</h4>
+      <h4>${esc(c.titulo.es)}</h4>
       <p class="chips"><span class="chip">${esc(NOMBRE_TECNICA[c.tecnica])}</span><span class="chip">${
         c.actividad.conPantalla ? "con pantalla" : "sin pantalla"
       }</span>${c.etiquetas.map((e) => `<span class="chip suave">${esc(e)}</span>`).join("")}</p>
-      <p class="explicacion">${esc(c.explicacion)}</p>
-      <blockquote><strong>Tu línea:</strong> ${esc(c.guion)}</blockquote>
-      <p class="actividad"><strong>La actividad:</strong> ${esc(c.actividad.texto)}</p>
+      <p class="explicacion">${esc(c.explicacion.es)}</p>
+      <blockquote><strong>Tu línea:</strong> ${esc(c.guion.es)}</blockquote>
+      <p class="actividad"><strong>La actividad:</strong> ${esc(c.actividad.texto.es)}</p>
       <p class="fuente">${esc(c.fuente)}</p>
     </article>`;
     }

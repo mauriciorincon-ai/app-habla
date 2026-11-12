@@ -109,3 +109,35 @@ describe("ajuste de idioma", () => {
     expect(AjustesSchema.parse(viejo)).toMatchObject({ ...viejo, idioma: null });
   });
 });
+
+describe("cápsulas del día en los dos idiomas", () => {
+  it("cada cápsula trae sus dos caras, dentro de los límites del esquema", async () => {
+    const { CAPSULAS } = await import("../../content/capsulas");
+    const { CAPSULAS_EN } = await import("../../content/capsulas-en");
+    const { BibliotecaSchema } = await import("../../content/schema");
+    expect(() => BibliotecaSchema.parse(CAPSULAS)).not.toThrow();
+    // Ni una cápsula en inglés huérfana (id que ya no existe en español).
+    const ids = new Set(CAPSULAS.map((c) => c.id));
+    for (const id of Object.keys(CAPSULAS_EN)) expect(ids.has(id), `id huérfano en capsulas-en: ${id}`).toBe(true);
+    for (const c of CAPSULAS) {
+      expect(c.guion.en, c.id).not.toContain("\n");
+      expect(c.titulo.en, c.id).not.toBe(c.titulo.es);
+      expect(c.explicacion.en, c.id).not.toBe(c.explicacion.es);
+    }
+  });
+
+  it("la cápsula del día es la MISMA id en los dos idiomas (la selección no depende del texto)", async () => {
+    const { CAPSULAS } = await import("../../content/capsulas");
+    const { seleccionarCapsula } = await import("../../src/lib/coach/daily");
+    const { PROGRESO_INICIAL } = await import("../../src/lib/storage/schemas");
+    // La misma biblioteca con el inglés cambiado por completo: si la selección mirara el texto, cambiaría.
+    const otra = CAPSULAS.map((c) => ({ ...c, titulo: { ...c.titulo, en: "x" }, guion: { ...c.guion, en: "y" } }));
+    for (const fecha of ["2026-11-11", "2026-12-24", "2027-02-03"]) {
+      for (const etapa of ["sonidos-e-intentos", "palabras-sueltas", "primeras-frases"] as const) {
+        const a = seleccionarCapsula(fecha, PROGRESO_INICIAL, CAPSULAS, etapa).capsula.id;
+        const b = seleccionarCapsula(fecha, PROGRESO_INICIAL, otra, etapa).capsula.id;
+        expect(b, `${fecha} ${etapa}`).toBe(a);
+      }
+    }
+  });
+});
