@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { HoyCliente } from "@/components/hoy/hoy-cliente";
 import { IconoAjustes, IconoBrujula, IconoDiana } from "@/components/iconos";
+import { Tx } from "@/components/idioma/tx";
+import { comunes } from "@/lib/idioma/textos/comunes";
+import { hoy } from "@/lib/idioma/textos/hoy";
 
 // Patrón lcp-nace-estatico: el bloque grande de la mitad superior (el saludo) se renderiza
 // ESTÁTICO en el servidor — sin envolturas que arranquen en opacity 0. La cápsula, que depende
@@ -24,7 +27,7 @@ export default function HoyPage() {
             data-testid="ir-a-rumbo"
           >
             <IconoBrujula className="h-4 w-4 shrink-0" />
-            El rumbo
+            <Tx t={comunes.secciones.rumbo} />
           </Link>
           <Link
             href="/objetivo"
@@ -32,7 +35,7 @@ export default function HoyPage() {
             data-testid="ir-a-objetivo"
           >
             <IconoDiana className="h-4 w-4 shrink-0" />
-            Objetivo
+            <Tx t={comunes.secciones.objetivo} />
           </Link>
           <Link
             href="/ajustes"
@@ -40,17 +43,14 @@ export default function HoyPage() {
             data-testid="ir-a-ajustes"
           >
             <IconoAjustes className="h-4 w-4 shrink-0" />
-            Ajustes
+            <Tx t={comunes.secciones.ajustes} />
           </Link>
         </nav>
         <h1 className="font-display mt-4 text-4xl sm:text-5xl">
-          ¿Y hoy qué puedo hacer por mi hijo?
+          <Tx t={hoy.pregunta} />
         </h1>
         <p className="text-tinta-suave mt-3 max-w-prose">
-          Esto es lo de hoy: una técnica con evidencia, explicada en 30
-          segundos, con una línea que puedes decirle y una actividad concreta.
-          Práctica en casa para acompañar —nunca reemplazar— las terapias
-          integrales del lenguaje de su hijo.
+          <Tx t={hoy.intro} />
         </p>
       </header>
 

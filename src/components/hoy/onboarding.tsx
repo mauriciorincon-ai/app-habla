@@ -6,25 +6,27 @@
 
 import { guardarPerfilEnStore } from "@/components/estado-local";
 import { PerfilForm } from "@/components/perfil-form";
+import { useT } from "@/lib/idioma/estado";
+import { primerUso } from "@/lib/idioma/textos/primer-uso";
 
 export function Onboarding() {
+  const tx = useT();
   return (
     <section
       className="bg-superficie shadow-tarjeta rounded-2xl p-6"
       data-testid="onboarding"
     >
-      <h2 className="text-xl font-medium">Antes de empezar, dos cositas</h2>
+      <h2 className="text-xl font-medium">{tx(primerUso.titulo)}</h2>
 
       <p className="text-tinta-suave mt-3 text-sm">
-        Todo lo que escribas aquí se queda <strong>en este dispositivo</strong>:
-        no hay cuentas ni servidores. Y la voz de su hijo nunca se graba ni sale
-        de aquí — solo se analiza en el momento para saber si hay voz y cuánto
-        dura.
+        {tx(primerUso.privacidad.antes)}{" "}
+        <strong>{tx(primerUso.privacidad.enfasis)}</strong>
+        {tx(primerUso.privacidad.despues)}
       </p>
 
       <PerfilForm
         inicial={null}
-        textoGuardar="Empezar"
+        textoGuardar={tx(primerUso.empezar)}
         testIdGuardar="terminar-onboarding"
         onGuardar={guardarPerfilEnStore}
       />

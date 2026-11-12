@@ -32,9 +32,12 @@ import {
 } from "@/components/estado-capsulas";
 import { diasPracticados } from "@/lib/coach/daily";
 import { useHidratado } from "@/components/use-hidratado";
+import { useT } from "@/lib/idioma/estado";
+import { hoy } from "@/lib/idioma/textos/hoy";
 import { Onboarding } from "./onboarding";
 
 export function HoyCliente() {
+  const tx = useT();
   const hidratado = useHidratado();
   const progreso = useProgreso();
   const perfil = usePerfil();
@@ -84,7 +87,7 @@ export function HoyCliente() {
         >
           <IconoDiana className="text-acento h-4 w-4 shrink-0" />
           <span>
-            Objetivo de la semana:{" "}
+            {tx(hoy.objetivoDeLaSemana)}{" "}
             <strong className="text-tinta">«{objetivo.texto}»</strong>
           </span>
         </Link>
@@ -100,7 +103,8 @@ export function HoyCliente() {
           className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
           data-testid="etiqueta-capsula"
         >
-          Técnica: {NOMBRE_TECNICA[capsula.tecnica]} · Etapa:{" "}
+          {tx(hoy.etiqueta.tecnica)} {NOMBRE_TECNICA[capsula.tecnica]} ·{" "}
+          {tx(hoy.etiqueta.etapa)}{" "}
           <span data-testid="etiqueta-etapa">
             {NOMBRE_ETAPA[capsula.etapa]}
           </span>
@@ -121,7 +125,7 @@ export function HoyCliente() {
           <IconoBurbuja className="text-acento mt-0.5 h-8 w-8 shrink-0" />
           <div>
             <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-              Tu línea de hoy
+              {tx(hoy.tuLinea)}
             </p>
             <p
               className="font-display mt-2 text-xl italic"
@@ -136,7 +140,7 @@ export function HoyCliente() {
           <IconoJuntos className="text-acento mt-0.5 h-8 w-8 shrink-0" />
           <div>
             <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-              La actividad de hoy
+              {tx(hoy.laActividad)}
             </p>
             <p className="mt-2 text-lg leading-relaxed">
               {capsula.actividad.texto}
@@ -147,7 +151,7 @@ export function HoyCliente() {
         <details className="mt-6">
           <summary className="text-tinta-suave flex cursor-pointer items-center gap-2 text-sm">
             <IconoCita className="h-4 w-4 shrink-0" />
-            ¿De dónde sale esto?
+            {tx(hoy.deDondeSale)}
           </summary>
           <p className="text-tinta-suave mt-2 text-sm italic">
             {capsula.fuente}
@@ -159,7 +163,7 @@ export function HoyCliente() {
             el estado, no la acción— (gate S4). Ahora el botón es la RESPUESTA a la pregunta. */}
         {!completada ? (
           <p className="text-tinta-suave mt-8 text-sm">
-            ¿Ya hicieron la actividad de hoy?
+            {tx(hoy.preguntaHecha)}
           </p>
         ) : null}
 
@@ -172,7 +176,7 @@ export function HoyCliente() {
               className="bg-acento text-sobre-acento flex min-h-12 flex-1 items-center justify-center rounded-xl px-6 font-medium"
               data-testid="ir-a-jugar"
             >
-              Jugar ahora, juntos
+              {tx(hoy.jugarAhora)}
             </Link>
           ) : null}
 
@@ -181,8 +185,7 @@ export function HoyCliente() {
               className="text-exito flex min-h-12 flex-1 items-center justify-center gap-2 text-sm font-medium"
               data-testid="capsula-completada"
             >
-              <IconoHecho className="h-5 w-5 shrink-0" /> Hecho hoy. Mañana hay
-              otra.
+              <IconoHecho className="h-5 w-5 shrink-0" /> {tx(hoy.hechoHoy)}
             </p>
           ) : (
             <button
@@ -194,7 +197,7 @@ export function HoyCliente() {
               data-testid="marcar-hecha"
             >
               <IconoPorHacer className="text-tinta-suave h-5 w-5 shrink-0" />
-              Sí, ya lo hicimos
+              {tx(hoy.siYaLoHicimos)}
             </button>
           )}
         </div>
@@ -207,12 +210,16 @@ export function HoyCliente() {
             className="text-tinta-suave border-borde mt-5 border-t pt-4 text-sm"
             data-testid="historial"
           >
-            Han practicado juntos{" "}
+            {tx(hoy.historial.antes)}{" "}
             <span className="text-acento font-sans text-2xl font-semibold tabular-nums">
               {diasAcompañados}
             </span>{" "}
-            {diasAcompañados === 1 ? "día" : "días"} en total. Este número nunca
-            baja: si un día no entran, no se pierde nada.
+            {tx(
+              diasAcompañados === 1
+                ? hoy.historial.unDia
+                : hoy.historial.variosDias,
+            )}{" "}
+            {tx(hoy.historial.despues)}
           </p>
         ) : null}
       </article>
@@ -236,10 +243,11 @@ export function HoyCliente() {
           <IconoGemelas className="text-acento h-8 w-9" />
         </span>
         <span>
-          <span className="block font-medium">Los juegos de voz</span>
+          <span className="block font-medium">
+            {tx(hoy.juegos.titulo)}
+          </span>
           <span className="text-tinta-suave block text-sm">
-            El globo, el cohete, los dibujos y las gemelas. Para jugar juntos —
-            hoy o cualquier día.
+            {tx(hoy.juegos.detalle)}
           </span>
         </span>
       </Link>

@@ -14,6 +14,8 @@
 // no se cazarían).
 
 import { createHash } from "node:crypto";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 export const N_MAX = 5;
 
@@ -151,6 +153,29 @@ export const ALCANCE_GATE: Alcance[] = [
   { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
   { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
 ];
+
+/**
+ * S7 «dos idiomas»: todo lo que contiene el texto del adulto en los dos idiomas entra al gate. Son
+ * directorios (los catálogos y las cápsulas en inglés crecen): cada archivo .ts/.tsx se vigila.
+ */
+export const DIRS_IDIOMAS = ["src/lib/idioma", "content/capsulas-en"];
+
+export function archivosDeIdiomas(raiz: string): string[] {
+  const out: string[] = [];
+  const andar = (rel: string) => {
+    const abs = join(raiz, rel);
+    if (!existsSync(abs)) return;
+    for (const nombre of readdirSync(abs).sort()) {
+      const r = `${rel}/${nombre}`;
+      if (statSync(join(raiz, r)).isDirectory()) andar(r);
+      else if (/\.(ts|tsx)$/.test(nombre)) out.push(r);
+    }
+  };
+  DIRS_IDIOMAS.forEach(andar);
+  return out;
+}
+
+ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
 export function nombreDe(alcance: Alcance): string {

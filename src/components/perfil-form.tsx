@@ -5,6 +5,8 @@
 // forma de volver a esta pantalla era borrar todos los datos o una ventana de incógnito).
 
 import { useState } from "react";
+import { useT } from "@/lib/idioma/estado";
+import { primerUso } from "@/lib/idioma/textos/primer-uso";
 import {
   NOMBRE_TEMA,
   TEMAS,
@@ -27,6 +29,7 @@ export function PerfilForm({
   /** Si existe, se muestra un botón secundario para salir sin guardar. */
   onCancelar?: () => void;
 }) {
+  const tx = useT();
   const [apodo, setApodo] = useState(inicial?.apodo ?? "");
   const [temas, setTemas] = useState<Tema[]>(inicial?.temas ?? []);
 
@@ -52,8 +55,8 @@ export function PerfilForm({
     <div>
       <div className="mt-6">
         <label htmlFor="apodo" className="block text-sm font-medium">
-          ¿Cómo le dicen en casa?{" "}
-          <span className="text-tinta-suave">(opcional)</span>
+          {tx(primerUso.form.apodoEtiqueta)}{" "}
+          <span className="text-tinta-suave">{tx(primerUso.form.opcional)}</span>
         </label>
         <input
           id="apodo"
@@ -61,18 +64,17 @@ export function PerfilForm({
           value={apodo}
           onChange={(e) => setApodo(e.target.value)}
           maxLength={30}
-          placeholder="Su apodo"
+          placeholder={tx(primerUso.form.apodoPlaceholder)}
           className="border-borde bg-fondo text-tinta mt-2 min-h-11 w-full rounded-xl border px-4"
         />
       </div>
 
       <fieldset className="mt-6">
         <legend className="text-sm font-medium">
-          ¿Qué le gusta? Elige hasta tres
+          {tx(primerUso.form.temasLeyenda)}
         </legend>
         <p className="text-tinta-suave mt-1 text-sm">
-          Las actividades usan lo que a él ya le interesa: seguir su interés es
-          una de las técnicas con mejor respaldo.
+          {tx(primerUso.form.temasAyuda)}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {TEMAS.map((tema) => {
@@ -112,7 +114,7 @@ export function PerfilForm({
             onClick={onCancelar}
             className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-6 font-medium"
           >
-            Mejor no
+            {tx(primerUso.form.mejorNo)}
           </button>
         ) : null}
       </div>

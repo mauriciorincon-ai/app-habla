@@ -28,6 +28,9 @@ export default defineConfig({
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: BASE,
+    // S7: la app sigue al navegador, y Playwright corre en en-US por defecto. Los e2e de este sprint
+    // van en español (regla 20: UN idioma por sprint); el inglés se prueba en tests/e2e/idioma.spec.ts.
+    locale: "es-CO",
     trace: "on-first-retry",
     // Micrófono falso para los e2e del juego de voz: Chromium "captura" el WAV sintético
     // (silencio → voz sostenida → silencio; ver scripts/gen-voz-sintetica.mjs) y lo loopea.
