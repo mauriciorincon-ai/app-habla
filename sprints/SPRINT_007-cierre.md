@@ -33,6 +33,6 @@ pr: 18
 - **Modelo por fase:** plan Opus 5.5 · F1–F3 Sonnet 5.5 medium · auditor Sonnet 5.5 high; sin desvío. **Relevos:** 0.
 - **Tokens:** subagentes en serie: 8 en F2 (migración, cápsulas EN, brochure), 2 en F3 (auditor, manual EN) y los de plan/F1; `/compact` pedidos y hechos: 3 (plan, F1, F2). Cifras medidas por la planeadora.
 - **Servidores:** `lsof` LISTEN en este repo: 0 míos (solo el test-server de Playwright de VS Code, que no cuenta). De otras apps, sin tocar: app-big-d y app-planlang (:3200).
-- **un-pr-vivo:** corre por primera vez en este PR; entra a la ruleset `main-protegida` tras su primera corrida verde.
+- **un-pr-vivo:** corrió verde por primera vez en este PR y ya está en la ruleset `main-protegida` (`quality` · `e2e` · `lighthouse` · `un-pr-vivo`). **Lighthouse falló en la primera corrida del PR:** CLS de `/ajustes` 0,1025 (tope 0,1), porque el texto pasa de español a inglés al hidratar; pagado con `OcultoHastaHidratar` (CLS 0 medido en las 12 rutas) · bac1aa0.
 - **Recomendación:** S8 = palabras, pares y diccionario del Objetivo en inglés. Esfuerzo-beneficio alto.
 - **Para mergear:** squash y borrar la rama; después `/cierre-sprint habla`.
