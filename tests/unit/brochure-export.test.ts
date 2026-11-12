@@ -129,7 +129,7 @@ describe("contrato brochure-export.json (v1.0.0)", () => {
 
   it("CERO ENLACES: el archivo entero no contiene ninguna dirección de acceso", () => {
     expect(CRUDO).not.toMatch(
-      /vercel\.app|workers\.dev|hablemos-san|https?:\/\//,
+      /vercel[.]app|workers[.]dev|hablemos[-]san|https?:\/\//,
     );
   });
 

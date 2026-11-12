@@ -21,6 +21,17 @@ jobs:
       - run: pnpm test            # vitest run --coverage (umbral 70% en vitest.config)
       - run: pnpm build
       - run: pnpm audit --audit-level high
+      # kit v2.0.0 — regla 17 (cero enlaces, F0 #8) pasa de casilla manual a gate de CI (auditoria 2026-10-06, R9/Q3a).
+      # La produccion se MUESTRA, jamas se ENTREGA. Dos superficies: los archivos versionados (git grep) y el campo
+      # `homepage` del repo en GitHub (la fuga de nutri-kids de 2026-08 vivia ahi). Los dominios salen de cero-enlaces.json
+      # (8 por defecto; cada app SUMA el host real de su stack al adoptar el kit; jamas se quita uno). Demo en rojo:
+      # scripts/demo-rojo.sh (visto en rojo en el S7).
+      - name: Cero enlaces — árbol y homepage del repo (regla 17, kit v2.0.0)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HOMEPAGE="$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.homepage // ""')"
+          node scripts/cero-enlaces.mjs --homepage "$HOMEPAGE"
 
   e2e:
     runs-on: ubuntu-latest
@@ -52,5 +63,5 @@ jobs:
         # 3.8s simulado vs 242ms observado) — budgets client-side necesitan margen documentado.
         run: |
           npm i -g @lhci/cli
-          URLS=$(node -e "console.log(require('./lighthouse-urls.json').map(u=>'--collect.url=http://localhost:3000'+u).join(' '))")
+          URLS=$(node -e "console.log(require('./lighthouse-urls.json').map(u=>'--collect.url=http://127.0.0.1:3500'+u).join(' '))")
           lhci autorun --collect.startServerCommand="pnpm start" $URLS --assert.budgetsFile=./perf-budget.json
