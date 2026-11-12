@@ -34,3 +34,5 @@ The adult reads all the text; the child does not read. Hard rules 2, 4 and 8 mus
 - Every new screen or content brings its `{ es, en }` pair in the same PR.
 - The catalog (S8 document) and the brochure read the Spanish side unless stated.
 - ADR-001 stays in the repo, marked superseded.
+- The server-rendered HTML always reads in Spanish (settings live only on the device). On an English device the pre-paint script sets `lang` first, and React repaints the text once after hydration, so a reader may see a brief flash of Spanish. The language components skip writing `lang` and the title until the settings have loaded, so they never undo the script.
+- The goal helper and its dictionary stay Spanish-only; in English the screen says so and the suggestion chips type the Spanish word. English words for them are a later, separate decision.
