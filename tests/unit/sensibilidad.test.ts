@@ -99,6 +99,10 @@ const EDAD = [
   /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?años\b/i,
   /hermano\s*\(\s*\d{1,2}/i,
   /\btiene\s+\d{1,2}\s+años\b/i,
+  // S7: las mismas formas en inglés («N years», «N-year-old», «aged N», «brother (N»).
+  /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?[- ]?years?[- ]?(?:old)?\b/i,
+  /\bage[sd]?\s+\d{1,2}\b/i,
+  /\b(?:brother|sister)\s*\(\s*\d{1,2}/i,
 ];
 
 describe("gate: ninguna edad escrita en lo que el sprint publica", () => {
@@ -111,6 +115,12 @@ describe("gate: ninguna edad escrita en lo que el sprint publica", () => {
     expect(tieneEdad(`el hermano tiene 17 ${A}`)).toBe(true);
     expect(tieneEdad("Momentos cortos — de 5 a 30 minutos")).toBe(false);
     expect(tieneEdad("Rowe, 2009, Science")).toBe(false);
+    // Inglés (S7): armado por partes por la misma razón.
+    const Y = "year";
+    expect(tieneEdad(`a child of 4 ${Y}s`)).toBe(true);
+    expect(tieneEdad(`a 5-${Y}-old`)).toBe(true);
+    expect(tieneEdad("a child aged " + "6")).toBe(true);
+    expect(tieneEdad("short moments — 5 to 30 minutes")).toBe(false);
   });
 
   for (const alcance of ALCANCE_GATE) {

@@ -14,6 +14,8 @@
 // no se cazarían).
 
 import { createHash } from "node:crypto";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 export const N_MAX = 5;
 
@@ -121,6 +123,16 @@ export function archivoDe(alcance: Alcance): string {
  * (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
+  // S7: los lotes de limpieza (README · manual · guía · brochure) quedaron en 0 coincidencias, así que
+  // esos documentos entran ENTEROS (ya no solo los tramos s5/s6), junto con lo nuevo del sprint.
+  "README.md",
+  "docs/MANUAL-DE-USO.md",
+  "docs/MANUAL-DE-USO.en.md",
+  "docs/GUIA-DE-PRUEBA.html",
+  "docs/BROCHURE.html",
+  "docs/BLUEPRINT.html",
+  "docs/REGLAS-ANEXO.md",
+  "decisions/017-bilingual-es-en.md",
   // S6 «La pirámide»
   "content/fichas.ts",
   "docs/LA-PIRAMIDE.html",
@@ -132,8 +144,6 @@ export const ALCANCE_GATE: Alcance[] = [
   "sprints/SPRINT_006-auditoria.md",
   "sprints/PROPUESTA-sprint-006-piramide.md",
   "decisions/016-la-piramide-fichas-y-retiro-del-registro.md",
-  { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
-  { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s6:inicio -->", "<!-- s6:fin -->"] },
   // S5 «Contacto visual» y lo compartido (el schema desde el dominio del S5 incluye el del S6)
   { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
   "content/contacto-visual.ts",
@@ -148,9 +158,30 @@ export const ALCANCE_GATE: Alcance[] = [
   "sprints/SPRINT_005-summary.md",
   "sprints/PROPUESTA-sprint-005-contacto-visual.md",
   "decisions/015-dominio-contacto-visual-y-gate-de-sensibilidad.md",
-  { archivo: "docs/GUIA-DE-PRUEBA.html", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
-  { archivo: "docs/MANUAL-DE-USO.md", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] },
 ];
+
+/**
+ * S7 «dos idiomas»: todo lo que contiene el texto del adulto en los dos idiomas entra al gate. Son
+ * directorios (los catálogos y las cápsulas en inglés crecen): cada archivo .ts/.tsx se vigila.
+ */
+export const DIRS_IDIOMAS = ["src/lib/idioma", "content/capsulas-en"];
+
+export function archivosDeIdiomas(raiz: string): string[] {
+  const out: string[] = [];
+  const andar = (rel: string) => {
+    const abs = join(raiz, rel);
+    if (!existsSync(abs)) return;
+    for (const nombre of readdirSync(abs).sort()) {
+      const r = `${rel}/${nombre}`;
+      if (statSync(join(raiz, r)).isDirectory()) andar(r);
+      else if (/\.(ts|tsx)$/.test(nombre)) out.push(r);
+    }
+  };
+  DIRS_IDIOMAS.forEach(andar);
+  return out;
+}
+
+ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
 export function nombreDe(alcance: Alcance): string {

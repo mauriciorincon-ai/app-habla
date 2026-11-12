@@ -6,40 +6,41 @@
 
 import { lunesDeLaSemana } from "@/lib/fecha";
 import { HITO_VUELTA_MS } from "@/lib/session-flow";
+import type { Texto } from "@/lib/idioma";
 import type { Sesion } from "@/lib/storage/schemas";
 import type { DiaCapsula } from "./tendencias";
 
 export type Hito = {
   id: string;
-  titulo: string;
+  titulo: Texto;
   /** La fecha (o la semana, para los de constancia) en que se alcanzó — YYYY-MM-DD. */
   fecha: string;
 };
 
 const UMBRALES_PALABRAS = [
-  { n: 10, id: "palabras-10", titulo: "10 palabras distintas practicadas" },
-  { n: 25, id: "palabras-25", titulo: "25 palabras distintas practicadas" },
+  { n: 10, id: "palabras-10", titulo: { es: "10 palabras distintas practicadas", en: "10 different words practiced" } },
+  { n: 25, id: "palabras-25", titulo: { es: "25 palabras distintas practicadas", en: "25 different words practiced" } },
 ];
 
 const UMBRALES_CONSTANCIA = [
-  { d: 3, id: "constancia-3", titulo: "Una semana de 3 días juntos" },
-  { d: 5, id: "constancia-5", titulo: "Una semana de 5 días juntos" },
+  { d: 3, id: "constancia-3", titulo: { es: "Una semana de 3 días juntos", en: "A week of 3 days together" } },
+  { d: 5, id: "constancia-5", titulo: { es: "Una semana de 5 días juntos", en: "A week of 5 days together" } },
 ];
 
 /** Días de práctica ACUMULADOS (total histórico — el número que nunca baja). */
 const UMBRALES_DIAS_TOTALES = [
-  { d: 10, id: "dias-10", titulo: "10 días de práctica en total" },
-  { d: 25, id: "dias-25", titulo: "25 días de práctica en total" },
+  { d: 10, id: "dias-10", titulo: { es: "10 días de práctica en total", en: "10 days of practice in total" } },
+  { d: 25, id: "dias-25", titulo: { es: "25 días de práctica en total", en: "25 days of practice in total" } },
 ];
 
 /** Dibujos encendidos ACUMULADOS (cuentan las repeticiones: cada encendido fue voz real). */
 const UMBRALES_DIBUJOS = [
-  { n: 50, id: "dibujos-50", titulo: "50 dibujos encendidos con su voz" },
+  { n: 50, id: "dibujos-50", titulo: { es: "50 dibujos encendidos con su voz", en: "50 pictures lit up with their voice" } },
 ];
 
 /** Palabras que el PADRE marcó haber oído, acumuladas (reconocidas + participación gemelas). */
 const UMBRALES_OIDAS = [
-  { n: 10, id: "oidas-10", titulo: "10 palabras que TÚ le oíste" },
+  { n: 10, id: "oidas-10", titulo: { es: "10 palabras que TÚ le oíste", en: "10 words YOU heard them say" } },
 ];
 
 /**
@@ -64,7 +65,7 @@ export function hitosAlcanzados(
   if (fechas.length === 0) return hitos;
   hitos.push({
     id: "primer-dia",
-    titulo: "Su primer rato de práctica juntos",
+    titulo: { es: "Su primer rato de práctica juntos", en: "Your first practice time together" },
     fecha: fechas[0],
   });
 
@@ -77,7 +78,7 @@ export function hitosAlcanzados(
   if (primeraOida) {
     hitos.push({
       id: "primera-oida",
-      titulo: "La primera palabra que TÚ le oíste",
+      titulo: { es: "La primera palabra que TÚ le oíste", en: "The first word YOU heard them say" },
       fecha: primeraOida.fecha,
     });
   }
@@ -88,7 +89,7 @@ export function hitosAlcanzados(
   if (vozLarga) {
     hitos.push({
       id: "voz-larga",
-      titulo: "Su voz sonó 5 segundos seguidos",
+      titulo: { es: "Su voz sonó 5 segundos seguidos", en: "Their voice sounded for 5 seconds in a row" },
       fecha: vozLarga.fecha,
     });
   }
@@ -98,7 +99,7 @@ export function hitosAlcanzados(
   if (vozMuyLarga) {
     hitos.push({
       id: "voz-larga-10",
-      titulo: "Su voz sonó 10 segundos seguidos",
+      titulo: { es: "Su voz sonó 10 segundos seguidos", en: "Their voice sounded for 10 seconds in a row" },
       fecha: vozMuyLarga.fecha,
     });
   }
@@ -110,7 +111,7 @@ export function hitosAlcanzados(
   if (primerEncendido) {
     hitos.push({
       id: "primer-encendido",
-      titulo: "El primer dibujo que su voz encendió",
+      titulo: { es: "El primer dibujo que su voz encendió", en: "The first picture their voice lit up" },
       fecha: primerEncendido.fecha,
     });
   }
@@ -120,7 +121,7 @@ export function hitosAlcanzados(
   if (primeraVuelta) {
     hitos.push({
       id: "primera-vuelta",
-      titulo: "La primera vuelta completa del globo",
+      titulo: { es: "La primera vuelta completa del globo", en: "The balloon's first full lap" },
       fecha: primeraVuelta.fecha,
     });
   }
@@ -130,7 +131,7 @@ export function hitosAlcanzados(
   if (primeraSirena) {
     hitos.push({
       id: "primera-sirena",
-      titulo: "La primera sirena: su voz subió y bajó",
+      titulo: { es: "La primera sirena: su voz subió y bajó", en: "The first siren: their voice went up and down" },
       fecha: primeraSirena.fecha,
     });
   }
@@ -140,7 +141,7 @@ export function hitosAlcanzados(
   if (primeraGemela) {
     hitos.push({
       id: "primera-gemela",
-      titulo: "Su primera ronda de palabras gemelas",
+      titulo: { es: "Su primera ronda de palabras gemelas", en: "Your first round of twin words" },
       fecha: primeraGemela.fecha,
     });
   }

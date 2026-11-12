@@ -255,8 +255,7 @@ export function Globo({
       viewBox="0 0 64 96"
       className={className}
       style={style}
-      role="img"
-      aria-label="globo"
+      aria-hidden="true"
       focusable="false"
     >
       {/* Cuerda */}
@@ -295,8 +294,7 @@ export function Cohete({ className }: IconoProps) {
     <svg
       viewBox="0 0 64 96"
       className={className}
-      role="img"
-      aria-label="cohete"
+      aria-hidden="true"
       focusable="false"
     >
       {/* Llama (abajo: el cohete "mira" hacia arriba) */}
@@ -350,8 +348,7 @@ export function IconoGemelas({ className }: IconoProps) {
     <svg
       viewBox="0 0 32 24"
       className={className}
-      role="img"
-      aria-label="dos dibujos parecidos"
+      aria-hidden="true"
       focusable="false"
     >
       <rect x="2" y="4" width="13" height="16" rx="2.5" {...trazo} />
@@ -425,8 +422,7 @@ export function IconoPictograma({ className }: IconoProps) {
     <svg
       viewBox="0 0 24 24"
       className={className}
-      role="img"
-      aria-label="dibujo con su palabra"
+      aria-hidden="true"
       focusable="false"
     >
       <rect x="3" y="3" width="18" height="14" rx="2.5" {...trazo} />

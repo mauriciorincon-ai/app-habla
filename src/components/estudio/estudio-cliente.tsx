@@ -36,18 +36,19 @@ import {
   IconoMicrofono,
   IconoRegrabar,
 } from "@/components/iconos";
+import { useT } from "@/lib/idioma/estado";
+import type { Texto } from "@/lib/idioma";
+import { estudio } from "@/lib/idioma/textos/estudio";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
-const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], string> = {
-  palabra: "Palabras",
-  consigna: "Consignas del juego",
-  celebracion: "Celebraciones",
-};
+const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], Texto> =
+  estudio.categoria;
 
 const CHIP_SALIDA =
   "text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-sm";
 
 export function EstudioCliente() {
+  const tx = useT();
   const hidratado = useHidratado();
   const perfil = usePerfil();
   const ajustes = useAjustes();
@@ -80,7 +81,7 @@ export function EstudioCliente() {
           className={CHIP_SALIDA}
           data-testid="volver-a-ajustes"
         >
-          ← Ajustes
+          {tx(estudio.salida.ajustes)}
         </Link>
       ) : (
         <button
@@ -89,15 +90,16 @@ export function EstudioCliente() {
           className={CHIP_SALIDA}
           data-testid="volver-al-banco"
         >
-          ← Tu banco de voz
+          {tx(estudio.salida.banco)}
         </button>
       )}
-      <h1 className="font-display mt-4 text-4xl">La voz de la familia</h1>
+      <h1 className="font-display mt-4 text-4xl">{tx(estudio.titulo)}</h1>
       <p className="text-tinta-suave mt-3 max-w-prose">
-        Graba tu voz —la de mamá o papá— para que los juegos suenen con la voz
-        que tu hijo conoce. <strong>La voz de tu hijo nunca se graba.</strong>{" "}
-        Todo lo que grabes vive <strong>solo en este dispositivo</strong>: no se
-        sube a internet ni sale de aquí.
+        {tx(estudio.promesa.a)}
+        <strong>{tx(estudio.promesa.negrita1)}</strong>
+        {tx(estudio.promesa.b)}
+        <strong>{tx(estudio.promesa.negrita2)}</strong>
+        {tx(estudio.promesa.c)}
       </p>
     </header>
   );
@@ -166,17 +168,18 @@ function Gestion({
   onGrabar: (categoria?: CategoriaGrabable) => void;
   onBorrado: (id: string) => void;
 }) {
+  const tx = useT();
   const grabadosItems = catalogo.filter((i) => grabados.has(i.id));
 
   return (
     <div className="flex flex-col gap-6">
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
-        <h2 className="font-medium">Con tu voz vas</h2>
+        <h2 className="font-medium">{tx(estudio.gestion.conTuVozVas)}</h2>
         <div className="mt-4 flex flex-col gap-4" data-testid="cobertura">
           {cobertura.porCategoria.map((c) => (
             <div key={c.categoria}>
               <div className="flex items-center justify-between gap-3 text-sm">
-                <span>{NOMBRE_CATEGORIA[c.categoria]}</span>
+                <span>{tx(NOMBRE_CATEGORIA[c.categoria])}</span>
                 <span className="flex shrink-0 items-center gap-3">
                   <span
                     className="font-mono tabular-nums"
@@ -192,9 +195,11 @@ function Gestion({
                       onClick={() => onGrabar(c.categoria)}
                       className="border-borde text-tinta min-h-11 rounded-lg border px-3 text-sm"
                       data-testid={`grabar-${c.categoria}`}
-                      aria-label={`Grabar ${NOMBRE_CATEGORIA[c.categoria].toLowerCase()}`}
+                      aria-label={tx(estudio.gestion.grabarGrupo, {
+                        grupo: tx(NOMBRE_CATEGORIA[c.categoria]).toLowerCase(),
+                      })}
                     >
-                      Grabar
+                      {tx(estudio.gestion.grabar)}
                     </button>
                   ) : null}
                 </span>
@@ -211,10 +216,11 @@ function Gestion({
           ))}
         </div>
         <p className="text-tinta-suave mt-4 text-sm">
-          Estas grabaciones viven <strong>SOLO en este dispositivo</strong>. No
-          se suben a ningún lado ni salen de aquí. La voz que grabas es la{" "}
-          <strong>tuya</strong> —la de los adultos—: la de tu hijo nunca se
-          graba.
+          {tx(estudio.gestion.privacidad.a)}
+          <strong>{tx(estudio.gestion.privacidad.negrita1)}</strong>
+          {tx(estudio.gestion.privacidad.b)}
+          <strong>{tx(estudio.gestion.privacidad.negrita2)}</strong>
+          {tx(estudio.gestion.privacidad.c)}
         </p>
       </section>
 
@@ -224,7 +230,9 @@ function Gestion({
         className="bg-acento text-sobre-acento min-h-14 rounded-xl px-6 text-lg font-medium"
         data-testid="ir-al-lote"
       >
-        {grabados.size === 0 ? "Grabar mi voz" : "Grabar más"}
+        {grabados.size === 0
+          ? tx(estudio.gestion.grabarMiVoz)
+          : tx(estudio.gestion.grabarMas)}
       </button>
 
       {grabadosItems.length > 0 ? (
@@ -254,13 +262,14 @@ function ListaGrabados({
   grabadosItems: ItemGrabable[];
   onBorrado: (id: string) => void;
 }) {
+  const tx = useT();
   const { reproducir, sonando, progreso } = useReproductor();
   // La diana del objetivo (gate S4, O2): las grabadas que sirven al objetivo de la semana se
   // marcan — mismo predicado del lote, así la insignia y el orden jamás divergen.
   const objetivo = useMemo(() => alinear(leerObjetivo()?.texto), []);
   return (
     <section className="flex flex-col gap-2">
-      <h2 className="font-medium">Lo que ya grabaste</h2>
+      <h2 className="font-medium">{tx(estudio.lista.titulo)}</h2>
       <div className="flex flex-col gap-4" data-testid="lista-grabados">
         {GRUPOS.map((grupo) => {
           const delGrupo = grabadosItems.filter((i) => i.categoria === grupo);
@@ -271,7 +280,7 @@ function ListaGrabados({
                 className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase"
                 data-testid={`grupo-${grupo}`}
               >
-                {NOMBRE_CATEGORIA[grupo]} · {delGrupo.length}
+                {tx(NOMBRE_CATEGORIA[grupo])} · {delGrupo.length}
               </h3>
               <ul className="mt-2 flex flex-col gap-2">
                 {delGrupo.map((item, indice) => (
@@ -327,6 +336,7 @@ function FilaGrabada({
   onEscuchar: () => void;
   onBorrado: (id: string) => void;
 }) {
+  const tx = useT();
   // Borrar pide un segundo toque (gate S4, J5): el primero arma "¿Seguro?" y se desarma solo;
   // el segundo dispara el efecto de despedida y AHÍ SÍ borra del banco.
   const [confirmando, setConfirmando] = useState(false);
@@ -372,7 +382,7 @@ function FilaGrabada({
               data-testid={`del-objetivo-${item.id}`}
             >
               <IconoDiana className="h-4 w-4" />
-              <span className="sr-only">del objetivo de la semana</span>
+              <span className="sr-only">{tx(estudio.lista.delObjetivo)}</span>
             </span>
           ) : null}
         </span>
@@ -384,7 +394,7 @@ function FilaGrabada({
             data-testid={`escuchar-${item.id}`}
           >
             <IconoAltavoz className="h-4 w-4 shrink-0" />
-            Escuchar
+            {tx(estudio.lista.escuchar)}
           </button>
           <button
             type="button"
@@ -397,7 +407,7 @@ function FilaGrabada({
             data-testid={`borrar-${item.id}`}
           >
             <IconoBorrar className="h-4 w-4 shrink-0" />
-            {confirmando ? "¿Seguro?" : "Borrar"}
+            {confirmando ? tx(estudio.lista.seguro) : tx(estudio.lista.borrar)}
           </button>
         </span>
       </div>
@@ -424,6 +434,7 @@ function Lote({
   onGrabado: (id: string) => void;
   onSalir: () => void;
 }) {
+  const tx = useT();
   // El lote se fija al entrar (no se re-baraja al grabar cada ítem): useMemo con deps vacías
   // captura temas/grabados/objetivo del montaje a propósito (React 19: no leer refs en render).
   // S4: el objetivo de la semana pone sus palabras primero; la etapa baja las de gemelas cuando
@@ -478,8 +489,8 @@ function Lote({
   if (sinEspacio) {
     return (
       <Aviso
-        titulo="Se llenó el espacio del dispositivo"
-        cuerpo="El banco de voz no cabe más en este dispositivo. Puedes borrar algunas grabaciones que ya no uses y seguir."
+        titulo={estudio.aviso.sinEspacio.titulo}
+        cuerpo={estudio.aviso.sinEspacio.cuerpo}
         onSalir={onSalir}
       />
     );
@@ -491,13 +502,13 @@ function Lote({
       <Aviso
         titulo={
           estado === "denegado"
-            ? "No pude abrir el micrófono"
-            : "Algo salió mal con el micrófono"
+            ? estudio.aviso.denegado.titulo
+            : estudio.aviso.error.titulo
         }
         cuerpo={
           estado === "denegado"
-            ? "Para grabar tu voz, dale permiso al micrófono desde el candado de la barra de direcciones y vuelve a intentar."
-            : "No pude usar el micrófono. Revisa que ningún otro programa lo esté usando y vuelve a intentar."
+            ? estudio.aviso.denegado.cuerpo
+            : estudio.aviso.error.cuerpo
         }
         onSalir={onSalir}
       />
@@ -508,10 +519,10 @@ function Lote({
   if (idx >= lote.length) {
     return (
       <Aviso
-        titulo="¡Listo por ahora!"
-        cuerpo="Grabaste todo lo que había pendiente en este lote. Tu voz ya suena en los juegos. Puedes volver cuando quieras a grabar más."
+        titulo={estudio.aviso.listo.titulo}
+        cuerpo={estudio.aviso.listo.cuerpo}
         onSalir={onSalir}
-        etiquetaSalir="Ver mi banco de voz"
+        etiquetaSalir={estudio.aviso.listo.salir}
       />
     );
   }
@@ -526,13 +537,13 @@ function Lote({
             el total real (50 palabras y más) vive en la cobertura del banco. Si la tanda está
             acotada a un grupo (K5), lo dice. */}
         <span className="font-sans font-semibold tabular-nums">{idx + 1}</span>{" "}
-        de {lote.length} de esta tanda
-        {categoria ? ` · ${NOMBRE_CATEGORIA[categoria]}` : null}
+        {tx(estudio.lote.deEstaTanda, { n: lote.length })}
+        {categoria ? ` · ${tx(NOMBRE_CATEGORIA[categoria])}` : null}
       </p>
 
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6 text-center">
         <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-          Grábate diciendo
+          {tx(estudio.lote.grabateDiciendo)}
         </p>
         <p className="font-display mt-3 text-4xl" data-testid="item-texto">
           {item.texto}
@@ -555,7 +566,7 @@ function Lote({
             data-testid="escuchar-captura"
           >
             <IconoAltavoz className="h-5 w-5 shrink-0" />
-            Escuchar cómo quedó
+            {tx(estudio.lote.escucharCaptura)}
           </button>
           {/* La señal de que SUENA (gate S4, J3): la barrita se llena con el avance del clip —
               sin ella, "Escuchar" era un acto de fe. */}
@@ -570,7 +581,7 @@ function Lote({
               data-testid="aceptar"
             >
               <IconoHecho className="h-5 w-5 shrink-0" />
-              Está bien, guardar
+              {tx(estudio.lote.guardar)}
             </button>
             <button
               type="button"
@@ -579,7 +590,7 @@ function Lote({
               data-testid="regrabar"
             >
               <IconoRegrabar className="h-5 w-5 shrink-0" />
-              Regrabar
+              {tx(estudio.lote.regrabar)}
             </button>
           </div>
         </div>
@@ -595,20 +606,20 @@ function Lote({
             className="bg-peligro text-sobre-peligro min-h-16 rounded-2xl px-6 text-lg font-medium"
             data-testid="detener"
           >
-            <span aria-hidden="true">■</span> Parar
+            <span aria-hidden="true">■</span> {tx(estudio.lote.parar)}
           </button>
           <p className="text-peligro text-center text-sm font-medium">
             <span aria-hidden="true" className="inline-block animate-pulse">
               ●
             </span>{" "}
-            Grabando…
+            {tx(estudio.lote.grabando)}
           </p>
           {/* El medidor del estudio (gate S4, stopper J2): la barra baila con tu voz — así sabes
               que YA está grabando y que te está oyendo, sin adivinar. Solo se mira: el análisis
               vive en memoria y muere con la grabación. */}
           <MedidorGrabacion nivel={nivel} />
           <p className="text-tinta-suave text-center text-sm">
-            Si la barra se mueve cuando hablas, te está oyendo bien.
+            {tx(estudio.lote.medidor)}
           </p>
         </div>
       ) : (
@@ -620,7 +631,9 @@ function Lote({
           data-testid="grabar"
         >
           <IconoMicrofono className="h-5 w-5 shrink-0" />
-          {estado === "pidiendo-permiso" ? "Abriendo el micrófono…" : "Grabar"}
+          {estado === "pidiendo-permiso"
+            ? tx(estudio.lote.abriendoMic)
+            : tx(estudio.lote.grabar)}
         </button>
       )}
     </section>
@@ -706,26 +719,27 @@ function Aviso({
   titulo,
   cuerpo,
   onSalir,
-  etiquetaSalir = "Volver",
+  etiquetaSalir = estudio.aviso.volver,
 }: {
-  titulo: string;
-  cuerpo: string;
+  titulo: Texto;
+  cuerpo: Texto;
   onSalir: () => void;
-  etiquetaSalir?: string;
+  etiquetaSalir?: Texto;
 }) {
+  const tx = useT();
   return (
     <section
       className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
       data-testid="aviso-estudio"
     >
-      <h2 className="font-display text-3xl">{titulo}</h2>
-      <p className="text-tinta-suave">{cuerpo}</p>
+      <h2 className="font-display text-3xl">{tx(titulo)}</h2>
+      <p className="text-tinta-suave">{tx(cuerpo)}</p>
       <button
         type="button"
         onClick={onSalir}
         className="bg-acento text-sobre-acento min-h-14 rounded-xl px-6 font-medium"
       >
-        {etiquetaSalir}
+        {tx(etiquetaSalir)}
       </button>
     </section>
   );

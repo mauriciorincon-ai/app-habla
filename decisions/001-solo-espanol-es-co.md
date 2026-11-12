@@ -1,6 +1,6 @@
 # ADR 001 — Spanish-only (es-CO), no bilingual i18n
 
-- **Status:** accepted (ratified in G-Plan, 2026-07-11)
+- **Status:** superseded by ADR-017 (Sprint 007, 2026-11-11) — originally accepted (ratified in G-Plan, 2026-07-11)
 - **Sprint:** 001
 
 ## Context

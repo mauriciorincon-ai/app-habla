@@ -17,6 +17,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Cohete } from "@/components/iconos";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
 import type { MedidasVivas } from "./use-voice-session";
 
@@ -66,6 +68,7 @@ export function EscenarioCohete({
   modoCalma,
   invitando,
 }: Props) {
+  const tx = useT();
   const cieloRef = useRef<HTMLDivElement | null>(null);
   const coheteRef = useRef<HTMLDivElement | null>(null);
   const medidorRef = useRef<HTMLDivElement | null>(null);
@@ -182,8 +185,9 @@ export function EscenarioCohete({
             className="bg-fondo/90 text-tinta absolute inset-x-4 bottom-14 rounded-2xl p-3 text-center text-lg"
             data-testid="invitacion"
           >
-            El cohete espera tu voz… ¿hacemos{" "}
-            <span className="font-display italic">aaaAAAaaa</span> juntos?
+            {tx(juegos.cohete.espera.antes)}{" "}
+            <span className="font-display italic">aaaAAAaaa</span>{" "}
+            {tx(juegos.cohete.espera.despues)}
           </p>
         ) : null}
       </div>

@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
+import { juntos, metadatos } from "@/lib/idioma/textos/metadatos";
 
 // PWA instalable en la tablet. Sin dependencias: Next genera y enlaza este manifest solo.
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Hablemos San",
     short_name: "Hablemos San",
-    description:
-      "Su voz mueve el mundo. Práctica diaria de estimulación del habla, para jugar juntos en casa.",
+    // Estático: el manifest no sabe el idioma elegido, así que lleva los dos (ADR-017).
+    description: juntos(metadatos.descripcionManifest),
     lang: "es-CO",
     start_url: "/",
     display: "standalone",

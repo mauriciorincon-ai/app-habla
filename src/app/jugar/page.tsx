@@ -6,6 +6,9 @@ import {
   IconoGemelas,
   IconoPictograma,
 } from "@/components/iconos";
+import { Tx, TituloDePagina } from "@/components/idioma/tx";
+import { comunes } from "@/lib/idioma/textos/comunes";
+import { jugar } from "@/lib/idioma/textos/jugar";
 
 export const metadata: Metadata = {
   title: "A jugar con tu voz · Hablemos San",
@@ -22,33 +25,25 @@ const JUEGOS = [
   {
     href: "/jugar/globo",
     testid: "juego-globo",
-    nombre: "El globo",
-    que: "Vuela mientras él sostiene la voz.",
-    mide: "Mide cuánto dura su voz.",
+    ...jugar.globo,
     icono: <Globo className="h-24 w-16" />,
   },
   {
     href: "/jugar/cohete",
     testid: "juego-cohete",
-    nombre: "El cohete",
-    que: "Sube cuando su voz sube de tono.",
-    mide: "Mide el tono de su voz.",
+    ...jugar.cohete,
     icono: <Cohete className="h-24 w-16" />,
   },
   {
     href: "/jugar/palabras",
     testid: "juego-palabras",
-    nombre: "Palabra y dibujo",
-    que: "Cualquier sonido enciende el dibujo.",
-    mide: "Mide que hubo voz — nunca qué palabra dijo.",
+    ...jugar.palabras,
     icono: <IconoPictograma className="text-acento h-20 w-20" />,
   },
   {
     href: "/jugar/gemelas",
     testid: "juego-gemelas",
-    nombre: "Palabras gemelas",
-    que: "Dos dibujos que suenan casi igual: él dice, tú marcas.",
-    mide: "No usa micrófono — el que oye la palabra eres tú.",
+    ...jugar.gemelas,
     icono: <IconoGemelas className="text-acento h-20 w-24" />,
   },
 ];
@@ -56,6 +51,7 @@ const JUEGOS = [
 export default function JugarPage() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8">
+      <TituloDePagina t={jugar.tituloPestana} />
       {/* El "← Hoy" arriba, igual que en Rumbo, Objetivo y Ajustes: la salida de toda pantalla
           del padre tiene la misma forma y el mismo sitio (gate S4). */}
       <header className="flex flex-col gap-3">
@@ -65,15 +61,14 @@ export default function JugarPage() {
           className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 self-start rounded-xl border px-3 text-sm"
           data-testid="volver-a-hoy"
         >
-          ← Hoy
+          <Tx t={comunes.volverAHoy} />
         </Link>
         <h1 className="font-display mt-1 text-center text-4xl sm:text-5xl">
-          ¿A qué jugamos hoy?
+          <Tx t={jugar.titulo} />
         </h1>
         <p className="text-tinta-suave mx-auto max-w-prose text-center">
-          Todos se juegan <strong>juntos</strong>: usted dirige, la pantalla es
-          la utilería. Ninguno le exige palabras al niño — y nada de lo que él
-          diga se graba ni sale de este dispositivo.
+          <Tx t={jugar.intro.antes} /> <strong><Tx t={jugar.intro.enfasis} /></strong>
+          <Tx t={jugar.intro.despues} />
         </p>
       </header>
 
@@ -92,10 +87,10 @@ export default function JugarPage() {
             >
               {juego.icono}
               <span className="flex flex-col gap-1">
-                <span className="font-display text-2xl">{juego.nombre}</span>
-                <span className="text-tinta-suave text-sm">{juego.que}</span>
+                <span className="font-display text-2xl"><Tx t={juego.nombre} /></span>
+                <span className="text-tinta-suave text-sm"><Tx t={juego.que} /></span>
                 <span className="text-tinta-suave mt-1 font-mono text-[11px] tracking-[0.04em] uppercase">
-                  {juego.mide}
+                  <Tx t={juego.mide} />
                 </span>
               </span>
             </Link>

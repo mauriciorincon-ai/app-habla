@@ -24,6 +24,8 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { EscenarioCohete } from "./escenario-cohete";
@@ -45,6 +47,7 @@ export function CoheteTono() {
 
 function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
   const router = useRouter();
+  const tx = useT();
 
   // Lo que mide el cohete: cuántas veces la voz subió y bajó DE VERDAD.
   const metricaActual = useCallback(
@@ -109,9 +112,9 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     >
       {actual.fase === "guion" ? (
         <GuionCard
-          etiqueta="El cohete del tono"
-          guion="“Haz la voz como una sirena: aaaAAAaaa… ¡mira cómo sube el cohete!”"
-          nota="Hazlo tú primero, exagerado y riéndote: sube la voz y bájala. El cohete responde al TONO, no a las palabras — cualquier sonido estirado sirve. Si hoy solo quiere mirar, también está bien."
+          etiqueta={tx(juegos.cohete.etiqueta)}
+          guion={tx(juegos.cohete.guion)}
+          nota={tx(juegos.cohete.nota)}
           onEmpezar={empezar}
           listo
         />
@@ -121,8 +124,8 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
         <section className="flex flex-col gap-5">
           <h2 className="font-display text-center text-3xl sm:text-4xl">
             {actual.fase === "jugando"
-              ? "¡El cohete está volando!"
-              : "Haz la voz de sirena: aaaAAAaaa"}
+              ? tx(juegos.cohete.volando)
+              : tx(juegos.cohete.invitacion)}
           </h2>
 
           {/* El logro medido, en vivo (ADR-013): cada subida-y-bajada se celebra sin detener el
@@ -134,9 +137,11 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               data-testid="subidas"
               aria-live="polite"
             >
-              ¡Ya subió y bajó{" "}
+              {tx(juegos.cohete.subioYBajo)}{" "}
               <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
-                {subidas} {subidas === 1 ? "vez" : "veces"}
+                {tx(subidas === 1 ? juegos.cohete.vez : juegos.cohete.veces, {
+                  n: subidas,
+                })}
               </span>
               !
             </p>
@@ -146,7 +151,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           <AltavozConsigna
             voz={voz}
             id="consigna:sirena"
-            etiqueta="Oír “Haz la voz de sirena: aaaAAAaaa”"
+            etiqueta={tx(juegos.cohete.oir)}
           />
 
           <EscenarioCohete
@@ -163,7 +168,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
               data-testid="terminar"
             >
-              Ya jugamos
+              {tx(juegos.comun.yaJugamos)}
             </button>
             <button
               type="button"
@@ -171,7 +176,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               className="border-borde text-tinta min-h-16 rounded-2xl border px-6 text-lg font-medium"
               data-testid="recalibrar"
             >
-              Volver a medir el ruido
+              {tx(juegos.comun.volverAMedir)}
             </button>
           </div>
         </section>
@@ -182,7 +187,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           metrica={actual.metrica}
           onOtraVez={otraVez}
           onTerminar={() => router.push("/jugar")}
-          etiquetaTerminar="Elegir otro juego"
+          etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}
         />
       ) : null}
     </MarcoJuego>

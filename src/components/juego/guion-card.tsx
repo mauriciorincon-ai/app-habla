@@ -5,6 +5,8 @@
 // dentro del juego (regla del design-system: la vista del niño es soberana).
 
 import Link from "next/link";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 
 type Props = {
   /** Etiqueta pequeña de contexto (la técnica del día, o el nombre del juego). */
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
+  const tx = useT();
   return (
     <section className="mx-auto flex w-full max-w-xl flex-col gap-6">
       {/* La salida estándar del guion (gate S4): el chip con la misma forma que el "← Hoy" de
@@ -28,15 +31,17 @@ export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
         className="text-tinta-suave border-borde inline-flex min-h-11 items-center gap-2 self-start rounded-xl border px-3 text-sm"
         data-testid="volver-a-juegos"
       >
-        ← Juegos
+        {tx(juegos.guion.volverAJuegos)}
       </Link>
 
       <div className="bg-superficie shadow-tarjeta rounded-2xl p-6">
         <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-          Antes de jugar · {etiqueta}
+          {tx(juegos.guion.antesDeJugar)} · {etiqueta}
         </p>
 
-        <h2 className="mt-3 text-xl font-medium">Tu línea de hoy</h2>
+        <h2 className="mt-3 text-xl font-medium">
+          {tx(juegos.guion.tuLinea)}
+        </h2>
 
         {/* La voz humana: lo único que el padre necesita leer para dirigir el juego. */}
         <blockquote className="font-display border-acento mt-4 border-l-4 pl-4 text-2xl italic">
@@ -53,7 +58,7 @@ export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
         className="bg-acento text-sobre-acento min-h-14 rounded-xl px-6 text-lg font-medium disabled:opacity-50"
         data-testid="empezar-juego"
       >
-        Estamos listos
+        {tx(juegos.guion.listos)}
       </button>
     </section>
   );

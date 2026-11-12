@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Globo } from "@/components/iconos";
+import { Tx, TituloDePagina } from "@/components/idioma/tx";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import { VoiceGame } from "@/components/juego/voice-game";
 
 export const metadata: Metadata = {
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
 export default function JugarGloboPage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
+      <TituloDePagina t={juegos.globo.tituloPestana} />
       {/* El icono del juego —el MISMO de su tarjeta del selector— dice dónde estás sin leer
           (gate S4). Decorativo aquí: el título ya lo dice todo, el lector de pantalla no lo
           necesita dos veces. */}
@@ -21,7 +24,7 @@ export default function JugarGloboPage() {
         <span aria-hidden="true">
           <Globo className="h-12 w-8" />
         </span>
-        Su voz mueve el mundo
+        <Tx t={juegos.globo.titulo} />
       </h1>
       {/* Nace visible en el HTML (es el candidato LCP), pero se retira en cuanto el juego
           arranca: la vista del niño es soberana — ningún texto del padre se filtra al escenario.
@@ -30,10 +33,7 @@ export default function JugarGloboPage() {
         data-intro-padre
         className="text-tinta-suave mx-auto max-w-prose text-center"
       >
-        Siéntese al lado de su hijo: usted dirige el juego. Le vamos a mostrar
-        la línea que puede decirle, después medimos el ruido de la casa y
-        entonces el globo empieza a volar mientras él sostiene la voz. Nada de
-        lo que él diga se graba ni sale de este dispositivo.
+        <Tx t={juegos.globo.intro} />
       </p>
       <VoiceGame />
     </main>

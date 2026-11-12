@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 /** El origen propio de la app, tomado del baseURL de la config (el puerto puede moverse con
  *  E2E_PORT): todo lo que no empiece por aquí es red hacia afuera. */
-const origen = () => new URL(test.info().project.use.baseURL ?? "http://localhost:3000").origin;
+const origen = () => new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3500").origin;
 
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.

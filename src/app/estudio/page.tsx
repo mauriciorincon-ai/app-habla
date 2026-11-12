@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { EstudioCliente } from "@/components/estudio/estudio-cliente";
+import { TituloDePagina } from "@/components/idioma/tx";
+import { estudio } from "@/lib/idioma/textos/estudio";
 
 export const metadata: Metadata = {
   title: "La voz de la familia · Hablemos San",
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 export default function EstudioPage() {
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
+      <TituloDePagina t={estudio.tituloPestana} />
       <EstudioCliente />
     </main>
   );

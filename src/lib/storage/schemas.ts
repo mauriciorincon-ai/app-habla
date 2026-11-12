@@ -39,6 +39,11 @@ export const AjustesSchema = z.object({
    * tomó el trabajo de grabar, que se oiga. Se puede apagar sin borrar el banco.
    */
   vozFamiliar: z.boolean().catch(true),
+  /**
+   * Idioma de la interfaz (S7, ADR-017). `null` = sigue al navegador; el adulto lo fija desde
+   * Ajustes. El `.catch` hace que los ajustes guardados antes del S7 (sin este campo) migren solos.
+   */
+  idioma: z.enum(["es", "en"]).nullable().catch(null),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -49,6 +54,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   etapa: ETAPA_DEFECTO,
   apariencia: "sistema",
   vozFamiliar: true,
+  idioma: null,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

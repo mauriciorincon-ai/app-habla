@@ -98,29 +98,51 @@ export const ETIQUETAS_CAPSULA = [
 
 export type EtiquetaCapsula = (typeof ETIQUETAS_CAPSULA)[number];
 
+/** Un texto con sus dos caras (S7, ADR-017). Mismo contrato que `Texto` de src/lib/idioma. */
+const textoCon = (max?: number) => {
+  const cara = max ? z.string().min(1).max(max) : z.string().min(1);
+  return z.object({ es: cara, en: cara });
+};
+
 export const CapsulaSchema = z.object({
   id: z.string().min(1),
   tecnica: z.enum(TECNICAS),
   /** Etapa del habla a la que sirve la cápsula (ADR 006). */
   etapa: z.enum(ETAPAS),
-  /** Titular corto y cálido, en es-CO. */
-  titulo: z.string().min(1).max(70),
+  /** Titular corto y cálido. */
+  titulo: textoCon(70),
   /** La técnica explicada para leerse en ~30 segundos. */
-  explicacion: z.string().min(1),
+  explicacion: textoCon(),
   /** UNA línea que el padre puede decir tal cual, hoy. */
-  guion: z.string().min(1).max(140),
+  guion: textoCon(140),
   actividad: z.object({
-    texto: z.string().min(1),
+    texto: textoCon(),
     /** true si la actividad usa el juego de voz de la app. */
     conPantalla: z.boolean(),
   }),
-  /** Cita corta y verificable a la investigación (§A.3). Obligatoria. */
+  /** Cita corta y verificable a la investigación (§A.3). Obligatoria. Es una cita: no se traduce. */
   fuente: z.string().min(10),
   /** Etiquetas del vocabulario controlado para alinear el objetivo de la semana (S4). ≥1. */
   etiquetas: z.array(z.enum(ETIQUETAS_CAPSULA)).min(1),
 });
 
 export type Capsula = z.infer<typeof CapsulaSchema>;
+
+/** La cápsula tal como nació, en español (content/capsulas.ts BASE). */
+export type CapsulaEs = Omit<Capsula, "titulo" | "explicacion" | "guion" | "actividad"> & {
+  titulo: string;
+  explicacion: string;
+  guion: string;
+  actividad: { texto: string; conPantalla: boolean };
+};
+
+/** La cara inglesa de una cápsula (content/capsulas-en/), por id: redactada, no traducida. */
+export type CapsulaEn = {
+  titulo: string;
+  explicacion: string;
+  guion: string;
+  actividad: string;
+};
 
 /** Mínimos por etapa (Sprint 002). El motor exige que ninguna etapa se quede sin días. */
 export const MINIMOS_POR_ETAPA: Record<Etapa, number> = {

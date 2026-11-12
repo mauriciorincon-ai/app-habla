@@ -66,8 +66,10 @@ describe("biblioteca de cápsulas: la estrella", () => {
   it("cada cápsula cita su fuente y trae un guion accionable de una línea", () => {
     for (const capsula of CAPSULAS) {
       expect(capsula.fuente.length).toBeGreaterThan(20);
-      expect(capsula.guion.trim().length).toBeGreaterThan(0);
-      expect(capsula.guion).not.toContain("\n");
+      for (const i of ["es", "en"] as const) {
+        expect(capsula.guion[i].trim().length).toBeGreaterThan(0);
+        expect(capsula.guion[i]).not.toContain("\n");
+      }
     }
   });
 
@@ -314,10 +316,10 @@ describe("etapas como motor (ADR 006)", () => {
     id,
     etapa,
     tecnica: "modelado",
-    titulo: `Cápsula ${id}`,
-    explicacion: "Explicación de prueba con el largo suficiente.",
-    guion: "Guion de prueba.",
-    actividad: { texto: "Actividad de prueba.", conPantalla: false },
+    titulo: { es: `Cápsula ${id}`, en: `Capsule ${id}` },
+    explicacion: { es: "Explicación de prueba con el largo suficiente.", en: "Test explanation that is long enough." },
+    guion: { es: "Guion de prueba.", en: "Test line." },
+    actividad: { texto: { es: "Actividad de prueba.", en: "Test activity." }, conPantalla: false },
     fuente: "Fuente sintética de prueba (unit).",
     etiquetas: ["juego"],
   });
@@ -459,10 +461,10 @@ describe("objetivo de la semana (S4): alinea Hoy DENTRO de la etapa, sin romper 
     id,
     etapa: "palabras-sueltas",
     tecnica: "modelado",
-    titulo: `Cápsula ${id}`,
-    explicacion: "Explicación de prueba con el largo suficiente.",
-    guion: "Guion de prueba.",
-    actividad: { texto: "Actividad de prueba.", conPantalla: false },
+    titulo: { es: `Cápsula ${id}`, en: `Capsule ${id}` },
+    explicacion: { es: "Explicación de prueba con el largo suficiente.", en: "Test explanation that is long enough." },
+    guion: { es: "Guion de prueba.", en: "Test line." },
+    actividad: { texto: { es: "Actividad de prueba.", en: "Test activity." }, conPantalla: false },
     fuente: "Fuente sintética de prueba (unit).",
     etiquetas: ["juego"],
   });

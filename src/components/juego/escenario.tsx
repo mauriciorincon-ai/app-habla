@@ -13,6 +13,8 @@
 
 import { useEffect, useRef } from "react";
 import { Globo } from "@/components/iconos";
+import { useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
 import type { MedidasVivas } from "./use-voice-session";
 
@@ -47,6 +49,7 @@ export function Escenario({
   modoCalma,
   invitando,
 }: Props) {
+  const tx = useT();
   const escenarioRef = useRef<HTMLDivElement | null>(null);
   const globoRef = useRef<HTMLDivElement | null>(null);
   const medidorRef = useRef<HTMLDivElement | null>(null);
@@ -161,8 +164,9 @@ export function Escenario({
             className="bg-fondo/90 text-tinta absolute inset-x-4 bottom-14 rounded-2xl p-3 text-center text-lg"
             data-testid="invitacion"
           >
-            El globo espera tu voz… ¿le hacemos{" "}
-            <span className="font-display italic">aaaah</span> juntos?
+            {tx(juegos.globo.espera.antes)}{" "}
+            <span className="font-display italic">aaaah</span>{" "}
+            {tx(juegos.globo.espera.despues)}
           </p>
         ) : null}
       </div>

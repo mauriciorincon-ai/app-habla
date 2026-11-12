@@ -31,10 +31,25 @@ const MESES = [
   "diciembre",
 ];
 
-/** "2026-07-14" → "14 de julio" (es-CO, para mostrarle fechas al padre sin jerga). */
-export function fechaLarga(clave: string): string {
+const MESES_EN = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/** "2026-07-14" → "14 de julio" (es-CO) o "July 14" (en), para mostrarle fechas al padre sin jerga. */
+export function fechaLarga(clave: string, idioma: "es" | "en" = "es"): string {
   const [, mes, dia] = clave.split("-").map(Number);
-  return `${dia} de ${MESES[mes - 1]}`;
+  return idioma === "en" ? `${MESES_EN[mes - 1]} ${dia}` : `${dia} de ${MESES[mes - 1]}`;
 }
 
 /**

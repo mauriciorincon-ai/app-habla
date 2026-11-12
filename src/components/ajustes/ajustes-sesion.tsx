@@ -11,15 +11,19 @@ import {
 } from "@/components/estado-local";
 import { PerfilForm } from "@/components/perfil-form";
 import { useHidratado } from "@/components/use-hidratado";
+import { useT } from "@/lib/idioma/estado";
+import type { Texto } from "@/lib/idioma";
+import { nombreTema } from "@/lib/idioma/textos/nombres";
+import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import {
   AJUSTES_DEFECTO,
-  NOMBRE_TEMA,
   type Apariencia,
   type Perfil,
 } from "@/lib/storage/schemas";
 
 export function AjustesSesion() {
+  const tx = useT();
   const guardados = useAjustes();
   const [confirmandoBorrado, setConfirmandoBorrado] = useState(false);
 
@@ -45,8 +49,8 @@ export function AjustesSesion() {
 
       <Interruptor
         id="modo-calma"
-        titulo="Modo calma"
-        descripcion="Colores de atardecer, sin medidor y sin meta. El globo sube mientras suena su voz y baja despacio en el silencio. Se puede activar también dentro del juego, en un toque."
+        titulo={textos.modoCalma.titulo}
+        descripcion={textos.modoCalma.descripcion}
         activo={ajustes.modoCalma}
         listo={listo}
         onCambiar={(activo) =>
@@ -64,8 +68,8 @@ export function AjustesSesion() {
 
       <Interruptor
         id="reducir-animaciones"
-        titulo="Reducir animaciones"
-        descripcion="Quita los movimientos que no son parte del juego. (Si el sistema ya pide menos movimiento, la app lo respeta sin que toques nada.)"
+        titulo={textos.reducirAnimaciones.titulo}
+        descripcion={textos.reducirAnimaciones.descripcion}
         activo={ajustes.reducirAnimaciones}
         listo={listo}
         onCambiar={(activo) =>
@@ -82,12 +86,11 @@ export function AjustesSesion() {
       />
 
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
-        <h2 className="font-medium">Borrar todos los datos</h2>
+        <h2 className="font-medium">{tx(textos.borrar.titulo)}</h2>
         <p className="text-tinta-suave mt-2 text-sm">
-          Borra el apodo, los temas, los ajustes, el progreso y{" "}
-          <strong>el banco de voz de la familia</strong> de este dispositivo. No
-          hay copia en ningún otro lado: cuando se borran, se van de verdad. (La
-          voz de su hijo nunca se guardó, así que de él no hay nada que borrar.)
+          {tx(textos.borrar.antes)}
+          <strong>{tx(textos.borrar.fuerte)}</strong>
+          {tx(textos.borrar.despues)}
         </p>
 
         {confirmandoBorrado ? (
@@ -98,14 +101,14 @@ export function AjustesSesion() {
               className="bg-peligro text-sobre-peligro min-h-12 flex-1 rounded-xl px-6 font-medium"
               data-testid="confirmar-borrado"
             >
-              Sí, borrar todo
+              {tx(textos.borrar.si)}
             </button>
             <button
               type="button"
               onClick={() => setConfirmandoBorrado(false)}
               className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-6 font-medium"
             >
-              Mejor no
+              {tx(textos.borrar.mejorNo)}
             </button>
           </div>
         ) : (
@@ -115,7 +118,7 @@ export function AjustesSesion() {
             className="border-peligro text-peligro mt-4 min-h-12 rounded-xl border px-6 font-medium"
             data-testid="borrar-datos"
           >
-            Borrar mis datos
+            {tx(textos.borrar.boton)}
           </button>
         )}
       </section>
@@ -127,6 +130,7 @@ export function AjustesSesion() {
 // vez, y la única forma de volver a esa pantalla era borrar todos los datos. Cambiarlos no toca
 // ni el progreso ni los ajustes.
 function SeccionPerfil() {
+  const tx = useT();
   const hidratado = useHidratado();
   const perfil = usePerfil();
   const [editando, setEditando] = useState(false);
@@ -138,23 +142,22 @@ function SeccionPerfil() {
 
   return (
     <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
-      <h2 className="font-medium">Apodo y temas</h2>
+      <h2 className="font-medium">{tx(textos.perfil.titulo)}</h2>
 
       {!hidratado ? (
         <div className="mt-2 min-h-11" aria-hidden="true" />
       ) : !perfil ? (
         <p className="text-tinta-suave mt-2 text-sm">
-          Aún no han empezado en este dispositivo. El apodo y los temas se
-          eligen{" "}
+          {tx(textos.perfil.aunNo.antes)}
           <Link href="/" className="underline underline-offset-4">
-            en la pantalla de Hoy
+            {tx(textos.perfil.aunNo.enlace)}
           </Link>
-          , la primera vez.
+          {tx(textos.perfil.aunNo.despues)}
         </p>
       ) : editando ? (
         <PerfilForm
           inicial={perfil}
-          textoGuardar="Guardar cambios"
+          textoGuardar={tx(textos.perfil.guardarCambios)}
           testIdGuardar="guardar-perfil"
           onGuardar={guardar}
           onCancelar={() => setEditando(false)}
@@ -163,19 +166,18 @@ function SeccionPerfil() {
         <>
           <dl className="mt-2 space-y-2 text-sm">
             <div className="flex gap-2">
-              <dt className="text-tinta-suave">Apodo:</dt>
-              <dd data-testid="perfil-apodo">{perfil.apodo ?? "sin apodo"}</dd>
+              <dt className="text-tinta-suave">{tx(textos.perfil.apodo)}</dt>
+              <dd data-testid="perfil-apodo">{perfil.apodo ?? tx(textos.perfil.sinApodo)}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-tinta-suave">Temas:</dt>
+              <dt className="text-tinta-suave">{tx(textos.perfil.temas)}</dt>
               <dd data-testid="perfil-temas">
-                {perfil.temas.map((tema) => NOMBRE_TEMA[tema]).join(" · ")}
+                {perfil.temas.map((tema) => tx(nombreTema[tema])).join(" · ")}
               </dd>
             </div>
           </dl>
           <p className="text-tinta-suave mt-3 text-sm">
-            Cambiarlos no borra nada: el progreso y los días practicados se
-            quedan como están.
+            {tx(textos.perfil.noBorra)}
           </p>
           <button
             type="button"
@@ -183,7 +185,7 @@ function SeccionPerfil() {
             className="border-borde text-tinta mt-4 min-h-12 rounded-xl border px-6 font-medium"
             data-testid="editar-perfil"
           >
-            Cambiar apodo y temas
+            {tx(textos.perfil.cambiar)}
           </button>
         </>
       )}
@@ -195,10 +197,10 @@ function SeccionPerfil() {
  * Claro / oscuro / el del sistema — solo para la pantalla del padre.
  * El niño ve SIEMPRE la paleta clara (regla del design-system): su mundo no cambia con la hora.
  */
-const APARIENCIAS: { valor: Apariencia; nombre: string; nota: string }[] = [
-  { valor: "sistema", nombre: "El del sistema", nota: "Como tu computador" },
-  { valor: "claro", nombre: "Claro", nota: "Siempre claro" },
-  { valor: "oscuro", nombre: "Oscuro", nota: "Siempre oscuro" },
+const APARIENCIAS: { valor: Apariencia; nombre: Texto; nota: Texto }[] = [
+  { valor: "sistema", ...textos.apariencia.opciones.sistema },
+  { valor: "claro", ...textos.apariencia.opciones.claro },
+  { valor: "oscuro", ...textos.apariencia.opciones.oscuro },
 ];
 
 function SelectorApariencia({
@@ -210,6 +212,7 @@ function SelectorApariencia({
   listo: boolean;
   onCambiar: (apariencia: Apariencia) => void;
 }) {
+  const tx = useT();
   // El tema se aplica al documento, no solo al estado: el <html> es quien lleva la paleta.
   useEffect(() => {
     if (!listo) return;
@@ -220,11 +223,12 @@ function SelectorApariencia({
   return (
     <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
       <h2 className="font-medium" id="apariencia-titulo">
-        Claro u oscuro
+        {tx(textos.apariencia.titulo)}
       </h2>
       <p className="text-tinta-suave mt-2 text-sm">
-        Cómo se ve <strong>esta</strong> pantalla, la tuya. La del niño es clara
-        siempre — su juego no cambia de color según la hora.
+        {tx(textos.apariencia.ayudaAntes)}
+        <strong>{tx(textos.apariencia.ayudaFuerte)}</strong>
+        {tx(textos.apariencia.ayudaDespues)}
       </p>
 
       <div
@@ -250,9 +254,9 @@ function SelectorApariencia({
               ].join(" ")}
             >
               {/* El estado NO se comunica solo con color: la elegida lo dice con palabras. */}
-              <span className="block font-medium">{opcion.nombre}</span>
+              <span className="block font-medium">{tx(opcion.nombre)}</span>
               <span className="text-tinta-suave block text-xs">
-                {elegida ? "Elegida" : opcion.nota}
+                {elegida ? tx(textos.apariencia.elegida) : tx(opcion.nota)}
               </span>
             </button>
           );
@@ -275,6 +279,7 @@ function SeccionVozFamiliar({
   listo: boolean;
   onCambiar: (activo: boolean) => void;
 }) {
+  const tx = useT();
   const [grabados, setGrabados] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
   const [confirmando, setConfirmando] = useState(false);
@@ -304,19 +309,19 @@ function SeccionVozFamiliar({
 
   return (
     <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
-      <h2 className="font-medium">La voz de la familia</h2>
+      <h2 className="font-medium">{tx(textos.voz.titulo)}</h2>
       <p className="text-tinta-suave mt-2 text-sm">
-        Graba tu voz para que los juegos suenen con la voz que tu hijo conoce.{" "}
+        {tx(textos.voz.texto)}{" "}
         {grabados !== null ? (
           <>
-            Vas{" "}
+            {tx(textos.voz.vas)}{" "}
             <strong data-testid="cobertura-ajustes">
-              {grabados} de {total}
+              {tx(textos.voz.deTotal, { grabados, total })}
             </strong>{" "}
-            con tu voz.
+            {tx(textos.voz.conTuVoz)}
           </>
         ) : null}{" "}
-        Vive solo en este dispositivo; la voz de tu hijo nunca se graba.
+        {tx(textos.voz.soloAqui)}
       </p>
 
       <Link
@@ -324,18 +329,17 @@ function SeccionVozFamiliar({
         className="bg-acento text-sobre-acento mt-4 inline-flex min-h-12 items-center rounded-xl px-6 font-medium"
         data-testid="ir-al-estudio"
       >
-        {grabados ? "Grabar o gestionar mi voz" : "Grabar mi voz"}
+        {grabados ? tx(textos.voz.gestionar) : tx(textos.voz.grabar)}
       </Link>
 
       <div className="border-borde mt-5 border-t pt-4">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="font-medium" id="voz-familiar-titulo">
-              Usar la voz de la familia
+              {tx(textos.voz.usar)}
             </h3>
             <p className="text-tinta-suave mt-1 text-sm">
-              Cuando está activo y hay grabaciones, los juegos suenan con tu
-              voz. Apagarlo no borra nada.
+              {tx(textos.voz.usarAyuda)}
             </p>
           </div>
           <button
@@ -373,14 +377,14 @@ function SeccionVozFamiliar({
                 className="bg-peligro text-sobre-peligro min-h-11 flex-1 rounded-xl px-4 text-sm font-medium"
                 data-testid="confirmar-borrar-banco"
               >
-                Sí, borrar el banco de voz
+                {tx(textos.voz.siBorrar)}
               </button>
               <button
                 type="button"
                 onClick={() => setConfirmando(false)}
                 className="border-borde text-tinta min-h-11 flex-1 rounded-xl border px-4 text-sm font-medium"
               >
-                Mejor no
+                {tx(textos.voz.mejorNo)}
               </button>
             </div>
           ) : (
@@ -390,7 +394,7 @@ function SeccionVozFamiliar({
               className="text-peligro min-h-11 text-sm underline-offset-4 hover:underline"
               data-testid="borrar-banco"
             >
-              Borrar solo el banco de voz
+              {tx(textos.voz.borrarSolo)}
             </button>
           )}
         </div>
@@ -408,21 +412,22 @@ function Interruptor({
   onCambiar,
 }: {
   id: string;
-  titulo: string;
-  descripcion: string;
+  titulo: Texto;
+  descripcion: Texto;
   activo: boolean;
   /** false hasta que hidrata: aún no sabemos el valor guardado, así que no se puede tocar. */
   listo: boolean;
   onCambiar: (activo: boolean) => void;
 }) {
+  const tx = useT();
   return (
     <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="font-medium" id={`${id}-titulo`}>
-            {titulo}
+            {tx(titulo)}
           </h2>
-          <p className="text-tinta-suave mt-2 text-sm">{descripcion}</p>
+          <p className="text-tinta-suave mt-2 text-sm">{tx(descripcion)}</p>
         </div>
         <button
           type="button"
