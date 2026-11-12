@@ -96,6 +96,7 @@ export function HoyCliente() {
       <article
         className="bg-superficie shadow-tarjeta rounded-2xl p-6"
         data-testid="capsula"
+        data-capsula-id={capsula.id}
         data-completada={completada}
       >
         {/* Nombra cada cosa por lo que es (gate S4): antes iba "Hoy practicamos · X · Y" y el

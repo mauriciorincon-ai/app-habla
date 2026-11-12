@@ -150,3 +150,14 @@ describe("contrato brochure-export.json (v1.0.0)", () => {
     expect(p.usa_ia).toBe(false);
   });
 });
+
+describe("brochure bilingüe (S7): cada bloque en español tiene su hermano en inglés", () => {
+  it("todo data-l=es va seguido de su data-l=en, con el mismo tag", () => {
+    const html = readFileSync(join(RAIZ, "docs", "BROCHURE.html"), "utf8");
+    const es = [...html.matchAll(/<(\w+)\b[^>]*\bdata-l="es"[^>]*>/g)];
+    const en = [...html.matchAll(/<(\w+)\b[^>]*\bdata-l="en"[^>]*>/g)];
+    expect(es.length).toBeGreaterThan(50);
+    expect(en.length).toBe(es.length);
+    es.forEach((m, i) => expect(en[i][1], `par ${i}: ${m[0].slice(0, 60)}`).toBe(m[1]));
+  });
+});

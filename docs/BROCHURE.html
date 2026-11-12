@@ -2,6 +2,27 @@
 <html lang="es-CO">
 <head>
 <meta charset="utf-8">
+<script>
+/* Idioma: la elección guardada (habla:v1:ajustes → idioma) y, sin ella, la primera
+   preferencia del navegador que sea es o en. Se fija antes de pintar. */
+(function () {
+  var l = null;
+  try {
+    var j = JSON.parse(localStorage.getItem("habla:v1:ajustes"));
+    if (j && (j.idioma === "en" || j.idioma === "es")) { l = j.idioma; }
+  } catch (e) {}
+  if (!l) {
+    try {
+      var ls = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < ls.length; i++) {
+        var p = String(ls[i] || "").toLowerCase().slice(0, 2);
+        if (p === "en" || p === "es") { l = p; break; }
+      }
+    } catch (e) {}
+  }
+  document.documentElement.lang = l === "en" ? "en" : "es-CO";
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="Conoce Hablemos San: juegos que se juegan hablando — y se juegan juntos.">
@@ -72,6 +93,20 @@
       --realce: #ECC56F;
     }
   }
+
+  /* ── Dos idiomas: cada bloque de texto es una pareja de hermanos data-l="es" / "en". ── */
+  html[lang="en"] [data-l="es"] { display: none; }
+  html:not([lang="en"]) [data-l="en"] { display: none; }
+  .idioma { position: fixed; top: 10px; right: 10px; z-index: 60; display: flex; gap: 4px;
+    padding: 4px; background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: 999px; }
+  .idioma button { font: inherit; font-size: .85rem; min-height: 44px; min-width: 44px;
+    padding: 0 14px; border-radius: 999px; border: 1px solid transparent;
+    background: transparent; color: var(--tinta); cursor: pointer; }
+  .idioma button[aria-pressed="true"] { background: var(--acento); color: var(--fondo);
+    font-weight: 600; }
+  .idioma button[aria-pressed="true"]::before { content: "\2713\00a0"; }
+  .idioma button:focus-visible { outline: 3px solid var(--acento-vivo); outline-offset: 2px; }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -830,7 +865,14 @@
 </head>
 <body>
 
-<a class="saltar" href="#contenido">Saltar al recorrido</a>
+<a data-l="es" class="saltar" href="#contenido">Saltar al recorrido</a>
+<a data-l="en" class="saltar" href="#contenido">Skip to the tour</a>
+
+<!-- Conmutador de idioma: dos botones, el activo lleva ✓ además del color. -->
+<div class="idioma" role="group" aria-label="Idioma · Language">
+  <button type="button" data-idioma="es" lang="es" aria-pressed="true">Español</button>
+  <button type="button" data-idioma="en" lang="en" aria-pressed="false">English</button>
+</div>
 
 <!-- E02 · el hilo: tu recorrido es la voz sostenida. -->
 <div class="hilo" aria-hidden="true">
@@ -861,13 +903,23 @@
         </svg>
       </div>
       <p class="eyebrow">Hablemos San</p>
-      <h1><span style="--i:0">Su</span> <span style="--i:1">voz</span>
+      <h1 data-l="es"><span style="--i:0">Su</span> <span style="--i:1">voz</span>
         <span style="--i:2">mueve</span> <span style="--i:3">el</span>
         <span style="--i:4">mundo.</span></h1>
-      <p class="promesa">Juegos que se juegan hablando — y se juegan contigo. Y cada día,
+      <h1 data-l="en"><span style="--i:0">Their</span> <span style="--i:1">voice</span>
+        <span style="--i:2">moves</span> <span style="--i:3">the</span>
+        <span style="--i:4">world.</span></h1>
+      <p data-l="es" class="promesa">Juegos que se juegan hablando — y se juegan contigo. Y cada día,
         una respuesta concreta a la pregunta que más pesa: «¿y hoy qué puedo hacer por
         mi hijo?».</p>
-      <p class="baja">Baja despacio
+      <p data-l="en" class="promesa">Games you play by talking — and you play them with them. And every day, a concrete
+        answer to the question that weighs the most: “so what can I do for my child
+        today?”.</p>
+      <p data-l="es" class="baja">Baja despacio
+        <span class="flecha" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg>
+        </span></p>
+      <p data-l="en" class="baja">Scroll down slowly
         <span class="flecha" aria-hidden="true">
           <svg viewBox="0 0 24 24" focusable="false"><path d="M6 9.5l6 6 6-6"/></svg>
         </span></p>
@@ -879,12 +931,15 @@
 
   <!-- ══ E03/E04 · LAS SEIS PUERTAS ══ -->
   <div class="lienzo">
-  <section class="acto" aria-labelledby="t-quehace">
+  <section class="acto" aria-labelledby="t-quehace" data-lb="t-quehace">
     <p class="acto-cabeza revela"><span class="num">01</span>
-      <span class="eyebrow">Qué hace</span><span class="raya"></span></p>
-    <h2 id="t-quehace" class="revela">Seis puertas, y ninguna se abre <em>sola</em>.</h2>
-    <p class="suave revela">Ábrelas en el orden que quieras — aquí nadie lee nada que no
+      <span data-l="es" class="eyebrow">Qué hace</span>
+      <span data-l="en" class="eyebrow">What it does</span><span class="raya"></span></p>
+    <h2 data-l="es" id="t-quehace" class="revela">Seis puertas, y ninguna se abre <em>sola</em>.</h2>
+    <h2 data-l="en" id="t-quehace-en" class="revela">Six doors, and none opens by <em>itself</em>.</h2>
+    <p data-l="es" class="suave revela">Ábrelas en el orden que quieras — aquí nadie lee nada que no
       pidió leer.</p>
+    <p data-l="en" class="suave revela">Open them in any order you like — nobody here reads anything they didn't ask to read.</p>
 
     <div class="tarjetas">
 
@@ -901,10 +956,13 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="estrellita">La estrella de la app</span>
-              <span class="t-nombre">La respuesta de cada día</span>
-              <span class="t-linea">Cada mañana, una idea lista: qué decirle hoy y qué
+              <span data-l="es" class="estrellita">La estrella de la app</span>
+              <span data-l="en" class="estrellita">The star of the app</span>
+              <span data-l="es" class="t-nombre">La respuesta de cada día</span>
+              <span data-l="en" class="t-nombre">The daily answer</span>
+              <span data-l="es" class="t-linea">Cada mañana, una idea lista: qué decirle hoy y qué
                 jugar juntos.</span>
+              <span data-l="en" class="t-linea">Every morning, an idea ready to go: what to say to them today and what to play together.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -912,61 +970,100 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d1" role="region" aria-label="La respuesta de cada día — detalle">
+        <div class="detalle" id="d1" role="region" aria-label="La respuesta de cada día — detalle" data-aria-en="The daily answer — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4>La cápsula del día</h4>
-              <p class="como">Al abrir la app te espera la cápsula de hoy: una técnica con
+              <h4 data-l="es">La cápsula del día</h4>
+              <h4 data-l="en">Today's capsule</h4>
+              <p data-l="es" class="como">Al abrir la app te espera la cápsula de hoy: una técnica con
                 respaldo científico, el porqué en dos líneas, <strong>tu línea de hoy</strong>
                 —la frase que puedes decirle tal cual— y una actividad corta para hacer
                 juntos. Cada día trae una distinta, no se repite hasta que se acaben todas,
                 y la de hoy no cambia aunque cierres y vuelvas a abrir. Si te da curiosidad,
                 en «¿De dónde sale esto?» está el estudio que la respalda.</p>
+              <p data-l="en" class="como">When you open the app, today's capsule is waiting: a technique backed by research,
+                the why in two lines, <strong>your line for today</strong> —the phrase you can
+                say to them just as it is— and a short activity to do together. Each day brings
+                a different one, none repeats until all of them have been used, and today's
+                doesn't change even if you close the app and come back. If you're curious,
+                “Where does this come from?” holds the study behind it.</p>
               <!-- Así se ve la cápsula de hoy en su pantalla. -->
               <div class="mock" aria-hidden="true">
-                <p class="mock-rotulo"><span class="chip" style="padding:2px 8px">Modelar</span></p>
-                <p class="mock-rotulo" style="margin-bottom:4px">Tu línea de hoy</p>
-                <p class="mock-linea">«Mira: un carro rojo. Rojo.»</p>
+                <p data-l="es" class="mock-rotulo"><span class="chip" style="padding:2px 8px">Modelar</span></p>
+                <p data-l="en" class="mock-rotulo"><span class="chip" style="padding:2px 8px">Modeling</span></p>
+                <p data-l="es" class="mock-rotulo" style="margin-bottom:4px">Tu línea de hoy</p>
+                <p data-l="en" class="mock-rotulo" style="margin-bottom:4px">Your line for today</p>
+                <p data-l="es" class="mock-linea">«Mira: un carro rojo. Rojo.»</p>
+                <p data-l="en" class="mock-linea">“Look: a red car. Red.”</p>
                 <p class="mock-pie">
-                  <span class="mock-pill">
+                  <span data-l="es" class="mock-pill">
                     <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
                     Sí, ya lo hicimos</span>
-                  <span class="mock-dato">12 días juntos</span>
+                  <span data-l="en" class="mock-pill">
+                    <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                    Yes, we did it</span>
+                  <span data-l="es" class="mock-dato">12 días juntos</span>
+                  <span data-l="en" class="mock-dato">12 days together</span>
                 </p>
               </div>
-              <p class="tip"><strong>Tip:</strong> son cosas de 5 a 10 minutos, pensadas
+              <p data-l="es" class="tip"><strong>Tip:</strong> son cosas de 5 a 10 minutos, pensadas
                 para la comida, el baño o el juego — el habla se estimula todo el día, no
                 solo frente a la pantalla.</p>
+              <p data-l="en" class="tip"><strong>Tip:</strong> these are 5-to-10-minute things, made for mealtime, bath time
+                or play — speech is nurtured all day long, not only in front of the screen.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+              <h4 data-l="es"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
                   focusable="false"><path d="M4 12.5l5 5L20 6.5"/></svg>
                 «Sí, ya lo hicimos» — los días que llevan</h4>
-              <p class="como">Cuando hagan la actividad, tócalo y el contador de días
+              <h4 data-l="en"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+                  focusable="false"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                “Yes, we did it” — the days you've shared</h4>
+              <p data-l="es" class="como">Cuando hagan la actividad, tócalo y el contador de días
                 practicados crece. Ese número <strong>nunca baja</strong>: si un día no se
                 pudo, no se pierde nada y no hay racha que se rompa. Lo que cuenta es
                 volver.</p>
+              <p data-l="en" class="como">When you've done the activity, tap it and the practice-day counter grows. That number
+                <strong>never goes down</strong>: if a day didn't work out, nothing is lost and
+                there is no streak to break. What counts is coming back.</p>
             </div>
             <div class="catalogo">
-              <p class="eyebrow">El catálogo completo</p>
-              <p class="como chica">Detrás del día a día hay <strong>50 cápsulas</strong>,
+              <p data-l="es" class="eyebrow">El catálogo completo</p>
+              <p data-l="en" class="eyebrow">The full catalog</p>
+              <p data-l="es" class="como chica">Detrás del día a día hay <strong>50 cápsulas</strong>,
                 organizadas por cómo habla el niño hoy y construidas sobre cinco técnicas
                 con evidencia — ninguna es un consejo genérico: cada una cita su fuente.</p>
-              <ul class="chips" aria-label="Las tres etapas del habla">
+              <p data-l="en" class="como chica">Underneath the day-to-day there are <strong>50 capsules</strong>, organized by how the
+                child talks today and built on five techniques with evidence — none is generic
+                advice: each one cites its source.</p>
+              <ul data-l="es" class="chips" aria-label="Las tres etapas del habla">
                 <li class="chip">Sonidos e intentos</li>
                 <li class="chip">Palabras sueltas</li>
                 <li class="chip">Primeras frases</li>
               </ul>
-              <ul class="chips" aria-label="Las cinco técnicas">
+              <ul data-l="en" class="chips" aria-label="The three speech stages">
+                <li class="chip">Sounds and attempts</li>
+                <li class="chip">Single words</li>
+                <li class="chip">First phrases</li>
+              </ul>
+              <ul data-l="es" class="chips" aria-label="Las cinco técnicas">
                 <li class="chip">Modelar</li>
                 <li class="chip">Expandir lo que dijo</li>
                 <li class="chip">Esperar en silencio</li>
                 <li class="chip">Seguir su interés</li>
                 <li class="chip">Repetir una palabra clave</li>
               </ul>
+              <ul data-l="en" class="chips" aria-label="The five techniques">
+                <li class="chip">Modeling</li>
+                <li class="chip">Building on what they said</li>
+                <li class="chip">Waiting in silence</li>
+                <li class="chip">Following their interest</li>
+                <li class="chip">Repeating a key word</li>
+              </ul>
             </div>
           
-            <a class="enlace" href="/">Ver la cápsula de hoy <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/">Ver la cápsula de hoy <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/">See today's capsule <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -982,9 +1079,11 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="t-nombre">Jugar con la voz</span>
-              <span class="t-linea">Cuatro juegos donde su voz es el control — y tú
+              <span data-l="es" class="t-nombre">Jugar con la voz</span>
+              <span data-l="en" class="t-nombre">Playing with the voice</span>
+              <span data-l="es" class="t-linea">Cuatro juegos donde su voz es el control — y tú
                 diriges.</span>
+              <span data-l="en" class="t-linea">Four games where their voice is the controller — and you lead.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -992,13 +1091,16 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d2" role="region" aria-label="Jugar con la voz — detalle">
+        <div class="detalle" id="d2" role="region" aria-label="Jugar con la voz — detalle" data-aria-en="Playing with the voice — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+              <h4 data-l="es"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
                   focusable="false"><path d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"/></svg>
                 Antes de jugar, tu guion</h4>
-              <p class="como">Tres de los juegos escuchan el micrófono (el globo, el cohete
+              <h4 data-l="en"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true"
+                  focusable="false"><path d="M20 15a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"/></svg>
+                Before playing, your script</h4>
+              <p data-l="es" class="como">Tres de los juegos escuchan el micrófono (el globo, el cohete
                 y «palabra y dibujo»), y antes de cada uno pasa siempre lo mismo: primero
                 te muestra <strong>tu guion</strong> —la línea que tú vas a decir—, luego
                 el navegador pide permiso para escuchar, y por último dos segundos de
@@ -1006,11 +1108,20 @@
                 ventilador con la voz. Puedes tocar «Ya jugamos» cuando quieras: no hay
                 tiempo mínimo, ni meta obligatoria, ni «game over». Y «Salir» apaga el
                 micrófono ahí mismo.</p>
-              <p class="tip"><strong>Tip:</strong> ninguno le exige palabras — miden la
+              <p data-l="en" class="como">Three of the games listen to the microphone (the balloon, the rocket and “word and
+                picture”), and before each one the same thing always happens: first it shows
+                <strong>your script</strong> —the line you are going to say—, then the browser
+                asks permission to listen, and finally two seconds of silence (“shhh…”) to
+                measure how your home sounds so it doesn't mistake the fan for a voice. You can
+                tap “We're done playing” whenever you like: there's no minimum time, no required
+                goal, no “game over”. And “Exit” turns the microphone off right there.</p>
+              <p data-l="es" class="tip"><strong>Tip:</strong> ninguno le exige palabras — miden la
                 voz, no el vocabulario. Cualquier sonido vale.</p>
+              <p data-l="en" class="tip"><strong>Tip:</strong> none of them asks for words — they measure the voice, not the
+                vocabulary. Any sound counts.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4><span class="escenario" aria-hidden="true">
+              <h4 data-l="es"><span class="escenario" aria-hidden="true">
                   <svg class="flota" viewBox="0 0 64 96" width="23" height="34" focusable="false">
                     <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="var(--nino-ink)"
                       stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
@@ -1020,16 +1131,34 @@
                     <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity=".4"/>
                   </svg></span>
                 El globo — la voz que se sostiene</h4>
-              <p class="como">El globo avanza mientras la voz suena («aaaaah») y espera sin
+              <h4 data-l="en"><span class="escenario" aria-hidden="true">
+                  <svg class="flota" viewBox="0 0 64 96" width="23" height="34" focusable="false">
+                    <path d="M32 66c-4 6 4 10 0 16s2 10 2 14" fill="none" stroke="var(--nino-ink)"
+                      stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+                    <path d="M28 62h8l-4 5z" fill="var(--nino-ink)" opacity=".55"/>
+                    <ellipse cx="32" cy="32" rx="25" ry="31" fill="var(--nino-peach)"
+                      stroke="var(--nino-ink)" stroke-width="1.5"/>
+                    <ellipse cx="23" cy="21" rx="6" ry="9" fill="#FFFFFF" opacity=".4"/>
+                  </svg></span>
+                The balloon — the voice that holds</h4>
+              <p data-l="es" class="como">El globo avanza mientras la voz suena («aaaaah») y espera sin
                 drama cuando se calla: lo avanzado nunca se pierde. Cada 3 segundos de voz
                 acumulada cruza la línea, da <strong>una vuelta</strong> y estalla un
                 confeti que cae una vez y se va. Al final, la celebración dice exactamente
                 lo que se midió — tres cosas: cuánto sonó la voz en total («¡Su voz sonó
                 7,3 segundos!»), cuántas vueltas dio el globo, y cuál fue el rato más largo
                 sin cortarse. La app nunca dice que sostuvo un tiempo que no sostuvo.</p>
+              <p data-l="en" class="como">The balloon moves forward while the voice sounds (“aaaaah”) and waits calmly when it
+                goes quiet: what it has advanced is never lost. Every 3 seconds of accumulated
+                voice it crosses the line, does <strong>one loop</strong> and a burst of confetti
+                falls once and goes away. At the end, the celebration says exactly what was
+                measured — three things: how long the voice sounded in total (“Their voice
+                sounded for 7.3 seconds!”), how many loops the balloon made, and the longest
+                stretch without a break. The app never says they held a sound longer than they
+                did.</p>
             </div>
             <div class="feature" style="--j:2">
-              <h4><span class="escenario" aria-hidden="true">
+              <h4 data-l="es"><span class="escenario" aria-hidden="true">
                   <svg viewBox="0 0 64 96" width="23" height="34" focusable="false">
                     <path class="llama" d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z" fill="var(--nino-yellow)"
                       stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"
@@ -1043,15 +1172,35 @@
                       stroke-linecap="round" opacity=".7"/>
                   </svg></span>
                 El cohete — la voz que sube y baja</h4>
-              <p class="como">El cohete escucha el <strong>tono</strong>: voz que sube,
+              <h4 data-l="en"><span class="escenario" aria-hidden="true">
+                  <svg viewBox="0 0 64 96" width="23" height="34" focusable="false">
+                    <path class="llama" d="M26 74c0 8 3 14 6 18 3-4 6-10 6-18z" fill="var(--nino-yellow)"
+                      stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"
+                      style="transform-origin:32px 74px"/>
+                    <path d="M20 68c-6 2-8 6-8 10 5 0 9-2 12-5zM44 68c6 2 8 6 8 10-5 0-9-2-12-5z"
+                      fill="var(--nino-sage)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M32 6c9 9 13 22 13 36v28H19V42C19 28 23 15 32 6z" fill="var(--nino-peach)"
+                      stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                    <circle cx="32" cy="36" r="8" fill="var(--nino-sky)" stroke="var(--nino-ink)" stroke-width="1.5"/>
+                    <path d="M28 32a5 5 0 0 1 4-2" fill="none" stroke="#FFFFFF" stroke-width="2"
+                      stroke-linecap="round" opacity=".7"/>
+                  </svg></span>
+                The rocket — the voice that goes up and down</h4>
+              <p data-l="es" class="como">El cohete escucha el <strong>tono</strong>: voz que sube,
                 cohete que sube. No hay que decir ninguna palabra — la sirena exagerada
                 («aaaAAAaaa») es exactamente lo que se busca; hazla tú primero, riéndote.
                 Cada subida y bajada de verdad gana un hito con confeti («¡Ya subió y bajó
                 2 veces!»), y una capa de nubes y estrellas pasa hacia abajo para que se
                 sienta que va cada vez más alto, como mirar por la ventanilla.</p>
+              <p data-l="en" class="como">The rocket listens to the <strong>pitch</strong>: voice goes up, rocket goes up. No
+                word needs to be said — the exaggerated siren (“aaaAAAaaa”) is exactly what we're
+                after; do it first yourself, laughing. Every real rise and fall earns a
+                milestone with confetti (“It went up and down 2 times!”), and a layer of clouds
+                and stars drifts downward so it feels like it's climbing higher and higher, like
+                looking out of a window.</p>
             </div>
             <div class="feature" style="--j:3">
-              <h4><span class="escenario" aria-hidden="true">
+              <h4 data-l="es"><span class="escenario" aria-hidden="true">
                   <svg class="trazo-nino" viewBox="0 0 24 24" width="26" height="26" focusable="false">
                     <rect x="3" y="3" width="18" height="14" rx="2.5"/>
                     <path d="M6 14l3.5-4 3 3.4L15 11l3 3"/>
@@ -1059,7 +1208,15 @@
                     <path d="M6 20h12"/>
                   </svg></span>
                 Palabra y dibujo — el nombre vive en la cosa</h4>
-              <p class="como">Aparece un dibujo grande con su palabra escrita, de los temas
+              <h4 data-l="en"><span class="escenario" aria-hidden="true">
+                  <svg class="trazo-nino" viewBox="0 0 24 24" width="26" height="26" focusable="false">
+                    <rect x="3" y="3" width="18" height="14" rx="2.5"/>
+                    <path d="M6 14l3.5-4 3 3.4L15 11l3 3"/>
+                    <circle cx="9" cy="7.5" r="1.4"/>
+                    <path d="M6 20h12"/>
+                  </svg></span>
+                Word and picture — the name lives in the thing</h4>
+              <p data-l="es" class="como">Aparece un dibujo grande con su palabra escrita, de los temas
                 que elegiste. Tu papel es el importante: nómbralo <strong>una sola vez</strong>
                 —«¡perro!»— y espera tres segundos en silencio. El dibujo se enciende con
                 cualquier sonido que él haga: un intento, un «pe», un balbuceo. ¿Y si sí
@@ -1067,11 +1224,22 @@
                 ‹perro›? Tócalo tú» — y sube una bandada de globos, porque decir la palabra
                 merece más que un sonido cualquiera. La app no reconoce palabras y no va a
                 fingir que sí: tú estabas ahí, y tú sabes.</p>
-              <p class="tip"><strong>Tip:</strong> los dibujos son pictogramas de ARASAAC y
+              <p data-l="en" class="como"><strong>An honest note:</strong> word games in English are coming soon; for now this
+                one is played with Spanish words. A big picture appears with its word written, from
+                the topics you chose. Your part is the important one: say it <strong>just
+                once</strong> —“¡perro!”— and wait three seconds in silence. The picture lights
+                up with any sound they make: an attempt, a “pe”, babbling. And if they did say
+                the word? That's for you to decide: below, in small print, there's “Did they say
+                ‘perro’? You tell us” — and a flock of balloons rises, because saying the word
+                deserves more than just any sound. The app doesn't recognize words and won't
+                pretend to: you were there, and you know.</p>
+              <p data-l="es" class="tip"><strong>Tip:</strong> los dibujos son pictogramas de ARASAAC y
                 viven dentro de la app — no se descargan de internet mientras juegan.</p>
+              <p data-l="en" class="tip"><strong>Tip:</strong> the pictures are ARASAAC pictograms and live inside the app —
+                they aren't downloaded from the internet while they play.</p>
             </div>
             <div class="feature" style="--j:4">
-              <h4><span class="escenario" aria-hidden="true">
+              <h4 data-l="es"><span class="escenario" aria-hidden="true">
                   <svg class="trazo-nino" viewBox="0 0 32 24" width="28" height="21" focusable="false">
                     <rect x="2" y="4" width="13" height="16" rx="2.5"/>
                     <rect x="17" y="4" width="13" height="16" rx="2.5"/>
@@ -1079,19 +1247,39 @@
                     <path d="M23.5 9v4M21.5 11h4"/>
                   </svg></span>
                 Palabras gemelas — casi iguales, no idénticas</h4>
-              <p class="como">Dos dibujos a la vez cuyas palabras se diferencian por un solo
+              <h4 data-l="en"><span class="escenario" aria-hidden="true">
+                  <svg class="trazo-nino" viewBox="0 0 32 24" width="28" height="21" focusable="false">
+                    <rect x="2" y="4" width="13" height="16" rx="2.5"/>
+                    <rect x="17" y="4" width="13" height="16" rx="2.5"/>
+                    <circle cx="8.5" cy="11" r="2.2"/>
+                    <path d="M23.5 9v4M21.5 11h4"/>
+                  </svg></span>
+                Twin words — almost the same, not identical</h4>
+              <p data-l="es" class="como">Dos dibujos a la vez cuyas palabras se diferencian por un solo
                 sonido: <em>pato</em> y <em>gato</em>, <em>foca</em> y <em>boca</em>.
                 Señalas los dos, le pides que diga uno, y <strong>tú marcas el que
                 oíste</strong> en «¿Cuál oíste?» — ahí el dibujo elegido festeja. Este
                 juego no usa micrófono ni analiza nada: el que oye eres tú. No hay
                 respuesta incorrecta para el niño; si hoy solo quiere mirar, tocas «Hoy
                 solo miramos esta» y siguen sin apuro.</p>
-              <p class="tip"><strong>Tip:</strong> necesita que el niño ya diga palabras
+              <p data-l="en" class="como"><strong>An honest note:</strong> word games in English are coming soon; for now this
+                one is played with Spanish words. Two pictures at once whose words differ by a
+                single sound: <em>pato</em> and <em>gato</em>, <em>foca</em> and <em>boca</em>.
+                You point to both, ask them to say one, and <strong>you mark the one you
+                heard</strong> under “Which did you hear?” — there, the chosen picture
+                celebrates. This game uses no microphone and analyzes nothing: you are the one
+                who hears. There is no wrong answer for the child; if today they just want to
+                look, you tap “Today we're just looking at this one” and you carry on, no
+                rush.</p>
+              <p data-l="es" class="tip"><strong>Tip:</strong> necesita que el niño ya diga palabras
                 sueltas — si su etapa es «sonidos e intentos», el juego mismo te lo dice
                 con cariño.</p>
+              <p data-l="en" class="tip"><strong>Tip:</strong> it needs the child to already say single words — if their stage
+                is “sounds and attempts”, the game itself tells you so, kindly.</p>
             </div>
           
-            <a class="enlace" href="/jugar">Ver los cuatro juegos <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/jugar">Ver los cuatro juegos <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/jugar">See the four games <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1109,9 +1297,11 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="t-nombre">Tu voz dentro de la app</span>
-              <span class="t-linea">Grabas «perro» una vez — y los juegos hablan con tu
+              <span data-l="es" class="t-nombre">Tu voz dentro de la app</span>
+              <span data-l="en" class="t-nombre">Your voice inside the app</span>
+              <span data-l="es" class="t-linea">Grabas «perro» una vez — y los juegos hablan con tu
                 voz.</span>
+              <span data-l="en" class="t-linea">Record a word once — and the games speak with your voice.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -1119,39 +1309,60 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d3" role="region" aria-label="Tu voz dentro de la app — detalle">
+        <div class="detalle" id="d3" role="region" aria-label="Tu voz dentro de la app — detalle" data-aria-en="Your voice inside the app — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4>El Estudio: grabar, oír, guardar</h4>
-              <p class="como">El Estudio te va mostrando, de a una, las palabras y frases
+              <h4 data-l="es">El Estudio: grabar, oír, guardar</h4>
+              <h4 data-l="en">The Studio: record, listen, save</h4>
+              <p data-l="es" class="como">El Estudio te va mostrando, de a una, las palabras y frases
                 que puedes grabar. Tocas «Grabar», la dices, la escuchas cómo quedó y la
                 guardas — o la regrabas sin pena. Mientras grabas, una barra baila con tu
                 voz: si se mueve cuando hablas, te está oyendo bien. Y al escuchar
                 cualquier grabación, una barrita se llena con el avance del audio: sabes
                 que suena y cuánto falta.</p>
+              <p data-l="en" class="como">The Studio shows you, one at a time, the words and phrases you can record. You tap
+                “Record”, say it, listen to how it came out and save it — or record it again with
+                no fuss. While you record, a bar dances with your voice: if it moves when you
+                talk, it's hearing you well. And when you play back any recording, a little bar
+                fills with the audio's progress: you know it's playing and how much is left.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4>Ve directo a lo que quieras grabar</h4>
-              <p class="como">Las grabaciones se organizan en tres grupos —Palabras ·
+              <h4 data-l="es">Ve directo a lo que quieras grabar</h4>
+              <h4 data-l="en">Go straight to what you want to record</h4>
+              <p data-l="es" class="como">Las grabaciones se organizan en tres grupos —Palabras ·
                 Consignas del juego · Celebraciones— y cada grupo tiene su propio botón
                 «Grabar»: puedes irte derecho a las dos consignas sin pasar por todas las
                 palabras. El botón grande sigue siendo el recorrido guiado de siempre, que
                 propone primero lo que más le sirve al niño.</p>
+              <p data-l="en" class="como">Recordings are organized into three groups —Words · Game cues · Celebrations— and
+                each group has its own “Record” button: you can go straight to the two game cues
+                without passing through all the words. The big button is still the usual guided
+                tour, which suggests first what helps the child most.</p>
             </div>
             <div class="feature" style="--j:2">
-              <h4>Lo que ya grabaste</h4>
-              <p class="como">Cada grabación con sus botones de Escuchar y Borrar,
+              <h4 data-l="es">Lo que ya grabaste</h4>
+              <h4 data-l="en">What you've already recorded</h4>
+              <p data-l="es" class="como">Cada grabación con sus botones de Escuchar y Borrar,
                 agrupadas y numeradas. Borrar pide un <strong>segundo toque</strong> —el
                 botón se pone rojo con «¿Seguro?»— para que un dedo apurado no borre nada
                 sin querer; si te arrepientes, en unos segundos se desarma solo.</p>
+              <p data-l="en" class="como">Each recording with its Listen and Delete buttons, grouped and numbered. Delete asks
+                for a <strong>second tap</strong> —the button turns red and says “Sure?”— so a
+                hurried finger doesn't erase anything by accident; if you change your mind, it
+                undoes itself after a few seconds.</p>
             </div>
             <div class="feature" style="--j:3">
-              <h4><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <h4 data-l="es"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path d="M4 9v6h4l5 4V5L8 9H4Z"/>
                   <path d="M16 9a3.5 3.5 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11"/>
                 </svg>
                 Y aquí la magia: tu voz suena en los juegos</h4>
-              <p class="como">Con grabaciones guardadas, en «palabra y dibujo» y en
+              <h4 data-l="en"><svg class="f-icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 9v6h4l5 4V5L8 9H4Z"/>
+                  <path d="M16 9a3.5 3.5 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11"/>
+                </svg>
+                And here's the magic: your voice plays in the games</h4>
+              <p data-l="es" class="como">Con grabaciones guardadas, en «palabra y dibujo» y en
                 «palabras gemelas» cada dibujo trae un <strong>botón de altavoz</strong>
                 (grande: él lo puede tocar) y la palabra suena sola al aparecer — el nombre
                 vive en la cosa, con una voz que él conoce. En el globo y el cohete, tus
@@ -1159,9 +1370,17 @@
                 y mientras tu voz grabada suena, el juego espera: el globo no vuela con una
                 grabación, solo con la voz de verdad. ¿Quieres apagarla un rato? El
                 interruptor «Usar la voz de la familia» la apaga sin borrar nada.</p>
+              <p data-l="en" class="como">With saved recordings, in “word and picture” and “twin words” each picture comes with
+                a <strong>speaker button</strong> (big: they can tap it) and the word plays by
+                itself when it appears — the name lives in the thing, in a voice they know. In
+                the balloon and the rocket, your recorded invitations (“Make your voice sound:
+                aaaaah”) play under the title — and while your recorded voice is playing, the
+                game waits: the balloon doesn't fly with a recording, only with a real voice.
+                Want to turn it off for a while? The “Use the family's voice” switch turns it
+                off without deleting anything.</p>
               <!-- El hilo completo, de un vistazo. -->
               <div class="mock" aria-hidden="true">
-                <div class="hilera">
+                <div data-l="es" class="hilera">
                   <span class="paso"><span class="caja">
                     <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/>
                       <path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4M9 21h6"/></svg>
@@ -1177,12 +1396,31 @@
                       <path d="M16 9a3.5 3.5 0 0 1 0 6"/></svg>
                     </span>Suena en los<br>cuatro juegos</span>
                 </div>
+                <div data-l="en" class="hilera">
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/>
+                      <path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4M9 21h6"/></svg>
+                    </span>You record<br>a word once</span>
+                  <span class="flecha">→</span>
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/>
+                      <path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                    </span>It stays<br>on this device</span>
+                  <span class="flecha">→</span>
+                  <span class="paso"><span class="caja">
+                    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z"/>
+                      <path d="M16 9a3.5 3.5 0 0 1 0 6"/></svg>
+                    </span>It plays in<br>all four games</span>
+                </div>
               </div>
-              <p class="tip"><strong>Importante:</strong> se graba TU voz, la del adulto.
+              <p data-l="es" class="tip"><strong>Importante:</strong> se graba TU voz, la del adulto.
                 La del niño nunca — ni aquí ni en ningún juego.</p>
+              <p data-l="en" class="tip"><strong>Important:</strong> it's YOUR voice that gets recorded, the adult's. The
+                child's, never — not here and not in any game.</p>
             </div>
           
-            <a class="enlace" href="/estudio">Abrir el Estudio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/estudio">Abrir el Estudio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/estudio">Open the Studio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1200,9 +1438,11 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="t-nombre">El objetivo de la semana</span>
-              <span class="t-linea">Lo que pidieron en sus terapias, puesto primero en
+              <span data-l="es" class="t-nombre">El objetivo de la semana</span>
+              <span data-l="en" class="t-nombre">This week's goal</span>
+              <span data-l="es" class="t-linea">Lo que pidieron en sus terapias, puesto primero en
                 todo.</span>
+              <span data-l="en" class="t-linea">What came up in their therapy sessions, put first in everything.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -1210,20 +1450,29 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d4" role="region" aria-label="El objetivo de la semana — detalle">
+        <div class="detalle" id="d4" role="region" aria-label="El objetivo de la semana — detalle" data-aria-en="This week's goal — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4>Escríbelo y la app se alinea</h4>
-              <p class="como">¿Te pidieron trabajar los animales, la comida, el baño?
+              <h4 data-l="es">Escríbelo y la app se alinea</h4>
+              <h4 data-l="en">Write it down and the app lines up</h4>
+              <p data-l="es" class="como">¿Te pidieron trabajar los animales, la comida, el baño?
                 Escríbelo en «Objetivo» y la app pone eso <strong>primero</strong>: la
                 cápsula del día, los dibujos de «palabra y dibujo» y lo que te propone
                 grabar el Estudio. Es opcional y no caduca solo: se queda hasta que lo
                 cambies o lo quites — y quitarlo deja todo como estaba. El botón nombra
                 exactamente lo que va a guardar: «Guardar ‹animales›».</p>
+              <p data-l="en" class="como">Were you asked to work on animals, food, the bathroom? Write it in “Goal” (for now, in Spanish: “animales”,
+                “comida”, “baño”) and the app
+                puts that <strong>first</strong>: the daily capsule, the pictures in “word and
+                picture” and what the Studio suggests you record. It's optional and doesn't
+                expire on its own: it stays until you change it or remove it — and removing it
+                leaves everything as it was. The button names exactly what it will save: “Save
+                ‘animales’”.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4>Mientras escribes, te acompaña</h4>
-              <p class="como">A media palabra («anim») te sugiere en qué puedes estar
+              <h4 data-l="es">Mientras escribes, te acompaña</h4>
+              <h4 data-l="en">It keeps you company as you type</h4>
+              <p data-l="es" class="como">A media palabra («anim») te sugiere en qué puedes estar
                 pensando, en dos grupos: chips <strong>verdes</strong> como
                 <span class="chip-ej chip-ej-verde">animales</span> —términos que están
                 en la app y alinean los juegos— y chips <strong>neutros</strong> como
@@ -1233,14 +1482,27 @@
                 con un error («animles») y das guardar, pregunta primero: «¿Quisiste decir
                 ‹animales›?» — corriges con un toque o guardas tal cual: escribir libre es
                 tu derecho.</p>
+              <p data-l="en" class="como">Midway through a Spanish word (“anim”) it suggests what you might be thinking of, in two
+                groups: <strong>green</strong> chips like
+                <span class="chip-ej chip-ej-verde">animales</span> —terms that are in the app and
+                line up the games— and <strong>neutral</strong> chips like
+                <span class="chip-ej chip-ej-neutra">animar</span> —well-spelled Spanish words the app
+                doesn't have yet, from a 10,000-word dictionary that travels inside the app, no
+                internet needed—. The goal helper works in Spanish for now; English words are on the way.
+                And if you type with a mistake (“animles”) and hit save, it
+                asks first: “Did you mean ‘animales’?” — you fix it with one tap or save it as
+                typed: writing freely is your right.</p>
             </div>
             <div class="feature" style="--j:2">
-              <h4>La tarjeta te dice el estado — con tres señales</h4>
-              <p class="como">Cada estado habla con tres señales a la vez —color,
+              <h4 data-l="es">La tarjeta te dice el estado — con tres señales</h4>
+              <h4 data-l="en">The card tells you the status — with three signals</h4>
+              <p data-l="es" class="como">Cada estado habla con tres señales a la vez —color,
                 <strong>forma</strong> y palabras—, pensado también para daltonismo:</p>
+              <p data-l="en" class="como">Each status speaks with three signals at once —color, <strong>shape</strong> and
+                words—, designed with color blindness in mind too:</p>
               <!-- Los tres estados, tal como se ven. -->
               <div class="mock" aria-hidden="true">
-                <div class="estados">
+                <div data-l="es" class="estados">
                   <div><svg class="ic-exito" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>
                     <circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
                     <span>Alineando ahora: <strong>4 cápsulas · 6 dibujos</strong></span></div>
@@ -1252,13 +1514,28 @@
                     <path d="M12 10v4.5"/><path d="M12 17v.5"/></svg>
                     <span>Priorizado, a la espera de contenido</span></div>
                 </div>
+                <div data-l="en" class="estados">
+                  <div><svg class="ic-exito" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                    <span>Lining up right now: <strong>4 capsules · 6 pictures</strong></span></div>
+                  <div><svg class="ic-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>
+                    <path d="M12 11v5"/><path d="M12 7.5v.5"/></svg>
+                    <span>Today's capsule yes; the pictures don't change: that topic isn't among the chosen ones</span></div>
+                  <div><svg class="ic-peligro" viewBox="0 0 24 24"><path d="M12 4L21 19.5H3L12 4z"/>
+                    <path d="M12 10v4.5"/><path d="M12 17v.5"/></svg>
+                    <span>Prioritized, waiting for content</span></div>
+                </div>
               </div>
-              <p class="como">Y en el Estudio, las grabaciones que le sirven al objetivo
+              <p data-l="es" class="como">Y en el Estudio, las grabaciones que le sirven al objetivo
                 llevan una diana al lado: de un vistazo ves cuáles ya apuntan a lo que
                 pidieron en las terapias.</p>
+              <p data-l="en" class="como">And in the Studio, the recordings that serve the goal carry a little target beside
+                them: at a glance you see which ones already aim at what came up in their
+                therapy sessions.</p>
             </div>
           
-            <a class="enlace" href="/objetivo">Escribir el objetivo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/objetivo">Escribir el objetivo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/objetivo">Write the goal <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1275,9 +1552,11 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="t-nombre">El rumbo</span>
-              <span class="t-linea">Cómo van, semana a semana — sin notas y sin
+              <span data-l="es" class="t-nombre">El rumbo</span>
+              <span data-l="en" class="t-nombre">The route</span>
+              <span data-l="es" class="t-linea">Cómo van, semana a semana — sin notas y sin
                 drama.</span>
+              <span data-l="en" class="t-linea">How things are going, week by week — no marks and no drama.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -1285,47 +1564,70 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d5" role="region" aria-label="El rumbo — detalle">
+        <div class="detalle" id="d5" role="region" aria-label="El rumbo — detalle" data-aria-en="The route — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4>Tendencias de lo que de verdad pasó</h4>
-              <p class="como">Semana a semana: los días que practicaron juntos, las
+              <h4 data-l="es">Tendencias de lo que de verdad pasó</h4>
+              <h4 data-l="en">Trends in what really happened</h4>
+              <p data-l="es" class="como">Semana a semana: los días que practicaron juntos, las
                 cápsulas completadas, las palabras distintas, los dibujos encendidos, las
                 vueltas del globo, las subidas del cohete, las rondas de gemelas, las
                 palabras que tú le oíste y los segundos de su voz (el total y el rato más
                 largo sin cortarse). Cada línea aparece solo cuando tiene algo que contar.
                 Al principio estará vacío: jueguen unos días y cobra vida.</p>
+              <p data-l="en" class="como">Week by week: the days you practiced together, capsules completed, different words,
+                pictures lit up, balloon loops, rocket climbs, twin-word rounds, words you heard
+                them say and seconds of their voice (the total and the longest stretch without a
+                break). Each line appears only when it has something to tell. At first it will
+                be empty: play for a few days and it comes to life.</p>
               <!-- Números medidos, sin notas: una semana floja es un número pequeño. -->
               <div class="mock" aria-hidden="true">
-                <p class="mock-rotulo">Días que practicaron juntos</p>
+                <p data-l="es" class="mock-rotulo">Días que practicaron juntos</p>
+                <p data-l="en" class="mock-rotulo">Days you practiced together</p>
                 <div class="semanas">
                   <i style="--h:38%"></i><i style="--h:72%"></i>
                   <i style="--h:24%"></i><i style="--h:88%"></i>
                 </div>
-                <div class="semanas-pie">
+                <div data-l="es" class="semanas-pie">
                   <span>sem 1</span><span>sem 2</span><span>sem 3</span><span>sem 4</span>
                 </div>
+                <div data-l="en" class="semanas-pie">
+                  <span>wk 1</span><span>wk 2</span><span>wk 3</span><span>wk 4</span>
+                </div>
                 <p class="mock-pie" style="margin-top:11px">
-                  <span class="mock-pill">
+                  <span data-l="es" class="mock-pill">
                     <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
                     Hito: su primera palabra que tú oíste</span>
+                  <span data-l="en" class="mock-pill">
+                    <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                    Milestone: their first word that you heard</span>
                 </p>
               </div>
-              <p class="tip"><strong>Tip:</strong> el rumbo cuenta lo que llegó a la
+              <p data-l="es" class="tip"><strong>Tip:</strong> el rumbo cuenta lo que llegó a la
                 celebración — terminen con «Ya jugamos» para que el intento quede.</p>
+              <p data-l="en" class="tip"><strong>Tip:</strong> the route counts what made it to the celebration — finish with
+                “We're done playing” so the attempt is saved.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4>16 hitos que no se pierden</h4>
-              <p class="como">Desde «su primer rato de práctica juntos» y las primeras
+              <h4 data-l="es">16 hitos que no se pierden</h4>
+              <h4 data-l="en">16 milestones that are never lost</h4>
+              <p data-l="es" class="como">Desde «su primer rato de práctica juntos» y las primeras
                 veces de cada juego, hasta acumulados como «25 días de práctica en total».
                 Una vez ganados, no se pierden nunca.</p>
-              <p class="tip"><strong>Lo que nunca hará:</strong> ponerle una nota, un
+              <p data-l="en" class="como">From “their first stretch of practice together” and the first time of each game, to
+                running totals like “25 days of practice in total”. Once earned, they are never
+                lost.</p>
+              <p data-l="es" class="tip"><strong>Lo que nunca hará:</strong> ponerle una nota, un
                 puntaje, un porcentaje o un plazo; ni compararlo con otro niño; ni
                 castigar una semana floja. No es un boletín — es el registro cálido de lo
                 que hicieron juntos.</p>
+              <p data-l="en" class="tip"><strong>What it will never do:</strong> give them a mark, a rating, a ranking or a
+                deadline; compare them with another child; or punish a slow week. It's not a
+                report card — it's the warm record of what you did together.</p>
             </div>
           
-            <a class="enlace" href="/rumbo">Ver el rumbo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/rumbo">Ver el rumbo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/rumbo">See the route <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1342,9 +1644,11 @@
               </svg>
             </span>
             <span class="tarjeta-titulos">
-              <span class="t-nombre">A su medida</span>
-              <span class="t-linea">Temas, etapa, calma: la app se ajusta a él, no al
+              <span data-l="es" class="t-nombre">A su medida</span>
+              <span data-l="en" class="t-nombre">Made to fit them</span>
+              <span data-l="es" class="t-linea">Temas, etapa, calma: la app se ajusta a él, no al
                 revés.</span>
+              <span data-l="en" class="t-linea">Topics, stage, calm: the app adjusts to them, not the other way around.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -1352,55 +1656,83 @@
             </svg>
           </button>
         </h3>
-        <div class="detalle" id="d6" role="region" aria-label="A su medida — detalle">
+        <div class="detalle" id="d6" role="region" aria-label="A su medida — detalle" data-aria-en="Made to fit them — details">
           <div class="detalle-interior"><div class="detalle-cuerpo">
             <div class="feature" style="--j:0">
-              <h4>Apodo y temas</h4>
-              <p class="como">La primera vez, la app pregunta dos cosas: cómo le dicen en
+              <h4 data-l="es">Apodo y temas</h4>
+              <h4 data-l="en">Nickname and topics</h4>
+              <p data-l="es" class="como">La primera vez, la app pregunta dos cosas: cómo le dicen en
                 casa (opcional) y hasta tres temas que le gusten — y los juegos se visten
                 de eso, para que practicar nunca lo aburra. ¿Cambiar después? Ajustes →
                 «Apodo y temas» → «Cambiar apodo y temas». No borra nada: el progreso se
                 queda como está.</p>
+              <p data-l="en" class="como">The first time, the app asks two things: what they're called at home (optional) and
+                up to three topics they like — and the games dress up in that, so practicing never
+                bores them. Change it later? Settings → “Nickname and topics” → “Change nickname
+                and topics”. It deletes nothing: progress stays as it is.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4>La etapa del habla</h4>
-              <p class="como">En Ajustes eliges cómo habla <strong>hoy</strong>: «Sonidos e
+              <h4 data-l="es">La etapa del habla</h4>
+              <h4 data-l="en">The speech stage</h4>
+              <p data-l="es" class="como">En Ajustes eliges cómo habla <strong>hoy</strong>: «Sonidos e
                 intentos», «Palabras sueltas» (la que la app trae por defecto — y su
                 especialidad) o «Primeras frases», que nunca se activa sola: la eliges tú,
                 a propósito. Las cápsulas se ajustan a la etapa. Cambiarla no borra nada;
                 el progreso de cada una se guarda por separado. Si dudas, quédate en
                 palabras sueltas.</p>
+              <p data-l="en" class="como">In Settings you choose how they talk <strong>today</strong>: “Sounds and attempts”,
+                “Single words” (the app's default — and its specialty) or “First phrases”, which
+                never turns on by itself: you choose it, on purpose. The capsules adjust to the
+                stage. Changing it deletes nothing; each stage's progress is saved separately. If
+                in doubt, stay on single words.</p>
             </div>
             <div class="feature" style="--j:2">
-              <h4>Modo calma</h4>
-              <p class="como">Un toque —en el juego o en Ajustes— y la pantalla baja a
+              <h4 data-l="es">Modo calma</h4>
+              <h4 data-l="en">Calm mode</h4>
+              <p data-l="es" class="como">Un toque —en el juego o en Ajustes— y la pantalla baja a
                 colores de atardecer: sin medidor, sin meta y sin celebración automática.
                 El globo no se detiene: sube con la voz y baja despacito en el silencio,
                 como un globo de verdad; el cohete flota igual. Para los días en que el
                 juego con meta pesa demasiado.</p>
+              <p data-l="en" class="como">One tap —in the game or in Settings— and the screen drops to sunset colors: no meter,
+                no goal and no automatic celebration. The balloon doesn't stop: it rises with the
+                voice and sinks slowly in the silence, like a real balloon; the rocket floats the
+                same way. For the days when a game with a goal feels like too much.</p>
             </div>
             <div class="feature" style="--j:3">
-              <h4>Reducir animaciones</h4>
-              <p class="como">Con este ajuste, los globos de la palabra, el confeti y la
+              <h4 data-l="es">Reducir animaciones</h4>
+              <h4 data-l="en">Reduce animations</h4>
+              <p data-l="es" class="como">Con este ajuste, los globos de la palabra, el confeti y la
                 capa de cielo del cohete no se muestran — el texto sigue contando cada
                 logro. Y si tu aparato ya pide menos movimiento, la app lo respeta sin que
                 toques nada.</p>
+              <p data-l="en" class="como">With this setting, the word balloons, the confetti and the rocket's sky layer aren't
+                shown — the text still tells each achievement. And if your device already asks
+                for less motion, the app respects it without you touching anything.</p>
             </div>
             <div class="feature" style="--j:4">
-              <h4>Claro u oscuro</h4>
-              <p class="como">Decide cómo se ve <strong>tu</strong> pantalla: seguir al
+              <h4 data-l="es">Claro u oscuro</h4>
+              <h4 data-l="en">Light or dark</h4>
+              <p data-l="es" class="como">Decide cómo se ve <strong>tu</strong> pantalla: seguir al
                 sistema (lo normal) o fijarla en claro u oscuro — útil de noche, al lado
                 del niño. La pantalla de él no cambia nunca: es clara siempre, y esa
                 previsibilidad es parte del diseño.</p>
+              <p data-l="en" class="como">Decide how <strong>your</strong> screen looks: follow the system (the usual), or fix
+                it to light or dark — handy at night, next to the child. Their screen never
+                changes: it's always light, and that predictability is part of the design.</p>
             </div>
             <div class="feature" style="--j:5">
-              <h4>Instálala como app — y sin internet</h4>
-              <p class="como">En el menú del navegador (Chrome en Android): «Añadir a la
+              <h4 data-l="es">Instálala como app — y sin internet</h4>
+              <h4 data-l="en">Install it as an app — and offline</h4>
+              <p data-l="es" class="como">En el menú del navegador (Chrome en Android): «Añadir a la
                 pantalla de inicio». Abre a pantalla completa y, después de la primera vez,
                 funciona sin conexión: el juego nunca necesita internet.</p>
+              <p data-l="en" class="como">In the browser menu (Chrome on Android): “Add to Home screen”. It opens full screen
+                and, after the first time, works offline: play never needs the internet.</p>
             </div>
           
-            <a class="enlace" href="/ajustes">Abrir Ajustes <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/ajustes">Abrir Ajustes <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/ajustes">Open Settings <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1410,20 +1742,24 @@
   </div>
 
   <!-- ══ E05 · EL RESPIRO ══ -->
-  <section class="respiro" aria-labelledby="t-vuelta">
+  <section class="respiro" aria-labelledby="t-vuelta" data-lb="t-vuelta">
     <div class="marco">
       <p class="acto-cabeza revela"><span class="num">02</span>
-        <span class="eyebrow">La vuelta</span><span class="raya"></span></p>
-      <h2 id="t-vuelta" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">
+        <span data-l="es" class="eyebrow">La vuelta</span>
+        <span data-l="en" class="eyebrow">The lap</span><span class="raya"></span></p>
+      <h2 data-l="es" id="t-vuelta" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">
         Así se ve <em>jugar</em>.</h2>
-      <p class="suave revela">Los cuatro juegos, tal como se ven en su pantalla. Ninguno le
+      <h2 data-l="en" id="t-vuelta-en" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">This is what <em>playing</em> looks like.</h2>
+      <p data-l="es" class="suave revela">Los cuatro juegos, tal como se ven en su pantalla. Ninguno le
         exige palabras.</p>
+      <p data-l="en" class="suave revela">The four games, just as they look on their screen. None of them asks for words.</p>
 
       <div class="galeria">
 
         <!-- 1 · el globo -->
         <div class="juego revela">
-          <h3><span class="num">01</span>El globo</h3>
+          <h3 data-l="es"><span class="num">01</span>El globo</h3>
+          <h3 data-l="en"><span class="num">01</span>The balloon</h3>
           <div class="cancha" data-juego="globo" aria-hidden="true">
             <span class="suelo"></span>
             <span class="meta"></span>
@@ -1439,15 +1775,20 @@
             </span>
             <span class="confeti"></span>
           </div>
-          <p class="leyenda"><b>3 s</b> <span>Su voz sostenida hace avanzar el globo. Cada
+          <p data-l="es" class="leyenda"><b>3 s</b> <span>Su voz sostenida hace avanzar el globo. Cada
             tres segundos acumulados cruza la línea, da una vuelta y el confeti cae una vez
             y se va. No se acaba solo.</span></p>
-          <p><a class="enlace" href="/jugar/globo">Abrir el globo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en" class="leyenda"><b>3 s</b> <span>Their sustained voice moves the balloon forward. Every three
+            accumulated seconds it crosses the line, does a loop and the confetti falls once
+            and goes away. It doesn't end by itself.</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/globo">Abrir el globo <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/globo">Open the balloon <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
 
         <!-- 2 · el cohete -->
         <div class="juego revela">
-          <h3><span class="num">02</span>El cohete</h3>
+          <h3 data-l="es"><span class="num">02</span>El cohete</h3>
+          <h3 data-l="en"><span class="num">02</span>The rocket</h3>
           <div class="cancha" data-juego="cohete" aria-hidden="true">
             <span class="cielo-juego">
               <i style="--d:0s;left:14%;top:26%;width:26px;height:10px"></i>
@@ -1470,18 +1811,24 @@
                   stroke-linecap="round" opacity=".7"/>
               </svg>
             </span>
-            <span class="marcador">¡Ya subió y bajó 2 veces!</span>
+            <span data-l="es" class="marcador">¡Ya subió y bajó 2 veces!</span>
+            <span data-l="en" class="marcador">It went up and down 2 times!</span>
             <span class="confeti" style="left:50%;top:26px"></span>
           </div>
-          <p class="leyenda"><b>tono</b> <span>Cuando la voz sube, el cohete sube; cuando
+          <p data-l="es" class="leyenda"><b>tono</b> <span>Cuando la voz sube, el cohete sube; cuando
             baja, baja. Una vocal estirada como sirena («aaaAAAaaa») es exactamente lo que
             se busca — y el cielo pasa hacia abajo para que se sienta la altura.</span></p>
-          <p><a class="enlace" href="/jugar/cohete">Abrir el cohete <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en" class="leyenda"><b>pitch</b> <span>When the voice goes up, the rocket goes up; when it goes down, it
+            goes down. A vowel stretched like a siren (“aaaAAAaaa”) is exactly what we're after
+            — and the sky drifts downward so you can feel the height.</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/cohete">Abrir el cohete <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/cohete">Open the rocket <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
 
         <!-- 3 · palabra y dibujo -->
         <div class="juego revela">
-          <h3><span class="num">03</span>Palabra y dibujo</h3>
+          <h3 data-l="es"><span class="num">03</span>Palabra y dibujo</h3>
+          <h3 data-l="en"><span class="num">03</span>Word and picture</h3>
           <div class="cancha" data-juego="dibujo" aria-hidden="true">
             <!-- Como en la app: marco (solo el dibujo) → palabra → altavoz. -->
             <span class="par par-solo">
@@ -1506,12 +1853,23 @@
             </span>
             <span class="globitos"></span>
           </div>
-          <p class="leyenda"><b>tú</b> <span>Nómbralo una vez y espera. El dibujo se
+          <p data-l="es" class="leyenda"><b>tú</b> <span>Nómbralo una vez y espera. El dibujo se
             enciende con <em>cualquier</em> sonido —un intento, un «ca»—; los globos suben
             solo cuando tú tocas «¿Dijo ‹carro›?». La app no reconoce palabras y no finge
             que sí. <strong>Si grabaste tu voz</strong>, la palabra suena sola al aparecer
             el dibujo, y el altavoz —grande, él lo puede tocar— la repite.</span></p>
-          <p><a class="enlace" href="/jugar/palabras">Abrir palabra y dibujo
+          <p data-l="en" class="leyenda"><b>you</b> <span>Say it once and wait. The picture lights up with <em>any</em> sound
+            —an attempt, a “ca”— and the balloons rise only when you tap “Did they say
+            ‘carro’?”. The app doesn't recognize words and doesn't pretend to. <strong>If you
+            recorded your voice</strong>, the word plays by itself when the picture appears, and
+            the speaker —big, they can tap it— repeats it. (Shown here with a Spanish word: word
+            games in English are coming soon.)</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/palabras">Abrir palabra y dibujo
+            <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/palabras">Open word and picture
             <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
               focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -1520,7 +1878,8 @@
 
         <!-- 4 · palabras gemelas -->
         <div class="juego revela">
-          <h3><span class="num">04</span>Palabras gemelas</h3>
+          <h3 data-l="es"><span class="num">04</span>Palabras gemelas</h3>
+          <h3 data-l="en"><span class="num">04</span>Twin words</h3>
           <div class="cancha" data-juego="gemelas" aria-hidden="true">
             <span class="pareja">
               <!-- Como en la app: marco (dibujo + altavoz) y la palabra abajo, fuera. -->
@@ -1561,23 +1920,37 @@
                 <span class="palabra"><b>g</b>ato</span>
               </span>
             </span>
-            <span class="dijo">¡Dijo «pato»!</span>
+            <span data-l="es" class="dijo">¡Dijo «pato»!</span>
+            <span data-l="en" class="dijo">They said “pato”!</span>
             <!-- Las teclas del adulto son DOS: una por palabra. Tú marcas la que oíste. -->
             <span class="cual">
-              <span class="cual-rotulo">¿Cuál oíste?</span>
+              <span data-l="es" class="cual-rotulo">¿Cuál oíste?</span>
+              <span data-l="en" class="cual-rotulo">Which did you hear?</span>
               <span class="teclas">
                 <span class="tecla marcada">pato</span>
                 <span class="tecla">gato</span>
               </span>
             </span>
           </div>
-          <p class="leyenda"><b>sin mic</b> <span>Dos palabras que se diferencian por un
+          <p data-l="es" class="leyenda"><b>sin mic</b> <span>Dos palabras que se diferencian por un
             solo sonido. Él dice una y <em>tú</em> marcas cuál oíste — hay <strong>una tecla
             por palabra</strong>, y son tuyas: la fiesta del niño está en los dibujos. Este
             juego no usa micrófono ni analiza nada. Tocar un dibujo solo lo hace
             <strong>sonar con tu voz</strong> —jamás marca nada—, y la palabra suena sola al
             aparecer la pareja.</span></p>
-          <p><a class="enlace" href="/jugar/gemelas">Abrir palabras gemelas
+          <p data-l="en" class="leyenda"><b>no mic</b> <span>Two words that differ by a single sound. They say one and
+            <em>you</em> mark which you heard — there is <strong>one key per word</strong>, and
+            they're yours: the child's party is in the pictures. This game doesn't use the
+            microphone or analyze anything. Tapping a picture only makes it <strong>sound with
+            your voice</strong> —it never marks anything— and the word plays by itself when the
+            pair appears. (Shown here with Spanish words: word games in English are coming
+            soon.)</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/gemelas">Abrir palabras gemelas
+            <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/gemelas">Open twin words
             <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
               focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -1589,12 +1962,14 @@
   </section>
 
   <!-- ══ E06a · EL TALLER — la primera noche, cálida: TU voz entra a los juegos. ══ -->
-  <section class="clima clima--taller" id="estudio" aria-labelledby="t-estudio">
+  <section class="clima clima--taller" id="estudio" aria-labelledby="t-estudio" data-lb="t-estudio">
     <div class="marco">
       <p class="acto-cabeza revela"><span class="num">03</span>
-        <span class="eyebrow">Tu voz</span><span class="raya"></span></p>
-      <h2 id="t-estudio" class="revela">La grabas una vez.<br>Y ya está <em>en todos los
+        <span data-l="es" class="eyebrow">Tu voz</span>
+        <span data-l="en" class="eyebrow">Your voice</span><span class="raya"></span></p>
+      <h2 data-l="es" id="t-estudio" class="revela">La grabas una vez.<br>Y ya está <em>en todos los
         juegos</em>.</h2>
+      <h2 data-l="en" id="t-estudio-en" class="revela">You record it once.<br>And it's <em>in every game</em>.</h2>
 
       <div class="taller revela" aria-hidden="true">
         <svg class="taller-svg" viewBox="0 0 320 128" focusable="false">
@@ -1605,17 +1980,20 @@
           <rect class="tv-barra" style="--k:1" x="69" y="34" width="6" height="34" rx="3"/>
           <rect class="tv-barra" style="--k:2" x="80" y="34" width="6" height="34" rx="3"/>
           <rect class="tv-barra" style="--k:3" x="91" y="34" width="6" height="34" rx="3"/>
-          <text class="tv-rotulo" x="36" y="90" text-anchor="middle">Grabas</text>
+          <text data-l="es" class="tv-rotulo" x="36" y="90" text-anchor="middle">Grabas</text>
+          <text data-l="en" class="tv-rotulo" x="36" y="90" text-anchor="middle">You record</text>
 
           <path class="via" d="M108 51h18"/>
 
           <!-- 2 · se guarda: la palabra queda aquí, en este aparato -->
           <g class="tv-tarjeta">
             <rect class="tv-caja" x="130" y="30" width="78" height="42" rx="10"/>
-            <text class="tv-texto" x="160" y="57" text-anchor="middle">perro</text>
+            <text data-l="es" class="tv-texto" x="160" y="57" text-anchor="middle">perro</text>
+            <text data-l="en" class="tv-texto" x="160" y="57" text-anchor="middle">dog</text>
             <path class="mic" d="M182 45v12M188 42v18"/>
           </g>
-          <text class="tv-rotulo" x="169" y="90" text-anchor="middle">Se queda aquí</text>
+          <text data-l="es" class="tv-rotulo" x="169" y="90" text-anchor="middle">Se queda aquí</text>
+          <text data-l="en" class="tv-rotulo" x="169" y="90" text-anchor="middle">Stays here</text>
 
           <path class="via" d="M212 51h56"/>
           <circle class="tv-punto" cx="214" cy="51" r="3.5"/>
@@ -1633,36 +2011,61 @@
             <rect x="272" y="74" width="38" height="22" rx="6"/>
             <path d="M282 81v8h4l5 4V77l-5 4h-4M296 82a3 3 0 0 1 0 6"/>
           </g>
-          <text class="tv-rotulo" x="289" y="108" text-anchor="middle"><tspan
+          <text data-l="es" class="tv-rotulo" x="289" y="108" text-anchor="middle"><tspan
             x="289">Suena en</tspan><tspan x="289" dy="11">los juegos</tspan></text>
+          <text data-l="en" class="tv-rotulo" x="289" y="108" text-anchor="middle"><tspan x="289">Plays in</tspan><tspan x="289" dy="11">the games</tspan></text>
         </svg>
       </div>
-      <p class="pie-aparato">grabas una vez · se queda aquí · suena en los cuatro juegos</p>
+      <p data-l="es" class="pie-aparato">grabas una vez · se queda aquí · suena en los cuatro juegos</p>
+      <p data-l="en" class="pie-aparato">you record once · it stays here · it plays in all four games</p>
 
-      <p class="revela" style="margin-top:26px">Los juegos pueden sonar con la voz de mamá
+      <p data-l="es" class="revela" style="margin-top:26px">Los juegos pueden sonar con la voz de mamá
         o papá en vez de estar mudos. En el <strong style="color:#F2EFE8">Estudio</strong>
         grabas de a una las palabras de los dibujos, las consignas del juego y las
         celebraciones: tocas «Grabar», la dices, la <em>escuchas cómo quedó</em> y la
         guardas o la regrabas sin pena. Mientras grabas, una barra baila con tu voz — si se
         mueve cuando hablas, te está oyendo bien.</p>
+      <p data-l="en" class="revela" style="margin-top:26px">The games can sound with a parent's voice instead of staying mute. In the
+        <strong style="color:#F2EFE8">Studio</strong> you record, one at a time, the words of the
+        pictures, the game cues and the celebrations: you tap “Record”, say it, <em>listen to how
+        it came out</em> and save it or record it again with no fuss. While you record, a bar
+        dances with your voice — if it moves when you talk, it's hearing you well.</p>
 
       <ul class="lista revela">
-        <li><b>Se graba TU voz, la del adulto.</b> La pantalla lo dice sin rodeos: «La voz
+        <li data-l="es"><b>Se graba TU voz, la del adulto.</b> La pantalla lo dice sin rodeos: «La voz
           de tu hijo nunca se graba». El Estudio es tuyo.</li>
-        <li><b>Y entonces el nombre vive en la cosa:</b> en «palabra y dibujo» y en
+        <li data-l="en"><b>It's YOUR voice that gets recorded, the adult's.</b> The screen says it plainly:
+          “Your child's voice is never recorded”. The Studio is yours.</li>
+        <li data-l="es"><b>Y entonces el nombre vive en la cosa:</b> en «palabra y dibujo» y en
           «palabras gemelas» aparece un altavoz grande —él lo puede tocar— y la palabra
           suena sola al aparecer el dibujo, con una voz que él conoce.</li>
-        <li><b>También en el globo y el cohete:</b> si grabaste las invitaciones, suenan
+        <li data-l="en"><b>And so the name lives in the thing:</b> in “word and picture” and “twin words” a big
+          speaker appears —they can tap it— and the word plays by itself when the picture
+          appears, in a voice they know.</li>
+        <li data-l="es"><b>También en el globo y el cohete:</b> si grabaste las invitaciones, suenan
           bajo el título. Y mientras tu voz grabada suena, <b>el juego espera</b>: el globo
           no vuela con una grabación, solo con la voz de verdad.</li>
-        <li><b>Tú mandas sobre ella:</b> la apagas con un interruptor sin borrar nada, o
+        <li data-l="en"><b>In the balloon and the rocket too:</b> if you recorded the invitations, they play
+          under the title. And while your recorded voice is playing, <b>the game waits</b>: the
+          balloon doesn't fly with a recording, only with a real voice.</li>
+        <li data-l="es"><b>Tú mandas sobre ella:</b> la apagas con un interruptor sin borrar nada, o
           borras solo el banco de voz cuando quieras.</li>
-        <li><b>Un detalle honesto:</b> se graban frases fijas. La celebración que dice un
+        <li data-l="en"><b>You're in charge of it:</b> turn it off with a switch without deleting anything, or
+          delete only the voice bank whenever you like.</li>
+        <li data-l="es"><b>Un detalle honesto:</b> se graban frases fijas. La celebración que dice un
           número —«¡Su voz sonó 7,3 segundos!»— no se puede grabar, porque el número cambia
           cada vez; esa se queda en texto.</li>
+        <li data-l="en"><b>An honest detail:</b> fixed phrases are what get recorded. The celebration that says
+          a number —“Their voice sounded for 7.3 seconds!”— can't be recorded, because the
+          number changes every time; that one stays as text.</li>
       </ul>
 
-      <a class="enlace" href="/estudio">Abrir el Estudio
+      <a data-l="es" class="enlace" href="/estudio">Abrir el Estudio
+        <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+          focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round"/></svg></a>
+      <a data-l="en" class="enlace" href="/estudio">Open the Studio
         <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
           focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
           stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -1671,11 +2074,13 @@
   </section>
 
   <!-- ══ E06b · EL CLÍMAX — la segunda noche, fría: la de él nunca sale. ══ -->
-  <section class="clima" id="privacidad" aria-labelledby="t-promesa">
+  <section class="clima" id="privacidad" aria-labelledby="t-promesa" data-lb="t-promesa">
     <div class="marco">
       <p class="acto-cabeza revela"><span class="num">04</span>
-        <span class="eyebrow">La promesa mayor</span><span class="raya"></span></p>
-      <h2 id="t-promesa" class="revela">Lo que pasa adentro,<br><em>muere adentro</em>.</h2>
+        <span data-l="es" class="eyebrow">La promesa mayor</span>
+        <span data-l="en" class="eyebrow">The biggest promise</span><span class="raya"></span></p>
+      <h2 data-l="es" id="t-promesa" class="revela">Lo que pasa adentro,<br><em>muere adentro</em>.</h2>
+      <h2 data-l="en" id="t-promesa-en" class="revela">What happens inside,<br><em>dies inside</em>.</h2>
 
       <div class="aparato revela" aria-hidden="true">
         <svg viewBox="0 0 300 168" focusable="false">
@@ -1693,39 +2098,58 @@
         </svg>
         <span class="grano"></span>
       </div>
-      <p class="pie-aparato">se analiza aquí · se descarta aquí</p>
+      <p data-l="es" class="pie-aparato">se analiza aquí · se descarta aquí</p>
+      <p data-l="en" class="pie-aparato">analyzed here · discarded here</p>
 
-      <p class="revela" style="margin-top:26px">Cuando tu hijo habla, el sonido se analiza
+      <p data-l="es" class="revela" style="margin-top:26px">Cuando tu hijo habla, el sonido se analiza
         <strong style="color:#F2EFE8">en el momento y dentro del aparato</strong> —para
         calcular dos números: cuánta energía hay y, en el cohete, qué tan agudo es el
         tono— y se descarta enseguida. Ese tono también es un dato de su voz, y se trata
         con la misma regla.</p>
+      <p data-l="en" class="revela" style="margin-top:26px">When your child speaks, the sound is analyzed
+        <strong style="color:#F2EFE8">on the spot and inside the device</strong> —to work out
+        two numbers: how much energy there is and, in the rocket, how high the pitch is— and
+        it is discarded right away. That pitch is also a piece of their voice data, and it's
+        treated with the same rule.</p>
 
       <ul class="lista revela">
-        <li><b>La voz de tu hijo nunca se graba</b>, ni se guarda, ni sale del aparato.</li>
-        <li><b>No hay servidores, ni cuentas, ni nube.</b> Durante el juego la app no hace
+        <li data-l="es"><b>La voz de tu hijo nunca se graba</b>, ni se guarda, ni sale del aparato.</li>
+        <li data-l="en"><b>Your child's voice is never recorded</b>, nor saved, nor does it leave the device.</li>
+        <li data-l="es"><b>No hay servidores, ni cuentas, ni nube.</b> Durante el juego la app no hace
           ninguna petición a internet — y hay pruebas automáticas que lo verifican en cada
           cambio del código: si alguien intentara guardar o enviar audio, esas pruebas
           fallan y el cambio no entra.</li>
-        <li><b>La cámara no se usa nunca.</b></li>
-        <li><b>Tu voz —la del Estudio— sí se guarda, solo en este aparato.</b> No va a
+        <li data-l="en"><b>No servers, no accounts, no cloud.</b> During play the app makes no requests to the
+          internet — and automatic tests check it on every change to the code: if anyone tried
+          to save or send audio, those tests fail and the change doesn't get in.</li>
+        <li data-l="es"><b>La cámara no se usa nunca.</b></li>
+        <li data-l="en"><b>The camera is never used.</b></li>
+        <li data-l="es"><b>Tu voz —la del Estudio— sí se guarda, solo en este aparato.</b> No va a
           internet, no se copia a ningún servidor y, si cambias de aparato, no viaja: se
           vuelve a grabar donde se va a usar. Y aun con el Estudio, la voz de tu hijo
           nunca se graba.</li>
-        <li><b>Todo se borra cuando quieras</b> en Ajustes → «Borrar mis datos», o solo las
+        <li data-l="en"><b>Your voice —the Studio's— is saved, only on this device.</b> It doesn't go to the
+          internet, it isn't copied to any server and, if you change devices, it doesn't
+          travel: you record it again where it will be used. And even with the Studio, your
+          child's voice is never recorded.</li>
+        <li data-l="es"><b>Todo se borra cuando quieras</b> en Ajustes → «Borrar mis datos», o solo las
           grabaciones con «Borrar solo el banco de voz».</li>
+        <li data-l="en"><b>Everything is deleted whenever you want</b> in Settings → “Delete my data”, or just
+          the recordings with “Delete only the voice bank”.</li>
       </ul>
     </div>
   </section>
 
   <!-- ══ E07 · LO FINO ══ -->
   <div class="lienzo">
-  <section class="acto" aria-labelledby="t-fino">
+  <section class="acto" aria-labelledby="t-fino" data-lb="t-fino">
     <p class="acto-cabeza revela"><span class="num">05</span>
-      <span class="eyebrow">Lo fino</span><span class="raya"></span></p>
-    <h2 id="t-fino" class="revela">Lo que falta, por si <em>lo pides</em>.</h2>
+      <span data-l="es" class="eyebrow">Lo fino</span>
+      <span data-l="en" class="eyebrow">The fine print</span><span class="raya"></span></p>
+    <h2 data-l="es" id="t-fino" class="revela">Lo que falta, por si <em>lo pides</em>.</h2>
+    <h2 data-l="en" id="t-fino-en" class="revela">What's left, in case <em>you ask</em>.</h2>
 
-    <details class="fino revela">
+    <details data-l="es" class="fino revela">
       <summary>Qué mide — y qué no va a fingir que mide</summary>
       <div class="cuerpo chica">
         <p><strong>Sí mide:</strong> si hay voz (sonido por encima del ruido de tu casa),
@@ -1741,7 +2165,24 @@
           esta app no hace.</p>
       </div>
     </details>
-    <details class="fino revela">
+    <details data-l="en" class="fino revela">
+      <summary>What it measures — and what it won't pretend to measure</summary>
+      <div class="cuerpo chica">
+        <p><strong>It does measure:</strong> whether there is a voice (sound above the noise in
+          your home), how long it is held and, in the rocket, whether the pitch goes up or
+          down.</p>
+        <p><strong>It does not measure:</strong> which word they said, or whether they
+          pronounced it well. Today no technology reliably judges the pronunciation of a young
+          child who is just starting to talk, and so this app doesn't pretend to. A picture
+          lighting up with any sound doesn't mean the word was right — and the app will never
+          say it was.</p>
+        <p><strong>You are the one who judges whether it was right.</strong> If they said the
+          word, you know it: celebrate it in your own words. Here nobody congratulates just to
+          congratulate — that “well done!” that rings out even when the child said nothing is
+          exactly what this app doesn't do.</p>
+      </div>
+    </details>
+    <details data-l="es" class="fino revela">
       <summary>Requisitos — y lo que esta app no es</summary>
       <div class="cuerpo chica">
         <p>Funciona en el navegador de una tablet o un teléfono (Chrome en Android es el
@@ -1755,7 +2196,21 @@
           propósito, porque lo que hace avanzar el habla es la interacción contigo.</p>
       </div>
     </details>
-    <details class="fino revela">
+    <details data-l="en" class="fino revela">
+      <summary>Requirements — and what this app is not</summary>
+      <div class="cuerpo chica">
+        <p>It works in the browser of a tablet or a phone (Chrome on Android is the tested
+          one). Three of the games ask for microphone permission, which is used only to
+          measure in the moment. Installing it as an app is optional but recommended: it opens
+          full screen and works offline.</p>
+        <p>And the full honesty: it is <strong>speech-stimulation practice at home</strong>.
+          It isn't therapy, it doesn't label anyone and it makes no promises about when
+          results will come — it accompanies, and never replaces, the child's comprehensive
+          language therapies. It's meant to be played by two: there is no “child alone mode”,
+          on purpose, because what moves speech forward is the interaction with you.</p>
+      </div>
+    </details>
+    <details data-l="es" class="fino revela">
       <summary>El mapa — a dónde lleva cada puerta</summary>
       <div class="cuerpo chica">
         <ul class="mapa">
@@ -1774,6 +2229,25 @@
         </ul>
       </div>
     </details>
+    <details data-l="en" class="fino revela">
+      <summary>The map — where each door leads</summary>
+      <div class="cuerpo chica">
+        <ul class="mapa">
+          <li><code>/</code> — “Today”: the daily capsule and the door to everything else.</li>
+          <li><code>/jugar</code> — the four games, always in the same order.</li>
+          <li><code>/jugar/globo</code> — the balloon (the voice that holds).</li>
+          <li><code>/jugar/cohete</code> — the rocket (the voice that goes up and down).</li>
+          <li><code>/jugar/palabras</code> — word and picture.</li>
+          <li><code>/jugar/gemelas</code> — twin words.</li>
+          <li><code>/estudio</code> — the Studio: record your voice.</li>
+          <li><code>/rumbo</code> — the route: how things are going.</li>
+          <li><code>/objetivo</code> — this week's goal.</li>
+          <li><code>/ajustes</code> — nickname and topics, stage, calm, light or dark,
+            delete data.</li>
+          <li><code>/conoce</code> — this page.</li>
+        </ul>
+      </div>
+    </details>
   </section>
 
   <!-- ══ E08 · EL CIERRE. Dos piezas DISTINTAS, cada una en su bloque (gate del
@@ -1781,13 +2255,18 @@
        el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
        hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
-    <strong class="conteo"><span data-contador>24</span> funcionalidades</strong>
-    <p class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
+    <strong data-l="es" class="conteo"><span data-contador>24</span> funcionalidades</strong>
+    <strong data-l="en" class="conteo"><span data-contador>24</span> features</strong>
+    <p data-l="es" class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
       todas están repartidas arriba, entre las seis puertas, los cuatro juegos y lo fino.
       Este número existe como promesa: aquí no se escogieron las bonitas; está todo.</p>
+    <p data-l="en" class="chica suave" style="margin-top:0">That's the total the app has today — and all of them are spread out above, among the
+      six doors, the four games and the fine print. This number exists as a promise: we didn't
+      pick the pretty ones here; everything is in.</p>
     <div class="historial-doc">
-      <p class="eyebrow">Este documento crece con la app</p>
-      <details class="chica">
+      <p data-l="es" class="eyebrow">Este documento crece con la app</p>
+      <p data-l="en" class="eyebrow">This document grows with the app</p>
+      <details data-l="es" class="chica">
         <summary>Historial de versiones</summary>
         <ul>
           <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
@@ -1795,14 +2274,25 @@
             funcionalidades de los sprints 1 a 4).</li>
         </ul>
       </details>
+      <details data-l="en" class="chica">
+        <summary>Version history</summary>
+        <ul>
+          <li><strong>Release · August 7, 2026:</strong> the brochure is born, with the app's
+            full tour at the close of its first cycle (the 24 features of sprints 1 to 4).</li>
+        </ul>
+      </details>
     </div>
   </footer>
   </div>
 
   <div class="marquesina" aria-hidden="true">
-    <div>
+    <div data-l="es">
       <span>Su voz mueve el mundo · Su voz mueve el mundo · Su voz mueve el mundo · Su voz mueve el mundo · </span>
       <span>Su voz mueve el mundo · Su voz mueve el mundo · Su voz mueve el mundo · Su voz mueve el mundo · </span>
+    </div>
+    <div data-l="en">
+      <span>Their voice moves the world · Their voice moves the world · Their voice moves the world · Their voice moves the world · </span>
+      <span>Their voice moves the world · Their voice moves the world · Their voice moves the world · Their voice moves the world · </span>
     </div>
   </div>
 </main>
@@ -1971,7 +2461,7 @@
   /* ── E08 · el número que se cuenta solo. El texto del DOM dice "24" desde el
         primer byte: nadie —ni un lector de pantalla ni una prueba— ve un número
         falso; la cuenta solo ocurre si la escena llega a verse.  ─────────────── */
-  var marcador = document.querySelector("[data-contador]");
+  [].slice.call(document.querySelectorAll("[data-contador]")).forEach(function (marcador) {
   if (marcador && !quieto.matches) {
     vigilar([marcador], function (el, dentro) {
       if (!dentro || el.dataset.contado) { return; }
@@ -1986,6 +2476,7 @@
       })(performance.now());
     }, true, 0.6);
   }
+  });
 
   /* ── E01 + E02 · EL MOTOR. Un solo bucle escribe variables CSS con inercia: el
         scroll únicamente mueve el playhead, nada anima por su cuenta. Las medidas
@@ -2089,6 +2580,62 @@
       }, { passive: true });
     }
   }
+})();
+</script>
+<script>
+/* Conmutador de idioma: cambia `lang` al instante y guarda SOLO el campo idioma,
+   fusionado con lo que ya haya en los ajustes locales. */
+(function () {
+  "use strict";
+  var raiz = document.documentElement;
+  var META = {
+    es: { t: "Hablemos San — Conócela",
+          d: "Conoce Hablemos San: juegos que se juegan hablando — y se juegan juntos." },
+    en: { t: "Hablemos San — Get to know it",
+          d: "Get to know Hablemos San: games you play by talking — and you play them together." }
+  };
+  function cada(sel, fn) { [].slice.call(document.querySelectorAll(sel)).forEach(fn); }
+
+  function aplicar(l) {
+    var en = l === "en";
+    raiz.lang = en ? "en" : "es-CO";
+    cada("[data-idioma]", function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-idioma") === (en ? "en" : "es") ? "true" : "false");
+    });
+    cada("[data-aria-en]", function (el) {
+      if (!el.hasAttribute("data-aria-es")) { el.setAttribute("data-aria-es", el.getAttribute("aria-label") || ""); }
+      el.setAttribute("aria-label", el.getAttribute(en ? "data-aria-en" : "data-aria-es"));
+    });
+    cada("[data-lb]", function (el) {
+      el.setAttribute("aria-labelledby", el.getAttribute("data-lb") + (en ? "-en" : ""));
+    });
+    var m = META[en ? "en" : "es"];
+    document.title = m.t;
+    var d = document.querySelector('meta[name="description"]');
+    if (d) { d.setAttribute("content", m.d); }
+  }
+
+  function guardar(l) {
+    try {
+      var j = null;
+      try { j = JSON.parse(localStorage.getItem("habla:v1:ajustes")); } catch (e) {}
+      if (!j || typeof j !== "object" || Array.isArray(j)) { j = {}; }
+      j.idioma = l;
+      localStorage.setItem("habla:v1:ajustes", JSON.stringify(j));
+    } catch (e) {}
+  }
+
+  cada("[data-idioma]", function (b) {
+    b.addEventListener("click", function () {
+      var l = b.getAttribute("data-idioma");
+      aplicar(l);
+      guardar(l);
+      /* El texto cambia de largo: el motor re-mide el recorrido. */
+      window.dispatchEvent(new Event("resize"));
+    });
+  });
+
+  aplicar(raiz.lang === "en" ? "en" : "es");
 })();
 </script>
 </body>
