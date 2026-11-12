@@ -51,6 +51,35 @@ import {
   ultimaClave,
 } from "@/lib/objetivo/diccionario";
 import { fechaLarga } from "@/lib/fecha";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import type { Texto } from "@/lib/idioma";
+import { objetivo as txt } from "@/lib/idioma/textos/objetivo";
+
+/** La fecha larga en el idioma de ahora (`fechaLarga` es solo español). */
+function fechaEnIdioma(clave: string, idioma: "es" | "en"): string {
+  if (idioma === "es") return fechaLarga(clave);
+  const [anio, mes, dia] = clave.split("-").map(Number);
+  return new Date(anio, mes - 1, dia).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+  });
+}
+
+/** "3 capsules · 2 pictures", con singular y plural de cada idioma. */
+function listaDeAlcance(
+  tx: (t: Texto, d?: Record<string, string | number>) => string,
+  a: { capsulas: number; palabras: number; pares: number },
+): string {
+  const parte = (n: number, uno: Texto, varios: Texto) =>
+    n > 0 ? `${n} ${n === 1 ? tx(uno) : tx(varios)}` : null;
+  return [
+    parte(a.capsulas, txt.unidades.capsulaUna, txt.unidades.capsulaVarias),
+    parte(a.palabras, txt.unidades.dibujoUno, txt.unidades.dibujoVarios),
+    parte(a.pares, txt.unidades.parUno, txt.unidades.parVarios),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+}
 
 type Bancos = {
   capsulas: readonly Capsula[];
@@ -87,13 +116,15 @@ function cargarBancos(): Promise<Bancos> {
 
 // Sugerencias que SÍ alinean (nacen de las etiquetas reales): el padre elige una y garantiza
 // coincidencia. Escribir libre también vale — y "colores" enseña el caso honesto sin matches.
-const SUGERENCIAS = [
-  "animales",
-  "la comida",
-  "el baño",
-  "acciones",
-  "pedir cosas",
-  "los sonidos",
+// El testid sale de la clave en español (estable en los dos idiomas); lo que se escribe en el
+// campo es el texto del idioma de ahora.
+const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
+  { testid: "animales", texto: txt.sugerencias.animales },
+  { testid: "la-comida", texto: txt.sugerencias.comida },
+  { testid: "el-baño", texto: txt.sugerencias.bano },
+  { testid: "acciones", texto: txt.sugerencias.acciones },
+  { testid: "pedir-cosas", texto: txt.sugerencias.pedir },
+  { testid: "los-sonidos", texto: txt.sugerencias.sonidos },
 ];
 
 /**
@@ -110,6 +141,7 @@ function GruposDeChips({
   orto: readonly Sugerencia[];
   alElegir: (termino: string) => void;
 }) {
+  const tx = useT();
   // Un parecido pregunta ("¿Quisiste decir…?"); un prefijo solo se ofrece (vas escribiendo).
   const pregunta = (s: Sugerencia) => s.tipo === "parecido";
   return (
@@ -117,7 +149,7 @@ function GruposDeChips({
       {app.length > 0 ? (
         <div className="mt-2">
           <p className="text-tinta-suave text-xs">
-            Están en la app — se ponen primero en lo que él ve:
+            {tx(txt.chips.estanEnLaApp)}
           </p>
           <div className="mt-1.5 flex flex-wrap gap-2">
             {app.map((s) => (
@@ -128,7 +160,9 @@ function GruposDeChips({
                 className="border-acento text-tinta min-h-11 rounded-full border px-4 text-sm font-medium"
                 data-testid={`sugerencia-viva-${s.termino}`}
               >
-                {pregunta(s) ? `¿Quisiste decir «${s.termino}»?` : s.termino}
+                {pregunta(s)
+                  ? tx(txt.chips.quisisteDecir, { termino: s.termino })
+                  : s.termino}
               </button>
             ))}
           </div>
@@ -137,7 +171,7 @@ function GruposDeChips({
       {orto.length > 0 ? (
         <div className="mt-2">
           <p className="text-tinta-suave text-xs">
-            Bien escritas, aunque aún no están en la app:
+            {tx(txt.chips.bienEscritas)}
           </p>
           <div className="mt-1.5 flex flex-wrap gap-2">
             {orto.map((s) => (
@@ -148,7 +182,9 @@ function GruposDeChips({
                 className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
                 data-testid={`ortografia-${s.termino}`}
               >
-                {pregunta(s) ? `¿Quisiste decir «${s.termino}»?` : s.termino}
+                {pregunta(s)
+                  ? tx(txt.chips.quisisteDecir, { termino: s.termino })
+                  : s.termino}
               </button>
             ))}
           </div>
@@ -186,6 +222,8 @@ function contarPara(
 }
 
 export function ObjetivoCliente() {
+  const tx = useT();
+  const idioma = useIdioma();
   const hidratado = useHidratado();
   const activo = useObjetivo();
   const ajustes = useAjustes();
@@ -364,34 +402,23 @@ export function ObjetivoCliente() {
             )}
             <div className="min-w-0">
               <p className="text-tinta-suave font-mono text-[11px] tracking-[0.08em] uppercase">
-                Objetivo activo
+                {tx(txt.activo.etiqueta)}
               </p>
               <p className="font-display mt-1 text-2xl break-words italic">
                 «{activo.texto}»
               </p>
               <p className="text-tinta-suave text-sm">
-                Activo desde el {fechaLarga(activo.desde)}. Se queda hasta que
-                lo cambies o lo quites.
+                {tx(txt.activo.desde, {
+                  fecha: fechaEnIdioma(activo.desde, idioma),
+                })}
               </p>
               {estadoActivo === "alineado" && conteosActivo ? (
                 <p
                   className="text-tinta mt-2 text-sm font-medium"
                   data-testid="objetivo-activo-alineando"
                 >
-                  Alineando ahora:{" "}
-                  {[
-                    conteosActivo.alcance.capsulas > 0
-                      ? `${conteosActivo.alcance.capsulas} ${conteosActivo.alcance.capsulas === 1 ? "cápsula" : "cápsulas"}`
-                      : null,
-                    conteosActivo.alcance.palabras > 0
-                      ? `${conteosActivo.alcance.palabras} ${conteosActivo.alcance.palabras === 1 ? "dibujo" : "dibujos"}`
-                      : null,
-                    conteosActivo.alcance.pares > 0
-                      ? `${conteosActivo.alcance.pares} ${conteosActivo.alcance.pares === 1 ? "par de gemelas" : "pares de gemelas"}`
-                      : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ")}
+                  {tx(txt.activo.alineando)}{" "}
+                  {listaDeAlcance(tx, conteosActivo.alcance)}
                   .
                 </p>
               ) : estadoActivo === "sin-juegos" ? (
@@ -399,14 +426,13 @@ export function ObjetivoCliente() {
                   className="text-tinta mt-2 text-sm font-medium"
                   data-testid="objetivo-activo-sin-juegos"
                 >
-                  La cápsula de hoy sí se alinea, pero los dibujos de los juegos
-                  no cambian: ese tema no está entre los elegidos.
+                  {tx(txt.activo.sinJuegos.a)}
                   {conteosActivo && conteosActivo.estudio > 0
-                    ? " En el estudio sí se pone primero al grabar."
+                    ? tx(txt.activo.sinJuegos.estudio)
                     : ""}{" "}
-                  Si quieres que los juegos lo traigan,{" "}
+                  {tx(txt.activo.sinJuegos.b)}
                   <Link href="/ajustes" className="underline">
-                    revisa sus temas en Ajustes
+                    {tx(txt.activo.sinJuegos.enlace)}
                   </Link>
                   .
                 </p>
@@ -415,22 +441,20 @@ export function ObjetivoCliente() {
                   className="text-tinta mt-2 text-sm font-medium"
                   data-testid="objetivo-activo-sin-contenido"
                 >
-                  Priorizado, pero la app aún no tiene contenido de esto: por
-                  ahora la cápsula y los juegos no cambian.
+                  {tx(txt.activo.sinContenido)}
                 </p>
               ) : estadoActivo === "fuera-de-alcance" ? (
                 <p
                   className="text-tinta mt-2 text-sm font-medium"
                   data-testid="objetivo-activo-fuera"
                 >
-                  Está en la app, pero no en lo que él ve hoy (su etapa y sus
-                  temas): la cápsula y los juegos no cambian.
+                  {tx(txt.activo.fuera.a)}
                   {conteosActivo && conteosActivo.estudio > 0
-                    ? " En el estudio sí se pone primero al grabar."
+                    ? tx(txt.activo.sinJuegos.estudio)
                     : ""}{" "}
-                  Si quieres que los juegos lo traigan,{" "}
+                  {tx(txt.activo.sinJuegos.b)}
                   <Link href="/ajustes" className="underline">
-                    revisa sus temas en Ajustes
+                    {tx(txt.activo.sinJuegos.enlace)}
                   </Link>
                   .
                 </p>
@@ -443,7 +467,7 @@ export function ObjetivoCliente() {
             className="border-borde text-tinta min-h-11 self-start rounded-xl border px-4 text-sm font-medium"
             data-testid="quitar-objetivo"
           >
-            Quitar el objetivo
+            {tx(txt.activo.quitar)}
           </button>
         </section>
       ) : null}
@@ -453,9 +477,7 @@ export function ObjetivoCliente() {
           exactamente lo que va a guardar. */}
       <section className="bg-superficie shadow-tarjeta flex flex-col gap-3 rounded-2xl p-5">
         <label htmlFor="objetivo-texto" className="font-medium">
-          {activo
-            ? "¿Cambiarlo? Escribe uno nuevo:"
-            : "¿Qué quieren trabajar esta semana?"}
+          {activo ? tx(txt.editor.cambiarlo) : tx(txt.editor.queTrabajar)}
         </label>
         <input
           ref={inputRef}
@@ -467,7 +489,7 @@ export function ObjetivoCliente() {
             setGuardado(false);
             setConfirmando(false);
           }}
-          placeholder="animales, la comida, el baño…"
+          placeholder={tx(txt.editor.placeholder)}
           maxLength={80}
           autoComplete="off"
           lang="es"
@@ -478,18 +500,18 @@ export function ObjetivoCliente() {
 
         <div
           role="group"
-          aria-label="Sugerencias"
+          aria-label={tx(txt.sugerencias.grupo)}
           className="flex flex-wrap gap-2"
         >
           {SUGERENCIAS.map((s) => (
             <button
-              key={s}
+              key={s.testid}
               type="button"
-              onClick={() => elegir(s)}
+              onClick={() => elegir(tx(s.texto))}
               className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
-              data-testid={`sugerencia-${s.replace(/\s+/g, "-")}`}
+              data-testid={`sugerencia-${s.testid}`}
             >
-              {s}
+              {tx(s.texto)}
             </button>
           ))}
         </div>
@@ -500,8 +522,7 @@ export function ObjetivoCliente() {
         <div aria-live="polite" className="min-h-[3rem]">
           {limpio === "" ? (
             <p className="text-tinta-suave text-sm">
-              Escribe una palabra o dos. La app buscará eso en las cápsulas, en
-              los dibujos y en las gemelas, y lo pondrá primero.
+              {tx(txt.preview.vacio)}
             </p>
           ) : conteos === null ? null : sinNada && hayPrefijos && !conocido ? (
             /* Va a media palabra hacia algo real: se acompaña, sin regaño. Una palabra COMPLETA
@@ -512,7 +533,7 @@ export function ObjetivoCliente() {
               data-testid="objetivo-sugerencias-vivas"
             >
               <p className="text-tinta-suave text-sm">
-                ¿Vas hacia alguna de estas? Tócala y listo:
+                {tx(txt.preview.vasHacia)}
               </p>
               <GruposDeChips
                 app={appSonPrefijos ? sugerencias : []}
@@ -526,10 +547,7 @@ export function ObjetivoCliente() {
               data-testid="objetivo-sin-matches"
             >
               <p className="text-tinta-suave text-sm">
-                «{limpio}» todavía no está en el contenido de la app, así que no
-                hay nada que priorizar. No pasa nada: puedes guardarlo igual y
-                no cambia nada, o probar con otra palabra (animales, la comida,
-                acciones…).
+                {tx(txt.preview.sinMatches, { limpio })}
               </p>
               <GruposDeChips
                 app={sugerencias}
@@ -542,31 +560,16 @@ export function ObjetivoCliente() {
               className="text-tinta-suave bg-fondo rounded-xl p-4 text-sm"
               data-testid="objetivo-fuera-de-alcance"
             >
-              «{limpio}» sí está en la app, pero no en lo que él ve hoy (su
-              etapa y sus temas), así que la cápsula y los juegos no cambian.
-              {conteos.estudio > 0
-                ? " En el estudio de grabación sí se pone primero al grabar."
-                : ""}
+              {tx(txt.preview.fuera, { limpio })}
+              {conteos.estudio > 0 ? tx(txt.preview.fueraEstudio) : ""}
             </p>
           ) : (
             <p
               className="text-tinta bg-fondo rounded-xl p-4 text-sm"
               data-testid="objetivo-preview"
             >
-              Con «{limpio}», la app pone primero{" "}
-              {[
-                conteos.alcance.capsulas > 0
-                  ? `${conteos.alcance.capsulas} ${conteos.alcance.capsulas === 1 ? "cápsula" : "cápsulas"}`
-                  : null,
-                conteos.alcance.palabras > 0
-                  ? `${conteos.alcance.palabras} ${conteos.alcance.palabras === 1 ? "dibujo" : "dibujos"}`
-                  : null,
-                conteos.alcance.pares > 0
-                  ? `${conteos.alcance.pares} ${conteos.alcance.pares === 1 ? "par de gemelas" : "pares de gemelas"}`
-                  : null,
-              ]
-                .filter(Boolean)
-                .join(" · ")}
+              {tx(txt.preview.conPonePrimero, { limpio })}
+              {listaDeAlcance(tx, conteos.alcance)}
               .
             </p>
           )}
@@ -581,7 +584,7 @@ export function ObjetivoCliente() {
               data-testid="objetivo-confirmar"
             >
               <p className="text-sm font-medium">
-                ¿Quisiste decir «{candidata}»?
+                {tx(txt.confirmar.pregunta, { candidata })}
               </p>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <button
@@ -590,7 +593,7 @@ export function ObjetivoCliente() {
                   className="bg-acento text-sobre-acento min-h-12 flex-1 rounded-xl px-4 font-medium"
                   data-testid="guardar-candidata"
                 >
-                  Sí, guardar «{candidata}»
+                  {tx(txt.confirmar.si, { candidata })}
                 </button>
                 <button
                   type="button"
@@ -598,7 +601,7 @@ export function ObjetivoCliente() {
                   className="border-borde text-tinta min-h-12 flex-1 rounded-xl border px-4 font-medium"
                   data-testid="guardar-tal-cual"
                 >
-                  No, guardar «{limpio}» tal cual
+                  {tx(txt.confirmar.no, { limpio })}
                 </button>
               </div>
             </div>
@@ -611,8 +614,11 @@ export function ObjetivoCliente() {
               data-testid="guardar-objetivo"
             >
               {limpio === ""
-                ? "Guardar el objetivo"
-                : `Guardar «${limpio.length > 28 ? `${limpio.slice(0, 28)}…` : limpio}»`}
+                ? tx(txt.guardar.vacio)
+                : tx(txt.guardar.con, {
+                    texto:
+                      limpio.length > 28 ? `${limpio.slice(0, 28)}…` : limpio,
+                  })}
             </button>
           )}
           {/* Región viva SIEMPRE montada: el contenido se inserta al guardar y el lector lo
@@ -624,8 +630,8 @@ export function ObjetivoCliente() {
           >
             {guardado ? (
               <>
-                <IconoHecho className="h-4 w-4 shrink-0" /> Listo. La cápsula de
-                hoy y los juegos ya lo tienen en cuenta.
+                <IconoHecho className="h-4 w-4 shrink-0" />
+                {tx(txt.guardar.listo)}
               </>
             ) : null}
           </p>
