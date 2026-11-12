@@ -341,6 +341,22 @@ siguiente quedaron solo en la app. **En la app no cambió nada.**
 
 <!-- s6:fin -->
 
+### Español o English — el idioma de la app (nuevo · S7)
+
+La app habla **español y English**, y cada idioma está escrito para ese idioma (no es una traducción
+palabra por palabra). Sin que usted haga nada, **sigue al idioma de su navegador**; si prefiere el
+otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el elegido lleva una
+«✓»). El cambio es inmediato, sin recargar, y se queda en el dispositivo como cualquier otro ajuste.
+
+- **Qué cambia:** Hoy, la cápsula del día (las 50), el primer uso, los juegos, el Estudio, el
+  Objetivo, el Rumbo, Ajustes y también `/conoce`, que trae su propio selector.
+- **La cápsula del día es la misma** en los dos idiomas: cambiar de idioma no cambia lo que toca hoy.
+- **Palabras y Gemelas, en English:** esos dos juegos practican palabras y dibujos del español, y
+  la app lo dice con una tarjeta honesta en vez de fingir. Los de voz (globo y cohete) juegan igual.
+- **El Objetivo de la semana, en English:** la pantalla se ve en inglés, pero el alineador y el
+  diccionario siguen entendiendo palabras en español, y la tarjeta lo avisa.
+- **Privacidad:** cambiar de idioma no envía nada a ninguna parte.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -462,4 +478,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 004    | "El rumbo": progreso honesto (tendencias por semana + hitos, sin notas ni puntajes); "Objetivo de la semana": escribir qué trabajar y que la app alinee la cápsula de hoy, los juegos y el lote de grabación (con preview honesto y caso sin coincidencias). Iconos reales de la app instalable. Cierre del ciclo H1. |
 | 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. Remate del mismo día: "Enviar a papá" manda solo lo nuevo desde la última vez (+ "Enviar otra vez esta semana"); las 50 cápsulas de habla entran al mismo documento, por etapa y con el mismo registro; sección "Qué hacer con lo que le llega" para el papá. |
 | 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (a la mamá no le resultó factible llevarlo). La app del niño no cambia. |
+| 007    | La app en dos idiomas, **español y English**: sigue al navegador o se elige en Ajustes; las 50 cápsulas, los juegos de voz, Hoy, Estudio, Objetivo, Rumbo y `/conoce` en los dos; en English, Palabras y Gemelas lo dicen con una tarjeta honesta. Ajustes → «Qué mide» nombra el tono del cohete. Primer sprint con el manual también en inglés (`MANUAL-DE-USO.en.md`). |
 <!-- s5:fin -->

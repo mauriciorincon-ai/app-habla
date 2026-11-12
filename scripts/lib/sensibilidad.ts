@@ -123,6 +123,8 @@ export function archivoDe(alcance: Alcance): string {
  * (scripts/sensibilidad-informe.mjs), que solo reporta.
  */
 export const ALCANCE_GATE: Alcance[] = [
+  // S7 el manual en inglés (entero: nace con el gate)
+  "docs/MANUAL-DE-USO.en.md",
   // S6 «La pirámide»
   "content/fichas.ts",
   "docs/LA-PIRAMIDE.html",
