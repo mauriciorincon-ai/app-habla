@@ -6,12 +6,12 @@
     "node": ">=22.18"
   },
   "scripts": {
-    "dev": "pnpm build:worklet && pnpm build:documentos && next dev",
+    "dev": "pnpm build:worklet && pnpm build:documentos && next dev -H 127.0.0.1 -p 3500",
     "build": "pnpm build:worklet && pnpm build:documentos && next build",
     "build:worklet": "tsc -p tsconfig.worklet.json",
     "build:documentos": "node scripts/copiar-documentos.mjs",
     "gen:piramide": "node scripts/gen-la-piramide.mjs",
-    "start": "next start",
+    "start": "next start -H 127.0.0.1 -p 3500",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --coverage --passWithNoTests",
