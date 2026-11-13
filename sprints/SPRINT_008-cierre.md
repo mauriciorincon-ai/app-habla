@@ -11,7 +11,7 @@ pr: pendiente
 # Sprint 008 «En inglés también se practica» — cierre ejecutivo
 
 - **Objetivo / resultado:** Palabras, Gemelas y Objetivo se practican en inglés (diccionarios Ngram es/en, pictogramas y pares propios); `/mirada`, contacto visual y catálogo en `{es,en}`; videoteca de la familia en Estudio; licencia del diccionario corregida (CC BY 3.0). **Estado:** completo salvo lo de «Preguntas».
-- **Tiempo:** estimado 4,25 h · real `horas-sprint.mjs`: 6 commits, 1 sesión, **1,4 h activas** (F1 0,5 · F2 0,5 · F3 0,5; la heurística solo cuenta commits, el reloj de pared fue mayor) · diferencia −2,85 h.
+- **Tiempo:** estimado 4,25 h · real `horas-sprint.mjs`: 7 commits, 1 sesión, **1,4 h activas** (F1 0,5 · F2 0,5 · F3 0,4; la heurística solo cuenta commits, el reloj de pared fue mayor) · diferencia −2,85 h.
 - **Modelo por fase:** F1–F3 Sonnet 5.5 (medium) = requerido, sin desvío. Auditor Sonnet 5.5 high. Prosa EN: Haiku 5.5. **Relevos:** 0.
 - **Tokens:** Haiku en **6 lotes paralelos** (≈ 80–95 k c/u), no en serie como pedía el plan (desvío; sin colisión: archivos disjuntos); auditor ≈ 234 k.
 - **Entregables:** `src/lib/{objetivo,videoteca}`, `content/{fichas,contacto-visual}-en/`, `scripts/lib/bilingue.mjs`, `docs/{LA-PIRAMIDE,CATALOGO-CAPSULAS}.html`, ADR-014 enmendado, **ADR-018**, ADR-017 enmendado, manual ES/EN, guía («Nuevo · S8»), brochure (función 25) y export.
