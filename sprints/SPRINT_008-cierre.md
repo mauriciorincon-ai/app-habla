@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-12
 closed: 2026-11-12
 branch: sprint-008/en-ingles-tambien
-pr: pendiente
+pr: 19
 ---
 
 # Sprint 008 «En inglés también se practica» — cierre ejecutivo
