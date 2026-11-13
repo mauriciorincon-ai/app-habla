@@ -1,8 +1,7 @@
 import type { Catalogo } from "../index";
 
 // Los juegos de voz: lo que comparten (marco, guion, calibración, celebración) y lo propio del globo
-// y del cohete. «Palabra y dibujo» y «gemelas» se juegan con palabras en español (regla dura 7 y 20):
-// en inglés muestran una tarjeta honesta y no montan el juego, así que su cuerpo no está aquí.
+// y del cohete. «Palabra y dibujo» y «gemelas» viven en `palabras.ts` (S8: también se juegan en inglés).
 export const juegos = {
   comun: {
     salir: { es: "Salir", en: "Exit" },
@@ -126,15 +125,6 @@ export const juegos = {
       antes: { es: "El cohete espera tu voz… ¿hacemos", en: "The rocket is waiting for your voice… shall we do" },
       despues: { es: "juntos?", en: "together?" },
     },
-  },
-  // En inglés estos dos juegos practican palabras en español: una tarjeta honesta en su lugar.
-  soloEspanol: {
-    titulo: { es: "Juegos de palabras", en: "Word games" },
-    mensaje: {
-      es: "Los juegos de palabras practican palabras en español. El globo y el cohete funcionan en cualquier idioma.",
-      en: "Word games practise Spanish words. The balloon and rocket games work in any language.",
-    },
-    volver: { es: "← Jugar", en: "← Play" },
   },
   celebracion: {
     segundos: { es: "{n} segundos", en: "{n} seconds" },

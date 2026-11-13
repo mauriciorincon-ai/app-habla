@@ -27,7 +27,8 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
-import { useT } from "@/lib/idioma/estado";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { idConsigna } from "@/lib/banco-voz/catalogo";
 import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { AltavozConsigna } from "./altavoz-consigna";
@@ -74,6 +75,7 @@ function JuegoListo({
 }) {
   const router = useRouter();
   const tx = useT();
+  const idioma = useIdioma();
 
   // Lo que mide el globo: el total de voz del intento (lo que lo hace volar) y, aparte, la racha
   // continua más larga — el único número con el que la app puede decir "la sostuviste".
@@ -184,7 +186,7 @@ function JuegoListo({
           {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
           <AltavozConsigna
             voz={voz}
-            id="consigna:aaah"
+            id={idConsigna("aaah", idioma)}
             etiqueta={tx(juegos.globo.oir)}
           />
 

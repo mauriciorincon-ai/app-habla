@@ -266,10 +266,10 @@ botón de guardar — que **nombra exactamente lo que va a guardar** ("Guardar �
 Mientras escribe, la app **acompaña, no regaña**: si va a media palabra ("anim"), le sugiere
 en qué puede estar pensando — en **dos grupos con su etiqueta**. Los chips **verdes** son
 términos que **están en la app** y alinean la cápsula y los juegos. Los chips **neutros** son
-palabras del español **bien escritas que la app aún no tiene** ("medi" → «medio», «media»):
+palabras **bien escritas del idioma activo que la app aún no tiene** ("medi" → «medio», «media»):
 no cambian los juegos, pero le ayudan a que el objetivo quede bien escrito — vienen de un
-diccionario de las 10.000 palabras más comunes del español que viaja dentro de la app (sin
-internet, como todo aquí). El campo también usa el corrector de su navegador o teclado (el
+diccionario de las palabras más comunes del idioma que viaja dentro de la app (sin
+internet, como todo aquí; hay uno en español y otro en inglés, y la app usa el del idioma activo). El campo también usa el corrector de su navegador o teclado (el
 subrayado rojo de siempre). Los nombres de los temas **tal como los ve en Ajustes** también
 valen: escribir "transporte" alinea todo lo de ese tema.
 
@@ -308,7 +308,8 @@ a lo que pidieron en las terapias.
 
 Además de la app, existe un **documento aparte para la mamá**, para los meses en que el niño no
 usa pantallas: **"La pirámide, en casa"**. Se abre en el teléfono de ella (o impreso) en la página
-`/mirada` de la app; él nunca lo ve: es para el adulto.
+`/mirada` de la app; él nunca lo ve: es para el adulto. **Desde el Sprint 008 está en español y en
+English** (selector arriba, escrito para cada idioma).
 
 Está organizado por las **seis piezas de la pirámide**: señalar, imitación,
 comprender, atención conjunta, intención comunicativa y juego. **No son pisos**: se trabajan todas
@@ -351,11 +352,39 @@ otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el
 - **Qué cambia:** Hoy, la cápsula del día (las 50), el primer uso, los juegos, el Estudio, el
   Objetivo, el Rumbo, Ajustes y también `/conoce`, que trae su propio selector.
 - **La cápsula del día es la misma** en los dos idiomas: cambiar de idioma no cambia lo que toca hoy.
-- **Palabras y Gemelas, en English:** esos dos juegos practican palabras y dibujos del español, y
-  la app lo dice con una tarjeta honesta en vez de fingir. Los de voz (globo y cohete) juegan igual.
-- **El Objetivo de la semana, en English:** la pantalla se ve en inglés, pero el alineador y el
-  diccionario siguen entendiendo palabras en español, y la tarjeta lo avisa.
+- **Palabras y Gemelas, en English (S8):** esos dos juegos **se practican en inglés**: las palabras, los
+  dibujos y las parejas de sonidos son propios del inglés (no las del español puestas en inglés), y la
+  consigna que usted graba en el Estudio también tiene su versión en inglés. Ya no hay tarjeta de «solo en
+  español». Los de voz (globo y cohete) juegan igual en los dos idiomas.
+- **El Objetivo de la semana, en English (S8):** escribe y sugiere en inglés, con su propio diccionario de
+  ortografía; ya no avisa nada. Cada idioma tiene el suyo.
+- **`/mirada` y el catálogo de cápsulas, en los dos idiomas (S8):** «La pirámide, en casa» y el catálogo
+  traen arriba un selector **Español · English** que cambia todo el documento sin recargar; sigue al
+  idioma que usted eligió en la app. Al imprimir, el selector no sale.
 - **Privacidad:** cambiar de idioma no envía nada a ninguna parte.
+
+### Videos de la familia — clips de su galería, solo en este dispositivo (nuevo · S8)
+
+En el **Estudio** hay una entrada **«Videos de la familia»**. Sirve para tener a mano unos pocos clips
+cortos que **muestran una conducta** —**pedir, saludar o jugar**— y mirarlos con su hijo, como utilería
+del juego (co-uso: usted está al lado).
+
+- **Cómo se añade:** **«Elegir un video de la galería»** abre el selector de archivos de su
+  teléfono o computador. **La app nunca abre la cámara**: no graba, solo guarda un clip que usted ya tenía.
+  Escoja primero qué conducta muestra, y si quiere escriba **quién aparece** (opcional, texto libre, se
+  queda aquí). Escriba un rol —«la abuela»—, no nombres.
+- **Límites:** hasta 60 segundos (si el aparato puede leer la duración del clip) y 50 MB por clip, y hasta 12 clips. Si uno no entra, la app le dice por
+  qué (no es un video, pesa demasiado, dura demasiado o la videoteca está llena); si el dispositivo no
+  tiene espacio, avisa y **no guarda nada a medias**.
+- **Dónde viven:** **solo en este dispositivo**. No se suben a internet, no se envían, no viajan con
+  ningún archivo ni copia, y la app no tiene ningún botón para descargarlos ni enviarlos. Cambiar de aparato significa volver a
+  elegirlos.
+- **Cómo se borra:** cada clip tiene su botón de borrar, en **dos toques** (el segundo confirma). Y
+  **Ajustes → Borrar mis datos** también borra todos los videos.
+- **Para quién:** pensado para clips de otras personas que su hijo conoce, no para grabarlo a él.
+- Si el aparato no puede reproducir un clip, la app lo dice en vez de dejar la pantalla vacía; si un borrado
+  falla, también.
+- **Qué NO hace:** no juzga, no puntúa, no compara ni dice si el niño imitó bien: es solo el video.
 
 ### Qué mide y qué NO mide la app (importante)
 
@@ -408,7 +437,8 @@ Esta es la promesa más importante de la app:
   proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
   sola llamada de red**. Y aun con el Estudio, **la voz de su hijo nunca se graba.**
 - Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes, qué
-  cápsulas completó, lo que marcó en "palabras gemelas" y —si las grabó— **sus** voces. Puede
+  cápsulas completó, lo que marcó en "palabras gemelas", —si las grabó— **sus** voces y —si los eligió—
+  **los videos de la familia** (clips de su propia galería: la app no abre la cámara y no salen de aquí). Puede
   borrarlo todo en **Ajustes → Borrar mis datos**, o solo el banco de voz con **"Borrar solo el
   banco de voz"**.
 
@@ -443,6 +473,14 @@ Se retiró en el Sprint 006: a la mamá no le resultó factible llevarlo. Cada f
 "Funcionó si…", que se mira en el momento.
 
 <!-- s6:fin -->
+**¿Se puede practicar en inglés?**
+Sí. Elija English en Ajustes → «Idioma / Language»: los juegos de palabras y de gemelas, el Objetivo y
+los documentos de la mamá se practican y se leen en inglés, con contenido propio de ese idioma.
+
+**¿La app graba o filma a mi hijo para los videos?**
+No. Nunca abre la cámara. Los videos son clips que usted ya tenía en su galería y elige; se guardan solo
+en este dispositivo y los borra cuando quiera.
+
 **¿Funciona sin internet?**
 Sí, después de la primera vez que la abra (si la instaló como app). El juego nunca necesita
 internet.
@@ -467,6 +505,10 @@ Los pictogramas del juego "Palabra y dibujo" son obra de **Sergio Palao** para
 licencia **Creative Commons BY-NC-SA**. Esta app es personal y sin fines comerciales. Los dibujos
 viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 
+Las sugerencias de ortografía del Objetivo salen de listas de las palabras más usadas en libros, tomadas de
+**Google Books Ngram** (Google), publicado bajo la licencia **Creative Commons BY 3.0**. Las listas, una por
+idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
+
 <!-- s5:inicio -->
 ## Historial
 
@@ -479,4 +521,5 @@ viven dentro de la app: no se descargan de internet mientras ustedes juegan.
 | 005    | "Mirarse jugando": el documento de contacto visual para la mamá, sin pantallas, servido en `/mirada` — escalera de seis peldaños, seis maneras con su evidencia, cápsulas, qué no hacer y registro diario (solo en su teléfono; enviar con ejemplos, guardar en archivo, cuadrícula impresa). La app del niño no cambia. Primer sprint de H2. Remate del mismo día: "Enviar a papá" manda solo lo nuevo desde la última vez (+ "Enviar otra vez esta semana"); las 50 cápsulas de habla entran al mismo documento, por etapa y con el mismo registro; sección "Qué hacer con lo que le llega" para el papá. |
 | 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (a la mamá no le resultó factible llevarlo). La app del niño no cambia. |
 | 007    | La app en dos idiomas, **español y English**: sigue al navegador o se elige en Ajustes; las 50 cápsulas, los juegos de voz, Hoy, Estudio, Objetivo, Rumbo y `/conoce` en los dos; en English, Palabras y Gemelas lo dicen con una tarjeta honesta. Ajustes → «Qué mide» nombra el tono del cohete. Primer sprint con el manual también en inglés (`MANUAL-DE-USO.en.md`). |
+| 008    | **«En inglés también se practica»**: Palabras, Gemelas y el Objetivo se practican en inglés (contenido y diccionario propios del idioma, sin tarjeta de «solo en español»); `/mirada` y el catálogo de cápsulas, en español e inglés con selector; **Videos de la familia** en el Estudio (clips de su galería, solo en el dispositivo, sin cámara, borrables); el crédito del diccionario corregido (Google Books Ngram, CC BY 3.0). |
 <!-- s5:fin -->

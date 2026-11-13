@@ -19,7 +19,12 @@ import { fnv1a } from "@/lib/coach/daily";
 import { alinear } from "@/lib/objetivo/alinear";
 import { agregarJuiciosGemelas, leerObjetivo } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
-import { NOMBRE_ETAPA, type Etapa } from "@content/schema";
+import { type Etapa } from "@content/schema";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
+import { palabras as txp } from "@/lib/idioma/textos/palabras";
+import { ajustes as txa } from "@/lib/idioma/textos/ajustes";
+import { paresDe } from "@content/pares-gemelos";
 import {
   metricaGemelas,
   secuenciaDeRondas,
@@ -43,6 +48,9 @@ export function Gemelas() {
 
 function GemelasListo({ etapa }: { etapa: Etapa }) {
   const router = useRouter();
+  const tx = useT();
+  const idioma = useIdioma();
+  const g = txp.gemelas;
   // Semilla DEL DÍA (gate S4: con 12 pares y semilla fija saldrían siempre los mismos 6): cada
   // día trae su mezcla de parejas, determinista y sin Math.random — el patrón de la cápsula
   // diaria. Estable por montaje: el orden no cambia al re-renderizar. Con objetivo de la semana,
@@ -53,12 +61,12 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
       etapa,
       fnv1a(fechaHoy()),
       6,
-      undefined,
+      paresDe(idioma),
       (par) =>
         objetivo.coincidePalabra(par.a.palabra) ||
         objetivo.coincidePalabra(par.b.palabra),
     );
-  }, [etapa]);
+  }, [etapa, idioma]);
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);
@@ -77,18 +85,18 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
         data-testid="gemelas-sin-pares"
       >
         <h2 className="font-display text-3xl">
-          Las gemelas llegan un poquito después
+          {tx(g.sinPares.titulo)}
         </h2>
         <p className="text-tinta-suave">
-          Este juego es para cuando ya dice palabras sueltas. Ahora está en{" "}
-          <strong>{NOMBRE_ETAPA[etapa]}</strong>. Lo puedes cambiar en Ajustes
-          cuando sea el momento — sin apuros.
+          {tx(g.sinPares.antes)}{" "}
+          <strong>{tx(txa.etapa.nombre[etapa])}</strong>
+          {tx(g.sinPares.despues)}
         </p>
         <Link
           href="/jugar"
           className="border-borde text-tinta min-h-12 rounded-xl border px-6 py-2 font-medium"
         >
-          Elegir otro juego
+          {tx(juegos.comun.elegirOtroJuego)}
         </Link>
       </section>
     );
@@ -118,7 +126,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
   /** El padre marcó cuál oyó: el dibujo festeja (se enciende + suena) ANTES de avanzar. */
   function marcar(lado: "a" | "b") {
     setFestejo(lado);
-    const id = idPalabra(par[lado].palabra);
+    const id = idPalabra(par[lado].palabra, idioma);
     if (voz.disponible(id)) void voz.reproducir(id);
   }
 
@@ -132,9 +140,9 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
   if (fase === "guion") {
     return (
       <GuionCard
-        etiqueta="Palabras gemelas"
-        guion="Señala los dos dibujos, pídele que diga UNO, y marca tú el que oíste."
-        nota="No hay respuesta correcta ni incorrecta para él: cualquier intento vale. La app no oye la palabra — el que la oye eres tú. Si hoy solo quiere mirar, también está bien."
+        etiqueta={tx(g.guion.etiqueta)}
+        guion={tx(g.guion.guion)}
+        nota={tx(g.guion.nota)}
         onEmpezar={() => setFase("jugando")}
         listo
       />
@@ -147,7 +155,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
         metrica={metricaGemelas(marcas)}
         onOtraVez={otraVez}
         onTerminar={() => router.push("/jugar")}
-        etiquetaTerminar="Elegir otro juego"
+        etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}
       />
     );
   }
@@ -166,21 +174,17 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
           data-testid="salir-al-guion"
           className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
         >
-          Salir
+          {tx(g.salir)}
         </button>
       </div>
       <div className="text-center">
         <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
-          Ronda{" "}
-          <span className="font-sans font-semibold tabular-nums">
-            {indice + 1}
-          </span>{" "}
-          de {rondas.length}
+          {tx(g.ronda, { n: indice + 1, total: rondas.length })}
         </p>
         {/* El contador honesto de la sesión (patrón de palabra↔objeto): cuenta lo que el PADRE
             marcó, jamás "aciertos". */}
         <p className="text-tinta-suave mt-1 text-sm" data-testid="oidas">
-          Palabras que le oíste:{" "}
+          {tx(g.oidas)}{" "}
           <span className="font-sans font-semibold tabular-nums">{oidas}</span>
         </p>
       </div>
@@ -188,7 +192,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
       <div className="flex items-stretch justify-center gap-3 sm:gap-6">
         {(["a", "b"] as const).map((lado) => {
           const palabra = par[lado];
-          const grabada = voz.disponible(idPalabra(palabra.palabra));
+          const grabada = voz.disponible(idPalabra(palabra.palabra, idioma));
           const encendida = festejo === lado;
           // La tarjeta del dibujo ES el botón de oírla (gate S4, L1): el niño toca el dibujo y
           // suena con la voz de su familia — mismo lenguaje que palabra↔objeto. Tocar = oír,
@@ -229,11 +233,11 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
                 <button
                   type="button"
                   onClick={() =>
-                    void voz.reproducir(idPalabra(palabra.palabra))
+                    void voz.reproducir(idPalabra(palabra.palabra, idioma))
                   }
                   data-testid={`altavoz-${lado}`}
                   data-fuente-voz="familiar"
-                  aria-label={`Oír «${palabra.palabra}»`}
+                  aria-label={tx(g.oir, { palabra: palabra.palabra })}
                   className="ease-suave transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
                 >
                   {tarjeta}
@@ -253,7 +257,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
         <div className="flex flex-col items-center gap-2">
           {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el niño
               es perspicaz — su fiesta está en los dibujos, no en estas teclas). */}
-          <p className="text-tinta-suave text-sm">¿Cuál oíste?</p>
+          <p className="text-tinta-suave text-sm">{tx(g.cual)}</p>
           <div className="flex items-center gap-6">
             {(["a", "b"] as const).map((lado) => (
               <button
@@ -273,7 +277,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
             data-testid="saltar-ronda"
             className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
           >
-            Hoy solo miramos esta — siguiente
+            {tx(g.saltar)}
           </button>
         </div>
       ) : (
@@ -284,7 +288,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
             data-testid="dijo"
             className="font-display text-center text-2xl"
           >
-            ¡Dijo «{par[festejo].palabra}»!
+            {tx(g.dijo, { palabra: par[festejo].palabra })}
           </p>
           <button
             type="button"
@@ -292,7 +296,7 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
             data-testid="siguiente-pareja"
             className="bg-acento text-sobre-acento min-h-14 rounded-xl px-8 text-lg font-medium"
           >
-            Siguiente pareja
+            {tx(g.siguiente)}
           </button>
         </div>
       )}

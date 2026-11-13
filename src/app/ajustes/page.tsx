@@ -112,6 +112,23 @@ export default function AjustesPage() {
             <Tx t={ajustes.dibujos.e} />
           </p>
         </section>
+
+        {/* Atribución del diccionario de ortografía (Google Books Ngram, CC BY 3.0 — ADR-014). */}
+        <section
+          className="bg-superficie shadow-tarjeta rounded-2xl p-5"
+          data-testid="acerca-de-palabras"
+        >
+          <h2 className="font-medium">
+            <Tx t={ajustes.palabrasDiccionario.titulo} />
+          </h2>
+          <p className="text-tinta-suave mt-2 text-sm">
+            <Tx t={ajustes.palabrasDiccionario.a} />
+            <strong>Google Books Ngram</strong>
+            <Tx t={ajustes.palabrasDiccionario.b} />
+            <strong>Creative Commons BY 3.0</strong>
+            <Tx t={ajustes.palabrasDiccionario.c} />
+          </p>
+        </section>
       </OcultoHastaHidratar>
     </main>
   );

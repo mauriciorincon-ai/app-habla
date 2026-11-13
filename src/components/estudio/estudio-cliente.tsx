@@ -36,9 +36,10 @@ import {
   IconoMicrofono,
   IconoRegrabar,
 } from "@/components/iconos";
-import { useT } from "@/lib/idioma/estado";
+import { useIdioma, useT } from "@/lib/idioma/estado";
 import type { Texto } from "@/lib/idioma";
 import { estudio } from "@/lib/idioma/textos/estudio";
+import { videoteca } from "@/lib/idioma/textos/videoteca";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
 const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], Texto> =
@@ -49,6 +50,7 @@ const CHIP_SALIDA =
 
 export function EstudioCliente() {
   const tx = useT();
+  const idioma = useIdioma();
   const hidratado = useHidratado();
   const perfil = usePerfil();
   const ajustes = useAjustes();
@@ -113,7 +115,8 @@ export function EstudioCliente() {
     );
   }
 
-  const catalogo = catalogoGrabable();
+  // El catálogo es el del idioma de la pantalla (S8): en inglés se graban las palabras y consignas inglesas.
+  const catalogo = catalogoGrabable(idioma);
   const cobertura = calcularCobertura(grabados, catalogo);
 
   const vista =
@@ -238,6 +241,19 @@ function Gestion({
       {grabadosItems.length > 0 ? (
         <ListaGrabados grabadosItems={grabadosItems} onBorrado={onBorrado} />
       ) : null}
+
+      <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+        <h2 className="font-medium">{tx(videoteca.entrada.titulo)}</h2>
+        <p className="text-tinta-suave mt-2 text-sm">{tx(videoteca.entrada.texto)}</p>
+        <Link
+          href="/estudio/videos"
+          prefetch={false}
+          className="border-borde text-tinta mt-4 inline-flex min-h-12 items-center rounded-xl border px-6 font-medium"
+          data-testid="ir-a-videos"
+        >
+          {tx(videoteca.entrada.abrir)}
+        </Link>
+      </section>
     </div>
   );
 }
@@ -435,6 +451,7 @@ function Lote({
   onSalir: () => void;
 }) {
   const tx = useT();
+  const idioma = useIdioma();
   // El lote se fija al entrar (no se re-baraja al grabar cada ítem): useMemo con deps vacías
   // captura temas/grabados/objetivo del montaje a propósito (React 19: no leer refs en render).
   // S4: el objetivo de la semana pone sus palabras primero; la etapa baja las de gemelas cuando
@@ -446,6 +463,7 @@ function Lote({
         etapa,
         grabados,
         objetivo: alinear(leerObjetivo()?.texto),
+        catalogo: catalogoGrabable(idioma),
         tamano: 20,
         categoria: categoria ?? undefined,
       }),

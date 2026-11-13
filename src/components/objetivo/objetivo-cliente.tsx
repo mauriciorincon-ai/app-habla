@@ -52,7 +52,7 @@ import {
 } from "@/lib/objetivo/diccionario";
 import { fechaLarga } from "@/lib/fecha";
 import { useIdioma, useT } from "@/lib/idioma/estado";
-import type { Texto } from "@/lib/idioma";
+import type { Idioma, Texto } from "@/lib/idioma";
 import { objetivo as txt } from "@/lib/idioma/textos/objetivo";
 
 /** La fecha larga en el idioma de ahora (`fechaLarga` es solo español). */
@@ -82,42 +82,48 @@ function listaDeAlcance(
 }
 
 type Bancos = {
+  idioma: Idioma;
   capsulas: readonly Capsula[];
   pictos: readonly Pictograma[];
   pares: readonly ParGemelo[];
   parJugableEn: (par: ParGemelo, etapa: Etapa) => boolean;
   grabables: readonly ItemGrabable[];
   coincideGrabable: (objetivo: Alineacion, i: ItemGrabable) => boolean;
-  /** Diccionario de ortografía general (gate S4, bloque O): 10 000 palabras curadas. */
-  palabrasEs: readonly string[];
+  /** Diccionario de ortografía general del IDIOMA activo (gate S4, bloque O; S8: uno por idioma). */
+  palabras: readonly string[];
 };
 
-// Cache a nivel de módulo: los bancos se cargan UNA vez por visita, y solo si el padre escribe.
-let promesaBancos: Promise<Bancos> | null = null;
-function cargarBancos(): Promise<Bancos> {
-  promesaBancos ??= Promise.all([
+// Cache a nivel de módulo, uno por idioma: los bancos se cargan UNA vez por visita, y solo si el padre
+// escribe. El diccionario del otro idioma jamás se descarga (cada uno pesa ≈ 200 KB).
+const promesasBancos: Partial<Record<Idioma, Promise<Bancos>>> = {};
+function cargarBancos(idioma: Idioma): Promise<Bancos> {
+  promesasBancos[idioma] ??= Promise.all([
     import("@content/capsulas"),
     import("@content/pictogramas"),
     import("@content/pares-gemelos"),
     import("@/lib/banco-voz/catalogo"),
     import("@/lib/banco-voz/lotes"),
-    import("@/lib/objetivo/palabras-es"),
+    idioma === "en"
+      ? import("@/lib/objetivo/palabras-en").then((m) => m.PALABRAS_EN)
+      : import("@/lib/objetivo/palabras-es").then((m) => m.PALABRAS_ES),
   ]).then(([capsulas, pictos, pares, catalogo, lotes, palabras]) => ({
+    idioma,
     capsulas: capsulas.CAPSULAS,
-    pictos: pictos.PICTOGRAMAS,
-    pares: pares.PARES_GEMELOS,
+    // En inglés se alinea contra la etiqueta inglesa del dibujo (`en`), no contra la española.
+    pictos: idioma === "en" ? pictos.PICTOGRAMAS.map((p) => ({ ...p, palabra: p.en })) : pictos.PICTOGRAMAS,
+    pares: pares.paresDe(idioma),
     parJugableEn: pares.parJugableEn,
-    grabables: catalogo.catalogoGrabable(),
+    grabables: catalogo.catalogoGrabable(idioma),
     coincideGrabable: (objetivo, i) => lotes.coincideConObjetivo(objetivo, i),
-    palabrasEs: palabras.PALABRAS_ES,
+    palabras,
   }));
-  return promesaBancos;
+  return promesasBancos[idioma]!;
 }
 
 // Sugerencias que SÍ alinean (nacen de las etiquetas reales): el padre elige una y garantiza
 // coincidencia. Escribir libre también vale — y "colores" enseña el caso honesto sin matches.
 // El testid sale de la clave en español (estable en los dos idiomas); lo que se escribe en el
-// campo es SIEMPRE la forma en español: el alineador y el diccionario solo entienden español.
+// campo es la forma del idioma activo (S8: el alineador y el diccionario entienden los dos).
 const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
   { testid: "animales", texto: txt.sugerencias.animales },
   { testid: "la-comida", texto: txt.sugerencias.comida },
@@ -233,7 +239,9 @@ export function ObjetivoCliente() {
   // Paso de ortografía (gate S4, O1): si lo escrito no coincide con NADA pero se parece a un
   // término real, guardar pide un segundo vistazo — "¿quisiste decir…?" — antes de grabar.
   const [confirmando, setConfirmando] = useState(false);
-  const [bancos, setBancos] = useState<Bancos | null>(null);
+  const [cargados, setBancos] = useState<Bancos | null>(null);
+  // Los bancos de OTRO idioma (si el padre cambió de idioma a media pantalla) no valen: se recargan.
+  const bancos = cargados?.idioma === idioma ? cargados : null;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const limpio = texto.trim();
@@ -245,13 +253,13 @@ export function ObjetivoCliente() {
   useEffect(() => {
     if ((limpio === "" && !activo) || bancos) return;
     let vivo = true;
-    void cargarBancos().then((b) => {
+    void cargarBancos(idioma).then((b) => {
       if (vivo) setBancos(b);
     });
     return () => {
       vivo = false;
     };
-  }, [limpio, activo, bancos]);
+  }, [limpio, activo, bancos, idioma]);
 
   const conteos = useMemo(
     () =>
@@ -277,21 +285,21 @@ export function ObjetivoCliente() {
   // Sugerencias en vivo (gate S4, O1): lo que escribe, contra el vocabulario REAL del contenido.
   const sugerencias = useMemo<Sugerencia[]>(() => {
     if (!bancos || limpio === "") return [];
-    return sugerir(limpio, vocabularioDe(bancos));
-  }, [bancos, limpio]);
+    return sugerir(limpio, vocabularioDe(bancos, idioma));
+  }, [bancos, limpio, idioma]);
 
   // Ortografía GENERAL (gate S4, bloque O — segundo remate): el diccionario embebido sugiere la
   // palabra bien escrita AUNQUE la app no la tenga («medi» → medio, media…), en su propio grupo.
   const indice = useMemo(
-    () => (bancos ? indexarDiccionario(bancos.palabrasEs) : null),
+    () => (bancos ? indexarDiccionario(bancos.palabras) : null),
     [bancos],
   );
   const clavesApp = useMemo(
     () =>
       bancos
-        ? new Set(vocabularioDe(bancos).flatMap((crudo) => normalizar(crudo)))
+        ? new Set(vocabularioDe(bancos, idioma).flatMap((crudo) => normalizar(crudo)))
         : new Set<string>(),
-    [bancos],
+    [bancos, idioma],
   );
   const ortografia = useMemo<Sugerencia[]>(() => {
     if (!indice || limpio === "") return [];
@@ -492,17 +500,11 @@ export function ObjetivoCliente() {
           placeholder={tx(txt.editor.placeholder)}
           maxLength={80}
           autoComplete="off"
-          lang="es"
+          lang={idioma}
           spellCheck
           className="border-borde bg-fondo text-tinta min-h-14 rounded-xl border px-4 text-lg"
           data-testid="objetivo-input"
         />
-
-        {idioma === "en" && (
-          <p className="text-tinta-suave text-sm" data-testid="objetivo-aviso-idioma">
-            {tx(txt.avisoIdioma)}
-          </p>
-        )}
 
         <div
           role="group"
@@ -513,7 +515,7 @@ export function ObjetivoCliente() {
             <button
               key={s.testid}
               type="button"
-              onClick={() => elegir(s.texto.es)}
+              onClick={() => elegir(tx(s.texto))}
               className="border-borde text-tinta-suave min-h-11 rounded-full border px-4 text-sm"
               data-testid={`sugerencia-${s.testid}`}
             >

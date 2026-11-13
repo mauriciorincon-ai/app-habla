@@ -9,7 +9,11 @@ export const esc = (s) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 
-export const fechaHoy = () => new Date().toISOString().slice(0, 10);
+export const fechaHoy = () => {
+  const d = new Date();
+  const dos = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${dos(d.getMonth() + 1)}-${dos(d.getDate())}`; // fecha LOCAL, no UTC
+};
 
 /** Tokens semánticos del design system, light por defecto y dark por preferencia del sistema. */
 export const PALETA_CSS = `

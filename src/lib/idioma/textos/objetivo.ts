@@ -83,10 +83,6 @@ export const objetivo = {
     },
     placeholder: { es: "animales, la comida, el baño…", en: "animals, food, bath time…" },
   },
-  avisoIdioma: {
-    es: "El alineador entiende palabras en español: escribe el objetivo en español.",
-    en: "The goal helper understands Spanish words only: write the goal in Spanish.",
-  },
   preview: {
     vacio: {
       es: "Escribe una palabra o dos. La app buscará eso en las cápsulas, en los dibujos y en las gemelas, y lo pondrá primero.",
@@ -98,7 +94,7 @@ export const objetivo = {
     },
     sinMatches: {
       es: "«{limpio}» todavía no está en el contenido de la app, así que no hay nada que priorizar. No pasa nada: puedes guardarlo igual y no cambia nada, o probar con otra palabra (animales, la comida, acciones…).",
-      en: "“{limpio}” isn't in the app's content yet, so there is nothing to put first. That's fine: you can save it anyway and nothing changes, or try another Spanish word (animales, la comida, acciones…).",
+      en: "“{limpio}” isn't in the app's content yet, so there is nothing to put first. That's fine: you can save it anyway and nothing changes, or try another word (animals, food, actions…).",
     },
     fuera: {
       es: "«{limpio}» sí está en la app, pero no en lo que él ve hoy (su etapa y sus temas), así que la cápsula y los juegos no cambian.",

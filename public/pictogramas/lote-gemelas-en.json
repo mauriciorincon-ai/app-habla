@@ -1,0 +1,38 @@
+[
+  {
+    "palabra": "hat",
+    "archivo": "hat.png",
+    "arasaacId": 2572,
+    "etiqueta": "hat"
+  },
+  {
+    "palabra": "mouse",
+    "archivo": "mouse.png",
+    "arasaacId": 2546,
+    "etiqueta": "mouse"
+  },
+  {
+    "palabra": "cone",
+    "archivo": "cone.png",
+    "arasaacId": 4928,
+    "etiqueta": "traffic cone"
+  },
+  {
+    "palabra": "sock",
+    "archivo": "sock.png",
+    "arasaacId": 8339,
+    "etiqueta": "sock"
+  },
+  {
+    "palabra": "foot",
+    "archivo": "foot.png",
+    "arasaacId": 2841,
+    "etiqueta": "foot"
+  },
+  {
+    "palabra": "rain",
+    "archivo": "rain.png",
+    "arasaacId": 3123,
+    "etiqueta": "rain"
+  }
+]

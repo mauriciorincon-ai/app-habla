@@ -79,11 +79,12 @@ test("cada ficha trae sus seis partes, en orden", async ({ page }) => {
   const n = await fichas.count();
   expect(n).toBeGreaterThan(0);
   for (let i = 0; i < n; i++) {
-    const rotulos = await fichas.nth(i).locator(".rotulo").allTextContents();
+    // innerText: lo que se VE (el texto del otro idioma está oculto y no cuenta).
+    const rotulos = await fichas.nth(i).locator(".rotulo").evaluateAll((els) => els.map((e) => (e as HTMLElement).innerText));
     expect(
-      rotulos.map((r) => r.trim()),
+      rotulos.map((r) => r.trim().toLowerCase()), // los rótulos se pintan en mayúsculas (CSS)
       `ficha ${i}`,
-    ).toEqual(PARTES);
+    ).toEqual(PARTES.map((p) => p.toLowerCase()));
     expect(
       await fichas.nth(i).locator("ol li").count(),
       `pasos de la ficha ${i}`,
@@ -136,7 +137,8 @@ test("el registro del S5 ya no existe: ni formularios, ni envío, ni cuadrícula
 }) => {
   await page.goto("/mirada");
   expect(await page.locator("form").count()).toBe(0);
-  expect(await page.locator("button").count()).toBe(0);
+  // Los únicos botones son los del conmutador de idioma (S8): ninguno es del registro retirado.
+  expect(await page.locator("button:not(.idioma button)").count()).toBe(0);
   await expect(page.getByText("Enviar a papá")).toHaveCount(0);
   await expect(page.getByText("Registrar este momento")).toHaveCount(0);
   await expect(page.getByText("Mis registros")).toHaveCount(0);
@@ -214,3 +216,38 @@ test("axe: el documento no tiene violaciones de accesibilidad, también en modo 
     expect(resultados.violations, ruta).toEqual([]);
   }
 });
+
+test("en inglés, /mirada se lee en inglés: «The pyramid, at home», con las fichas y sus seis partes", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.goto("/mirada");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1, name: "The pyramid, at home" })).toBeVisible();
+  await expect(page.getByText("This is not a test.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "What not to do" })).toBeVisible();
+  // La primera ficha trae sus seis partes, en inglés, y nada de español a la vista.
+  const ficha = page.locator("article.ficha").first();
+  for (const parte of ["Have ready", "Do", "Your line", "What you may see", "It worked if", "If it doesn't happen"]) {
+    await expect(ficha.getByText(parte, { exact: true })).toBeVisible();
+  }
+  await expect(page.getByText("Ten a la mano").first()).toBeHidden();
+  await expect(page.getByText("Esto no es una prueba.").first()).toBeHidden();
+
+  // El conmutador del propio documento cambia el idioma y recuerda la elección.
+  await page.getByRole("button", { name: "Español" }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-CO");
+  await expect(page.getByRole("heading", { level: 1, name: "La pirámide, en casa" })).toBeVisible();
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-CO");
+  await ctx.close();
+});
+
+test("a11y: /mirada en inglés sin violaciones serias", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.goto("/mirada");
+  const r = await new AxeBuilder({ page }).analyze();
+  expect(r.violations.filter((v) => v.impact === "serious" || v.impact === "critical")).toEqual([]);
+  await ctx.close();
+});
+

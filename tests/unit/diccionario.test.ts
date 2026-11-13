@@ -5,6 +5,7 @@ import {
   sugerirOrtografia,
   ultimaClave,
 } from "@/lib/objetivo/diccionario";
+import { PALABRAS_EN } from "@/lib/objetivo/palabras-en";
 import { PALABRAS_ES } from "@/lib/objetivo/palabras-es";
 
 // ORTOGRAFÍA GENERAL del objetivo (gate S4, bloque O — pedido del usuario): "medi" debe poder
@@ -68,34 +69,53 @@ describe("sugerirOrtografia: la palabra bien escrita que la app no tiene", () =>
   });
 });
 
-describe("palabras-es: el diccionario embebido curado", () => {
-  it("trae hasta 10 000 palabras bien formadas, sin duplicados", () => {
-    expect(PALABRAS_ES.length).toBeGreaterThanOrEqual(8000);
-    expect(PALABRAS_ES.length).toBeLessThanOrEqual(10000);
+describe("palabras-es: el diccionario embebido curado (Google Books Ngram, CC BY 3.0)", () => {
+  it("trae hasta 16 000 palabras bien formadas, sin duplicados", () => {
+    expect(PALABRAS_ES.length).toBeGreaterThanOrEqual(12000);
+    expect(PALABRAS_ES.length).toBeLessThanOrEqual(16000);
     expect(new Set(PALABRAS_ES).size).toBe(PALABRAS_ES.length);
-    const malFormadas = PALABRAS_ES.filter(
-      (p) => !/^[a-záéíóúüñ]{3,16}$/.test(p),
-    );
+    const malFormadas = PALABRAS_ES.filter((p) => !/^[a-záéíóúüñ]{3,16}$/.test(p));
     expect(malFormadas).toEqual([]);
   });
 
   it("contiene el caso del gate y palabras de la casa", () => {
-    for (const p of ["medio", "medios", "baño", "niño", "también", "agua"]) {
+    for (const p of ["medio", "medios", "baño", "niño", "también", "agua", "hola", "dame", "mamá"]) {
       expect(PALABRAS_ES).toContain(p);
     }
   });
 
   it("la curaduría vetó lo que jamás debe salir como chip en una app familiar", () => {
-    for (const p of [
-      "mierda",
-      "puta",
-      "sexo",
-      "idiota",
-      "estúpido",
-      "the",
-      "you",
-    ]) {
+    for (const p of ["mierda", "puta", "sexo", "idiota", "estúpido", "the", "you"]) {
       expect(PALABRAS_ES).not.toContain(p);
     }
+  });
+});
+
+describe("palabras-en: el diccionario embebido del inglés (S8)", () => {
+  it("trae hasta 16 000 palabras bien formadas, sin duplicados", () => {
+    expect(PALABRAS_EN.length).toBeGreaterThanOrEqual(12000);
+    expect(PALABRAS_EN.length).toBeLessThanOrEqual(16000);
+    expect(new Set(PALABRAS_EN).size).toBe(PALABRAS_EN.length);
+    expect(PALABRAS_EN.filter((p) => !/^[a-z]{2,16}$/.test(p))).toEqual([]);
+  });
+
+  it("contiene palabras de la casa y de los dibujos", () => {
+    for (const p of ["hello", "water", "dog", "mommy", "bath", "feelings", "animals", "sea", "bubble"]) {
+      expect(PALABRAS_EN).toContain(p);
+    }
+  });
+
+  it("la curaduría vetó groserías y no se coló el español", () => {
+    for (const p of ["fuck", "shit", "bitch", "sex", "stupid", "hola", "gracias"]) {
+      expect(PALABRAS_EN).not.toContain(p);
+    }
+  });
+
+  it("indexa y sugiere en inglés con el mismo motor", () => {
+    const indice = indexarDiccionario(PALABRAS_EN);
+    expect(conoceElDiccionario(indice, "bath")).toBe(true);
+    expect(conoceElDiccionario(indice, "bathh")).toBe(false);
+    const s = sugerirOrtografia("anima", indice, NADIE).map((x) => x.termino);
+    expect(s).toContain("animal");
   });
 });

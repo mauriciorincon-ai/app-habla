@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 import {
   LoteParesSchema,
   PARES_GEMELOS,
+  PARES_GEMELOS_EN,
+  paresDe,
   palabrasDeGemelos,
   parJugableEn,
 } from "@content/pares-gemelos";
@@ -100,5 +102,41 @@ describe("gemelas: la métrica honesta (regla dura 3)", () => {
       rondas: 2,
       participadas: 0,
     });
+  });
+});
+
+describe("gemelas: los pares mínimos del inglés (S8, regla 20)", () => {
+  it("el lote cumple el mismo schema que el del español", () => {
+    expect(() => LoteParesSchema.parse(PARES_GEMELOS_EN)).not.toThrow();
+    expect(paresDe("en")).toBe(PARES_GEMELOS_EN);
+    expect(paresDe("es")).toBe(PARES_GEMELOS);
+  });
+
+  it("cada palabra tiene su dibujo en el repo y no hay llamadas a la red", () => {
+    for (const { archivo } of palabrasDeGemelos("en")) {
+      expect(existsSync(resolve(process.cwd(), "public/pictogramas", archivo)), `falta ${archivo}`).toBe(true);
+    }
+  });
+
+  it("son pares del inglés: ninguna palabra es la del español, y cada par difiere en UN solo rasgo", () => {
+    const espanol = new Set(PARES_GEMELOS.flatMap((p) => [p.a.palabra, p.b.palabra]));
+    for (const par of PARES_GEMELOS_EN) {
+      expect(par.a.palabra).not.toBe(par.b.palabra);
+      expect(espanol.has(par.a.palabra), par.a.palabra).toBe(false);
+      expect(espanol.has(par.b.palabra), par.b.palabra).toBe(false);
+      expect(par.contraste).toMatch(/^the .+ (at the start|at the end|in the middle)$/);
+      expect(par.a.palabra).toMatch(/^[a-z]{2,8}$/);
+      // Un par mínimo se parece: misma longitud ± 1 y al menos una letra en común.
+      expect(Math.abs(par.a.palabra.length - par.b.palabra.length)).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it("hay pares jugables en palabras sueltas (el nivel por defecto) y la secuencia es reproducible", () => {
+    expect(paresParaEtapa("palabras-sueltas", PARES_GEMELOS_EN).length).toBeGreaterThanOrEqual(6);
+    expect(paresParaEtapa("sonidos-e-intentos", PARES_GEMELOS_EN)).toHaveLength(0);
+    const a = secuenciaDeRondas("palabras-sueltas", 7, 6, PARES_GEMELOS_EN).map((p) => p.id);
+    const b = secuenciaDeRondas("palabras-sueltas", 7, 6, PARES_GEMELOS_EN).map((p) => p.id);
+    expect(a).toEqual(b);
+    expect(a).toHaveLength(6);
   });
 });

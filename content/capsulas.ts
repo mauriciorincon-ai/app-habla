@@ -1,4 +1,4 @@
-import { CAPSULAS_EN } from "./capsulas-en";
+import { CAPSULAS_EN } from "./capsulas-en/index.ts";
 import type { Capsula, CapsulaEs, EtiquetaCapsula } from "./schema";
 
 /**
@@ -20,7 +20,7 @@ import type { Capsula, CapsulaEs, EtiquetaCapsula } from "./schema";
  * las RUTINAS reales (carro, mercado, parque, calle, vestirse, dormir), los turnos con sonidos,
  * las canciones con pausa y los mini-retos sin pantalla — no de rellenar con variaciones.
  *
- * Tono: cálido, directo, es-CO. Prohibido (§D anti-claims): "terapia", "[omitido]", plazos
+ * Tono: cálido, directo, es-CO. Prohibido (§D anti-claims): "terapia", plazos
  * ("en X semanas"), puntajes clínicos, elogios desacoplados de lo medido. Esto es práctica de
  * estimulación en casa — complementaria, nunca sustituta, de las terapias integrales del
  * lenguaje del niño.
@@ -45,7 +45,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Heidlage et al. 2019 (Early Childhood Research Quarterly): la [omitido] guiada por padres muestra g=0.42 en [omitido]; el efecto es mayor cuando ocurre dentro del juego y las rutinas (g=0.50).",
+       "Heidlage et al. 2019 (Early Childhood Research Quarterly): cuando los padres guían la práctica, el efecto en lo que el niño dice es g=0.42; es mayor cuando ocurre dentro del juego y las rutinas (g=0.50).",
   },
   {
     id: "modelado-mismas-palabras-rutina",
@@ -86,15 +86,15 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
     etapa: "palabras-sueltas",
     titulo: "Devuélvele la palabra, completa y celebrada",
     explicacion:
-      "Cuando tu hijo intenta una palabra y le sale a medias (“[omitido]” por agua, “tete” por chupete), no lo corrijas ni le pidas repetir: devuélvele la palabra completa, con alegría, como confirmando que le entendiste: “¡Agua! Sí, agua”. Él oye la versión buena justo cuando más le importa — en su propio intento — y sin ningún costo de sentirse equivocado. Esta es, de todas las técnicas, la que más evidencia tiene a favor.",
-    guion: "Él dice “[omitido]”; tú: “¡Agua! Sí, agua”. Y se la das.",
+      "Cuando tu hijo intenta una palabra y le sale a medias (“agu” por agua, “tete” por chupete), no lo corrijas ni le pidas repetir: devuélvele la palabra completa, con alegría, como confirmando que le entendiste: “¡Agua! Sí, agua”. Él oye la versión buena justo cuando más le importa — en su propio intento — y sin ningún costo de sentirse equivocado. Esta es, de todas las técnicas, la que más evidencia tiene a favor.",
+    guion: "Él dice “agu”; tú: “¡Agua! Sí, agua”. Y se la das.",
     actividad: {
       texto:
         "Hoy, cada intento de palabra que le salga a medias se lo devuelves completo y cálido. Cuenta mentalmente cuántas veces lo lograste. Sin corregir, sin “di agua”.",
       conPantalla: false,
     },
     fuente:
-      "Cleave et al. 2015 (AJSLP), [omitido] de 35 estudios: los recasts muestran un efecto de 0.96 en medidas cercanas, y funcionan mejor con al menos un recast por minuto.",
+       "Cleave et al. 2015 (AJSLP), revisión de 35 estudios: devolver la palabra completa muestra un efecto de 0.96 en medidas cercanas, y funciona mejor con al menos una vez por minuto.",
   },
   {
     id: "recast-su-palabra-mas-una",
@@ -110,7 +110,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Cleave et al. 2015 (AJSLP): las expansiones muestran efectos de 0.96 ([omitido]) y 0.76 ([omitido]); la densidad recomendada es ≥1 por minuto de juego.",
+       "Cleave et al. 2015 (AJSLP): ampliar lo que el niño dice muestra efectos de 0.96 (en lo cercano) y 0.76 (en lo lejano); la densidad recomendada es ≥1 por minuto de juego.",
   },
   {
     id: "espera-cuenta-cinco",
@@ -127,7 +127,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada dentro del enfoque [omitido] (ensayo controlado, PubMed 29054980): produce ganancias en lenguaje; el sostenimiento depende de que la práctica continúe.",
+       "Espera estructurada dentro de la enseñanza en la rutina (ensayo controlado, PubMed 29054980): produce ganancias en lenguaje; el sostenimiento depende de que la práctica continúe.",
   },
   {
     id: "espera-pausa-canciones",
@@ -144,7 +144,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada / tiempo de espera dentro de [omitido] (PubMed 29054980), técnica central de las [omitido] naturalistas implementadas por padres.",
+       "Espera estructurada / tiempo de espera dentro de la enseñanza en la rutina (PubMed 29054980), técnica central de los enfoques naturales aplicados por padres.",
   },
   {
     id: "espera-no-adivines",
@@ -161,7 +161,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada ([omitido], PubMed 29054980): crear oportunidades comunicativas dentro de la rutina, sin forzar ni condicionar el acceso.",
+       "Espera estructurada (enseñanza en la rutina, PubMed 29054980): crear oportunidades comunicativas dentro de la rutina, sin forzar ni condicionar el acceso.",
   },
   {
     id: "interes-el-manda",
@@ -178,7 +178,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "[omitido] naturalistas del desarrollo (revisión Crank et al. 2021): seguir el foco de atención del niño es el núcleo común de los enfoques con mejor respaldo.",
+       "Enfoques naturales del desarrollo (revisión Crank et al. 2021): seguir el foco de atención del niño es el núcleo común de los enfoques con mejor respaldo.",
   },
   {
     id: "interes-voz-mueve",
@@ -228,7 +228,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Estimulación focalizada (revisión de facilitación del lenguaje, ASHA; revisión sistemática AJSLP 2022): exposición concentrada sin exigir producción. La evidencia es más fuerte en niños con [omitido] que en [omitido] — por eso la usamos sin prometer resultados.",
+       "Estimulación focalizada (revisión de facilitación del lenguaje, ASHA; revisión sistemática AJSLP 2022): exposición concentrada sin exigir producción. La evidencia cambia según el niño — por eso la usamos sin prometer resultados.",
   },
   {
     id: "focalizada-el-nombre-vive-en-la-cosa",
@@ -282,7 +282,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Heidlage et al. 2019 (Early Childhood Research Quarterly): la [omitido] guiada por padres muestra g=0.42 en [omitido], y el efecto es mayor cuando ocurre dentro del juego (g=0.50).",
+       "Heidlage et al. 2019 (Early Childhood Research Quarterly): cuando los padres guían la práctica, el efecto en lo que el niño dice es g=0.42, y es mayor cuando ocurre dentro del juego (g=0.50).",
   },
   {
     id: "sonidos-habla-como-el",
@@ -298,7 +298,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "[omitido] naturalistas del desarrollo ([omitido]): responder contingentemente a la iniciativa del niño —incluidos sus sonidos y gestos— es el mecanismo central; Crank et al. 2021, con la cautela de que las magnitudes varían.",
+       "Enfoques naturales del desarrollo: responder contingentemente a la iniciativa del niño —incluidos sus sonidos y gestos— es el mecanismo central; Crank et al. 2021, con la cautela de que las magnitudes varían.",
   },
   {
     id: "sonidos-espera-con-cara-de-pregunta",
@@ -315,7 +315,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Enseñanza del [omitido] Mejorada ([omitido]): el ensayo [omitido] con toddlers muestra ganancias en comunicación cuando el adulto crea oportunidades y espera; el efecto no se sostuvo al año, así que se habla de práctica sostenida, no de resultados prometidos (PubMed 29054980).",
+       "Enseñanza en la rutina: el ensayo con niños pequeños muestra ganancias en comunicación cuando el adulto crea oportunidades y espera; el efecto no se sostuvo al año, así que se habla de práctica sostenida, no de resultados prometidos (PubMed 29054980).",
   },
   {
     id: "sonidos-senalar-ya-es-hablar",
@@ -349,7 +349,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Recast/expansión conversacional: [omitido] de 35 estudios con tamaño de efecto 0.96 en medidas próximas y 0.76 en distales; funciona mejor con densidad de al menos un recast por minuto (Cleave et al. 2015, AJSLP).",
+       "Devolver y ampliar lo que el niño dice: revisión de 35 estudios con tamaño de efecto 0.96 en medidas cercanas y 0.76 en lejanas; funciona mejor con al menos una vez por minuto (Cleave et al. 2015, AJSLP).",
   },
   {
     id: "sonidos-un-solo-sonido-todo-el-dia",
@@ -399,7 +399,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: true,
     },
     fuente:
-      "Juegos controlados por voz con parámetros simples (sonoridad, duración, tono) son factibles y muestran pilotos positivos en habla infantil; se clasifican como PROMETEDORES, no como [omitido] probado (Flappy Voice, CHI PLAY 2014; Apraxia World, Hair et al. 2021).",
+       "Juegos controlados por voz con parámetros simples (sonoridad, duración, tono) son factibles y muestran pilotos positivos en habla infantil; se clasifican como PROMETEDORES, no como práctica probada (Flappy Voice, CHI PLAY 2014; Apraxia World, Hair et al. 2021).",
   },
   // ---------------------------------------------------------------------------------------
   // ETAPA: palabras sueltas — el nivel POR DEFECTO PERMANENTE de esta app (ADR 005).
@@ -420,7 +420,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Heidlage et al. 2019 (ECRQ): el efecto de la [omitido] por padres es mayor cuando ocurre dentro de rutinas cotidianas (g=0.50) que en sesiones separadas de la vida diaria.",
+       "Heidlage et al. 2019 (ECRQ): el efecto de la práctica guiada por padres es mayor cuando ocurre dentro de rutinas cotidianas (g=0.50) que en sesiones separadas de la vida diaria.",
   },
   {
     id: "modelado-vestirse",
@@ -454,7 +454,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés del niño ([omitido]): responder al foco atencional que él YA tiene es el mecanismo central de las [omitido] naturalistas del desarrollo (Crank et al. 2021).",
+       "Seguir el interés del niño: responder al foco atencional que él YA tiene es el mecanismo central de los enfoques naturales del desarrollo (Crank et al. 2021).",
   },
   {
     id: "modelado-parque",
@@ -504,7 +504,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés ([omitido]): la palabra dicha sobre el foco de atención que el niño YA tiene es la que mejor se asocia con el objeto; imponer el tema del adulto rinde menos (Crank et al. 2021).",
+       "Seguir el interés: la palabra dicha sobre el foco de atención que el niño YA tiene es la que mejor se asocia con el objeto; imponer el tema del adulto rinde menos (Crank et al. 2021).",
   },
   {
     id: "espera-el-frasco-dificil",
@@ -521,7 +521,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Enseñanza del [omitido] Mejorada ([omitido]): montar el ambiente para crear oportunidades de comunicación y esperar la iniciativa del niño ([omitido] con toddlers, PubMed 29054980).",
+       "Enseñanza en la rutina: montar el ambiente para crear oportunidades de comunicación y esperar la iniciativa del niño (ensayo con niños pequeños, PubMed 29054980).",
   },
   {
     id: "espera-de-a-poquitos",
@@ -538,7 +538,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "[omitido] / comunicación tentadora: fragmentar el acceso al objeto deseado multiplica las oportunidades de iniciación sin frustrar al niño (PubMed 29054980).",
+       "Comunicación tentadora: fragmentar el acceso al objeto deseado multiplica las oportunidades de iniciación sin frustrar al niño (PubMed 29054980).",
   },
   {
     id: "espera-el-hueco-de-la-rutina",
@@ -555,7 +555,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada ([omitido]): las rutinas predecibles con pausa expectante generan iniciación comunicativa; la evidencia respalda la práctica sostenida, no promesas de resultados (PubMed 29054980).",
+       "Espera estructurada: las rutinas predecibles con pausa expectante generan iniciación comunicativa; la evidencia respalda la práctica sostenida, no promesas de resultados (PubMed 29054980).",
   },
   {
     id: "recast-repite-bien-sin-corregir",
@@ -572,7 +572,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Recast conversacional: [omitido] de 35 estudios, ES 0.96 en medidas próximas y 0.76 en distales; el rasgo clave es que el adulto reformula SIN exigir repetición (Cleave et al. 2015, AJSLP).",
+       "Devolver la palabra: revisión de 35 estudios, ES 0.96 en medidas cercanas y 0.76 en lejanas; el rasgo clave es que el adulto reformula SIN exigir repetición (Cleave et al. 2015, AJSLP).",
   },
   {
     id: "recast-nombra-lo-que-siente",
@@ -589,7 +589,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Modelado y recast dentro de rutinas afectivas: la evidencia de [omitido] por padres (Heidlage et al. 2019, ECRQ) muestra su mayor efecto en contextos de alta implicación emocional del niño.",
+       "Modelado y devolver la palabra dentro de rutinas afectivas: la evidencia de la práctica guiada por padres (Heidlage et al. 2019, ECRQ) muestra su mayor efecto en contextos de alta implicación emocional del niño.",
   },
   {
     id: "interes-siéntate-en-el-piso",
@@ -605,7 +605,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "[omitido]: la atención conjunta cara a cara y el seguimiento del interés del niño son el núcleo de las [omitido] naturalistas del desarrollo (Crank et al. 2021).",
+       "Enfoques naturales: la atención conjunta cara a cara y el seguimiento del interés del niño son su núcleo (Crank et al. 2021).",
   },
   {
     id: "interes-el-juguete-que-el-eligio",
@@ -621,7 +621,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés ([omitido]): el aprendizaje de palabras se asocia al foco atencional del niño; imponer el material del adulto reduce las oportunidades de aprendizaje (Crank et al. 2021).",
+       "Seguir el interés: el aprendizaje de palabras se asocia al foco atencional del niño; imponer el material del adulto reduce las oportunidades de aprendizaje (Crank et al. 2021).",
   },
   {
     id: "interes-cohete-de-la-voz",
@@ -638,7 +638,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: true,
     },
     fuente:
-      "Juegos de voz con parámetros simples (tono, sonoridad, duración): factibles en tiempo real y con pilotos positivos en habla infantil; clasificados como PROMETEDORES, no como [omitido] probado (§A.9 de la investigación).",
+       "Juegos de voz con parámetros simples (tono, sonoridad, duración): factibles en tiempo real y con pilotos positivos en habla infantil; clasificados como PROMETEDORES, no como práctica probada (§A.9 de la investigación).",
   },
   {
     id: "interes-palabra-y-objeto",
@@ -689,7 +689,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Generalización en estimulación focalizada: la variación de contextos con el mismo blanco favorece el uso funcional de la palabra (revisión de [omitido] para [omitido], AJSLP 2022).",
+       "Generalización en estimulación focalizada: la variación de contextos con el mismo blanco favorece el uso funcional de la palabra (revisión de enfoques para niños que tardan en hablar, AJSLP 2022).",
   },
   {
     id: "modelado-cancion-de-la-rutina",
@@ -706,7 +706,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Rutinas predecibles y modelado (Heidlage et al. 2019, ECRQ): la repetición dentro de rutinas familiares es el vehículo con mayor efecto en [omitido] guiado por padres.",
+       "Rutinas predecibles y modelado (Heidlage et al. 2019, ECRQ): la repetición dentro de rutinas familiares es el vehículo con mayor efecto en lo que el niño dice cuando los padres guían.",
   },
   {
     id: "espera-tres-segundos-mas",
@@ -723,7 +723,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada ([omitido]): la pausa expectante prolongada aumenta la iniciación comunicativa del niño; el adulto suele subestimar cuánto tiempo necesita (PubMed 29054980).",
+       "Espera estructurada: la pausa expectante prolongada aumenta la iniciación comunicativa del niño; el adulto suele subestimar cuánto tiempo necesita (PubMed 29054980).",
   },
   {
     id: "interes-nombra-lo-que-el-hace",
@@ -740,7 +740,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Modelado dentro del juego (Heidlage et al. 2019, ECRQ, g=0.50) combinado con seguir el interés del niño ([omitido]): la palabra llega sobre la acción que él ya está ejecutando.",
+       "Modelado dentro del juego (Heidlage et al. 2019, ECRQ, g=0.50) combinado con seguir el interés del niño: la palabra llega sobre la acción que él ya está ejecutando.",
   },
   {
     id: "focalizada-no-preguntes-nombra",
@@ -777,7 +777,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Expansión conversacional: [omitido] de 35 estudios con ES 0.96 en medidas próximas; la expansión efectiva se mantiene apenas un paso por encima del nivel actual del niño (Cleave et al. 2015, AJSLP).",
+       "Ampliar lo que el niño dice: revisión de 35 estudios con ES 0.96 en medidas cercanas; la ampliación efectiva se mantiene apenas un paso por encima del nivel actual del niño (Cleave et al. 2015, AJSLP).",
   },
   {
     id: "frases-dos-palabras-utiles",
@@ -811,7 +811,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada ([omitido]): la pausa expectante dentro de una rutina verbal muy aprendida es una de las formas más eficaces de provocar iniciación (PubMed 29054980).",
+       "Espera estructurada: la pausa expectante dentro de una rutina verbal muy aprendida es una de las formas más eficaces de provocar iniciación (PubMed 29054980).",
   },
   {
     id: "frases-recast-sin-corregir",
@@ -827,7 +827,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Recast conversacional: ES 0.96 [omitido] / 0.76 [omitido] en [omitido] de 35 estudios; el efecto depende de que el adulto reformule SIN exigir repetición y con densidad de ≥1 por minuto (Cleave et al. 2015, AJSLP).",
+       "Devolver la palabra: ES 0.96 en lo cercano / 0.76 en lo lejano en revisión de 35 estudios; el efecto depende de que el adulto reformule SIN exigir repetición y con densidad de ≥1 por minuto (Cleave et al. 2015, AJSLP).",
   },
   {
     id: "frases-narra-con-dos",
@@ -843,7 +843,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Heidlage et al. 2019 (ECRQ): el modelado por padres dentro del juego alcanza su mayor efecto en [omitido] (g=0.50); el nivel del modelo se ajusta un paso por encima del niño.",
+       "Heidlage et al. 2019 (ECRQ): el modelado por padres dentro del juego alcanza su mayor efecto en lo que el niño dice (g=0.50); el nivel del modelo se ajusta un paso por encima del niño.",
   },
   {
     id: "frases-elige-tu-o-yo",
@@ -860,7 +860,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés y dar control al niño ([omitido]): las oportunidades de elección aumentan la iniciación comunicativa; el refuerzo informativo sostiene la motivación intrínseca (Crank et al. 2021; Deci et al. 1999).",
+       "Seguir el interés y dar control al niño: las oportunidades de elección aumentan la iniciación comunicativa; el refuerzo informativo sostiene la motivación intrínseca (Crank et al. 2021; Deci et al. 1999).",
   },
   {
     id: "frases-cuenta-cuentos-con-huecos",
@@ -877,7 +877,7 @@ const BASE: Omit<CapsulaEs, "etiquetas">[] = [
       conPantalla: false,
     },
     fuente:
-      "Espera estructurada en rutinas verbales muy aprendidas ([omitido], PubMed 29054980); la lectura compartida repetida es uno de los contextos con mejor evidencia para provocar producción.",
+       "Espera estructurada en rutinas verbales muy aprendidas (PubMed 29054980); la lectura compartida repetida es uno de los contextos con mejor evidencia para provocar producción.",
   },
 ];
 

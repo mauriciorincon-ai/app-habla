@@ -24,7 +24,8 @@ import {
   muestraMedidor,
   type Metrica,
 } from "@/lib/session-flow";
-import { useT } from "@/lib/idioma/estado";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { idConsigna } from "@/lib/banco-voz/catalogo";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
@@ -48,6 +49,7 @@ export function CoheteTono() {
 function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
   const router = useRouter();
   const tx = useT();
+  const idioma = useIdioma();
 
   // Lo que mide el cohete: cuántas veces la voz subió y bajó DE VERDAD.
   const metricaActual = useCallback(
@@ -150,7 +152,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           {/* La invitación, en la voz de la familia (si está grabada). El niño puede tocarlo. */}
           <AltavozConsigna
             voz={voz}
-            id="consigna:sirena"
+            id={idConsigna("sirena", idioma)}
             etiqueta={tx(juegos.cohete.oir)}
           />
 

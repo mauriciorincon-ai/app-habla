@@ -289,7 +289,8 @@ function SeccionVozFamiliar({
       import("@/lib/banco-voz/almacen"),
       import("@/lib/banco-voz/catalogo"),
     ]).then(([{ listarIds }, { catalogoGrabable }]) => {
-      setTotal(catalogoGrabable().length);
+      // El banco guarda las grabaciones de los dos idiomas: el total cuenta las posibles en ambos.
+      setTotal(catalogoGrabable("es").length + catalogoGrabable("en").length);
       // Banco inaccesible (IndexedDB roto) = banco vacío: la sección no se rompe (M-1).
       listarIds()
         .then((ids) => setGrabados(ids.length))
