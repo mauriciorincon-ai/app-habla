@@ -50,7 +50,7 @@
   · prefers-reduced-motion = experiencia COMPLETA: el rig se colapsa, todo llega en su
     pose final y ninguna escena pierde contenido (cada una declara su variante).
   · Lo cerrado sale del árbol de accesibilidad (visibility en la transición): sin eso el
-    lector de pantalla recita las 24 features mientras aria-expanded dice "cerrado".
+    lector de pantalla recita las 25 features mientras aria-expanded dice "cerrado".
   · Cero emojis (el design system los prohíbe): los iconos son los SVG de trazo de la app
     y los personajes llevan la paleta del niño sobre su escenario claro.
   · Cero datos del menor. Tono es-CO de "tú": le habla a ella.
@@ -246,7 +246,7 @@
   .tarjeta[data-abierta] .chevron { transform: rotate(180deg); }
 
   /* E04 · El telón (G2). `visibility` saca lo cerrado del árbol de accesibilidad — sin
-     él, un lector de pantalla recita las 24 features mientras aria-expanded dice
+     él, un lector de pantalla recita las 25 features mientras aria-expanded dice
      "cerrado" (el recorte por overflow engaña al ojo, no al lector: verificado por CDP).
      Se transiciona a propósito: con un extremo en `visible`, CSS la mantiene visible todo
      el colapso y la animación no se corta.
@@ -1224,8 +1224,8 @@
                 ‹perro›? Tócalo tú» — y sube una bandada de globos, porque decir la palabra
                 merece más que un sonido cualquiera. La app no reconoce palabras y no va a
                 fingir que sí: tú estabas ahí, y tú sabes.</p>
-              <p data-l="en" class="como"><strong>An honest note:</strong> this word game practises Spanish
-                words, so in English the app says so instead of pretending. A big picture appears with its word written, from
+              <p data-l="en" class="como"><strong>In English too:</strong> this game is practised in English,
+                with English words and pictures. A big picture appears with its word written, from
                 the topics you chose. Your part is the important one: say it <strong>just
                 once</strong> —“¡perro!”— and wait three seconds in silence. The picture lights
                 up with any sound they make: an attempt, a “pe”, babbling. And if they did say
@@ -1262,8 +1262,8 @@
                 juego no usa micrófono ni analiza nada: el que oye eres tú. No hay
                 respuesta incorrecta para el niño; si hoy solo quiere mirar, tocas «Hoy
                 solo miramos esta» y siguen sin apuro.</p>
-              <p data-l="en" class="como"><strong>An honest note:</strong> this word game practises Spanish
-                words, so in English the app says so instead of pretending. Two pictures at once whose words differ by a
+              <p data-l="en" class="como"><strong>In English too:</strong> this game is practised in English,
+                with English words and pictures. Two pictures at once whose words differ by a
                 single sound: <em>pato</em> and <em>gato</em>, <em>foca</em> and <em>boca</em>.
                 You point to both, ask them to say one, and <strong>you mark the one you
                 heard</strong> under “Which did you hear?” — there, the chosen picture
@@ -1417,6 +1417,20 @@
                 La del niño nunca — ni aquí ni en ningún juego.</p>
               <p data-l="en" class="tip"><strong>Important:</strong> it's YOUR voice that gets recorded, the adult's. The
                 child's, never — not here and not in any game.</p>
+            </div>
+            <div class="feature" style="--j:4">
+              <h4 data-l="es">Videos de la familia: clips de tu galería</h4>
+              <h4 data-l="en">Family videos: clips from your gallery</h4>
+              <p data-l="es" class="como">En el Estudio puedes guardar unos pocos clips cortos que
+                <strong>muestran pedir, saludar o jugar</strong> y mirarlos con tu hijo, a su
+                lado. Los eliges de la galería de tu teléfono: <strong>la app nunca abre la
+                cámara</strong>. Cada clip vive solo en este aparato, no se sube ni se envía, y
+                lo borras con dos toques; «Borrar mis datos» también se los lleva.</p>
+              <p data-l="en" class="como">In the Studio you can keep a few short clips that
+                <strong>show asking, greeting or playing</strong> and watch them with your child,
+                right beside them. You pick them from your phone's gallery: <strong>the app never
+                opens the camera</strong>. Each clip lives only on this device, is not uploaded or
+                sent, and you delete it in two taps; “Delete my data” takes them along too.</p>
             </div>
           
             <a data-l="es" class="enlace" href="/estudio">Abrir el Estudio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -2255,8 +2269,8 @@
        el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
        hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
-    <strong data-l="es" class="conteo"><span data-contador>24</span> funcionalidades</strong>
-    <strong data-l="en" class="conteo"><span data-contador>24</span> features</strong>
+    <strong data-l="es" class="conteo"><span data-contador>25</span> funcionalidades</strong>
+    <strong data-l="en" class="conteo"><span data-contador>25</span> features</strong>
     <p data-l="es" class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
       todas están repartidas arriba, entre las seis puertas, los cuatro juegos y lo fino.
       Este número existe como promesa: aquí no se escogieron las bonitas; está todo.</p>
@@ -2272,6 +2286,8 @@
           <li><strong>Entrega · 7 de agosto de 2026:</strong> nace el brochure, con el
             recorrido completo de la app al cierre de su primer ciclo (las 24
             funcionalidades de los sprints 1 a 4).</li>
+          <li><strong>Sprint 8 · noviembre de 2026:</strong> los juegos de palabras y el objetivo se
+            practican en inglés, y el Estudio suma «Videos de la familia» (la funcionalidad 25).</li>
         </ul>
       </details>
       <details data-l="en" class="chica">
@@ -2279,6 +2295,8 @@
         <ul>
           <li><strong>Release · August 7, 2026:</strong> the brochure is born, with the app's
             full tour at the close of its first cycle (the 24 features of sprints 1 to 4).</li>
+          <li><strong>Sprint 8 · November 2026:</strong> the word games and the goal are practised in
+            English, and the Studio adds “Family videos” (feature 25).</li>
         </ul>
       </details>
     </div>

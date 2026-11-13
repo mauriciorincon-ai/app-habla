@@ -29,7 +29,7 @@
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. Nunca finge reconocer la palabra: el acierto lo juzgas tú, que estabas ahí. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 24,
+    "total": 25,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -120,6 +120,12 @@
             "nombre": "Tu voz dentro de cada juego",
             "que_hace": "Cuando una palabra o una consigna tiene tu grabación, los juegos la dicen con tu voz y aparece un altavoz que tu hijo puede tocar. Un interruptor en Ajustes la apaga sin borrar nada.",
             "seccion_manual": "La voz de la familia"
+          },
+          {
+            "id": "25",
+            "nombre": "Videos de la familia: clips de tu galería",
+            "que_hace": "Guardas unos pocos clips cortos de tu galería que muestran pedir, saludar o jugar y los miras con tu hijo, a su lado. La app nunca abre la cámara: solo elige lo que ya tenías. Cada clip vive solo en el aparato, no se sube ni se envía, y se borra con dos toques o con «Borrar mis datos».",
+            "seccion_manual": "Videos de la familia"
           }
         ]
       },
@@ -247,7 +253,7 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 24,
+      "valor": 25,
       "unidad": "funcionalidades",
       "fuente": "medido",
       "detalle": "Contadas contra docs/MANUAL-DE-USO.md, con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."

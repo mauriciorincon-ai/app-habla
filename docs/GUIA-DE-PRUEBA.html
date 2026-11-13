@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s8 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s7 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s6 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-mejora { color: var(--mejora); border-color: var(--mejora); background: var(--mejora-suave); font-weight: 600; }
@@ -174,7 +175,8 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s7">Nuevo · S7</span> Nació en este sprint (la app en español y English). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s8">Nuevo · S8</span> Nació en este sprint (practicar en inglés y los videos de la familia). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s7">S7</span> Nació en este sprint (la app en español y English). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s6">S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s4">S4</span> Del Sprint 4, sin cambios. <span class="suave">Regresión: que el Rumbo y el Objetivo de la semana sigan.</span></li>
         <li><span class="origen o-mejora">Mejorado en S6</span> Venía de antes y <strong>un sprint posterior lo cambió</strong>; se hereda igual. <span class="suave">(Verás también “Mejorado en S4” y “Mejorado en S3”.)</span></li>
@@ -199,7 +201,8 @@
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
-        <button type="button" data-filtro="s7" aria-pressed="false">Solo lo nuevo del S7</button>
+        <button type="button" data-filtro="s8" aria-pressed="false">Solo lo nuevo del S8</button>
+        <button type="button" data-filtro="s7" aria-pressed="false">Solo lo del S7</button>
         <button type="button" data-filtro="s6" aria-pressed="false">Solo lo del S6</button>
         <button type="button" data-filtro="s4" aria-pressed="false">Solo regresión del S4</button>
         <button type="button" data-filtro="mejora" aria-pressed="false">Solo lo mejorado</button>
@@ -591,10 +594,35 @@
         <p class="esperar"><span class="et">Esperado</span> Todo cambia a inglés <strong>sin recargar</strong>; el botón elegido lleva una <strong>«✓»</strong> además del color; la cápsula del día es <strong>la misma</strong> que tenías en español. En Objetivo, una línea avisa que el alineador entiende palabras en español, y los chips de sugerencia escriben la palabra en español.</p>
         <p class="mal"><span class="et">Mal</span> Queda texto en español a medias · la cápsula de hoy es otra · el cambio pide recargar.</p>
       </div></li>
-      <li data-origen="s7"><input type="checkbox" id="v7-h2"><div>
-        <label for="v7-h2">Con English activo, abre los juegos y toca <strong>Words</strong> y <strong>Twins</strong>; después juega el <strong>globo</strong>. Vuelve a <strong>Español</strong> al terminar. <span class="origen o-s7">Nuevo · S7</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Words y Twins muestran una tarjeta honesta (esos juegos practican español) y <strong>no piden el micrófono</strong>; el globo juega igual que en español.</p>
-        <p class="mal"><span class="et">Mal</span> Esos dos juegos se abren con palabras del español sin avisar, o piden micrófono.</p>
+      <li data-origen="mejora"><input type="checkbox" id="v7-h2"><div>
+        <label for="v7-h2">Con English activo, abre los juegos y toca <strong>Words</strong> y <strong>Twins</strong>; después juega el <strong>globo</strong>. Vuelve a <strong>Español</strong> al terminar. <span class="origen o-mejora">Mejorado en S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Words y Twins <strong>se practican en inglés</strong>, con palabras, dibujos y parejas de sonidos del inglés, y <strong>sin tarjeta de «solo en español»</strong>; Twins no pide el micrófono; el globo juega igual que en español.</p>
+        <p class="mal"><span class="et">Mal</span> Aparece una tarjeta de «solo en español» · las palabras salen en español · Twins pide micrófono.</p>
+      </div></li>
+      <li data-origen="s8"><input type="checkbox" id="v8-h1"><div>
+        <label for="v8-h1">Con English activo, abre <strong>Objetivo</strong>, toca una sugerencia (por ejemplo <strong>animals</strong>) y luego escribe media palabra, como <strong>“anim”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Las sugerencias y los chips salen <strong>en inglés</strong>, la tarjeta <strong>no avisa</strong> de ningún idioma ajeno y el aviso de lo que encuentra habla de palabras en inglés.</p>
+        <p class="mal"><span class="et">Mal</span> Los chips salen en español · aparece un aviso de «solo español».</p>
+      </div></li>
+      <li data-origen="s8"><input type="checkbox" id="v8-h2"><div>
+        <label for="v8-h2">Con English activo, abre <code>/mirada</code> y toca <strong>Español</strong> y <strong>English</strong> en el selector de arriba. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Todo el documento («La pirámide, en casa») cambia de idioma <strong>sin recargar</strong>, el botón elegido lleva una <strong>«✓»</strong> además del color, y en cada idioma se lee escrito para él (no traducido palabra por palabra). Al imprimir, el selector no sale.</p>
+        <p class="mal"><span class="et">Mal</span> Queda texto en el otro idioma a medias · el selector tapa el contenido en el teléfono.</p>
+      </div></li>
+      <li data-origen="s8"><input type="checkbox" id="v8-h3"><div>
+        <label for="v8-h3">En el <strong>Estudio</strong>, entra a <strong>“Videos de la familia”</strong>. Elige un clip corto de tu galería, dile qué muestra (<strong>pedir, saludar o jugar</strong>) y míralo. Luego bórralo con <strong>dos toques</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La app <strong>no abre la cámara</strong> en ningún momento: solo el selector de archivos. El clip se ve y se oye, queda <strong>solo en este dispositivo</strong> y se va con el segundo toque. Un archivo que no es video, o muy largo o pesado, se rechaza con un motivo claro.</p>
+        <p class="mal"><span class="et">Mal</span> Se enciende la cámara · el clip sigue ahí tras borrarlo · un rechazo sin explicación.</p>
+      </div></li>
+      <li data-origen="s8"><input type="checkbox" id="v8-h4"><div>
+        <label for="v8-h4">Con un clip guardado, ve a <strong>Ajustes → Borrar mis datos</strong> y confirma; luego vuelve a <strong>“Videos de la familia”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La videoteca queda <strong>vacía</strong>: borrar tus datos también borra los videos.</p>
+        <p class="mal"><span class="et">Mal</span> El clip sigue guardado después de borrar todo.</p>
+      </div></li>
+      <li data-origen="s8"><input type="checkbox" id="v8-h5"><div>
+        <label for="v8-h5">Lee <strong>“Acerca de las palabras”</strong> en Ajustes. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>Google Books Ngram</strong> bajo la licencia <strong>CC BY 3.0</strong> (corrige el crédito anterior, que era otro).</p>
+        <p class="mal"><span class="et">Mal</span> Nombra otra fuente o licencia · falta el crédito.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-h7"><div>
         <label for="v2-h7"><strong>DE ÚLTIMO</strong>, cuando termines toda la guía: <strong>“Borrar mis datos”</strong> → confirma. <span class="origen o-s1">S1</span></label>
@@ -922,6 +950,9 @@
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
+<!-- s8:inicio -->
+    <p class="chica suave"><strong>Sprint 008 (2026-11-12) — «En inglés también se practica»:</strong> Palabras, Gemelas y el Objetivo se practican en inglés; <code>/mirada</code> y el catálogo de cápsulas salen en español y English; el Estudio trae <strong>Videos de la familia</strong> (clips de tu galería, sin cámara, solo en el dispositivo); el crédito del diccionario se corrigió. <strong>Nuevo:</strong> cinco pruebas en el bloque H. <strong>Mejorado:</strong> la prueba de Words y Twins en English. <strong>Eliminado:</strong> nada. Toda prueba anterior se hereda como regresión.</p>
+<!-- s8:fin -->
 <!-- s7:inicio -->
     <p class="chica suave"><strong>Sprint 007 (2026-11-11) — apertura del H-2, «Habla en dos idiomas»:</strong> la app sigue al idioma del navegador y se cambia en <strong>Ajustes → Idioma / Language</strong>; Hoy, las 50 cápsulas, los juegos de voz, Estudio, Objetivo, Rumbo, Ajustes y <code>/conoce</code> existen en español y English. <strong>Nuevo:</strong> dos pruebas en el bloque H. <strong>Mejorado:</strong> Ajustes → «Qué mide» nombra el tono del cohete. <strong>Eliminado:</strong> nada. Toda prueba anterior se hereda como regresión en español.</p>
 <!-- s7:fin -->
