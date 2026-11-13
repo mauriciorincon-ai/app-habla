@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ETAPA_DEFECTO, ETAPAS } from "@content/schema";
+import { ETAPA_DEFECTO, ETAPAS, NIVELES_CONTACTO_VISUAL } from "@content/schema";
 import { TEMAS } from "./temas";
 
 // Lo ÚNICO que esta app guarda: progreso de cápsulas, ajustes y el onboarding local.
@@ -44,6 +44,12 @@ export const AjustesSchema = z.object({
    * Ajustes. El `.catch` hace que los ajustes guardados antes del S7 (sin este campo) migren solos.
    */
   idioma: z.enum(["es", "en"]).nullable().catch(null),
+  /**
+   * El nivel de contacto visual con el que se juega hoy (S9): la escalera n1–n6 de «La pirámide». Lo elige
+   * el adulto por lo que VE en casa; «Hoy» calibra la actividad de contacto visual a él. Default n1: se
+   * empieza por donde el niño ya mira. El `.catch` migra solos los ajustes guardados antes del S9.
+   */
+  nivelMirada: z.enum(NIVELES_CONTACTO_VISUAL).catch("n1"),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -55,6 +61,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   apariencia: "sistema",
   vozFamiliar: true,
   idioma: null,
+  nivelMirada: "n1",
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

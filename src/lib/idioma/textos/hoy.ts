@@ -35,6 +35,19 @@ export const hoy = {
       en: "in total. This number never goes down: if you skip a day, nothing is lost.",
     },
   },
+  contactoVisual: {
+    etiqueta: { es: "Y también hoy · contacto visual", en: "Also today · eye contact" },
+    tuLinea: { es: "Tu línea, primero", en: "Your line, first" },
+    laActividad: { es: "La actividad", en: "The activity" },
+    queNoHacer: { es: "Lo que no se hace", en: "What not to do" },
+    duracion: { es: "Dura", en: "Takes" },
+    conQuien: {
+      mama: { es: "Con mamá", en: "With mom" },
+      "otra-persona": { es: "Con otra persona de la casa", en: "With someone else at home" },
+    },
+    verMas: { es: "Ver todas en «La pirámide, en casa»", en: "See them all in “The pyramid, at home”" },
+    sinPantalla: { es: "Sin pantalla", en: "No screen" },
+  },
   juegos: {
     titulo: { es: "Los juegos de voz", en: "The voice games" },
     detalle: {

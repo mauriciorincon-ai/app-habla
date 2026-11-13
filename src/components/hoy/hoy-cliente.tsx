@@ -35,6 +35,7 @@ import { useT } from "@/lib/idioma/estado";
 import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
 import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { hoy } from "@/lib/idioma/textos/hoy";
+import { ContactoVisualHoy } from "./contacto-visual-hoy";
 import { Onboarding } from "./onboarding";
 
 export function HoyCliente() {
@@ -225,6 +226,9 @@ export function HoyCliente() {
           </p>
         ) : null}
       </article>
+
+      {/* S9: una actividad de contacto visual por día, junto a la cápsula, calibrada al paso que eligió el adulto. */}
+      <ContactoVisualHoy fecha={fecha} nivel={ajustes.nivelMirada} />
 
       {/* El juego SIEMPRE está a un toque, sea cual sea la cápsula del día. Hallazgo del primer
           uso real (2026-07-12): la entrada al juego solo existía los días de actividad con

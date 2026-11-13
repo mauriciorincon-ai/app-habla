@@ -16,6 +16,7 @@ import type { Texto } from "@/lib/idioma";
 import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
+import { NivelContactoVisual } from "./nivel-contacto-visual";
 import {
   AJUSTES_DEFECTO,
   type Apariencia,
@@ -44,6 +45,8 @@ export function AjustesSesion() {
   return (
     <div className="flex flex-col gap-4">
       <EtapaDelHabla />
+
+      <NivelContactoVisual />
 
       <SeccionPerfil />
 

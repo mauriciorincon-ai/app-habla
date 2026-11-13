@@ -218,6 +218,12 @@ ALCANCE_GATE.push(
   "src/lib/storage/local.ts",
   "tests/e2e/rumbo.spec.ts",
   "tests/unit/daily-coach.test.ts",
+  // S9: contacto visual en «Hoy» (el copy de los dos idiomas ya vive en src/lib/idioma, que se vigila entero).
+  "src/lib/coach/contacto-visual-hoy.ts",
+  "src/components/hoy/contacto-visual-hoy.tsx",
+  "src/components/ajustes/nivel-contacto-visual.tsx",
+  "tests/unit/contacto-visual-hoy.test.ts",
+  "tests/e2e/contacto-visual-hoy.spec.ts",
 );
 
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
