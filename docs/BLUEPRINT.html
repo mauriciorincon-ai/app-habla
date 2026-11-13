@@ -90,7 +90,7 @@
     <text class="titulo-caja" x="120" y="356" text-anchor="middle">Almacenamiento local</text>
     <text class="detalle-caja" x="120" y="374" text-anchor="middle">localStorage: perfil · ajustes ·</text>
     <text class="detalle-caja" x="120" y="389" text-anchor="middle">progreso · gemelas · sesiones · objetivo</text>
-    <text class="detalle-caja" x="120" y="408" text-anchor="middle">IndexedDB: banco de voz familiar</text>
+    <text class="detalle-caja" x="120" y="408" text-anchor="middle">IndexedDB: banco de voz + videoteca familiar</text>
 
     <!-- Hosting: Vercel -->
     <rect class="caja caja-principal" x="330" y="140" width="250" height="116" rx="10"/>
@@ -121,7 +121,7 @@
     <!-- Futuro -->
     <rect class="caja-futuro" x="680" y="312" width="260" height="112" rx="10"/>
     <text class="titulo-caja detalle-futuro" x="810" y="340" text-anchor="middle">(futuro — fase personal 2)</text>
-    <text class="detalle-caja detalle-futuro" x="810" y="360" text-anchor="middle">videoteca familiar</text>
+    <text class="detalle-caja detalle-futuro" x="810" y="360" text-anchor="middle">cuentos hechos para él</text>
     <text class="detalle-caja detalle-futuro" x="810" y="377" text-anchor="middle">cuentero por IA (por LOTES, ≤US$10/mes,</text>
     <text class="detalle-caja detalle-futuro" x="810" y="393" text-anchor="middle">con fallback determinista · su propio ADR)</text>
 
@@ -179,6 +179,7 @@
     <tbody>
       <tr><td>2026-07-19</td><td>H1 (S1–S4)</td><td>Versión inicial. As-built del ciclo H1 completo: PWA local-first en Vercel, sin backend, sin BD, sin IA. Datos en localStorage + IndexedDB (banco de voz). Punto único de falla declarado: el dispositivo (ADR-011 rechaza el backup por ahora).</td></tr>
       <tr><td>2026-11-11</td><td>H2 · S7</td><td>Sin cambio de infraestructura. Nota de <code>/mirada</code> (S5–S6): «La pirámide, en casa» es un HTML estático (<code>docs/LA-PIRAMIDE.html</code>) que <code>scripts/copiar-documentos.mjs</code> copia a <code>public/</code> y Next sirve por reescritura, igual que <code>/conoce</code>; no usa servidor, red ni base de datos. S7: la app es bilingüe (español y English); el idioma es un ajuste local (<code>habla:v1:ajustes</code>) y <code>lang</code> se fija con un script previo a la pintura. Los servidores locales de prueba escuchan en <code>127.0.0.1:3500</code>.</td></tr>
+      <tr><td>2026-11-12</td><td>H2 · S8</td><td>Segunda base IndexedDB local, <code>habla-videoteca</code> (clips que la familia elige de su galería; sin cámara, sin red, fuera de cualquier copia; <code>borrarTodo</code> la elimina; ADR-018). Los diccionarios del Objetivo son dos (<code>palabras-es.ts</code>, <code>palabras-en.ts</code>, Google Books Ngram, CC BY 3.0). <code>/mirada</code> y el catálogo salen en dos idiomas. Sin servidor ni cuentas nuevos.</td></tr>
     </tbody>
   </table>
   </div>

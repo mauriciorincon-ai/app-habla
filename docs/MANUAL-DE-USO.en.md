@@ -39,7 +39,7 @@ any other setting.
 - **The daily capsule is the same** in both languages: switching language never changes what is on for today.
 - **Words and Twins, in English (S8):** both games **are practised in English**: the words, the pictures and the
   look-alike sound pairs are English ones (not the Spanish ones put into English), and the cues you record in the
-  Studio come in English as well. There is no "Spanish only" card any more. The voice games (balloon and rocket)
+  Studio come in English as well. The voice games (balloon and rocket)
   play the same in both languages.
 - **The weekly Goal, in English (S8):** it writes and suggests in English, with its own spelling dictionary, and
   no longer warns you about anything. Each language has its own.
@@ -276,8 +276,8 @@ which **names exactly what it will save** ("Save «animals»").
 
 While you type, the app **keeps you company; it does not scold**. If you stop halfway through a word ("anim"), it
 suggests what you may be thinking of, in **two groups, each with its label**. The **green** chips are terms that
-**are in the app** and line up the capsule and the games. The **neutral** chips are correctly spelled Spanish words
-that **the app does not have** ("medi" → «medio», «media»): they change nothing in the games, but they help your
+**are in the app** and line up the capsule and the games. The **neutral** chips are correctly spelled words of the active language
+that **the app does not have** ("medi" → “media”, “medium”): they change nothing in the games, but they help your
 goal be written correctly. They come from a dictionary of the most common words of the language that travels inside
 the app (no internet needed, like everything here; there is one in Spanish and one in English, and the app uses the
 one for the active language). The field also uses your browser's or keyboard's spell-checker
@@ -288,12 +288,12 @@ lines up everything under that topic.
 
 If you type with a spelling mistake ("animles") and tap save, the app **asks first**: _"Did you mean «animales»?"_
 You can fix it with one tap or save it as typed (writing freely stays your right: in therapy they may ask for
-something the app does not have). A **correctly spelled** word never gets that question: "medios" or "colores" are
+something the app does not have). A **correctly spelled** word never gets that question: "media" or "colors" are
 saved the first time, even if they line nothing up.
 
 Once the word is complete, the app tells you **honestly** how much it finds, and it counts **only what your child
 will actually see**: the capsules for their stage and the pictures from the topics you chose ("with «animales», the
-app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "colores",
+app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "colors",
 which deliberately does not exist, it tells you so openly instead of pretending it lined something up. And if you
 type something that does exist but is **outside what your child sees today** (a topic you did not choose during
 first use), it also says so clearly: the games do not change, although the Studio will suggest recording those
@@ -360,13 +360,16 @@ them).
   never opens the camera**: it does not record, it only keeps a clip you already had. First pick which behaviour
   it shows and, if you like, write **who is in it** (optional, free text, stays here). Write a role, "Grandma", not
   names.
-- **Limits:** up to 60 seconds and 50 MB per clip, and up to 12 clips. If one does not fit, the app tells you why
+- **Limits:** up to 60 seconds (when the device can read the clip's length) and 50 MB per clip, and up to 12 clips. If one does not fit, the app tells you why
   (not a video, too large, too long, or the shelf is full); if the device has no space it says so and **saves
   nothing half-done**.
 - **Where they live:** **only on this device**. They are not uploaded, not sent, not part of any file or copy, and
-  there is no way to take them out of here. Changing device means choosing them again.
+  the app has no button to download or send them. Changing device means choosing them again.
 - **How to delete:** each clip has its own delete button, in **two taps** (the second confirms). And **Settings →
   Delete my data** also deletes every video.
+- **Who it is for:** meant for clips of other people your child knows, not for filming your child.
+- If the device cannot play a clip, the app says so instead of leaving the screen blank; if a delete fails, it says
+  so too.
 - **What it does NOT do:** it does not judge, score, compare or say whether your child imitated well: it is only
   the video.
 
@@ -495,4 +498,4 @@ and load only when you write a goal.
 | Sprint | What was added to this manual                                                                                                                                                                                                                      |
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 007    | First English edition, written alongside the Spanish one: the Language section and every feature up to date (Today, the four games, the Studio, stages, the Path, the weekly Goal, the mother's document, calm mode, light or dark, privacy, FAQ). |
-| 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own, no more "Spanish only" card); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |
+| 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |

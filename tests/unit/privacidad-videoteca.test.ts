@@ -57,4 +57,9 @@ describe("videoteca: sin cámara y sin salida", () => {
     expect(c).toMatch(/type="file"/);
     expect(c).toMatch(/accept="video\/\*"/);
   });
+  it("el <video> no ofrece descargar, ni enviar a otra pantalla, ni imagen en imagen", () => {
+    const c = readFileSync(join(RAIZ, "src/components/estudio/videoteca-cliente.tsx"), "utf8");
+    expect(c).toMatch(/controlsList="nodownload noremoteplayback"/);
+    expect(c).toMatch(/disablePictureInPicture/);
+  });
 });

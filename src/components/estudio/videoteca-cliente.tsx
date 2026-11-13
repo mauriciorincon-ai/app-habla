@@ -26,6 +26,7 @@ import {
   MAX_BYTES,
   MAX_CLIPS,
   MAX_DURACION_S,
+  MAX_QUIEN,
   limpiarQuien,
   revisarClip,
   type Conducta,
@@ -46,6 +47,7 @@ export function VideotecaCliente() {
   const [error, setError] = useState<MotivoRechazo | "almacenamiento" | null>(null);
   const [guardando, setGuardando] = useState(false);
   const [avisoBorrado, setAvisoBorrado] = useState(false);
+  const [errorBorrar, setErrorBorrar] = useState(false);
   const [confirmandoTodos, setConfirmandoTodos] = useState(false);
   const entrada = useRef<HTMLInputElement>(null);
 
@@ -99,11 +101,17 @@ export function VideotecaCliente() {
       setConfirmandoTodos(true);
       return;
     }
-    void eliminarVideoteca().then(() => {
-      setClips([]);
-      setConfirmandoTodos(false);
-      setAvisoBorrado(true);
-    });
+    setErrorBorrar(false);
+    eliminarVideoteca()
+      .then(() => {
+        setClips([]);
+        setConfirmandoTodos(false);
+        setAvisoBorrado(true);
+      })
+      .catch(() => {
+        setConfirmandoTodos(false);
+        setErrorBorrar(true);
+      });
   };
 
   const encabezado = (
@@ -119,6 +127,7 @@ export function VideotecaCliente() {
         <strong>{tx(videoteca.promesa.negrita2)}</strong>
         {tx(videoteca.promesa.c)}
       </p>
+      <p className="text-tinta-suave mt-2 max-w-prose text-sm">{tx(videoteca.promesa.soloOtros)}</p>
     </header>
   );
 
@@ -170,7 +179,7 @@ export function VideotecaCliente() {
             type="text"
             value={quien}
             onChange={(e) => setQuien(e.target.value)}
-            maxLength={40}
+            maxLength={MAX_QUIEN}
             placeholder={tx(videoteca.anadir.quienEjemplo)}
             className="border-borde bg-fondo mt-1 block min-h-11 w-full rounded-lg border px-3"
             data-testid="clip-quien"
@@ -178,7 +187,7 @@ export function VideotecaCliente() {
         </label>
 
         <label
-          className="bg-acento text-sobre-acento mt-4 inline-flex min-h-12 cursor-pointer items-center rounded-xl px-6 font-medium"
+          className="bg-acento text-sobre-acento focus-within:outline-info mt-4 inline-flex min-h-12 cursor-pointer items-center rounded-xl px-6 font-medium focus-within:outline-[3px] focus-within:outline-offset-2"
           data-testid="clip-elegir"
         >
           {guardando ? tx(videoteca.anadir.guardando) : tx(videoteca.anadir.elegir)}
@@ -217,6 +226,12 @@ export function VideotecaCliente() {
             {tx(videoteca.lista.borradoTodos)}
           </p>
         ) : null}
+        {errorBorrar ? (
+          <p role="alert" className="text-peligro text-sm font-medium" data-testid="clips-error-borrar">
+            <span aria-hidden="true">⚠ </span>
+            {tx(videoteca.lista.errorBorrar)}
+          </p>
+        ) : null}
         {clips.length === 0 ? (
           <p className="text-tinta-suave" data-testid="clips-vacio">
             {tx(videoteca.lista.vacio)}
@@ -252,6 +267,7 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
   const [url, setUrl] = useState<string | null>(null);
   const [sonido, setSonido] = useState(false);
   const [confirmando, setConfirmando] = useState(false);
+  const [falla, setFalla] = useState<"borrar" | "reproducir" | null>(null);
   const nombre = tx(videoteca.conducta[clip.conducta]);
 
   // El blob: es local; se suelta al cerrar o al desmontar.
@@ -275,7 +291,13 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
       setConfirmando(true);
       return;
     }
-    void borrarClip(clip.id).then(onBorrado);
+    setFalla(null);
+    borrarClip(clip.id)
+      .then(onBorrado)
+      .catch(() => {
+        setConfirmando(false);
+        setFalla("borrar");
+      });
   };
 
   return (
@@ -297,10 +319,19 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
           autoPlay
           playsInline
           controls
+          controlsList="nodownload noremoteplayback"
+          disablePictureInPicture
+          onError={() => setFalla("reproducir")}
           muted={!sonido}
           className="mt-3 max-h-80 w-full rounded-xl bg-black"
           data-testid="clip-video"
         />
+      ) : null}
+      {falla ? (
+        <p role="alert" className="text-peligro mt-3 text-sm font-medium" data-testid="clip-falla">
+          <span aria-hidden="true">⚠ </span>
+          {tx(falla === "borrar" ? videoteca.lista.errorBorrar : videoteca.lista.noSePuede)}
+        </p>
       ) : null}
       <div className="mt-3 flex flex-wrap gap-2">
         <button

@@ -18,7 +18,7 @@ terapias del niño con palabras que la app aún no tiene (caso O6): merecen qued
 
 **Diccionario embebido + corrector nativo, con chips en dos colores.**
 
-1. **`src/lib/objetivo/palabras-es.ts`:** las 10 000 palabras más frecuentes del español que
+1. **`src/lib/objetivo/palabras-es.ts`:** las 10 000 palabras más frecuentes del español (hasta el S7; 16 000 por idioma desde el S8) que
    sobreviven una curaduría fuerte (fuente original: OpenSubtitles 2018 vía hermitdave/FrequencyWords;
    **sustituida en el S8**, ver «Enmienda S8» abajo). El orden del arreglo ES el rango de frecuencia. Se regenera con
    `scripts/gen-diccionario.mjs` (ahí vive la curaduría: solo alfabeto español, marcadores
@@ -46,7 +46,7 @@ terapias del niño con palabras que la app aún no tiene (caso O6): merecen qued
 
 ## Consecuencias
 
-- Límite honesto: una palabra fuera de las 10 000 no recibe chip (el corrector nativo la cubre).
+- Límite honesto: una palabra fuera de la lista (10 000 hasta el S7; 16 000 desde el S8) no recibe chip (el corrector nativo la cubre).
 - La lista viaja curada y congelada en el repo: regenerarla es correr el script y revisar su
   "vigía" de sospechosas a ojo humano. Si cambia la fuente, re-verificar la curaduría.
 - El unit de `palabras-es` clava forma, tope, duplicados y el veto (mierda/sexo/the/you…).

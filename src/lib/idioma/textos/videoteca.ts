@@ -21,8 +21,12 @@ export const videoteca = {
     b: { es: " Cada clip vive ", en: " Each clip lives " },
     negrita2: { es: "solo en este dispositivo", en: "only on this device" },
     c: {
-      es: ": no se sube a internet, no se envía y no sale en ninguna copia. Los borras de un toque.",
-      en: ": it is not uploaded, not sent, and not part of any export. You can delete them in one tap.",
+      es: ": no se sube a internet, la app no tiene botón para enviarlo ni descargarlo y no entra en ninguna copia. Los borras en dos toques.",
+      en: ": it is not uploaded, the app has no button to send or download it, and it is not part of any export. You delete them in two taps.",
+    },
+    soloOtros: {
+      es: "Pensado para clips de otras personas que tu hijo conoce, no para grabarlo a él.",
+      en: "Meant for clips of other people your child knows, not for filming your child.",
     },
   },
   anadir: {
@@ -71,5 +75,13 @@ export const videoteca = {
     clipDe: { es: "Clip de {conducta}", en: "Clip: {conducta}" },
     verClip: { es: "Ver el clip de {conducta}", en: "Watch the clip: {conducta}" },
     borrarClip: { es: "Borrar el clip de {conducta}", en: "Delete the clip: {conducta}" },
+    errorBorrar: {
+      es: "No se pudo borrar. Inténtalo de nuevo.",
+      en: "It could not be deleted. Please try again.",
+    },
+    noSePuede: {
+      es: "Este aparato no puede reproducir este clip.",
+      en: "This device cannot play this clip.",
+    },
   },
 } satisfies Catalogo;

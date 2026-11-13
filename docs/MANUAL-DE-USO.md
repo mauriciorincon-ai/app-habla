@@ -266,7 +266,7 @@ botón de guardar — que **nombra exactamente lo que va a guardar** ("Guardar �
 Mientras escribe, la app **acompaña, no regaña**: si va a media palabra ("anim"), le sugiere
 en qué puede estar pensando — en **dos grupos con su etiqueta**. Los chips **verdes** son
 términos que **están en la app** y alinean la cápsula y los juegos. Los chips **neutros** son
-palabras del español **bien escritas que la app aún no tiene** ("medi" → «medio», «media»):
+palabras **bien escritas del idioma activo que la app aún no tiene** ("medi" → «medio», «media»):
 no cambian los juegos, pero le ayudan a que el objetivo quede bien escrito — vienen de un
 diccionario de las palabras más comunes del idioma que viaja dentro de la app (sin
 internet, como todo aquí; hay uno en español y otro en inglés, y la app usa el del idioma activo). El campo también usa el corrector de su navegador o teclado (el
@@ -373,14 +373,17 @@ del juego (co-uso: usted está al lado).
   teléfono o computador. **La app nunca abre la cámara**: no graba, solo guarda un clip que usted ya tenía.
   Escoja primero qué conducta muestra, y si quiere escriba **quién aparece** (opcional, texto libre, se
   queda aquí). Escriba un rol —«la abuela»—, no nombres.
-- **Límites:** hasta 60 segundos y 50 MB por clip, y hasta 12 clips. Si uno no entra, la app le dice por
+- **Límites:** hasta 60 segundos (si el aparato puede leer la duración del clip) y 50 MB por clip, y hasta 12 clips. Si uno no entra, la app le dice por
   qué (no es un video, pesa demasiado, dura demasiado o la videoteca está llena); si el dispositivo no
   tiene espacio, avisa y **no guarda nada a medias**.
 - **Dónde viven:** **solo en este dispositivo**. No se suben a internet, no se envían, no viajan con
-  ningún archivo ni copia, y no hay manera de sacarlos de aquí. Cambiar de aparato significa volver a
+  ningún archivo ni copia, y la app no tiene ningún botón para descargarlos ni enviarlos. Cambiar de aparato significa volver a
   elegirlos.
 - **Cómo se borra:** cada clip tiene su botón de borrar, en **dos toques** (el segundo confirma). Y
   **Ajustes → Borrar mis datos** también borra todos los videos.
+- **Para quién:** pensado para clips de otras personas que su hijo conoce, no para grabarlo a él.
+- Si el aparato no puede reproducir un clip, la app lo dice en vez de dejar la pantalla vacía; si un borrado
+  falla, también.
 - **Qué NO hace:** no juzga, no puntúa, no compara ni dice si el niño imitó bien: es solo el video.
 
 ### Qué mide y qué NO mide la app (importante)

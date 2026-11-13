@@ -142,3 +142,18 @@ test("«Usar el idioma del dispositivo» devuelve al navegador la elección", as
   await expect(page.getByTestId("idioma-dispositivo")).toHaveAttribute("aria-pressed", "true");
   await ctx.close();
 });
+
+test("en inglés, una ronda de Gemelas trae un par de palabras inglesas y el padre puede marcar", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.goto("/jugar/gemelas");
+  await page.getByTestId("empezar-juego").click();
+  const ronda = page.getByTestId("gemelas-ronda");
+  await expect(ronda).toBeVisible();
+  const texto = await ronda.innerText();
+  expect(texto).toMatch(/\b(hat|cat|house|mouse|mouth|bed|bell|bull|boat|boot|bone|cone|rock|sock|rain|train)\b/i);
+  expect(texto).not.toMatch(/\b(pato|gato|foca|boca)\b/i);
+  await page.getByTestId("marcar-a").click();
+  await ctx.close();
+});
+

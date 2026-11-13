@@ -22,7 +22,10 @@ import {
 const esc = (s) =>
   s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
-const fecha = new Date().toISOString().slice(0, 10);
+const fecha = (() => {
+  const d = new Date(); // fecha LOCAL, no UTC
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+})();
 
 // Las preguntas de juicio por grupo — vivían en las 8 casillas del bloque I de la guía y se
 // MUDARON aquí cuando el bloque se consolidó en una sola casilla (pedido del usuario, gate S4):

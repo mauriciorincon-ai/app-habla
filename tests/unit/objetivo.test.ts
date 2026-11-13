@@ -319,3 +319,11 @@ describe("alinear en inglés (S8): el objetivo se escribe en cualquiera de los d
     expect(normalizar("the water and the sea")).toEqual(["water", "sea"]);
   });
 });
+
+describe("alinear: palabras inglesas que en español significan otra cosa", () => {
+  it("«sea» solo (subjuntivo español) NO alinea el tema «mar»; «the sea» u «ocean» sí", () => {
+    expect(alinear("que sea claro").coincideTema("mar")).toBe(false);
+    expect(alinear("the sea").coincideTema("mar")).toBe(true);
+    expect(alinear("ocean").coincideTema("mar")).toBe(true);
+  });
+});

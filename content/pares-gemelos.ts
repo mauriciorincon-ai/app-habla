@@ -170,8 +170,6 @@ export const PARES_GEMELOS_EN: ParGemelo[] = [
     a: { palabra: "bull", archivo: "toro.png" }, b: { palabra: "bell", archivo: "campana.png" } },
   { id: "boat-boot", etapaMinima: "palabras-sueltas", contraste: "the long o and the oo in the middle",
     a: { palabra: "boat", archivo: "barco.png" }, b: { palabra: "boot", archivo: "bota.png" } },
-  { id: "boot-foot", etapaMinima: "palabras-sueltas", contraste: "the b and the f at the start",
-    a: { palabra: "boot", archivo: "bota.png" }, b: { palabra: "foot", archivo: "foot.png" } },
   { id: "bone-cone", etapaMinima: "palabras-sueltas", contraste: "the b and the c at the start",
     a: { palabra: "bone", archivo: "hueso.png" }, b: { palabra: "cone", archivo: "cone.png" } },
   { id: "rock-sock", etapaMinima: "palabras-sueltas", contraste: "the r and the s at the start",

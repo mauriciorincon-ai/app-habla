@@ -18,6 +18,9 @@ import { ETIQUETA_EN } from "./etiquetas-en";
  * inglés van en el MISMO conjunto (S8): ninguna es una palabra española con sentido, y así
  * `normalizar` sigue sin saber de idiomas.
  */
+/** Palabras inglesas que en español significan otra cosa: solas, no expanden. */
+const AMBIGUAS_ES = new Set(["sea"]);
+
 const PALABRAS_VACIAS = new Set([
   "the",
   "and",
@@ -101,13 +104,17 @@ export function alinear(texto: string | null | undefined): Alineacion {
   // El padre escribe «feelings» o «animals»: las etiquetas y los temas son claves en español, así que
   // las palabras inglesas se traducen a la CLAVE del contenido. Sirve en los dos idiomas a la vez (un
   // objetivo escrito en uno alinea igual si la pantalla está en el otro) y con el set vacío no expande nada.
+  // «sea» es también el subjuntivo español («que sea más claro»): sola NO alinea «mar»; con «the» u
+  // «ocean» al lado sí. Ningún objetivo escrito en español debe quedar alineado sin que el adulto lo escribiera.
+  const enAlinea = (t: string) =>
+    objetivo.has(t) && (!AMBIGUAS_ES.has(t) || /\b(the|ocean|oceans|beach)\b/i.test(texto ?? ""));
   for (const etiqueta of ETIQUETAS_CAPSULA) {
-    if (ETIQUETA_EN[etiqueta].some((p) => normalizar(p).some((t) => objetivo.has(t)))) {
+    if (ETIQUETA_EN[etiqueta].some((p) => normalizar(p).some(enAlinea))) {
       objetivo.add(etiqueta.normalize("NFD").replace(/[̀-ͯ]/g, ""));
     }
   }
   for (const tema of TEMAS) {
-    if (normalizar(nombreTema[tema].en).some((t) => objetivo.has(t))) objetivo.add(tema);
+    if (normalizar(nombreTema[tema].en).some(enAlinea)) objetivo.add(tema);
   }
 
   // Los nombres VISIBLES de los temas también alinean su clave interna: en Ajustes el padre ve

@@ -144,7 +144,7 @@
           {
             "id": "13",
             "nombre": "Te ayuda a escribirlo bien",
-            "que_hace": "Mientras escribes, la app te sugiere los temas que sabe alinear y revisa la ortografía con un diccionario de 10 000 palabras del español que viaja dentro del aparato. Si guardas una palabra mal escrita, primero te pregunta qué quisiste decir.",
+            "que_hace": "Mientras escribes, la app te sugiere los temas que sabe alinear y revisa la ortografía con un diccionario del idioma activo (uno en español y otro en inglés) que viaja dentro del aparato. Si guardas una palabra mal escrita, primero te pregunta qué quisiste decir.",
             "seccion_manual": "El objetivo de la semana"
           },
           {
@@ -261,10 +261,10 @@
     {
       "clave": "pantallas",
       "etiqueta": "Pantallas de la app",
-      "valor": 10,
+      "valor": 11,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (11 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Verificado el 2026-10-27 sobre 6c4d113."
+      "detalle": "Archivos page.tsx bajo src/app/ (12 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Verificado el 2026-11-12 sobre ab1948b."
     },
     {
       "clave": "pruebas_unitarias",
@@ -309,10 +309,10 @@
     {
       "clave": "palabras_diccionario",
       "etiqueta": "Palabras del corrector de ortografía",
-      "valor": 10000,
+      "valor": 32000,
       "unidad": "palabras",
       "fuente": "medido",
-      "detalle": "src/lib/objetivo/palabras-es.ts: las 10 000 palabras más frecuentes del español, embebidas y cargadas bajo demanda. Corrige sin red y sin IA."
+      "detalle": "src/lib/objetivo/palabras-es.ts y palabras-en.ts: 16 000 palabras cada una (Google Books Ngram, CC BY 3.0), embebidas y cargadas bajo demanda. Corrige sin red y sin IA."
     },
     {
       "clave": "dependencias_runtime",
