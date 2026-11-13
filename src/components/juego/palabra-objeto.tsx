@@ -4,7 +4,7 @@
 //
 // LA REGLA MÁS IMPORTANTE DE ESTA PANTALLA (ADR 005): el juego **JAMÁS exige la palabra**.
 // Aparece el dibujo con su nombre escrito; el PADRE lo nombra (su guion está en su vista) y
-// **cualquier vocalización del niño lo enciende** — un intento, un sonido, un "aba". La app no
+// **cualquier vocalización del niño lo enciende** — un intento, un sonido, un "ah". La app no
 // sabe qué dijo, y no va a fingir que sí: si dijo la palabra o se acercó, el que lo juzga es el
 // padre. Lo único que la app afirma es lo que midió: su voz sonó.
 //

@@ -2,21 +2,21 @@
 
 > Fuente de verdad visual de la app. Creado en el Sprint 001 tomando como **referencia visual**
 > los tokens del prototipo legado (`referencias-ui/habla/Habla Santy/design-system.md`, paleta
-> "Clínica cálida"). Las 9 pantallas funcionales de ese prototipo están **ANULADAS** — de ahí no
+> "Paleta cálida"). Las 9 pantallas funcionales de ese prototipo están **ANULADAS** — de ahí no
 > se hereda ningún flujo, layout ni feature; solo el lenguaje visual.
 > Implementación: `src/app/globals.css` (Tailwind v4, `@theme` + capa semántica).
 
 ## Personalidad
 
 **Es:** cálida · honesta · serena.
-**Jamás será:** clínica (nada de batas blancas ni puntajes) · infantiloide (el niño no es tonto:
+**Jamás será:** de consultorio (nada de batas blancas ni puntajes) · infantiloide (el niño no es tonto:
 nada de colores chillones ni premios falsos) · ansiosa (sin rachas, sin cuentas atrás, sin nada
 que apure a un padre que ya carga bastante).
 
 La prueba de fuego de cada pantalla: _¿esto trataría con respeto a un padre cansado a las 8 de la
 noche, y a un niño que ese día no quiere hablar?_
 
-## Filosofía — "Clínica cálida"
+## Filosofía — "Paleta cálida"
 
 Dos audiencias, una paleta dual:
 
@@ -27,7 +27,7 @@ Dos audiencias, una paleta dual:
   `<html>` le gana a `prefers-color-scheme`; se aplica antes de la primera pintura, sin parpadeo).
   Los valores de la paleta oscura se declaran **una sola vez** (`--oscuro-*`); los dos caminos que
   la encienden solo mapean.
-- **Niño (4–6, perfil neurodivergente):** calma y cero ruido visual. Paleta propia, **SIEMPRE
+- **Niño (4–6, perfil muy sensible a los cambios):** calma y cero ruido visual. Paleta propia, **SIEMPRE
   clara** (sin dark mode — la pantalla del juego no cambia con el sistema), áreas táctiles
   grandes, contraste alto solo en lo accionable.
 
@@ -130,12 +130,12 @@ nuevos sin derivarlos de la paleta.
   Prohibido el confeti desacoplado del desempeño.
 - **PrivacyNotice obligatorio** en toda superficie que toque el micrófono: qué se escucha, qué
   se mide y que **nada se guarda ni sale del dispositivo**. Es contrato, no decoración.
-- Lenguaje empático: jamás "déficit", "diagnóstico", "terapia" ni plazos; microcopy es-CO
+- Lenguaje empático: jamás "etiquetas", "terapia" ni plazos; microcopy es-CO
   cálido, directo, sin culpa.
 - **Iconografía propia, cero emojis.** Los iconos viven en `src/components/iconos.tsx`: trazo
   line (stroke 1.5, viewBox 24, `currentColor`), `aria-hidden` salvo que el icono sea el
   contenido. Los emojis están prohibidos como iconos: es la firma del "look de IA con prisa" y,
-  peor, cada sistema operativo los dibuja distinto — para un niño con perfil neurodivergente, un
+  peor, cada sistema operativo los dibuja distinto — para un niño con perfil muy sensible a los cambios, un
   símbolo que cambia de forma entre dispositivos es ruido, no señal. **Los PERSONAJES son la
   excepción**: el globo y el cohete no son iconos —son los protagonistas del juego— y por eso
   llevan la paleta del niño en vez de `currentColor`.
@@ -209,8 +209,8 @@ niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos p
 
 - **El rumbo** (`/rumbo`) — progreso honesto. **Vacío:** "Todavía no hay nada que contar" + puerta
   a los juegos. **Contenido:** tendencias por semana (números medidos en Geist `tabular-nums`, nunca
-  Mono dentro de frase) + hitos funcionales. **Regla de contenido dura:** cero vocabulario clínico
-  —ni "puntaje", ni "diagnóstico", ni "nivel", ni "%", ni siquiera negado—; una semana floja es un
+  Mono dentro de frase) + hitos funcionales. **Regla de contenido dura:** cero vocabulario de consultorio
+  —ni "puntaje", ni "marcador", ni "nivel", ni "%", ni siquiera negado—; una semana floja es un
   número sin adjetivo (sin rachas que castiguen). Es la mecánica de honestidad hecha pantalla.
 - **Objetivo de la semana** (`/objetivo`) — texto libre → alineación determinista. Los 5 estados:
   **vacío** (sin objetivo, campo con placeholder), **escribiendo** (preview honesto en vivo),

@@ -197,6 +197,29 @@ ALCANCE_GATE.push(
   "src/components/estudio/videoteca-cliente.tsx",
 );
 
+// S9 «cuentos de casa»: el resto del copy vigente (fuera de `sprints/`, que son bitácoras) quedó en 0 coincidencias
+// y entra al gate para que no vuelva a crecer.
+ALCANCE_GATE.push(
+  ".claude/skills/diseno-ui.md",
+  ".claude/skills/ia-embebida.md",
+  ".claude/skills/security-owasp.md",
+  "decisions/005-palabras-sueltas-primero.md",
+  "decisions/006-etapas-del-habla-como-motor.md",
+  "decisions/007-pitch-infantil-yin.md",
+  "decisions/009-el-padre-juzga-la-palabra.md",
+  "decisions/013-cohete-sin-fin.md",
+  "design-system.md",
+  "scripts/gen-iconos.mjs",
+  "src/app/spike/audio/page.tsx",
+  "src/components/ajustes/etapa-del-habla.tsx",
+  "src/components/iconos.tsx",
+  "src/components/juego/palabra-objeto.tsx",
+  "src/lib/rumbo/hitos.ts",
+  "src/lib/storage/local.ts",
+  "tests/e2e/rumbo.spec.ts",
+  "tests/unit/daily-coach.test.ts",
+);
+
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */

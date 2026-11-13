@@ -37,7 +37,7 @@ in the browser).
 
 ## Amendment (2026-07-12) — the fixed "child range" was a defect, found by the user's real voice
 
-The first implementation clamped the tracker to a **fixed 200–450 Hz** ("children aged 4–6 are
+The first implementation clamped the tracker to a **fixed 200–450 Hz** ("young children are
 250–400 Hz, per §B.1"). Running the desktop gate, the user reported his falsetto topping out at
 **160–170 Hz** — below the 200 Hz floor. Two defects follow, and the second is the serious one:
 
@@ -45,7 +45,7 @@ The first implementation clamped the tracker to a **fixed 200–450 Hz** ("child
    ("hazlo tú primero, exagerado y riéndote"). With a 200 Hz floor, the parent's demonstration
    moved nothing on screen: the app asked him for something it then ignored.
 2. **We were asserting a number we have never measured.** The child's real F0 is unknown (the
-   tablet is travelling). Hard-coding a range from a paper, for a specific neurodivergent child,
+   tablet is travelling). Hard-coding a range from a paper, for a specific child,
    is exactly the kind of unverified claim this app forbids elsewhere.
 
 The fix removes the assumption instead of widening it: **the flight is relative to the voice that

@@ -34,7 +34,7 @@ miente" manda.
    **pendiente y pasa cuando la voz VUELVE A SUBIR de verdad** (~65 ms sostenidos de ascenso):
    la ilusión de ascenso solo suena cuando de verdad se sube. El confeti y el contador sí
    celebran en el instante del hito — no insinúan dirección.
-4. **Vocabulario:** nada de "niveles" en el microcopy — es la escalera vetada (rumbo anti-clínico
+4. **Vocabulario:** nada de "niveles" en el microcopy — es la escalera vetada (rumbo anti-marcador
    y contra-recomendación de las etapas ordinales). Se celebran "subidas y bajadas", lo medido.
 5. **De paso (F8):** el cohete adopta el patrón de planeo del globo — persecución 200 ms con voz
    (mayor que los 140 del globo: el tono llega a saltos y necesita más absorción) / 480 ms en

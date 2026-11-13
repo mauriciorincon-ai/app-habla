@@ -39,7 +39,7 @@ import { anthropic } from "@ai-sdk/anthropic";
 const { object, usage } = await generateObject({
   model: anthropic("claude-sonnet-5"),      // Haiku para tareas simples; Sonnet para razonamiento
   schema: AnalisisSchema,
-  prompt, abortSignal: AbortSignal.timeout(30_000),
+  consigna, abortSignal: AbortSignal.timeout(30_000),
 });
 ```
 
@@ -58,17 +58,17 @@ const { object, usage } = await generateObject({
 
 `persist.ts` mapea el objeto validado a entidades de la BD (nunca guardar el blob crudo como única
 forma): p. ej. `AnalisisSchema` → fila en `analisis` + N filas en `entidades` con FK. Guardar
-además: `modelo`, `version_prompt`, `costo_usd`, `created_by` — trazabilidad de qué IA produjo qué
+además: `modelo`, `version_consigna`, `costo_usd`, `created_by` — trazabilidad de qué IA produjo qué
 dato. RLS aplica a estas tablas como a cualquier otra.
 
 ## 3. Guardrails (capa base, por sprint)
 
 - **Input:** longitud máxima, tipo de contenido esperado, strip de instrucciones inyectadas
-  (patrón anti prompt-injection del skill `security-owasp`), rate limiting por usuario.
+  (patrón anti consigna-injection del skill `security-owasp`), rate limiting por usuario.
 - **Output:** validación Zod (ya bloquea la mayoría del formato malicioso) + lista de negación del
-  dominio (ej. en `habla`: nunca diagnóstico clínico; en `financiera`: nunca recomendación de
+  dominio (ej. en `habla`: nunca consejo de consultorio; en `financiera`: nunca recomendación de
   inversión — el brief define la política).
-- **System prompt** siempre del lado servidor; el cliente jamás lo compone.
+- **System instructions** siempre del lado servidor; el cliente jamás lo compone.
 
 ## 4. Costo
 
@@ -104,15 +104,15 @@ proveedor real muestra (todas ocurrieron en el primer request real de ds S2):
 3. **Matching literal vs idioma:** la prosa en español acentúa identificadores ("la región" por
    `region`) — verificadores insensibles a diacríticos sin dejar de ser literales.
 4. El LLM **frasea resultados que no puede conocer** (direcciones como desenlaces reales sin tener
-   la clase positiva) — el prompt lo restringe explícitamente.
+   la clase positiva) — el enunciado lo restringe explícitamente.
 5. **La varianza del Grader/juez decide su modelo:** medir estabilidad sobre la misma salida
-   (3/4/5 en corridas repetidas = inaceptable) + rúbrica explícita en el prompt.
+   (3/4/5 en corridas repetidas = inaceptable) + rúbrica explícita en el enunciado.
 
 ## Checklist del sprint (lo verifica /deploy-check)
 
 - [ ] Toda llamada LLM pasa por `lib/ia/client.ts` y valida contra un schema de `schemas.ts`.
 - [ ] Lo persistido está descompuesto en entidades (no solo blob) con metadatos de trazabilidad.
-- [ ] Guardrails de input/output activos; system prompt server-side.
+- [ ] Guardrails de input/output activos; system instructions server-side.
 - [ ] Costo por request loggeado.
 - [ ] Tests: unit del schema (casos válidos/inválidos) + mock del LLM en integración (nunca llamar
       al API real en CI) + 1 e2e con respuesta fixture.

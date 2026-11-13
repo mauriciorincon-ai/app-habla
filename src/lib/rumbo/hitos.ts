@@ -1,7 +1,7 @@
 // RUMBO — hitos funcionales (Outcome 1) — motor PURO.
 //
 // Un hito es un logro CONCRETO y celebrable, derivado de lo medido o marcado — nunca un puntaje
-// clínico ni un "nivel". Se alcanzan una vez y se quedan (no se pierden por una semana floja). Son
+// de consultorio ni un "nivel". Se alcanzan una vez y se quedan (no se pierden por una semana floja). Son
 // la cara amable del progreso: "la primera palabra que TÚ le oíste", no "percentil 40".
 
 import { lunesDeLaSemana } from "@/lib/fecha";

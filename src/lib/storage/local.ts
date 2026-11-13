@@ -58,7 +58,7 @@ export function leer<T>(clave: string, schema: z.ZodType<T>): T | null {
     const parsed = schema.safeParse(JSON.parse(crudo));
     if (parsed.success) return parsed.data;
   } catch {
-    // JSON inválido: mismo tratamiento que un valor que no pasa el esquema.
+    // JSON inválido: mismo trato que un valor que no pasa el esquema.
   }
   window.localStorage.removeItem(clave);
   return null;
@@ -105,7 +105,7 @@ export const leerProgreso = (): Progreso => {
       return migrado;
     }
   } catch {
-    // JSON inválido: mismo tratamiento que un valor que no pasa ningún esquema.
+    // JSON inválido: mismo trato que un valor que no pasa ningún esquema.
   }
   window.localStorage.removeItem(CLAVES.progreso);
   return PROGRESO_INICIAL;

@@ -8,7 +8,7 @@
 ADR 005 fixed the product rule: all content is born at the single-word level. Sprint 002 turns
 the rule into an engine: the library grows to ≥45 capsules organized by **speech stage**
 (`sonidos-e-intentos` · `palabras-sueltas` · `primeras-frases`), and the parent selects the
-active stage in Ajustes, described by observable behavior (no clinical jargon).
+active stage in Ajustes, described by observable behavior (no specialist jargon).
 
 ## Decision
 

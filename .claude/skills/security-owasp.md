@@ -23,7 +23,7 @@ Checklist y patrones alineados con OWASP Top 10 (2021). Aplica a todas las apps 
 
 ### A03:2021 — Injection
 - [ ] **SQL:** usar query builders/ORMs (Supabase, Prisma, Drizzle). Prohibido string concat.
-- [ ] **LLM prompts:** sanitizar inputs que van al prompt. Ver patrón "prompt injection" abajo.
+- [ ] **LLM instrucciones:** sanitizar inputs que van al modelo. Ver patrón "instruction injection" abajo.
 - [ ] **Comandos shell:** nunca pasar input de usuario a `child_process.exec`.
 - [ ] **XSS:** React escapa por defecto; si usas `dangerouslySetInnerHTML`, sanitizar con DOMPurify.
 
@@ -64,12 +64,12 @@ Checklist y patrones alineados con OWASP Top 10 (2021). Aplica a todas las apps 
 - [ ] Si el servidor hace fetch a URLs con input del usuario, whitelist de dominios.
 - [ ] Timeouts y límites de tamaño en fetch externos.
 
-## Patrón específico: Prompt Injection (apps con LLM)
+## Patrón específico: Instruction Injection (apps con LLM)
 
 Para apps que pasan input del usuario a un LLM:
 
 ```typescript
-// src/lib/prompt-sanitizer.ts
+// src/lib/instruction-sanitizer.ts
 const INJECTION_PATTERNS = [
   /ignore previous instructions/i,
   /forget everything/i,
@@ -98,7 +98,7 @@ export function sanitizeUserPrompt(input: string): { sanitized: string; flagged:
 }
 ```
 
-Y en el prompt al LLM, usa delimitadores claros:
+Y en el mensaje al LLM, usa delimitadores claros:
 
 ```typescript
 const systemPrompt = `
@@ -141,4 +141,4 @@ SUPABASE_ANON_KEY=
 
 - **Antes de cada merge a main:** correr `/security-audit`.
 - **Cada 90 días:** rotar API keys, revisar logs de intentos de ataque, actualizar deps.
-- **Después de cada feature con LLM/API:** red-team pass contra prompt injection y data exfiltration.
+- **Después de cada feature con LLM/API:** red-team pass contra instruction injection y data exfiltration.

@@ -1,6 +1,6 @@
 // Iconografía propia. Los emojis están PROHIBIDOS como iconos (anti-patrón del pipeline: es la
 // firma del "look de IA con prisa" y además cada sistema operativo los dibuja distinto — para un
-// niño con perfil neurodivergente, un icono que cambia de forma entre dispositivos es ruido).
+// niño con perfil muy sensible a los cambios, un icono que cambia de forma entre dispositivos es ruido).
 //
 // Estilo (design-system.md): trazo de 1.5, viewBox 24, `currentColor`, sin relleno.
 // El globo es la excepción: no es un icono, es EL personaje — lleva la paleta del niño.

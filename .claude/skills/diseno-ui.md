@@ -27,7 +27,7 @@ extiende por ADR, nunca se contradice en silencio). Contenido mínimo:
 
 **Origen de los tokens:** si existe prototipo en `referencias-ui/<slug>/` de la planeadora, los
 tokens se **extraen de su `design-system.md`** (los 4 prototipos legados ya definen lenguajes
-completos: scholarly indigo, clínica cálida, monocromo técnico, editorial). Si la app es nueva, se
+completos: scholarly indigo, paleta cálida, monocromo técnico, editorial). Si la app es nueva, se
 definen en la exploración de diseño (§ 3).
 
 ## 2. Heurísticas de vanguardia (lo que separa "correcto" de "nivel mundial")

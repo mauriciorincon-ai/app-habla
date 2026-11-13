@@ -19,7 +19,7 @@ centers on words for now._
 default.** Concretely:
 
 1. **Content:** all capsules target single words and word↔object association. Examples use
-   one-word utterances, word attempts ("aba" → "¡agua!") and gestures — never assume the child
+   one-word utterances, word attempts ("ua" → "¡agua!") and gestures — never assume the child
    combines words. This was applied retroactively to the full seed library in this sprint.
 2. **Mechanics:** games never require words. The voice game measures sustained vocal energy —
    any sound counts. Future mechanics follow the same principle: the child's _current_ abilities

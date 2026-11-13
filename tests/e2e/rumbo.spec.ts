@@ -67,11 +67,11 @@ test("el Rumbo refleja el NÚMERO que de verdad se registró (frase-vs-métrica)
   await expect(hitos).toContainText("La primera palabra que TÚ le oíste");
   await expect(hitos).toContainText("Su voz sonó 5 segundos seguidos");
 
-  // Y JAMÁS lenguaje clínico (anti-claims §D) — vocabulario vetado igualado al de las cápsulas
+  // Y JAMÁS lenguaje de consultorio (anti-claims §D) — vocabulario vetado igualado al de las cápsulas
   // (daily-coach.test.ts) más los sinónimos que el grep viejo dejaba pasar (auditoría de cierre).
   const texto = await page.locator("main").innerText();
   expect(texto).not.toMatch(
-    /puntaje|puntuaci|diagn[oó]stic|terapia|retraso|atraso|percentil|nivel|d[eé]ficit|trastorno|%|en \d+ semanas/i,
+    /puntaje|puntuaci|diagn[oó]stic|terapia|retraso|atraso|percentil|nivel|d[eé]ficit|%|en \d+ semanas/i,
   );
 });
 

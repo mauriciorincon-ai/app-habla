@@ -16,7 +16,7 @@ but the obvious implementation is closed to us on three independent grounds.
    audio to Google's servers**. The child's voice leaving the device is the one thing this app
    promises never happens. This alone ends the discussion.
 2. **It would punish exactly this child.** An on-device recognizer (Whisper-wasm et al.) is trained
-   on adult, fluent speech. On a 4–6-year-old with a speech delay, half-formed words, and
+   on adult, fluent speech. On a preschooler with a very limited vocabulary, half-formed words, and
    atypical prosody, it produces **false negatives**: the child says "perro", the app says nothing.
    That silent "no" is the cruelest possible feedback, and the whole app is built to never give it.
    The research is explicit (§D): no consumer ASR is reliable for this population.
@@ -43,12 +43,12 @@ there, he knows whether "peo" was an attempt at "perro", and no model will ever 
 
 The user disagrees with premise (1). His position, verbatim: sending the child's **voice** to
 Google is not what worries him — what must never leave are "los datos personales, sus exámenes, su
-historia clínica, incluso su solo nombre". He asked to revisit this in a later sprint. **Nothing
+historia propia, incluso su solo nombre". He asked to revisit this in a later sprint. **Nothing
 changed in the code**: the rule stands until he decides otherwise, and this is his app.
 
 The one fact he should weigh before deciding, because it is the crux and it is not obvious:
 
-> **For a child in speech therapy, the voice IS the clinical record.** It is not a neutral carrier
+> **For a child in speech therapy, the voice IS the personal record.** It is not a neutral carrier
 > of words — it is the raw signal from which his condition can be inferred: the articulation, the
 > prosody, the delay. Under Ley 1581 (art. 5 and art. 7) voice is a personal datum, health data is
 > **sensitive** data, and sensitive data **of a minor** carries the strictest regime in Colombian

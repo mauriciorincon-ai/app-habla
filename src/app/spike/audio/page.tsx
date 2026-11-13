@@ -1,6 +1,6 @@
 "use client";
 
-// Página de diagnóstico del audio — sobrevive hasta cerrar el ADR 003 (gate de tablet).
+// Página de ensayo técnico del audio — sobrevive hasta cerrar el ADR 003 (gate de tablet).
 // Objetivo S1 (riesgo #1): latencia percibida, estabilidad del worklet, constraints reales del
 // track (getSettings) y piso de ruido de la casa.
 // Objetivo S2 (riesgo #1 del sprint, ADR 007): ¿el PITCH es estable con voz real? La página
@@ -208,7 +208,7 @@ export default function SpikeAudioPage() {
     <main className="mx-auto flex min-h-screen max-w-xl flex-col gap-6 p-6">
       <h1 className="font-display text-3xl">Spike de audio</h1>
       <p className="text-tinta-suave text-sm">
-        Página de diagnóstico: valida el medidor (RMS) y el seguidor de tono
+        Página de ensayo técnico: valida el medidor (RMS) y el seguidor de tono
         (F0) con un micrófono real. Nada se graba ni sale del dispositivo: son
         dos números que se calculan en vivo y mueren en pantalla.
       </p>

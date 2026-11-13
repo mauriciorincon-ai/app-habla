@@ -1,7 +1,7 @@
 // Genera los iconos de la PWA (public/icons/) SIN dependencias — encoder PNG a mano con node:zlib.
 // Deuda del remate S4: de placeholder a iconos REALES del design system. El emblema es el GLOBO
 // —el personaje que la voz del niño mueve— en crema sobre verde salvia (paleta operador
-// "Clínica cálida"). Se generan tres:
+// "paleta cálida"). Se generan tres:
 //   - icon-192.png, icon-512.png        → el icono normal (globo grande, centrado).
 //   - icon-512-maskable.png             → variante MASKABLE: el globo vive dentro de la zona segura
 //                                          (~60 % central) para que el recorte del sistema (círculo,
