@@ -37,10 +37,15 @@ any other setting.
 - **What changes:** Today, the daily capsule (all 50), first use, the games, the Studio, the Goal, the Path,
   Settings, and the brochure page `/conoce`, which has its own switch.
 - **The daily capsule is the same** in both languages: switching language never changes what is on for today.
-- **Words and Twins, in English:** those two games practise Spanish words and pictures, so the app says so on a
-  plain card instead of pretending. The voice games (balloon and rocket) play the same in both languages.
-- **The weekly Goal, in English:** the screen reads in English, but the aligner and its dictionary understand
-  Spanish words, and the chips write the word in Spanish. The card tells you so.
+- **Words and Twins, in English (S8):** both games **are practised in English**: the words, the pictures and the
+  look-alike sound pairs are English ones (not the Spanish ones put into English), and the cues you record in the
+  Studio come in English as well. The voice games (balloon and rocket)
+  play the same in both languages.
+- **The weekly Goal, in English (S8):** it writes and suggests in English, with its own spelling dictionary, and
+  no longer warns you about anything. Each language has its own.
+- **`/mirada` and the capsule catalog, in both languages (S8):** "The pyramid, at home" and the catalog carry a
+  **Español · English** switch at the top that changes the whole document without reloading; it follows the
+  language you chose in the app. When printed, the switch does not appear.
 - **Privacy:** switching language sends nothing anywhere.
 
 ## How to use it
@@ -271,25 +276,24 @@ which **names exactly what it will save** ("Save «animals»").
 
 While you type, the app **keeps you company; it does not scold**. If you stop halfway through a word ("anim"), it
 suggests what you may be thinking of, in **two groups, each with its label**. The **green** chips are terms that
-**are in the app** and line up the capsule and the games. The **neutral** chips are correctly spelled Spanish words
-that **the app does not have** ("medi" → «medio», «media»): they change nothing in the games, but they help your
-goal be written correctly. They come from a dictionary of the 10,000 most common Spanish words that travels inside
-the app (no internet needed, like everything here). The field also uses your browser's or keyboard's spell-checker
+**are in the app** and line up the capsule and the games. The **neutral** chips are correctly spelled words of the active language
+that **the app does not have** ("medi" → “media”, “medium”): they change nothing in the games, but they help your
+goal be written correctly. They come from a dictionary of the most common words of the language that travels inside
+the app (no internet needed, like everything here; there is one in Spanish and one in English, and the app uses the
+one for the active language). The field also uses your browser's or keyboard's spell-checker
 (the usual red underline). The names of the topics **as you see them in Settings** also work: typing "transport"
 lines up everything under that topic.
 
-**In English, the aligner and the dictionary understand Spanish words, and the chips write the word in Spanish.**
-So write your goal in Spanish if you want the app to line things up ("animales" rather than "animals"); the card
-tells you this when the language is English.
+**In English, the aligner and the dictionary work in English**: write "animals" and the app lines things up.
 
 If you type with a spelling mistake ("animles") and tap save, the app **asks first**: _"Did you mean «animales»?"_
 You can fix it with one tap or save it as typed (writing freely stays your right: in therapy they may ask for
-something the app does not have). A **correctly spelled** word never gets that question: "medios" or "colores" are
+something the app does not have). A **correctly spelled** word never gets that question: "media" or "colors" are
 saved the first time, even if they line nothing up.
 
 Once the word is complete, the app tells you **honestly** how much it finds, and it counts **only what your child
 will actually see**: the capsules for their stage and the pictures from the topics you chose ("with «animales», the
-app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "colores",
+app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "colors",
 which deliberately does not exist, it tells you so openly instead of pretending it lined something up. And if you
 type something that does exist but is **outside what your child sees today** (a topic you did not choose during
 first use), it also says so clearly: the games do not change, although the Studio will suggest recording those
@@ -316,7 +320,8 @@ With an active goal, in the Studio the recordings under **"What you have recorde
 
 Besides the app, there is a **separate document for mom**, for the times when your child is not using screens:
 **"The pyramid, at home"**. It opens on her phone (or printed) at the **`/mirada`** page of the app. Your child
-never sees it: it is for the adult. **The document is in Spanish.**
+never sees it: it is for the adult. **Since Sprint 008 it comes in Spanish and in English** (switch at the top,
+written for each language).
 
 It is organised by the **six parts of the pyramid**: pointing, imitation, understanding, joint attention,
 communicative intent, and play. **They are not floors**: all of them are worked at once, in the same games. Three
@@ -344,6 +349,29 @@ send, or save, and the document keeps nothing on mom's phone.
 **Where the cards come from:** from the eye-contact capsules of the earlier document and the 50 speech capsules of
 the app, each reviewed one by one against fresh research. Some stayed, some were merged into one, some are new, and
 those that need the screen or belong to the next stage stayed only in the app. **Nothing changed in the app.**
+
+### Family videos — clips from your gallery, only on this device (new · S8)
+
+The **Studio** has a **"Family videos"** entry. It keeps a few short clips that **show a behaviour** (**asking,
+greeting or playing**) so you can watch them with your child, as a prop for the game (co-use: you are right beside
+them).
+
+- **How you add one:** **"Choose a video from the gallery"** opens your phone's or computer's file picker. **The app
+  never opens the camera**: it does not record, it only keeps a clip you already had. First pick which behaviour
+  it shows and, if you like, write **who is in it** (optional, free text, stays here). Write a role, "Grandma", not
+  names.
+- **Limits:** up to 60 seconds (when the device can read the clip's length) and 50 MB per clip, and up to 12 clips. If one does not fit, the app tells you why
+  (not a video, too large, too long, or the shelf is full); if the device has no space it says so and **saves
+  nothing half-done**.
+- **Where they live:** **only on this device**. They are not uploaded, not sent, not part of any file or copy, and
+  the app has no button to download or send them. Changing device means choosing them again.
+- **How to delete:** each clip has its own delete button, in **two taps** (the second confirms). And **Settings →
+  Delete my data** also deletes every video.
+- **Who it is for:** meant for clips of other people your child knows, not for filming your child.
+- If the device cannot play a clip, the app says so instead of leaving the screen blank; if a delete fails, it says
+  so too.
+- **What it does NOT do:** it does not judge, score, compare or say whether your child imitated well: it is only
+  the video.
 
 ### What the app measures and what it does NOT (important)
 
@@ -396,7 +424,8 @@ This is the most important promise of the app:
   child's voice is never recorded.**
 - Switching the app's language sends nothing anywhere.
 - All that is kept on the device: the nickname (if you set one), the topics, your settings, which capsules you
-  completed, what you marked in "word twins", and, if you recorded them, **your** voices. You can delete it all in
+  completed, what you marked in "word twins", if you recorded them **your** voices, and, if you chose them, **the
+  family videos** (clips from your own gallery: the app never opens the camera and they never leave here). You can delete it all in
   **Settings → Delete my data**, or only the voice bank with **"Delete only the voice bank"**.
 
 ## Frequently asked questions
@@ -421,7 +450,7 @@ really measured.
 **What is "The pyramid, at home" and why is it not inside the app?**
 It is mom's document for playing without screens. It lives at the `/mirada` page of the app, but it is a document,
 not a game: your child does not use it, the adult does. It is separate on purpose, for the times without screens;
-when your child returns to the app, live observation decides which cards move to Today. The document is in Spanish.
+when your child returns to the app, live observation decides which cards move to Today.
 
 **Where did the daily log go?**
 It was removed because it did not turn out to be practical for mom to keep. Each card carries its "It worked
@@ -447,8 +476,12 @@ No. It lives only on this device. If you lend the tablet to someone else or chan
 travel with you; you record them again where they will be used.
 
 **Can I use the app in English?**
-Yes. Choose it in Settings → "Idioma / Language". The voice games work the same; "Word and picture" and "Word
-twins" practise Spanish words and say so on a plain card, and the weekly goal understands Spanish words.
+Yes. Choose it in Settings → "Idioma / Language". The word and twin games, the weekly Goal and mom's documents are
+practised and read in English, with content that belongs to that language.
+
+**Does the app record or film my child for the videos?**
+No. It never opens the camera. The videos are clips you already had in your gallery and choose yourself; they are
+saved only on this device and you delete them whenever you like.
 
 ## Picture credits
 
@@ -456,8 +489,13 @@ The pictograms in "Word and picture" are by **Sergio Palao** for **ARASAAC**, pr
 Aragón** (Spain), used under a **Creative Commons BY-NC-SA** licence. This app is personal and non-commercial. The
 pictures live inside the app: nothing is downloaded while you play.
 
+The Goal's spelling suggestions come from lists of the most-used words in books, taken from **Google Books Ngram**
+(Google), published under the **Creative Commons BY 3.0** licence. The lists, one per language, live inside the app
+and load only when you write a goal.
+
 ## History
 
 | Sprint | What was added to this manual                                                                                                                                                                                                                      |
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 007    | First English edition, written alongside the Spanish one: the Language section and every feature up to date (Today, the four games, the Studio, stages, the Path, the weekly Goal, the mother's document, calm mode, light or dark, privacy, FAQ). |
+| 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |

@@ -13,7 +13,7 @@ Ejecuta una pasada de auditoría de seguridad completa usando el skill `security
 3. **Review del código reciente** (último sprint) contra el checklist OWASP Top 10 de `security-owasp.md`:
    - A01 Broken Access Control — rutas autenticadas validan sesión server-side, RLS en DB.
    - A02 Cryptographic Failures — HTTPS, secrets en env, JWT con expiración.
-   - A03 Injection — query builders, sanitización de prompts LLM, input validation con Zod.
+   - A03 Injection — query builders, sanitización de las instrucciones al LLM, input validation con Zod.
    - A04 Insecure Design — rate limiting, least privilege.
    - A05 Security Misconfiguration — CSP headers, X-Frame-Options, mensajes de error sin stack traces.
    - A06 Vulnerable Components — audit + Dependabot.
@@ -22,7 +22,7 @@ Ejecuta una pasada de auditoría de seguridad completa usando el skill `security
    - A09 Logging Failures — auth failures loggeados, errores en Sentry.
    - A10 SSRF — whitelist de dominios en fetches server-side.
 
-4. **Prompt injection** (si la app usa LLM): revisa que haya sanitización en cualquier path que pase input de usuario al modelo. Verifica delimitadores claros en los prompts.
+4. **Inyección de instrucciones** (si la app usa LLM): revisa que haya sanitización en cualquier path que pase input de usuario al modelo. Verifica delimitadores claros en las instrucciones.
 
 5. **Headers de seguridad** en `next.config.js`: CSP, HSTS, X-Frame-Options, X-Content-Type-Options.
 

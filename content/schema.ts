@@ -335,14 +335,14 @@ export const CapsulaContactoVisualSchema = z.object({
   dominio: z.literal("contacto-visual"),
   tecnica: z.enum(TECNICAS_CONTACTO_VISUAL),
   nivel: z.enum(NIVELES_CONTACTO_VISUAL),
-  /** Titular corto y cálido, en es-CO. */
-  titulo: z.string().min(1).max(70),
+  /** Titular corto y cálido. */
+  titulo: textoCon(70),
   /** La técnica y por qué funciona, para leerse en ~30 segundos. */
-  explicacion: z.string().min(1),
+  explicacion: textoCon(),
   /** UNA línea que la mamá puede decir tal cual, hoy. */
-  guion: z.string().min(1).max(140),
+  guion: textoCon(140),
   actividad: z.object({
-    texto: z.string().min(1),
+    texto: textoCon(),
     /** Cuánto dura un momento de esta cápsula («3–5 min»). Momentos cortos, no sesiones. */
     duracion: z.string().regex(/^\d+(–\d+)? min$/),
     momentos: z.array(z.enum(MOMENTOS_DEL_DIA)).min(1),
@@ -351,7 +351,7 @@ export const CapsulaContactoVisualSchema = z.object({
   }),
   conQuien: z.enum(CON_QUIEN),
   /** Lo que NO se hace en esta cápsula, en una línea y en observable. */
-  queNoHacer: z.string().min(1).max(200),
+  queNoHacer: textoCon(200),
   /** Cita corta y verificable: autor · año · revista. Obligatoria. */
   fuente: z
     .string()
@@ -363,6 +363,27 @@ export const CapsulaContactoVisualSchema = z.object({
 });
 
 export type CapsulaContactoVisual = z.infer<typeof CapsulaContactoVisualSchema>;
+
+/** La cápsula de contacto visual tal como nació, en español (content/contacto-visual.ts BASE). */
+export type CapsulaContactoVisualEs = Omit<
+  CapsulaContactoVisual,
+  "titulo" | "explicacion" | "guion" | "actividad" | "queNoHacer"
+> & {
+  titulo: string;
+  explicacion: string;
+  guion: string;
+  actividad: Omit<CapsulaContactoVisual["actividad"], "texto"> & { texto: string };
+  queNoHacer: string;
+};
+
+/** La cara inglesa de una cápsula de contacto visual (content/contacto-visual-en/), por id. */
+export type CapsulaContactoVisualEn = {
+  titulo: string;
+  explicacion: string;
+  guion: string;
+  actividad: string;
+  queNoHacer: string;
+};
 
 /** Cualquier cápsula de cualquier dominio (el segundo paso —la app— lo consumirá). */
 export type CapsulaDeDominio =
@@ -613,19 +634,19 @@ export const FichaSchema = z
     grupo: z.enum(GRUPOS),
     prioridad: z.enum(PRIORIDADES),
     tecnica: z.enum(TECNICAS_FICHA),
-    titulo: z.string().min(1).max(70),
-    /** Lo que hay que tener listo antes de empezar. */
-    tenALaMano: z.array(z.string().min(1)).min(1).max(5),
-    /** Los pasos, en orden, uno por acción. */
-    haz: z.array(z.string().min(1)).min(3).max(5),
+    titulo: textoCon(70),
+    /** Lo que hay que tener listo antes de empezar. Cada ítem, con sus dos caras (S8). */
+    tenALaMano: z.array(textoCon()).min(1).max(5),
+    /** Los pasos, en orden, uno por acción. En inglés, los mismos pasos en el mismo orden. */
+    haz: z.array(textoCon()).min(3).max(5),
     /** UNA línea que la mamá dice tal cual. */
-    tuLinea: z.string().min(1).max(140),
+    tuLinea: textoCon(140),
     /** Lo que es probable que pase. */
-    esperaVer: z.string().min(1).max(260),
+    esperaVer: textoCon(260),
     /** La señal observable de que funcionó — sin número, sin plazo, sin puntaje. */
-    funcionoSi: z.string().min(1).max(220),
+    funcionoSi: textoCon(220),
     /** Qué hacer si no pasa: siempre bajar la exigencia, nunca insistir. */
-    siNoPasa: z.string().min(1).max(260),
+    siNoPasa: textoCon(260),
     duracion: z.string().regex(/^\d+(–\d+)? min$/),
     momentos: z.array(z.enum(MOMENTOS_DEL_DIA)).min(1),
     conQuien: z.enum(CON_QUIEN_FICHA),
@@ -640,7 +661,7 @@ export const FichaSchema = z
           "La fuente va como «Autor, año, Revista» —o «Autor, año» si la revista describe a quién se estudió—, sin título.",
       }),
   })
-  .refine((f) => !/\d/.test(f.funcionoSi), {
+  .refine((f) => !/\d/.test(f.funcionoSi.es) && !/\d/.test(f.funcionoSi.en), {
     message: "«Funcionó si» describe lo que se ve, sin números: ni conteos, ni plazos, ni porcentajes.",
     path: ["funcionoSi"],
   })
@@ -665,7 +686,8 @@ export const FichaSchema = z
   .refine(
     (f) =>
       f.conQuien !== "hermano" ||
-      [...f.haz, f.tuLinea].some((t) => t.toLowerCase().includes("hermano")),
+      ([...f.haz.map((t) => t.es), f.tuLinea.es].some((t) => t.toLowerCase().includes("hermano")) &&
+        [...f.haz.map((t) => t.en), f.tuLinea.en].some((t) => /sibling|brother|sister/i.test(t))),
     {
       message: "Una ficha con el hermano dice qué hace él: los pasos o la línea lo nombran.",
       path: ["conQuien"],
@@ -673,6 +695,31 @@ export const FichaSchema = z
   );
 
 export type Ficha = z.infer<typeof FichaSchema>;
+
+/** La ficha tal como nació, en español (content/fichas.ts BASE). */
+export type FichaEs = Omit<
+  Ficha,
+  "titulo" | "tenALaMano" | "haz" | "tuLinea" | "esperaVer" | "funcionoSi" | "siNoPasa"
+> & {
+  titulo: string;
+  tenALaMano: string[];
+  haz: string[];
+  tuLinea: string;
+  esperaVer: string;
+  funcionoSi: string;
+  siNoPasa: string;
+};
+
+/** La cara inglesa de una ficha (content/fichas-en/), por id: redactada, no traducida. Mismos pasos, mismo orden. */
+export type FichaEn = {
+  titulo: string;
+  tenALaMano: string[];
+  haz: string[];
+  tuLinea: string;
+  esperaVer: string;
+  funcionoSi: string;
+  siNoPasa: string;
+};
 
 /** Piso de la biblioteca (decisión del usuario: calidad sobre cantidad, «no menos de 20»). */
 export const MIN_FICHAS = 20;

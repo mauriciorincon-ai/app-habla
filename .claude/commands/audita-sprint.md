@@ -1,5 +1,5 @@
 ---
-description: Auditoría de UNA pasada al concluir la construcción — un auditor independiente en solo lectura, 4 casillas; todo hallazgo, de cualquier severidad, se paga antes del STOP (kit v2.4.0).
+description: Auditoría de UNA pasada al concluir la construcción — un auditor independiente en solo lectura, 4 casillas; todo hallazgo, de cualquier gravedad, se paga antes del STOP (kit v2.4.0).
 ---
 
 # /audita-sprint

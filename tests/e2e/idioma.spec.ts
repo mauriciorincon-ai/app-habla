@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 //   · el dispositivo en inglés arranca en inglés (sigue al navegador) y `lang` es «en»;
 //   · el conmutador de Ajustes cambia todo sin recargar y la elección sobrevive a un reload;
 //   · la cápsula del día es la misma en los dos idiomas;
-//   · en inglés los juegos de palabras muestran la línea honesta y NO abren el micrófono;
+//   · en inglés los juegos de palabras y el Objetivo se practican en inglés (S8);
 //   · cambiar de idioma no abre ninguna conexión hacia afuera.
 
 /** Un perfil inventado, para saltar el primer uso (sin él, Hoy pide el apodo y los temas). */
@@ -75,23 +75,14 @@ test("el conmutador cambia la app entera sin recargar, y la elección se recuerd
   await ctx.close();
 });
 
-test("en inglés, palabras y gemelas muestran la línea honesta y no abren el micrófono", async ({ browser }) => {
-  const ctx = await browser.newContext({ locale: "en-US", permissions: ["microphone"], serviceWorkers: "block" });
+test("en inglés, Palabras y Gemelas se practican en inglés: guion en inglés, sin tarjeta «solo en español»", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
   const page = await ctx.newPage();
-  await page.addInitScript(() => {
-    (window as unknown as { __mic: number }).__mic = 0;
-    const md = navigator.mediaDevices;
-    const original = md.getUserMedia.bind(md);
-    md.getUserMedia = (...a) => {
-      (window as unknown as { __mic: number }).__mic++;
-      return original(...a);
-    };
-  });
   for (const ruta of ["/jugar/palabras", "/jugar/gemelas"]) {
     await page.goto(ruta);
-    await expect(page.getByTestId("solo-en-espanol")).toBeVisible();
-    await expect(page.getByTestId("solo-en-espanol")).toContainText("Spanish words");
-    expect(await page.evaluate(() => (window as unknown as { __mic: number }).__mic)).toBe(0);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByTestId("solo-en-espanol")).toHaveCount(0);
+    expect(await page.locator("main").innerText(), ruta).not.toMatch(/\b(Palabras|Gemelas|Empezar)\b/);
   }
   await ctx.close();
 });
@@ -105,15 +96,15 @@ test("a11y: Ajustes en inglés sin violaciones serias", async ({ browser }) => {
   await ctx.close();
 });
 
-test("en inglés, el Objetivo avisa que el alineador entiende español y los chips escriben en español", async ({ browser }) => {
+test("en inglés, el Objetivo no avisa nada: los chips y el alineador escriben en inglés", async ({ browser }) => {
   const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
   await ctx.addInitScript(conPerfil);
   const page = await ctx.newPage();
   await page.goto("/objetivo");
-  await expect(page.getByTestId("objetivo-aviso-idioma")).toBeVisible();
+  await expect(page.getByTestId("objetivo-aviso-idioma")).toHaveCount(0);
   await expect(page.getByTestId("sugerencia-animales")).toHaveText("animals");
   await page.getByTestId("sugerencia-animales").click();
-  await expect(page.getByTestId("objetivo-input")).toHaveValue("animales");
+  await expect(page.getByTestId("objetivo-input")).toHaveValue("animals");
   await expect(page.getByTestId("objetivo-preview")).toBeVisible();
   await expect(page.getByTestId("objetivo-sin-matches")).toHaveCount(0);
   await ctx.close();
@@ -151,3 +142,18 @@ test("«Usar el idioma del dispositivo» devuelve al navegador la elección", as
   await expect(page.getByTestId("idioma-dispositivo")).toHaveAttribute("aria-pressed", "true");
   await ctx.close();
 });
+
+test("en inglés, una ronda de Gemelas trae un par de palabras inglesas y el padre puede marcar", async ({ browser }) => {
+  const ctx = await browser.newContext({ locale: "en-US", serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.goto("/jugar/gemelas");
+  await page.getByTestId("empezar-juego").click();
+  const ronda = page.getByTestId("gemelas-ronda");
+  await expect(ronda).toBeVisible();
+  const texto = await ronda.innerText();
+  expect(texto).toMatch(/\b(hat|cat|house|mouse|mouth|bed|bell|bull|boat|boot|bone|cone|rock|sock|rain|train)\b/i);
+  expect(texto).not.toMatch(/\b(pato|gato|foca|boca)\b/i);
+  await page.getByTestId("marcar-a").click();
+  await ctx.close();
+});
+

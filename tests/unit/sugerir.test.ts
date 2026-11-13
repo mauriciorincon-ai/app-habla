@@ -98,3 +98,20 @@ describe("vocabularioDe: el universo real de términos", () => {
     expect(v.filter((t) => t === "animales")).toHaveLength(1);
   });
 });
+
+describe("vocabularioDe en inglés", () => {
+  const contenido = {
+    capsulas: [{ etiquetas: ["animales"] as readonly string[] }],
+    pictos: [{ palabra: "dog", tema: "animales" }],
+    pares: [] as { a: { palabra: string }; b: { palabra: string } }[],
+  };
+  it("ofrece las palabras inglesas de la etiqueta y esconde las claves de tema", () => {
+    const v = vocabularioDe(contenido, "en");
+    expect(v).toContain("animals");
+    expect(v).toContain("dog");
+    expect(v).not.toContain("animales");
+  });
+  it("en español ofrece la clave", () => {
+    expect(vocabularioDe(contenido, "es")).toContain("animales");
+  });
+});

@@ -13,7 +13,9 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { rutaPictograma, type Pictograma } from "@content/pictogramas";
 import { IconoAltavoz } from "@/components/iconos";
-import { idPalabra } from "@/lib/banco-voz/catalogo";
+import { idCelebracion, idPalabra } from "@/lib/banco-voz/catalogo";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { palabras as txp } from "@/lib/idioma/textos/palabras";
 import { GlobosCelebracion } from "./globos-celebracion";
 import type { MedidasVivas } from "./use-voice-session";
 import type { VozFamiliar } from "./use-voz-familiar";
@@ -45,6 +47,10 @@ export function EscenarioPalabra({
   onVocalizar,
   voz,
 }: Props) {
+  const tx = useT();
+  const idioma = useIdioma();
+  /** La palabra que se ve y se nombra: en inglés, la etiqueta inglesa del mismo dibujo (S8). */
+  const palabra = idioma === "en" ? picto.en : picto.palabra;
   const auraRef = useRef<HTMLDivElement | null>(null);
   const avisarRef = useRef(onVocalizar);
   useEffect(() => {
@@ -58,9 +64,9 @@ export function EscenarioPalabra({
   const baseSostenidoRef = useRef(0);
   useEffect(() => {
     baseSostenidoRef.current = medidas.sostenidoMs();
-  }, [picto.palabra, medidas]);
+  }, [picto.id, medidas]);
 
-  const idNombre = idPalabra(picto.palabra);
+  const idNombre = idPalabra(palabra, idioma);
   const nombreDisponible = voz.disponible(idNombre);
 
   // La voz se lee de un ref en los efectos: su identidad cambia al cargar el banco, y no queremos
@@ -74,19 +80,19 @@ export function EscenarioPalabra({
   // grabada). Modela el nombre para el niño; el altavoz lo repite cuando él quiera ("el nombre
   // vive en la cosa"). No-op silencioso si no hay grabación.
   useEffect(() => {
-    void vozRef.current.reproducir(idPalabra(picto.palabra));
-  }, [picto.palabra]);
+    void vozRef.current.reproducir(idPalabra(palabra, idioma));
+  }, [palabra, idioma]);
 
   // La frase honesta que ya se muestra en pantalla, dicha con la voz de la familia si está grabada.
   // Son EXACTAMENTE las celebraciones del catálogo (le-salio / dijo-palabra): la app solo dice en
   // voz alta lo que de verdad pasó (regla dura 3).
   useEffect(() => {
-    if (reconocida) void vozRef.current.reproducir("celebracion:dijo-palabra");
-  }, [reconocida]);
+    if (reconocida) void vozRef.current.reproducir(idCelebracion("dijo-palabra", idioma));
+  }, [reconocida, idioma]);
   useEffect(() => {
     if (encendido && !reconocida)
-      void vozRef.current.reproducir("celebracion:le-salio");
-  }, [encendido, reconocida]);
+      void vozRef.current.reproducir(idCelebracion("le-salio", idioma));
+  }, [encendido, reconocida, idioma]);
 
   useEffect(() => {
     let id = 0;
@@ -156,7 +162,7 @@ export function EscenarioPalabra({
           ) : null}
           <Image
             src={rutaPictograma(picto)}
-            alt={picto.palabra}
+            alt={palabra}
             width={500}
             height={500}
             loading="lazy"
@@ -170,7 +176,7 @@ export function EscenarioPalabra({
         className="font-display text-5xl sm:text-6xl"
         data-testid="palabra-del-picto"
       >
-        {picto.palabra}
+        {palabra}
       </p>
 
       {/* Altavoz de la voz familiar: el niño puede tocarlo para volver a oír el nombre (≥64 px).
@@ -182,7 +188,7 @@ export function EscenarioPalabra({
           className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
           data-testid="altavoz-palabra"
           data-fuente-voz="familiar"
-          aria-label={`Oír “${picto.palabra}”`}
+          aria-label={`Oír “${palabra}”`}
         >
           <IconoAltavoz className="h-8 w-8" />
         </button>
@@ -190,25 +196,25 @@ export function EscenarioPalabra({
 
       {reconocida ? (
         <p className="text-exito text-lg font-medium" role="status">
-          ¡Dijo la palabra! Lo oíste tú.
+          {tx(txp.escenario.dijo)}
         </p>
       ) : encendido ? (
         <p
           className="text-celebracion-fuerte text-lg font-medium"
           role="status"
         >
-          ¡Le salió la voz! Lo intentó.
+          {tx(txp.escenario.salio)}
         </p>
       ) : invitando ? (
         <p
           className="bg-fondo/90 text-tinta rounded-2xl p-3 text-center text-lg"
           data-testid="invitacion"
         >
-          El dibujo espera su voz… nómbralo tú otra vez y espera.
+          {tx(txp.escenario.espera)}
         </p>
       ) : (
         <p className="text-tinta-suave text-lg">
-          Cualquier sonido lo enciende. Nómbralo tú y espera.
+          {tx(txp.escenario.cualquierSonido)}
         </p>
       )}
     </div>

@@ -40,7 +40,11 @@ export const PROHIBIDO_EN: { nombre: string; patron: RegExp }[] = [
 ];
 
 const ARCHIVOS = archivosDeIdiomas(RAIZ).filter(
-  (a) => a.startsWith("content/capsulas-en") || a.startsWith("src/lib/idioma/textos"),
+  (a) =>
+    a.startsWith("content/capsulas-en") ||
+    a.startsWith("content/fichas-en") ||
+    a.startsWith("content/contacto-visual-en") ||
+    a.startsWith("src/lib/idioma/textos"),
 );
 
 describe("copy prohibido en inglés", () => {

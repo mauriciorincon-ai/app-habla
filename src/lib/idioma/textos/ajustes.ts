@@ -190,4 +190,16 @@ export const ajustes = {
       en: " (Spain). This app is personal and non-commercial. The pictures live inside the app: they are not downloaded from the internet while you play.",
     },
   },
+  palabrasDiccionario: {
+    titulo: { es: "Acerca de las palabras", en: "About the words" },
+    a: {
+      es: "Las sugerencias de ortografía del Objetivo salen de una lista de las palabras más usadas en libros, tomada de ",
+      en: "The Goal's spelling suggestions come from a list of the most-used words in books, taken from ",
+    },
+    b: { es: ", publicada por Google bajo la licencia ", en: ", published by Google under the license " },
+    c: {
+      es: ". La lista vive dentro de la app y se carga solo cuando escribes un objetivo: no se descarga de internet mientras juegan.",
+      en: ". The list lives inside the app and loads only when you write a goal: nothing is downloaded from the internet while you play.",
+    },
+  },
 } satisfies Catalogo;

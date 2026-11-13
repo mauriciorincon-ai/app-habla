@@ -20,9 +20,7 @@ The adult reads all the text; the child does not read. Hard rules 2, 4 and 8 mus
 4. **Daily capsule**: the text fields (`titulo`, `explicacion`, `guion`, `actividad.texto`) become `{ es, en }`.
    English lives in `content/capsulas-en/` keyed by id. The selection (`coach/daily.ts`) depends only on id,
    stage, order and date, so the same capsule is chosen in both languages.
-5. **In English you practice in English.** The word games (words, twins) and their pictograms, pairs and
-   dictionary are Spanish; in English they show an honest line («practice words in English arrive soon»).
-   English word content is the next sprint's job.
+5. **In English you practice in English.** *(Superseded by S8, see the amendment below: the first cut left the word games and the dictionary in Spanish.)*
 6. **Gate**: the sensitivity gate covers `src/lib/idioma/**` and `content/capsulas-en/**` (hashes regenerated
    before writing English), the age guard also catches the English forms, and a banned-copy list in English
    (deadlines, scores, consultancy language and the construction-jargon word) fails the build.
@@ -32,7 +30,15 @@ The adult reads all the text; the child does not read. Hard rules 2, 4 and 8 mus
 
 ## Consequences
 - Every new screen or content brings its `{ es, en }` pair in the same PR.
-- The catalog (S8 document) and the brochure read the Spanish side unless stated.
+- The catalog and the brochure carry both languages as sibling `data-l` blocks (amended in S8).
 - ADR-001 stays in the repo, marked superseded.
 - The server-rendered HTML always reads in Spanish (settings live only on the device). On an English device the pre-paint script sets `lang` first, and React repaints the text once after hydration, so a reader may see a brief flash of Spanish. The language components skip writing `lang` and the title until the settings have loaded, so they never undo the script.
-- The goal helper and its dictionary stay Spanish-only; in English the screen says so and the suggestion chips type the Spanish word. English words for them are a later, separate decision.
+- *(Superseded by S8.)* The goal helper and its dictionary were Spanish-only in S7.
+
+## Amendment — Sprint 008 «Practice in English too»
+- Words, Twins and the Goal are practiced in English: pictograms carry an English label, the twin pairs are
+  English minimal pairs (not translations), the voice-bank cues have English ids, and the Goal aligner and
+  spelling dictionary run per language (`palabras-es.ts`, `palabras-en.ts`, ADR-014). The «Spanish only» card is gone.
+- `/mirada` («La pirámide, en casa»), the contact-eye content and the capsule catalog are `{ es, en }` data and
+  print in both languages with a two-button switch (sibling `data-l` blocks, as in `/conoce`).
+- The English prose was drafted in six parallel Haiku batches against a fixed glossary and sampled by the builder.

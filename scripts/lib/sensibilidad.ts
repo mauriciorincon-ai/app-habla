@@ -164,7 +164,7 @@ export const ALCANCE_GATE: Alcance[] = [
  * S7 «dos idiomas»: todo lo que contiene el texto del adulto en los dos idiomas entra al gate. Son
  * directorios (los catálogos y las cápsulas en inglés crecen): cada archivo .ts/.tsx se vigila.
  */
-export const DIRS_IDIOMAS = ["src/lib/idioma", "content/capsulas-en"];
+export const DIRS_IDIOMAS = ["src/lib/idioma", "content/capsulas-en", "content/fichas-en", "content/contacto-visual-en"];
 
 export function archivosDeIdiomas(raiz: string): string[] {
   const out: string[] = [];
@@ -180,6 +180,22 @@ export function archivosDeIdiomas(raiz: string): string[] {
   DIRS_IDIOMAS.forEach(andar);
   return out;
 }
+
+// S8: el dato nuevo del inglés (etiquetas, pares, diccionarios y vocabulario del alineador) entra al gate.
+ALCANCE_GATE.push(
+  "content/pictogramas.ts",
+  "content/pares-gemelos.ts",
+  "src/lib/objetivo/palabras-es.ts",
+  "src/lib/objetivo/palabras-en.ts",
+  "src/lib/objetivo/etiquetas-en.ts",
+  "src/lib/objetivo/LICENCIA-diccionario.md",
+  "src/lib/banco-voz/catalogo.ts",
+  "scripts/gen-diccionario.mjs",
+  // F2: la videoteca y su copy entran al gate desde el primer día.
+  "src/lib/idioma/textos/videoteca.ts",
+  "src/lib/videoteca/reglas.ts",
+  "src/components/estudio/videoteca-cliente.tsx",
+);
 
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 

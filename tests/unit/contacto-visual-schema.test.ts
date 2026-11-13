@@ -11,22 +11,24 @@ import {
 // El dominio «contacto visual» (S5): sus garantías viven en el schema y este test las demuestra
 // UNA a una con fixtures — cada constraint se vio en rojo antes de darla por buena.
 
+const dos = (es: string, en: string = es) => ({ es, en });
+
 const base: CapsulaContactoVisual = {
   id: "x",
   dominio: "contacto-visual",
   tecnica: "hago-lo-que-el-hace",
   nivel: "n1",
-  titulo: "Título",
-  explicacion: "Explicación de prueba.",
-  guion: "«Igual que tú.»",
+  titulo: dos("Título", "Title"),
+  explicacion: dos("Explicación de prueba.", "Test explanation."),
+  guion: dos("«Igual que tú.»", "“Same as you.”"),
   actividad: {
-    texto: "Actividad de prueba.",
+    texto: dos("Actividad de prueba.", "Test activity."),
     duracion: "3–5 min",
     momentos: ["juego"],
     conPantalla: false,
   },
   conQuien: "mama",
-  queNoHacer: "Nada raro.",
+  queNoHacer: dos("Nada raro.", "Nothing odd."),
   fuente: "Halle, 1981, J Appl Behav Anal",
 };
 
@@ -89,11 +91,11 @@ describe("CapsulaContactoVisualSchema — cada cápsula", () => {
 
   it("el guion cabe en una línea (≤140) y el título en un titular (≤70)", () => {
     expect(
-      CapsulaContactoVisualSchema.safeParse({ ...base, guion: "x".repeat(141) })
+      CapsulaContactoVisualSchema.safeParse({ ...base, guion: dos("x".repeat(141)) })
         .success,
     ).toBe(false);
     expect(
-      CapsulaContactoVisualSchema.safeParse({ ...base, titulo: "x".repeat(71) })
+      CapsulaContactoVisualSchema.safeParse({ ...base, titulo: dos("x".repeat(71)) })
         .success,
     ).toBe(false);
   });
