@@ -1,5 +1,5 @@
 ---
-description: Plan del sprint en 5 pasos desde el archivo del sprint de la planeadora (inicio ejecutivo + plan + prompt). Plan mode; nada se construye antes del «construye».
+description: Plan del sprint en 5 pasos desde el archivo del sprint de la planeadora (inicio ejecutivo + plan + arranque). Plan mode; nada se construye antes del «construye».
 ---
 
 # /plan-sprint
@@ -11,7 +11,7 @@ con `status: open`.
 ## Pasos
 
 1. **Lee el archivo del sprint entero:** inicio ejecutivo (objetivo, resultado esperado, alcance incluido y
-   excluido, fases, dependencias, riesgos, criterios de fin, «reutiliza»), plan técnico breve y prompt de
+   excluido, fases, dependencias, riesgos, criterios de fin, «reutiliza»), plan técnico breve y arranque de
    arranque, más las referencias que cite (brief, visión, maqueta aprobada en `docs/diseno/`). Si el sprint
    toca una feature votada del roadmap de CV Viva, anótalo.
 2. **Estado real del código y riesgos.** Lee las features existentes que el sprint tocará — el riesgo nº 1

@@ -39,7 +39,7 @@ equivocado.
 2. **El diff ES el plan:** `git status design-sync/` dice exactamente qué publicar. Nada más.
 3. **Publica** con el tool `DesignSync` (schema diferido: cárgalo con `ToolSearch`
    `select:DesignSync`):
-   - `list_files` — verifica el estado remoto (barato, sin prompt de permiso).
+   - `list_files` — verifica el estado remoto (barato, sin pedir permiso).
    - **Comprueba que el conteo remoto coincide con `publishedFiles` de `project.json`
      (kit v1.17.0).** Si NO coincide, **detente y avisa al usuario**: alguien editó en Claude
      Design y el repo diverge en silencio; publicar encima lo pisaría sin dejar rastro. *(Sin
