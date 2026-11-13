@@ -1,4 +1,5 @@
-import type { Ficha } from "./schema";
+import { FICHAS_EN } from "./fichas-en/index.ts";
+import type { Ficha, FichaEs } from "./schema";
 
 /**
  * LA PIRÁMIDE (Sprint 006) — las fichas de actividad del documento de la mamá (/mirada).
@@ -16,9 +17,12 @@ import type { Ficha } from "./schema";
  * cosquillas con su sonido, señalar y decir «tú», «hola» y «chao», las vocales). Solo
  * comportamiento observable; el gate de sensibilidad lo vigila.
  *
+ * Cada ficha nace en español aquí (BASE) y su cara inglesa vive en content/fichas-en/ (S8): redactada,
+ * no traducida, mismos pasos en el mismo orden. `FICHAS` las junta; falta una y truena a propósito.
+ *
  * (Solo `import type` desde ./schema: el generador corre con Node quitando tipos.)
  */
-export const FICHAS: Ficha[] = [
+const BASE: FichaEs[] = [
   // ════════════════ IMITACIÓN (prioridad ahora) ════════════════
   {
     id: "dos-juguetes-iguales",
@@ -1677,6 +1681,25 @@ export const FICHAS: Ficha[] = [
     fuente: "Wetherby, 2014, Pediatrics · Carter, 2011, J Child Psychol Psychiatry",
   },
 ];
+
+/** La biblioteca con sus dos caras. */
+export const FICHAS: Ficha[] = BASE.map((f) => {
+  const en = FICHAS_EN[f.id];
+  if (!en) throw new Error(`Falta la ficha en inglés: ${f.id} (content/fichas-en/)`);
+  if (en.haz.length !== f.haz.length || en.tenALaMano.length !== f.tenALaMano.length) {
+    throw new Error(`La ficha ${f.id} en inglés no tiene los mismos pasos que en español.`);
+  }
+  return {
+    ...f,
+    titulo: { es: f.titulo, en: en.titulo },
+    tenALaMano: f.tenALaMano.map((es, i) => ({ es, en: en.tenALaMano[i] as string })),
+    haz: f.haz.map((es, i) => ({ es, en: en.haz[i] as string })),
+    tuLinea: { es: f.tuLinea, en: en.tuLinea },
+    esperaVer: { es: f.esperaVer, en: en.esperaVer },
+    funcionoSi: { es: f.funcionoSi, en: en.funcionoSi },
+    siNoPasa: { es: f.siNoPasa, en: en.siNoPasa },
+  };
+});
 
 /**
  * Las cápsulas de la app que el mapa deja FUERA del documento. Siguen intactas en la app; aquí

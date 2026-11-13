@@ -4,6 +4,7 @@
 
 import type { z } from "zod";
 import { eliminarBanco } from "@/lib/banco-voz/almacen";
+import { eliminarVideoteca } from "@/lib/videoteca/almacen";
 import {
   AJUSTES_DEFECTO,
   AjustesSchema,
@@ -178,6 +179,8 @@ export async function borrarTodo(): Promise<void> {
   // El banco de voz familiar vive en IndexedDB, no en localStorage: sin esto, "borrar mis datos"
   // dejaría atrás las grabaciones y el botón mentiría (S3). Se ESPERA su resolución real.
   await eliminarBanco();
+  // La videoteca de la familia (S8) también vive en IndexedDB: «borrar todo» la incluye.
+  await eliminarVideoteca();
 
   if (typeof caches !== "undefined") {
     await caches

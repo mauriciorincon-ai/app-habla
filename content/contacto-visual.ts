@@ -1,4 +1,5 @@
-import type { CapsulaContactoVisual } from "./schema";
+import { CONTACTO_VISUAL_EN } from "./contacto-visual-en/index.ts";
+import type { CapsulaContactoVisual, CapsulaContactoVisualEs } from "./schema";
 
 /**
  * Biblioteca de CONTACTO VISUAL (Sprint 005) — el documento que la mamá trabaja sin pantallas.
@@ -18,7 +19,7 @@ import type { CapsulaContactoVisual } from "./schema";
  * (Solo `import type` desde ./schema, como en capsulas.ts: el generador corre con Node
  * quitando tipos y un import de valor sin extensión no resuelve ahí.)
  */
-export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
+const BASE: CapsulaContactoVisualEs[] = [
   // ── Hago lo que él hace ─────────────────────────────────────────────────────────────────
   {
     id: "dos-juguetes-iguales",
@@ -535,3 +536,17 @@ export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = [
     fuente: "Rogers, 2012, J Am Acad Child Adolesc Psychiatry · Halle, 1981, J Appl Behav Anal",
   },
 ];
+
+/** La biblioteca con sus dos caras (S8): la inglesa vive en content/contacto-visual-en/. */
+export const CAPSULAS_CONTACTO_VISUAL: CapsulaContactoVisual[] = BASE.map((c) => {
+  const en = CONTACTO_VISUAL_EN[c.id];
+  if (!en) throw new Error(`Falta la cápsula de contacto visual en inglés: ${c.id} (content/contacto-visual-en/)`);
+  return {
+    ...c,
+    titulo: { es: c.titulo, en: en.titulo },
+    explicacion: { es: c.explicacion, en: en.explicacion },
+    guion: { es: c.guion, en: en.guion },
+    actividad: { ...c.actividad, texto: { es: c.actividad.texto, en: en.actividad } },
+    queNoHacer: { es: c.queNoHacer, en: en.queNoHacer },
+  };
+});

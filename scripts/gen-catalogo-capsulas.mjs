@@ -5,8 +5,11 @@
 //
 // La fuente de verdad es content/capsulas.ts (se importa DIRECTO — cero copias a mano): si el
 // contenido cambia, regenerar con `node scripts/gen-catalogo-capsulas.mjs`.
+// Dos idiomas (S8): cada texto sale como pareja data-l="es" / data-l="en" y un conmutador (patrón de /conoce).
 
 import { writeFileSync } from "node:fs";
+import { DESCRIPCION_ETAPA_EN, NOMBRE_ETAPA_EN, NOMBRE_TECNICA_EN } from "../content/chrome-documentos-en.ts";
+import { IDIOMA_CONMUTADOR, IDIOMA_CSS, IDIOMA_HEAD, idiomaScript, par, parHtml } from "./lib/bilingue.mjs";
 import { CAPSULAS } from "../content/capsulas.ts";
 import {
   DESCRIPCION_ETAPA,
@@ -25,21 +28,36 @@ const fecha = new Date().toISOString().slice(0, 10);
 // MUDARON aquí cuando el bloque se consolidó en una sola casilla (pedido del usuario, gate S4):
 // el juicio se hace donde se lee.
 const JUZGAR_ETAPA = {
-  "sonidos-e-intentos":
-    "¿Te servirían los días difíciles, o si algún día él retrocede? No son para su nivel de hoy: son la red de abajo.",
-  "primeras-frases":
-    "¿Te parecen bien guardadas para cuando junte dos palabras? Recuerda: esta etapa nunca se activa sola.",
+  "sonidos-e-intentos": {
+    es: "¿Te servirían los días difíciles, o si algún día él retrocede? No son para su nivel de hoy: son la red de abajo.",
+    en: "Would they help on hard days, or if one day your child steps back? They are not for today's level: they are the safety net underneath.",
+  },
+  "primeras-frases": {
+    es: "¿Te parecen bien guardadas para cuando junte dos palabras? Recuerda: esta etapa nunca se activa sola.",
+    en: "Do they seem well kept for when your child joins two words? Remember: this stage never turns on by itself.",
+  },
 };
 const JUZGAR_TECNICA_PALABRAS = {
-  modelado:
-    "¿Reconoces tu día real en ellas — el carro, vestirse, el mercado, la hora de dormir? Pediste «más novedosas»: ¿lo son?",
-  "espera-estructurada":
-    "¿Son hacibles sin que se te vuelva una tortura la comida o el juego?",
-  "expansion-recast":
-    "¿Te queda claro qué decir EXACTAMENTE en el momento? (esa es la prueba: que no tengas que pensarlo).",
-  "seguir-interes": "¿Te suenan a jugar con él y no a darle una lección?",
-  "estimulacion-focalizada":
-    "¿Te parecen repetibles sin volverse machaconas?",
+  modelado: {
+    es: "¿Reconoces tu día real en ellas — el carro, vestirse, el mercado, la hora de dormir? Pediste «más novedosas»: ¿lo son?",
+    en: "Do you recognize your real day in them — the car, getting dressed, the market, bedtime? You asked for “more novel”: are they?",
+  },
+  "espera-estructurada": {
+    es: "¿Son hacibles sin que se te vuelva una tortura la comida o el juego?",
+    en: "Can you do them without mealtime or play turning into torture?",
+  },
+  "expansion-recast": {
+    es: "¿Te queda claro qué decir EXACTAMENTE en el momento? (esa es la prueba: que no tengas que pensarlo).",
+    en: "Is it clear what to say EXACTLY in the moment? (that is the test: you should not have to think about it).",
+  },
+  "seguir-interes": {
+    es: "¿Te suenan a jugar con él y no a darle una lección?",
+    en: "Do they sound like playing with your child, and not like giving a lesson?",
+  },
+  "estimulacion-focalizada": {
+    es: "¿Te parecen repetibles sin volverse machaconas?",
+    en: "Can they be repeated without becoming nagging?",
+  },
 };
 
 let cuerpo = "";
@@ -48,32 +66,32 @@ for (const etapa of ETAPAS) {
   if (deEtapa.length === 0) continue;
   cuerpo += `
   <section class="etapa">
-    <h2>${esc(NOMBRE_ETAPA[etapa])} <span class="conteo">(${deEtapa.length} cápsulas)</span></h2>
-    <p class="descripcion">${esc(DESCRIPCION_ETAPA[etapa])}</p>`;
+    <h2>${par(NOMBRE_ETAPA[etapa], NOMBRE_ETAPA_EN[etapa])} <span class="conteo">(${par(`${deEtapa.length} cápsulas`, `${deEtapa.length} tips`)})</span></h2>
+    <p class="descripcion">${par(DESCRIPCION_ETAPA[etapa], DESCRIPCION_ETAPA_EN[etapa])}</p>`;
   if (JUZGAR_ETAPA[etapa]) {
     cuerpo += `
-    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ${esc(JUZGAR_ETAPA[etapa])}</p>`;
+    <p class="juzgar">${parHtml("<strong>Qué juzgar aquí:</strong> ", "<strong>What to judge here:</strong> ")}${par(JUZGAR_ETAPA[etapa].es, JUZGAR_ETAPA[etapa].en)}</p>`;
   }
   for (const tecnica of TECNICAS) {
     const grupo = deEtapa.filter((c) => c.tecnica === tecnica);
     if (grupo.length === 0) continue;
     cuerpo += `
-    <h3>${esc(NOMBRE_TECNICA[tecnica])} <span class="conteo">(${grupo.length})</span></h3>`;
+    <h3>${par(NOMBRE_TECNICA[tecnica], NOMBRE_TECNICA_EN[tecnica])} <span class="conteo">(${grupo.length})</span></h3>`;
     if (etapa === "palabras-sueltas" && JUZGAR_TECNICA_PALABRAS[tecnica]) {
       cuerpo += `
-    <p class="juzgar"><strong>Qué juzgar aquí:</strong> ${esc(JUZGAR_TECNICA_PALABRAS[tecnica])}</p>`;
+    <p class="juzgar">${parHtml("<strong>Qué juzgar aquí:</strong> ", "<strong>What to judge here:</strong> ")}${par(JUZGAR_TECNICA_PALABRAS[tecnica].es, JUZGAR_TECNICA_PALABRAS[tecnica].en)}</p>`;
     }
     for (const c of grupo) {
       cuerpo += `
     <article class="capsula" id="${esc(c.id)}">
-      <label class="revision"><input type="checkbox" data-id="${esc(c.id)}"> Revisada</label>
-      <h4>${esc(c.titulo.es)}</h4>
-      <p class="chips"><span class="chip">${esc(NOMBRE_TECNICA[c.tecnica])}</span><span class="chip">${
-        c.actividad.conPantalla ? "con pantalla" : "sin pantalla"
+      <label class="revision"><input type="checkbox" data-id="${esc(c.id)}"> ${par("Revisada", "Reviewed")}</label>
+      <h4>${par(c.titulo.es, c.titulo.en)}</h4>
+      <p class="chips"><span class="chip">${par(NOMBRE_TECNICA[c.tecnica], NOMBRE_TECNICA_EN[c.tecnica])}</span><span class="chip">${
+        c.actividad.conPantalla ? par("con pantalla", "with screen") : par("sin pantalla", "no screen")
       }</span>${c.etiquetas.map((e) => `<span class="chip suave">${esc(e)}</span>`).join("")}</p>
-      <p class="explicacion">${esc(c.explicacion.es)}</p>
-      <blockquote><strong>Tu línea:</strong> ${esc(c.guion.es)}</blockquote>
-      <p class="actividad"><strong>La actividad:</strong> ${esc(c.actividad.texto.es)}</p>
+      <p class="explicacion">${par(c.explicacion.es, c.explicacion.en)}</p>
+      <blockquote>${parHtml("<strong>Tu línea:</strong> ", "<strong>Your line:</strong> ")}${par(c.guion.es, c.guion.en)}</blockquote>
+      <p class="actividad">${parHtml("<strong>La actividad:</strong> ", "<strong>The activity:</strong> ")}${par(c.actividad.texto.es, c.actividad.texto.en)}</p>
       <p class="fuente">${esc(c.fuente)}</p>
     </article>`;
     }
@@ -86,10 +104,12 @@ const html = `<!doctype html>
 <html lang="es-CO">
 <head>
 <meta charset="utf-8">
+${IDIOMA_HEAD}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hablemos San — Catálogo de las ${CAPSULAS.length} cápsulas (bloque I del gate)</title>
+<title>Hablemos San — Catálogo de las cápsulas</title>
 <style>
   :root { --fondo:#fbf8f2; --superficie:#f5f0e5; --borde:#ece4d2; --tinta:#1f2420; --suave:#5a615c; --acento:#527947; --acento-suave:#eef2ec; }
+${IDIOMA_CSS}
   * { box-sizing:border-box; }
   body { margin:0; padding:2rem 1rem 4rem; background:var(--fondo); color:var(--tinta); font:16px/1.55 Georgia,"Times New Roman",serif; }
   main { max-width:46rem; margin:0 auto; }
@@ -120,19 +140,32 @@ const html = `<!doctype html>
 </head>
 <body>
 <main>
-  <h1>Las ${CAPSULAS.length} cápsulas, completas — tu veredicto (bloque I)</h1>
-  <p class="aviso">Instrumento de revisión del gate ⭐ (S4): la app entrega la cápsula <strong>una por día</strong> y todavía no
+${IDIOMA_CONMUTADOR}
+  <h1>${par(`Las ${CAPSULAS.length} cápsulas, completas — tu veredicto (bloque I)`, `All ${CAPSULAS.length} tips, in full — your verdict (block I)`)}</h1>
+  <p class="aviso">${parHtml(
+    `Instrumento de revisión del gate ⭐ (S4): la app entrega la cápsula <strong>una por día</strong> y todavía no
   tiene histórico navegable (está en el backlog) — este catálogo existe para que puedas leerlas <strong>todas, de corrido</strong>,
   tal cual viven en la app (generado directo de <code>content/capsulas.ts</code> el ${fecha}; se regenera con
   <code>node scripts/gen-catalogo-capsulas.mjs</code>). La pregunta de siempre por cada una: ¿la línea la dirías tal cual
   en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.
   Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (las aprobaste el 2026-07-12 y ninguna se botó):
-  confirma que las reconoces cuando te las cruces.</p>
-  <p class="progreso"><span id="hechas">0</span> de ${CAPSULAS.length} revisadas · tu avance queda guardado en este navegador</p>
+  confirma que las reconoces cuando te las cruces.`,
+    `Review instrument for the ⭐ gate (S4): the app delivers the tip <strong>one per day</strong> and does not yet have a
+  browsable history (it is in the backlog) — this catalog exists so you can read <strong>all of them, straight through</strong>,
+  exactly as they live in the app (generated directly from <code>content/capsulas.ts</code> on ${fecha}; regenerate with
+  <code>node scripts/gen-catalogo-capsulas.mjs</code>). The usual question for each one: would you say the line as written
+  at home? Can the activity be done today? Do you recognize your real day in it? If one does not work, tell me which and why — it gets replaced.
+  The <strong>14 originals from S1</strong> are still alive inside the 50 (you approved them on 2026-07-12 and none was dropped):
+  confirm you recognize them when you come across them.`,
+  )}</p>
+  <p class="progreso"><span id="hechas">0</span> ${par(`de ${CAPSULAS.length} revisadas · tu avance queda guardado en este navegador`, `of ${CAPSULAS.length} reviewed · your progress is saved in this browser`)}</p>
   ${cuerpo}
-  <footer>Hablemos San — catálogo de contenido para el gate del padre. Las fuentes citadas son las mismas que la app
-  guarda con cada cápsula (§A.3 de la investigación). Este documento no es la app: es el contenido, desnudo, para tu juicio.</footer>
+  <footer>${par(
+    "Hablemos San — catálogo de contenido para el gate del padre. Las fuentes citadas son las mismas que la app guarda con cada cápsula (§A.3 de la investigación). Este documento no es la app: es el contenido, desnudo, para tu juicio.",
+    "Hablemos San — content catalog for the parent's gate. The cited sources are the same ones the app keeps with each tip (§A.3 of the research). This document is not the app: it is the bare content, for your judgment.",
+  )}</footer>
 </main>
+${idiomaScript({ es: "Hablemos San — Catálogo de las cápsulas", en: "Hablemos San — Tip catalog" })}
 <script>
   var CLAVE = "catalogo-capsulas-v1:";
   var cajas = document.querySelectorAll(".revision input");

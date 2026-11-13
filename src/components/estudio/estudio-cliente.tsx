@@ -39,6 +39,7 @@ import {
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import type { Texto } from "@/lib/idioma";
 import { estudio } from "@/lib/idioma/textos/estudio";
+import { videoteca } from "@/lib/idioma/textos/videoteca";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
 const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], Texto> =
@@ -240,6 +241,19 @@ function Gestion({
       {grabadosItems.length > 0 ? (
         <ListaGrabados grabadosItems={grabadosItems} onBorrado={onBorrado} />
       ) : null}
+
+      <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+        <h2 className="font-medium">{tx(videoteca.entrada.titulo)}</h2>
+        <p className="text-tinta-suave mt-2 text-sm">{tx(videoteca.entrada.texto)}</p>
+        <Link
+          href="/estudio/videos"
+          prefetch={false}
+          className="border-borde text-tinta mt-4 inline-flex min-h-12 items-center rounded-xl border px-6 font-medium"
+          data-testid="ir-a-videos"
+        >
+          {tx(videoteca.entrada.abrir)}
+        </Link>
+      </section>
     </div>
   );
 }

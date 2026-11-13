@@ -32,8 +32,8 @@ const RED_PROHIBIDA = [
 ];
 
 const MENSAJE_BANCO =
-  "Regla dura 2-bis: el banco de voz familiar vive SOLO en storage local. " +
-  "Nada de red: ninguna grabación sale del dispositivo.";
+  "Regla dura 2-bis: el banco de voz y la videoteca de la familia viven SOLO en storage local. " +
+  "Nada de red: ninguna grabación ni video sale del dispositivo.";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -77,7 +77,7 @@ const eslintConfig = defineConfig([
   },
   {
     // El banco de voz y el resolver de audio: red PROHIBIDA, storage permitido.
-    files: ["src/lib/banco-voz/**/*.ts", "src/lib/audio/**/*.ts"],
+    files: ["src/lib/banco-voz/**/*.ts", "src/lib/audio/**/*.ts", "src/lib/videoteca/**/*.ts"],
     rules: {
       "no-restricted-globals": [
         "error",

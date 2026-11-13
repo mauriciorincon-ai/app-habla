@@ -28,18 +28,20 @@ const CAPSULAS_DEL_MAPA = 74;
 const esc = (t: string) =>
   t.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 
+const dos = (es: string, en: string = es) => ({ es, en });
+
 const base: Ficha = {
   id: "x",
   grupo: "imitacion",
   prioridad: "alta",
   tecnica: "lo-copio",
-  titulo: "Título",
-  tenALaMano: ["Dos carros iguales."],
-  haz: ["Uno.", "Dos.", "Tres."],
-  tuLinea: "«Igual que tú.»",
-  esperaVer: "Que te mire.",
-  funcionoSi: "te mira mientras lo copias.",
-  siNoPasa: "Más cerca, más grande.",
+  titulo: dos("Título", "Title"),
+  tenALaMano: [dos("Dos carros iguales.", "Two matching cars.")],
+  haz: [dos("Uno.", "One."), dos("Dos.", "Two."), dos("Tres.", "Three.")],
+  tuLinea: dos("«Igual que tú.»", "“Same as you.”"),
+  esperaVer: dos("Que te mire.", "That they look at you."),
+  funcionoSi: dos("te mira mientras lo copias.", "they look at you while you copy them."),
+  siNoPasa: dos("Más cerca, más grande.", "Closer, bigger."),
   duracion: "3–5 min",
   momentos: ["juego"],
   conQuien: "mama",
@@ -84,18 +86,20 @@ describe("FichaSchema — la ficha de actividad", () => {
     }
   });
   it("los pasos son entre tres y cinco, uno por acción", () => {
-    expect(valida({ haz: ["Uno.", "Dos."] })).toBe(false);
+    expect(valida({ haz: [dos("Uno."), dos("Dos.")] })).toBe(false);
     expect(
-      valida({ haz: ["1", "2", "3", "4", "5", "6"].map((n) => `Paso ${n}.`) }),
+      valida({ haz: ["1", "2", "3", "4", "5", "6"].map((n) => dos(`Paso ${n}.`, `Step ${n}.`)) }),
     ).toBe(false);
   });
   it("siempre hay algo que tener a la mano, y la línea cabe en una frase", () => {
     expect(valida({ tenALaMano: [] })).toBe(false);
-    expect(valida({ tuLinea: "a".repeat(141) })).toBe(false);
+    expect(valida({ tuLinea: dos("a".repeat(141)) })).toBe(false);
   });
   it("«Funcionó si» describe lo que se ve, sin números", () => {
-    expect(valida({ funcionoSi: "te mira 3 veces." })).toBe(false);
-    expect(valida({ funcionoSi: "lo logra en 2 semanas." })).toBe(false);
+    expect(valida({ funcionoSi: dos("te mira 3 veces.", "they look at you.") })).toBe(false);
+    expect(valida({ funcionoSi: dos("lo logra en 2 semanas.", "they get it.") })).toBe(false);
+    // También en inglés: el número en la cara inglesa tampoco pasa.
+    expect(valida({ funcionoSi: dos("te mira.", "they look at you 3 times.") })).toBe(false);
   });
   it("la prioridad alta es solo de imitación, atención conjunta y juego", () => {
     expect(valida({ grupo: "comprender", prioridad: "alta" })).toBe(false);
@@ -137,9 +141,16 @@ describe("FichaSchema — la ficha de actividad", () => {
     expect(
       valida({
         conQuien: "hermano",
-        tuLinea: "Al hermano: «Igualito que yo».",
+        tuLinea: dos("Al hermano: «Igualito que yo».", "To the sibling: “Just like me.”"),
       }),
     ).toBe(true);
+    // El hermano tiene que aparecer en las DOS caras.
+    expect(
+      valida({
+        conQuien: "hermano",
+        tuLinea: dos("Al hermano: «Igualito que yo».", "“Just like me.”"),
+      }),
+    ).toBe(false);
   });
   it("el origen es trazable y cuadra con su tipo", () => {
     expect(
@@ -270,7 +281,7 @@ describe("el documento y los textos no se quedan atrás de la biblioteca", () =>
     expect(html.split('<article class="ficha"').length - 1).toBe(FICHAS.length);
     for (const f of FICHAS) {
       expect(html, `falta la ficha ${f.id} (¿se corrió pnpm gen:piramide?)`).toContain(`id="${f.id}"`);
-      expect(html, `la ficha ${f.id} cambió y el documento no (¿pnpm gen:piramide?)`).toContain(esc(f.funcionoSi));
+      expect(html, `la ficha ${f.id} cambió y el documento no (¿pnpm gen:piramide?)`).toContain(esc(f.funcionoSi.es));
     }
   });
 
@@ -286,3 +297,75 @@ describe("el documento y los textos no se quedan atrás de la biblioteca", () =>
   });
 });
 
+describe("las fichas en los dos idiomas (S8)", () => {
+  it("cada ficha trae sus dos caras: mismos pasos, en inglés distinto del español y sin huérfanas", async () => {
+    const { FICHAS_EN } = await import("@content/fichas-en/index.ts");
+    const ids = new Set(FICHAS.map((f) => f.id));
+    for (const id of Object.keys(FICHAS_EN)) expect(ids.has(id), `ficha huérfana en fichas-en: ${id}`).toBe(true);
+    expect(Object.keys(FICHAS_EN)).toHaveLength(FICHAS.length);
+    for (const f of FICHAS) {
+      const en = FICHAS_EN[f.id];
+      expect(en?.haz.length, `${f.id}: pasos`).toBe(f.haz.length);
+      expect(en?.tenALaMano.length, `${f.id}: a la mano`).toBe(f.tenALaMano.length);
+      expect(f.titulo.en, f.id).not.toBe(f.titulo.es);
+      expect(f.tuLinea.en, f.id).not.toBe(f.tuLinea.es);
+      for (const campo of ["titulo", "tuLinea", "esperaVer", "funcionoSi", "siNoPasa"] as const) {
+        expect(f[campo].en, `${f.id}.${campo}`).not.toMatch(/\n/);
+        // En inglés no queda español de relleno: ni «él», ni «tú», ni signos de apertura.
+        expect(f[campo].en, `${f.id}.${campo}`).not.toMatch(/[¿¡«»]|\b(él|tú|mamá)\b/i);
+      }
+    }
+  });
+
+  it("el inglés habla del niño en neutro y del hermano como «sibling»", async () => {
+    for (const f of FICHAS) {
+      const todo = [f.titulo.en, ...f.tenALaMano.map((t) => t.en), ...f.haz.map((t) => t.en), f.tuLinea.en, f.esperaVer.en, f.funcionoSi.en, f.siNoPasa.en].join(" ");
+      expect(todo, f.id).not.toMatch(/\b(kid|kids|toddler|baby|patient|brother|sister)\b/i);
+    }
+  });
+
+  it("los rótulos en inglés tienen exactamente las mismas claves que los de español", async () => {
+    const en = await import("@content/chrome-documentos-en.ts");
+    const { DESCRIPCION_ETAPA, NOMBRE_ETAPA, NOMBRE_MOMENTO, NOMBRE_TECNICA, NOMBRE_TECNICA_FICHA, DESCRIPCION_GRUPO } = await import("@content/schema");
+    const claves = (o: object) => Object.keys(o).sort();
+    expect(claves(en.NOMBRE_GRUPO_EN)).toEqual(claves(NOMBRE_GRUPO));
+    expect(claves(en.DESCRIPCION_GRUPO_EN)).toEqual(claves(DESCRIPCION_GRUPO));
+    expect(claves(en.NOMBRE_MOMENTO_EN)).toEqual(claves(NOMBRE_MOMENTO));
+    expect(claves(en.NOMBRE_TECNICA_FICHA_EN)).toEqual(claves(NOMBRE_TECNICA_FICHA));
+    expect(claves(en.NOMBRE_ETAPA_EN)).toEqual(claves(NOMBRE_ETAPA));
+    expect(claves(en.DESCRIPCION_ETAPA_EN)).toEqual(claves(DESCRIPCION_ETAPA));
+    expect(claves(en.NOMBRE_TECNICA_EN)).toEqual(claves(NOMBRE_TECNICA));
+    for (const g of GRUPOS) expect(claves(en.PROGRESIONES_EN[g]), `pasos de ${g}`).toEqual(claves(PROGRESIONES[g]));
+  });
+
+  it("las cápsulas de contacto visual traen sus dos caras y ninguna huérfana", async () => {
+    const { CONTACTO_VISUAL_EN } = await import("@content/contacto-visual-en/index.ts");
+    const ids = new Set(CAPSULAS_CONTACTO_VISUAL.map((c) => c.id));
+    for (const id of Object.keys(CONTACTO_VISUAL_EN)) expect(ids.has(id), `huérfana: ${id}`).toBe(true);
+    for (const c of CAPSULAS_CONTACTO_VISUAL) {
+      expect(c.titulo.en, c.id).not.toBe(c.titulo.es);
+      expect(c.explicacion.en, c.id).not.toBe(c.explicacion.es);
+      expect(c.guion.en, c.id).not.toMatch(/\n|[¿¡«»]/);
+      expect(c.queNoHacer.en, c.id).not.toMatch(/[¿¡«»]/);
+    }
+  });
+
+  it("los documentos salen en los dos idiomas con paridad: cada texto en español tiene su hermano en inglés", () => {
+    for (const ruta of ["docs/LA-PIRAMIDE.html", "docs/CATALOGO-CAPSULAS.html"]) {
+      const html = leer(ruta);
+      // Solo el cuerpo (el CSS menciona los selectores data-l).
+      const cuerpo = html.slice(html.indexOf("<body>"));
+      const orden = [...cuerpo.matchAll(/data-l="(es|en)"/g)].map((m) => m[1]);
+      expect(orden.length, ruta).toBeGreaterThan(100);
+      orden.forEach((l, i) => expect(l, `${ruta}: desfase de idiomas en el texto nº ${i}`).toBe(i % 2 === 0 ? "es" : "en"));
+      expect(html, ruta).toContain('<button type="button" data-idioma="en"');
+      expect(html, ruta).toContain("habla:v1:ajustes");
+    }
+  });
+
+  it("/mirada sirve el documento bilingüe (el que copia copiar-documentos.mjs)", () => {
+    const mirada = leer("docs/LA-PIRAMIDE.html");
+    expect(mirada).toContain("The pyramid, at home");
+    expect(mirada).toContain("La pirámide, en casa");
+  });
+});

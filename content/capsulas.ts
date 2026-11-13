@@ -1,4 +1,4 @@
-import { CAPSULAS_EN } from "./capsulas-en";
+import { CAPSULAS_EN } from "./capsulas-en/index.ts";
 import type { Capsula, CapsulaEs, EtiquetaCapsula } from "./schema";
 
 /**
