@@ -224,6 +224,27 @@ ALCANCE_GATE.push(
   "src/components/ajustes/nivel-contacto-visual.tsx",
   "tests/unit/contacto-visual-hoy.test.ts",
   "tests/e2e/contacto-visual-hoy.spec.ts",
+  // S9: «Cuentos de casa» (ADR-019). La biblioteca, el lote de prueba y la skill de la bandeja se vigilan.
+  "content/cuentos.ts",
+  "decisions/019-stories-code-first.md",
+  "src/lib/cuentos/estado.ts",
+  "src/lib/bandeja/contrato.ts",
+  "src/lib/bandeja/cuentos-del-mes.ts",
+  "src/lib/bandeja/sensibilidad.ts",
+  "src/lib/bandeja/CONTRATO.lock",
+  "src/components/cuentos/cuentos-adulto.tsx",
+  "src/components/cuentos/cuentos-nino.tsx",
+  "src/components/cuentos/narrar-cuento.tsx",
+  "src/app/cuentos/page.tsx",
+  "src/app/estudio/cuentos/page.tsx",
+  ".claude/skills/bandeja.md",
+  "scripts/validar-lote-cuentos.mjs",
+  "tests/fixtures/lote-cuentos-prueba.json",
+  "tests/unit/bandeja.test.ts",
+  "tests/unit/cuentos.test.ts",
+  "tests/unit/privacidad-cuentos.test.ts",
+  "tests/unit/privado-ignorado.test.ts",
+  "tests/e2e/cuentos.spec.ts",
 );
 
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");

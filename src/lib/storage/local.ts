@@ -28,6 +28,11 @@ import {
   type Sesion,
 } from "./schemas";
 import { fechaHoy } from "@/lib/fecha";
+import {
+  CUENTOS_VACIO,
+  CuentosGuardadosSchema,
+  type CuentosGuardados,
+} from "@/lib/cuentos/estado";
 
 const PREFIJO = "habla:";
 
@@ -38,6 +43,7 @@ export const CLAVES = {
   gemelas: `${PREFIJO}v1:gemelas`,
   sesiones: `${PREFIJO}v1:sesiones`,
   objetivo: `${PREFIJO}v1:objetivo`,
+  cuentos: `${PREFIJO}v1:cuentos`,
 } as const;
 
 function disponible(): boolean {
@@ -160,6 +166,15 @@ export const borrarObjetivo = (): void => {
   if (!disponible()) return;
   window.localStorage.removeItem(CLAVES.objetivo);
 };
+
+/** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
+export function leerCuentos(): CuentosGuardados {
+  return leer(CLAVES.cuentos, CuentosGuardadosSchema) ?? CUENTOS_VACIO;
+}
+
+export function guardarCuentos(valor: CuentosGuardados): void {
+  guardar(CLAVES.cuentos, CuentosGuardadosSchema, valor);
+}
 
 /**
  * "Borrar todos mis datos" del panel de ajustes: total y honesto. Quita todo lo de la app y,

@@ -35,6 +35,7 @@ import { useT } from "@/lib/idioma/estado";
 import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
 import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { hoy } from "@/lib/idioma/textos/hoy";
+import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { ContactoVisualHoy } from "./contacto-visual-hoy";
 import { Onboarding } from "./onboarding";
 
@@ -229,6 +230,16 @@ export function HoyCliente() {
 
       {/* S9: una actividad de contacto visual por día, junto a la cápsula, calibrada al paso que eligió el adulto. */}
       <ContactoVisualHoy fecha={fecha} nivel={ajustes.nivelMirada} />
+
+      {/* «Cuentos de casa» (S9): la biblioteca y lo que el adulto aprobó, a un toque. */}
+      <Link
+        href="/cuentos"
+        prefetch={false}
+        className="text-tinta bg-superficie shadow-tarjeta flex min-h-12 items-center rounded-xl px-4 py-3 font-medium"
+        data-testid="ir-a-cuentos-hoy"
+      >
+        {tx(cuentos.entrada.hoy)} →
+      </Link>
 
       {/* El juego SIEMPRE está a un toque, sea cual sea la cápsula del día. Hallazgo del primer
           uso real (2026-07-12): la entrada al juego solo existía los días de actividad con

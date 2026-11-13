@@ -291,12 +291,13 @@ function SeccionVozFamiliar({
     void Promise.all([
       import("@/lib/banco-voz/almacen"),
       import("@/lib/banco-voz/catalogo"),
-    ]).then(([{ listarIds }, { catalogoGrabable }]) => {
+    ]).then(([{ listarIds }, { catalogoGrabable, esDeCuento }]) => {
       // El banco guarda las grabaciones de los dos idiomas: el total cuenta las posibles en ambos.
       setTotal(catalogoGrabable("es").length + catalogoGrabable("en").length);
       // Banco inaccesible (IndexedDB roto) = banco vacío: la sección no se rompe (M-1).
       listarIds()
-        .then((ids) => setGrabados(ids.length))
+        // La narración de los cuentos (S9) vive en el banco pero no es del catálogo: no entra a la cuenta.
+        .then((ids) => setGrabados(ids.filter((id) => !esDeCuento(id)).length))
         .catch(() => setGrabados(0));
     });
   };
