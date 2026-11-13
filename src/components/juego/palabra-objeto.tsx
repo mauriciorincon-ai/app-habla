@@ -14,6 +14,9 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PICTOGRAMAS } from "@content/pictogramas";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { juegos } from "@/lib/idioma/textos/juegos";
+import { palabras as txp } from "@/lib/idioma/textos/palabras";
 import {
   ajustesActuales,
   guardarAjustesEnStore,
@@ -60,6 +63,8 @@ function JuegoListo({
   temas: Tema[] | null;
 }) {
   const router = useRouter();
+  const tx = useT();
+  const idioma = useIdioma();
 
   // La baraja del día: los pictos de SUS temas, en orden estable durante toda la sesión. Si hay un
   // objetivo de la semana, sus dibujos van al frente (partición estable). SIN objetivo, el orden es
@@ -74,7 +79,9 @@ function JuegoListo({
     return priorizarEstable(
       barajado,
       (p) =>
-        objetivo.coincidePalabra(p.palabra) || objetivo.coincideTema(p.tema),
+        objetivo.coincidePalabra(p.palabra) ||
+        objetivo.coincidePalabra(p.en) ||
+        objetivo.coincideTema(p.tema),
     );
   }, [temas]);
 
@@ -104,6 +111,8 @@ function JuegoListo({
   const armadoDesdeRef = useRef(0);
 
   const picto = mazo[indice % mazo.length];
+  /** La palabra que se ve y se nombra: en inglés, la etiqueta inglesa del mismo dibujo (S8). */
+  const palabraVisible = idioma === "en" ? picto.en : picto.palabra;
   // Ref al picto actual: `alVocalizar` (useCallback estable) necesita la palabra de HOY sin
   // recrear el callback ni re-suscribir el escenario. Patrón "última referencia" (se escribe en un
   // efecto, no en el render: leer/escribir un ref durante el render está prohibido).
@@ -248,9 +257,9 @@ function JuegoListo({
     >
       {actual.fase === "guion" ? (
         <GuionCard
-          etiqueta="Palabra y dibujo"
-          guion="Señala el dibujo, nómbralo UNA vez —“¡perro!”— y espera tres segundos en silencio."
-          nota="El dibujo se enciende con CUALQUIER sonido que él haga: no tiene que decir la palabra ni pronunciarla bien. Si dijo algo parecido, el que lo sabe eres tú — la app no lo juzga."
+          etiqueta={tx(txp.guion.etiqueta)}
+          guion={tx(txp.guion.guion)}
+          nota={tx(txp.guion.nota)}
           onEmpezar={empezar}
           listo
         />
@@ -274,13 +283,13 @@ function JuegoListo({
               data-testid="contador-activaciones"
               aria-live="polite"
             >
-              Dibujos encendidos con su voz:{" "}
+              {tx(txp.juego.encendidos)}{" "}
               <span className="font-sans font-semibold tabular-nums">
                 {activaciones}
               </span>
               {reconocidas > 0 ? (
                 <>
-                  {" · "}Palabras que TÚ oíste:{" "}
+                  {" · "}{tx(txp.juego.tuOiste)}{" "}
                   <span className="text-exito font-sans font-semibold tabular-nums">
                     {reconocidas}
                   </span>
@@ -296,7 +305,7 @@ function JuegoListo({
               className="bg-acento text-sobre-acento min-h-16 flex-1 rounded-2xl px-6 text-lg font-medium"
               data-testid="siguiente-picto"
             >
-              Otro dibujo
+              {tx(txp.juego.otroDibujo)}
             </button>
             <button
               type="button"
@@ -304,7 +313,7 @@ function JuegoListo({
               className="border-borde text-tinta min-h-16 flex-1 rounded-2xl border px-6 text-lg font-medium"
               data-testid="terminar"
             >
-              Ya jugamos
+              {tx(juegos.comun.yaJugamos)}
             </button>
           </div>
 
@@ -327,8 +336,8 @@ function JuegoListo({
             data-testid="dijo-la-palabra"
           >
             {reconocidaAhora
-              ? `Dijiste que dijo “${picto.palabra}”`
-              : `¿Dijo “${picto.palabra}”? Tócalo tú`}
+              ? tx(txp.juego.dijoAfirma, { palabra: palabraVisible })
+              : tx(txp.juego.dijoPregunta, { palabra: palabraVisible })}
           </button>
         </section>
       ) : null}
@@ -339,7 +348,7 @@ function JuegoListo({
           palabrasEncendidas={palabrasEncendidas}
           onOtraVez={reiniciarSesion}
           onTerminar={() => router.push("/jugar")}
-          etiquetaTerminar="Elegir otro juego"
+          etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}
         />
       ) : null}
     </MarcoJuego>

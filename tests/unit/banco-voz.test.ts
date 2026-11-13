@@ -2,6 +2,9 @@ import "fake-indexeddb/auto";
 import { describe, expect, it, beforeEach } from "vitest";
 import {
   catalogoGrabable,
+  esDelIdioma,
+  idCelebracion,
+  idConsigna,
   idPalabra,
   type ItemGrabable,
 } from "@/lib/banco-voz/catalogo";
@@ -37,6 +40,30 @@ describe("banco-voz: el catálogo grabable", () => {
   it("el id de una palabra ignora tildes (la clave no cambia por un acento)", () => {
     expect(idPalabra("camión")).toBe(idPalabra("camion"));
     expect(idPalabra("pájaro")).toBe("palabra:pajaro");
+  });
+
+  it("en inglés el catálogo es propio: ids con su prefijo y texto en inglés (S8)", () => {
+    const en = catalogoGrabable("en");
+    const ids = en.map((i) => i.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const cat of ["palabra", "consigna", "celebracion"] as const) {
+      expect(en.some((i) => i.categoria === cat)).toBe(true);
+    }
+    expect(idPalabra("dog", "en")).toBe("palabra-en:dog");
+    expect(idConsigna("sirena", "en")).toBe("consigna-en:sirena");
+    expect(idCelebracion("casi", "en")).toBe("celebracion-en:casi");
+    // El español no cambia: lo grabado antes sigue sonando.
+    expect(idPalabra("perro")).toBe("palabra:perro");
+    expect(idConsigna("aaah")).toBe("consigna:aaah");
+    // Nada del inglés comparte clave con el español (bus, piano… se dicen distinto).
+    const claves = new Set(catalogo.map((i) => i.id));
+    expect(ids.filter((id) => claves.has(id))).toEqual([]);
+    expect(en.filter((i) => i.categoria === "consigna").map((i) => i.texto)).toEqual([
+      "Make a siren voice: aaaAAAaaa",
+      "Make your voice sound: aaaaah",
+    ]);
+    expect(ids.every((id) => esDelIdioma(id, "en"))).toBe(true);
+    expect(catalogo.every((i) => esDelIdioma(i.id, "es"))).toBe(true);
   });
 
   it("NO incluye celebraciones con números (esas no se pueden grabar)", () => {

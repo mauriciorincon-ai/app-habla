@@ -65,4 +65,15 @@ describe("lote de pictogramas ARASAAC", () => {
       expect(ruta).not.toMatch(/^https?:/);
     }
   });
+
+  it("cada dibujo trae su etiqueta en inglés: una palabra suelta, sin repetirse (S8)", () => {
+    for (const picto of PICTOGRAMAS) {
+      expect(picto.en, picto.id).toMatch(/^[a-z]{2,12}$/);
+    }
+    const etiquetas = PICTOGRAMAS.map((p) => p.en);
+    expect(new Set(etiquetas).size).toBe(etiquetas.length);
+    // Las palabras corrientes de los niños, no las raras de la fuente (lorry, aeroplane, tortoise).
+    for (const p of ["truck", "plane", "turtle", "rock", "dog", "cat"]) expect(etiquetas).toContain(p);
+    for (const p of ["lorry", "aeroplane", "tortoise"]) expect(etiquetas).not.toContain(p);
+  });
 });

@@ -181,6 +181,18 @@ export function archivosDeIdiomas(raiz: string): string[] {
   return out;
 }
 
+// S8: el dato nuevo del inglés (etiquetas, pares, diccionarios y vocabulario del alineador) entra al gate.
+ALCANCE_GATE.push(
+  "content/pictogramas.ts",
+  "content/pares-gemelos.ts",
+  "src/lib/objetivo/palabras-es.ts",
+  "src/lib/objetivo/palabras-en.ts",
+  "src/lib/objetivo/etiquetas-en.ts",
+  "src/lib/objetivo/LICENCIA-diccionario.md",
+  "src/lib/banco-voz/catalogo.ts",
+  "scripts/gen-diccionario.mjs",
+);
+
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */

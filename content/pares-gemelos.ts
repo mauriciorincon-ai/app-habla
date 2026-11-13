@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Idioma } from "@/lib/idioma";
 import { ETAPAS, type Etapa } from "./schema";
 
 /**
@@ -104,7 +105,7 @@ export const PARES_GEMELOS: ParGemelo[] = [
   },
   // ── Ampliación del gate S4 (bloque L: "si son pocas necesitamos más") ──────────────────────
   // Misma investigación § A.4; pictos revisados visualmente (se descartaron "rama" y "piso" por
-  // depender de flechas didácticas o escenas abstractas — débiles para 4-6 años).
+  // depender de flechas didácticas o escenas abstractas — débiles a esa edad).
   {
     id: "rana-lana",
     etapaMinima: "palabras-sueltas",
@@ -149,7 +150,42 @@ export const PARES_GEMELOS: ParGemelo[] = [
   },
 ];
 
+/**
+ * PARES MÍNIMOS DEL INGLÉS (S8, regla 20): no son los del español traducidos — foca/boca no es un par en
+ * inglés. Cada par se distingue por UN sonido del inglés (bed/bell, boat/boot, house/mouse) y usa los
+ * dibujos que ya viajan (los del lote y los de gemelas) más los que baja `scripts/descargar-gemelas-en.mjs`,
+ * todos ARASAAC (CC BY-NC-SA, misma atribución). La etiqueta de cada dibujo es la `en` de pictogramas.ts
+ * (o la de ARASAAC): bone = hueso, boat = barco, boot = bota, bell = campana, bull = toro, rock = roca…
+ */
+export const PARES_GEMELOS_EN: ParGemelo[] = [
+  { id: "hat-cat", etapaMinima: "palabras-sueltas", contraste: "the h and the c at the start",
+    a: { palabra: "hat", archivo: "hat.png" }, b: { palabra: "cat", archivo: "gato.png" } },
+  { id: "house-mouse", etapaMinima: "palabras-sueltas", contraste: "the h and the m at the start",
+    a: { palabra: "house", archivo: "casa.png" }, b: { palabra: "mouse", archivo: "mouse.png" } },
+  { id: "mouth-mouse", etapaMinima: "palabras-sueltas", contraste: "the th and the s at the end",
+    a: { palabra: "mouth", archivo: "boca.png" }, b: { palabra: "mouse", archivo: "mouse.png" } },
+  { id: "bed-bell", etapaMinima: "palabras-sueltas", contraste: "the d and the l at the end",
+    a: { palabra: "bed", archivo: "cama.png" }, b: { palabra: "bell", archivo: "campana.png" } },
+  { id: "bull-bell", etapaMinima: "palabras-sueltas", contraste: "the u and the e in the middle",
+    a: { palabra: "bull", archivo: "toro.png" }, b: { palabra: "bell", archivo: "campana.png" } },
+  { id: "boat-boot", etapaMinima: "palabras-sueltas", contraste: "the long o and the oo in the middle",
+    a: { palabra: "boat", archivo: "barco.png" }, b: { palabra: "boot", archivo: "bota.png" } },
+  { id: "boot-foot", etapaMinima: "palabras-sueltas", contraste: "the b and the f at the start",
+    a: { palabra: "boot", archivo: "bota.png" }, b: { palabra: "foot", archivo: "foot.png" } },
+  { id: "bone-cone", etapaMinima: "palabras-sueltas", contraste: "the b and the c at the start",
+    a: { palabra: "bone", archivo: "hueso.png" }, b: { palabra: "cone", archivo: "cone.png" } },
+  { id: "rock-sock", etapaMinima: "palabras-sueltas", contraste: "the r and the s at the start",
+    a: { palabra: "rock", archivo: "roca.png" }, b: { palabra: "sock", archivo: "sock.png" } },
+  { id: "rain-train", etapaMinima: "palabras-sueltas", contraste: "the r and the tr at the start",
+    a: { palabra: "rain", archivo: "rain.png" }, b: { palabra: "train", archivo: "tren.png" } },
+];
+
+/** Los pares del idioma de la pantalla: en inglés se juega con los del inglés, no con los del español. */
+export function paresDe(idioma: Idioma): ParGemelo[] {
+  return idioma === "en" ? PARES_GEMELOS_EN : PARES_GEMELOS;
+}
+
 /** Todas las palabras del banco de gemelas (para el catálogo de grabación del banco de voz). */
-export function palabrasDeGemelos(): { palabra: string; archivo: string }[] {
-  return PARES_GEMELOS.flatMap((p) => [p.a, p.b]);
+export function palabrasDeGemelos(idioma: Idioma = "es"): { palabra: string; archivo: string }[] {
+  return paresDe(idioma).flatMap((p) => [p.a, p.b]);
 }

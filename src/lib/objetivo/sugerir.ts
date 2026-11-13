@@ -6,7 +6,11 @@
 // ofrece "¿quisiste decir…?"; solo cuando está completamente lejos, el mensaje honesto de antes.
 
 import { normalizar, normalizarConForma } from "./alinear";
-import { NOMBRE_TEMA } from "@/lib/storage/temas";
+import type { Idioma } from "@/lib/idioma";
+import { nombreTema } from "@/lib/idioma/textos/nombres";
+import { NOMBRE_TEMA, type Tema } from "@/lib/storage/temas";
+import { ETIQUETA_EN } from "./etiquetas-en";
+import type { EtiquetaCapsula } from "@content/schema";
 
 export type Sugerencia = {
   termino: string;
@@ -39,21 +43,32 @@ export function distancia(a: string, b: string): number {
  * El vocabulario alineable del contenido: etiquetas de cápsulas, palabras de pictogramas y de
  * pares, y claves de tema. Únicos y en orden estable (el orden del contenido, que es fijo).
  */
-export function vocabularioDe(contenido: {
-  capsulas: readonly { etiquetas: readonly string[] }[];
-  pictos: readonly { palabra: string; tema: string }[];
-  pares: readonly { a: { palabra: string }; b: { palabra: string } }[];
-}): string[] {
+export function vocabularioDe(
+  contenido: {
+    capsulas: readonly { etiquetas: readonly string[] }[];
+    pictos: readonly { palabra: string; tema: string }[];
+    pares: readonly { a: { palabra: string }; b: { palabra: string } }[];
+  },
+  idioma: Idioma = "es",
+): string[] {
   const terminos = new Set<string>();
+  // En inglés las etiquetas (claves en español) se ofrecen con sus palabras inglesas, y las claves de
+  // tema («carros») se esconden: el padre escribe lo que ve en pantalla, jamás una clave nuestra.
+  const enEn = idioma === "en";
   for (const c of contenido.capsulas)
-    for (const e of c.etiquetas) terminos.add(e);
+    for (const e of c.etiquetas) {
+      if (enEn) for (const p of ETIQUETA_EN[e as EtiquetaCapsula] ?? []) terminos.add(p);
+      else terminos.add(e);
+    }
   for (const p of contenido.pictos) {
     terminos.add(p.palabra);
-    terminos.add(p.tema);
+    if (!enEn) terminos.add(p.tema);
     // El nombre VISIBLE del tema también es vocabulario: el padre ve "Transporte" en Ajustes,
     // no la clave "carros" — lo que la pantalla muestra se puede escribir (y alinear.ts lo
     // expande a su clave al alinear). El cast: aquí `tema` es string genérico, no Tema.
-    const nombre = (NOMBRE_TEMA as Record<string, string>)[p.tema];
+    const nombre = enEn
+      ? nombreTema[p.tema as Tema]?.en
+      : (NOMBRE_TEMA as Record<string, string>)[p.tema];
     if (nombre) terminos.add(nombre);
   }
   for (const p of contenido.pares) {

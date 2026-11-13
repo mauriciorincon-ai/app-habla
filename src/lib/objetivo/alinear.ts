@@ -8,10 +8,31 @@
 // que no existe en el contenido), la app lo dice claro y no finge alinear algo. El objetivo NUNCA
 // salta de etapa (ADR-005): alinea DENTRO de la etapa activa, jamás fuerza contenido de otra.
 
+import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { NOMBRE_TEMA, TEMAS } from "@/lib/storage/temas";
+import { ETIQUETAS_CAPSULA } from "@content/schema";
+import { ETIQUETA_EN } from "./etiquetas-en";
 
-/** Palabras estructurales (artículos, preposiciones, conjunciones) de ≥3 letras que no aportan. */
+/**
+ * Palabras estructurales (artículos, preposiciones, conjunciones) de ≥3 letras que no aportan. Las del
+ * inglés van en el MISMO conjunto (S8): ninguna es una palabra española con sentido, y así
+ * `normalizar` sigue sin saber de idiomas.
+ */
 const PALABRAS_VACIAS = new Set([
+  "the",
+  "and",
+  "for",
+  "with",
+  "our",
+  "his",
+  "her",
+  "their",
+  "this",
+  "that",
+  "from",
+  "your",
+  "are",
+  "you",
   "del",
   "las",
   "los",
@@ -76,6 +97,18 @@ export function alinear(texto: string | null | undefined): Alineacion {
   const tokens = texto ? normalizar(texto) : [];
   const activo = tokens.length > 0;
   const objetivo = new Set(tokens);
+
+  // El padre escribe «feelings» o «animals»: las etiquetas y los temas son claves en español, así que
+  // las palabras inglesas se traducen a la CLAVE del contenido. Sirve en los dos idiomas a la vez (un
+  // objetivo escrito en uno alinea igual si la pantalla está en el otro) y con el set vacío no expande nada.
+  for (const etiqueta of ETIQUETAS_CAPSULA) {
+    if (ETIQUETA_EN[etiqueta].some((p) => normalizar(p).some((t) => objetivo.has(t)))) {
+      objetivo.add(etiqueta.normalize("NFD").replace(/[̀-ͯ]/g, ""));
+    }
+  }
+  for (const tema of TEMAS) {
+    if (normalizar(nombreTema[tema].en).some((t) => objetivo.has(t))) objetivo.add(tema);
+  }
 
   // Los nombres VISIBLES de los temas también alinean su clave interna: en Ajustes el padre ve
   // "Transporte", pero la clave del contenido sigue siendo "carros" (rename del gate S4, G6).

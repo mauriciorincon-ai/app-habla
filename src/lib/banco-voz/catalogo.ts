@@ -9,6 +9,7 @@
 
 import { PICTOGRAMAS } from "@content/pictogramas";
 import { palabrasDeGemelos } from "@content/pares-gemelos";
+import type { Idioma } from "@/lib/idioma";
 import type { Tema } from "@/lib/storage/temas";
 
 export type CategoriaGrabable = "palabra" | "consigna" | "celebracion";
@@ -33,8 +34,22 @@ function slug(texto: string): string {
     .replace(/^-|-$/g, "");
 }
 
-export const idPalabra = (palabra: string): string =>
-  `palabra:${slug(palabra)}`;
+/**
+ * Las claves del español NO cambian (lo grabado antes sigue sonando). Las del inglés llevan su propio
+ * prefijo (`palabra-en:`, `consigna-en:`, `celebracion-en:`): «bus» o «piano» se dicen distinto, y una
+ * grabación de la familia en español no debe sonar cuando el niño practica en inglés.
+ */
+const SUFIJO: Record<Idioma, string> = { es: "", en: "-en" };
+
+export const idPalabra = (palabra: string, idioma: Idioma = "es"): string =>
+  `palabra${SUFIJO[idioma]}:${slug(palabra)}`;
+/** ¿Esta clave del banco es de este idioma? Las del inglés llevan `-en` antes de los dos puntos. */
+export const esDelIdioma = (id: string, idioma: Idioma): boolean =>
+  /^[a-z]+-en:/.test(id) === (idioma === "en");
+export const idConsigna = (clave: string, idioma: Idioma = "es"): string =>
+  `consigna${SUFIJO[idioma]}:${clave}`;
+export const idCelebracion = (clave: string, idioma: Idioma = "es"): string =>
+  `celebracion${SUFIJO[idioma]}:${clave}`;
 
 /**
  * Consignas fijas de juego (el mismo texto siempre → grabable). Regla del remate S3: SOLO entra
@@ -42,52 +57,53 @@ export const idPalabra = (palabra: string): string =>
  * es deshonesto con el padre. "Nómbralo tú y espera" se retiró por eso: es una instrucción AL
  * padre, no una invitación al niño, y no tiene dónde sonar.
  */
-const CONSIGNAS: { clave: string; texto: string }[] = [
-  { clave: "sirena", texto: "Haz la voz de sirena: aaaAAAaaa" }, // suena en el cohete
-  { clave: "aaah", texto: "Haz sonar tu voz: aaaaah" }, // suena en el globo
+const CONSIGNAS: { clave: string; texto: Record<Idioma, string> }[] = [
+  // suena en el cohete
+  { clave: "sirena", texto: { es: "Haz la voz de sirena: aaaAAAaaa", en: "Make a siren voice: aaaAAAaaa" } },
+  // suena en el globo
+  { clave: "aaah", texto: { es: "Haz sonar tu voz: aaaaah", en: "Make your voice sound: aaaaah" } },
 ];
 
 /** Celebraciones honestas SIN cifras (las que sí las llevan no son grabables — ADR/​manual). */
-const CELEBRACIONES: { clave: string; texto: string }[] = [
-  { clave: "le-salio", texto: "¡Le salió la voz! Lo intentó." },
-  { clave: "dijo-palabra", texto: "¡Dijo la palabra! Lo oíste tú." },
-  { clave: "casi", texto: "Hoy casi no salió. No pasa nada: mañana seguimos." },
+const CELEBRACIONES: { clave: string; texto: Record<Idioma, string> }[] = [
+  { clave: "le-salio", texto: { es: "¡Le salió la voz! Lo intentó.", en: "Their voice came out! They tried." } },
+  { clave: "dijo-palabra", texto: { es: "¡Dijo la palabra! Lo oíste tú.", en: "They said the word! You heard it." } },
+  {
+    clave: "casi",
+    texto: { es: "Hoy casi no salió. No pasa nada: mañana seguimos.", en: "Hardly anything came out today. That's fine: we go on tomorrow." },
+  },
 ];
 
 /**
  * El catálogo completo, DETERMINISTA (mismo orden siempre). Las palabras se deduplican por slug:
  * "pato"/"gato"/"luna" aparecen una sola vez aunque estén en pictos y en gemelas.
  */
-export function catalogoGrabable(): ItemGrabable[] {
+export function catalogoGrabable(idioma: Idioma = "es"): ItemGrabable[] {
   const palabras = new Map<string, ItemGrabable>();
 
   for (const p of PICTOGRAMAS) {
-    const id = idPalabra(p.palabra);
+    const texto = idioma === "en" ? p.en : p.palabra;
+    const id = idPalabra(texto, idioma);
     if (!palabras.has(id)) {
-      palabras.set(id, {
-        id,
-        categoria: "palabra",
-        texto: p.palabra,
-        tema: p.tema,
-      });
+      palabras.set(id, { id, categoria: "palabra", texto, tema: p.tema });
     }
   }
-  for (const g of palabrasDeGemelos()) {
-    const id = idPalabra(g.palabra);
+  for (const g of palabrasDeGemelos(idioma)) {
+    const id = idPalabra(g.palabra, idioma);
     if (!palabras.has(id)) {
       palabras.set(id, { id, categoria: "palabra", texto: g.palabra });
     }
   }
 
   const consignas: ItemGrabable[] = CONSIGNAS.map((c) => ({
-    id: `consigna:${c.clave}`,
+    id: idConsigna(c.clave, idioma),
     categoria: "consigna",
-    texto: c.texto,
+    texto: c.texto[idioma],
   }));
   const celebraciones: ItemGrabable[] = CELEBRACIONES.map((c) => ({
-    id: `celebracion:${c.clave}`,
+    id: idCelebracion(c.clave, idioma),
     categoria: "celebracion",
-    texto: c.texto,
+    texto: c.texto[idioma],
   }));
 
   return [...palabras.values(), ...consignas, ...celebraciones];

@@ -285,3 +285,37 @@ describe("etiquetas del contenido (R8): curaduría completa y honesta", () => {
     }
   });
 });
+
+describe("alinear en inglés (S8): el objetivo se escribe en cualquiera de los dos idiomas", () => {
+  it("«animals» alinea el tema, las etiquetas y los dibujos como «animales»", () => {
+    const en = alinear("animals");
+    const es = alinear("animales");
+    expect(en.activo).toBe(true);
+    expect(en.coincideTema("animales")).toBe(true);
+    expect(en.coincideEtiquetas(["animales"])).toBe(true);
+    expect(es.coincideEtiquetas(["animales"])).toBe(true);
+  });
+
+  it("las rutinas y los focos se dicen en inglés: «feelings», «bath time», «asking for things»", () => {
+    expect(alinear("feelings").coincideEtiquetas(["emociones"])).toBe(true);
+    expect(alinear("bath time").coincideEtiquetas(["baño"])).toBe(true);
+    expect(alinear("asking for things").coincideEtiquetas(["pedir"])).toBe(true);
+    expect(alinear("the sea").coincideTema("mar")).toBe(true);
+  });
+
+  it("una palabra inglesa de un dibujo alinea ese dibujo (la etiqueta `en`)", () => {
+    expect(alinear("dog").coincidePalabra("dog")).toBe(true);
+    expect(alinear("dog").coincidePalabra("cat")).toBe(false);
+  });
+
+  it("«colors» sigue sin coincidir con nada: la honestidad es la misma en inglés", () => {
+    const a = alinear("colors");
+    expect(a.activo).toBe(true);
+    expect(a.coincideTema("animales")).toBe(false);
+    for (const etiqueta of ETIQUETAS_CAPSULA) expect(a.coincideEtiquetas([etiqueta])).toBe(false);
+  });
+
+  it("las palabras estructurales del inglés no cuentan: «the water and the sea»", () => {
+    expect(normalizar("the water and the sea")).toEqual(["water", "sea"]);
+  });
+});

@@ -19,8 +19,8 @@ terapias del niño con palabras que la app aún no tiene (caso O6): merecen qued
 **Diccionario embebido + corrector nativo, con chips en dos colores.**
 
 1. **`src/lib/objetivo/palabras-es.ts`:** las 10 000 palabras más frecuentes del español que
-   sobreviven una curaduría fuerte (fuente: OpenSubtitles 2018 vía hermitdave/FrequencyWords,
-   MIT). El orden del arreglo ES el rango de frecuencia. Se regenera con
+   sobreviven una curaduría fuerte (fuente original: OpenSubtitles 2018 vía hermitdave/FrequencyWords;
+   **sustituida en el S8**, ver «Enmienda S8» abajo). El orden del arreglo ES el rango de frecuencia. Se regenera con
    `scripts/gen-diccionario.mjs` (ahí vive la curaduría: solo alfabeto español, marcadores
    anti-inglés, terminaciones no españolas con lista blanca de préstamos, interjecciones,
    y el veto de groserías/insultos/términos sexuales que JAMÁS deben salir como chip en una
@@ -50,3 +50,19 @@ terapias del niño con palabras que la app aún no tiene (caso O6): merecen qued
 - La lista viaja curada y congelada en el repo: regenerarla es correr el script y revisar su
   "vigía" de sospechosas a ojo humano. Si cambia la fuente, re-verificar la curaduría.
 - El unit de `palabras-es` clava forma, tope, duplicados y el veto (mierda/sexo/the/you…).
+
+## Enmienda S8 (2026-11-12) — dos idiomas y licencia corregida
+
+- **La licencia estaba mal dicha.** Este ADR y la cabecera de `palabras-es.ts` llamaban «MIT» a la fuente: el
+  código de FrequencyWords es MIT, pero su **contenido es CC BY-SA 4.0** (compartir igual). Se corrige aquí.
+- **Nueva fuente:** Google Books Ngram, 1-gramas (`spa` y `eng`, edición 20200217), **CC BY 3.0**: solo exige
+  atribución (Ajustes → Acerca de y `src/lib/objetivo/LICENCIA-diccionario.md`). FrequencyWords sale.
+- **Dos diccionarios:** `palabras-es.ts` y `palabras-en.ts`, 16 000 palabras cada uno (antes 10 000: los libros
+  son un registro más formal que los subtítulos, y el tope mayor recupera las palabras de la casa), cargados
+  bajo demanda **solo el del idioma activo**. Un suplemento a mano (≈ 90 palabras por idioma) rellena lo
+  coloquial. La curaduría vive en el mismo script, por idioma, y ahora también descarta toda palabra cuyo
+  SHA-256 esté en la lista de sensibilidad (jamás se escribe el término).
+- **El alineador entiende los dos idiomas:** `alinear.ts` traduce «feelings»/«bath»/«animals» a la clave del
+  contenido con `etiquetas-en.ts`; `vocabularioDe` ofrece las palabras del idioma de la pantalla.
+- **Cómo se regenera:** `node scripts/gen-diccionario.mjs [es|en]` (≈ 8 GB en flujo, ~10 min; nada del crudo
+  toca el disco).
