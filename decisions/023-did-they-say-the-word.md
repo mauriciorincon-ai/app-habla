@@ -30,7 +30,7 @@ the other-home file; and an honest measurement on Lingua Libre recordings.
    that cache, checked again, and handed to the Worker as `blob:` URLs: **no network during play**.
 3. **The Worker has no network.** A prelude (`src/lib/reconocer/preludio.ts`) runs before the vosk code:
    `fetch` answers only the verified blobs; `XMLHttpRequest`, `WebSocket`, `EventSource`, `WebTransport`,
-   `importScripts` and `sendBeacon` are removed. Its console is silenced (`logLevel -2`) before loading.
+   `importScripts` and `sendBeacon` are removed. Its console is silenced: `set logLevel -2` goes to the engine before it loads and again when it is ready (`src/lib/voice/escucha.ts`, checked in `tests/unit/reconocer.test.ts`). `Worker` and `SharedWorker` are removed as well.
 4. **The audio path.** A second worklet branch (`src/worklets/pcm-tap.ts`), mounted only while the
    recognizer is on, moves ≈ 85 ms blocks by transfer to `src/lib/voice/escucha.ts`, which moves them on to
    the Worker. The listener hands the page **only `{palabra, conf}`** for words of the grammar; text,
@@ -41,10 +41,11 @@ the other-home file; and an honest measurement on Lingua Libre recordings.
 6. **«Maybe», never «no».** `quizasDijo` shows «quizás dijo X» only when the recognizer heard the round's
    word with `conf ≥ 0.6`. Anything else shows nothing. The adult's button stays the only way to a
    recognized word (ADR-009 stands: two numbers, two owners).
-7. **The child's animation (option b).** A second switch, off by default and only present while the
+7. **The child's animation (option b), against hard rule 3.** Rule 3 forbids showing automatic recognition as a verdict and a «well done» that cheers whatever the child says. The glow is neither: it is a soft light with no text, no word and no verdict, it appears only when the recognizer is on, the adult switched the second option on, and the recognizer itself thinks it heard the round's word; it never counts, never triggers or replaces the celebration the adult fires (hard rule 3's «the adult judges»), and it is smaller than it. A miss shows nothing, so the child never sees a «no». The owner decides in the rehearsal whether it stays.
+    A second switch, off by default and only present while the
    recognizer is on, shows a soft halo on the drawing: `aria-hidden`, no text, no verdict, does not count,
    smaller than the celebration the adult triggers, and under reduced motion only its opacity changes.
-8. **The count.** Four local numbers (recognizer matched yes/no × adult judged yes/no) in
+8. **The count.** «Matched» means the recognizer showed a «maybe» for the round (in Gemelas: for a side); «judged yes» means the adult marked THAT word or side (a «maybe» for one side while the adult marked the other is matched · judged no). Four local numbers (recognizer matched yes/no × adult judged yes/no) in
    `habla:v1:coincidencias`, outside the other-home package; with fewer than 20 rounds Ajustes says «todavía
    no se puede decir».
 9. **Storage the Worker adds.** vosk-browser unpacks the model into its own IndexedDB database (`/vosk`,
@@ -56,7 +57,8 @@ the other-home file; and an honest measurement on Lingua Libre recordings.
 Recordings: adult volunteers of Lingua Libre (Wikimedia Commons), one per word, words of the game, each
 with its author and license in `tests/e2e/fixtures/palabras/LICENCIA.md` (CC0, CC BY 4.0 or CC BY-SA 4.0;
 converted to 16 kHz mono). Never the family. Run: `tests/e2e/reconocedor-medida.spec.ts` over the real
-engine in Chromium (closed grammar of the whole game, 1 s of silence after each word).
+engine in Chromium (closed grammar of the whole game, 1 s of silence after each word); it writes the result to
+`tests/e2e/fixtures/palabras/medida-es.json` and `medida-en.json`, versioned, so this table can be checked.
 
 Measured 2026-11-14 on the real engine (small models, closed grammar of the whole game, `conf ≥ 0.6`
 for the «maybe»), 10 recordings per language, one speaker per word.
