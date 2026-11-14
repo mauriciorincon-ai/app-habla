@@ -18,6 +18,7 @@ import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
 import { OtraCasa } from "./otra-casa";
+import { Reconocedor } from "./reconocedor";
 import {
   AJUSTES_DEFECTO,
   type Apariencia,
@@ -88,6 +89,8 @@ export function AjustesSesion() {
           guardarAjustesEnStore({ ...ajustes, vozFamiliar })
         }
       />
+
+      <Reconocedor />
 
       <OtraCasa />
 

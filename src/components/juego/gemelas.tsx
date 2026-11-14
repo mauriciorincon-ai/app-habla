@@ -9,7 +9,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
@@ -33,6 +33,12 @@ import {
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
 import { useVozFamiliar } from "./use-voz-familiar";
+import { useReconocedor } from "./use-reconocedor";
+import { QuizasDijo } from "./quizas-dijo";
+import { MicSession } from "@/lib/voice/mic-session";
+import { quizasLado } from "@/lib/reconocer/coincidencia";
+import { rondaGemelas } from "@/lib/reconocer/conteo";
+import { reconocedor as txr } from "@/lib/idioma/textos/reconocedor";
 
 type Fase = "guion" | "jugando" | "celebracion";
 
@@ -43,10 +49,25 @@ export function Gemelas() {
   if (!hidratado || !ajustes) {
     return <div className="min-h-[28rem]" aria-hidden="true" />;
   }
-  return <GemelasListo etapa={ajustes.etapa} />;
+  return (
+    <GemelasListo
+      etapa={ajustes.etapa}
+      reconocedorActivo={ajustes.reconocedor}
+      animacionReconocedor={ajustes.reconocedor && ajustes.animacionReconocedor}
+    />
+  );
 }
 
-function GemelasListo({ etapa }: { etapa: Etapa }) {
+function GemelasListo({
+  etapa,
+  reconocedorActivo,
+  animacionReconocedor,
+}: {
+  etapa: Etapa;
+  /** «¿Dijo la palabra?» (S11): off by default; Gemelas has no microphone unless the adult asks. */
+  reconocedorActivo: boolean;
+  animacionReconocedor: boolean;
+}) {
   const router = useRouter();
   const tx = useT();
   const idioma = useIdioma();
@@ -74,8 +95,58 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
   // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
   // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
   const [festejo, setFestejo] = useState<"a" | "b" | null>(null);
-  // La voz de la familia modela cada palabra del par. Gemelas no tiene micrófono → sin guarda.
+  // La voz de la familia modela cada palabra del par. Gemelas no abre micrófono por sí sola (solo si el adulto toca «Escuchar», más abajo) → sin guarda de eco.
   const voz = useVozFamiliar();
+
+  // The recognizer (S11): Gemelas opens a microphone ONLY when the adult taps «Listen», and closes it
+  // when the game leaves the playing phase. Nothing is stored; the adult's buttons still decide.
+  const rec = useReconocedor({
+    juego: "gemelas",
+    idioma,
+    activo: reconocedorActivo,
+  });
+  const micRef = useRef<MicSession | null>(null);
+  const { desconectar } = rec;
+  useEffect(() => {
+    if (fase === "jugando") return;
+    desconectar();
+    micRef.current?.stop();
+    micRef.current = null;
+  }, [fase, desconectar]);
+  useEffect(
+    () => () => {
+      micRef.current?.stop();
+      micRef.current = null;
+    },
+    [],
+  );
+  const [sinMic, setSinMic] = useState(false);
+  const abriendoRef = useRef(false);
+  async function escuchar() {
+    // A guard ref: only the first tap opens a microphone session.
+    if (micRef.current || abriendoRef.current) return;
+    abriendoRef.current = true;
+    setSinMic(false);
+    const mic = new MicSession();
+    try {
+      await mic.start();
+    } catch {
+      mic.stop();
+      setSinMic(true);
+      abriendoRef.current = false;
+      return;
+    }
+    micRef.current = mic;
+    abriendoRef.current = false;
+    await rec.conectar(mic);
+  }
+  // If the recognizer cannot start (no model, or it failed), the microphone it opened is closed again.
+  const estadoRec = rec.estado;
+  useEffect(() => {
+    if (estadoRec !== "sin-modelo" && estadoRec !== "error") return;
+    micRef.current?.stop();
+    micRef.current = null;
+  }, [estadoRec]);
 
   // Gemelas exige que el niño intente palabras → no hay pares en "sonidos-e-intentos".
   if (rondas.length === 0) {
@@ -104,7 +175,19 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
 
   const par = rondas[indice];
 
+  // The better of the two hearings of THIS pair (a louder word of another pair does not hide them).
+  const oidoA = rec.oidoDe(par.a.palabra);
+  const oidoB = rec.oidoDe(par.b.palabra);
+  const ladoQuizas = quizasLado(
+    oidoA && (!oidoB || oidoA.conf >= oidoB.conf) ? oidoA : oidoB,
+    { a: par.a.palabra, b: par.b.palabra },
+  );
+
   function avanzar(marca: Marca) {
+    // The local 2×2 (only if something happened): see rondaGemelas.
+    const ronda = rondaGemelas(ladoQuizas, marca);
+    if (ronda) rec.contar(ronda.coincidio, ronda.adultoSi);
+    rec.nuevaRonda();
     const nuevas = [...marcas, marca];
     setMarcas(nuevas);
     setFestejo(null);
@@ -222,6 +305,13 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
                   <IconoAltavoz className="h-4 w-4" />
                 </span>
               ) : null}
+              {animacionReconocedor && ladoQuizas === lado && festejo === null ? (
+                <span
+                  aria-hidden="true"
+                  data-testid="halo-reconocedor"
+                  className="halo-reconocedor pointer-events-none absolute inset-0"
+                />
+              ) : null}
               {encendida ? (
                 <span className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4" />
               ) : null}
@@ -252,6 +342,25 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
           );
         })}
       </div>
+
+      {reconocedorActivo ? (
+        <div className="flex flex-col items-center gap-2">
+          {rec.estado === "apagado" ? (
+            <button
+              type="button"
+              onClick={() => void escuchar()}
+              data-testid="escuchar-reconocedor"
+              className="border-borde text-tinta-suave min-h-11 rounded-xl border px-4 text-sm"
+            >
+              {tx(txr.juego.escuchar)}
+            </button>
+          ) : null}
+          <QuizasDijo
+            palabra={ladoQuizas ? par[ladoQuizas].palabra : null}
+            estado={sinMic ? "error" : rec.estado}
+          />
+        </div>
+      ) : null}
 
       {festejo === null ? (
         <div className="flex flex-col items-center gap-2">

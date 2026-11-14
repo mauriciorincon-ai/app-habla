@@ -1,0 +1,29 @@
+{
+  "$comment": "Recognizer assets for «¿Dijo la palabra?» (S11, ADR-023). Fetched at build time by scripts/traer-modelos.mjs, never committed. Every file is pinned by SHA-256; the app re-checks the same hash on the device before using it.",
+  "modelos": {
+    "es": {
+      "nombre": "vosk-model-small-es-0.42",
+      "url": "https://alphacephei.com/vosk/models/vosk-model-small-es-0.42.zip",
+      "sha256": "09b239888f633ef2f0b4e09736e3d9936acfd810bc65d53fad45261762c6511f",
+      "bytes": 39817833,
+      "licencia": "Apache-2.0",
+      "fuente": "https://alphacephei.com/vosk/models"
+    },
+    "en": {
+      "nombre": "vosk-model-small-en-us-0.15",
+      "url": "https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip",
+      "sha256": "30f26242c4eb449f948e42cb302dd7a686cb29a3423a8367f99ff41780942498",
+      "bytes": 41205931,
+      "licencia": "Apache-2.0",
+      "fuente": "https://alphacephei.com/vosk/models"
+    }
+  },
+  "motor": {
+    "paquete": "@lichess-org/vosk-browser@0.0.3",
+    "licencia": "Apache-2.0",
+    "archivos": {
+      "vosk.worker.js": "24c215a4e2ab2288541596f43c8fd789b4c23c9a1ebe8e09e16da871176a82eb",
+      "vosk.wasm": "e2a33196eacd6cd7d863392f877b9360664d7614ce97cddf9de5b5e637e2ccf9"
+    }
+  }
+}

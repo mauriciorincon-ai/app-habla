@@ -216,3 +216,9 @@ niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos p
   **vacío** (sin objetivo, campo con placeholder), **escribiendo** (preview honesto en vivo),
   **activo** (tarjeta con "desde…" + quitar), **sin coincidencias** (dice honesto que no encontró
   nada — el caso "colores"), **guardado** (confirmación sobria). Toques del adulto ≥44 px.
+
+## El halo del reconocedor (Sprint 11)
+
+Un resplandor suave alrededor del dibujo cuando el reconocedor local cree que oyó la palabra de la ronda y el adulto
+encendió la animación (apagada de fábrica). Sin texto, `aria-hidden`, más tenue que la celebración que dispara el
+adulto, nunca cuenta; con «reducir animaciones» solo cambia la opacidad. Un fallo no muestra nada: jamás un «no».

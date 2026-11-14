@@ -36,6 +36,10 @@ import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession } from "./use-voice-session";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { EscenarioPalabra } from "./escenario-palabra";
+import { useReconocedor } from "./use-reconocedor";
+import { MicSession } from "@/lib/voice/mic-session";
+import { quizasDijo } from "@/lib/reconocer/coincidencia";
+import { QuizasDijo } from "./quizas-dijo";
 
 export function PalabraObjeto() {
   const hidratado = useHidratado();
@@ -49,6 +53,8 @@ export function PalabraObjeto() {
   return (
     <JuegoListo
       modoCalmaInicial={ajustes.modoCalma}
+      reconocedorActivo={ajustes.reconocedor}
+      animacionReconocedor={ajustes.reconocedor && ajustes.animacionReconocedor}
       temas={perfil?.temas ?? null}
     />
   );
@@ -56,9 +62,14 @@ export function PalabraObjeto() {
 
 function JuegoListo({
   modoCalmaInicial,
+  reconocedorActivo,
+  animacionReconocedor,
   temas,
 }: {
   modoCalmaInicial: boolean;
+  /** «¿Dijo la palabra?» (S11): off by default, turned on by the adult in Ajustes. */
+  reconocedorActivo: boolean;
+  animacionReconocedor: boolean;
   /** Los temas que el padre eligió en el onboarding: por fin HACEN algo (S2). */
   temas: Tema[] | null;
 }) {
@@ -144,6 +155,7 @@ function JuegoListo({
     volverAlGuion,
     cambiarCalma,
     silenciar,
+    fuente,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "activaciones",
@@ -159,7 +171,24 @@ function JuegoListo({
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
 
+  const rec = useReconocedor({
+    juego: "palabras",
+    idioma,
+    activo: reconocedorActivo,
+  });
+  const quizas = quizasDijo(rec.oidoDe(palabraVisible), palabraVisible);
+  const { conectar, desconectar } = rec;
+
   const fase = actual.fase;
+  // The recognizer taps the real microphone session while a round is on, and closes with it.
+  useEffect(() => {
+    if (fase === "esperando-voz" || fase === "jugando") {
+      const f = fuente();
+      if (f instanceof MicSession) void conectar(f);
+    } else {
+      desconectar();
+    }
+  }, [fase, fuente, conectar, desconectar]);
   useEffect(() => {
     if (fase === "esperando-voz") armadoDesdeRef.current = Date.now();
   }, [fase]);
@@ -209,7 +238,14 @@ function JuegoListo({
     }
   }
 
+  /** Closes the round in the local 2×2 (only if something happened in it). */
+  function cerrarRonda() {
+    if (yaContadoRef.current || quizas) rec.contar(quizas, reconocidaAhora);
+    rec.nuevaRonda();
+  }
+
   function siguiente() {
+    cerrarRonda();
     yaContadoRef.current = false;
     setEncendido(false);
     setReconocidaAhora(false);
@@ -267,15 +303,25 @@ function JuegoListo({
 
       {actual.fase === "esperando-voz" || actual.fase === "jugando" ? (
         <section className="flex flex-col gap-5">
-          <EscenarioPalabra
-            picto={picto}
-            medidas={medidas}
-            encendido={encendido}
-            reconocida={reconocidaAhora}
-            invitando={invitacionAmable(sesion)}
-            onVocalizar={alVocalizar}
-            voz={voz}
-          />
+          <div className="relative">
+            <EscenarioPalabra
+              picto={picto}
+              medidas={medidas}
+              encendido={encendido}
+              reconocida={reconocidaAhora}
+              invitando={invitacionAmable(sesion)}
+              onVocalizar={alVocalizar}
+              voz={voz}
+            />
+            {/* Optional soft glow for the child (ADR-023 §7): no text, no verdict, counts nothing. */}
+            {animacionReconocedor && quizas ? (
+              <span
+                aria-hidden="true"
+                data-testid="halo-reconocedor"
+                className="halo-reconocedor pointer-events-none absolute inset-0"
+              />
+            ) : null}
+          </div>
 
           {!modoCalma ? (
             <p
@@ -309,13 +355,23 @@ function JuegoListo({
             </button>
             <button
               type="button"
-              onClick={terminar}
+              onClick={() => {
+                cerrarRonda();
+                terminar();
+              }}
               className="border-borde text-tinta min-h-16 flex-1 rounded-2xl border px-6 text-lg font-medium"
               data-testid="terminar"
             >
               {tx(juegos.comun.yaJugamos)}
             </button>
           </div>
+
+          {reconocedorActivo ? (
+            <QuizasDijo
+              palabra={quizas ? palabraVisible : null}
+              estado={rec.estado}
+            />
+          ) : null}
 
           {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.
               Va AL FINAL y en voz baja (gate S4, bloque G): el niño es perspicaz y este control

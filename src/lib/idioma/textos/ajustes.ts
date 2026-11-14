@@ -176,8 +176,8 @@ export const ajustes = {
     no: {
       titulo: { es: "No mide", en: "It does not measure" },
       texto: {
-        es: "No sabe qué palabra dijo su hijo, ni si la pronunció bien. Hoy ningún sistema evalúa con fiabilidad la pronunciación de un niño pequeño que apenas empieza a hablar en español. Por eso el juez del acierto es usted, no la app: aquí nadie felicita por felicitar.",
-        en: "It doesn't know which word your child said, or whether they said it well. Today no system can reliably judge the pronunciation of a little one just starting to talk. That is why you are the judge of getting it right, not the app: here nobody cheers just to cheer.",
+        es: "No sabe con certeza qué palabra dijo su hijo, ni si la pronunció bien (el reconocedor opcional de «¿Dijo la palabra?» solo le da a usted un «quizás»). Hoy ningún sistema evalúa con fiabilidad la pronunciación de un niño pequeño que apenas empieza a hablar en español. Por eso el juez del acierto es usted, no la app: aquí nadie felicita por felicitar.",
+        en: "It doesn't know for certain which word your child said, or whether they said it well (the optional “Did they say the word?” recognizer only gives you a “maybe”). Today no system can reliably judge the pronunciation of a little one just starting to talk. That is why you are the judge of getting it right, not the app: here nobody cheers just to cheer.",
       },
     },
     voz: {

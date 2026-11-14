@@ -83,7 +83,7 @@ describe("qué viaja y qué no (regla dura 2 y regla 8)", () => {
     expect(CAMPOS_DEL_PAQUETE).toEqual(
       ["app", "banco", "creado", "esquema", "gemelas", "objetivo", "progreso", "sesiones"].sort(),
     );
-    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino"]) {
+    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino", "coincidencias", "reconocedor"]) {
       expect(CAMPOS_DEL_PAQUETE).not.toContain(prohibido);
     }
   });

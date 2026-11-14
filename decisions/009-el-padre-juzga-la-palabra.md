@@ -2,6 +2,7 @@
 
 - **Status:** accepted (2026-07-12)
 - **Sprint:** 002, during the user's desktop gate
+- **Amended by:** ADR 023 (2026-11-14, Sprint 011): the app may now *suggest* a «maybe» to the adult, from an on-device recognizer that is off by default; the adult still judges and the app never says «no».
 - **Supersedes nothing. Extends:** ADR 005 (single words first), regla dura 2 (privacy), regla dura 3 (honesty)
 
 ## Context

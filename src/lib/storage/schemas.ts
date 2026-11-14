@@ -50,6 +50,13 @@ export const AjustesSchema = z.object({
    * empieza por donde el niño ya mira. El `.catch` migra solos los ajustes guardados antes del S9.
    */
   nivelMirada: z.enum(NIVELES_CONTACTO_VISUAL).catch("n1"),
+  /**
+   * «¿Dijo la palabra?» (S11, ADR-023): el reconocedor local, APAGADO por defecto. Encenderlo (y descargar
+   * el modelo) es una acción del adulto en Ajustes. El `.catch(false)` migra solos los ajustes anteriores.
+   */
+  reconocedor: z.boolean().catch(false),
+  /** La animación suave opcional para el niño (ADR-023 §7): apagada por defecto, sin texto ni veredicto. */
+  animacionReconocedor: z.boolean().catch(false),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -62,6 +69,8 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   vozFamiliar: true,
   idioma: null,
   nivelMirada: "n1",
+  reconocedor: false,
+  animacionReconocedor: false,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

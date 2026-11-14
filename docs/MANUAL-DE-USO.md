@@ -61,7 +61,7 @@ cualquiera de esos cuatro pasa siempre lo mismo:
    tele— para no confundir ese ruido con la voz del niño. Si hay mucho ruido, se lo dice de frente
    y ustedes deciden si siguen o vuelven a medir.
 
-**"Palabras gemelas" NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
+**"Palabras gemelas" por defecto no usa micrófono** (más abajo): no pide permiso ni mide silencio. Solo si usted enciende «¿Dijo la palabra?» en Ajustes aparece un botón suyo para escuchar.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
 "game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
@@ -130,11 +130,12 @@ activó "reducir animaciones", los globos no vuelan pero la celebración se sigu
 se pone verde y lo dice con palabras.)
 
 Ese botón es **suyo, no del niño**, y es la única forma de encender esa celebración: **la app no
-reconoce palabras y no va a fingir que sí.** No es que no sepamos hacerlo: es que hacerlo bien
-exigiría mandar la voz de su hijo a un servidor (jamás), y hacerlo mal significaría decirle "no"
-cuando él **sí** dijo la palabra — el reconocimiento automático se equivoca justo con los niños
-que están aprendiendo a hablar. Usted estaba ahí y usted sabe. Al final, la celebración lo dice
-tal cual: _"Y **tú** oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
+decide por usted que dijo la palabra.** Hacerlo mal significaría decirle "no" cuando él **sí** la
+dijo: el reconocimiento automático se equivoca justo con los niños que están aprendiendo a hablar.
+Usted estaba ahí y usted sabe. Si activa la segunda opinión del aparato (sección «¿Dijo la
+palabra?», más abajo), la app puede añadir una línea **solo para usted**, siempre como «quizás»;
+el botón sigue siendo el único que celebra. Al final, la celebración lo dice tal cual: _"Y **tú**
+oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
 
 #### 4. Palabras gemelas — dos dibujos que suenan casi igual (nuevo)
 
@@ -156,8 +157,9 @@ contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga
 
 Este juego es **distinto a los otros cuatro**:
 
-- **No usa micrófono. No graba ni analiza nada.** La app no oye la palabra: **el que la oye es
-  usted**, y por eso las teclas de marcar son suyas. Es co-uso puro.
+- **Por defecto no usa micrófono y no graba nada.** La app no decide qué palabra se dijo: **el que la oye es
+  usted**, y por eso las teclas de marcar son suyas. Si enciende «¿Dijo la palabra?» en Ajustes, solo cuando usted
+  toca «Escuchar» el aparato mira, sin guardar nada, y le sugiere un «quizás». Es co-uso puro.
 - **No hay respuesta correcta ni incorrecta para el niño.** Cualquier intento vale; si hoy solo
   quiere mirar, toque **"Hoy solo miramos esta"** y sigan sin apuro.
 - La celebración es honesta: cuenta **cuántas rondas jugaron** y en cuántas **usted** marcó algo —
@@ -471,12 +473,38 @@ turno») para jugar sentados juntos, sin pantalla.
   Gobierno de Aragón, licencia Creative Commons BY-NC-SA, uso personal y sin fines comerciales).
 - **Qué NO hace:** no puntúa ni mide nada; es papel para jugar.
 
+### ¿Dijo la palabra? — una segunda opinión, solo para usted (nuevo · S11)
+
+Viene **apagada**. Es un oído extra, **dentro del aparato**, que intenta adivinar si el niño dijo la palabra
+del dibujo. Se equivoca, y por eso **nunca** decide nada: usted sigue juzgando con su botón.
+
+- **Encenderla:** **Ajustes → «¿Dijo la palabra?»**. La app le avisa que bajará **unos 40 MB** (el modelo del
+  idioma que tiene activo; el otro idioma se baja aparte, si usted lo pide) y solo lo hace cuando usted toca el
+  interruptor. Si la descarga falla, el interruptor queda apagado. **«Borrar el reconocedor»** lo quita del
+  aparato con un toque.
+- **Qué ve usted:** en **Palabra y dibujo**, cuando el aparato cree que oyó la palabra del dibujo, aparece una
+  línea con un «?» y el texto **«Quizás dijo "gato"»**, junto al botón del juicio. Si no cree nada, **no
+  aparece nada**: jamás un «no». En **Palabras gemelas**, que por defecto no usa micrófono, aparece el botón **«Escuchar con el
+  reconocedor»**: solo cuando usted lo toca se abre el micrófono, y la línea dice cuál de las dos cree que oyó.
+- **Qué ve el niño:** nada, salvo que usted encienda aparte **«Mostrarle al niño una animación suave»**
+  (apagada de fábrica): un halo suave alrededor del dibujo, **sin texto, sin veredicto, sin contar** y más
+  tenue que la celebración que usted dispara. Con «reducir animaciones» solo cambia la transparencia.
+- **Cómo le va:** Ajustes muestra **cuatro números** guardados solo en este aparato (el reconocedor coincidió o
+  no, y usted dijo que sí o que no). Con **menos de 20 rondas** dice que todavía no se puede decir; con más,
+  le dice con qué frecuencia coincidieron. **Si le sirve o no lo decide usted**, no la app. Esos cuatro
+  números **no viajan** en el archivo de la otra casa y se borran con «Borrar mis datos».
+- **La voz de su hijo:** el reconocedor corre en el aparato, recibe el sonido solo en memoria y devuelve
+  únicamente una palabra y su confianza. **No se graba, no se guarda, no sale.** Mientras se juega no hay
+  ninguna petición a internet; el modelo se baja una vez, de la propia app, y solo si usted lo pide.
+- **Limite honesto:** medido con voces de adultos, acierta mucho; con un niño que apenas empieza, fallará más, y a
+  veces creerá oír una palabra donde solo hubo un sonido. Por eso es una pista, no una respuesta.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
   —en el cohete— si el **tono** de esa voz sube o baja y —en el mapa de las vocales, que es experimental— a qué
   vocal **se parece** la forma del sonido, siempre como «quizás».
-- **NO mide:** qué palabra dijo, ni si la pronunció bien. Hoy ningún sistema evalúa con fiabilidad
+- **NO mide con certeza:** qué palabra dijo, ni si la pronunció bien (la segunda opinión opcional solo da un «quizás» para usted). Hoy ningún sistema evalúa con fiabilidad
   la pronunciación de un niño pequeño que apenas empieza a hablar, en español, y por eso la app no lo finge. En "Palabra
   y dibujo", el dibujo se enciende con cualquier sonido — **eso no significa que la palabra estuvo
   bien**, y la app nunca va a decir que sí.
@@ -519,6 +547,7 @@ Esta es la promesa más importante de la app:
   a internet. Hay pruebas automáticas que lo verifican en cada cambio del código: si alguien
   intentara guardar o enviar audio, esas pruebas fallan y el cambio no entra.
 - **La cámara no se usa nunca.**
+- **La segunda opinión «¿Dijo la palabra?» (opcional, apagada)** escucha dentro del aparato, en memoria, y solo devuelve una palabra y su confianza para usted: el audio no se guarda ni sale. Lo único que deja es cuatro números de conteo, en este aparato.
 - **La voz de la familia (la SUYA) sí se guarda —solo aquí.** Si usted graba su voz en el Estudio,
   esas grabaciones viven en este dispositivo y **nunca salen de él**: no van a internet ni al
   proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
@@ -544,7 +573,7 @@ Se para y ya. No hay castigo, ni racha que se pierda, ni pantalla de derrota. Si
 pruebe el modo calma, o haga la actividad del día sin pantalla.
 
 **¿Por qué la app no me dice si pronunció bien?**
-Porque sería mentira. La tecnología que reconoce voz infantil se equivoca demasiado a esa edad, y
+Porque sería mentira. Puede activar una segunda opinión opcional que le dice «quizás» a usted (nunca al niño), pero no la usa como veredicto. La tecnología que reconoce voz infantil se equivoca demasiado a esa edad, y
 una app que finge saber terminaría diciéndole "¡bien!" a un niño que no dijo nada. Preferimos
 decirle solo lo que de verdad medimos.
 
@@ -612,4 +641,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 008    | **«En inglés también se practica»**: Palabras, Gemelas y el Objetivo se practican en inglés (contenido y diccionario propios del idioma, sin tarjeta de «solo en español»); `/mirada` y el catálogo de cápsulas, en español e inglés con selector; **Videos de la familia** en el Estudio (clips de su galería, solo en el dispositivo, sin cámara, borrables); el crédito del diccionario corregido (Google Books Ngram, CC BY 3.0). |
 | 009    | **«Cuentos de casa»**: seis cuentos de respaldo en español e inglés que se llenan con los gustos y las palabras meta que escribe el adulto; pedidos y lotes de cuentos nuevos por la bandeja de IA (fuera de la app, solo con aprobación del adulto de cada cuento); narración con la voz del adulto grabada en el dispositivo o «lo leo yo». **«Hoy»** suma una actividad de contacto visual al día junto a la cápsula (dos dominios). Las parejas de sonidos del inglés pasan de 9 a 12. |
 | 010    | **«Lejos de la pantalla»**: **Pasar a la otra casa** (un archivo cifrado con una frase lleva el objetivo, lo practicado y lo logrado a otro aparato, sin internet, mostrando antes qué cambia); **el mapa de las vocales**, quinto juego, **experimental** («quizás suena como…», nunca un veredicto); **Hojas para imprimir** (tarjetas con dibujo y tablero de turnos, con el crédito de ARASAAC en cada hoja y sin nombre ni edad). |
+| 011    | **«¿Dijo la palabra?»**: un reconocedor en el aparato (apagado de fábrica, unos 40 MB que usted baja y puede borrar) que en Palabra y dibujo y Palabras gemelas le muestra **solo a usted** un «quizás dijo…»; una animación suave opcional para el niño (apagada, sin texto ni veredicto); cuatro números locales de coincidencia, fuera del archivo de la otra casa. |
 <!-- s5:fin -->

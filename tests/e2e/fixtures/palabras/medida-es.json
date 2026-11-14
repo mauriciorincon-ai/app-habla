@@ -1,0 +1,102 @@
+{
+ "idioma": "es",
+ "n": 10,
+ "aciertos": 10,
+ "quizas": 10,
+ "filas": [
+  {
+   "archivo": "pez.wav",
+   "esperada": "pez",
+   "oida": "pez",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "perro.wav",
+   "esperada": "perro",
+   "oida": "perro",
+   "conf": 0.67,
+   "quizas": true
+  },
+  {
+   "archivo": "huevo.wav",
+   "esperada": "huevo",
+   "oida": "huevo",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "sol.wav",
+   "esperada": "sol",
+   "oida": "sol",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "luna.wav",
+   "esperada": "luna",
+   "oida": "luna",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "estrella.wav",
+   "esperada": "estrella",
+   "oida": "estrella",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "agua.wav",
+   "esperada": "agua",
+   "oida": "agua",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "nube.wav",
+   "esperada": "nube",
+   "oida": "nube",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "gato.wav",
+   "esperada": "gato",
+   "oida": "gato",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "vaca.wav",
+   "esperada": "vaca",
+   "oida": "vaca",
+   "conf": 1,
+   "quizas": true
+  }
+ ],
+ "controles": [
+  {
+   "archivo": "voz-sintetica.wav",
+   "esperada": "",
+   "oida": null,
+   "conf": null,
+   "quizas": false
+  },
+  {
+   "archivo": "barrido-tono.wav",
+   "esperada": "",
+   "oida": "huevo",
+   "conf": 0.65,
+   "quizas": true
+  },
+  {
+   "archivo": "vocales-nino.wav",
+   "esperada": "",
+   "oida": "huevo",
+   "conf": 0.77,
+   "quizas": true
+  }
+ ],
+ "controlesConPalabra": 2
+}

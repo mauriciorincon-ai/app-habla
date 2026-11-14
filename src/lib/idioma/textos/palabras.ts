@@ -60,10 +60,10 @@ export const palabras = {
         es: "y marca el que oyó. No hay respuesta correcta ni incorrecta para él: cualquier intento vale.",
         en: "and mark the one you heard. There is no right or wrong answer for them: any try counts.",
       },
-      noOye: { es: "La app no oye la palabra", en: "The app doesn't hear the word" },
+      noOye: { es: "La app no decide por usted", en: "The app doesn't decide for you" },
       despues: {
-        es: "—no usa micrófono aquí—, el que la oye es usted.",
-        en: "—it doesn't use the microphone here—, you're the one who hears it.",
+        es: "—por defecto no usa el micrófono aquí; si enciende el reconocedor en Ajustes, solo le sugiere un «quizás»—, el que marca es usted.",
+        en: "—by default it doesn't use the microphone here; if you turn on the recognizer in Settings it only offers a “maybe”—, you're the one who marks it.",
       },
     },
     sinPares: {
@@ -81,8 +81,8 @@ export const palabras = {
         en: "Point at the two pictures, ask them to say ONE, and mark the one you heard yourself.",
       },
       nota: {
-        es: "No hay respuesta correcta ni incorrecta para él: cualquier intento vale. La app no oye la palabra — el que la oye eres tú. Si hoy solo quiere mirar, también está bien.",
-        en: "There is no right or wrong answer for them: any try counts. The app doesn't hear the word — you do. If they'd rather just look today, that's fine too.",
+        es: "No hay respuesta correcta ni incorrecta para él: cualquier intento vale. Por defecto la app no oye la palabra — la oyes tú (si enciendes el reconocedor en Ajustes, te sugiere un «quizás» y tú marcas). Si hoy solo quiere mirar, también está bien.",
+        en: "There is no right or wrong answer for them: any try counts. By default the app doesn't hear the word — you do (if you turn on the recognizer in Settings it offers a “maybe” and you mark). If they'd rather just look today, that's fine too.",
       },
     },
     salir: { es: "Salir", en: "Exit" },
