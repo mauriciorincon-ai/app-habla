@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 // «Hojas para imprimir» (S10). Cada hoja lleva su pie de ARASAAC, ninguna lleva el apodo del niño
 // (perfil inventado «Pipo» sembrado a propósito) ni el texto libre de la familia, y en papel solo
-// quedan las hojas (emulación de `print`). Español únicamente (UN idioma por sprint).
+// quedan las hojas (con la vista de impresión simulada). Español únicamente (UN idioma por sprint).
 
 const APODO = "Pipo";
 
