@@ -12,7 +12,7 @@
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
   "schema_version": "1.0.0",
-  "actualizado": "2026-10-27",
+  "actualizado": "2026-11-13",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
@@ -24,12 +24,12 @@
   },
   "promesa": {
     "tagline": "Su voz mueve el mundo: tu hijo juega hablando y tú diriges a su lado.",
-    "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y cuatro juegos que se juegan hablando, donde su voz hace volar un globo, sube un cohete y enciende dibujos.",
+    "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y cinco juegos —uno, experimental—, donde su voz hace volar un globo, sube un cohete, enciende dibujos y ilumina el mapa de las vocales.",
     "para_quien": "Para la mamá o el papá de un niño de 4 a 6 años que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. Nunca finge reconocer la palabra: el acierto lo juzgas tú, que estabas ahí. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 26,
+    "total": 29,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -56,7 +56,7 @@
       {
         "orden": 2,
         "estrella": false,
-        "nombre": "Cuatro juegos que se juegan hablando",
+        "nombre": "Cinco juegos que se juegan hablando",
         "linea": "Su voz hace que algo pase en la pantalla, con un adulto que dirige al lado. Ninguno le exige palabras.",
         "features": [
           {
@@ -88,6 +88,12 @@
             "nombre": "Palabras gemelas",
             "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego no usa el micrófono: quien escucha eres tú.",
             "seccion_manual": "Los juegos de voz § 4"
+          },
+          {
+            "id": "27",
+            "nombre": "El mapa de las vocales (experimental)",
+            "que_hace": "Tu hijo estira una vocal —a, e, i, o, u— y se enciende la zona del mapa que más se parece, con su letra, su forma y su color. Es un juego en prueba y lo dice en pantalla: la app solo adivina, con margen de error, «quizás suena como…», y nunca dice que una vocal salió bien o mal. Al final cuenta las zonas que sonaron y los cambios de una a otra, y lo que diga no se graba ni sale del aparato.",
+            "seccion_manual": "Los juegos de voz § 5"
           }
         ]
       },
@@ -132,6 +138,12 @@
             "nombre": "Cuentos de casa: cuentos cortos con lo que le gusta",
             "que_hace": "Cuentos cortos con una palabra grande por página, que lees con tu hijo: seis vienen listos y se llenan con sus gustos y las palabras que practican. Si quieres más, pides un lote y lees y apruebas cada cuento antes de que llegue a tu hijo. Los narras con tu propia voz grabada en el aparato, o los lees en vivo: nunca hay voz de máquina, y el pedido nunca lleva su nombre, su edad ni su voz.",
             "seccion_manual": "Cuentos de casa"
+          },
+          {
+            "id": "29",
+            "nombre": "Hojas para imprimir: jugar lejos de la pantalla",
+            "que_hace": "Tarjetas con dibujo y un tablero de turnos para jugar sentados juntos, sin pantalla. Salen de las palabras y los gustos de «Cuentos de casa» y llevan solo el dibujo y su palabra: ningún nombre, edad ni texto de la familia. Eliges español o inglés, imprimes, y cada hoja trae su crédito de ARASAAC.",
+            "seccion_manual": "Hojas para imprimir"
           }
         ]
       },
@@ -222,6 +234,12 @@
             "nombre": "Se instala y funciona sin internet",
             "que_hace": "La instalas en la tablet o el teléfono como una app más y abre a pantalla completa. Después de abrirla una vez funciona sin conexión, porque todo el contenido, dibujos incluidos, viaja dentro del aparato.",
             "seccion_manual": "Primeros pasos + FAQ"
+          },
+          {
+            "id": "28",
+            "nombre": "Pasar a la otra casa",
+            "que_hace": "Si tu hijo practica en dos casas, llevas el objetivo, lo practicado y lo logrado de un aparato al otro en un archivo que tú mueves y que se protege con una frase que solo tú sabes: sin la frase, no se abre. Antes de escribir nada, la app te muestra qué va a cambiar, y nada de lo que ya estaba se borra. Nunca viajan la voz de tu hijo, los videos ni su apodo, y la app no se conecta a internet.",
+            "seccion_manual": "Pasar a la otra casa"
           }
         ]
       },
@@ -259,7 +277,7 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 26,
+      "valor": 29,
       "unidad": "funcionalidades",
       "fuente": "medido",
       "detalle": "Contadas contra docs/MANUAL-DE-USO.md, con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
@@ -267,10 +285,10 @@
     {
       "clave": "pantallas",
       "etiqueta": "Pantallas de la app",
-      "valor": 11,
+      "valor": 15,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (12 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Verificado el 2026-11-12 sobre ab1948b."
+      "detalle": "Archivos page.tsx bajo src/app/ (16 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-13 sobre la rama del S10."
     },
     {
       "clave": "pruebas_unitarias",
