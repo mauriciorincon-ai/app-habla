@@ -76,7 +76,17 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         launchOptions: fakeMic("palabras/mic-es.wav"),
       },
-      testMatch: /reconocedor[\w-]*\.spec\.ts/,
+      testMatch: /reconocedor(?!-en)[\w-]*\.spec\.ts/,
+      timeout: 180_000,
+    },
+    {
+      // The same recognizer in English (S11): `cat` (Lingua Libre, licensed per file) as the fake microphone.
+      name: "desktop-chromium-reconocer-en",
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: fakeMic("palabras/mic-en.wav"),
+      },
+      testMatch: /reconocedor-en\.spec\.ts/,
       timeout: 180_000,
     },
   ],

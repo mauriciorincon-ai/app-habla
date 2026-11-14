@@ -31,3 +31,7 @@ else changed); as adaptations of CC BY-SA 4.0 works they are shared under the sa
 ## mic-es.wav
 
 `mic-es.wav` is `es/gato.wav` (same author and license as listed above) with 3 s of silence before and after, used as the fake microphone of `tests/e2e/reconocedor.spec.ts`.
+
+## mic-en.wav
+
+`mic-en.wav` is `en/cat.wav` (same author and license as listed above) with 3 s of silence before and after, used as the fake microphone of `tests/e2e/reconocedor-en.spec.ts`.

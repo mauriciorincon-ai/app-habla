@@ -3,7 +3,7 @@ import path from "node:path";
 import { expect, test } from "@playwright/test";
 
 // The ADR-023 measurement (S11): the real recognizer over the Lingua Libre recordings, per language.
-// It prints the table and writes it to test-results/; it does NOT pass or fail on accuracy — the owner
+// It prints the table and writes it to tests/e2e/fixtures/palabras/medida-<language>.json; it does NOT pass or fail on accuracy — the owner
 // decides what the result means in the rehearsal (default v of the sprint order).
 
 const FIXTURES = path.resolve(__dirname, "fixtures/palabras");
@@ -39,10 +39,12 @@ for (const idioma of ["es", "en"] as const) {
       (await page.getByTestId("medida").textContent()) ?? "{}",
     );
     expect(medida.n).toBeGreaterThan(0);
-    const fuera = path.resolve(__dirname, "../../test-results");
+    // Versioned next to the recordings (not in test-results/, which is wiped on every run): the ADR-023
+    // table can be checked against this file. Running the spec again rewrites it.
+    const fuera = path.join(FIXTURES);
     mkdirSync(fuera, { recursive: true });
     writeFileSync(
-      path.join(fuera, `medida-reconocedor-${idioma}.json`),
+      path.join(fuera, `medida-${idioma}.json`),
       JSON.stringify(medida, null, 1),
     );
     console.log(

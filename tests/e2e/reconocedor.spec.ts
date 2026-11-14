@@ -41,6 +41,12 @@ test("viene apagado, se enciende con la descarga y se borra del aparato", async 
   await expect(page.getByTestId("reconocedor")).toHaveAttribute("aria-checked", "false");
   await expect(page.getByTestId("reconocedor-estado")).toContainText("borrado");
   expect(await page.evaluate(() => caches.has("habla-reconocedor-v1"))).toBe(false);
+  // Neither does the Worker's own copy of the model (vosk's IndexedDB, ADR-023 §9) stay behind.
+  expect(
+    (await page.evaluate(async () => (await indexedDB.databases()).map((d) => d.name))).filter(
+      (n) => n?.includes("vosk"),
+    ),
+  ).toEqual([]);
 });
 
 test("palabras: «quizás dijo» solo con la palabra de la ronda, cero red, y el conteo sube con el juicio", async ({
@@ -87,6 +93,11 @@ test("palabras: «quizás dijo» solo con la palabra de la ronda, cero red, y el
     await page.getByTestId("siguiente-picto").click();
   await expect(page.getByTestId("quizas-dijo")).toContainText(`Quizás dijo «${PALABRA}»`, { timeout: 30_000 });
   await expect(page.getByTestId("quizas-dijo")).not.toContainText(/no /i);
+  // The child's glow (switched on above): a soft light, no text, hidden from assistive tech.
+  const halo = page.getByTestId("halo-reconocedor");
+  await expect(halo).toBeVisible();
+  await expect(halo).toHaveAttribute("aria-hidden", "true");
+  await expect(halo).toHaveText("");
   await expect(page.getByTestId("juego")).not.toContainText(/incorrect|mal\b/i);
 
   // Axe sobre la línea del adulto (el resto de la pantalla del niño lo audita a11y.spec.ts).
@@ -106,8 +117,20 @@ test("palabras: «quizás dijo» solo con la palabra de la ronda, cero red, y el
   await expect(page.getByTestId("conteo-siSi")).toHaveText("1");
 });
 
-test("gemelas: el micrófono solo se abre si el adulto toca «Escuchar»", async ({ page }) => {
+test("gemelas: el micrófono solo se abre si el adulto toca «Escuchar»; con «gato» en el par sale el «quizás» (sin halo: la luz está apagada) y no hay red", async ({
+  page,
+}) => {
   await encender(page);
+  const fuera: string[] = [];
+  await page.context().route("**/*", async (route) => {
+    const url = route.request().url();
+    if (!url.startsWith(origen()) && !url.startsWith("blob:") && !url.startsWith("data:")) {
+      fuera.push(url);
+      await route.abort();
+      return;
+    }
+    await route.continue();
+  });
   await page.addInitScript(() => {
     (window as unknown as { __gum: number }).__gum = 0;
     const md = navigator.mediaDevices;
@@ -122,7 +145,29 @@ test("gemelas: el micrófono solo se abre si el adulto toca «Escuchar»", async
   await expect(page.getByTestId("gemelas-ronda")).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { __gum: number }).__gum)).toBe(0);
 
-  await page.getByTestId("escuchar-reconocedor").click();
+  // Two taps in a row open ONE microphone (the second one, with the permission prompt open, does nothing).
+  const escuchar = page.getByTestId("escuchar-reconocedor");
+  await escuchar.dblclick();
   await expect(page.getByTestId("reconocedor-escuchando")).toBeVisible({ timeout: 60_000 });
   expect(await page.evaluate(() => (window as unknown as { __gum: number }).__gum)).toBe(1);
+
+  // Walk the rounds: when the pair has «gato» the adult's line says so; otherwise there is nothing (never a «no»).
+  // The fake microphone repeats «gato» about every 9 s.
+  let vistoGato = false;
+  for (let ronda = 1; ronda <= 6; ronda++) {
+    const palabras = await page.locator('[data-testid="gemelas-ronda"] p.font-display').allInnerTexts();
+    if (palabras.map((p) => p.trim()).includes(PALABRA)) {
+      await expect(page.getByTestId("quizas-dijo")).toContainText(`Quizás dijo «${PALABRA}»`, {
+        timeout: 30_000,
+      });
+      await expect(page.getByTestId("halo-reconocedor")).toHaveCount(0); // the glow is off by default
+      vistoGato = true;
+      break;
+    }
+    await page.waitForTimeout(9500);
+    await expect(page.getByTestId("quizas-dijo")).toHaveCount(0);
+    if (ronda < 6) await page.getByTestId("saltar-ronda").click();
+  }
+  console.log(vistoGato ? "gemelas: par con «gato» probado" : "gemelas: hoy no sale un par con «gato»");
+  expect(fuera, `Salió tráfico del dispositivo: ${fuera.join(", ")}`).toEqual([]);
 });
