@@ -432,3 +432,42 @@ body {
   color: var(--tinta);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/*
+ * Hojas para imprimir (S10). En papel solo se ve el contenido de `.hoja`: la interfaz, los controles
+ * y los fondos de pantalla se van; cada hoja ocupa una página y lleva su propio pie de ARASAAC.
+ */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  .no-imprimir {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .zona-imprimible {
+    display: block !important;
+    max-width: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  .hoja {
+    break-after: page;
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    min-height: 0;
+    padding: 0 2px 0 0 !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  .hoja:last-child {
+    break-after: auto;
+  }
+}

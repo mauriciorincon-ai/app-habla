@@ -1,8 +1,8 @@
 // AudioWorkletProcessor: RMS acumulado por bloques de 128 muestras + F0 (pitch) por YIN,
-// emitidos throttled (~31 mensajes/s).
+// emitidos throttled (~31 mensajes/s). Desde el S10 también F1/F2 (spike de formantes, ADR-021).
 //
-// Regla dura 2 (privacidad): este archivo es AUTOCONTENIDO — sin imports, sin storage, sin red,
-// sin logs. Las muestras de audio viven en el buffer de análisis y mueren aquí; lo único que
+// Regla dura 2 (privacidad): este archivo no tiene storage, ni red, ni logs; su único import es el
+// módulo puro de formantes (S10, ADR-021), hermano en esta misma carpeta sellada. Las muestras de audio viven en el buffer de análisis y mueren aquí; lo único que
 // sale del hilo de audio son escalares (RMS y, cuando hay voz, F0 en Hz). El pitch es dato
 // DERIVADO de la voz del niño: se trata con la misma regla que el audio (ADR 007).
 
@@ -26,6 +26,8 @@ const YIN_THRESHOLD = 0.15;
 
 /** Bajo este RMS no se intenta pitch: el ruido de fondo NO debe producir F0 fantasma. */
 const RMS_MINIMO_PARA_PITCH = 0.01;
+
+import { estimarFormantes, type Formantes } from "./formantes.js";
 
 /**
  * YIN (cumulative mean normalized difference) sobre la ventana. Devuelve F0 en Hz, o null si
@@ -123,15 +125,18 @@ class RmsProcessor extends AudioWorkletProcessor {
 
       // Gating por energía: sin voz no se calcula pitch (ni se emite uno fantasma).
       let pitchHz: number | null = null;
+      let formantes: Formantes | null = null;
       if (rms >= RMS_MINIMO_PARA_PITCH) {
         // Desenrolla el ring buffer a orden cronológico antes de analizarlo.
         for (let i = 0; i < WINDOW_SIZE; i++) {
           this.ordenada[i] = this.ventana[(this.escritura + i) % WINDOW_SIZE];
         }
         pitchHz = detectarPitch(this.ordenada, sampleRate);
+        // El mismo gate de energía: bajo el umbral no hay formantes (ni fantasmas del ruido).
+        formantes = estimarFormantes(this.ordenada, sampleRate);
       }
 
-      this.port.postMessage({ rms, pitchHz, tMs: currentTime * 1000 });
+      this.port.postMessage({ rms, pitchHz, tMs: currentTime * 1000, formantes });
       this.sumSquares = 0;
       this.sampleCount = 0;
       this.blockCount = 0;

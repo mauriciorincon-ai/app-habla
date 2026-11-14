@@ -22,6 +22,14 @@ export const jugar = {
     que: { es: "Sube cuando su voz sube de tono.", en: "It rises when their voice goes higher." },
     mide: { es: "Mide el tono de su voz.", en: "Measures the pitch of their voice." },
   },
+  vocales: {
+    nombre: { es: "El mapa de las vocales", en: "The vowel map" },
+    que: { es: "Cada vocal enciende su zona del mapa.", en: "Each vowel lights up its own spot on the map." },
+    mide: {
+      es: "Experimental: mide la forma del sonido y adivina la vocal, con margen de error.",
+      en: "Experimental: measures the shape of the sound and guesses the vowel, with a margin of error.",
+    },
+  },
   palabras: {
     nombre: { es: "Palabra y dibujo", en: "Word and picture" },
     que: { es: "Cualquier sonido enciende el dibujo.", en: "Any sound lights up the picture." },

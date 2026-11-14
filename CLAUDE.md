@@ -6,7 +6,7 @@
 > `docs/REGLAS-ANEXO.md` § «Habla», junto a las reglas del kit en detalle; el anexo se lee solo cuando una regla se cita, nunca al abrir la sesión.
 > Las reglas duras de producto de Habla están aquí, completas; lo demás de la v1 (tesis, stack y workflow v1, reglas de desarrollo v1) vive en
 > ese anexo. Frase centinela de esta adopción: «su voz mueve el mundo, y no sale de aquí». Enmienda del 2026-11-12 (S9): la videoteca
-> ya no figura como pendiente del H-2.
+> ya no figura como pendiente del H-2. Enmienda del 2026-11-13 (S10): los cuentos por lotes ya existen (ADR-019).
 
 ## Identidad y las dos casas (regla dura)
 
@@ -34,7 +34,7 @@ Numeración de la v1 conservada (el código y los ADR citan «regla dura 2», «
 ## Hito vigente: H-2 «Producto completo» (F0 2026-11-01; entra a la ola el 2026-11-11)
 
 - **Desde el S7.** El H-1 está cerrado y sellado (S4); el gate humano de Habla hasta cerrar el H-2 es UNO: el **ensayo general** del dueño (no se ofrece un gate al cerrar sprints). El S7 empieza adoptando este núcleo y su anexo (≈ 1 h).
-- **Sale cuando:** el inventario de la VISION v1.0.1 está al 100 % —las 17 del MVP (falta **cuentos hechos para él**; la videoteca llegó en el S8, ADR-018) y las 4 del roadmap («¿dijo la palabra?» automático, tarjetas y tableros imprimibles, juegos de tono avanzados, convenciones con Nutri-Kids), cada una **construida o descartada por el dueño con su nombre** (descartar jamás es default ni lo propone el builder; las que la VISION condiciona a un spike se construyen hasta el spike y su resultado lo decide el dueño)— · **bilingüe ES/EN completo** (Habla nació solo en español, ADR-001: el H-2 lo paga, ADR nuevo) · el despliegue de Vercel como entorno igual al de producción · arquitectura al día · **ensayo general del dueño**: todos los flujos como cliente, con la guía abierta; lo no visto no cuenta.
+- **Sale cuando:** el inventario de la VISION v1.0.1 está al 100 % —las 17 del MVP (construidas: la videoteca en el S8, ADR-018, y los cuentos en el S9, ADR-019) y las 4 del roadmap («¿dijo la palabra?» automático, tarjetas y tableros imprimibles, juegos de tono avanzados, convenciones con Nutri-Kids), cada una **construida o descartada por el dueño con su nombre** (descartar jamás es default ni lo propone el builder; las que la VISION condiciona a un spike se construyen hasta el spike y su resultado lo decide el dueño)— · **bilingüe ES/EN completo** (Habla nació solo en español, ADR-001: el H-2 lo paga, ADR nuevo) · el despliegue de Vercel como entorno igual al de producción · arquitectura al día · **ensayo general del dueño**: todos los flujos como cliente, con la guía abierta; lo no visto no cuenta.
 - **Ninguna feature del H-2 afloja una regla dura.** Las que la rozan (videoteca y cámara, cuentos e IA, reconocimiento y voz del niño) se le plantean al dueño como mirada de DECISIÓN, con su ADR, antes de construir; jamás se resuelven en silencio.
 
 ## Workflow del sprint (5 pasos)
@@ -82,7 +82,7 @@ Numeración de la v1 conservada (el código y los ADR citan «regla dura 2», «
 1. `[siempre]` **TypeScript strict.** Sin `any` ni `@ts-ignore` sin justificación. — § 1
 2. `[sprint]` **Tests de lo que cambia.** Motores puros > 80 % (`src/lib/**`; global 70 % en `vitest.config.ts`), ≥ 1 e2e por feature core que llega POR LA UI, con micrófono falso y WAV sintéticos; directorios generados a `globalIgnores`. — § 2
 3. `[siempre]` **Motor separado de UI.** `lib/voice/`, `lib/coach/`, `session-flow` son puros y se prueban con señales sintéticas; la UI no habla Web Audio crudo. — § 3
-4. `[siempre]` **Toda salida de LLM que se persista pasa por esquema Zod** (los cuentos por lotes, cuando lleguen); nunca texto libre directo al almacenamiento. — § 4
+4. `[siempre]` **Toda salida de LLM que se persista pasa por esquema Zod** (los lotes de cuentos de la bandeja, desde el S9: `src/lib/cuentos/`, ADR-019); nunca texto libre directo al almacenamiento. — § 4
 5. `[siempre]` **A11y desde el inicio:** contraste AA, aria-labels, sin límite de tiempo; `prefers-reduced-motion` cambia propiedades, jamás la forma del árbol; el color nunca solo (símbolo + texto + color). — § 5
 6. `[siempre]` **Commits convencionales**; branch `sprint-NNN/<tema>`; jamás push directo a `main` (hook); ruleset `main-protegida`; un job de CI nuevo entra a la ruleset en el mismo sprint. — § 6
 7. `[siempre]` 🔒 **Secrets solo en `.env.local` y Vercel env;** gitleaks a doble cinturón (hook + `githooks/pre-commit`); se prueba con la carnada canónica del anexo § 7, nunca improvisada. — § 7
@@ -127,7 +127,7 @@ Propios: `node scripts/gen-sensibilidad-hashes.mjs` (al cambiar la lista privada
 ## Estándares (los 6+1, gates en CI)
 
 Testing · CI/CD · Observabilidad (metadata-only: jamás audio ni contenido, solo `kind` + conteos) · Seguridad · Performance (`perf-budget.json`, Lighthouse una corrida) · UX+A11y ·
-**IA embebida responsable** (aplica cuando lleguen los cuentos por lotes). Detalle: `estandares/estandares.md` de la planeadora. Ítem rojo ⇒ deuda explícita en el cierre o el sprint no cierra.
+**IA embebida responsable** (aplica a los lotes de cuentos de la bandeja desde el S9, ADR-019). Detalle: `estandares/estandares.md` de la planeadora. Ítem rojo ⇒ deuda explícita en el cierre o el sprint no cierra.
 
 ## Patrones de dominio de esta app
 

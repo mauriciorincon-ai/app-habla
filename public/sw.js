@@ -6,10 +6,16 @@
 // app (HTML, JS, CSS, iconos). No intercepta ni almacena nada del micrófono — el audio del niño
 // nunca sale del hilo de análisis, así que nunca llega a la red.
 
-const CACHE = "habla-v1";
+const CACHE = "habla-v2";
 
 // El shell: lo mínimo para que "Hoy" y el juego abran sin red.
-const SHELL = ["/", "/jugar", "/ajustes", "/worklets/rms-processor.js?v=1"];
+const SHELL = [
+  "/",
+  "/jugar",
+  "/ajustes",
+  "/worklets/rms-processor.js?v=3",
+  "/worklets/formantes.js",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

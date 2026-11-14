@@ -1,13 +1,19 @@
 // Sesión de micrófono real: getUserMedia → AudioContext → AudioWorklet (rms-processor).
 // Regla dura 2 (privacidad): el audio vive en el grafo de análisis y muere ahí — este módulo
-// no persiste, no transmite y no registra nada; del hilo de audio solo llegan escalares (RMS).
+// no persiste, no transmite y no registra nada; del hilo de audio solo llegan escalares (RMS, F0 y, desde el S10, F1/F2).
 // El grafo JAMÁS se conecta a destination: no hay playback.
 
-import { MIC_CONSTRAINTS, type MeterFrame, type MeterSource } from "./types";
+import {
+  esMeterFrame,
+  MIC_CONSTRAINTS,
+  type MeterFrame,
+  type MeterSource,
+} from "./types";
 
 // Sufijo de versión manual: el archivo estático no lleva hash de contenido (ADR 004).
-// Súbelo si cambia src/worklets/rms-processor.ts.
-const WORKLET_URL = "/worklets/rms-processor.js?v=2";
+// Súbelo si cambia src/worklets/rms-processor.ts o src/worklets/formantes.ts
+// (el import interno `./formantes.js` no lleva sufijo: el módulo principal manda la caché).
+const WORKLET_URL = "/worklets/rms-processor.js?v=3";
 
 export class MicSession implements MeterSource {
   private audioContext: AudioContext | null = null;
@@ -37,7 +43,8 @@ export class MicSession implements MeterSource {
     this.sourceNode = this.audioContext.createMediaStreamSource(this.stream);
     this.sourceNode.connect(this.workletNode);
     this.workletNode.port.onmessage = (event: MessageEvent) => {
-      const frame = event.data as MeterFrame;
+      const frame: unknown = event.data;
+      if (!esMeterFrame(frame)) return; // regla 19: lo que no es un frame no entra
       for (const cb of this.subscribers) {
         cb(frame);
       }

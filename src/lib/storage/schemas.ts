@@ -182,7 +182,7 @@ export const REGISTRO_GEMELAS_VACIO: RegistroGemelas = { juicios: [] };
 // (CelebracionHonesta, compartida por los 4 juegos). Discriminado por juego: cada juego mide algo
 // distinto y no se mezclan (mismo principio que la Metrica de session-flow).
 
-export const JUEGOS = ["globo", "cohete", "palabras", "gemelas"] as const;
+export const JUEGOS = ["globo", "cohete", "palabras", "gemelas", "vocales"] as const;
 export type Juego = (typeof JUEGOS)[number];
 
 export const SesionSchema = z.discriminatedUnion("juego", [
@@ -215,6 +215,14 @@ export const SesionSchema = z.discriminatedUnion("juego", [
     fecha: FechaSchema,
     rondas: z.number().int().min(0),
     participadas: z.number().int().min(0),
+  }),
+  // Vocales (S10, experimental): vocales distintas que sonaron estables (0..5) y cambios entre ellas.
+  // Solo contadores: ni F1/F2 ni Hz ni audio (regla dura 2).
+  z.object({
+    juego: z.literal("vocales"),
+    fecha: FechaSchema,
+    zonas: z.number().int().min(0).max(5),
+    cambios: z.number().int().min(0),
   }),
 ]);
 export type Sesion = z.infer<typeof SesionSchema>;

@@ -38,7 +38,13 @@ export type Metrica =
    *   - `rondas`: pares que se jugaron.
    *   - `participadas`: rondas donde el padre marcó lo que oyó (el niño intentó una palabra).
    */
-  | { tipo: "gemelas"; rondas: number; participadas: number };
+  | { tipo: "gemelas"; rondas: number; participadas: number }
+  /**
+   * Mapa de las vocales (S10, EXPERIMENTAL). Solo lo que el DSP midió, sin juzgar la vocal:
+   *   - `zonas`: vocales distintas (de las cinco) que sonaron estables en el intento.
+   *   - `cambios`: veces que pasó de una vocal estable a otra distinta.
+   */
+  | { tipo: "vocales"; zonas: number; cambios: number };
 
 /** El número que la métrica lleva dentro — con eso se compara contra la meta. */
 export function valorDeMetrica(metrica: Metrica): number {
@@ -47,6 +53,8 @@ export function valorDeMetrica(metrica: Metrica): number {
       return metrica.ms;
     case "gemelas":
       return metrica.participadas;
+    case "vocales":
+      return metrica.zonas;
     default:
       return metrica.veces;
   }
@@ -57,6 +65,7 @@ export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
   inversiones: { tipo: "inversiones", veces: 0 },
   activaciones: { tipo: "activaciones", veces: 0, reconocidas: 0 },
   gemelas: { tipo: "gemelas", rondas: 0, participadas: 0 },
+  vocales: { tipo: "vocales", zonas: 0, cambios: 0 },
 };
 
 export type Fase =

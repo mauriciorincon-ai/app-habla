@@ -17,6 +17,7 @@ import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
+import { OtraCasa } from "./otra-casa";
 import {
   AJUSTES_DEFECTO,
   type Apariencia,
@@ -87,6 +88,8 @@ export function AjustesSesion() {
           guardarAjustesEnStore({ ...ajustes, vozFamiliar })
         }
       />
+
+      <OtraCasa />
 
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">{tx(textos.borrar.titulo)}</h2>

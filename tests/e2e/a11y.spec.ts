@@ -12,12 +12,14 @@ const RUTAS = [
   "/jugar/cohete",
   "/jugar/palabras",
   "/jugar/gemelas",
+  "/jugar/vocales",
   "/estudio",
   "/ajustes",
   "/rumbo",
   "/objetivo",
   "/cuentos",
   "/estudio/cuentos",
+  "/estudio/imprimibles",
 ];
 
 // Los dos esquemas: la paleta del padre tiene modo oscuro, y sus colores de estado NO son los

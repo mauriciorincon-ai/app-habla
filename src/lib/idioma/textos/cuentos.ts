@@ -121,8 +121,8 @@ export const cuentos = {
   narrar: {
     titulo: { es: "Tu voz para los cuentos", en: "Your voice for the stories" },
     ayuda: {
-      es: "Graba cada página leyéndola tú. Se guarda solo en este dispositivo y no sale de aquí. Si no grabas, la lees en vivo.",
-      en: "Record each page as you read it. It stays only on this device and never leaves it. If you don't record, you read it live.",
+      es: "Graba cada página leyéndola tú. Se guarda en este dispositivo y solo sale en el archivo cifrado de «Pasar a la otra casa» si tú lo marcas. Si no grabas, la lees en vivo.",
+      en: "Record each page as you read it. It stays on this device and only leaves in the locked file of “Take it to the other home” if you tick it. If you don't record, you read it live.",
     },
     grabarCuento: { es: "Grabar mi voz", en: "Record my voice" },
     pagina: { es: "Página {n} de {total}", en: "Page {n} of {total}" },

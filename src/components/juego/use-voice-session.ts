@@ -24,6 +24,10 @@ import {
   type PitchTracker,
 } from "@/lib/voice/pitch-tracker";
 import type { MeterFrame, MeterSource } from "@/lib/voice/types";
+import {
+  crearSeguimientoVocales,
+  type Vocal,
+} from "@/lib/voice/vocales";
 import { DURACION_CALIBRACION_MS } from "@/lib/voice/calibration";
 import {
   reducir,
@@ -51,6 +55,10 @@ export type MedidasVivas = {
   inversiones: () => number;
   /** 0..1 — avance de la calibración. */
   progresoCalibracion: () => number;
+  /** Mapa de las vocales (S10, experimental): la vocal estable de ahora y lo que ya se midió. */
+  vocalActual: () => Vocal | null;
+  vocalesZonas: () => number;
+  vocalesCambios: () => number;
 };
 
 export type VoiceSession = {
@@ -109,6 +117,7 @@ export function useVoiceSession({
   const fuenteRef = useRef<MeterSource | null>(null);
   const meterRef = useRef<Meter | null>(null);
   const pitchRef = useRef<PitchTracker | null>(null);
+  const vocalesRef = useRef(crearSeguimientoVocales());
   const calibracionRef = useRef<Calibracion | null>(null);
 
   // Valores vivos que la UI pinta a 60 fps sin re-render.
@@ -138,6 +147,9 @@ export function useVoiceSession({
       direccionPitch: () => direccionRef.current,
       inversiones: () => inversionesRef.current,
       progresoCalibracion: () => progresoCalibracionRef.current,
+      vocalActual: () => vocalesRef.current.actual(),
+      vocalesZonas: () => vocalesRef.current.zonas(),
+      vocalesCambios: () => vocalesRef.current.cambios(),
     }),
     [],
   );
@@ -181,6 +193,7 @@ export function useVoiceSession({
         alturaPitchRef.current = 0;
         direccionRef.current = "quieto";
         inversionesRef.current = 0;
+        vocalesRef.current.reiniciar();
         despachar(
           estado.ruidoAlto
             ? { tipo: "CALIBRACION_RUIDOSA", pisoRuido: estado.pisoRuido }
@@ -209,6 +222,13 @@ export function useVoiceSession({
         direccionRef.current = pitch.direccion;
         inversionesRef.current = pitch.inversiones;
       }
+      // Las vocales usan el MISMO frame y el mismo veredicto de energía; solo dos números (F1, F2)
+      // entran, y mueren en este ref de contadores (regla dura 2).
+      vocalesRef.current.empujar(
+        frame.formantes,
+        frame.pitchHz,
+        estado.vozActiva,
+      );
     }
   }, []);
 
@@ -289,6 +309,7 @@ export function useVoiceSession({
     alturaPitchRef.current = 0;
     direccionRef.current = "quieto";
     inversionesRef.current = 0;
+    vocalesRef.current.reiniciar();
   }, []);
 
   const recalibrar = useCallback(() => {

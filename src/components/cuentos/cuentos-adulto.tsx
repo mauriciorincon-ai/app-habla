@@ -7,6 +7,7 @@
 //    dirigido a un agente, gate de sensibilidad). Lo que entra, entra `pendiente`.
 // 3. Leer y aprobar o rechazar cada cuento; y poner la voz propia, página por página (banco local).
 
+import { descargarArchivo } from "@/lib/descargar";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CUENTOS } from "@content/cuentos";
@@ -123,17 +124,7 @@ export function CuentosAdulto() {
       return;
     }
     // Una descarga local por acción explícita del adulto: el archivo lo guarda él donde quiera.
-    const blob = new Blob([`${JSON.stringify(pedido, null, 2)}\n`], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${pedido.id}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+    descargarArchivo(`${JSON.stringify(pedido, null, 2)}\n`, `${pedido.id}.json`, "application/json");
   };
 
   const elegido = async (archivo: File | undefined) => {

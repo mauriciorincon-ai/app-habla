@@ -12,7 +12,7 @@ import { describe, expect, it } from "vitest";
 // Si este test falla, NO lo relajes: ninguna grabación de la familia puede tener un camino a la red.
 
 const RAIZ = resolve(__dirname, "../..");
-const CARPETAS = ["src/lib/banco-voz", "src/lib/audio", "src/lib/videoteca"];
+const CARPETAS = ["src/lib/banco-voz", "src/lib/audio", "src/lib/videoteca", "src/lib/otra-casa"];
 
 const RED_PROHIBIDA: Array<{ patron: RegExp; que: string }> = [
   { patron: /\bfetch\s*\(/, que: "fetch (red)" },

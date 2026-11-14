@@ -41,12 +41,12 @@ export default defineConfig({
     {
       name: "mobile-chromium",
       use: { ...devices["Pixel 7"] },
-      testIgnore: /(cohete|spike-pitch)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales)\.spec\.ts/,
     },
     {
       name: "desktop-chromium",
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: /(cohete|spike-pitch)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales)\.spec\.ts/,
     },
     {
       // El cohete necesita una voz que CANTE (barrido de tono), no una voz plana: proyecto
@@ -57,6 +57,15 @@ export default defineConfig({
         launchOptions: fakeMic("barrido-tono.wav"),
       },
       testMatch: /(cohete|spike-pitch)\.spec\.ts/,
+    },
+    {
+      // El mapa de las vocales (S10): vocales sintéticas de voz infantil (a·e·i·o·u), no un barrido.
+      name: "desktop-chromium-vocales",
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: fakeMic("vocales-nino.wav"),
+      },
+      testMatch: /vocales\.spec\.ts/,
     },
   ],
   webServer: {

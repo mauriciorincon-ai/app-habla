@@ -106,7 +106,7 @@ test("cada tarjeta y cada juego enlazan a su ruta real", async ({ page }) => {
 
 // La progressive disclosure también tiene que existir para quien no ve la pantalla.
 // El recorte visual (overflow) engaña al ojo pero NO al lector de pantalla: sin sacar lo
-// cerrado del árbol de accesibilidad, esa persona recibe las 26 features de corrido
+// cerrado del árbol de accesibilidad, esa persona recibe las 29 features de corrido
 // mientras aria-expanded le dice "cerrado". Playwright no distingue los dos casos (para
 // él ambos son "no visible"), así que se mira el árbol real por CDP.
 test("lo cerrado no llega al lector de pantalla", async ({ page }) => {
@@ -139,7 +139,7 @@ test("lo cerrado no llega al lector de pantalla", async ({ page }) => {
 test("el pie declara el conteo de funcionalidades", async ({ page }) => {
   await page.goto("/conoce");
   await expect(
-    page.getByText("26 funcionalidades", { exact: true }),
+    page.getByText("29 funcionalidades", { exact: true }),
   ).toBeVisible();
 });
 

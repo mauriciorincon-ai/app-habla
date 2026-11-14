@@ -24,6 +24,8 @@ import { registrarSesion } from "@/lib/storage/local";
 import type { Idioma } from "@/lib/idioma";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
+import { vocales as vocalesTextos } from "@/lib/idioma/textos/vocales";
+import { FormaVocal } from "./forma-vocal";
 
 type Props = {
   metrica: Metrica;
@@ -66,6 +68,7 @@ function Logro({
   const tx = useT();
   const idioma = useIdioma();
   const c = juegos.celebracion;
+  const v = vocalesTextos.celebracion;
   const cifra = (texto: string) => (
     <span
       className="text-celebracion-fuerte font-sans font-semibold tabular-nums"
@@ -160,6 +163,35 @@ function Logro({
         </>
       );
 
+    case "vocales":
+      return (
+        <>
+          <FormaVocal vocal="a" letra="A" className="size-20" encendida />
+          <h2 className="font-display text-4xl">
+            {tx(metrica.zonas === 1 ? v.antesUna : v.antes)}{" "}
+            {cifra(
+              tx(metrica.zonas === 1 ? v.una : v.varias, { n: metrica.zonas }),
+            )}{" "}
+            {tx(v.despues)}
+          </h2>
+          {metrica.cambios > 0 ? (
+            <p className="text-lg" data-testid="celebracion-cambios">
+              {tx(v.cambios)}{" "}
+              <strong className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+                {tx(
+                  metrica.cambios === 1
+                    ? vocalesTextos.vez
+                    : vocalesTextos.veces,
+                  { n: metrica.cambios },
+                )}
+              </strong>
+              .
+            </p>
+          ) : null}
+          <p className="text-tinta-suave">{tx(v.cuerpo)}</p>
+        </>
+      );
+
     case "gemelas":
       return (
         <>
@@ -198,7 +230,9 @@ function SinVoz({ metrica }: { metrica: Metrica }) {
       ? c.cohete
       : metrica.tipo === "activaciones"
         ? c.dibujos
-        : c.globo;
+        : metrica.tipo === "vocales"
+          ? vocalesTextos.celebracion.sinVoz
+          : c.globo;
 
   return (
     <>
