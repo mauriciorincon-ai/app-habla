@@ -31,7 +31,7 @@ export function preludio(mapa: MapaPreludio): string {
     if (!a) return Promise.reject(new TypeError("habla: the recognizer has no network"));
     return original(a, opciones);
   };
-  for (const nombre of ["XMLHttpRequest", "WebSocket", "EventSource", "WebTransport"]) {
+  for (const nombre of ["XMLHttpRequest", "WebSocket", "EventSource", "WebTransport", "Worker", "SharedWorker"]) {
     try { Object.defineProperty(self, nombre, { value: undefined, configurable: false, writable: false }); } catch (_) {}
   }
   self.importScripts = () => { throw new TypeError("habla: the recognizer cannot load scripts"); };

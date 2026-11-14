@@ -127,16 +127,19 @@ describe("la escucha devuelve solo palabra y confianza (regla dura 2)", () => {
       sampleRate: 48000,
       alOir: (o) => oidos.push(o),
     });
-    expect(enviados[0]).toEqual({
+    // First, the worker's console is silenced; then it loads.
+    expect(enviados[0]).toEqual({ action: "set", key: "logLevel", value: -2 });
+    expect(enviados[1]).toEqual({
       action: "load",
       modelUrl: "/modelos/es.zip?v=1",
       wasmUrl: "blob:w",
     });
     e.oir(new Float32Array(4)); // antes de cargar: se descarta
-    expect(enviados).toHaveLength(1);
+    expect(enviados).toHaveLength(2);
     motor.decir({ event: "load", result: true });
     await e.lista;
-    expect(enviados[1]).toMatchObject({
+    expect(enviados[2]).toEqual({ action: "set", key: "logLevel", value: -2 });
+    expect(enviados[3]).toMatchObject({
       action: "create",
       grammar: '["perro","[unk]"]',
       sampleRate: 48000,
@@ -153,6 +156,7 @@ describe("la escucha devuelve solo palabra y confianza (regla dura 2)", () => {
         result: [
           { word: "perro", conf: 0.8, start: 0, end: 1 },
           { word: "[unk]", conf: 1, start: 1, end: 2 },
+          { word: "gato", conf: 0.9, start: 2, end: 3 }, // not in the grammar: dropped
         ],
         text: "perro",
       },
@@ -201,6 +205,8 @@ describe("el preludio le quita la red al Worker", () => {
       XMLHttpRequest: class {},
       WebSocket: class {},
       EventSource: class {},
+      Worker: class {},
+      SharedWorker: class {},
       navigator: { sendBeacon: () => true },
     };
     vm.runInNewContext(preludio(mapa), {
@@ -235,6 +241,8 @@ describe("el preludio le quita la red al Worker", () => {
     expect(self.XMLHttpRequest).toBeUndefined();
     expect(self.WebSocket).toBeUndefined();
     expect(self.EventSource).toBeUndefined();
+    expect(self.Worker).toBeUndefined();
+    expect(self.SharedWorker).toBeUndefined();
     expect(() => (self.importScripts as () => void)()).toThrow();
     expect((self.navigator as { sendBeacon: () => boolean }).sendBeacon()).toBe(
       false,

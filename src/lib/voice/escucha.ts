@@ -49,6 +49,8 @@ export type Escucha = {
 
 const ID = "habla";
 const ESCALA_PCM16 = 32768;
+/** Vosk's log level that prints nothing. */
+const LOG_SILENCIO = -2;
 
 /** Linear-interpolation resample from `de` Hz to `a` Hz (pure; the same array when the rates match). */
 export function remuestrear(x: Float32Array, de: number, a: number): Float32Array {
@@ -68,6 +70,8 @@ export function remuestrear(x: Float32Array, de: number, a: number): Float32Arra
 export function crearEscucha(o: OpcionesEscucha): Escucha {
   let lista = false;
   let terminada = false;
+  // The page only ever receives words of the closed grammar (anything else the engine says is dropped).
+  const palabrasGramatica = new Set(o.gramatica);
   let aceptar: () => void = () => undefined;
   let rechazar: (e: Error) => void = () => undefined;
   const promesa = new Promise<void>((res, rej) => {
@@ -82,6 +86,7 @@ export function crearEscucha(o: OpcionesEscucha): Escucha {
         rechazar(new Error("reconocedor-no-cargo"));
         return;
       }
+      o.motor.postMessage({ action: "set", key: "logLevel", value: LOG_SILENCIO });
       o.motor.postMessage({
         action: "create",
         recognizerId: ID,
@@ -104,12 +109,15 @@ export function crearEscucha(o: OpcionesEscucha): Escucha {
     }
     if (esResultadoVosk(m) && !terminada) {
       for (const w of m.result.result) {
-        if (w.word === "[unk]") continue;
+        if (w.word === "[unk]" || !palabrasGramatica.has(w.word)) continue;
         o.alOir({ palabra: w.word, conf: w.conf });
       }
     }
   };
 
+  // Silence the worker's own console before it loads anything (the engine's logger), and the wasm module's
+  // once it exists (the same message is repeated when the engine is ready, below).
+  o.motor.postMessage({ action: "set", key: "logLevel", value: LOG_SILENCIO });
   o.motor.postMessage({
     action: "load",
     modelUrl: o.modelUrl,
