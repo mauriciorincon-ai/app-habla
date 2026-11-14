@@ -73,7 +73,7 @@ describe("biblioteca de cápsulas: la estrella", () => {
     }
   });
 
-  it("el microcopy respeta los anti-claims (§D): nada de terapia, diagnóstico ni plazos", () => {
+  it("el microcopy respeta los anti-claims (§D): nada de terapia ni plazos", () => {
     // La app es práctica de estimulación en casa, jamás terapia — y jamás promete plazos.
     const prohibidos = [
       /\bterapia\b/i,

@@ -50,7 +50,7 @@
   · prefers-reduced-motion = experiencia COMPLETA: el rig se colapsa, todo llega en su
     pose final y ninguna escena pierde contenido (cada una declara su variante).
   · Lo cerrado sale del árbol de accesibilidad (visibility en la transición): sin eso el
-    lector de pantalla recita las 25 features mientras aria-expanded dice "cerrado".
+    lector de pantalla recita las 26 features mientras aria-expanded dice "cerrado".
   · Cero emojis (el design system los prohíbe): los iconos son los SVG de trazo de la app
     y los personajes llevan la paleta del niño sobre su escenario claro.
   · Cero datos del menor. Tono es-CO de "tú": le habla a ella.
@@ -246,7 +246,7 @@
   .tarjeta[data-abierta] .chevron { transform: rotate(180deg); }
 
   /* E04 · El telón (G2). `visibility` saca lo cerrado del árbol de accesibilidad — sin
-     él, un lector de pantalla recita las 25 features mientras aria-expanded dice
+     él, un lector de pantalla recita las 26 features mientras aria-expanded dice
      "cerrado" (el recorte por overflow engaña al ojo, no al lector: verificado por CDP).
      Se transiciona a propósito: con un extremo en `visible`, CSS la mantiene visible todo
      el colapso y la animación no se corta.
@@ -1432,6 +1432,22 @@
                 opens the camera</strong>. Each clip lives only on this device, is not uploaded or
                 sent, and you delete it in two taps; “Delete my data” takes them along too.</p>
             </div>
+            <div class="feature" style="--j:5">
+              <h4 data-l="es">Cuentos de casa: cuentos cortos con lo que le gusta</h4>
+              <h4 data-l="en">Stories at home: short stories built on what they enjoy</h4>
+              <p data-l="es" class="como">Cuentos <strong>cortos, con una palabra grande
+                por página</strong>, que lees en voz alta mientras tu hijo mira. Seis vienen listos y
+                se llenan con lo que le gusta. Si quieres más, pides un lote y <strong>lees y
+                apruebas cada cuento</strong> antes de que llegue a él. Los narras con <strong>tu
+                voz grabada</strong> en el aparato o los lees en vivo: nunca una voz de máquina. El
+                pedido no lleva su nombre, su edad ni su voz, y la app no se conecta a internet.</p>
+              <p data-l="en" class="como"><strong>Short</strong> stories, <strong>one big word per
+                page</strong>, which you read aloud while your child watches. Six come ready and
+                are filled in with what they enjoy. If you want more, you ask for a batch and
+                <strong>read and approve each story</strong> before it reaches them. You narrate with
+                <strong>your own recorded voice</strong> on this device or read live: never a machine
+                voice. The request carries no name, age or voice, and the app never goes online.</p>
+            </div>
           
             <a data-l="es" class="enlace" href="/estudio">Abrir el Estudio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             <a data-l="en" class="enlace" href="/estudio">Open the Studio <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -2267,7 +2283,7 @@
        el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
        hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
-    <strong data-l="es" class="conteo"><span data-contador>25</span> funcionalidades</strong>
+    <strong data-l="es" class="conteo"><span data-contador>26</span> funcionalidades</strong>
     <strong data-l="en" class="conteo"><span data-contador>25</span> features</strong>
     <p data-l="es" class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
       todas están repartidas arriba, entre las seis puertas, los cuatro juegos y lo fino.
@@ -2286,6 +2302,8 @@
             funcionalidades de los sprints 1 a 4).</li>
           <li><strong>Sprint 8 · noviembre de 2026:</strong> los juegos de palabras y el objetivo se
             practican en inglés, y el Estudio suma «Videos de la familia» (la funcionalidad 25).</li>
+          <li><strong>Sprint 9 · noviembre de 2026:</strong> «Cuentos de casa» (la funcionalidad 26) y una
+            actividad de contacto visual al día en «Hoy».</li>
         </ul>
       </details>
       <details data-l="en" class="chica">
@@ -2295,6 +2313,8 @@
             full tour at the close of its first cycle (the 24 features of sprints 1 to 4).</li>
           <li><strong>Sprint 8 · November 2026:</strong> the word games and the goal are practised in
             English, and the Studio adds “Family videos” (feature 25).</li>
+          <li><strong>Sprint 9 · November 2026:</strong> “Stories at home” (feature 26) and one
+            eye-contact activity a day on “Today”.</li>
         </ul>
       </details>
     </div>

@@ -40,6 +40,11 @@ toca **"Sí, ya lo hicimos"**.
   hicimos"). **No hay rachas ni castigos**: ese número **nunca baja** — si se saltan un día, no
   se pierde nada. Lo que cuenta es volver.
 - En "¿De dónde sale esto?" puede ver el estudio en el que se apoya cada cápsula.
+- **Dos dominios (S9):** debajo de la cápsula de habla aparece **«Y también hoy · contacto visual»**: una
+  sola actividad de mirada al día, con **su línea primero** (usted la dice) y luego la actividad, cuánto
+  dura y lo que no se hace. Cambia por fecha, no se repite en la semana y sigue el paso que usted fijó.
+  **Es sin pantalla:** se hace de a dos, mirando a su hijo. El enlace «Ver todas en La pirámide, en casa»
+  abre el documento completo. Debajo hay también un acceso a **«Un cuento para leer juntos»**.
 
 ### Los juegos de voz — "su voz mueve el mundo"
 
@@ -386,6 +391,35 @@ del juego (co-uso: usted está al lado).
   falla, también.
 - **Qué NO hace:** no juzga, no puntúa, no compara ni dice si el niño imitó bien: es solo el video.
 
+### Cuentos de casa — cuentos cortos con lo que le gusta (nuevo · S9)
+
+Cuentos cortos de **unas pocas páginas** (los seis de la app, de cuatro), con **una palabra grande por página** (palabras sueltas primero). Usted los lee
+en voz alta y su hijo mira la palabra: si la dice, la imita o la señala, cuenta. **No hay tiempo, ni puntaje.**
+
+- **Dónde:** el niño los abre desde **«Hoy» → «Un cuento para leer juntos»** (`/cuentos`). Usted los prepara
+  en **Estudio → «Cuentos de casa»**.
+- **Los de la app:** vienen **seis listos**, escritos en español y en English. Se llenan con lo que usted
+  escriba en **«Lo que le gusta»** (palabras generales, «trenes, animales») y **«Palabras que están
+  practicando»** (una palabra cada una). Sin escribir nada, usan palabras de ejemplo.
+- **Qué viaja y qué no:** lo único que sale en un pedido son esos **gustos en palabras generales y las
+  palabras meta**. **Nunca** su nombre, su edad, su voz ni nada de su condición; si escribe un número, la
+  app no lo acepta como gusto.
+- **Cuentos nuevos, por lotes (opcional):** **«Descargar el pedido»** guarda un archivo. Se lo da a Claude
+  Code con **/bandeja** (en la carpeta privada del proyecto, que no se sube al repositorio); él escribe un
+  lote de cuentos con la suscripción de quien construye la app, **no con un servicio de pago**, y la app
+  **no se conecta a internet** en ningún momento. Luego **«Traer un lote»** elige ese archivo.
+- **Usted aprueba cada uno:** los cuentos del lote entran **«esperando su lectura»**. Léalos enteros y
+  toque **«✓ Aprobar»** o **«✕ Este no»**. **Solo lo aprobado** aparece del lado del niño. Si un cuento
+  habla de plazos o puntajes, trae instrucciones o usa palabras que esta app no escribe, **no entra** y
+  la app le dice por qué.
+- **Con su voz:** **«Grabar mi voz»** le pide leer cada página; la grabación vive **solo en este
+  dispositivo**, como el banco de voz. Del lado del niño, **«Con mi voz grabada»** la reproduce y
+  **«Lo leo yo»** deja solo el texto grande. **Nunca hay voz de máquina.** Graba solo usted: la voz del niño
+  jamás se guarda.
+- **Cambiar de idea:** en **«Ya decididos»** puede **retirar** un cuento aprobado (el niño deja de verlo) o **quitar** uno rechazado (libera el lugar). Si cambia lo que le gusta, las grabaciones de las páginas que cambiaron dejan de sonar y esas páginas se vuelven a leer en vivo hasta que las grabe de nuevo.
+- **Borrar:** **Ajustes → Borrar mis datos** también borra los cuentos importados y las grabaciones.
+- **Qué NO hace:** no juzga ni puntúa, no felicita por felicitar y no manda nada a ninguna parte.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -522,4 +556,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 006    | "La pirámide, en casa": el documento de la mamá en `/mirada` se reorganiza por los seis grupos de la pirámide (señalar · imitación · comprender · atención conjunta · intención comunicativa · juego, todos a la vez), con fichas de actividad en instrucción directa (Ten a la mano · Haz · Tu línea · Espera ver · Funcionó si · Si no pasa) que salen de revisar las 24 cápsulas de la mirada y las 50 de habla. **Se retira el registro diario** (a la mamá no le resultó factible llevarlo). La app del niño no cambia. |
 | 007    | La app en dos idiomas, **español y English**: sigue al navegador o se elige en Ajustes; las 50 cápsulas, los juegos de voz, Hoy, Estudio, Objetivo, Rumbo y `/conoce` en los dos; en English, Palabras y Gemelas lo dicen con una tarjeta honesta. Ajustes → «Qué mide» nombra el tono del cohete. Primer sprint con el manual también en inglés (`MANUAL-DE-USO.en.md`). |
 | 008    | **«En inglés también se practica»**: Palabras, Gemelas y el Objetivo se practican en inglés (contenido y diccionario propios del idioma, sin tarjeta de «solo en español»); `/mirada` y el catálogo de cápsulas, en español e inglés con selector; **Videos de la familia** en el Estudio (clips de su galería, solo en el dispositivo, sin cámara, borrables); el crédito del diccionario corregido (Google Books Ngram, CC BY 3.0). |
+| 009    | **«Cuentos de casa»**: seis cuentos de respaldo en español e inglés que se llenan con los gustos y las palabras meta que escribe el adulto; pedidos y lotes de cuentos nuevos por la bandeja de IA (fuera de la app, solo con aprobación del adulto de cada cuento); narración con la voz del adulto grabada en el dispositivo o «lo leo yo». **«Hoy»** suma una actividad de contacto visual al día junto a la cápsula (dos dominios). Las parejas de sonidos del inglés pasan de 9 a 12. |
 <!-- s5:fin -->

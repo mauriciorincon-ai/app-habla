@@ -13,14 +13,17 @@ import {
   borrarObjetivo,
   guardarAjustes,
   guardarObjetivo,
+  guardarCuentos,
   guardarPerfil,
   guardarProgreso,
   leerAjustes,
+  leerCuentos,
   leerObjetivo,
   leerPerfil,
   leerProgreso,
 } from "@/lib/storage/local";
 import { fechaHoy } from "@/lib/fecha";
+import type { CuentosGuardados } from "@/lib/cuentos/estado";
 import type {
   AjustesGuardados,
   Objetivo,
@@ -73,7 +76,23 @@ const storeObjetivo = crearStore<Objetivo | null>(leerObjetivo, (obj) => {
   else borrarObjetivo();
 });
 
+const storeCuentos = crearStore<CuentosGuardados>(leerCuentos, guardarCuentos);
+
 const sinDatosEnServidor = () => null;
+
+/** «Cuentos de casa» (S9): `null` hasta que hidrata. */
+export function useCuentos(): CuentosGuardados | null {
+  return useSyncExternalStore(storeCuentos.subscribe, storeCuentos.snapshot, sinDatosEnServidor);
+}
+
+export function guardarCuentosEnStore(valor: CuentosGuardados): void {
+  storeCuentos.set(valor);
+}
+
+/** Lo guardado ahora mismo, fuera de React (al importar un lote). */
+export function cuentosActuales(): CuentosGuardados {
+  return storeCuentos.snapshot();
+}
 
 /** `null` hasta que hidrata (el servidor no puede saber qué guardó este dispositivo). */
 export function useProgreso(): Progreso | null {

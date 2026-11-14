@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s9 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s8 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s7 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s6 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
@@ -175,7 +176,8 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s8">Nuevo · S8</span> Nació en este sprint (practicar en inglés y los videos de la familia). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s9">Nuevo · S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s8">S8</span> Del Sprint 8 (practicar en inglés y los videos de la familia). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s7">S7</span> Nació en este sprint (la app en español y English). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s6">S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s4">S4</span> Del Sprint 4, sin cambios. <span class="suave">Regresión: que el Rumbo y el Objetivo de la semana sigan.</span></li>
@@ -201,7 +203,8 @@
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
-        <button type="button" data-filtro="s8" aria-pressed="false">Solo lo nuevo del S8</button>
+        <button type="button" data-filtro="s9" aria-pressed="false">Solo lo nuevo del S9</button>
+        <button type="button" data-filtro="s8" aria-pressed="false">Solo lo del S8</button>
         <button type="button" data-filtro="s7" aria-pressed="false">Solo lo del S7</button>
         <button type="button" data-filtro="s6" aria-pressed="false">Solo lo del S6</button>
         <button type="button" data-filtro="s4" aria-pressed="false">Solo regresión del S4</button>
@@ -623,6 +626,31 @@
         <label for="v8-h5">Lee <strong>“Acerca de las palabras”</strong> en Ajustes. <span class="origen o-s8">Nuevo · S8</span></label>
         <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>Google Books Ngram</strong> bajo la licencia <strong>CC BY 3.0</strong> (corrige el crédito anterior, que era otro).</p>
         <p class="mal"><span class="et">Mal</span> Nombra otra fuente o licencia · falta el crédito.</p>
+      </div></li>
+      <li data-origen="s9"><input type="checkbox" id="v9-h1"><div>
+        <label for="v9-h1">Abre <strong>Hoy</strong> y baja hasta <strong>“Y también hoy · contacto visual”</strong>. Cambia la fecha del aparato un día y vuelve a mirar. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Debajo de la cápsula de habla hay <strong>una sola actividad de mirada</strong>, con <strong>tu línea primero</strong>, cuánto dura y lo que no se hace, y dice <strong>«Sin pantalla»</strong>. Cambia de un día a otro y no repite en la semana. En inglés sale escrita en inglés.</p>
+        <p class="mal"><span class="et">Mal</span> Salen varias actividades de mirada a la vez · la actividad va antes que tu línea · repite al día siguiente.</p>
+      </div></li>
+      <li data-origen="s9"><input type="checkbox" id="v9-h2"><div>
+        <label for="v9-h2">En <strong>Estudio → “Cuentos de casa”</strong>, escribe <strong>“trenes, animales”</strong> y una palabra que practican, toca <strong>Guardar</strong> y luego <strong>“Descargar el pedido”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Se descarga un archivo <code>pedido-….json</code> que lleva <strong>solo los gustos y las palabras</strong>: ni nombre, ni edad, ni voz. Si escribes un número como gusto, la app lo rechaza con un aviso.</p>
+        <p class="mal"><span class="et">Mal</span> El archivo trae algo más que los gustos y las palabras · un número entra como gusto.</p>
+      </div></li>
+      <li data-origen="s9"><input type="checkbox" id="v9-h3"><div>
+        <label for="v9-h3">Abre <code>/cuentos</code> desde <strong>Hoy → “Un cuento para leer juntos”</strong> y lee un cuento de la app, página por página. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Arriba va <strong>el guion del adulto</strong>; cada página tiene texto grande y <strong>una palabra enorme</strong>; los botones son grandes; no hay tiempo ni puntaje. Los seis cuentos de la app aparecen en el idioma activo, <strong>sin pasos que exijan decir la palabra</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Hay cronómetro, puntaje o un «¡muy bien!» automático · el texto o los botones quedan chicos.</p>
+      </div></li>
+      <li data-origen="s9"><input type="checkbox" id="v9-h4"><div>
+        <label for="v9-h4">Si tienes un lote de <code>/bandeja</code>, en <strong>Cuentos de casa → “Traer un lote”</strong> elige el archivo. Si no, <strong>elige un archivo cualquiera que no sea un lote</strong>. Aprueba uno y rechaza otro; luego abre <code>/cuentos</code>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Un archivo que no es lote dice que <strong>no entró nada</strong>. En un lote, cada cuento <strong>espera tu lectura</strong>: solo el que <strong>apruebas</strong> aparece del lado del niño; el rechazado no. La app <strong>no hace ninguna petición a internet</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Un cuento sin aprobar aparece del lado del niño · un archivo ajeno entra a medias.</p>
+      </div></li>
+      <li data-origen="s9"><input type="checkbox" id="v9-h5"><div>
+        <label for="v9-h5">En <strong>Cuentos de casa → “Grabar mi voz”</strong>, graba una página. Luego, del lado del niño, abre ese cuento y toca <strong>“Con mi voz grabada”</strong> y <strong>“▶ Tu voz”</strong>; después toca <strong>“Lo leo yo”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Suena <strong>tu voz</strong> (no una voz de máquina) y el modo activo lleva una <strong>«✓»</strong> además del color. «Lo leo yo» deja solo el texto. Después de <strong>Ajustes → Borrar mis datos</strong>, los cuentos importados y las grabaciones desaparecen.</p>
+        <p class="mal"><span class="et">Mal</span> Suena una voz sintética · la grabación sigue tras borrar tus datos · el modo activo se distingue solo por color.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-h7"><div>
         <label for="v2-h7"><strong>DE ÚLTIMO</strong>, cuando termines toda la guía: <strong>“Borrar mis datos”</strong> → confirma. <span class="origen o-s1">S1</span></label>

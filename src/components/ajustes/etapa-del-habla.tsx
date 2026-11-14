@@ -2,7 +2,7 @@
 
 // EL SELECTOR DE ETAPA (ADR 006, extiende ADR 005).
 //
-// Las etapas se describen por COMPORTAMIENTO OBSERVABLE, jamás con jerga clínica: el padre
+// Las etapas se describen por COMPORTAMIENTO OBSERVABLE, jamás con jerga de especialista: el padre
 // reconoce a su hijo en la descripción, no lo diagnostica. "Palabras sueltas" es la recomendada
 // y el DEFAULT PERMANENTE; "primeras frases" existe pero JAMÁS se activa sola — hay que elegirla.
 //

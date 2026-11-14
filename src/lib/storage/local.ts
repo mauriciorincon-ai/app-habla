@@ -28,6 +28,11 @@ import {
   type Sesion,
 } from "./schemas";
 import { fechaHoy } from "@/lib/fecha";
+import {
+  CUENTOS_VACIO,
+  CuentosGuardadosSchema,
+  type CuentosGuardados,
+} from "@/lib/cuentos/estado";
 
 const PREFIJO = "habla:";
 
@@ -38,6 +43,7 @@ export const CLAVES = {
   gemelas: `${PREFIJO}v1:gemelas`,
   sesiones: `${PREFIJO}v1:sesiones`,
   objetivo: `${PREFIJO}v1:objetivo`,
+  cuentos: `${PREFIJO}v1:cuentos`,
 } as const;
 
 function disponible(): boolean {
@@ -58,7 +64,7 @@ export function leer<T>(clave: string, schema: z.ZodType<T>): T | null {
     const parsed = schema.safeParse(JSON.parse(crudo));
     if (parsed.success) return parsed.data;
   } catch {
-    // JSON inválido: mismo tratamiento que un valor que no pasa el esquema.
+    // JSON inválido: mismo trato que un valor que no pasa el esquema.
   }
   window.localStorage.removeItem(clave);
   return null;
@@ -105,7 +111,7 @@ export const leerProgreso = (): Progreso => {
       return migrado;
     }
   } catch {
-    // JSON inválido: mismo tratamiento que un valor que no pasa ningún esquema.
+    // JSON inválido: mismo trato que un valor que no pasa ningún esquema.
   }
   window.localStorage.removeItem(CLAVES.progreso);
   return PROGRESO_INICIAL;
@@ -160,6 +166,15 @@ export const borrarObjetivo = (): void => {
   if (!disponible()) return;
   window.localStorage.removeItem(CLAVES.objetivo);
 };
+
+/** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
+export function leerCuentos(): CuentosGuardados {
+  return leer(CLAVES.cuentos, CuentosGuardadosSchema) ?? CUENTOS_VACIO;
+}
+
+export function guardarCuentos(valor: CuentosGuardados): void {
+  guardar(CLAVES.cuentos, CuentosGuardadosSchema, valor);
+}
 
 /**
  * "Borrar todos mis datos" del panel de ajustes: total y honesto. Quita todo lo de la app y,

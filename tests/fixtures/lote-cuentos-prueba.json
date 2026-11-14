@@ -1,0 +1,68 @@
+{
+  "contrato": "bandeja-ia@0.1.0",
+  "tipo": "cuentos-del-mes",
+  "id": "lote-2026-11-12",
+  "pedido": "pedido-2026-11-12",
+  "creado": "2026-11-12",
+  "registro": {
+    "modelo": "perfil inventado para pruebas",
+    "fecha": "2026-11-12",
+    "anotaciones": []
+  },
+  "cuentos": [
+    {
+      "id": "el-tren-de-las-nubes",
+      "titulo": { "es": "El tren de las nubes", "en": "The cloud train" },
+      "paginas": [
+        {
+          "texto": { "es": "Un tren sube al cielo. Chu, chu.", "en": "A train rides up to the sky. Choo choo." },
+          "palabra": { "es": "tren", "en": "train" }
+        },
+        {
+          "texto": { "es": "Arriba hay una nube blanca.", "en": "Up high there is a white cloud." },
+          "palabra": { "es": "nube", "en": "cloud" }
+        },
+        {
+          "texto": { "es": "El tren para. Pip.", "en": "The train stops. Beep." },
+          "palabra": { "es": "para", "en": "stops" }
+        }
+      ]
+    },
+    {
+      "id": "la-gata-y-el-sombrero",
+      "titulo": { "es": "La gata y el sombrero", "en": "The cat and the hat" },
+      "paginas": [
+        {
+          "texto": { "es": "La gata ve un sombrero. Miau.", "en": "The cat sees a hat. Meow." },
+          "palabra": { "es": "miau", "en": "meow" }
+        },
+        {
+          "texto": { "es": "Se lo pone. ¡Qué grande!", "en": "She puts it on. So big!" },
+          "palabra": { "es": "grande", "en": "big" }
+        },
+        {
+          "texto": { "es": "Se lo quita. Adiós, sombrero.", "en": "She takes it off. Bye, hat." },
+          "palabra": { "es": "adiós", "en": "bye" }
+        }
+      ]
+    },
+    {
+      "id": "cuento-con-plazo",
+      "titulo": { "es": "Rápido", "en": "Quick" },
+      "paginas": [
+        {
+          "texto": { "es": "En pocas semanas lo dirá.", "en": "In a few weeks it will be said." },
+          "palabra": { "es": "pocas", "en": "few" }
+        },
+        {
+          "texto": { "es": "Mira la luna.", "en": "Look at the moon." },
+          "palabra": { "es": "luna", "en": "moon" }
+        },
+        {
+          "texto": { "es": "Mira el sol.", "en": "Look at the sun." },
+          "palabra": { "es": "sol", "en": "sun" }
+        }
+      ]
+    }
+  ]
+}

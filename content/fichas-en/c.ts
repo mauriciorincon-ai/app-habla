@@ -165,7 +165,7 @@ export const FICHAS_EN_C: Record<string, FichaEn> = {
       "Wait for them to look at it, then give it to them.",
       "When they have it, open your hand and wait: if they give it back, return it right away.",
       "If they show it to you or point at it on their own, name it and celebrate it like a treasure; don't ask for anything more.",
-      "If their sibling is nearby, turn your body toward the sibling, “Show it to your sibling!”, and let your sibling respond: look at the thing, look at your child's face, and name it.",
+      "If their sibling is nearby, turn your body toward the sibling, “Show it to your sibling!”, and let the sibling respond: look at the thing, look at your child's face, and name it.",
     ],
     tuLinea: "“Look!…” (at face level) “…the feather!”",
     esperaVer:

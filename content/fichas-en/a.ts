@@ -27,7 +27,7 @@ export const FICHAS_EN_A: Record<string, FichaEn> = {
     haz: [
       "Play copying them as in “Two matching toys.”",
       "Watch for the moment they do something and turn to look at you.",
-      "Copy it in that same second, bigger than they are and with a party face.",
+      "Copy it in that same second, with a bigger movement than theirs and a playful face.",
       "If they change toy or movement, you change too.",
     ],
     tuLinea: "“And now?… Just like that!”",
@@ -155,7 +155,7 @@ export const FICHAS_EN_A: Record<string, FichaEn> = {
     funcionoSi:
       "they make the sound when you do it without tickling, or they use it to ask for the tickles.",
     siNoPasa:
-      "The wait, shorter: three seconds and you go on. Go back to one full round and try again. Copy their sound more times before waiting.",
+      "Shorten the wait: three seconds, then go on. Go back to one full round and try again. Copy their sound more times before waiting.",
   },
   "gestos-que-dicen-algo": {
     titulo: "Gestures that say something",
