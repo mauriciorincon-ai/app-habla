@@ -67,7 +67,8 @@ const cacheDisponible = () => typeof caches !== "undefined";
 export async function estaDescargado(
   idioma: IdiomaReconocedor,
 ): Promise<boolean> {
-  if (!cacheDisponible()) return false;
+  // `caches.open` would CREATE an empty cache after «Borrar el reconocedor»: ask first.
+  if (!cacheDisponible() || !(await caches.has(CACHE_RECONOCEDOR))) return false;
   const c = await caches.open(CACHE_RECONOCEDOR);
   for (const a of archivosDe(idioma))
     if (!(await c.match(a.ruta))) return false;
@@ -157,7 +158,7 @@ export type ArchivosListos = {
 export async function cargar(
   idioma: IdiomaReconocedor,
 ): Promise<ArchivosListos | null> {
-  if (!cacheDisponible()) return null;
+  if (!cacheDisponible() || !(await caches.has(CACHE_RECONOCEDOR))) return null;
   const c = await caches.open(CACHE_RECONOCEDOR);
   const blobs: Blob[] = [];
   for (const a of archivosDe(idioma)) {

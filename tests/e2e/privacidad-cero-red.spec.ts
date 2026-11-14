@@ -22,6 +22,8 @@ const JUEGOS = [
   { ruta: "/jugar/cohete", nombre: "el cohete" },
   { ruta: "/jugar/palabras", nombre: "palabra↔objeto" },
   { ruta: "/jugar/vocales", nombre: "el mapa de las vocales" },
+  // Gemelas no abre micrófono, pero entra al candado de cero red igual (S11, ADR-023).
+  { ruta: "/jugar/gemelas", nombre: "gemelas" },
 ] as const;
 
 for (const juego of JUEGOS) {
@@ -60,10 +62,14 @@ for (const juego of JUEGOS) {
     await page.getByTestId("empezar-juego").click();
 
     // Ventana de medición: abre cuando el juego ya corre.
-    const escena = page.getByTestId("juego");
-    await expect(escena).toHaveAttribute("data-fase", "jugando", {
-      timeout: 20_000,
-    });
+    const escena = page.getByTestId(
+      juego.ruta.endsWith("gemelas") ? "gemelas-ronda" : "juego",
+    );
+    if (juego.ruta.endsWith("gemelas")) await expect(escena).toBeVisible();
+    else
+      await expect(escena).toHaveAttribute("data-fase", "jugando", {
+        timeout: 20_000,
+      });
 
     const peticionesDuranteElJuego: string[] = [];
     const registrar = (url: string) => {

@@ -33,7 +33,7 @@ export function QuizasDijo({
         <p data-testid="quizas-dijo" className="inline-flex items-center gap-2">
           <span
             aria-hidden="true"
-            className="border-acento text-acento flex h-5 w-5 items-center justify-center rounded-full border text-xs font-semibold"
+            className="border-tinta-suave text-tinta-suave flex h-5 w-5 items-center justify-center rounded-full border text-xs font-semibold"
           >
             ?
           </span>

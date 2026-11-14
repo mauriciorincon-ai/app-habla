@@ -6,8 +6,8 @@ export const reconocedor = {
   ajustes: {
     titulo: { es: "¿Dijo la palabra?", en: "Did they say the word?" },
     descripcion: {
-      es: "Un reconocedor que escucha en este aparato y le sugiere a usted, en voz baja, «quizás dijo…». Usted sigue siendo quien juzga. Viene apagado.",
-      en: "A recognizer that listens on this device and quietly suggests to you, «maybe they said…». You are still the one who judges. It comes turned off.",
+      es: "Un reconocedor que escucha en este aparato y le sugiere a usted, en voz baja, «quizás dijo…». Usted sigue siendo quien juzga.",
+      en: "A recognizer that listens on this device and quietly suggests to you, «maybe they said…». You are still the one who judges.",
     },
     aviso: {
       es: "Al encenderlo se descarga el modelo de voz del idioma actual: unos 40 MB, una sola vez, desde esta misma app. El sonido no se guarda ni sale de aquí: el reconocedor lo oye en memoria y solo devuelve una palabra y qué tan seguro está.",
@@ -44,8 +44,8 @@ export const reconocedor = {
         en: "Show the child a soft glow",
       },
       descripcion: {
-        es: "Cuando el reconocedor cree que oyó la palabra, el dibujo brilla apenas. Sin texto, sin «bien» ni «mal», no cuenta nada y puede equivocarse. Viene apagada.",
-        en: "When the recognizer thinks it heard the word, the picture glows a little. No text, no «right» or «wrong», it counts nothing and it can be wrong. It comes turned off.",
+        es: "Cuando el reconocedor cree que oyó la palabra, el dibujo brilla apenas. Sin texto, sin «bien» ni «mal», no cuenta nada y puede equivocarse.",
+        en: "When the recognizer thinks it heard the word, the picture glows a little. No text, no «right» or «wrong», it counts nothing and it can be wrong.",
       },
     },
     conteo: {

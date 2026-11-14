@@ -296,6 +296,7 @@ describe("modelo: descargar, verificar, cargar y borrar (sin red durante el jueg
           put: async (k: string, r: Response) => void t.set(k, r),
         };
       },
+      has: async (n: string) => tiendas.has(n),
       delete: async (n: string) => tiendas.delete(n),
     };
   }
