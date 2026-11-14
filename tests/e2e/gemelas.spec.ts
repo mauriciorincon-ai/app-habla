@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // PALABRAS GEMELAS (Outcome 3) — el juego SIN micrófono (co-uso puro, ADR-009). El niño dice una
 // palabra del par y el PADRE marca cuál oyó. La app NO oye ni graba nada: solo cuenta participación.

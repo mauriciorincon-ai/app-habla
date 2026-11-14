@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // «DID THEY SAY THE WORD?» in English (S11, ADR-023), through the UI with a fake microphone: `cat`, an adult
 // Lingua Libre volunteer (CC BY-SA 4.0, never the family; tests/e2e/fixtures/palabras/mic-en.wav).

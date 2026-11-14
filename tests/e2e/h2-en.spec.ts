@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // THE H-2 IN ENGLISH (S11, rule 20: e2e and screenshots in ONE language per sprint, the other at the
 // milestone's close). Every screen of the H-2 with the device in English: `lang` is «en», no Spanish

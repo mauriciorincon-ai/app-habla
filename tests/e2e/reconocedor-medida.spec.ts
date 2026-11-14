@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // The ADR-023 measurement (S11): the real recognizer over the Lingua Libre recordings, per language.
 // It prints the table and writes it to tests/e2e/fixtures/palabras/medida-<language>.json; it does NOT pass or fail on accuracy — the owner

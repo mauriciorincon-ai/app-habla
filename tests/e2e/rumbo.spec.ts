@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // EL RUMBO (Outcome 1) — progreso HONESTO. El patrón anti-"comportamiento sin experiencia"
 // (frase-vs-métrica) aplica DIRECTO aquí: la pantalla no puede mostrar una frase bonita fija —

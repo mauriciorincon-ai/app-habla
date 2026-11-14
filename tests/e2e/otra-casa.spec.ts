@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // «Pasar a la otra casa» (S10, ADR-020), de punta a punta en español, con DOS aparatos (dos contextos
 // del navegador) y un perfil inventado. La casa A crea el archivo cifrado; la casa B lo rechaza con la

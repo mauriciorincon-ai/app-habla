@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // OBJETIVO DE LA SEMANA (Outcome 2). Se prueba POR LA UI, de punta a punta: escribir "animales"
 // alinea la cápsula de Hoy, el mazo de palabra↔objeto y el lote del estudio; "colores" no coincide

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // Spike de PITCH en CI (riesgo #1 del S2, ADR 007): valida el pipeline completo del tono
 // (getUserMedia → AudioWorklet con YIN → pitch-tracker → pantalla) con un micrófono falso que

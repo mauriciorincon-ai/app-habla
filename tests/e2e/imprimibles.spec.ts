@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // «Hojas para imprimir» (S10). Cada hoja lleva su pie de ARASAAC, ninguna lleva el apodo del niño
 // (perfil inventado «Pipo» sembrado a propósito) ni el texto libre de la familia, y en papel solo

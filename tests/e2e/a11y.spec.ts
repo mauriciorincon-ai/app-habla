@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // Gate 6 (UX/A11y): axe sin violaciones en las 3 rutas, en móvil y desktop.
 // El juego además se audita EN VIVO (paleta del niño y modo calma tienen sus propios colores:

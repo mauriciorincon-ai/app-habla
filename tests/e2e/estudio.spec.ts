@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // EL ESTUDIO DE GRABACIÓN (Outcome 1) — se llega POR LA UI (lección S2: nada de "comportamiento
 // sin experiencia"). Usa el micrófono falso compartido: MediaRecorder "captura" el WAV sintético.

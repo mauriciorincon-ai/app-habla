@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // El bug de la medianoche (2026-08-08, cazado por el usuario GRABANDO un video para la
 // familia): la pestaña quedó abierta de un día para otro y cada toque de «Sí, ya lo

@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // LA VOZ DE LA FAMILIA EN LOS JUEGOS (Outcome 2). Se llega POR LA UI: el picto suena con la voz
 // grabada, y el altavoz (≥64 px) la repite. Si no hay grabación, la app suena como antes: en
