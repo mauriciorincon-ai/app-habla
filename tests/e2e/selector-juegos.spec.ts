@@ -49,12 +49,12 @@ test("cada juego dice honestamente qué mide (y qué no)", async ({ page }) => {
 
   await expect(page.getByTestId("juego-globo")).toContainText(/cuánto dura/i);
   await expect(page.getByTestId("juego-cohete")).toContainText(/tono/i);
-  // La promesa más delicada: la app nunca afirma qué palabra dijo el niño.
+  // La promesa más delicada: la app nunca afirma qué palabra dijo el niño (a lo sumo, un «quizás» al adulto).
   await expect(page.getByTestId("juego-palabras")).toContainText(
-    /nunca qué palabra/i,
+    /lo juzgas tú/i,
   );
-  // Gemelas es co-uso puro: lo dice de frente, no usa micrófono.
+  // Gemelas es co-uso puro: lo dice de frente: sin micrófono por defecto.
   await expect(page.getByTestId("juego-gemelas")).toContainText(
-    /no usa micrófono/i,
+    /sin micrófono por defecto/i,
   );
 });

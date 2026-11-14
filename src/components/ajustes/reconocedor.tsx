@@ -6,7 +6,11 @@
 // encendido. Abajo, el conteo local 2×2: cuatro números de este aparato, jamás en el archivo de la otra casa.
 
 import { useEffect, useState } from "react";
-import { guardarAjustesEnStore, useAjustes } from "@/components/estado-local";
+import {
+  ajustesActuales,
+  guardarAjustesEnStore,
+  useAjustes,
+} from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { reconocedor as txr } from "@/lib/idioma/textos/reconocedor";
@@ -76,17 +80,18 @@ export function Reconocedor() {
   async function alternar() {
     setBorrado(false);
     if (ajustes.reconocedor) {
-      guardarAjustesEnStore({ ...ajustes, reconocedor: false });
+      guardarAjustesEnStore({ ...ajustesActuales(), reconocedor: false });
       return;
     }
     // Turning it on downloads this language's model first; if it fails the switch stays off.
     if (!bajados[idioma] && !(await bajar(idioma))) return;
-    guardarAjustesEnStore({ ...ajustes, reconocedor: true });
+    // A download can take a while: save on top of what is stored NOW, not on the render that started it.
+    guardarAjustesEnStore({ ...ajustesActuales(), reconocedor: true });
   }
 
   async function borrarTodoElReconocedor() {
     guardarAjustesEnStore({
-      ...ajustes,
+      ...ajustesActuales(),
       reconocedor: false,
       animacionReconocedor: false,
     });
@@ -178,7 +183,7 @@ export function Reconocedor() {
               aria-labelledby="animacion-titulo"
               onClick={() =>
                 guardarAjustesEnStore({
-                  ...ajustes,
+                  ...ajustesActuales(),
                   animacionReconocedor: !ajustes.animacionReconocedor,
                 })
               }
@@ -256,8 +261,9 @@ export function Reconocedor() {
         <button
           type="button"
           onClick={() => void borrarTodoElReconocedor()}
+          disabled={estado === "descargando"}
           data-testid="borrar-reconocedor"
-          className="border-peligro text-peligro mt-4 min-h-11 rounded-xl border px-4 text-sm font-medium"
+          className="border-peligro text-peligro mt-4 min-h-11 rounded-xl border px-4 text-sm font-medium disabled:opacity-50"
         >
           {tx(txr.ajustes.borrar)}
         </button>
