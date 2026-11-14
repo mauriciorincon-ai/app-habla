@@ -61,6 +61,11 @@ activity. When you have done it, the app asks "Did you do today's activity?" and
   we did it". There are **no streaks and no penalties**: that number never goes down. If you skip a day, nothing is
   lost. What counts is coming back.
 - Under "Where does this come from?" you can see the study each capsule rests on.
+- **Two domains (S9):** below the speech capsule you will find **"Also today · eye contact"**: just one
+  eye-contact activity a day, with **your line first** (you say it), then the activity, how long it takes and what
+  not to do. It changes by date, does not repeat within the week and follows the pace you set. **It is
+  screen-free:** you do it together, looking at your child. "See them all in The pyramid, at home" opens the full
+  document. Underneath there is also a way in to **"A story to read together"**.
 
 ### The voice games — "their voice moves the world"
 
@@ -373,6 +378,36 @@ them).
 - **What it does NOT do:** it does not judge, score, compare or say whether your child imitated well: it is only
   the video.
 
+### Stories at home — short stories built on what they enjoy (new · S9)
+
+Short stories of **a few pages**, with **one big word on each page** (single words first). You read them aloud and
+your child looks at the word: saying it, copying it or pointing to it all count. **There is no clock and no score.**
+
+- **Where:** your child opens them from **"Today" → "A story to read together"** (`/cuentos`). You set them up in
+  **Studio → "Stories at home"**.
+- **The app's own:** **six come ready** (four pages each), written in English and in Spanish. They are filled in with
+  what you type under **"What your child enjoys"** (general words, like "trains, animals") and **"Words you are
+  practicing"** (one word each). Type nothing and they use example words.
+- **What travels and what does not:** all a request carries is those **general interests and the practice words**.
+  **Never** their name, their age, their voice or anything about a condition; a number is not accepted as an interest,
+  and neither is a word this app does not write.
+- **New stories, in batches (optional):** **"Download the request"** saves a file. You hand it to Claude Code with
+  **/bandeja** (in the project's private folder, which is never uploaded to the repository); it writes a batch of
+  stories on the builder's own subscription, **not a pay-per-use service**, and the app **never goes online**.
+  Then **"Bring in a batch"** picks that file.
+- **You approve each one:** the batch's stories come in **"waiting for you to read"**. Read each all the way through
+  and tap **"✓ Approve"** or **"✕ Not this one"**. **Only what you approve** shows up on your child's side. A story
+  that talks about deadlines or scores, carries instructions, or uses words this app does not write **does not come
+  in**, and the app tells you why.
+- **Changing your mind:** under **"Already decided"** you can **withdraw** an approved story (your child stops seeing
+  it) or **remove** a rejected one (it frees the spot). If you change what your child enjoys, the recordings of the
+  pages that changed stop playing and those pages are read live until you record them again.
+- **In your voice:** **"Record my voice"** asks you to read each page; the recording stays **only on this device**,
+  like the voice bank. On your child's side **"With my recorded voice"** plays it and **"I'll read it"** leaves just
+  the big text. **There is never a machine voice.** Only you record: your child's voice is never saved.
+- **Deleting:** **Settings → Delete my data** also deletes the imported stories and the recordings.
+- **What it does NOT do:** it does not judge or score, it does not cheer just to cheer, and it sends nothing anywhere.
+
 ### What the app measures and what it does NOT (important)
 
 - **It does measure:** whether there is voice (sound above the noise of the house), how long it is held, and, in
@@ -499,3 +534,4 @@ and load only when you write a goal.
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 007    | First English edition, written alongside the Spanish one: the Language section and every feature up to date (Today, the four games, the Studio, stages, the Path, the weekly Goal, the mother's document, calm mode, light or dark, privacy, FAQ). |
 | 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |
+| 009    | **"Stories at home"**: six fallback stories in English and Spanish, filled in with the interests and practice words the adult types; requests and batches of new stories through the AI tray (outside the app, with the adult approving each story); narration in the adult's recorded voice on the device or "I'll read it". **"Today"** adds one eye-contact activity a day next to the capsule (two domains). English sound pairs go from 9 to 12. |

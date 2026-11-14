@@ -17,7 +17,8 @@ Este README es para quien toca el código.
    `src/worklets/`, un test que escanea esas carpetas (y prohíbe el `eslint-disable`), y un e2e que
    verifica cero peticiones de red durante el juego.
 2. **Determinista primero.** El núcleo es DSP local + lógica pura + contenido estructurado. **No
-   hay IA en la app** (ni SDK instalado).
+   hay IA en el runtime** (ni SDK instalado): los cuentos nuevos, si el adulto los pide, los escribe Claude
+   Code por lotes fuera de la app y el adulto aprueba cada uno (ADR-019).
 3. **Honestidad como mecánica.** La app solo afirma lo que su medidor midió de verdad (hubo voz,
    duró N segundos). El acierto de la palabra lo juzga el padre, nunca la app.
 

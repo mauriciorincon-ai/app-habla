@@ -393,7 +393,7 @@ del juego (co-uso: usted está al lado).
 
 ### Cuentos de casa — cuentos cortos con lo que le gusta (nuevo · S9)
 
-Cuentos de **cuatro páginas**, con **una palabra grande por página** (palabras sueltas primero). Usted los lee
+Cuentos cortos de **unas pocas páginas** (los seis de la app, de cuatro), con **una palabra grande por página** (palabras sueltas primero). Usted los lee
 en voz alta y su hijo mira la palabra: si la dice, la imita o la señala, cuenta. **No hay tiempo, ni puntaje.**
 
 - **Dónde:** el niño los abre desde **«Hoy» → «Un cuento para leer juntos»** (`/cuentos`). Usted los prepara
@@ -416,6 +416,7 @@ en voz alta y su hijo mira la palabra: si la dice, la imita o la señala, cuenta
   dispositivo**, como el banco de voz. Del lado del niño, **«Con mi voz grabada»** la reproduce y
   **«Lo leo yo»** deja solo el texto grande. **Nunca hay voz de máquina.** Graba solo usted: la voz del niño
   jamás se guarda.
+- **Cambiar de idea:** en **«Ya decididos»** puede **retirar** un cuento aprobado (el niño deja de verlo) o **quitar** uno rechazado (libera el lugar). Si cambia lo que le gusta, las grabaciones de las páginas que cambiaron dejan de sonar y esas páginas se vuelven a leer en vivo hasta que las grabe de nuevo.
 - **Borrar:** **Ajustes → Borrar mis datos** también borra los cuentos importados y las grabaciones.
 - **Qué NO hace:** no juzga ni puntúa, no felicita por felicitar y no manda nada a ninguna parte.
 
