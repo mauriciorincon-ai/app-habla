@@ -42,6 +42,7 @@ import type { Texto } from "@/lib/idioma";
 import { estudio } from "@/lib/idioma/textos/estudio";
 import { videoteca } from "@/lib/idioma/textos/videoteca";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
+import { imprimibles } from "@/lib/idioma/textos/imprimibles";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
 const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], Texto> =
@@ -268,6 +269,19 @@ function Gestion({
           data-testid="ir-a-cuentos"
         >
           {tx(cuentos.entrada.abrir)}
+        </Link>
+      </section>
+
+      <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+        <h2 className="font-medium">{tx(imprimibles.entrada.titulo)}</h2>
+        <p className="text-tinta-suave mt-2 text-sm">{tx(imprimibles.entrada.texto)}</p>
+        <Link
+          href="/estudio/imprimibles"
+          prefetch={false}
+          className="border-borde text-tinta mt-4 inline-flex min-h-12 items-center rounded-xl border px-6 font-medium"
+          data-testid="ir-a-imprimibles"
+        >
+          {tx(imprimibles.entrada.abrir)}
         </Link>
       </section>
     </div>
