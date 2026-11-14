@@ -299,10 +299,10 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 822,
+      "valor": 886,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 41 archivos, 822 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 42 archivos, 886 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
@@ -315,10 +315,10 @@
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 94.95,
+      "valor": 94.97,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,95 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,97 % de líneas."
     },
     {
       "clave": "capsulas",
