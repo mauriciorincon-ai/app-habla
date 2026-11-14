@@ -34,8 +34,8 @@ export const jugar = {
     nombre: { es: "Palabra y dibujo", en: "Word and picture" },
     que: { es: "Cualquier sonido enciende el dibujo.", en: "Any sound lights up the picture." },
     mide: {
-      es: "Mide que hubo voz — nunca qué palabra dijo.",
-      en: "Measures that there was voice — never which word they said.",
+      es: "Mide que hubo voz; qué palabra dijo lo juzgas tú (a lo sumo, un «quizás»).",
+      en: "Measures that there was voice; which word they said is your call (at most, a “maybe”).",
     },
   },
   gemelas: {
@@ -45,8 +45,8 @@ export const jugar = {
       en: "Two pictures that sound almost alike: they say it, you mark it.",
     },
     mide: {
-      es: "No usa micrófono — el que oye la palabra eres tú.",
-      en: "No microphone — you are the one who hears the word.",
+      es: "Sin micrófono por defecto — el que oye la palabra eres tú.",
+      en: "No microphone by default — you are the one who hears the word.",
     },
   },
 } satisfies Catalogo;

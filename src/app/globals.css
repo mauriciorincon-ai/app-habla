@@ -391,6 +391,38 @@ html[data-reducir-animacion="true"] .capa-cielo {
 }
 
 /*
+ * The optional soft glow of «¿Dijo la palabra?» (S11, ADR-023 §7): a faint ring that breathes, far
+ * smaller than the celebration the adult triggers. No text, no verdict. With reduced motion only the
+ * opacity changes (the shape of the tree never does).
+ */
+@keyframes halo-reconocedor {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.halo-reconocedor {
+  border-radius: 1.5rem;
+  box-shadow: 0 0 0 6px var(--celebracion-fuerte);
+  animation: halo-reconocedor 2400ms ease-in-out infinite both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo-reconocedor {
+    animation: none;
+    opacity: 0.3;
+  }
+}
+:root[data-reducir-animacion="true"] .halo-reconocedor {
+  animation: none;
+  opacity: 0.3;
+}
+
+/*
  * La despedida de una fila borrada del banco (gate S4, J5): se desvanece UNA vez antes de irse
  * de verdad — así el borrado se NOTA. Con movimiento reducido la regla global la vuelve
  * instantánea; la confirmación "¿Seguro?" sigue contando la noticia.

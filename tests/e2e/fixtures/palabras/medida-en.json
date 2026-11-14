@@ -1,0 +1,102 @@
+{
+ "idioma": "en",
+ "n": 10,
+ "aciertos": 10,
+ "quizas": 10,
+ "filas": [
+  {
+   "archivo": "duck.wav",
+   "esperada": "duck",
+   "oida": "duck",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "train.wav",
+   "esperada": "train",
+   "oida": "train",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "fish.wav",
+   "esperada": "fish",
+   "oida": "fish",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "dog.wav",
+   "esperada": "dog",
+   "oida": "dog",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "sun.wav",
+   "esperada": "sun",
+   "oida": "sun",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "moon.wav",
+   "esperada": "moon",
+   "oida": "moon",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "water.wav",
+   "esperada": "water",
+   "oida": "water",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "car.wav",
+   "esperada": "car",
+   "oida": "car",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "boat.wav",
+   "esperada": "boat",
+   "oida": "boat",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "cat.wav",
+   "esperada": "cat",
+   "oida": "cat",
+   "conf": 1,
+   "quizas": true
+  }
+ ],
+ "controles": [
+  {
+   "archivo": "voz-sintetica.wav",
+   "esperada": "",
+   "oida": null,
+   "conf": null,
+   "quizas": false
+  },
+  {
+   "archivo": "barrido-tono.wav",
+   "esperada": "",
+   "oida": "moon",
+   "conf": 1,
+   "quizas": true
+  },
+  {
+   "archivo": "vocales-nino.wav",
+   "esperada": "",
+   "oida": null,
+   "conf": null,
+   "quizas": false
+  }
+ ],
+ "controlesConPalabra": 1
+}

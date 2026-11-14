@@ -12,24 +12,24 @@
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
   "schema_version": "1.0.0",
-  "actualizado": "2026-11-13",
+  "actualizado": "2026-11-14",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
     "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 6,
+    "sprints_cerrados": 11,
     "version_repo": "0.1.0"
   },
   "promesa": {
     "tagline": "Su voz mueve el mundo: tu hijo juega hablando y tú diriges a su lado.",
     "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y cinco juegos —uno, experimental—, donde su voz hace volar un globo, sube un cohete, enciende dibujos y ilumina el mapa de las vocales.",
     "para_quien": "Para la mamá o el papá de un niño de 4 a 6 años que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
-    "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. Nunca finge reconocer la palabra: el acierto lo juzgas tú, que estabas ahí. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
+    "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. El acierto de la palabra lo juzgas tú, que estabas ahí; si activas la segunda opinión del aparato, solo te dice «quizás», nunca «no», y jamás sola. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 29,
+    "total": 30,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -86,7 +86,7 @@
           {
             "id": "07",
             "nombre": "Palabras gemelas",
-            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego no usa el micrófono: quien escucha eres tú.",
+            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego, por defecto, no usa el micrófono: quien escucha eres tú.",
             "seccion_manual": "Los juegos de voz § 4"
           },
           {
@@ -266,8 +266,14 @@
           {
             "id": "24",
             "nombre": "Qué mide y qué no va a fingir",
-            "que_hace": "Sabes siempre qué hay detrás de cada celebración: la app mide si hubo voz, cuánto duró y si el tono subió o bajó. No sabe qué palabra dijo ni si la pronunció bien, y lo dice en pantalla. El acierto lo juzgas tú.",
+            "que_hace": "Sabes siempre qué hay detrás de cada celebración: la app mide si hubo voz, cuánto duró y si el tono subió o bajó. No sabe con certeza qué palabra dijo ni si la pronunció bien, y lo dice en pantalla. El acierto lo juzgas tú.",
             "seccion_manual": "Qué mide y qué NO mide"
+          },
+          {
+            "id": "30",
+            "nombre": "¿Dijo la palabra? — una segunda opinión solo para ti",
+            "que_hace": "Viene apagada. Si la activas, un reconocedor dentro del aparato intenta adivinar si dijo la palabra del dibujo y, cuando cree que sí, te muestra a ti un «quizás dijo…». Nunca decide, nunca le dice «no» al niño y no guarda su voz. Baja unos 40 MB solo cuando lo pides y se borra con un toque; una luz suave para el niño es otra opción, también apagada.",
+            "seccion_manual": "¿Dijo la palabra? — una segunda opinión, solo para usted"
           }
         ]
       }
@@ -277,10 +283,10 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 29,
+      "valor": 30,
       "unidad": "funcionalidades",
       "fuente": "medido",
-      "detalle": "Contadas contra docs/MANUAL-DE-USO.md, con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
+      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (30 con «¿Dijo la palabra?», S11), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
     },
     {
       "clave": "pantallas",
@@ -288,20 +294,20 @@
       "valor": 15,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (16 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-13 sobre la rama del S10."
+      "detalle": "Archivos page.tsx bajo src/app/ (17 en total) menos /spike/audio y /spike/reconocer, que son bancos de prueba del motor de voz y del reconocedor y no pantallas del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-14 sobre la rama del S11."
     },
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 775,
+      "valor": 886,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura, --maxWorkers=2) el 2026-11-13 sobre la rama del S10: 38 archivos, 775 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 42 archivos, 886 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 257,
+      "valor": 271,
       "unidad": "pruebas",
       "fuente": "medido",
       "detalle": "Salida de `pnpm test:e2e` (Playwright, --workers=1, servidor de desarrollo local) el 2026-11-13 sobre la rama del S10: 257 pruebas en verde en sus cuatro proyectos (móvil, escritorio, escritorio con voz que canta y escritorio con vocales), con micrófono falso: un WAV sintético inyectado como dispositivo de captura."
@@ -309,10 +315,10 @@
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 94.57,
+      "valor": 94.97,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-13 sobre la rama del S10: 94,57 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,97 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -341,10 +347,10 @@
     {
       "clave": "dependencias_runtime",
       "etiqueta": "Dependencias en tiempo de ejecución",
-      "valor": 6,
+      "valor": 7,
       "unidad": "paquetes",
       "fuente": "medido",
-      "detalle": "next, react, react-dom, zod, pino y @sentry/nextjs — este último INERTE, sin DSN configurado, y limitado por diseño a metadatos (tipo de evento y conteos): jamás audio ni contenido. Ninguna es un SDK de IA: la app no usa IA en absoluto."
+      "detalle": "next, react, react-dom, zod, pino, @sentry/nextjs y @lichess-org/vosk-browser (el motor del reconocedor opcional, Apache-2.0, versión exacta, que corre en un Worker del aparato y sin red). @sentry/nextjs es INERTE, sin DSN, y limitado por diseño a metadatos: jamás audio ni contenido. Ninguna es un SDK de proveedor de IA generativa."
     },
     {
       "clave": "llamadas_de_red",
@@ -381,10 +387,10 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 16,
+      "valor": 23,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-10-27 sobre 6c4d113."
+      "detalle": "Archivos de decisions/ el 2026-11-14 sobre la rama del S11 (hasta el ADR-023)."
     }
   ],
   "stack": [
@@ -417,7 +423,7 @@
     "local_only": true,
     "red_saliente": false,
     "usa_ia": false,
-    "detalle": "La voz de tu hijo nunca se graba, ni se guarda, ni sale del aparato: se analiza en memoria, en el momento, y se descarta. La cámara no se usa nunca. La voz que tú grabas en el Estudio sí se guarda, pero solo en ese aparato: no viaja a ningún servidor. No hay cuentas ni nube, y la app no usa IA: los cuentos nuevos, si los pides, los escribe Claude Code fuera de la app y tú apruebas cada uno. Durante el juego no sale una sola petición a internet, y pruebas automáticas rompen el código si alguien intenta guardar o enviar el audio de tu hijo."
+    "detalle": "La voz de tu hijo nunca se graba, ni se guarda, ni sale del aparato: se analiza en memoria, en el momento, y se descarta. La cámara no se usa nunca. La voz que tú grabas en el Estudio sí se guarda, pero solo en ese aparato: no viaja a ningún servidor. No hay cuentas ni nube, y la app no usa IA generativa (el reconocedor opcional de «¿Dijo la palabra?» es un modelo pequeño que corre dentro del aparato, apagado de fábrica, sin red y sin guardar nada): los cuentos nuevos, si los pides, los escribe Claude Code fuera de la app y tú apruebas cada uno. Durante el juego no sale una sola petición a internet, y pruebas automáticas rompen el código si alguien intenta guardar o enviar el audio de tu hijo."
   },
   "enlaces": {
     "produccion": null,

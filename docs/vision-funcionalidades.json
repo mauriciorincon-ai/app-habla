@@ -1,0 +1,26 @@
+{
+  "fuente": "VISION v1.0.2 (21 funcionalidades: 17 del MVP + 4 del roadmap)",
+  "funcionalidades": [
+    { "id": "voz-juegos", "grupo": "mvp", "es": "Juegos que la voz controla", "en": "Games the voice controls" },
+    { "id": "sabe-cuando-hablo", "grupo": "mvp", "es": "La app sabe cuándo habló", "en": "The app knows when they spoke" },
+    { "id": "celebracion-honesta", "grupo": "mvp", "es": "Celebración honesta", "en": "Honest celebration" },
+    { "id": "logros-sin-caramelos", "grupo": "mvp", "es": "Logros sin caramelos digitales", "en": "Achievements without digital candy" },
+    { "id": "palabras-gemelas", "grupo": "mvp", "es": "El juego de las palabras gemelas", "en": "The twin-words game" },
+    { "id": "sesiones-para-dos", "grupo": "mvp", "es": "Sesiones diseñadas para dos", "en": "Sessions designed for two" },
+    { "id": "apuntador", "grupo": "mvp", "es": "Tu apuntador invisible", "en": "Your invisible prompter" },
+    { "id": "capsulas", "grupo": "mvp", "es": "Escuela de padres en cápsulas", "en": "Parent school in capsules" },
+    { "id": "sesiones-cortas", "grupo": "mvp", "es": "Sesiones cortas que sí pasan", "en": "Short sessions that fit" },
+    { "id": "intereses", "grupo": "mvp", "es": "Sus intereses mandan", "en": "Their interests lead" },
+    { "id": "voz-familia", "grupo": "mvp", "es": "La voz de mamá y papá dentro de la app", "en": "Mom's and dad's voice inside the app" },
+    { "id": "videoteca", "grupo": "mvp", "es": "Videoteca de la familia", "en": "The family video library" },
+    { "id": "cuentos", "grupo": "mvp", "es": "Cuentos hechos para él", "en": "Stories made for them" },
+    { "id": "pictogramas", "grupo": "mvp", "es": "Pictogramas que empujan la voz", "en": "Pictograms that nudge the voice" },
+    { "id": "hecho-para-el", "grupo": "mvp", "es": "Hecho para él (y el modo calma)", "en": "Made for them (and calm mode)" },
+    { "id": "progreso-honesto", "grupo": "mvp", "es": "Progreso honesto, sin batas blancas", "en": "Honest progress, no white coats" },
+    { "id": "sintonia-terapias", "grupo": "mvp", "es": "Sintonía con su equipo de terapias", "en": "In tune with their therapy team" },
+    { "id": "dijo-palabra", "grupo": "roadmap", "es": "«¿Dijo la palabra?» automático", "en": "Automatic «did they say the word?»" },
+    { "id": "imprimibles", "grupo": "roadmap", "es": "Tarjetas y tableros imprimibles", "en": "Printable cards and boards" },
+    { "id": "tono-avanzado", "grupo": "roadmap", "es": "Juegos de tono avanzados", "en": "Advanced pitch games" },
+    { "id": "convenciones", "grupo": "roadmap", "es": "Convenciones compartidas con Nutri-Kids", "en": "Conventions shared with Nutri-Kids" }
+  ]
+}

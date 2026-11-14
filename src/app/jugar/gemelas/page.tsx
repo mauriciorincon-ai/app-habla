@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 // LCP estático (patrón lcp-nace-estatico): titular + intro del padre nacen en el HTML del
-// servidor; los pictogramas cargan perezosos dentro del juego. Sin micrófono: gemelas no captura
+// servidor; los pictogramas cargan perezosos dentro del juego. Sin micrófono por defecto (S11: solo si el adulto toca «Escuchar»): gemelas no captura
 // ni analiza voz — el padre marca lo que oye (ADR-009). En inglés se juega con los pares mínimos
 // del inglés (S8), no con los del español traducidos.
 

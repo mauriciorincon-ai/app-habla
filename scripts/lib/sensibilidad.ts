@@ -247,6 +247,38 @@ ALCANCE_GATE.push(
   "tests/e2e/cuentos.spec.ts",
 );
 
+// S11 «¿Dijo la palabra?» (ADR-023): el reconocedor, su copy y sus pruebas entran al gate desde el primer día.
+ALCANCE_GATE.push(
+  "decisions/023-did-they-say-the-word.md",
+  "public/modelos/LICENCIA.md",
+  "scripts/modelos.json",
+  "scripts/traer-modelos.mjs",
+  "src/app/spike/reconocer/page.tsx",
+  "src/components/ajustes/reconocedor.tsx",
+  "src/components/juego/quizas-dijo.tsx",
+  "src/components/juego/use-reconocedor.ts",
+  "src/components/juego/gemelas.tsx",
+  "src/lib/reconocer/coincidencia.ts",
+  "src/lib/reconocer/conteo.ts",
+  "src/lib/reconocer/gramatica.ts",
+  "src/lib/reconocer/modelo.ts",
+  "src/lib/reconocer/preludio.ts",
+  "src/lib/reconocer/vocabulario.ts",
+  "src/lib/voice/escucha.ts",
+  "src/lib/voice/protocolo-vosk.ts",
+  "src/worklets/pcm-tap.ts",
+  "tests/e2e/fixtures/palabras/LICENCIA.md",
+  "tests/e2e/reconocedor.spec.ts",
+  "tests/e2e/reconocedor-en.spec.ts",
+  "tests/e2e/reconocedor-medida.spec.ts",
+  "tests/e2e/h2-en.spec.ts",
+  "tests/unit/reconocer.test.ts",
+  "tests/unit/conteo-reconocedor.test.ts",
+  "tests/unit/use-reconocedor.test.tsx",
+  "tests/unit/guia-cobertura.test.ts",
+  "docs/vision-funcionalidades.json",
+);
+
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */

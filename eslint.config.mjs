@@ -116,6 +116,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Artefacto compilado del worklet (la fuente vive en src/worklets/).
     "public/worklets/**",
+    // Recognizer engine and models, fetched at build time with a pinned hash (S11, ADR-023).
+    "public/vosk/**",
+    "public/modelos/**",
     // Reportes generados.
     "coverage/**",
     "playwright-report/**",

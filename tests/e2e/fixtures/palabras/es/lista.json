@@ -1,0 +1,42 @@
+[
+ {
+  "archivo": "pez.wav",
+  "palabra": "pez"
+ },
+ {
+  "archivo": "perro.wav",
+  "palabra": "perro"
+ },
+ {
+  "archivo": "huevo.wav",
+  "palabra": "huevo"
+ },
+ {
+  "archivo": "sol.wav",
+  "palabra": "sol"
+ },
+ {
+  "archivo": "luna.wav",
+  "palabra": "luna"
+ },
+ {
+  "archivo": "estrella.wav",
+  "palabra": "estrella"
+ },
+ {
+  "archivo": "agua.wav",
+  "palabra": "agua"
+ },
+ {
+  "archivo": "nube.wav",
+  "palabra": "nube"
+ },
+ {
+  "archivo": "gato.wav",
+  "palabra": "gato"
+ },
+ {
+  "archivo": "vaca.wav",
+  "palabra": "vaca"
+ }
+]

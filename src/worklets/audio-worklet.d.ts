@@ -4,7 +4,7 @@
 
 declare abstract class AudioWorkletProcessor {
   readonly port: {
-    postMessage(message: unknown): void;
+    postMessage(message: unknown, transfer?: ArrayBuffer[]): void;
     onmessage: ((event: { data: unknown }) => void) | null;
   };
   abstract process(
