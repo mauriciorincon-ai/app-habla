@@ -56,16 +56,23 @@ export function importar(
   aceptados: readonly Cuento[],
   lote: string,
   fecha: string,
-): { estado: CuentosGuardados; nuevos: number; repetidos: number } {
+): {
+  estado: CuentosGuardados;
+  nuevos: number;
+  repetidos: number;
+  sinLugar: number;
+} {
   const ids = new Set(estado.cuentos.map((c) => c.cuento.id));
   const nuevos: CuentoGuardado[] = [];
   let repetidos = 0;
+  let sinLugar = 0;
   for (const cuento of aceptados) {
-    if (
-      ids.has(cuento.id) ||
-      estado.cuentos.length + nuevos.length >= MAX_CUENTOS_GUARDADOS
-    ) {
+    if (ids.has(cuento.id)) {
       repetidos++;
+      continue;
+    }
+    if (estado.cuentos.length + nuevos.length >= MAX_CUENTOS_GUARDADOS) {
+      sinLugar++;
       continue;
     }
     ids.add(cuento.id);
@@ -75,6 +82,7 @@ export function importar(
     estado: { ...estado, cuentos: [...estado.cuentos, ...nuevos] },
     nuevos: nuevos.length,
     repetidos,
+    sinLugar,
   };
 }
 
@@ -90,6 +98,28 @@ export function decidir(
       c.cuento.id === id && c.estado === "pendiente"
         ? { ...c, estado: decision }
         : c,
+    ),
+  };
+}
+
+/** El adulto retira un cuento que había aprobado: el niño deja de verlo (queda como rechazado). */
+export function retirar(estado: CuentosGuardados, id: string): CuentosGuardados {
+  return {
+    ...estado,
+    cuentos: estado.cuentos.map((c) =>
+      c.cuento.id === id && c.estado === "aprobado"
+        ? { ...c, estado: "rechazado" }
+        : c,
+    ),
+  };
+}
+
+/** Borra un cuento rechazado: libera su lugar y deja que ese id pueda volver en otro lote. */
+export function quitar(estado: CuentosGuardados, id: string): CuentosGuardados {
+  return {
+    ...estado,
+    cuentos: estado.cuentos.filter(
+      (c) => !(c.cuento.id === id && c.estado === "rechazado"),
     ),
   };
 }

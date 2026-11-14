@@ -42,7 +42,7 @@ export function CuentosNino() {
 
   const sonar = (n: number) => {
     if (!cuento) return;
-    const id = idCuento(cuento.id, n + 1, idioma);
+    const id = idCuento(cuento.id, n + 1, idioma, cuento.paginas[n].texto);
     if (!grabadas.has(id)) return;
     void obtenerGrabacion(id)
       .then((g) => {
@@ -104,9 +104,9 @@ export function CuentosNino() {
   }
 
   const p = cuento.paginas[pagina];
-  const idPagina = idCuento(cuento.id, pagina + 1, idioma);
+  const idPagina = idCuento(cuento.id, pagina + 1, idioma, p.texto);
   const hayVoz = cuento.paginas.some((_, i) =>
-    grabadas.has(idCuento(cuento.id, i + 1, idioma)),
+    grabadas.has(idCuento(cuento.id, i + 1, idioma, cuento.paginas[i].texto)),
   );
   const ultima = pagina === cuento.paginas.length - 1;
 

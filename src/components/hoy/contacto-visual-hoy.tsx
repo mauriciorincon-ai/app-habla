@@ -17,9 +17,11 @@ export function ContactoVisualHoy({ fecha, nivel }: { fecha: string; nivel: Nive
 
   useEffect(() => {
     let vivo = true;
-    import("@content/contacto-visual").then((m) => {
-      if (vivo) setBiblioteca(m.CAPSULAS_CONTACTO_VISUAL);
-    });
+    import("@content/contacto-visual")
+      .then((m) => {
+        if (vivo) setBiblioteca(m.CAPSULAS_CONTACTO_VISUAL);
+      })
+      .catch(() => undefined); // sin el chunk, la tarjeta no aparece y «Hoy» sigue igual
     return () => {
       vivo = false;
     };

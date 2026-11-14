@@ -28,7 +28,8 @@ import { CUENTOS } from "@content/cuentos";
 
 const RAIZ = join(__dirname, "../..");
 const LOTE = JSON.parse(readFileSync(join(RAIZ, "tests/fixtures/lote-cuentos-prueba.json"), "utf8"));
-const SIN_HUELLAS = new Set<string>();
+// Una huella inventada que no toca nada: con el conjunto vacío el gate no corre y el lote no entra (B-2).
+const SIN_HUELLAS = new Set<string>(["0".repeat(64)]);
 const huella = (s: string) => createHash("sha256").update(normalizar(s).join(" ")).digest("hex");
 const HOY = "2026-11-12";
 /** Un cuento del lote tal como llega (JSON crudo), para torcerlo en cada caso. */
@@ -180,6 +181,25 @@ describe("el validador del lote", () => {
     expect(r.ok && r.rechazados[0].motivo).toBe("esquema");
   });
 
+  it("señalar no es puntaje: «points at» se acepta (B-1)", async () => {
+    const r = await validarLote(
+      conPagina((c) => (c.paginas[1].texto.en = "Mia points at the cloud.")),
+      { huellas: SIN_HUELLAS },
+    );
+    expect(r.ok && r.rechazados).toHaveLength(0);
+  });
+
+  it("con el gate sin huellas el lote no entra (B-2)", async () => {
+    const r = await validarLote(LOTE, { huellas: new Set<string>() });
+    expect(r).toEqual({ ok: false, motivo: "lote-invalido" });
+  });
+
+  it("el pedido pasa por el mismo gate: un interés que choca se detecta (M-3)", async () => {
+    const huellas = new Set([huella("blanca")]);
+    expect(await tocaLaLista(["trenes", "blanca"].join("\n"), huellas)).toBe(true);
+    expect(await tocaLaLista(["trenes", "nubes"].join("\n"), huellas)).toBe(false);
+  });
+
   it("rechaza un puntaje", async () => {
     const r = await validarLote(
       conPagina((c) => (c.paginas[1].texto.en = "Up high you get a score.")),
@@ -187,7 +207,7 @@ describe("el validador del lote", () => {
     );
     expect(r.ok && r.rechazados[0].motivo).toBe("esquema"); // la palabra «cloud» ya no está en la página
     const r2 = await validarLote(
-      conPagina((c) => (c.paginas[1].texto.en = "A cloud gives you points.")),
+      conPagina((c) => (c.paginas[1].texto.en = "A cloud gives you a score.")),
       { huellas: SIN_HUELLAS },
     );
     expect(r2.ok && r2.rechazados[0].motivo).toBe("plazo-o-puntaje");

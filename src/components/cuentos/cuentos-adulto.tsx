@@ -15,6 +15,7 @@ import { cuentosActuales, guardarCuentosEnStore, useCuentos } from "@/components
 import { useHidratado } from "@/components/use-hidratado";
 import { listarIds } from "@/lib/banco-voz/almacen";
 import { esDeCuento } from "@/lib/banco-voz/catalogo";
+import { tocaLaLista } from "@/lib/bandeja/sensibilidad";
 import {
   armarPedido,
   separarLista,
@@ -28,6 +29,8 @@ import {
   CUENTOS_VACIO,
   decidir,
   importar,
+  quitar,
+  retirar,
 } from "@/lib/cuentos/estado";
 import { fechaHoy } from "@/lib/fecha";
 import { useIdioma, useT } from "@/lib/idioma/estado";
@@ -41,12 +44,20 @@ const PRIMARIO =
 const TARJETA = "bg-superficie shadow-tarjeta rounded-2xl p-5";
 const MAX_BYTES_LOTE = 256 * 1024;
 
+/** Las huellas del gate de sensibilidad (datos públicos, se cargan solo cuando hacen falta). */
+async function cargarHuellas(): Promise<Set<string>> {
+  const { hashes } =
+    await import("../../../tests/fixtures/sensibilidad-hashes.json");
+  return new Set(hashes);
+}
+
 type Resultado =
   | { tipo: "invalido" }
   | {
       tipo: "ok";
       nuevos: number;
       repetidos: number;
+      sinLugar: number;
       rechazados: { indice: number; id: string | null; motivo: MotivoCuento }[];
     };
 
@@ -60,7 +71,7 @@ export function CuentosAdulto() {
   const [editPalabras, setTextoPalabras] = useState<string | null>(null);
   const textoIntereses = editIntereses ?? estado.intereses.join(", ");
   const textoPalabras = editPalabras ?? estado.palabrasMeta.join(", ");
-  const [aviso, setAviso] = useState<"guardado" | "error" | "falta" | null>(
+  const [aviso, setAviso] = useState<"guardado" | "error" | "falta" | "sensible" | null>(
     null,
   );
   const [resultado, setResultado] = useState<Resultado | null>(null);
@@ -76,7 +87,11 @@ export function CuentosAdulto() {
 
   const cambiar = guardarCuentosEnStore;
 
-  const guardarGustos = () => {
+  // Lo que sale en un pedido también pasa por el gate de sensibilidad (decisión «1a»: nunca un nombre).
+  const tocaGate = async (palabras: readonly string[]) =>
+    tocaLaLista(palabras.join("\n"), await cargarHuellas());
+
+  const guardarGustos = async () => {
     const r = CuentosGuardadosSchema.safeParse({
       ...estado,
       intereses: separarLista(textoIntereses),
@@ -86,11 +101,19 @@ export function CuentosAdulto() {
       setAviso("error");
       return;
     }
+    if (await tocaGate([...r.data.intereses, ...r.data.palabrasMeta])) {
+      setAviso("sensible");
+      return;
+    }
     cambiar(r.data);
     setAviso("guardado");
   };
 
-  const descargarPedido = () => {
+  const descargarPedido = async () => {
+    if (await tocaGate([...estado.intereses, ...estado.palabrasMeta])) {
+      setAviso("sensible");
+      return;
+    }
     const pedido = armarPedido(
       { intereses: estado.intereses, palabrasMeta: estado.palabrasMeta },
       fechaHoy(),
@@ -119,10 +142,8 @@ export function CuentosAdulto() {
     try {
       if (archivo.size > MAX_BYTES_LOTE) throw new Error("grande");
       const json: unknown = JSON.parse(await archivo.text());
-      const { hashes } =
-        await import("../../../tests/fixtures/sensibilidad-hashes.json");
       const r = await validarLote(json, {
-        huellas: new Set(hashes),
+        huellas: await cargarHuellas(),
         idsReservados: CUENTOS.map((c) => c.id),
       });
       if (!r.ok) {
@@ -135,6 +156,7 @@ export function CuentosAdulto() {
         tipo: "ok",
         nuevos: imp.nuevos,
         repetidos: imp.repetidos,
+        sinLugar: imp.sinLugar,
         rechazados: r.rechazados,
       });
     } catch {
@@ -145,6 +167,7 @@ export function CuentosAdulto() {
   };
 
   const pendientes = conEstado(estado, "pendiente");
+  const decididos = estado.cuentos.filter((c) => c.estado !== "pendiente");
   const delNino = cuentosDelNino(estado, CUENTOS, idioma);
 
   return (
@@ -215,7 +238,7 @@ export function CuentosAdulto() {
         <button
           type="button"
           className={PRIMARIO + " mt-4"}
-          onClick={guardarGustos}
+          onClick={() => void guardarGustos()}
           disabled={!hidratado}
           data-testid="cuentos-guardar-gustos"
         >
@@ -225,6 +248,7 @@ export function CuentosAdulto() {
           {aviso === "guardado" ? tx(cuentos.pedido.guardado) : null}
           {aviso === "error" ? tx(cuentos.pedido.error) : null}
           {aviso === "falta" ? tx(cuentos.pedido.faltaGusto) : null}
+          {aviso === "sensible" ? tx(cuentos.pedido.sensible) : null}
         </p>
 
         <h3 className="mt-6 font-medium">{tx(cuentos.pedido.pedirTitulo)}</h3>
@@ -234,7 +258,7 @@ export function CuentosAdulto() {
         <button
           type="button"
           className={BOTON + " mt-3"}
-          onClick={descargarPedido}
+          onClick={() => void descargarPedido()}
           disabled={!hidratado}
           data-testid="cuentos-descargar-pedido"
         >
@@ -278,6 +302,9 @@ export function CuentosAdulto() {
                 <p>
                   {tx(cuentos.importar.repetidos, { n: resultado.repetidos })}
                 </p>
+              ) : null}
+              {resultado.sinLugar > 0 ? (
+                <p>{tx(cuentos.importar.sinLugar, { n: resultado.sinLugar })}</p>
               ) : null}
               {resultado.rechazados.length > 0 ? (
                 <>
@@ -372,6 +399,49 @@ export function CuentosAdulto() {
             ))}
           </ul>
         )}
+        {decididos.length > 0 ? (
+          <>
+            <h3 className="mt-5 font-medium">{tx(cuentos.revision.decididos)}</h3>
+            <ul className="mt-2 flex flex-col gap-2">
+              {decididos.map(({ cuento, estado: st }) => (
+                <li
+                  key={cuento.id}
+                  className="border-borde flex flex-wrap items-center justify-between gap-2 rounded-xl border p-3"
+                  data-testid="cuento-decidido"
+                  data-cuento-id={cuento.id}
+                >
+                  <span lang={idioma}>
+                    <span className="font-medium">{cuento.titulo[idioma]}</span>{" "}
+                    <span className="text-tinta-suave text-sm">
+                      {st === "aprobado"
+                        ? tx(cuentos.revision.estadoAprobado)
+                        : tx(cuentos.revision.estadoRechazado)}
+                    </span>
+                  </span>
+                  {st === "aprobado" ? (
+                    <button
+                      type="button"
+                      className={BOTON}
+                      onClick={() => cambiar(retirar(estado, cuento.id))}
+                      data-testid="cuento-retirar"
+                    >
+                      {tx(cuentos.revision.retirar)}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={BOTON}
+                      onClick={() => cambiar(quitar(estado, cuento.id))}
+                      data-testid="cuento-quitar"
+                    >
+                      {tx(cuentos.revision.quitar)}
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
       </section>
 
       <section className={TARJETA} aria-labelledby="narrar-titulo">

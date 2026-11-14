@@ -115,3 +115,23 @@ test("la voz del adulto en una página, y el niño la escucha con «Con mi voz g
   await page.getByTestId("cuento-siguiente").click();
   await expect(page.getByText("Esta página no tiene tu voz")).toBeVisible();
 });
+
+test("el adulto retira un cuento aprobado y el niño deja de verlo; quita uno rechazado", async ({ page }) => {
+  await page.goto("/estudio/cuentos");
+  await expect(page.getByTestId("cuentos-guardar-gustos")).toBeEnabled();
+  await traerLote(page);
+  await page.locator('[data-testid="cuento-pendiente"][data-cuento-id="el-tren-de-las-nubes"]').getByTestId("cuento-aprobar").click();
+  await page.locator('[data-testid="cuento-pendiente"][data-cuento-id="la-gata-y-el-sombrero"]').getByTestId("cuento-rechazar").click();
+  await expect(page.getByTestId("cuento-decidido")).toHaveCount(2);
+
+  await page.goto("/cuentos");
+  await expect(page.locator('[data-cuento-id="el-tren-de-las-nubes"]')).toHaveCount(1);
+
+  await page.goto("/estudio/cuentos");
+  await page.locator('[data-testid="cuento-decidido"][data-cuento-id="el-tren-de-las-nubes"]').getByTestId("cuento-retirar").click();
+  await page.locator('[data-testid="cuento-decidido"][data-cuento-id="la-gata-y-el-sombrero"]').getByTestId("cuento-quitar").click();
+  await expect(page.getByTestId("cuento-decidido")).toHaveCount(1);
+
+  await page.goto("/cuentos");
+  await expect(page.locator('[data-cuento-id="el-tren-de-las-nubes"]')).toHaveCount(0);
+});

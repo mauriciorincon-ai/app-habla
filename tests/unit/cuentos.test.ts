@@ -17,6 +17,8 @@ import {
   decidir,
   importar,
   llenar,
+  quitar,
+  retirar,
   type CuentosGuardados,
 } from "@/lib/cuentos/estado";
 import { borrarTodo, CLAVES, guardarCuentos, leerCuentos } from "@/lib/storage/local";
@@ -127,10 +129,51 @@ describe("persistencia local y la voz del adulto", () => {
     expect(localStorage.getItem(CLAVES.cuentos)).toBeNull();
   });
 
+  it("el adulto retira un aprobado (el niño deja de verlo) y quita un rechazado (el id puede volver)", () => {
+    const inicial = importar(CUENTOS_VACIO, DEL_LOTE, "lote-2026-11-12", "2026-11-12").estado;
+    let e = decidir(inicial, "el-tren-de-las-nubes", "aprobado");
+    expect(cuentosDelNino(e, CUENTOS, "es").some((c) => c.id === "el-tren-de-las-nubes")).toBe(true);
+    e = retirar(e, "el-tren-de-las-nubes");
+    expect(cuentosDelNino(e, CUENTOS, "es").some((c) => c.id === "el-tren-de-las-nubes")).toBe(false);
+    expect(retirar(e, "la-gata-y-el-sombrero").cuentos.find((c) => c.cuento.id === "la-gata-y-el-sombrero")?.estado).toBe("pendiente");
+    expect(quitar(e, "la-gata-y-el-sombrero").cuentos).toHaveLength(2); // un pendiente no se quita
+    e = quitar(e, "el-tren-de-las-nubes");
+    expect(e.cuentos).toHaveLength(1);
+    expect(importar(e, DEL_LOTE, "lote-2026-12-12", "2026-12-12").nuevos).toBe(1);
+  });
+
+  it("con la lista llena, lo que no cabe se cuenta aparte de lo repetido", () => {
+    const lleno: CuentosGuardados = {
+      ...CUENTOS_VACIO,
+      cuentos: Array.from({ length: 60 }, (_, i) => ({
+        cuento: { ...DEL_LOTE[0], id: `relleno-${i}` },
+        estado: "rechazado" as const,
+        lote: "lote-2026-11-12",
+        importado: "2026-11-12",
+      })),
+    };
+    const r = importar(lleno, DEL_LOTE, "lote-2026-12-12", "2026-12-12");
+    expect(r.nuevos).toBe(0);
+    expect(r.sinLugar).toBe(DEL_LOTE.length);
+    expect(r.repetidos).toBe(0);
+  });
+
+  it("si el texto de la página cambia (otros gustos), la grabación vieja deja de aplicar", () => {
+    const plantilla = CUENTOS[0];
+    const a = llenar(plantilla, { intereses: ["trenes"], palabrasMeta: ["sube"] }, "es", 0);
+    const b = llenar(plantilla, { intereses: ["nubes"], palabrasMeta: ["sube"] }, "es", 0);
+    const grabadas = new Set(a.paginas.map((p, i) => idCuento(a.id, i + 1, "es", p.texto)));
+    const conVoz = (c: typeof a) => c.paginas.map((p, i) => grabadas.has(idCuento(c.id, i + 1, "es", p.texto)));
+    expect(conVoz(a).every(Boolean)).toBe(true);
+    // Las páginas cuyo texto cambió pierden la voz vieja; las que no cambiaron la conservan.
+    expect(conVoz(b)).toEqual(a.paginas.map((p, i) => p.texto === b.paginas[i].texto));
+    expect(conVoz(b).includes(false)).toBe(true);
+  });
+
   it("la narración tiene su id por cuento, página e idioma, y no es del catálogo", () => {
-    expect(idCuento("el-paseo", 2)).toBe("cuento:el-paseo:2");
-    expect(idCuento("el-paseo", 2, "en")).toBe("cuento-en:el-paseo:2");
-    expect(esDeCuento("cuento-en:el-paseo:2")).toBe(true);
+    expect(idCuento("el-paseo", 2, "es", "Hoy")).toMatch(/^cuento:el-paseo:2:[0-9a-f]+$/);
+    expect(idCuento("el-paseo", 2, "en", "Today")).toMatch(/^cuento-en:el-paseo:2:[0-9a-f]+$/);
+    expect(esDeCuento(idCuento("el-paseo", 2, "en", "Today"))).toBe(true);
     expect(esDeCuento("palabra:casa")).toBe(false);
   });
 });

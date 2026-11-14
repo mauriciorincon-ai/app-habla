@@ -176,7 +176,7 @@ export type ResultadoLote =
 
 /** Plazos y puntajes (regla dura 4), en los dos idiomas. Las cifras ya las rechaza el esquema. */
 const PLAZO_O_PUNTAJE =
-  /\b(semanas?|meses|plazo|resultados?|puntaje|puntos|calificaci[oó]n|weeks?|months?|deadline|results?|porcentaje|score|scores|points|grades?|rating|percent(age)?)\b/i;
+  /\b(semanas?|meses|plazo|resultados?|puntaje|calificaci[oó]n|weeks?|months?|deadline|results?|porcentaje|score|scores|grades?|rating|percent(age)?)\b/i;
 
 const textosDe = (c: Cuento): string[] => [
   c.titulo.es,
@@ -200,6 +200,8 @@ export async function validarLote(
 ): Promise<ResultadoLote> {
   const sobre = LoteCuentosSchema.safeParse(crudo);
   if (!sobre.success) return { ok: false, motivo: "lote-invalido" };
+  // Sin huellas el gate no vería nada: un lote no entra con la puerta apagada.
+  if (opciones.huellas.size === 0) return { ok: false, motivo: "lote-invalido" };
   const usados = new Set(opciones.idsReservados ?? []);
   const aceptados: Cuento[] = [];
   const rechazados: {

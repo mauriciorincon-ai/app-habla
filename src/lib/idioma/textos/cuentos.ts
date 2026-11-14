@@ -34,6 +34,10 @@ export const cuentos = {
       es: "✓ Guardado en este dispositivo.",
       en: "✓ Saved on this device.",
     },
+    sensible: {
+      es: "Alguna de esas palabras no puede ir en un pedido. Usa palabras generales, sin nombres.",
+      en: "One of those words cannot go in a request. Use general words, no names.",
+    },
     error: {
       es: "Revisa: cada gusto de una a tres palabras, sin números (hasta cinco); cada palabra, una sola (hasta ocho).",
       en: "Check: each interest one to three words, no numbers (up to five); each practice word a single word (up to eight).",
@@ -63,6 +67,10 @@ export const cuentos = {
     repetidos: {
       es: "{n} ya estaban y no se repitieron.",
       en: "{n} were already here and were not repeated.",
+    },
+    sinLugar: {
+      es: "{n} no cupieron: la lista está llena. Quita rechazados para hacer lugar.",
+      en: "{n} did not fit: the list is full. Remove rejected ones to make room.",
     },
     rechazados: { es: "{n} no entraron:", en: "{n} did not come in:" },
     invalido: {
@@ -104,6 +112,11 @@ export const cuentos = {
     aprobados: { es: "Aprobados: {n}", en: "Approved: {n}" },
     rechazadosCuenta: { es: "Rechazados: {n}", en: "Rejected: {n}" },
     palabra: { es: "Palabra:", en: "Word:" },
+    decididos: { es: "Ya decididos", en: "Already decided" },
+    retirar: { es: "Retirar", en: "Withdraw" },
+    quitar: { es: "Quitar", en: "Remove" },
+    estadoAprobado: { es: "✓ Aprobado", en: "✓ Approved" },
+    estadoRechazado: { es: "✕ Rechazado", en: "✕ Rejected" },
   },
   narrar: {
     titulo: { es: "Tu voz para los cuentos", en: "Your voice for the stories" },

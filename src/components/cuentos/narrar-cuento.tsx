@@ -40,7 +40,7 @@ export function NarrarCuento({
   useEffect(() => () => cancelar(), [cancelar]);
 
   const pagina = cuento.paginas[idx];
-  const id = idCuento(cuento.id, idx + 1, idioma);
+  const id = idCuento(cuento.id, idx + 1, idioma, pagina.texto);
 
   const ir = (n: number) => {
     cancelar();
