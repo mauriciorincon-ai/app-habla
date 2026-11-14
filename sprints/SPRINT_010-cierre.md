@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-13
 closed: 2026-11-13
 branch: sprint-010/lejos-de-la-pantalla
-pr: PENDIENTE
+pr: 21
 ---
 
 # Sprint 010 «Lejos de la pantalla» — cierre ejecutivo
