@@ -2,6 +2,7 @@
 // NO se importa desde lib/voice ni desde los worklets — el audio del niño nunca llega aquí
 // (regla dura 2, vigilada por ESLint y por tests/unit/privacidad-voice.test.ts).
 
+import { borrar as borrarReconocedor } from "@/lib/reconocer/modelo";
 import type { z } from "zod";
 import { eliminarBanco } from "@/lib/banco-voz/almacen";
 import { eliminarVideoteca } from "@/lib/videoteca/almacen";
@@ -196,6 +197,10 @@ export async function borrarTodo(): Promise<void> {
   await eliminarBanco();
   // La videoteca de la familia (S8) también vive en IndexedDB: «borrar todo» la incluye.
   await eliminarVideoteca();
+
+  // The recognizer (S11, ADR-023): its files are in the cache below; its unpacked model lives in
+  // the Worker's own IndexedDB database, which the cache sweep would not reach.
+  await borrarReconocedor().catch(() => undefined);
 
   if (typeof caches !== "undefined") {
     await caches

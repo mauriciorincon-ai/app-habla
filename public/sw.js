@@ -6,7 +6,9 @@
 // app (HTML, JS, CSS, iconos). No intercepta ni almacena nada del micrófono — el audio del niño
 // nunca sale del hilo de análisis, así que nunca llega a la red.
 
-const CACHE = "habla-v2";
+const CACHE = "habla-v3";
+// The recognizer cache (S11, ADR-023) belongs to Ajustes: only the adult fills or empties it.
+const CACHE_RECONOCEDOR = "habla-reconocedor-v1";
 
 // El shell: lo mínimo para que "Hoy" y el juego abran sin red.
 const SHELL = [
@@ -34,7 +36,7 @@ self.addEventListener("activate", (event) => {
       .then((claves) =>
         Promise.all(
           claves
-            .filter((clave) => clave !== CACHE)
+            .filter((clave) => clave !== CACHE && clave !== CACHE_RECONOCEDOR)
             .map((clave) => caches.delete(clave)),
         ),
       )
@@ -47,7 +49,11 @@ self.addEventListener("fetch", (event) => {
 
   // Solo GET del mismo origen. Todo lo demás pasa de largo, sin tocarlo.
   if (request.method !== "GET") return;
-  if (new URL(request.url).origin !== self.location.origin) return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  // Recognizer assets (≈ 40 MB each): never cached here. Ajustes downloads them on the adult's
+  // tap, checks their hash and keeps them in CACHE_RECONOCEDOR (src/lib/reconocer/modelo.ts).
+  if (url.pathname.startsWith("/modelos/") || url.pathname.startsWith("/vosk/")) return;
 
   // Navegaciones: red primero (para no servir un HTML viejo tras un deploy), caché si no hay red.
   if (request.mode === "navigate") {
