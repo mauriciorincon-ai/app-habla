@@ -13,7 +13,7 @@ export type Formantes = { f1: number; f2: number };
 const FS_OBJETIVO = 12_000;
 /** Orden del predictor: ≈ fs/1000 + 2 en kHz, un poco menos para no seguir armónicos agudos. */
 const ORDEN = 12;
-/** Un polo con banda más ancha que esto no es un formante (es la inclinación del espectro). */
+/** Tope de anchura (Hz): lo que pasa de aquí es la pendiente general, no una resonancia. */
 const BANDA_MAXIMA_HZ = 500;
 const F_MINIMA_HZ = 200;
 
