@@ -17,6 +17,8 @@ export const ESQUEMA_PAQUETE = 1;
 export const MAX_GRABACIONES = 400;
 /** ≈ 2 MB por grabación en base64: una palabra o una página leída duran segundos. */
 const MAX_B64_GRABACION = 2_800_000;
+/** Tope de todo el banco en base64 (≈ 60 MB): un teléfono tiene que poder abrir el archivo entero. */
+export const MAX_BANCO_BYTES = 60_000_000;
 
 const FECHA = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
@@ -49,7 +51,14 @@ export const PaqueteSchema = z
     sesiones: RegistroSesionesSchema,
     gemelas: RegistroGemelasSchema,
     /** null = el adulto no marcó «incluir mi voz grabada». */
-    banco: z.array(GrabacionPaqueteSchema).max(MAX_GRABACIONES).nullable(),
+    banco: z
+      .array(GrabacionPaqueteSchema)
+      .max(MAX_GRABACIONES)
+      .refine(
+        (b) => b.reduce((n, g) => n + g.datos.length, 0) <= MAX_BANCO_BYTES,
+        "banco-demasiado-grande",
+      )
+      .nullable(),
   })
   .strict();
 export type Paquete = z.infer<typeof PaqueteSchema>;

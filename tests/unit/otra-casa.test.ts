@@ -1,7 +1,7 @@
 import "fake-indexeddb/auto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { guardarGrabacion, listarIds, obtenerGrabacion, eliminarBanco } from "@/lib/banco-voz/almacen";
 import { abrirArchivo, aplicar, crearArchivo } from "@/lib/otra-casa/casa";
 import { cifrar, descifrar, fraseValida, FORMATO } from "@/lib/otra-casa/cifrado";
@@ -294,5 +294,112 @@ describe("la carpeta del archivo de la otra casa no tiene camino a la red", () =
   it("está en el candado de privacidad-banco", () => {
     const fuente = readFileSync(join(__dirname, "privacidad-banco.test.ts"), "utf8");
     expect(fuente).toContain('"src/lib/otra-casa"');
+  });
+});
+
+describe("lo que el auditor del S10 pidió cerrar", () => {
+  const vacio: Local = {
+    objetivo: null,
+    progreso: PROGRESO_INICIAL,
+    sesiones: { sesiones: [] },
+    gemelas: { juicios: [] },
+    bancoIds: [],
+  };
+  const paquete = (p: Partial<Paquete>): Paquete => ({
+    app: "habla",
+    esquema: 1,
+    creado: "2026-11-13",
+    objetivo: null,
+    progreso: PROGRESO_INICIAL,
+    sesiones: { sesiones: [] },
+    gemelas: { juicios: [] },
+    banco: null,
+    ...p,
+  });
+  const ses = (i: number) => ({
+    juego: "cohete" as const,
+    fecha: `2026-0${1 + (i % 9)}-${String(1 + (i % 28)).padStart(2, "0")}`,
+    inversiones: i,
+  });
+
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("la frase vale igual con un espacio al final o con la tilde compuesta de otro modo", async () => {
+    const sobre = await cifrar("hola", "la canción de los martes ", IT);
+    expect(await descifrar(sobre, "la canción de los martes")).toEqual({ ok: true, texto: "hola" });
+    const nfd = "la canción de los martes".normalize("NFD");
+    expect(await descifrar(sobre, nfd)).toEqual({ ok: true, texto: "hola" });
+  });
+
+  it("sin Web Crypto no es «frase»: se avisa «navegador»", async () => {
+    const sobre = await cifrar("hola", FRASE, IT);
+    vi.stubGlobal("crypto", {});
+    const r = await abrirArchivo(JSON.stringify(sobre), FRASE, siempre);
+    expect(r).toEqual({ ok: false, motivo: "navegador" });
+  });
+
+  it("el tope de 500 jamás descarta lo de este aparato", () => {
+    const aqui = Array.from({ length: 495 }, (_, i) => ses(i));
+    const llega = Array.from({ length: 20 }, (_, i) => ses(1000 + i));
+    const { fusion, plan } = fusionar(
+      { ...vacio, sesiones: { sesiones: aqui } },
+      paquete({ sesiones: { sesiones: llega } }),
+      siempre,
+    );
+    expect(fusion.sesiones.sesiones).toHaveLength(500);
+    expect(plan.sesionesNuevas).toBe(5);
+    const claves = new Set(fusion.sesiones.sesiones.map((x) => JSON.stringify(x)));
+    for (const x of aqui) expect(claves.has(JSON.stringify(x))).toBe(true);
+  });
+
+  it("un avance de ciclo solo, sin cápsulas nuevas, sí se ofrece", () => {
+    const base = PROGRESO_INICIAL.porEtapa["palabras-sueltas"];
+    const aqui: Local = {
+      ...vacio,
+      progreso: {
+        porEtapa: { ...PROGRESO_INICIAL.porEtapa, "palabras-sueltas": { ...base, ciclo: 0 } },
+        historial: [],
+      },
+    };
+    const { plan, fusion } = fusionar(
+      aqui,
+      paquete({
+        progreso: {
+          porEtapa: { ...PROGRESO_INICIAL.porEtapa, "palabras-sueltas": { ...base, ciclo: 1, cicloCompletadas: [] } },
+          historial: [],
+        },
+      }),
+      siempre,
+    );
+    expect(plan.cicloAvanza).toBe(true);
+    expect(plan.nadaCambia).toBe(false);
+    expect(fusion.progreso.porEtapa["palabras-sueltas"]?.ciclo).toBe(1);
+  });
+
+  it("si una grabación falla al escribir, el almacenamiento de texto no cambió", async () => {
+    localStorage.clear();
+    await eliminarBanco();
+    const antes = instantanea();
+    const f = fusionar(
+      vacio,
+      paquete({
+        objetivo: { texto: "animales", desde: "2026-11-13" },
+        banco: [{ id: "palabra:x", mimeType: "audio/webm", duracionMs: 10, fecha: "2026-11-13", datos: "AQID" }],
+      }),
+      siempre,
+    ).fusion;
+    const original = globalThis.indexedDB;
+    vi.stubGlobal("indexedDB", { open: () => { throw new Error("sin cuota"); } });
+    await expect(aplicar(f)).rejects.toThrow();
+    vi.stubGlobal("indexedDB", original);
+    expect(instantanea()).toEqual(antes);
+  });
+
+  it("un banco que pasa del tope no cabe en el paquete", () => {
+    const g = { id: "p", mimeType: "audio/webm", duracionMs: 1, fecha: "2026-11-13", datos: "A".repeat(2_000_000) };
+    const grande = paquete({ banco: Array.from({ length: 31 }, (_, i) => ({ ...g, id: `p${i}` })) });
+    expect(leerPaquete(JSON.stringify(grande))).toBeNull();
+    const ok = paquete({ banco: Array.from({ length: 29 }, (_, i) => ({ ...g, id: `p${i}` })) });
+    expect(leerPaquete(JSON.stringify(ok))).not.toBeNull();
   });
 });

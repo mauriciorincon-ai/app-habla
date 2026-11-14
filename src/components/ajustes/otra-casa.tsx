@@ -24,7 +24,7 @@ import { fraseValida } from "@/lib/otra-casa/cifrado";
 import { nombreArchivo } from "@/lib/otra-casa/paquete";
 
 const HECHO = "#otra-casa-hecho";
-const MAX_BYTES = 200 * 1024 * 1024;
+const MAX_BYTES = 64 * 1024 * 1024;
 
 const campo =
   "border-borde bg-fondo text-tinta mt-1 min-h-11 w-full rounded-xl border px-3";
@@ -157,7 +157,7 @@ function AbrirArchivo() {
   const [abriendo, setAbriendo] = useState(false);
   const [resultado, setResultado] = useState<Apertura | null>(null);
   const [aviso, setAviso] = useState<
-    "" | "faltaArchivo" | "cancelado" | "hecho"
+    "" | "faltaArchivo" | "cancelado" | "hecho" | "errorAlSumar"
   >("");
 
   // Tras confirmar, la página se recarga con la marca en la dirección: se lee al hidratar (sin
@@ -179,8 +179,11 @@ function AbrirArchivo() {
       setResultado(
         await abrirArchivo(await archivo.text(), frase, puedeSonarAqui),
       );
-    } catch {
-      setResultado({ ok: false, motivo: "formato" });
+    } catch (e) {
+      setResultado({
+        ok: false,
+        motivo: e instanceof Error && e.message === "grande" ? "formato" : "inesperado",
+      });
     } finally {
       setAbriendo(false);
     }
@@ -188,7 +191,13 @@ function AbrirArchivo() {
 
   const confirmar = async () => {
     if (!resultado?.ok) return;
-    await aplicar(resultado.fusion);
+    try {
+      await aplicar(resultado.fusion);
+    } catch {
+      setResultado(null);
+      setAviso("errorAlSumar");
+      return;
+    }
     window.location.hash = HECHO;
     window.location.reload();
   };
@@ -254,6 +263,10 @@ function AbrirArchivo() {
               ? textos.abrir.fraseMala
               : resultado.motivo === "contenido"
                 ? textos.abrir.contenido
+                : resultado.motivo === "navegador"
+                ? textos.abrir.navegador
+                : resultado.motivo === "inesperado"
+                ? textos.abrir.inesperado
                 : textos.abrir.formato,
           )}
         </p>
@@ -282,6 +295,9 @@ function AbrirArchivo() {
               ) : null}
               {plan.gemelasNuevas ? (
                 <li>{tx(textos.plan.gemelas, { n: plan.gemelasNuevas })}</li>
+              ) : null}
+              {plan.cicloAvanza ? (
+                <li>{tx(textos.plan.ciclo)}</li>
               ) : null}
               {plan.capsulasNuevas ? (
                 <li>{tx(textos.plan.capsulas, { n: plan.capsulasNuevas })}</li>

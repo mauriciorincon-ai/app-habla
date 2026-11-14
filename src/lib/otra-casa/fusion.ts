@@ -34,6 +34,8 @@ export type Plan = {
   sesionesNuevas: number;
   gemelasNuevas: number;
   capsulasNuevas: number;
+  /** El archivo trae un avance de ciclo que aquí no está. */
+  cicloAvanza: boolean;
   /** null = el archivo no trae el banco. */
   banco: { nuevas: number; yaEstaban: number; noSuenanAqui: number } | null;
   nadaCambia: boolean;
@@ -76,10 +78,15 @@ function unir<T extends { fecha: string }>(
     vistos.set(k, n);
     if (n > (cuenta.get(k) ?? 0)) nuevos.push(r);
   }
-  const lista = [...aqui, ...nuevos].sort((a, b) =>
+  // El tope jamás descarta lo de este aparato: de lo que llega entran solo las más recientes que caben.
+  const cabe = Math.max(0, MAX_REGISTROS - aqui.length);
+  const admitidos = [...nuevos]
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0))
+    .slice(0, cabe);
+  const lista = [...aqui, ...admitidos].sort((a, b) =>
     a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0,
   );
-  return { lista: lista.slice(-MAX_REGISTROS), nuevos: nuevos.length };
+  return { lista, nuevos: admitidos.length };
 }
 
 function unirProgreso(
@@ -163,6 +170,8 @@ export function fusionar(
   const progreso = unirProgreso(local.progreso, paquete.progreso);
   const objetivo = objetivoQueda(local.objetivo, paquete.objetivo);
   const banco = grabacionesQueEntran(local, paquete, puedeSonar);
+  const cicloAvanza =
+    clave(progreso.progreso.porEtapa) !== clave(local.progreso.porEtapa);
   const cambiaObjetivo =
     (objetivo?.texto ?? null) !== (local.objetivo?.texto ?? null);
   const plan: Plan = {
@@ -174,6 +183,7 @@ export function fusionar(
     sesionesNuevas: sesiones.nuevos,
     gemelasNuevas: gemelas.nuevos,
     capsulasNuevas: progreso.nuevas,
+    cicloAvanza,
     banco: paquete.banco
       ? {
           nuevas: banco.entran.length,
@@ -186,6 +196,7 @@ export function fusionar(
       sesiones.nuevos === 0 &&
       gemelas.nuevos === 0 &&
       progreso.nuevas === 0 &&
+      !cicloAvanza &&
       banco.entran.length === 0,
   };
   return {

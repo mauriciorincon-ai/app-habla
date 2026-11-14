@@ -27,6 +27,7 @@ import { aBase64, cifrar, deBase64, descifrar } from "./cifrado";
 import { fusionar, type Fusion, type Local, type Plan } from "./fusion";
 import {
   ESQUEMA_PAQUETE,
+  MAX_BANCO_BYTES,
   MAX_GRABACIONES,
   leerPaquete,
   type GrabacionPaquete,
@@ -46,9 +47,13 @@ export async function leerLocal(): Promise<Local> {
 async function bancoParaViajar(): Promise<GrabacionPaquete[]> {
   const ids = (await listarIds()).slice(0, MAX_GRABACIONES);
   const out: GrabacionPaquete[] = [];
+  let bytes = 0;
   for (const id of ids) {
     const g = await obtenerGrabacion(id);
     if (!g) continue;
+    // Tope del archivo: lo que no cabe se queda en este aparato (el adulto lo ve en el aviso).
+    bytes += Math.ceil((g.blob.size * 4) / 3);
+    if (bytes > MAX_BANCO_BYTES) break;
     out.push({
       id,
       mimeType: g.mimeType,
@@ -92,7 +97,7 @@ export async function crearArchivo(
 
 export type Apertura =
   | { ok: true; plan: Plan; fusion: Fusion }
-  | { ok: false; motivo: "formato" | "frase" | "contenido" };
+  | { ok: false; motivo: "formato" | "frase" | "contenido" | "navegador" | "inesperado" };
 
 /** Descifra y calcula el plan. NO escribe nada: eso lo hace `aplicar`, tras el «sí» del adulto. */
 export async function abrirArchivo(
@@ -106,7 +111,12 @@ export async function abrirArchivo(
   } catch {
     return { ok: false, motivo: "formato" };
   }
-  const d = await descifrar(sobre, frase);
+  let d;
+  try {
+    d = await descifrar(sobre, frase);
+  } catch {
+    return { ok: false, motivo: "navegador" };
+  }
   if (!d.ok) return d;
   const paquete = leerPaquete(d.texto);
   if (!paquete) return { ok: false, motivo: "contenido" };
@@ -116,12 +126,8 @@ export async function abrirArchivo(
 
 /** Escribe la fusión. Solo suma: lo de este aparato que no está en el archivo se queda. */
 export async function aplicar(fusion: Fusion): Promise<void> {
-  if (fusion.objetivo)
-    guardar(CLAVES.objetivo, ObjetivoSchema, fusion.objetivo);
-  else borrarObjetivo();
-  guardar(CLAVES.progreso, ProgresoSchema, fusion.progreso);
-  guardar(CLAVES.sesiones, RegistroSesionesSchema, fusion.sesiones);
-  guardar(CLAVES.gemelas, RegistroGemelasSchema, fusion.gemelas);
+  // Primero lo que puede fallar a medias (grabaciones, una a una; cuota o códec): si algo lanza, el
+  // almacenamiento de texto aún no cambió. Lo último y más corto es localStorage.
   for (const g of fusion.grabaciones) {
     const bytes = deBase64(g.datos);
     if (!bytes) continue;
@@ -132,6 +138,12 @@ export async function aplicar(fusion: Fusion): Promise<void> {
       fecha: g.fecha,
     });
   }
+  if (fusion.objetivo)
+    guardar(CLAVES.objetivo, ObjetivoSchema, fusion.objetivo);
+  else borrarObjetivo();
+  guardar(CLAVES.progreso, ProgresoSchema, fusion.progreso);
+  guardar(CLAVES.sesiones, RegistroSesionesSchema, fusion.sesiones);
+  guardar(CLAVES.gemelas, RegistroGemelasSchema, fusion.gemelas);
 }
 
 /** ¿Este navegador reproduce ese formato? (ADR-011 § «Cuándo reabrir» (a)). */

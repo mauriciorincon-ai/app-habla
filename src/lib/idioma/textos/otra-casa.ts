@@ -15,8 +15,8 @@ export const otraCasa = {
       en: "Include my recorded voice ({n} recordings)",
     },
     incluirBancoAyuda: {
-      es: "Solo su voz de adulto, la del banco. Algunos aparatos no reproducen las grabaciones de otros: al abrir el archivo, la otra casa ve cuáles suenan allá.",
-      en: "Only your adult voice, from the voice bank. Some devices cannot play recordings made on others: when the file is opened, the other home sees which ones play there.",
+      es: "Solo su voz de adulto, la del banco (hasta unos 60 MB; si hay más, las demás se quedan aquí). Algunos aparatos no reproducen las grabaciones de otros: al abrir el archivo, la otra casa ve cuáles suenan allá.",
+      en: "Only your adult voice, from the voice bank (up to about 60 MB; if there is more, the rest stays here). Some devices cannot play recordings made on others: when the file is opened, the other home sees which ones play there.",
     },
     frase: { es: "Frase para proteger el archivo", en: "Phrase to lock the file" },
     fraseAyuda: {
@@ -56,6 +56,14 @@ export const otraCasa = {
       en: "The file opened, but what it holds is not in the expected shape. Nothing came in.",
     },
     faltaArchivo: { es: "Primero elija el archivo.", en: "First choose the file." },
+    navegador: {
+      es: "Este navegador no puede abrir archivos protegidos (hace falta una conexión segura). No se cambió nada.",
+      en: "This browser cannot open locked files (a secure connection is needed). Nothing was changed.",
+    },
+    inesperado: {
+      es: "No se pudo abrir el archivo en este aparato. No se cambió nada.",
+      en: "The file could not be opened on this device. Nothing was changed.",
+    },
   },
   plan: {
     titulo: { es: "Esto es lo que cambia aquí", en: "This is what changes here" },
@@ -91,5 +99,10 @@ export const otraCasa = {
     cancelar: { es: "✕ Ahora no", en: "✕ Not now" },
     hecho: { es: "✓ Listo: ya está en este aparato.", en: "✓ Done: it is on this device now." },
     cancelado: { es: "No se cambió nada.", en: "Nothing was changed." },
+    errorAlSumar: {
+      es: "No se pudo sumar todo, así que no se escribió ningún dato de texto: puede intentarlo otra vez.",
+      en: "Not everything could be added, so no text data was written: you can try again.",
+    },
+    ciclo: { es: "Avance en las etapas de la práctica", en: "Progress in the practice stages" },
   },
 } satisfies Catalogo;

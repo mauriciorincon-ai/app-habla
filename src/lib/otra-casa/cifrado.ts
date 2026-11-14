@@ -63,7 +63,7 @@ async function derivarLlave(
   const s = sutil();
   const base = await s.importKey(
     "raw",
-    new TextEncoder().encode(frase),
+    new TextEncoder().encode(frase.trim().normalize("NFC")),
     "PBKDF2",
     false,
     ["deriveKey"],
@@ -160,6 +160,7 @@ export async function descifrar(
 ): Promise<Descifrado> {
   const sobre = leerSobre(crudo);
   if (!sobre) return { ok: false, motivo: "formato" };
+  sutil(); // sin Web Crypto no es una frase mala: se avisa aparte (lanza web-crypto-no-disponible)
   try {
     const llave = await derivarLlave(frase, sobre.sal, sobre.iteraciones);
     const claro = await sutil().decrypt(
