@@ -11,6 +11,8 @@
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `voz-sintetica.wav` | Silencio → voz sostenida → silencio (8 s). Ejercita la calibración del ruido y la histéresis de "hay voz / no hay voz". | **El globo** (duración sostenida) y **palabra y dibujo** (cualquier voz enciende el dibujo). |
 | `barrido-tono.wav`  | Un tono que sube y baja como una sirena (11 s), con 2 armónicos para que parezca voz de verdad.                         | **El cohete** (sigue el tono; cuenta 3 inversiones).                                         |
+| `vocales-nino.wav`  | Ruido de fondo y luego a · e · i · o · u (11 s) con una voz aguda de juguete (tono 300 Hz), hecha de pulsos y resonadores. | **El mapa de las vocales** (experimental, S10): cada vocal enciende su zona.                  |
+| `vocales-adulto.wav` | Lo mismo con una voz grave (tono 120 Hz).                                                                              | El mismo mapa, con la voz del adulto.                                                        |
 
 Ambos son PCM 16-bit mono a 48 kHz — el formato que "oye" el motor de la app.
 
@@ -22,7 +24,7 @@ Ambos son PCM 16-bit mono a 48 kHz — el formato que "oye" el motor de la app.
 - **Para verlos/oírlos:** ábrelos con cualquier reproductor. `barrido-tono.wav` suena como una
   sirena de juguete; `voz-sintetica.wav` como una vocal larga entre dos silencios.
 - **Se generan con** los scripts del repo: `scripts/gen-voz-sintetica.mjs` y
-  `scripts/gen-barrido-tono.mjs` (Node puro, sin dependencias). Si cambias el motor de voz y
+  `scripts/gen-barrido-tono.mjs` y `scripts/gen-vocales.mjs` (Node puro, sin dependencias). Si cambias el motor de voz y
   necesitas otra señal, edita esos scripts y regénralos.
 
 ## Qué NO son
