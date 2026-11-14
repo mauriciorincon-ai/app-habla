@@ -41,12 +41,12 @@ export default defineConfig({
     {
       name: "mobile-chromium",
       use: { ...devices["Pixel 7"] },
-      testIgnore: /(cohete|spike-pitch|vocales)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales|reconocedor[\w-]*)\.spec\.ts/,
     },
     {
       name: "desktop-chromium",
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: /(cohete|spike-pitch|vocales)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales|reconocedor[\w-]*)\.spec\.ts/,
     },
     {
       // El cohete necesita una voz que CANTE (barrido de tono), no una voz plana: proyecto
@@ -66,6 +66,18 @@ export default defineConfig({
         launchOptions: fakeMic("vocales-nino.wav"),
       },
       testMatch: /vocales\.spec\.ts/,
+    },
+    {
+      // «¿Dijo la palabra?» (S11, ADR-023): the real recognizer with a Lingua Libre recording (an adult
+      // volunteer, licensed per file — never the family) as the fake microphone. It downloads the model
+      // (≈ 40 MB) from the dev server, so it has its own project and a longer timeout.
+      name: "desktop-chromium-reconocer",
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: fakeMic("palabras/mic-es.wav"),
+      },
+      testMatch: /reconocedor[\w-]*\.spec\.ts/,
+      timeout: 180_000,
     },
   ],
   webServer: {
