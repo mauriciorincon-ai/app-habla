@@ -33,6 +33,11 @@ describe("construirSesion: Metrica → Sesion (solo números, jamás audio)", ()
       construirSesion({ tipo: "inversiones", veces: 5 }, "2026-07-15"),
     ).toEqual({ juego: "cohete", fecha: "2026-07-15", inversiones: 5 });
 
+    // Vocales (S10): solo contadores; ni F1/F2 ni Hz. Las zonas se acotan a las cinco vocales.
+    expect(
+      construirSesion({ tipo: "vocales", zonas: 7, cambios: 4 }, "2026-07-15"),
+    ).toEqual({ juego: "vocales", fecha: "2026-07-15", zonas: 5, cambios: 4 });
+
     expect(
       construirSesion(
         { tipo: "activaciones", veces: 3, reconocidas: 1 },

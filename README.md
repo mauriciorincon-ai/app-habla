@@ -57,7 +57,7 @@ src/lib/voice/     meter.ts (histéresis) · calibration.ts (piso de ruido)   �
 src/lib/coach/     daily.ts — la cápsula del día, determinista por fecha     ← motor PURO
 src/lib/session-flow.ts   guion → mic → calibración → juego → celebración    ← reducer PURO
 src/lib/storage/   localStorage validado con zod (jamás audio)
-src/worklets/      rms-processor.ts — corre en el hilo de audio, sin imports
+src/worklets/      rms-processor.ts — corre en el hilo de audio; solo importa el módulo puro formantes.ts
 content/capsulas.ts  las 14 cápsulas (técnica + guion + actividad + fuente)
 src/components/    UI sin lógica de negocio
 ```

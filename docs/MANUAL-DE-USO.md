@@ -48,11 +48,11 @@ toca **"Sí, ya lo hicimos"**.
 
 ### Los juegos de voz — "su voz mueve el mundo"
 
-En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **cuatro
-juegos**. Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
+En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **cinco
+juegos** (el quinto es experimental). Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
 
-**Tres de ellos escuchan el micrófono** (el globo, el cohete y "palabra y dibujo"). Antes de
-cualquiera de esos tres pasa siempre lo mismo:
+**Cuatro de ellos escuchan el micrófono** (el globo, el cohete, "palabra y dibujo" y el mapa de las vocales). Antes de
+cualquiera de esos cuatro pasa siempre lo mismo:
 
 1. **Su guion primero.** La app le muestra la línea que usted va a decir. Usted dirige el juego;
    el niño no juega solo (no existe un "modo niño solo", y es a propósito).
@@ -61,13 +61,13 @@ cualquiera de esos tres pasa siempre lo mismo:
    tele— para no confundir ese ruido con la voz del niño. Si hay mucho ruido, se lo dice de frente
    y ustedes deciden si siguen o vuelven a medir.
 
-**El cuarto, "palabras gemelas", NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
+**"Palabras gemelas" NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
 "game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
 micrófono se apaga ahí mismo) y **el juego se reinicia por completo**: al volver a entrar, los
 contadores arrancan en cero — no queda rastro de la sesión pasada. Desde el guion, **"← Juegos"**
-lo lleva de vuelta a los cuatro.
+lo lleva de vuelta a los cinco.
 
 #### 1. El globo — la voz que se sostiene
 
@@ -154,7 +154,7 @@ contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga
 - **"Siguiente pareja"** lo toca usted cuando quieran seguir: pueden repetir, volver a tocar los
   dibujos o quedarse un rato. Arriba, _"Palabras que le oíste: N"_ va contando la sesión.
 
-Este juego es **distinto a los otros tres**:
+Este juego es **distinto a los otros cuatro**:
 
 - **No usa micrófono. No graba ni analiza nada.** La app no oye la palabra: **el que la oye es
   usted**, y por eso las teclas de marcar son suyas. Es co-uso puro.
@@ -168,6 +168,21 @@ Este juego es **distinto a los otros tres**:
 
 Si grabó su voz (más abajo), cada dibujo trae un **botón de altavoz** para que el niño oiga la
 palabra en la voz de la familia antes de intentarla.
+
+#### 5. El mapa de las vocales — a, e, i, o, u (nuevo · S10 · experimental)
+
+Un juego **en prueba**, y se lo dice en pantalla («Experimental · en prueba»). El niño **estira una vocal**
+—aaaa, eeee, iiii, oooo, uuuu— y la **zona del mapa** que más se parece se enciende. Cada zona tiene su
+**letra, su forma con nombre** (círculo, triángulo, rombo, cuadrado, estrella) **y su color**: el color nunca va solo.
+
+- **Hágalo usted primero**, despacio y con la boca bien marcada. Si hoy solo quiere mirar, también está bien.
+- **Siempre «quizás»:** la app mide la **forma del sonido** y dice «Quizás suena como…», con margen de error
+  (sobre todo con voces muy agudas). **Nunca dice que la vocal estuvo bien o mal**: eso lo sabe usted, que lo oye.
+- **Qué cuenta al final:** cuántas zonas **sonaron de forma estable** y cuántas veces pasó **de una a otra**.
+  Sin voz, el mapa se queda esperando y no inventa nada.
+- **Qué se guarda:** solo esos dos números, para el rumbo. **Ni la voz, ni los Hz, ni la vocal que cree haber oído.**
+- Tiene **modo calma** (sin contadores) y **«Volver a medir»** como los demás. El sonido se analiza en el
+  momento y se descarta.
 
 ### La voz de la familia — grabar tu voz para los juegos (nuevo)
 
@@ -209,9 +224,10 @@ pantalla del **Estudio**).
   graba."_ El Estudio es para el adulto.
 - **La voz de su hijo nunca se graba**, ni siquiera aquí. Los juegos que escuchan el micrófono
   siguen sin guardar nada de su voz (ver Privacidad).
-- **El banco de voz vive SOLO en este dispositivo.** No se sube a internet, no se copia a ningún
-  servidor y no queda en el repositorio del proyecto. Si cambia de aparato, las grabaciones **no
-  viajan**: se vuelven a grabar donde se van a usar.
+- **El banco de voz vive en este dispositivo.** No se sube a internet, no se copia a ningún
+  servidor y no queda en el repositorio del proyecto. **Solo sale si usted marca «Incluir mi voz
+  grabada» al crear un archivo de «Pasar a la otra casa»** (va cifrado, y «Borrar mis datos» no borra
+  los archivos que ya guardó). Si no, al cambiar de aparato las grabaciones se vuelven a grabar donde se van a usar.
 - Puede borrar **solo el banco de voz** (sin tocar lo demás) con _"Borrar solo el banco de voz"_,
   o borrarlo todo desde _"Borrar mis datos"_.
 
@@ -420,10 +436,46 @@ en voz alta y su hijo mira la palabra: si la dice, la imita o la señala, cuenta
 - **Borrar:** **Ajustes → Borrar mis datos** también borra los cuentos importados y las grabaciones.
 - **Qué NO hace:** no juzga ni puntúa, no felicita por felicitar y no manda nada a ninguna parte.
 
+### Pasar a la otra casa — llevar el progreso a otro aparato (nuevo · S10)
+
+Si su hijo practica en **dos casas**, cada aparato guarda lo suyo y no se ven entre sí. Esta función lleva lo de
+aquí a la otra casa **en un archivo que usted mueve** (por mensaje, cable o tarjeta): la app **no se conecta a
+internet** para esto.
+
+- **Dónde:** **Ajustes → «Pasar a la otra casa»**.
+- **Crear el archivo:** escriba una **frase de al menos diez letras**, dos veces, y toque **«Crear y descargar»**.
+  El archivo (`habla-otra-casa-<fecha>.habla`) queda **cifrado con esa frase**. **La app no la guarda: si la
+  olvida, el archivo no se puede abrir.**
+- **Qué viaja:** el objetivo de la semana, lo que han practicado y lo que han logrado. **Su voz grabada solo si
+  usted marca la casilla.** **Nunca** viajan la voz de su hijo, los videos, el apodo ni sus ajustes.
+- **Abrir uno:** en la otra casa, **«Abrir un archivo de la otra casa»**: elija el archivo, escriba la frase y
+  toque **«Ver qué trae»**. Antes de escribir nada, la app le **muestra qué cambia** (objetivo antes → después,
+  juegos y actividades que se suman, grabaciones que entran). Solo cuando toca **«Sí, sumarlo»** se escribe.
+  Con la frase equivocada o un archivo ajeno **no entra nada**.
+- **Nada se borra:** lo que trae el archivo **se suma**; lo de ese aparato se queda. Si una grabación viene en un
+  formato que ese navegador no reproduce, la app se lo dice y **no la trae**.
+- **Qué NO hace:** no sincroniza solo, no usa cuentas y no manda nada a ninguna parte. Es una foto del momento:
+  repítanlo cuando quieran ponerse al día.
+
+### Hojas para imprimir — jugar lejos de la pantalla (nuevo · S10)
+
+**Estudio → «Hojas para imprimir»** arma **tarjetas con dibujo** y un **tablero de turnos** («Mi turno / Tu
+turno») para jugar sentados juntos, sin pantalla.
+
+- **De dónde salen:** de las palabras y los gustos que usted escribió en «Cuentos de casa»; si faltan, se
+  completan con un lote base. **Solo se imprimen el dibujo y su palabra**: ningún nombre, edad ni texto de la familia.
+- **Idioma:** elija **Español o Inglés** para las hojas.
+- **Imprimir:** toque **«Imprimir»** (o use el menú de impresión del navegador). Salen hojas A4; los controles de
+  la app no se imprimen.
+- **Los créditos:** **cada hoja lleva su pie** con «Hoja n de N» y el crédito de **ARASAAC** (Sergio Palao,
+  Gobierno de Aragón, licencia Creative Commons BY-NC-SA, uso personal y sin fines comerciales).
+- **Qué NO hace:** no puntúa ni mide nada; es papel para jugar.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
-  —en el cohete— si el **tono** de esa voz sube o baja.
+  —en el cohete— si el **tono** de esa voz sube o baja y —en el mapa de las vocales, que es experimental— a qué
+  vocal **se parece** la forma del sonido, siempre como «quizás».
 - **NO mide:** qué palabra dijo, ni si la pronunció bien. Hoy ningún sistema evalúa con fiabilidad
   la pronunciación de un niño pequeño que apenas empieza a hablar, en español, y por eso la app no lo finge. En "Palabra
   y dibujo", el dibujo se enciende con cualquier sonido — **eso no significa que la palabra estuvo
@@ -438,7 +490,7 @@ Un toque —en el juego o en Ajustes— y la pantalla baja a colores de atardece
 sin meta y sin celebración automática**. El globo no se detiene: **sube mientras su voz suena y
 baja despacito cuando hay silencio**, como un globo de verdad — sin carrera y sin llegada. El
 cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está sobreestimulado o
-cuando el juego con meta le resulta demasiado. Está disponible en los tres juegos.
+cuando el juego con meta le resulta demasiado. Está disponible en los juegos de voz (globo, cohete, palabra y dibujo y el mapa de las vocales).
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
 app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra, el confeti
@@ -460,7 +512,8 @@ Esta es la promesa más importante de la app:
 
 - **La voz de su hijo NUNCA se graba, ni se guarda, ni sale del dispositivo.** El sonido se analiza
   en el momento, dentro del teléfono o la tablet, para calcular dos números —cuánta energía hay y,
-  en el cohete, qué tan agudo es el tono— y se descarta enseguida. **Ese tono es también un dato
+  en el cohete, qué tan agudo es el tono— y se descarta enseguida (el mapa de las vocales calcula además la
+  forma del sonido, también en el momento). **Ese tono es también un dato
   de su voz, y se trata con la misma regla:** no se guarda, no se envía, no queda en ningún lado.
 - **No hay servidores, ni cuentas, ni nube.** Durante el juego la app no hace **ninguna** petición
   a internet. Hay pruebas automáticas que lo verifican en cada cambio del código: si alguien
@@ -471,7 +524,7 @@ Esta es la promesa más importante de la app:
   proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
   sola llamada de red**. Y aun con el Estudio, **la voz de su hijo nunca se graba.**
 - Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes, qué
-  cápsulas completó, lo que marcó en "palabras gemelas", —si las grabó— **sus** voces y —si los eligió—
+  cápsulas completó, lo que marcó en "palabras gemelas", cuántas zonas del mapa de las vocales sonaron, —si las grabó— **sus** voces y —si los eligió—
   **los videos de la familia** (clips de su propia galería: la app no abre la cámara y no salen de aquí). Puede
   borrarlo todo en **Ajustes → Borrar mis datos**, o solo el banco de voz con **"Borrar solo el
   banco de voz"**.
@@ -480,7 +533,7 @@ Esta es la promesa más importante de la app:
 
 **¿Sirve si mi hijo no habla todavía?**
 Sí. Muchas cápsulas no necesitan que el niño hable: son cosas que hace usted (modelar palabras,
-esperar en silencio, devolver la palabra completa). Y en los tres juegos, cualquier sonido basta:
+esperar en silencio, devolver la palabra completa). Y en el globo, el cohete y palabra y dibujo, cualquier sonido basta:
 mueve el globo, sube el cohete y enciende el dibujo — no hace falta que sea una palabra.
 
 **¿Cuánto tiempo al día?**
@@ -529,8 +582,9 @@ porque la voz de su hijo es un dato delicado que esta app se comprometió a **nu
 voz, en cambio, la controla usted: la graba, la escucha, la apaga o la borra cuando quiera.
 
 **¿La voz que grabo se sube a algún lado?**
-No. Vive solo en este dispositivo. Si le presta la tablet a otra persona o cambia de aparato, esas
-grabaciones no viajan con usted — se vuelven a grabar donde se van a usar.
+No. Vive en este dispositivo. Solo sale si usted lo decide, marcando «Incluir mi voz grabada» al
+crear el archivo cifrado de «Pasar a la otra casa». Si no, al cambiar de aparato las grabaciones no
+viajan con usted: se vuelven a grabar donde se van a usar.
 
 ## Créditos de los dibujos
 
@@ -557,4 +611,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 007    | La app en dos idiomas, **español y English**: sigue al navegador o se elige en Ajustes; las 50 cápsulas, los juegos de voz, Hoy, Estudio, Objetivo, Rumbo y `/conoce` en los dos; en English, Palabras y Gemelas lo dicen con una tarjeta honesta. Ajustes → «Qué mide» nombra el tono del cohete. Primer sprint con el manual también en inglés (`MANUAL-DE-USO.en.md`). |
 | 008    | **«En inglés también se practica»**: Palabras, Gemelas y el Objetivo se practican en inglés (contenido y diccionario propios del idioma, sin tarjeta de «solo en español»); `/mirada` y el catálogo de cápsulas, en español e inglés con selector; **Videos de la familia** en el Estudio (clips de su galería, solo en el dispositivo, sin cámara, borrables); el crédito del diccionario corregido (Google Books Ngram, CC BY 3.0). |
 | 009    | **«Cuentos de casa»**: seis cuentos de respaldo en español e inglés que se llenan con los gustos y las palabras meta que escribe el adulto; pedidos y lotes de cuentos nuevos por la bandeja de IA (fuera de la app, solo con aprobación del adulto de cada cuento); narración con la voz del adulto grabada en el dispositivo o «lo leo yo». **«Hoy»** suma una actividad de contacto visual al día junto a la cápsula (dos dominios). Las parejas de sonidos del inglés pasan de 9 a 12. |
+| 010    | **«Lejos de la pantalla»**: **Pasar a la otra casa** (un archivo cifrado con una frase lleva el objetivo, lo practicado y lo logrado a otro aparato, sin internet, mostrando antes qué cambia); **el mapa de las vocales**, quinto juego, **experimental** («quizás suena como…», nunca un veredicto); **Hojas para imprimir** (tarjetas con dibujo y tablero de turnos, con el crédito de ARASAAC en cada hoja y sin nombre ni edad). |
 <!-- s5:fin -->

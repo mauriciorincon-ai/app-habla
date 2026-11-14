@@ -36,5 +36,12 @@ export function construirSesion(
         rondas: metrica.rondas,
         participadas: metrica.participadas,
       };
+    case "vocales":
+      return {
+        juego: "vocales",
+        fecha,
+        zonas: Math.min(5, metrica.zonas),
+        cambios: metrica.cambios,
+      };
   }
 }

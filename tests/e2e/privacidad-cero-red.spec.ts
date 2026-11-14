@@ -6,7 +6,7 @@ const origen = () => new URL(test.info().project.use.baseURL ?? "http://127.0.0.
 
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.
-// Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los TRES juegos.
+// Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los cuatro juegos que escuchan el micrófono.
 //
 // Doble candado:
 //   A) Ninguna petición cross-origin en toda la sesión (si algún día Sentry despertara con DSN,
@@ -21,6 +21,7 @@ const JUEGOS = [
   { ruta: "/jugar/globo", nombre: "el globo" },
   { ruta: "/jugar/cohete", nombre: "el cohete" },
   { ruta: "/jugar/palabras", nombre: "palabra↔objeto" },
+  { ruta: "/jugar/vocales", nombre: "el mapa de las vocales" },
 ] as const;
 
 for (const juego of JUEGOS) {

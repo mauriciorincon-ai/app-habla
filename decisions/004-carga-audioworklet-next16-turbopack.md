@@ -1,6 +1,8 @@
 # ADR 004 — Loading the AudioWorklet under Next 16 / Turbopack
 
 - **Status:** accepted
+- **Amended by:** ADR-021 (Sprint 010): the processor now imports one pure sibling module,
+  `formantes.js`, which is precached by the service worker.
 - **Sprint:** 001
 
 ## Context
@@ -27,7 +29,7 @@ Compile `src/worklets/*.ts` with a dedicated `tsconfig.worklet.json`
 (`lib: ES2022`, `types: []`, `outDir: public/worklets`) and load it with
 `audioWorklet.addModule("/worklets/rms-processor.js?v=1")`.
 
-- The processor is **import-free and self-contained**; worklet globals
+- The processor is **self-contained** (since Sprint 010 its only import is the pure `formantes.js`); worklet globals
   (`AudioWorkletProcessor`, `registerProcessor`, `sampleRate`, `currentTime`) are declared in
   `src/worklets/audio-worklet.d.ts`, so `strict` holds with no `any`.
 - `package.json` chains the step explicitly — `"dev"` and `"build"` run

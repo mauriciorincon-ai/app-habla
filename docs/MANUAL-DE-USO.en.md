@@ -69,10 +69,10 @@ activity. When you have done it, the app asks "Did you do today's activity?" and
 
 ### The voice games — "their voice moves the world"
 
-On Today there is a permanent card, **"Voice games"**. Open it and choose among **four games**. None asks the child
+On Today there is a permanent card, **"Voice games"**. Open it and choose among **five games** (the fifth is experimental). None asks the child
 for words: they respond to voice (or to taking part), not to vocabulary.
 
-**Three of them listen to the microphone** (balloon, rocket, and word and picture). Before any of those, the same
+**Four of them listen to the microphone** (balloon, rocket, word and picture, and the vowel map). Before any of those, the same
 three things always happen:
 
 1. **Your line first.** The app shows the line you will say. You lead the game; the child does not play alone
@@ -82,12 +82,12 @@ three things always happen:
    not mistake that noise for your child's voice. If it is very noisy, the app says so openly and you decide
    whether to go on or measure again.
 
-**The fourth, "word twins", uses no microphone** (see below): no permission and no quiet measurement.
+**"Word twins" uses no microphone** (see below): no permission and no quiet measurement.
 
 Tap **"We played"** whenever you like: there is no minimum time, no required goal, and never a game over. If you
 tap **"Exit"** inside a game, you return to your line screen (the microphone turns off right there) and **the game
 restarts completely**: when you go back in, the counters start from zero and nothing of the earlier session
-remains. From your line screen, **"← Games"** takes you back to the four.
+remains. From your line screen, **"← Games"** takes you back to the five.
 
 #### 1. The balloon — a voice that keeps going
 
@@ -169,7 +169,7 @@ hear?"_ line at the bottom. (This game practises Spanish words; see the Language
 - **"Next pair"** is yours to tap when you want to go on. You can repeat, touch the pictures again, or stay a
   while. At the top, _"Words you heard: N"_ keeps count for the session.
 
-This game is **different from the other three**:
+This game is **different from the other four**:
 
 - **It uses no microphone. It records and analyses nothing.** The app does not hear the word: **you are the one who
   hears it**, which is why the marking buttons are yours. It is shared play, pure and simple.
@@ -183,6 +183,22 @@ This game is **different from the other three**:
 
 If you recorded your voice (below), each picture has a **speaker button** so your child can hear the word in the
 family's voice before trying it.
+
+#### 5. The vowel map — ah, eh, ee, oh, oo (new · S10 · experimental)
+
+A game **still being tested**, and the screen says so ("Experimental · still testing"). Your child **stretches a
+vowel** (ahhh, ehhh, eeee, ohhh, oooo) and the **spot on the map** that sounds most like it lights up. Every spot has
+its **own letter, a shape with a name** (circle, triangle, diamond, square, star) **and a colour**: colour is never
+the only signal.
+
+- **Go first**, slowly, with a clearly shaped mouth. If they would rather just watch today, that is fine too.
+- **Always "maybe":** the app measures the **shape of the sound** and says "Maybe it sounds like…", with a margin of
+  error (especially with very high voices). **It never says a vowel was right or wrong**: you know, because you hear it.
+- **What counts at the end:** how many spots **sounded steadily** and how many times it **moved from one to
+  another**. With no voice, the map just waits and invents nothing.
+- **What is kept:** only those two numbers, for the path. **Not the voice, not the Hz, not the vowel it thought it heard.**
+- It has **calm mode** (no counters) and **"Measure again"** like the others. The sound is analysed on the spot and
+  discarded.
 
 ### Your family's voice — record your voice for the games
 
@@ -221,9 +237,10 @@ from **Settings → "Your family's voice" → "Record my voice"** (or straight f
   recorded."_ The Studio is for the adult.
 - **Your child's voice is never recorded**, not even here. The games that listen to the microphone still save
   nothing of their voice (see Privacy).
-- **The voice bank lives ONLY on this device.** It is not uploaded to the internet, not copied to any server, and
-  not kept in the project's repository. If you change device, the recordings **do not travel**: you record them
-  again where they will be used.
+- **The voice bank lives on this device.** It is not uploaded to the internet, not copied to any server, and not
+  kept in the project's repository. **It only leaves if you tick "Include my recorded voice" when making a "Take it
+  to the other home" file** (it is locked, and "Delete my data" does not delete files you already saved). Otherwise,
+  if you change device, the recordings are made again where they will be used.
 - You can delete **only the voice bank** (touching nothing else) with _"Delete only the voice bank"_, or delete
   everything from _"Delete my data"_.
 
@@ -408,10 +425,45 @@ your child looks at the word: saying it, copying it or pointing to it all count.
 - **Deleting:** **Settings → Delete my data** also deletes the imported stories and the recordings.
 - **What it does NOT do:** it does not judge or score, it does not cheer just to cheer, and it sends nothing anywhere.
 
+### Take it to the other home — carry progress to another device (new · S10)
+
+If your child practices in **two homes**, each device keeps its own data and they cannot see each other. This feature
+carries what is here to the other home **in a file that you move yourself** (by message, cable or memory card): the
+app **does not go online** for this.
+
+- **Where:** **Settings → "Take it to the other home"**.
+- **Making the file:** type a **phrase of at least ten characters**, twice, and tap **"Make and download"**. The file
+  (`habla-otra-casa-<date>.habla`) is **locked with that phrase**. **The app does not keep it: if it is forgotten, the
+  file cannot be opened.**
+- **What it carries:** the goal of the week, what you have practiced and what you have achieved. **Your recorded voice
+  only if you tick the box.** It **never** carries your child's voice, the videos, the nickname or your settings.
+- **Opening one:** in the other home, **"Open a file from the other home"**: choose the file, type the phrase and tap
+  **"See what it brings"**. Before anything is written, the app **shows you what will change** (goal before → after,
+  games and activities that are added, recordings that come in). Only when you tap **"Yes, add it"** is anything
+  written. With the wrong phrase or a file from elsewhere, **nothing comes in**.
+- **Nothing is deleted:** what the file brings **is added**; what the device already has stays. If a recording is in a
+  format that browser cannot play, the app tells you and **does not bring it in**.
+- **What it does NOT do:** it does not sync by itself, it uses no accounts, and it sends nothing anywhere. It is a
+  snapshot: do it again whenever you want to catch up.
+
+### Printable sheets — play away from the screen (new · S10)
+
+**Studio → "Printable sheets"** builds **picture cards** and a **turn board** ("My turn / Your turn") to play
+sitting together, with no screen.
+
+- **Where they come from:** the words and interests you typed in "Stories at home"; if some are missing, a base set
+  fills the gap. **Only the picture and its word are printed**: no name, no age, none of the family's own text.
+- **Language:** choose **Spanish or English** for the sheets.
+- **Printing:** tap **"Print"** (or use the browser's print menu). You get A4 sheets; the app's controls are not printed.
+- **Credits:** **every sheet carries its own footer** with "Sheet n of N" and the **ARASAAC** credit (Sergio Palao,
+  Government of Aragón, Creative Commons BY-NC-SA licence, personal and non-commercial use).
+- **What it does NOT do:** it scores nothing and measures nothing; it is paper to play with.
+
 ### What the app measures and what it does NOT (important)
 
 - **It does measure:** whether there is voice (sound above the noise of the house), how long it is held, and, in
-  the rocket, whether the **pitch** of that voice goes up or down.
+  the rocket, whether the **pitch** of that voice goes up or down, and, in the vowel map (experimental), which
+  vowel the shape of the sound **resembles**, always as a "maybe".
 - **It does NOT measure:** which word was said, or whether it was said well. No system today assesses reliably the
   pronunciation of a very young child who is just starting to talk, so the app does not pretend to. In "Word and
   picture" the picture lights up with any sound. **That does not mean the word was right**, and the app will never
@@ -425,8 +477,8 @@ your child looks at the word: saying it, copying it or pointing to it all count.
 One tap, in the game or in Settings, and the screen drops to dusk colours: **no meter, no goal, and no automatic
 celebration**. The balloon does not stop: it **rises while the voice sounds and settles slowly in silence**, like a
 real balloon, with no race and no finish line. The rocket does the same: it floats with the voice, with no goal. It
-helps when your child is overstimulated or when a game with a goal is too much. It is available in all three voice
-games.
+helps when your child is overstimulated or when a game with a goal is too much. It is available in the voice games
+(balloon, rocket, word and picture and the vowel map).
 
 There is also a setting to **reduce animation** (and if your system already asks for less motion, the app follows
 it without you touching anything). With it on, the word balloons, the milestone confetti, and the rocket's sky
@@ -447,7 +499,7 @@ This is the most important promise of the app:
 
 - **Your child's voice is NEVER recorded, saved, or sent off the device.** The sound is analysed on the spot, inside
   the phone or tablet, to work out two numbers, how much energy there is and, in the rocket, how high the pitch is,
-  and it is discarded right away. **Pitch is also data about the voice and follows the same rule:** it is not
+  and it is discarded right away (the vowel map also works out the shape of the sound, also on the spot). **Pitch is also data about the voice and follows the same rule:** it is not
   saved, not sent, and not kept anywhere.
 - **No servers, no accounts, no cloud.** During play the app makes **no** request to the internet. Automated tests
   check this on every change to the code: if anyone tried to save or send audio, those tests would fail and the
@@ -459,7 +511,7 @@ This is the most important promise of the app:
   child's voice is never recorded.**
 - Switching the app's language sends nothing anywhere.
 - All that is kept on the device: the nickname (if you set one), the topics, your settings, which capsules you
-  completed, what you marked in "word twins", if you recorded them **your** voices, and, if you chose them, **the
+  completed, what you marked in "word twins", how many vowel-map spots sounded, if you recorded them **your** voices, and, if you chose them, **the
   family videos** (clips from your own gallery: the app never opens the camera and they never leave here). You can delete it all in
   **Settings → Delete my data**, or only the voice bank with **"Delete only the voice bank"**.
 
@@ -467,7 +519,7 @@ This is the most important promise of the app:
 
 **Does it help if my child does not talk yet?**
 Yes. Many capsules do not need your child to speak: they are things you do (modelling words, waiting in silence,
-handing back the full word). And in the three voice games any sound is enough: it moves the balloon, lifts the
+handing back the full word). And in the balloon, the rocket and word and picture any sound is enough: it moves the balloon, lifts the
 rocket, and lights up the picture. It does not have to be a word.
 
 **How much time a day?**
@@ -507,8 +559,9 @@ child's voice is delicate data that this app promised to **never** keep. Your vo
 your control: you record it, play it, switch it off, or delete it whenever you like.
 
 **Does the voice I record go anywhere?**
-No. It lives only on this device. If you lend the tablet to someone else or change device, those recordings do not
-travel with you; you record them again where they will be used.
+No. It lives on this device. It only leaves if you decide so, by ticking "Include my recorded voice" when making the
+locked "Take it to the other home" file. Otherwise, if you change device, those recordings do not travel with you;
+you record them again where they will be used.
 
 **Can I use the app in English?**
 Yes. Choose it in Settings → "Idioma / Language". The word and twin games, the weekly Goal and mom's documents are
@@ -535,3 +588,4 @@ and load only when you write a goal.
 | 007    | First English edition, written alongside the Spanish one: the Language section and every feature up to date (Today, the four games, the Studio, stages, the Path, the weekly Goal, the mother's document, calm mode, light or dark, privacy, FAQ). |
 | 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |
 | 009    | **"Stories at home"**: six fallback stories in English and Spanish, filled in with the interests and practice words the adult types; requests and batches of new stories through the AI tray (outside the app, with the adult approving each story); narration in the adult's recorded voice on the device or "I'll read it". **"Today"** adds one eye-contact activity a day next to the capsule (two domains). English sound pairs go from 9 to 12. |
+| 010    | **"Away from the screen"**: **Take it to the other home** (a file locked with a phrase carries the goal, what was practiced and what was achieved to another device, with no internet, showing first what will change); **the vowel map**, fifth game, **experimental** ("maybe it sounds like…", never a verdict); **Printable sheets** (picture cards and a turn board, with the ARASAAC credit on every sheet and no name or age). |

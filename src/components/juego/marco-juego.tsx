@@ -24,7 +24,7 @@ type Props = {
   sesion: Sesion;
   medidas: MedidasVivas;
   /** Identifica el juego en los tests y en los estilos. */
-  nombre: "globo" | "cohete" | "palabras";
+  nombre: "globo" | "cohete" | "palabras" | "vocales";
   onAlternarCalma: () => void;
   onReintentarMic: () => void;
   onRecalibrar: () => void;

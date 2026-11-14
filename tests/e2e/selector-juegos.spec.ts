@@ -2,9 +2,11 @@ import { expect, test } from "@playwright/test";
 
 // EL SELECTOR DE JUEGOS (COGA §C): opciones grandes, siempre las mismas y en el mismo orden.
 // La predictibilidad importa más que la variedad — y el niño elige por el dibujo, sin leer.
-// En el S3 pasa de 3 a 4 juegos (llega "palabras gemelas"): decisión de producto de la orden.
+// En el S3 pasa de 3 a 4 juegos (llega "palabras gemelas"): decisión de producto de la orden. En el S10
+// llega un quinto, EXPERIMENTAL (el mapa de las vocales), siempre al final: el orden de los cuatro
+// primeros no cambia — el niño encuentra su juego donde siempre estuvo.
 
-test("hay exactamente 4 juegos, grandes, y cada uno lleva al suyo", async ({
+test("hay exactamente 5 juegos, grandes, y cada uno lleva al suyo", async ({
   page,
 }) => {
   await page.goto("/jugar");
@@ -14,6 +16,7 @@ test("hay exactamente 4 juegos, grandes, y cada uno lleva al suyo", async ({
     "juego-cohete",
     "juego-palabras",
     "juego-gemelas",
+    "juego-vocales",
   ];
   for (const testid of juegos) {
     const tarjeta = page.getByTestId(testid);
@@ -23,8 +26,9 @@ test("hay exactamente 4 juegos, grandes, y cada uno lleva al suyo", async ({
     expect(caja?.height ?? 0).toBeGreaterThanOrEqual(64);
   }
 
-  // Cuatro y no más: el techo de carga cognitiva subió a 4 con gemelas (sigue siendo poco).
-  await expect(page.locator("[data-testid^='juego-']")).toHaveCount(4);
+  // Cinco y no más: el techo de carga cognitiva subió a 4 con gemelas y a 5 con el mapa experimental.
+  await expect(page.locator("[data-testid^='juego-']")).toHaveCount(5);
+  await expect(page.getByTestId("juego-vocales")).toContainText(/experimental/i);
 
   await page.getByTestId("juego-gemelas").click();
   await expect(page).toHaveURL(/\/jugar\/gemelas$/);

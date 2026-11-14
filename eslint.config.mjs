@@ -77,7 +77,7 @@ const eslintConfig = defineConfig([
   },
   {
     // El banco de voz y el resolver de audio: red PROHIBIDA, storage permitido.
-    files: ["src/lib/banco-voz/**/*.ts", "src/lib/audio/**/*.ts", "src/lib/videoteca/**/*.ts"],
+    files: ["src/lib/banco-voz/**/*.ts", "src/lib/audio/**/*.ts", "src/lib/videoteca/**/*.ts", "src/lib/otra-casa/**/*.ts"],
     rules: {
       "no-restricted-globals": [
         "error",

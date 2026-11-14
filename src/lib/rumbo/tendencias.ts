@@ -76,6 +76,9 @@ function resumirSemana(
         rondas += s.rondas;
         marcadas += s.participadas;
         break;
+      case "vocales":
+        // Experimental: cuenta como día de práctica y sesión de voz, pero no entra en ninguna cifra.
+        break;
     }
   }
 

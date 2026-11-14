@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s10 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s9 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s8 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s7 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
@@ -176,7 +177,8 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
-        <li><span class="origen o-s9">Nuevo · S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s10">Nuevo · S10</span> Nació en este sprint (pasar a la otra casa, el mapa de las vocales y las hojas para imprimir). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s9">S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s8">S8</span> Del Sprint 8 (practicar en inglés y los videos de la familia). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s7">S7</span> Nació en este sprint (la app en español y English). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s6">S6</span> Nació en este sprint (la pirámide en tu teléfono). <span class="suave">Nunca lo has probado.</span></li>
@@ -193,7 +195,7 @@
         <ol class="chica suave" style="margin:0; padding-left:1.2rem">
           <li>El oído de la app (bloque A) — tu tono real. <strong>~8 min</strong></li>
           <li>“Hoy” y la etapa del habla (B–C). <strong>~4 min</strong></li>
-          <li>Los cuatro juegos: globo, cohete, palabra&nbsp;y&nbsp;dibujo, gemelas (E–I). <strong>~12 min</strong></li>
+          <li>Los juegos: globo, cohete, palabra&nbsp;y&nbsp;dibujo, gemelas (E–I). <strong>~12 min</strong></li>
           <li>La voz de la familia: grabar y escuchar (J–L). <strong>~8 min</strong></li>
           <li><strong>El rumbo</strong> (bloque N). <strong>~4 min</strong></li>
           <li><strong>El objetivo de la semana</strong> (bloque O). <strong>~5 min</strong></li>
@@ -203,7 +205,8 @@
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
-        <button type="button" data-filtro="s9" aria-pressed="false">Solo lo nuevo del S9</button>
+        <button type="button" data-filtro="s10" aria-pressed="false">Solo lo nuevo del S10</button>
+        <button type="button" data-filtro="s9" aria-pressed="false">Solo lo del S9</button>
         <button type="button" data-filtro="s8" aria-pressed="false">Solo lo del S8</button>
         <button type="button" data-filtro="s7" aria-pressed="false">Solo lo del S7</button>
         <button type="button" data-filtro="s6" aria-pressed="false">Solo lo del S6</button>
@@ -375,11 +378,11 @@
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">D</span><h2>El selector de juegos</h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — se llega por la tarjeta “Los juegos de voz” de “Hoy” (eso es parte de la prueba)</p>
-    <p class="meta-bloque chica suave">~3 min. En el S1 la puerta llevaba directo al globo; ahora abre cuatro juegos. Esta pantalla la va a tocar <strong>él</strong>: tiene que ser la más predecible de la app.</p>
+    <p class="meta-bloque chica suave">~3 min. En el S1 la puerta llevaba directo al globo; ahora abre cinco juegos (el quinto, experimental). Esta pantalla la va a tocar <strong>él</strong>: tiene que ser la más predecible de la app.</p>
     <ul class="pasos">
       <li data-origen="mejora"><input type="checkbox" id="v2-d1"><div>
         <label for="v2-d1">Desde “Hoy” → tarjeta <strong>“Los juegos de voz”</strong>. Mira también <strong>arriba del todo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Aparecen <strong>exactamente 4</strong> tarjetas: el globo, el cohete, palabra y dibujo, y <strong>palabras gemelas</strong> (la nueva). Cada una con su dibujo grande. Arriba, el mismo chip <strong>“← Hoy”</strong> de Rumbo, Objetivo y Ajustes (mejora del gate S4: antes esta pantalla lo tenía como enlace suelto al pie).</p>
+        <p class="esperar"><span class="et">Esperado</span> Aparecen <strong>exactamente 5</strong> tarjetas: el globo, el cohete, palabra y dibujo, palabras gemelas y, <strong>al final, el mapa de las vocales</strong>, marcado <strong>«experimental»</strong> con texto. Cada una con su dibujo grande. Arriba, el mismo chip <strong>“← Hoy”</strong> de Rumbo, Objetivo y Ajustes (mejora del gate S4: antes esta pantalla lo tenía como enlace suelto al pie).</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-d2"><div>
         <label for="v2-d2">Lee lo que dice cada tarjeta debajo del nombre. <span class="origen o-s2">S2</span></label>
@@ -549,7 +552,7 @@
       </div></li>
       <li data-origen="s4"><input type="checkbox" id="v4-g9"><div>
         <label for="v4-g9">Enciende un dibujo, toca <strong>“Salir”</strong> (arriba a la izquierda) y vuelve a entrar con <strong>“Estamos listos”</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <strong>No queda rastro de la sesión pasada</strong> (tu regla del gate: “Salir” reinicia por completo): al encender el primer dibujo, el contador dice <strong>“Dibujos encendidos con su voz: 1”</strong> — no 2, no lo que llevaras antes. Los juicios tuyos también arrancan de cero. Vale para los cuatro juegos.</p>
+        <p class="esperar"><span class="et">Esperado</span> <strong>No queda rastro de la sesión pasada</strong> (tu regla del gate: “Salir” reinicia por completo): al encender el primer dibujo, el contador dice <strong>“Dibujos encendidos con su voz: 1”</strong> — no 2, no lo que llevaras antes. Los juicios tuyos también arrancan de cero. Vale para los cinco juegos.</p>
         <p class="mal"><span class="et">Mal</span> El contador sigue sumando lo de antes de salir (era el defecto que cazaste en este gate).</p>
       </div></li>
     </ul>
@@ -570,8 +573,8 @@
         <p class="esperar"><span class="et">Esperado</span> Responden al toque y <strong>quedan guardados</strong> tras recargar.</p>
       </div></li>
       <li data-origen="s2"><input type="checkbox" id="v2-h2"><div>
-        <label for="v2-h2">El <strong>modo calma</strong> ya no es solo del globo: compruébalo en <strong>los tres juegos</strong>. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> En los tres: paleta de atardecer, sin medidor ni meta, sin contadores — y el personaje <strong>sigue respondiendo a la voz</strong>.</p>
+        <label for="v2-h2">El <strong>modo calma</strong> ya no es solo del globo: compruébalo en <strong>los cuatro juegos de voz</strong> (globo, cohete, palabra y dibujo y el mapa de las vocales). <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> En los cuatro: paleta de atardecer, sin medidor ni meta, sin contadores — y el personaje <strong>sigue respondiendo a la voz</strong>.</p>
       </div></li>
       <li data-origen="s1"><input type="checkbox" id="v2-h3"><div>
         <label for="v2-h3"><strong>“Apodo y temas”</strong>: mira los actuales, cámbialos, guarda, y vuelve a “Hoy”. <span class="origen o-s1">S1</span></label>
@@ -900,6 +903,47 @@
     </ul>
   </section>
 <!-- s6:fin -->
+
+<!-- s10:inicio -->
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">R</span><h2>Lejos de la pantalla <span class="chica suave">(S10 — la otra casa, las vocales, el papel)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
+    <p class="meta-bloque chica suave">~12 min. Tres cosas nuevas. Para la primera necesitas <strong>dos navegadores o dos perfiles</strong> (la «otra casa»); para el mapa de las vocales, micrófono (con el kit de prueba o tu voz). <strong>Nada de esto cambia lo que ya probaste.</strong></p>
+    <ul class="pasos">
+      <li data-origen="s10"><input type="checkbox" id="v10-r1"><div>
+        <label for="v10-r1">En <strong>Ajustes → “Pasar a la otra casa”</strong>, escribe una frase de <strong>menos de diez letras</strong> y toca <strong>“Crear y descargar”</strong>. Luego una de diez o más, escrita <strong>dos veces distinta</strong>. Por último, igual las dos y descarga. <span class="origen o-s10">Nuevo · S10</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La corta dice que necesita <strong>al menos diez letras</strong>; las dos distintas dicen que <strong>no son iguales</strong>; con las dos iguales baja un archivo <code>habla-otra-casa-….habla</code> que, abierto con un editor de texto, <strong>no deja leer nada</strong> (solo versión y datos de cifrado). La pantalla avisa que <strong>si se olvida la frase, el archivo no se abre</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Acepta una frase corta · el archivo se lee en claro · no avisa qué pasa si olvidas la frase.</p>
+      </div></li>
+      <li data-origen="s10"><input type="checkbox" id="v10-r2"><div>
+        <label for="v10-r2">En el <strong>otro navegador o perfil</strong>, <strong>Ajustes → “Abrir un archivo de la otra casa”</strong>: elige el archivo, escribe <strong>una frase equivocada</strong> y toca <strong>“Ver qué trae”</strong>. Luego la buena. <span class="origen o-s10">Nuevo · S10</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Con la equivocada: <strong>“La frase no abre este archivo. No se cambió nada.”</strong> Con la buena: aparece <strong>“Esto es lo que cambia aquí”</strong> (objetivo antes → después, juegos y actividades que se suman) y <strong>“Nada de este aparato se borra”</strong>. Hasta ahora <strong>no se escribió nada</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> La frase equivocada deja pasar algo · se cambia algo antes de que toques confirmar · no se ve qué cambia.</p>
+      </div></li>
+      <li data-origen="s10"><input type="checkbox" id="v10-r3"><div>
+        <label for="v10-r3">Toca <strong>“Sí, sumarlo”</strong> y mira el <strong>Rumbo</strong> y el <strong>Objetivo</strong> de ese aparato. <span class="origen o-s10">Nuevo · S10</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La página se recarga con <strong>“Listo: ya está en este aparato”</strong>; el objetivo y lo practicado de la otra casa están ahí, <strong>y lo que ese aparato ya tenía sigue</strong>. <strong>No aparece el apodo</strong> ni la voz del niño: no viajan. <span class="suave">Es tu juicio: ¿lo que llegó es lo que esperabas llevar?</span></p>
+        <p class="mal"><span class="et">Mal</span> Se borra algo de lo que había · llega el apodo, un video o algo del niño · la misma sesión se cuenta dos veces al devolver el archivo.</p>
+      </div></li>
+      <li data-origen="s10"><input type="checkbox" id="v10-r4"><div>
+        <label for="v10-r4">Desde <strong>Hoy → “Los juegos de voz”</strong> abre <strong>el mapa de las vocales</strong> (la quinta tarjeta). Lee la pantalla de tu guion antes de empezar. <span class="origen o-s10">Nuevo · S10</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Dice <strong>«Experimental · en prueba»</strong> en texto, explica que <strong>adivina con margen de error</strong> y que <strong>nada de lo que diga se graba ni sale</strong>, y trae <strong>tu línea primero</strong>. No hay tiempo ni puntaje.</p>
+        <p class="mal"><span class="et">Mal</span> No dice que es experimental · promete acertar · empieza sin tu línea.</p>
+      </div></li>
+      <li data-origen="s10"><input type="checkbox" id="v10-r5"><div>
+        <label for="v10-r5">Entra al juego y estira <strong>aaaa, eeee, iiii, oooo, uuuu</strong>, una por una y luego de una a otra. Toca <strong>“Ya jugamos”</strong>. <span class="origen o-s10">Nuevo · S10</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Se enciende una zona con <strong>letra, forma con nombre y color</strong> y dice <strong>«Quizás suena como…»</strong>, nunca «bien» ni «mal». Con tu voz de adulto suele acertar; con voces agudas <strong>se puede equivocar</strong>. La celebración final cuenta <strong>zonas que sonaron y cambios</strong>, y dice que <strong>quien sabe si la vocal salió bien eres tú</strong>. <span class="suave">Es tu juicio: ¿sirve la idea? El resultado del spike lo decides tú.</span></p>
+        <p class="mal"><span class="et">Mal</span> Dice «¡muy bien!» o «correcta» · la zona se distingue solo por color · se enciende con silencio · se queda con la última vocal sin voz.</p>
+      </div></li>
+      <li data-origen="s10"><input type="checkbox" id="v10-r6"><div>
+        <label for="v10-r6">Abre <strong>Estudio → “Hojas para imprimir”</strong>, elige <strong>Español</strong> y luego <strong>Inglés</strong>, y toca <strong>“Imprimir”</strong> (la vista previa basta). <span class="origen o-s10">Nuevo · S10</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Hay <strong>tarjetas con dibujo y su palabra</strong> y un <strong>tablero «Mi turno / Tu turno»</strong>. En la vista de impresión <strong>desaparecen los botones</strong> y <strong>cada hoja trae al pie</strong> “Hoja n de N” y el crédito de <strong>ARASAAC</strong>. <strong>Ninguna hoja lleva nombre ni edad</strong>, ni lo que escribiste en «Cuentos de casa».</p>
+        <p class="mal"><span class="et">Mal</span> Una hoja sin crédito · aparece el apodo, una edad o un gusto con nombre propio · se imprimen los botones.</p>
+      </div></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> si la frase y la pantalla de «qué cambia» se entienden sin ayuda · si el mapa de las vocales te sirve o lo descartas (tu decisión, con nombre) · si las hojas se pueden usar tal cual en tu casa.</p></div>
+  </section>
+<!-- s10:fin -->
 
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
