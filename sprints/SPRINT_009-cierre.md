@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-12
 closed: 2026-11-13
 branch: sprint-009/cuentos-de-casa
-pr: PR_N
+pr: 20
 ---
 
 # Sprint 009 «Cuentos de casa» — cierre ejecutivo
