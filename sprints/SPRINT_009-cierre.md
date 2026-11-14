@@ -11,7 +11,7 @@ pr: 20
 # Sprint 009 «Cuentos de casa» — cierre ejecutivo
 
 - **Objetivo / resultado:** cuentos hechos para él (biblioteca `{es,en}` + lotes por la bandeja de IA con aprobación del adulto, narración con su voz o «leer yo»), contacto visual en «Hoy» y deuda del S8 pagada. **Completo.** Las 17 del MVP quedan construidas.
-- **Tiempo:** estimado 3,75 h · real (`node scripts/horas-sprint.mjs`, 12 commits, 2 sesiones): **1,8 h activas** (F1 0,6 · F2 0,6 · F3 0,6; este cierre suma un commit) · diferencia **−1,95 h**; ninguna fase pasó el +50 %.
+- **Tiempo:** estimado 3,75 h · real (`node scripts/horas-sprint.mjs`, 15 commits, 2 sesiones): **2,3 h activas** (F1 0,6 · F2 0,6 · F3 ≈1,1, con la auditoría y el arreglo de la CI) · diferencia **−1,45 h**; ninguna fase pasó el +50 %.
 - **Modelo por fase:** F1 Sonnet 5.5 · F2 Opus 5.5 (reglas 1 y 2-bis) · F3 Sonnet 5.5; auditor Sonnet 5.5 high. Sin desvío. **Relevos: 0.**
 - **Tokens:** 3 subagentes: Explore (Haiku) F1 ≈144 k, Explore (Haiku) F2 ≈93 k, auditor Sonnet ≈159 k. `/compact` pedidos y hechos: 2 (F1→F2, F2→F3), más `/model` por fase.
 - **Entregables:** ADR-019 · `content/cuentos.ts` (6 cuentos) · `src/lib/{cuentos,bandeja}` con `CONTRATO.lock` y carnadas C01–C06 · skill `/bandeja` · `/estudio/cuentos` y `/cuentos` · «Hoy» con dos dominios · pares EN 9→12 · manual ES/EN, guía «Nuevo · S9», brochure 26 y BLUEPRINT. `privado/` ignorado y con test.
