@@ -1,0 +1,42 @@
+[
+ {
+  "archivo": "duck.wav",
+  "palabra": "duck"
+ },
+ {
+  "archivo": "train.wav",
+  "palabra": "train"
+ },
+ {
+  "archivo": "fish.wav",
+  "palabra": "fish"
+ },
+ {
+  "archivo": "dog.wav",
+  "palabra": "dog"
+ },
+ {
+  "archivo": "sun.wav",
+  "palabra": "sun"
+ },
+ {
+  "archivo": "moon.wav",
+  "palabra": "moon"
+ },
+ {
+  "archivo": "water.wav",
+  "palabra": "water"
+ },
+ {
+  "archivo": "car.wav",
+  "palabra": "car"
+ },
+ {
+  "archivo": "boat.wav",
+  "palabra": "boat"
+ },
+ {
+  "archivo": "cat.wav",
+  "palabra": "cat"
+ }
+]
