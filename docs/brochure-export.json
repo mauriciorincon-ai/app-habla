@@ -86,7 +86,7 @@
           {
             "id": "07",
             "nombre": "Palabras gemelas",
-            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego no usa el micrófono: quien escucha eres tú.",
+            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego, por defecto, no usa el micrófono: quien escucha eres tú.",
             "seccion_manual": "Los juegos de voz § 4"
           },
           {
@@ -294,20 +294,20 @@
       "valor": 15,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (16 en total) menos /spike/audio, que es el banco de pruebas del motor de voz y no una pantalla del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-13 sobre la rama del S10."
+      "detalle": "Archivos page.tsx bajo src/app/ (17 en total) menos /spike/audio y /spike/reconocer, que son bancos de prueba del motor de voz y del reconocedor y no pantallas del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-14 sobre la rama del S11."
     },
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 775,
+      "valor": 822,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura, --maxWorkers=2) el 2026-11-13 sobre la rama del S10: 38 archivos, 775 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 41 archivos, 822 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 257,
+      "valor": 271,
       "unidad": "pruebas",
       "fuente": "medido",
       "detalle": "Salida de `pnpm test:e2e` (Playwright, --workers=1, servidor de desarrollo local) el 2026-11-13 sobre la rama del S10: 257 pruebas en verde en sus cuatro proyectos (móvil, escritorio, escritorio con voz que canta y escritorio con vocales), con micrófono falso: un WAV sintético inyectado como dispositivo de captura."
@@ -315,10 +315,10 @@
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 94.57,
+      "valor": 94.95,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-13 sobre la rama del S10: 94,57 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,95 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -347,10 +347,10 @@
     {
       "clave": "dependencias_runtime",
       "etiqueta": "Dependencias en tiempo de ejecución",
-      "valor": 6,
+      "valor": 7,
       "unidad": "paquetes",
       "fuente": "medido",
-      "detalle": "next, react, react-dom, zod, pino y @sentry/nextjs — este último INERTE, sin DSN configurado, y limitado por diseño a metadatos (tipo de evento y conteos): jamás audio ni contenido. Ninguna es un SDK de IA: la app no usa IA en absoluto."
+      "detalle": "next, react, react-dom, zod, pino, @sentry/nextjs y @lichess-org/vosk-browser (el motor del reconocedor opcional, Apache-2.0, versión exacta, que corre en un Worker del aparato y sin red). @sentry/nextjs es INERTE, sin DSN, y limitado por diseño a metadatos: jamás audio ni contenido. Ninguna es un SDK de proveedor de IA generativa."
     },
     {
       "clave": "llamadas_de_red",
@@ -387,10 +387,10 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 16,
+      "valor": 23,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-10-27 sobre 6c4d113."
+      "detalle": "Archivos de decisions/ el 2026-11-14 sobre la rama del S11 (hasta el ADR-023)."
     }
   ],
   "stack": [

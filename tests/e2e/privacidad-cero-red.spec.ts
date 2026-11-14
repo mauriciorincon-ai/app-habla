@@ -88,7 +88,10 @@ for (const juego of JUEGOS) {
     page.removeAllListeners("request");
 
     const soloPictogramasLocales = peticionesDuranteElJuego.filter(
-      (url) => !url.startsWith(`${origen()}/pictogramas/`),
+      (url) =>
+        !url.startsWith(`${origen()}/pictogramas/`) &&
+        // The same static pictograms, served resized by the app's own image optimizer (same origin).
+        !url.startsWith(`${origen()}/_next/image?url=%2Fpictogramas%2F`),
     );
 
     expect(
