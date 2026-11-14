@@ -5,7 +5,8 @@
 > construcción del H-2; sustituye a la constitución v1 de 243 líneas (estampada desde kit v1.4.0 el 2026-07-11), cuyo texto íntegro queda en
 > `docs/REGLAS-ANEXO.md` § «Habla», junto a las reglas del kit en detalle; el anexo se lee solo cuando una regla se cita, nunca al abrir la sesión.
 > Las reglas duras de producto de Habla están aquí, completas; lo demás de la v1 (tesis, stack y workflow v1, reglas de desarrollo v1) vive en
-> ese anexo. Frase centinela de esta adopción: «su voz mueve el mundo, y no sale de aquí».
+> ese anexo. Frase centinela de esta adopción: «su voz mueve el mundo, y no sale de aquí». Enmienda del 2026-11-12 (S9): la videoteca
+> ya no figura como pendiente del H-2.
 
 ## Identidad y las dos casas (regla dura)
 
@@ -33,7 +34,7 @@ Numeración de la v1 conservada (el código y los ADR citan «regla dura 2», «
 ## Hito vigente: H-2 «Producto completo» (F0 2026-11-01; entra a la ola el 2026-11-11)
 
 - **Desde el S7.** El H-1 está cerrado y sellado (S4); el gate humano de Habla hasta cerrar el H-2 es UNO: el **ensayo general** del dueño (no se ofrece un gate al cerrar sprints). El S7 empieza adoptando este núcleo y su anexo (≈ 1 h).
-- **Sale cuando:** el inventario de la VISION v1.0.1 está al 100 % —las 17 del MVP (faltan **videoteca de la familia** y **cuentos hechos para él**) y las 4 del roadmap («¿dijo la palabra?» automático, tarjetas y tableros imprimibles, juegos de tono avanzados, convenciones con Nutri-Kids), cada una **construida o descartada por el dueño con su nombre** (descartar jamás es default ni lo propone el builder; las que la VISION condiciona a un spike se construyen hasta el spike y su resultado lo decide el dueño)— · **bilingüe ES/EN completo** (Habla nació solo en español, ADR-001: el H-2 lo paga, ADR nuevo) · el despliegue de Vercel como entorno igual al de producción · arquitectura al día · **ensayo general del dueño**: todos los flujos como cliente, con la guía abierta; lo no visto no cuenta.
+- **Sale cuando:** el inventario de la VISION v1.0.1 está al 100 % —las 17 del MVP (falta **cuentos hechos para él**; la videoteca llegó en el S8, ADR-018) y las 4 del roadmap («¿dijo la palabra?» automático, tarjetas y tableros imprimibles, juegos de tono avanzados, convenciones con Nutri-Kids), cada una **construida o descartada por el dueño con su nombre** (descartar jamás es default ni lo propone el builder; las que la VISION condiciona a un spike se construyen hasta el spike y su resultado lo decide el dueño)— · **bilingüe ES/EN completo** (Habla nació solo en español, ADR-001: el H-2 lo paga, ADR nuevo) · el despliegue de Vercel como entorno igual al de producción · arquitectura al día · **ensayo general del dueño**: todos los flujos como cliente, con la guía abierta; lo no visto no cuenta.
 - **Ninguna feature del H-2 afloja una regla dura.** Las que la rozan (videoteca y cámara, cuentos e IA, reconocimiento y voz del niño) se le plantean al dueño como mirada de DECISIÓN, con su ADR, antes de construir; jamás se resuelven en silencio.
 
 ## Workflow del sprint (5 pasos)

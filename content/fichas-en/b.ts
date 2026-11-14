@@ -112,7 +112,7 @@ export const FICHAS_EN_B: Record<string, FichaEn> = {
       "Change games rather than pushing harder: try rocking or lifting them instead. Do it only when they have nothing in their hands, and keep it shorter.",
   },
   "cosquillas-que-se-detienen": {
-    titulo: "Tickles and “Run, I’ll catch you” that pause just before",
+    titulo: "Tickles and “Run, I’ll catch you” that stop just before",
     tenALaMano: ["Nothing: tickles with their usual sound, or space to run."],
     haz: [
       "Do the full round twice, the same way: tickles with their sound, or two chases.",

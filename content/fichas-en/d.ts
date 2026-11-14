@@ -111,7 +111,7 @@ export const FICHAS_EN_D: Record<string, FichaEn> = {
       "Once per meal, and not every day.",
     ],
     tuLinea: "“You don't want it! All done.” and you take it away.",
-    esperaVer: "A clear “no” aimed at you, without getting to crying.",
+    esperaVer: "A clear “no” aimed at you, without it turning into crying.",
     funcionoSi:
       "they refuse with something you understand (a gesture and a look, or the word) and the thing is gone before they get upset.",
     siNoPasa:
@@ -245,7 +245,7 @@ export const FICHAS_EN_D: Record<string, FichaEn> = {
       "The second time, stop right before the best part (the “boom!,” the “round and round”), with your mouth open and a waiting face.",
       "Wait two or three seconds.",
       "When they look at you, make the gesture or a sound, keep singing.",
-      "If they don't fill the gap, sing it all the way through and go on: the gap has been planted.",
+      "If they don't fill the gap, sing it all the way through and go on: the gap is set up for next time.",
     ],
     tuLinea:
       "“The little chicks say…” (silence, waiting face) “…peep, peep, peep!”",
@@ -263,7 +263,7 @@ export const FICHAS_EN_D: Record<string, FichaEn> = {
     ],
     haz: [
       "When they feel something strong, come close and look at them.",
-      "Give it one word, clear, with your face: “Scared!,” “Giggles!,” “Mad!”",
+      "Give it one word, clear, with your face: “Scared!” “Giggles!” “Mad!”",
       "Go with your hug or your hand, without long explanations.",
       "If they make a sound, give it back with the word: “Aaah! Scared!”",
     ],
@@ -311,6 +311,6 @@ export const FICHAS_EN_D: Record<string, FichaEn> = {
     funcionoSi:
       "they freeze at “Stop!” before you do, or they take off at “Go!” while you keep still.",
     siNoPasa:
-      "Too many words, or they keep changing: keep only “Go!” and “Stop!”.",
+      "Too many words, or you keep changing them: keep only “Go!” and “Stop!”.",
   },
 };

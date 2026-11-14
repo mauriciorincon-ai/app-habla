@@ -154,7 +154,7 @@ test("cero red al grabar y reproducir en el estudio (banco 100 % local)", async 
 // Rumbo) y `objetivo` (texto del padre) a las del S1/S3; el candado de CONTENIDO sigue vetando
 // cualquier rastro de audio o de tono, sea cual sea la clave.
 const LISTA_BLANCA =
-  /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo)$/;
+  /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo|cuentos)$/;
 const RASTRO_DE_AUDIO = /audio|rms|pcm|wav|pitch|hz|blob:|data:audio/i;
 
 /** Foto del almacenamiento del navegador, para correr el candado en un momento dado. */

@@ -50,6 +50,23 @@ export const ajustes = {
       en: ": it's where this app does the most work, and where everything else grows from.",
     },
   },
+  nivelMirada: {
+    titulo: { es: "¿Cómo mira hoy?", en: "How does your child look at you today?" },
+    ayuda: {
+      es: "Elija el paso donde está ahora, por lo que ve en casa. La actividad de contacto visual de «Hoy» se ajusta a él. Cambiarlo no borra nada, y puede volver cuando quiera.",
+      en: "Pick the step you are at now, by what you see at home. The eye-contact activity on Today adjusts to it. Changing it erases nothing, and you can go back whenever you like.",
+    },
+    leyenda: { es: "Paso del contacto visual", en: "Eye-contact step" },
+    elegido: { es: "Elegido", en: "Selected" },
+    nombre: {
+      n1: { es: "Mira cuando le interesa, con quien confía", en: "Looks when interested, with someone they trust" },
+      n2: { es: "Anticipa y pide que siga", en: "Anticipates and asks for more" },
+      n3: { es: "Mira dentro del turno", en: "Looks within the turn" },
+      n4: { es: "Él arranca el juego", en: "Starts the game themself" },
+      n5: { es: "Con más personas", en: "With more people" },
+      n6: { es: "En más momentos del día", en: "At more moments of the day" },
+    },
+  },
   perfil: {
     titulo: { es: "Apodo y temas", en: "Nickname and topics" },
     aunNo: {

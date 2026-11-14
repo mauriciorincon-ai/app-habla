@@ -176,6 +176,13 @@ export const PARES_GEMELOS_EN: ParGemelo[] = [
     a: { palabra: "rock", archivo: "roca.png" }, b: { palabra: "sock", archivo: "sock.png" } },
   { id: "rain-train", etapaMinima: "palabras-sueltas", contraste: "the r and the tr at the start",
     a: { palabra: "rain", archivo: "rain.png" }, b: { palabra: "train", archivo: "tren.png" } },
+  // S9: tres pares más (9 → 12, el mismo tamaño que el lote del español); dibujos que ya viajan en el repo.
+  { id: "foot-boot", etapaMinima: "palabras-sueltas", contraste: "the f and the b at the start",
+    a: { palabra: "foot", archivo: "foot.png" }, b: { palabra: "boot", archivo: "bota.png" } },
+  { id: "shell-bell", etapaMinima: "palabras-sueltas", contraste: "the sh and the b at the start",
+    a: { palabra: "shell", archivo: "concha.png" }, b: { palabra: "bell", archivo: "campana.png" } },
+  { id: "horse-house", etapaMinima: "palabras-sueltas", contraste: "the or and the ou in the middle",
+    a: { palabra: "horse", archivo: "caballo.png" }, b: { palabra: "house", archivo: "casa.png" } },
 ];
 
 /** Los pares del idioma de la pantalla: en inglés se juega con los del inglés, no con los del español. */

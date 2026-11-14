@@ -14,6 +14,7 @@ import { alinear } from "@/lib/objetivo/alinear";
 import { leerObjetivo } from "@/lib/storage/local";
 import {
   catalogoGrabable,
+  esDeCuento,
   type CategoriaGrabable,
   type ItemGrabable,
 } from "@/lib/banco-voz/catalogo";
@@ -40,6 +41,7 @@ import { useIdioma, useT } from "@/lib/idioma/estado";
 import type { Texto } from "@/lib/idioma";
 import { estudio } from "@/lib/idioma/textos/estudio";
 import { videoteca } from "@/lib/idioma/textos/videoteca";
+import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { useGrabadora, type Captura } from "./use-grabadora";
 
 const NOMBRE_CATEGORIA: Record<ItemGrabable["categoria"], Texto> =
@@ -65,8 +67,9 @@ export function EstudioCliente() {
   useEffect(() => {
     // Si IndexedDB falla al abrir (modo privado viejo, storage roto), el estudio NO se queda en
     // esqueleto eterno: se muestra como banco vacío (auditoría S3, M-1).
+    // La narración de los cuentos (S9) vive en el mismo banco, pero se graba desde «Cuentos de casa».
     listarIds()
-      .then((ids) => setGrabados(new Set(ids)))
+      .then((ids) => setGrabados(new Set(ids.filter((id) => !esDeCuento(id)))))
       .catch(() => setGrabados(new Set()))
       .finally(() => setCargando(false));
   }, []);
@@ -252,6 +255,19 @@ function Gestion({
           data-testid="ir-a-videos"
         >
           {tx(videoteca.entrada.abrir)}
+        </Link>
+      </section>
+
+      <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
+        <h2 className="font-medium">{tx(cuentos.entrada.titulo)}</h2>
+        <p className="text-tinta-suave mt-2 text-sm">{tx(cuentos.entrada.texto)}</p>
+        <Link
+          href="/estudio/cuentos"
+          prefetch={false}
+          className="border-borde text-tinta mt-4 inline-flex min-h-12 items-center rounded-xl border px-6 font-medium"
+          data-testid="ir-a-cuentos"
+        >
+          {tx(cuentos.entrada.abrir)}
         </Link>
       </section>
     </div>

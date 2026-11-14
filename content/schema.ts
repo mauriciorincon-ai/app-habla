@@ -747,3 +747,95 @@ export const BibliotecaFichasSchema = z
         "Imitación, atención conjunta y juego son la prioridad: juntos llevan más fichas que los otros tres juntos.",
     },
   );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CUENTOS DE CASA (S9, ADR-019). Un cuento son 3 a 6 páginas cortas, cada una con su palabra meta:
+// palabras sueltas primero (regla 7). El mismo esquema sirve para la biblioteca de respaldo (con huecos
+// `{interes}` y `{palabra}` que se llenan en el aparato) y para los lotes de la bandeja (sin huecos).
+
+export const MIN_PAGINAS_CUENTO = 3;
+export const MAX_PAGINAS_CUENTO = 6;
+export const MAX_PALABRAS_PAGINA = 12;
+export const MAX_LARGO_PALABRA_META = 20;
+export const HUECOS_CUENTO = ["interes", "palabra"] as const;
+export type HuecoCuento = (typeof HUECOS_CUENTO)[number];
+
+const ID_KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/** Cuántas palabras tiene un texto (los huecos cuentan como una). */
+export const contarPalabras = (texto: string): number =>
+  texto.trim().split(/\s+/).filter(Boolean).length;
+
+/** Minúsculas y sin acentos, para comparar una palabra con el texto de su página. */
+const plano = (s: string): string =>
+  s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+/** ¿La palabra meta aparece en el texto como palabra entera? `{palabra}` cuenta como presente. */
+export function palabraEnTexto(palabra: string, texto: string): boolean {
+  if (palabra === "{palabra}") return texto.includes("{palabra}");
+  const p = plano(palabra);
+  return plano(texto)
+    .split(/[^a-z0-9ñ{}]+/)
+    .some((w) => w === p);
+}
+
+const caraPagina = (conHuecos: boolean) =>
+  z
+    .string()
+    .min(1)
+    .max(120)
+    .refine((s) => contarPalabras(s) <= MAX_PALABRAS_PAGINA, "pagina-larga")
+    .refine((s) => !/\d/.test(s), "con-cifras")
+    .refine(
+      (s) => (conHuecos ? !/\{(?!interes\}|palabra\})/.test(s) : !/[{}]/.test(s)),
+      "hueco-desconocido",
+    );
+
+const caraPalabra = (conHuecos: boolean) =>
+  z
+    .string()
+    .min(1)
+    .max(MAX_LARGO_PALABRA_META)
+    .refine(
+      (s) => (conHuecos && s === "{palabra}") || /^[\p{L}]+(['-][\p{L}]+)?$/u.test(s),
+      "palabra-no-suelta",
+    );
+
+const paginaCon = (conHuecos: boolean) =>
+  z
+    .object({
+      texto: z.object({ es: caraPagina(conHuecos), en: caraPagina(conHuecos) }),
+      palabra: z.object({ es: caraPalabra(conHuecos), en: caraPalabra(conHuecos) }),
+    })
+    .strict()
+    .refine(
+      (p) => palabraEnTexto(p.palabra.es, p.texto.es) && palabraEnTexto(p.palabra.en, p.texto.en),
+      "palabra-fuera-de-la-pagina",
+    );
+
+const cuentoCon = (conHuecos: boolean) =>
+  z
+    .object({
+      id: z.string().regex(ID_KEBAB).max(48),
+      titulo: z.object({
+        es: z.string().min(1).max(48).refine((s) => !/[{}\d]/.test(s), "titulo-raro"),
+        en: z.string().min(1).max(48).refine((s) => !/[{}\d]/.test(s), "titulo-raro"),
+      }),
+      paginas: z.array(paginaCon(conHuecos)).min(MIN_PAGINAS_CUENTO).max(MAX_PAGINAS_CUENTO),
+    })
+    .strict();
+
+/** Un cuento ya escrito, sin huecos: el que llega en un lote de la bandeja. */
+export const CuentoSchema = cuentoCon(false);
+export type Cuento = z.infer<typeof CuentoSchema>;
+
+/** Una plantilla de la biblioteca de respaldo: puede llevar `{interes}` y `{palabra}`, con su relleno por defecto. */
+export const PlantillaCuentoSchema = cuentoCon(true).extend({
+  porDefecto: z
+    .object({
+      interes: z.object({ es: z.string().min(1).max(24), en: z.string().min(1).max(24) }),
+      palabra: z.object({ es: caraPalabra(false), en: caraPalabra(false) }),
+    })
+    .strict(),
+});
+export type PlantillaCuento = z.infer<typeof PlantillaCuentoSchema>;

@@ -31,3 +31,6 @@ Thumbs.db
 *.m4v
 *.mkv
 *.3gp
+
+# Bandeja de IA (S9, ADR-019): pedidos y lotes de cuentos. Son de la familia: jamás se versionan.
+privado/

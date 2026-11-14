@@ -50,6 +50,28 @@ export const idConsigna = (clave: string, idioma: Idioma = "es"): string =>
   `consigna${SUFIJO[idioma]}:${clave}`;
 export const idCelebracion = (clave: string, idioma: Idioma = "es"): string =>
   `celebracion${SUFIJO[idioma]}:${clave}`;
+/**
+ * La narración de un cuento (S9, ADR-019): la voz del ADULTO leyendo la página `pagina` (desde 1).
+ * Vive en el mismo banco local (regla 2-bis) pero NO es parte del catálogo grabable: el lote guiado y
+ * la cobertura no la cuentan.
+ */
+export const idCuento = (
+  cuento: string,
+  pagina: number,
+  idioma: Idioma,
+  texto: string,
+): string => `cuento${SUFIJO[idioma]}:${cuento}:${pagina}:${huellaTexto(texto)}`;
+/** Huella corta del texto leído: si los gustos cambian el texto de una página, su grabación vieja deja de aplicar. */
+function huellaTexto(texto: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < texto.length; i++) {
+    h ^= texto.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16);
+}
+/** ¿Esta clave del banco es la narración de un cuento? */
+export const esDeCuento = (id: string): boolean => /^cuento(-en)?:/.test(id);
 
 /**
  * Consignas fijas de juego (el mismo texto siempre → grabable). Regla del remate S3: SOLO entra

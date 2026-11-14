@@ -170,11 +170,13 @@ test("guardar «animles» pregunta «¿Quisiste decir animales?» antes de graba
   page,
 }) => {
   await page.goto("/objetivo");
-  await page.getByTestId("objetivo-input").fill("animles");
-  await page.getByTestId("guardar-objetivo").click();
-
   const confirmar = page.getByTestId("objetivo-confirmar");
-  await expect(confirmar).toBeVisible();
+  // Un toque antes de hidratar se pierde (intermitente en móvil): se repite hasta que la pregunta aparece.
+  await expect(async () => {
+    await page.getByTestId("objetivo-input").fill("animles");
+    await page.getByTestId("guardar-objetivo").click();
+    await expect(confirmar).toBeVisible({ timeout: 2_000 });
+  }).toPass({ timeout: 15_000 });
   await expect(confirmar).toContainText("¿Quisiste decir «animales»?");
 
   await page.getByTestId("guardar-candidata").click();

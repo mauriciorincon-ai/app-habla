@@ -197,6 +197,56 @@ ALCANCE_GATE.push(
   "src/components/estudio/videoteca-cliente.tsx",
 );
 
+// S9 «cuentos de casa»: el resto del copy vigente (fuera de `sprints/`, que son bitácoras) quedó en 0 coincidencias
+// y entra al gate para que no vuelva a crecer.
+ALCANCE_GATE.push(
+  ".claude/skills/diseno-ui.md",
+  ".claude/skills/ia-embebida.md",
+  ".claude/skills/security-owasp.md",
+  "decisions/005-palabras-sueltas-primero.md",
+  "decisions/006-etapas-del-habla-como-motor.md",
+  "decisions/007-pitch-infantil-yin.md",
+  "decisions/009-el-padre-juzga-la-palabra.md",
+  "decisions/013-cohete-sin-fin.md",
+  "design-system.md",
+  "scripts/gen-iconos.mjs",
+  "src/app/spike/audio/page.tsx",
+  "src/components/ajustes/etapa-del-habla.tsx",
+  "src/components/iconos.tsx",
+  "src/components/juego/palabra-objeto.tsx",
+  "src/lib/rumbo/hitos.ts",
+  "src/lib/storage/local.ts",
+  "tests/e2e/rumbo.spec.ts",
+  "tests/unit/daily-coach.test.ts",
+  // S9: contacto visual en «Hoy» (el copy de los dos idiomas ya vive en src/lib/idioma, que se vigila entero).
+  "src/lib/coach/contacto-visual-hoy.ts",
+  "src/components/hoy/contacto-visual-hoy.tsx",
+  "src/components/ajustes/nivel-contacto-visual.tsx",
+  "tests/unit/contacto-visual-hoy.test.ts",
+  "tests/e2e/contacto-visual-hoy.spec.ts",
+  // S9: «Cuentos de casa» (ADR-019). La biblioteca, el lote de prueba y la skill de la bandeja se vigilan.
+  "content/cuentos.ts",
+  "decisions/019-stories-code-first.md",
+  "src/lib/cuentos/estado.ts",
+  "src/lib/bandeja/contrato.ts",
+  "src/lib/bandeja/cuentos-del-mes.ts",
+  "src/lib/bandeja/sensibilidad.ts",
+  "src/lib/bandeja/CONTRATO.lock",
+  "src/components/cuentos/cuentos-adulto.tsx",
+  "src/components/cuentos/cuentos-nino.tsx",
+  "src/components/cuentos/narrar-cuento.tsx",
+  "src/app/cuentos/page.tsx",
+  "src/app/estudio/cuentos/page.tsx",
+  ".claude/skills/bandeja.md",
+  "scripts/validar-lote-cuentos.mjs",
+  "tests/fixtures/lote-cuentos-prueba.json",
+  "tests/unit/bandeja.test.ts",
+  "tests/unit/cuentos.test.ts",
+  "tests/unit/privacidad-cuentos.test.ts",
+  "tests/unit/privado-ignorado.test.ts",
+  "tests/e2e/cuentos.spec.ts",
+);
+
 ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
 
 /** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
