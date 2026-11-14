@@ -29,11 +29,11 @@ export type Metrica =
   /**
    * Palabra↔objeto. Dos números con DOS DUEÑOS, y no se mezclan:
    *   - `veces`: dibujos que su voz activó (lo midió la app; cualquier vocalización cuenta, ADR 005).
-   *   - `reconocidas`: palabras que el PADRE dijo haber oído (lo juzgó él; la app no oye palabras).
+   *   - `reconocidas`: palabras que el PADRE dijo haber oído (lo juzgó él; la app no juzga palabras: a lo sumo sugiere un «quizás» al adulto, ADR-023).
    */
   | { tipo: "activaciones"; veces: number; reconocidas: number }
   /**
-   * Palabras gemelas (sin micrófono — el niño dice, el PADRE marca; ADR-009). No hay
+   * Palabras gemelas (sin micrófono por defecto — el niño dice, el PADRE marca; ADR-009; con el reconocedor, solo un «quizás»). No hay
    * "correcto/incorrecto" para el niño: solo se cuenta la participación.
    *   - `rondas`: pares que se jugaron.
    *   - `participadas`: rondas donde el padre marcó lo que oyó (el niño intentó una palabra).

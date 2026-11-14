@@ -5,6 +5,7 @@ import {
   leerConteo,
   MINIMO_PARA_DECIR,
   registrarRonda,
+  rondaGemelas,
 } from "@/lib/reconocer/conteo";
 import { remuestrear } from "@/lib/voice/escucha";
 import { borrarTodo, CLAVES } from "@/lib/storage/local";
@@ -52,5 +53,23 @@ describe("remuestrear (de la tasa del aparato a la del modelo)", () => {
     const y = remuestrear(x, 48000, 16000);
     expect(y.length).toBe(160);
     expect(y[80]).toBeCloseTo(240 / 480, 3);
+  });
+});
+
+describe("la ronda de gemelas en el 2×2 (S11)", () => {
+  it("nada pasó: no se cuenta", () => {
+    expect(rondaGemelas(null, null)).toBeNull();
+  });
+  it("el «quizás» era el lado que el adulto marcó: coincidió y juzgó que sí", () => {
+    expect(rondaGemelas("a", "a")).toEqual({ coincidio: true, adultoSi: true });
+  });
+  it("el «quizás» era un lado y el adulto marcó el OTRO: coincidió el aviso, el adulto no lo confirmó", () => {
+    expect(rondaGemelas("a", "b")).toEqual({ coincidio: true, adultoSi: false });
+  });
+  it("el «quizás» salió y el adulto no marcó nada", () => {
+    expect(rondaGemelas("b", null)).toEqual({ coincidio: true, adultoSi: false });
+  });
+  it("no hubo «quizás» pero el adulto marcó un lado", () => {
+    expect(rondaGemelas(null, "a")).toEqual({ coincidio: false, adultoSi: true });
   });
 });

@@ -28,7 +28,7 @@ type Props = {
   medidas: MedidasVivas;
   encendido: boolean;
   /**
-   * El PADRE oyó la palabra y lo dijo (no la app: la app no oye palabras — regla dura 3).
+   * El PADRE oyó la palabra y lo dijo (no la app: la app no juzga palabras: a lo sumo sugiere un «quizás» al adulto, ADR-023 — regla dura 3).
    * Solo llega true por un toque suyo; ningún camino automático la enciende.
    */
   reconocida: boolean;

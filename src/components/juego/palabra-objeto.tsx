@@ -176,7 +176,7 @@ function JuegoListo({
     idioma,
     activo: reconocedorActivo,
   });
-  const quizas = quizasDijo(rec.oido, palabraVisible);
+  const quizas = quizasDijo(rec.oidoDe(palabraVisible), palabraVisible);
   const { conectar, desconectar } = rec;
 
   const fase = actual.fase;
@@ -314,7 +314,7 @@ function JuegoListo({
               voz={voz}
             />
             {/* Optional soft glow for the child (ADR-023 §7): no text, no verdict, counts nothing. */}
-            {animacionReconocedor && quizas && !encendido ? (
+            {animacionReconocedor && quizas ? (
               <span
                 aria-hidden="true"
                 data-testid="halo-reconocedor"

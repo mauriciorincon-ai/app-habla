@@ -37,6 +37,7 @@ import { useReconocedor } from "./use-reconocedor";
 import { QuizasDijo } from "./quizas-dijo";
 import { MicSession } from "@/lib/voice/mic-session";
 import { quizasLado } from "@/lib/reconocer/coincidencia";
+import { rondaGemelas } from "@/lib/reconocer/conteo";
 import { reconocedor as txr } from "@/lib/idioma/textos/reconocedor";
 
 type Fase = "guion" | "jugando" | "celebracion";
@@ -94,11 +95,11 @@ function GemelasListo({
   // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
   // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
   const [festejo, setFestejo] = useState<"a" | "b" | null>(null);
-  // La voz de la familia modela cada palabra del par. Gemelas no tiene micrófono → sin guarda.
+  // La voz de la familia modela cada palabra del par. Gemelas no abre micrófono por sí sola (solo si el adulto toca «Escuchar», más abajo) → sin guarda de eco.
   const voz = useVozFamiliar();
 
   // The recognizer (S11): Gemelas opens a microphone ONLY when the adult taps «Listen», and closes it
-  // when the round ends or the screen is left. Nothing is stored; the adult's buttons still decide.
+  // when the game leaves the playing phase. Nothing is stored; the adult's buttons still decide.
   const rec = useReconocedor({
     juego: "gemelas",
     idioma,
@@ -119,18 +120,33 @@ function GemelasListo({
     },
     [],
   );
+  const [sinMic, setSinMic] = useState(false);
+  const abriendoRef = useRef(false);
   async function escuchar() {
-    if (micRef.current) return;
+    // One tap, one microphone: a second tap while the permission prompt is open does nothing.
+    if (micRef.current || abriendoRef.current) return;
+    abriendoRef.current = true;
+    setSinMic(false);
     const mic = new MicSession();
     try {
       await mic.start();
     } catch {
       mic.stop();
+      setSinMic(true);
+      abriendoRef.current = false;
       return;
     }
     micRef.current = mic;
+    abriendoRef.current = false;
     await rec.conectar(mic);
   }
+  // If the recognizer cannot start (no model, or it failed), the microphone it opened is closed again.
+  const estadoRec = rec.estado;
+  useEffect(() => {
+    if (estadoRec !== "sin-modelo" && estadoRec !== "error") return;
+    micRef.current?.stop();
+    micRef.current = null;
+  }, [estadoRec]);
 
   // Gemelas exige que el niño intente palabras → no hay pares en "sonidos-e-intentos".
   if (rondas.length === 0) {
@@ -159,15 +175,18 @@ function GemelasListo({
 
   const par = rondas[indice];
 
-  const ladoQuizas = quizasLado(rec.oido, {
-    a: par.a.palabra,
-    b: par.b.palabra,
-  });
+  // The better of the two hearings of THIS pair (a louder word of another pair does not hide them).
+  const oidoA = rec.oidoDe(par.a.palabra);
+  const oidoB = rec.oidoDe(par.b.palabra);
+  const ladoQuizas = quizasLado(
+    oidoA && (!oidoB || oidoA.conf >= oidoB.conf) ? oidoA : oidoB,
+    { a: par.a.palabra, b: par.b.palabra },
+  );
 
   function avanzar(marca: Marca) {
-    // The local 2×2: did the recognizer's «maybe» match what the adult judged? (only if something happened)
-    if (marca !== null || ladoQuizas !== null)
-      rec.contar(marca !== null ? ladoQuizas === marca : true, marca !== null);
+    // The local 2×2 (only if something happened): see rondaGemelas.
+    const ronda = rondaGemelas(ladoQuizas, marca);
+    if (ronda) rec.contar(ronda.coincidio, ronda.adultoSi);
     rec.nuevaRonda();
     const nuevas = [...marcas, marca];
     setMarcas(nuevas);
@@ -338,7 +357,7 @@ function GemelasListo({
           ) : null}
           <QuizasDijo
             palabra={ladoQuizas ? par[ladoQuizas].palabra : null}
-            estado={rec.estado}
+            estado={sinMic ? "error" : rec.estado}
           />
         </div>
       ) : null}

@@ -1,6 +1,6 @@
 // LA CELEBRACIÓN DE LA PALABRA: una bandada de globos que sube y se va.
 //
-// La dispara SIEMPRE el padre (ADR 009) — la app no oye palabras. Es distinta de la de "hubo voz"
+// La dispara SIEMPRE el padre (ADR 009) — la app no juzga palabras: a lo sumo sugiere un «quizás» al adulto, ADR-023. Es distinta de la de "hubo voz"
 // a propósito: decir la palabra merece más que un brillo.
 //
 // Diseñada para él (COGA, regla dura 6): sube UNA vez y termina (~1,6 s), no hay bucle, no hay

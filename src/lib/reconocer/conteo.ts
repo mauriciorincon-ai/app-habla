@@ -44,6 +44,22 @@ export function registrarRonda(coincidio: boolean, adultoSi: boolean): Conteo {
   return c;
 }
 
+/**
+ * The round of a twin pair as the 2×2 sees it (pure). «Matched» = the recognizer showed a «maybe» for a
+ * side; «judged yes» = the adult marked THAT side. A «maybe» for one side while the adult marked the
+ * other is a miss of the recognizer (matched · judged no), not an agreement. Null = nothing happened.
+ */
+export function rondaGemelas(
+  ladoQuizas: "a" | "b" | null,
+  marca: "a" | "b" | null,
+): { coincidio: boolean; adultoSi: boolean } | null {
+  if (ladoQuizas === null && marca === null) return null;
+  return {
+    coincidio: ladoQuizas !== null,
+    adultoSi: marca !== null && (ladoQuizas === null || ladoQuizas === marca),
+  };
+}
+
 /** How often the recognizer's «maybe» matched the adult's judgement, or null if it is too early. */
 export function acuerdo(c: Conteo): number | null {
   const t = totalConteo(c);
