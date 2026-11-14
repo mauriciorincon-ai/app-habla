@@ -39,8 +39,8 @@ export const estudio = {
       a: { es: "Estas grabaciones viven ", en: "These recordings live " },
       negrita1: { es: "SOLO en este dispositivo", en: "ONLY on this device" },
       b: {
-        es: ". No se suben a ningún lado ni salen de aquí. La voz que grabas es la ",
-        en: ". They are not uploaded anywhere and never leave here. The voice you record is ",
+        es: ". No se suben a ningún lado; solo salen en el archivo cifrado de «Pasar a la otra casa» si tú marcas esa casilla. La voz que grabas es la ",
+        en: ". They are not uploaded anywhere; they only leave in the locked file of “Take it to the other home” if you tick that box. The voice you record is ",
       },
       negrita2: { es: "tuya", en: "yours" },
       c: {

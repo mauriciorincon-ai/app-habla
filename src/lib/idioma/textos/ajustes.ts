@@ -135,8 +135,8 @@ export const ajustes = {
     deTotal: { es: "{grabados} de {total}", en: "{grabados} of {total}" },
     conTuVoz: { es: "con tu voz.", en: "with your voice." },
     soloAqui: {
-      es: "Vive solo en este dispositivo; la voz de tu hijo nunca se graba.",
-      en: "It lives only on this device; your child's voice is never recorded.",
+      es: "Vive en este dispositivo y solo sale en el archivo cifrado de «Pasar a la otra casa» si tú lo marcas; la voz de tu hijo nunca se graba.",
+      en: "It lives on this device and only leaves in the locked file of “Take it to the other home” if you tick it; your child's voice is never recorded.",
     },
     gestionar: { es: "Grabar o gestionar mi voz", en: "Record or manage my voice" },
     grabar: { es: "Grabar mi voz", en: "Record my voice" },
@@ -157,8 +157,8 @@ export const ajustes = {
     },
     fuerte: { es: "el banco de voz de la familia", en: "the family's voice bank" },
     despues: {
-      es: " de este dispositivo. No hay copia en ningún otro lado: cuando se borran, se van de verdad. (La voz de su hijo nunca se guardó, así que de él no hay nada que borrar.)",
-      en: " from this device. There is no copy anywhere else: once deleted, they're really gone. (Your child's voice was never saved, so there is nothing of theirs to delete.)",
+      es: " de este dispositivo. No se tocan los archivos de «Pasar a la otra casa» que usted ya guardó: bórrelos usted donde estén. (La voz de su hijo nunca se guardó, así que de él no hay nada que borrar.)",
+      en: " from this device. Files from “Take it to the other home” that you already saved are not touched: delete them yourself wherever they are. (Your child's voice was never saved, so there is nothing of theirs to delete.)",
     },
     si: { es: "Sí, borrar todo", en: "Yes, delete everything" },
     mejorNo: { es: "Mejor no", en: "Never mind" },
