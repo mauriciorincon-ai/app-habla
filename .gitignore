@@ -34,3 +34,7 @@ Thumbs.db
 
 # Bandeja de IA (S9, ADR-019): pedidos y lotes de cuentos. Son de la familia: jamás se versionan.
 privado/
+
+# Recognizer (S11, ADR-023): models and engine are fetched at build time with a pinned hash; never committed.
+public/modelos/*.zip
+public/vosk/
