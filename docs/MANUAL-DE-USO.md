@@ -52,7 +52,7 @@ En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija en
 juegos** (el quinto es experimental). Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
 
 **Cuatro de ellos escuchan el micrófono** (el globo, el cohete, "palabra y dibujo" y el mapa de las vocales). Antes de
-cualquiera de esos tres pasa siempre lo mismo:
+cualquiera de esos cuatro pasa siempre lo mismo:
 
 1. **Su guion primero.** La app le muestra la línea que usted va a decir. Usted dirige el juego;
    el niño no juega solo (no existe un "modo niño solo", y es a propósito).
@@ -154,7 +154,7 @@ contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga
 - **"Siguiente pareja"** lo toca usted cuando quieran seguir: pueden repetir, volver a tocar los
   dibujos o quedarse un rato. Arriba, _"Palabras que le oíste: N"_ va contando la sesión.
 
-Este juego es **distinto a los otros tres**:
+Este juego es **distinto a los otros cuatro**:
 
 - **No usa micrófono. No graba ni analiza nada.** La app no oye la palabra: **el que la oye es
   usted**, y por eso las teclas de marcar son suyas. Es co-uso puro.
@@ -224,9 +224,10 @@ pantalla del **Estudio**).
   graba."_ El Estudio es para el adulto.
 - **La voz de su hijo nunca se graba**, ni siquiera aquí. Los juegos que escuchan el micrófono
   siguen sin guardar nada de su voz (ver Privacidad).
-- **El banco de voz vive SOLO en este dispositivo.** No se sube a internet, no se copia a ningún
-  servidor y no queda en el repositorio del proyecto. Si cambia de aparato, las grabaciones **no
-  viajan**: se vuelven a grabar donde se van a usar.
+- **El banco de voz vive en este dispositivo.** No se sube a internet, no se copia a ningún
+  servidor y no queda en el repositorio del proyecto. **Solo sale si usted marca «Incluir mi voz
+  grabada» al crear un archivo de «Pasar a la otra casa»** (va cifrado, y «Borrar mis datos» no borra
+  los archivos que ya guardó). Si no, al cambiar de aparato las grabaciones se vuelven a grabar donde se van a usar.
 - Puede borrar **solo el banco de voz** (sin tocar lo demás) con _"Borrar solo el banco de voz"_,
   o borrarlo todo desde _"Borrar mis datos"_.
 
@@ -581,8 +582,9 @@ porque la voz de su hijo es un dato delicado que esta app se comprometió a **nu
 voz, en cambio, la controla usted: la graba, la escucha, la apaga o la borra cuando quiera.
 
 **¿La voz que grabo se sube a algún lado?**
-No. Vive solo en este dispositivo. Si le presta la tablet a otra persona o cambia de aparato, esas
-grabaciones no viajan con usted — se vuelven a grabar donde se van a usar.
+No. Vive en este dispositivo. Solo sale si usted lo decide, marcando «Incluir mi voz grabada» al
+crear el archivo cifrado de «Pasar a la otra casa». Si no, al cambiar de aparato las grabaciones no
+viajan con usted: se vuelven a grabar donde se van a usar.
 
 ## Créditos de los dibujos
 

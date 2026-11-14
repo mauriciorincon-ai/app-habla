@@ -2,6 +2,8 @@
 
 - **Status:** accepted — **REJECT the export for now** (2026-07-19, Sprint 004; the user validated
   this at the plan gate and may reopen it if real use demands a backup).
+- **Amended by:** ADR-020 (Sprint 010), **for one case only**: the bank may travel inside the encrypted
+  «Pasar a la otra casa» file when the adult ticks it. A standalone export or backup of the bank stays rejected.
 - **Sprint:** 004 "El rumbo" + cierre de ciclo H1
 - **Extends:** ADR-010 (family voice bank in IndexedDB, local-only). Bound by regla dura 2-bis
   (the bank lives ONLY in local storage — never network, never repo).
@@ -40,7 +42,8 @@ of this: the data lives only there.
 ## Consequences
 
 - The estudio keeps its current honest framing: "estas grabaciones viven SOLO en este dispositivo".
-  No export button, no import, no `.zip`.
+  No export button, no import, no `.zip` (as of Sprint 004; ADR-020 later added the encrypted
+  other-home file, which carries the bank only on the adult's explicit tick).
 - `docs/BLUEPRINT.html` names **the device** as the single point of failure and cites this ADR as
   the conscious reason there is no backup path yet.
 - The manual documents plainly: if you change devices or clear the browser, you re-record — it

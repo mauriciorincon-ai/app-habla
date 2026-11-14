@@ -169,7 +169,7 @@ hear?"_ line at the bottom. (This game practises Spanish words; see the Language
 - **"Next pair"** is yours to tap when you want to go on. You can repeat, touch the pictures again, or stay a
   while. At the top, _"Words you heard: N"_ keeps count for the session.
 
-This game is **different from the other three**:
+This game is **different from the other four**:
 
 - **It uses no microphone. It records and analyses nothing.** The app does not hear the word: **you are the one who
   hears it**, which is why the marking buttons are yours. It is shared play, pure and simple.
@@ -237,9 +237,10 @@ from **Settings → "Your family's voice" → "Record my voice"** (or straight f
   recorded."_ The Studio is for the adult.
 - **Your child's voice is never recorded**, not even here. The games that listen to the microphone still save
   nothing of their voice (see Privacy).
-- **The voice bank lives ONLY on this device.** It is not uploaded to the internet, not copied to any server, and
-  not kept in the project's repository. If you change device, the recordings **do not travel**: you record them
-  again where they will be used.
+- **The voice bank lives on this device.** It is not uploaded to the internet, not copied to any server, and not
+  kept in the project's repository. **It only leaves if you tick "Include my recorded voice" when making a "Take it
+  to the other home" file** (it is locked, and "Delete my data" does not delete files you already saved). Otherwise,
+  if you change device, the recordings are made again where they will be used.
 - You can delete **only the voice bank** (touching nothing else) with _"Delete only the voice bank"_, or delete
   everything from _"Delete my data"_.
 
@@ -558,8 +559,9 @@ child's voice is delicate data that this app promised to **never** keep. Your vo
 your control: you record it, play it, switch it off, or delete it whenever you like.
 
 **Does the voice I record go anywhere?**
-No. It lives only on this device. If you lend the tablet to someone else or change device, those recordings do not
-travel with you; you record them again where they will be used.
+No. It lives on this device. It only leaves if you decide so, by ticking "Include my recorded voice" when making the
+locked "Take it to the other home" file. Otherwise, if you change device, those recordings do not travel with you;
+you record them again where they will be used.
 
 **Can I use the app in English?**
 Yes. Choose it in Settings → "Idioma / Language". The word and twin games, the weekly Goal and mom's documents are

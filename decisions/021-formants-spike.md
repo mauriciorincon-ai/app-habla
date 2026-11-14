@@ -3,6 +3,7 @@
 - **Status:** accepted as a **spike** (2026-11-13, Sprint 010). The result is decided by the owner in the
   ensayo general: keep the game, keep it labeled experimental, or discard it by name. The builder does not
   decide it (constitution, H-2).
+- **Amends:** ADR-004 (the worklet is no longer import-free: it imports the pure `formantes.js`).
 - **Extends:** ADR-003 (audio matrix), ADR-007 (pitch by YIN). Bound by regla dura 2 (the child's voice
   never leaves memory) and regla dura 3 (the app only claims what its DSP measured).
 
