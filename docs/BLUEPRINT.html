@@ -64,7 +64,7 @@
 <body>
 <main>
   <h1>Hablemos San — Blueprint de infraestructura <span class="badge">as-built</span></h1>
-  <p class="meta">Ciclo: <strong>H1 (MVP personal)</strong> · Cerrado: <strong>2026-07-19</strong> · Sprints del ciclo: <strong>S1–S4</strong> (4, ≥3 ✓) · Última actualización: <strong>2026-07-19</strong></p>
+  <p class="meta">Ciclo: <strong>H1 (MVP personal)</strong> · Cerrado: <strong>2026-07-19</strong> · Sprints del ciclo: <strong>S1–S4</strong> (4, ≥3 ✓) · Última actualización: <strong>2026-11-14 (H2 · S11)</strong></p>
   <p class="nota"><strong>Entregable del CIERRE DE CICLO</strong> (método v1.9.x · kit v1.7.x): el mapa real de <strong>TODA</strong> la infraestructura que sostiene esta app, escrito con lo <strong>DESPLEGADO de verdad</strong>. Es vivo y acumulativo — el ciclo siguiente lo ACTUALIZA y declara sus cambios en el historial. La particularidad de esta app: <strong>no hay backend ni base de datos</strong>. Todo vive en el dispositivo del padre (local-first, ADR-002), y el audio del niño <strong>jamás se persiste</strong> (regla dura 2). El diagrama lo dice honesto.</p>
 
   <h2>Diagrama</h2>
@@ -90,7 +90,7 @@
     <text class="titulo-caja" x="120" y="356" text-anchor="middle">Almacenamiento local</text>
     <text class="detalle-caja" x="120" y="374" text-anchor="middle">localStorage: perfil · ajustes ·</text>
     <text class="detalle-caja" x="120" y="389" text-anchor="middle">progreso · gemelas · sesiones · objetivo</text>
-    <text class="detalle-caja" x="120" y="408" text-anchor="middle">IndexedDB: banco de voz (y cuentos) + videoteca</text>
+    <text class="detalle-caja" x="120" y="408" text-anchor="middle">IndexedDB: banco de voz (y cuentos) + videoteca · Cache API: modelo del reconocedor</text>
 
     <!-- Hosting: Vercel -->
     <rect class="caja caja-principal" x="330" y="140" width="250" height="116" rx="10"/>
@@ -109,7 +109,7 @@
     <rect class="caja" x="680" y="196" width="260" height="76" rx="10"/>
     <text class="titulo-caja" x="810" y="222" text-anchor="middle">Observabilidad · IA</text>
     <text class="detalle-caja" x="810" y="240" text-anchor="middle">Sentry INERTE (sin DSN) · Pino</text>
-    <text class="detalle-caja" x="810" y="257" text-anchor="middle">IA embebida: NINGUNA (5 sprints)</text>
+    <text class="detalle-caja" x="810" y="257" text-anchor="middle">IA generativa: NINGUNA · reconocedor local (S11)</text>
 
     <!-- GitHub / CI -->
     <rect class="caja" x="330" y="330" width="250" height="94" rx="10"/>
@@ -182,6 +182,7 @@
       <tr><td>2026-11-12</td><td>H2 · S8</td><td>Segunda base IndexedDB local, <code>habla-videoteca</code> (clips que la familia elige de su galería; sin cámara, sin red, fuera de cualquier copia; <code>borrarTodo</code> la elimina; ADR-018). Los diccionarios del Objetivo son dos (<code>palabras-es.ts</code>, <code>palabras-en.ts</code>, Google Books Ngram, CC BY 3.0). <code>/mirada</code> y el catálogo salen en dos idiomas. Sin servidor ni cuentas nuevos.</td></tr>
       <tr><td>2026-11-13</td><td>H2 · S9</td><td>«Cuentos de casa» y la bandeja de IA, sin servidor ni cuentas nuevos: los cuentos aprobados y los gustos viven en <code>localStorage</code> (<code>habla:v1:cuentos</code>) y la narración, en la IndexedDB del banco de voz (ids <code>cuento:…</code> y <code>cuento-en:…</code>); <code>borrarTodo</code> los elimina. La IA generativa corre <strong>fuera del runtime</strong>, solo desde Claude Code con <code>/bandeja</code> (contrato bandeja-ia v0.1.0 fijado en <code>CONTRATO.lock</code>; pedidos y lotes en <code>privado/</code>, ignorado por git); la app no hace ninguna petición de red para los cuentos y el adulto aprueba cada cuento (ADR-019). «Hoy» suma una actividad de contacto visual al día. Sin API de pago ni SDK.</td></tr>
       <tr><td>2026-11-13</td><td>H2 · S10</td><td>Sin servidor, cuentas ni dependencias nuevas. «Pasar a la otra casa» (ADR-020): archivo <code>.habla</code> cifrado en el navegador con Web Crypto (PBKDF2-SHA-256 y AES-GCM-256); la frase nunca se guarda ni viaja; el archivo lo mueve el adulto a mano. El AudioWorklet calcula además dos formantes (F1 y F2) por LPC en memoria para «el mapa de las vocales», juego experimental (ADR-021); no se guarda ni sale nada de la voz. Las hojas imprimibles son HTML con <code>@media print</code>, sin red. Convenciones con Nutri-Kids como propuesta v0.1.0 en <code>docs/convenciones-familia/</code> (ADR-022).</td></tr>
+      <tr><td>2026-11-14</td><td>H2 · S11</td><td>«¿Dijo la palabra?» (ADR-023), sin servidor ni cuentas nuevos. Un reconocedor local (<code>@lichess-org/vosk-browser</code> 0.0.3, Apache-2.0, versión exacta) corre en un Worker del aparato con gramática cerrada y <strong>sin red</strong> (preludio que anula <code>XMLHttpRequest</code>, <code>WebSocket</code> y compañía; <code>fetch</code> solo responde los blobs verificados). Los modelos pequeños es y en (≈ 40 MB cada uno) <strong>no entran al repo</strong>: <code>scripts/traer-modelos.mjs</code> los trae en el build con SHA-256 fijo a <code>public/modelos/</code> y el motor a <code>public/vosk/</code>. Apagado de fábrica; el adulto lo activa en Ajustes y la app lo baja de su propio origen a la Cache API (<code>habla-reconocedor-v1</code>); el Worker lo desempaca además en su IndexedDB (<code>/vosk</code>, solo el modelo, jamás audio). «Borrar el reconocedor» y «Borrar mis datos» vacían ambas. El audio viaja por un worklet (<code>pcm-tap</code>) a <code>src/lib/voice/escucha.ts</code>, que entrega a la página solo palabra y confianza. El conteo 2×2 son cuatro números en <code>localStorage</code> (<code>habla:v1:coincidencias</code>), fuera del archivo de la otra casa. Sigue sin IA generativa en el runtime.</td></tr>
     </tbody>
   </table>
   </div>
