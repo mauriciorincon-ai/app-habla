@@ -50,7 +50,7 @@
   · prefers-reduced-motion = experiencia COMPLETA: el rig se colapsa, todo llega en su
     pose final y ninguna escena pierde contenido (cada una declara su variante).
   · Lo cerrado sale del árbol de accesibilidad (visibility en la transición): sin eso el
-    lector de pantalla recita las 25 features mientras aria-expanded dice "cerrado".
+    lector de pantalla recita las 26 features mientras aria-expanded dice "cerrado".
   · Cero emojis (el design system los prohíbe): los iconos son los SVG de trazo de la app
     y los personajes llevan la paleta del niño sobre su escenario claro.
   · Cero datos del menor. Tono es-CO de "tú": le habla a ella.
@@ -246,7 +246,7 @@
   .tarjeta[data-abierta] .chevron { transform: rotate(180deg); }
 
   /* E04 · El telón (G2). `visibility` saca lo cerrado del árbol de accesibilidad — sin
-     él, un lector de pantalla recita las 25 features mientras aria-expanded dice
+     él, un lector de pantalla recita las 26 features mientras aria-expanded dice
      "cerrado" (el recorte por overflow engaña al ojo, no al lector: verificado por CDP).
      Se transiciona a propósito: con un extremo en `visible`, CSS la mantiene visible todo
      el colapso y la animación no se corta.

@@ -26,6 +26,7 @@ pr: 20
   - Seguridad y privacidad: sin hallazgos (sin secretos; cero enlaces; sin red en cuentos).
   - Frases caducadas: B-5 README «no hay IA en la app» — pagado · ef31163.
 - **Verificación:** unit 708/708 · lint y typecheck limpios · e2e cuentos + axe + cero red + contacto visual 74/74 (móvil y escritorio) · `pnpm build` ok · capturas leídas como imagen (Hoy, Ajustes, Cuentos adulto y niño; claro y oscuro; móvil y escritorio).
+- **CI:** el primer `e2e` falló 2 pruebas de `conoce.spec.ts` (el pie esperaba «25 funcionalidades»; el brochure ya dice 26): causa mía, test y comentarios actualizados — pagado · ver el último commit.
 - **Servidores:** `lsof` LISTEN en este repo: 0 (solo el test-server de Playwright de VS Code); planlang en 3200 es de otra app, no se tocó.
 - **Sensibilidad:** 0 coincidencias en lo que vigila el gate (30 en 8 bitácoras de `sprints/`, fuera del alcance).
 - **Deuda (solo lo imposible):** `CLAUDE.md:85` y `CLAUDE.md:130` dicen «cuando lleguen los cuentos por lotes»: es copia de la orden de la planeadora y no se edita aquí. Decisión del dueño: **pendiente de su respuesta (ver STOP, pregunta 1)**.
