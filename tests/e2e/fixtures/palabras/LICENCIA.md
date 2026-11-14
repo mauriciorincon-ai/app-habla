@@ -27,3 +27,7 @@ else changed); as adaptations of CC BY-SA 4.0 works they are shared under the sa
 | `en/car.wav` | car | Back ache / Back ache | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Back_ache-car.wav |
 | `en/boat.wav` | boat | Back ache / Back ache | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Back_ache-boat.wav |
 | `en/cat.wav` | cat | Adélaïde Calais WMFr / Adélaïde Calais WMFr | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Ad%C3%A9la%C3%AFde_Calais_WMFr-cat.wav | 
+
+## mic-es.wav
+
+`mic-es.wav` is `es/gato.wav` (same author and license as listed above) with 3 s of silence before and after, used as the fake microphone of `tests/e2e/reconocedor.spec.ts`.
