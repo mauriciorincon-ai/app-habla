@@ -10,6 +10,10 @@ const FIXTURES = path.resolve(__dirname, "fixtures/palabras");
 // Wordless controls: the synthetic sounds the other e2e use (scripts/gen-voz-sintetica.mjs and friends).
 const CONTROLES = ["voz-sintetica.wav", "barrido-tono.wav", "vocales-nino.wav"];
 
+// In CI the app runs as `next start`, where the service worker registers and would answer `/__medida/` itself,
+// bypassing page.route; the measurement must see the served recordings.
+test.use({ serviceWorkers: "block" });
+
 for (const idioma of ["es", "en"] as const) {
   test(`medida del reconocedor · ${idioma}`, async ({ page }) => {
     await page.route("**/__medida/**", (route) => {
