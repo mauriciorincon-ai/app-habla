@@ -1,5 +1,5 @@
 {
-  "fuente": "VISION v1.0.1 (21 funcionalidades: 17 del MVP + 4 del roadmap)",
+  "fuente": "VISION v1.0.2 (21 funcionalidades: 17 del MVP + 4 del roadmap)",
   "funcionalidades": [
     { "id": "voz-juegos", "grupo": "mvp", "es": "Juegos que la voz controla", "en": "Games the voice controls" },
     { "id": "sabe-cuando-hablo", "grupo": "mvp", "es": "La app sabe cuándo habló", "en": "The app knows when they spoke" },

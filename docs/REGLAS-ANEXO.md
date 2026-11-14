@@ -680,7 +680,7 @@ pantalla es utilería del juego compartido, nunca la niñera.
 - **Backend/BD/Auth:** **NINGUNO.** Todo client-side; sin server routes, sin cuentas, sin Supabase.
   Persistencia **local-first** (localStorage/IndexedDB) SOLO para: progreso de cápsulas, ajustes,
   apodo/temas del onboarding. **Nunca audio del niño.**
-- **IA embebida:** **NINGUNA en el Sprint 1.** Desde el sprint del "cuentero" (posterior): adapter
+- **IA embebida:** **NINGUNA IA GENERATIVA en el runtime** (desde el S11 hay además un reconocedor local opcional de palabra y confianza, ADR-023). Texto v1: **NINGUNA en el Sprint 1.** Desde el sprint del "cuentero" (posterior): adapter
   multi-proveedor **conmutable por env** (skill `ia-embebida`), **solo por LOTES** (generación de
   contenido offline, verificada + revisión parental antes de llegar al niño), ≤US$10/mes, con
   fallback a biblioteca de plantillas. **NO instalar SDK de ningún proveedor antes de su ADR.**
@@ -799,7 +799,7 @@ decisions/NNN-titulo.md   (ADRs de implementación)
 ## Estándares (los 6+1, gates en CI)
 
 Testing · CI/CD · Observabilidad · Seguridad · Performance (contra `perf-budget.json`) · UX+A11y ·
-**IA embebida responsable** (aplica solo cuando llegue el cuentero por lotes; **N/A en S1**).
+**IA embebida responsable** (aplica a los lotes de cuentos desde el S9 y al reconocedor local desde el S11; **N/A en S1**).
 Detalle canónico: `estandares/estandares.md` de la planeadora (read-only). Ítem rojo ⇒ deuda
 técnica explícita en el summary o el sprint no cierra.
 

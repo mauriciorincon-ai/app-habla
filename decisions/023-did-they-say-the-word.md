@@ -89,6 +89,9 @@ owner.
 - The VISION's last roadmap item is built up to its measurement; whether it stays on is the owner's call.
 - The device stores ≈ 40 MB per language twice (the zip in the cache, the unpacked model in IDBFS) while the
   recognizer is on; both go with one tap.
+- **Build dependency.** `pnpm build` and `pnpm dev` download the two model zips from the Vosk project's host
+  (`alphacephei.com`) and stop if a SHA-256 differs from `scripts/modelos.json`; the engine and wasm are only
+  _copied_ from `node_modules/@lichess-org/vosk-browser` into `public/vosk/`. At run time the app never talks to that host.
 - A false «maybe» is possible; it is worded as a suggestion and the adult's button decides.
 - Tests: `tests/unit/reconocer.test.ts` (grammar, matcher, guards, listener, prelude sandbox, hashes,
   download/verify/delete), `tests/unit/privacidad-voice.test.ts` (sealed folders + the new split), the

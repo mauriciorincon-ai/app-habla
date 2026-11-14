@@ -82,7 +82,7 @@ three things always happen:
    not mistake that noise for your child's voice. If it is very noisy, the app says so openly and you decide
    whether to go on or measure again.
 
-**"Word twins" uses no microphone** (see below): no permission and no quiet measurement.
+**"Word twins" uses no microphone by default** (see below): no permission and no quiet measurement. Only if you switch on "Did they say the word?" in Settings does a button of yours appear to listen.
 
 Tap **"We played"** whenever you like: there is no minimum time, no required goal, and never a game over. If you
 tap **"Exit"** inside a game, you return to your line screen (the microphone turns off right there) and **the game
@@ -171,8 +171,9 @@ hear?"_ line at the bottom. (This game practises Spanish words; see the Language
 
 This game is **different from the other four**:
 
-- **It uses no microphone. It records and analyses nothing.** The app does not hear the word: **you are the one who
-  hears it**, which is why the marking buttons are yours. It is shared play, pure and simple.
+- **By default it uses no microphone and records nothing.** The app does not decide which word was said: **you are the one who
+  hears it**, which is why the marking buttons are yours. If you switch on "Did they say the word?" in Settings, only when you
+  tap "Listen" does the device listen, storing nothing, and offer a "maybe". It is shared play, pure and simple.
 - **There is no right or wrong answer for your child.** Any attempt counts; if today they only want to look, tap
   **"Today we just look at this one"** and carry on without hurry.
 - The celebration is honest: it counts **how many rounds you played** and in how many **you** marked something. It

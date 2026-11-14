@@ -61,7 +61,7 @@ cualquiera de esos cuatro pasa siempre lo mismo:
    tele— para no confundir ese ruido con la voz del niño. Si hay mucho ruido, se lo dice de frente
    y ustedes deciden si siguen o vuelven a medir.
 
-**"Palabras gemelas" NO usa micrófono** (más abajo): no pide permiso ni mide silencio.
+**"Palabras gemelas" por defecto no usa micrófono** (más abajo): no pide permiso ni mide silencio. Solo si usted enciende «¿Dijo la palabra?» en Ajustes aparece un botón suyo para escuchar.
 
 Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obligatoria, y nunca hay
 "game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
@@ -157,8 +157,9 @@ contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga
 
 Este juego es **distinto a los otros cuatro**:
 
-- **No usa micrófono. No graba ni analiza nada.** La app no oye la palabra: **el que la oye es
-  usted**, y por eso las teclas de marcar son suyas. Es co-uso puro.
+- **Por defecto no usa micrófono y no graba nada.** La app no decide qué palabra se dijo: **el que la oye es
+  usted**, y por eso las teclas de marcar son suyas. Si enciende «¿Dijo la palabra?» en Ajustes, solo cuando usted
+  toca «Escuchar» el aparato mira, sin guardar nada, y le sugiere un «quizás». Es co-uso puro.
 - **No hay respuesta correcta ni incorrecta para el niño.** Cualquier intento vale; si hoy solo
   quiere mirar, toque **"Hoy solo miramos esta"** y sigan sin apuro.
 - La celebración es honesta: cuenta **cuántas rondas jugaron** y en cuántas **usted** marcó algo —
@@ -483,7 +484,7 @@ del dibujo. Se equivoca, y por eso **nunca** decide nada: usted sigue juzgando c
   aparato con un toque.
 - **Qué ve usted:** en **Palabra y dibujo**, cuando el aparato cree que oyó la palabra del dibujo, aparece una
   línea con un «?» y el texto **«Quizás dijo "gato"»**, junto al botón del juicio. Si no cree nada, **no
-  aparece nada**: jamás un «no». En **Palabras gemelas**, que no usa micrófono, aparece el botón **«Escuchar con el
+  aparece nada**: jamás un «no». En **Palabras gemelas**, que por defecto no usa micrófono, aparece el botón **«Escuchar con el
   reconocedor»**: solo cuando usted lo toca se abre el micrófono, y la línea dice cuál de las dos cree que oyó.
 - **Qué ve el niño:** nada, salvo que usted encienda aparte **«Mostrarle al niño una animación suave»**
   (apagada de fábrica): un halo suave alrededor del dibujo, **sin texto, sin veredicto, sin contar** y más
