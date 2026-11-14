@@ -145,11 +145,11 @@ the word deserves more than just any sound. (If you turned on "reduce animation"
 celebration still shows: the picture turns green and says so in words.)
 
 That button is **yours, not your child's**, and it is the only way to switch that celebration on: **the app does
-not recognise words and will not pretend to.** It is not that we cannot build it. Doing it well would mean sending
-your child's voice to a server (never), and doing it badly would mean telling them "no" when they **did** say the
-word. Automatic recognition makes mistakes most with children who are just learning to speak. You were there, and
-you know. At the end, the celebration says it plainly: _"And **you** heard 3 words. That is something you know,
-because you were there."_
+not decide for you that the word was said.** Doing that badly would mean telling them "no" when they **did** say
+the word: automatic recognition makes mistakes most with children who are just learning to speak. You were there, and
+you know. If you turn on the device's second opinion (the "Did they say the word?" section below), the app can add
+a line **for you only**, always as a "maybe"; your button stays the only thing that celebrates. At the end, the
+celebration says it plainly: _"And **you** heard 3 words. That is something you know, because you were there."_
 
 #### 4. Word twins — two pictures that sound almost the same
 
@@ -459,12 +459,39 @@ sitting together, with no screen.
   Government of Aragón, Creative Commons BY-NC-SA licence, personal and non-commercial use).
 - **What it does NOT do:** it scores nothing and measures nothing; it is paper to play with.
 
+### Did they say the word? — a second opinion, for you only (new · S11)
+
+It comes **switched off**. It is an extra ear, **inside the device**, that tries to guess whether the child said the
+picture's word. It gets things wrong, so it **never** decides anything: you keep judging with your button.
+
+- **Turn it on:** **Settings → "Did they say the word?"**. The app tells you it will download **about 40 MB** (the
+  model of the language you have active; the other language is downloaded separately, only if you ask) and does it
+  only when you tap the switch. If the download fails, the switch stays off. **"Delete the recognizer"** removes it
+  from the device with one tap.
+- **What you see:** in **Word and picture**, when the device thinks it heard the picture's word, a line appears
+  with a "?" and the text **"Maybe they said 'cat'"**, next to the judging button. If it thinks nothing, **nothing
+  appears**: never a "no". In **Word twins**, which does not use the microphone, a **"Listen with the recognizer"**
+  button appears: the microphone opens only when you tap it, and the line says which of the two it thinks it heard.
+- **What the child sees:** nothing, unless you switch on **"Show the child a soft animation"** separately (off by
+  default): a soft halo around the picture, **with no text, no verdict, not counted**, and fainter than the
+  celebration you trigger. With "reduce animation" only its transparency changes.
+- **How it is doing:** Settings shows **four numbers** kept only on this device (whether the recognizer matched or
+  not, and whether you said yes or no). With **fewer than 20 rounds** it says it cannot be told yet; with more, it
+  tells you how often they matched. **Whether it is useful is your call**, not the app's. Those four numbers do
+  **not** travel in the other-home file and are erased by "Delete my data".
+- **Your child's voice:** the recognizer runs on the device, receives the sound only in memory and returns just a
+  word and its confidence. **It is not recorded, not saved, and does not leave.** While playing there is no request to
+  the internet; the model is downloaded once, from the app itself, and only if you ask.
+- **An honest limit:** measured with adult voices it gets most right; with a child who is just starting it will
+  miss more, and sometimes it will think it heard a word where there was only a sound. That is why it is a hint,
+  not an answer.
+
 ### What the app measures and what it does NOT (important)
 
 - **It does measure:** whether there is voice (sound above the noise of the house), how long it is held, and, in
   the rocket, whether the **pitch** of that voice goes up or down, and, in the vowel map (experimental), which
   vowel the shape of the sound **resembles**, always as a "maybe".
-- **It does NOT measure:** which word was said, or whether it was said well. No system today assesses reliably the
+- **It does NOT measure with certainty:** which word was said, or whether it was said well (the optional second opinion only gives you a "maybe"). No system today assesses reliably the
   pronunciation of a very young child who is just starting to talk, so the app does not pretend to. In "Word and
   picture" the picture lights up with any sound. **That does not mean the word was right**, and the app will never
   say it was.
@@ -505,6 +532,7 @@ This is the most important promise of the app:
   check this on every change to the code: if anyone tried to save or send audio, those tests would fail and the
   change would not go in.
 - **The camera is never used.**
+- **The optional "Did they say the word?" second opinion (off by default)** listens inside the device, in memory, and only hands you a word and its confidence: the audio is not saved and does not leave. All it leaves behind is four count numbers, on this device.
 - **Your family's voice (YOURS) is saved, only here.** If you record your voice in the Studio, those recordings live
   on this device and **never leave it**: they go neither to the internet nor to the project. Automated tests check
   that recording and playing back your voice **triggers no network call at all**. And even with the Studio, **your
@@ -530,7 +558,7 @@ You stop, and that is all. There is no punishment, no streak to lose, and no def
 heavy, try calm mode, or do the day's activity without the screen.
 
 **Why does the app not tell me whether they said it well?**
-Because it would be a lie. Technology that recognises young children's voices makes too many mistakes, and an app
+Because it would be a lie. You can turn on an optional second opinion that tells **you** "maybe" (never the child), but it is not used as a verdict. Technology that recognises young children's voices makes too many mistakes, and an app
 that pretends to know would end up saying "good!" to a child who said nothing. We prefer to tell you only what we
 really measured.
 
@@ -589,3 +617,4 @@ and load only when you write a goal.
 | 008    | **"Practice in English too"**: Words, Twins and the Goal are practised in English (content and dictionary of their own); `/mirada` and the capsule catalog in Spanish and English with a switch; **Family videos** in the Studio (clips from your gallery, only on the device, no camera, deletable); the dictionary credit corrected (Google Books Ngram, CC BY 3.0). |
 | 009    | **"Stories at home"**: six fallback stories in English and Spanish, filled in with the interests and practice words the adult types; requests and batches of new stories through the AI tray (outside the app, with the adult approving each story); narration in the adult's recorded voice on the device or "I'll read it". **"Today"** adds one eye-contact activity a day next to the capsule (two domains). English sound pairs go from 9 to 12. |
 | 010    | **"Away from the screen"**: **Take it to the other home** (a file locked with a phrase carries the goal, what was practiced and what was achieved to another device, with no internet, showing first what will change); **the vowel map**, fifth game, **experimental** ("maybe it sounds like…", never a verdict); **Printable sheets** (picture cards and a turn board, with the ARASAAC credit on every sheet and no name or age). |
+| 011    | **"Did they say the word?"**: an on-device recognizer (off by default; about 40 MB that you download and can delete) that in Word and picture and Word twins shows **only you** a "maybe they said…"; an optional soft animation for the child (off, no text or verdict); four local match numbers, outside the other-home file. |
