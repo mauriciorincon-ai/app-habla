@@ -86,3 +86,29 @@ describe("regla dura 2: el audio del niño jamás se persiste ni sale del dispos
     },
   );
 });
+
+// S11 (ADR-023): «¿Dijo la palabra?». The listening half (src/lib/voice/escucha.ts, src/worklets/pcm-tap.ts)
+// lives in the sealed folders above, so the scan already covers it. The other half (src/lib/reconocer/)
+// downloads and keeps the ENGINE and the MODEL; it must never touch audio, so it may not import the voice
+// engine nor name an audio type.
+describe("regla dura 2 · el reconocedor: lo que baja archivos no toca audio", () => {
+  const archivos = archivosTs("src/lib/reconocer");
+
+  it("la carpeta existe", () => {
+    expect(archivos.length).toBeGreaterThan(0);
+  });
+
+  it.each(archivos)("%s no importa el motor de voz ni nombra tipos de audio", (relativa) => {
+    const codigo = sinComentarios(readFileSync(join(RAIZ, relativa), "utf8"));
+    expect(/from\s+["'](@\/lib\/voice|\.\.\/voice)/.test(codigo), `${relativa} importa lib/voice`).toBe(false);
+    for (const tipo of ["Float32Array", "AudioContext", "MediaStream", "getUserMedia", "AudioWorklet", "MediaRecorder"]) {
+      expect(codigo.includes(tipo), `${relativa} nombra ${tipo}`).toBe(false);
+    }
+  });
+
+  it("la escucha solo le entrega a la página {palabra, conf}", () => {
+    const codigo = sinComentarios(readFileSync(join(RAIZ, "src/lib/voice/escucha.ts"), "utf8"));
+    const entregas = [...codigo.matchAll(/alOir\(([^)]*)\)/g)].map((m) => m[1].replace(/\s+/g, " ").trim());
+    expect(entregas).toEqual(["{ palabra: w.word, conf: w.conf }"]);
+  });
+});
