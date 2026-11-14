@@ -9,7 +9,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
@@ -33,6 +33,11 @@ import {
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
 import { useVozFamiliar } from "./use-voz-familiar";
+import { useReconocedor } from "./use-reconocedor";
+import { QuizasDijo } from "./quizas-dijo";
+import { MicSession } from "@/lib/voice/mic-session";
+import { quizasLado } from "@/lib/reconocer/coincidencia";
+import { reconocedor as txr } from "@/lib/idioma/textos/reconocedor";
 
 type Fase = "guion" | "jugando" | "celebracion";
 
@@ -43,10 +48,25 @@ export function Gemelas() {
   if (!hidratado || !ajustes) {
     return <div className="min-h-[28rem]" aria-hidden="true" />;
   }
-  return <GemelasListo etapa={ajustes.etapa} />;
+  return (
+    <GemelasListo
+      etapa={ajustes.etapa}
+      reconocedorActivo={ajustes.reconocedor}
+      animacionReconocedor={ajustes.reconocedor && ajustes.animacionReconocedor}
+    />
+  );
 }
 
-function GemelasListo({ etapa }: { etapa: Etapa }) {
+function GemelasListo({
+  etapa,
+  reconocedorActivo,
+  animacionReconocedor,
+}: {
+  etapa: Etapa;
+  /** «¿Dijo la palabra?» (S11): off by default; Gemelas has no microphone unless the adult asks. */
+  reconocedorActivo: boolean;
+  animacionReconocedor: boolean;
+}) {
   const router = useRouter();
   const tx = useT();
   const idioma = useIdioma();
@@ -77,6 +97,41 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
   // La voz de la familia modela cada palabra del par. Gemelas no tiene micrófono → sin guarda.
   const voz = useVozFamiliar();
 
+  // The recognizer (S11): Gemelas opens a microphone ONLY when the adult taps «Listen», and closes it
+  // when the round ends or the screen is left. Nothing is stored; the adult's buttons still decide.
+  const rec = useReconocedor({
+    juego: "gemelas",
+    idioma,
+    activo: reconocedorActivo,
+  });
+  const micRef = useRef<MicSession | null>(null);
+  const { desconectar } = rec;
+  useEffect(() => {
+    if (fase === "jugando") return;
+    desconectar();
+    micRef.current?.stop();
+    micRef.current = null;
+  }, [fase, desconectar]);
+  useEffect(
+    () => () => {
+      micRef.current?.stop();
+      micRef.current = null;
+    },
+    [],
+  );
+  async function escuchar() {
+    if (micRef.current) return;
+    const mic = new MicSession();
+    try {
+      await mic.start();
+    } catch {
+      mic.stop();
+      return;
+    }
+    micRef.current = mic;
+    await rec.conectar(mic);
+  }
+
   // Gemelas exige que el niño intente palabras → no hay pares en "sonidos-e-intentos".
   if (rondas.length === 0) {
     return (
@@ -104,7 +159,16 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
 
   const par = rondas[indice];
 
+  const ladoQuizas = quizasLado(rec.oido, {
+    a: par.a.palabra,
+    b: par.b.palabra,
+  });
+
   function avanzar(marca: Marca) {
+    // The local 2×2: did the recognizer's «maybe» match what the adult judged? (only if something happened)
+    if (marca !== null || ladoQuizas !== null)
+      rec.contar(marca !== null ? ladoQuizas === marca : true, marca !== null);
+    rec.nuevaRonda();
     const nuevas = [...marcas, marca];
     setMarcas(nuevas);
     setFestejo(null);
@@ -222,6 +286,13 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
                   <IconoAltavoz className="h-4 w-4" />
                 </span>
               ) : null}
+              {animacionReconocedor && ladoQuizas === lado && festejo === null ? (
+                <span
+                  aria-hidden="true"
+                  data-testid="halo-reconocedor"
+                  className="halo-reconocedor pointer-events-none absolute inset-0"
+                />
+              ) : null}
               {encendida ? (
                 <span className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4" />
               ) : null}
@@ -252,6 +323,25 @@ function GemelasListo({ etapa }: { etapa: Etapa }) {
           );
         })}
       </div>
+
+      {reconocedorActivo ? (
+        <div className="flex flex-col items-center gap-2">
+          {rec.estado === "apagado" ? (
+            <button
+              type="button"
+              onClick={() => void escuchar()}
+              data-testid="escuchar-reconocedor"
+              className="border-borde text-tinta-suave min-h-11 rounded-xl border px-4 text-sm"
+            >
+              {tx(txr.juego.escuchar)}
+            </button>
+          ) : null}
+          <QuizasDijo
+            palabra={ladoQuizas ? par[ladoQuizas].palabra : null}
+            estado={rec.estado}
+          />
+        </div>
+      ) : null}
 
       {festejo === null ? (
         <div className="flex flex-col items-center gap-2">

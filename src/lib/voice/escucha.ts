@@ -30,7 +30,10 @@ export type OpcionesEscucha = {
   wasmUrl: string;
   /** Closed vocabulary: the game's words plus "[unk]" (src/lib/reconocer/gramatica.ts). */
   gramatica: readonly string[];
+  /** Rate the recognizer is created with (the model's own: 16 kHz). */
   sampleRate: number;
+  /** Rate of the incoming blocks, if it differs (the page's AudioContext often runs at 44.1/48 kHz). */
+  tasaEntrada?: number;
   alOir: (oido: Oido) => void;
 };
 
@@ -46,6 +49,21 @@ export type Escucha = {
 
 const ID = "habla";
 const ESCALA_PCM16 = 32768;
+
+/** Linear-interpolation resample from `de` Hz to `a` Hz (pure; the same array when the rates match). */
+export function remuestrear(x: Float32Array, de: number, a: number): Float32Array {
+  if (de === a || x.length === 0) return x;
+  const n = Math.max(1, Math.floor((x.length * a) / de));
+  const y = new Float32Array(n);
+  const paso = de / a;
+  for (let i = 0; i < n; i++) {
+    const t = i * paso;
+    const k = Math.floor(t);
+    const f = t - k;
+    y[i] = x[k] * (1 - f) + x[Math.min(k + 1, x.length - 1)] * f;
+  }
+  return y;
+}
 
 export function crearEscucha(o: OpcionesEscucha): Escucha {
   let lista = false;
@@ -100,8 +118,9 @@ export function crearEscucha(o: OpcionesEscucha): Escucha {
 
   return {
     lista: promesa,
-    oir(muestras) {
+    oir(entrada) {
       if (!lista || terminada) return;
+      const muestras = remuestrear(entrada, o.tasaEntrada ?? o.sampleRate, o.sampleRate);
       // Vosk's float input is on the 16-bit scale (±32768), Web Audio's on ±1: scale in place.
       for (let i = 0; i < muestras.length; i++) muestras[i] *= ESCALA_PCM16;
       o.motor.postMessage(

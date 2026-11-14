@@ -45,6 +45,8 @@ export const CLAVES = {
   sesiones: `${PREFIJO}v1:sesiones`,
   objetivo: `${PREFIJO}v1:objetivo`,
   cuentos: `${PREFIJO}v1:cuentos`,
+  /** The recognizer-vs-adult 2×2 (S11, ADR-023): four local numbers, never in the other-home package. */
+  coincidencias: `${PREFIJO}v1:coincidencias`,
 } as const;
 
 function disponible(): boolean {

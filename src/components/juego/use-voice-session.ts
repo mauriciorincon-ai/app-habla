@@ -85,6 +85,8 @@ export type VoiceSession = {
    * lib/voice/guarda-bucle (ADR-010), unit-tested.
    */
   silenciar: (ms: number) => void;
+  /** The live meter source (the recognizer taps the real microphone session; null before it opens). */
+  fuente: () => MeterSource | null;
 };
 
 export type OpcionesSesion = {
@@ -338,6 +340,7 @@ export function useVoiceSession({
   return {
     sesion,
     medidas,
+    fuente: () => fuenteRef.current,
     empezar,
     reintentarMic,
     recalibrar,
