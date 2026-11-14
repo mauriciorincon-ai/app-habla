@@ -12,6 +12,21 @@ const RAIZ = join(__dirname, "..", "..");
 const DOC = readFileSync(join(RAIZ, "docs/convenciones-familia/README.md"), "utf8");
 const REGLAS = ["C1", "C2", "C3", "C4", "C5", "C6"];
 
+/** Lo que cada `ruta:línea` del documento debe seguir diciendo en esa línea. */
+const ANCLAS: Record<string, string> = {
+  "src/components/juego/forma-vocal.tsx:30": "export function FormaVocal",
+  "src/app/globals.css:112": "--exito",
+  "src/lib/storage/schemas.ts:20": "modoCalma",
+  "src/components/juego/marco-juego.tsx:96": "modo-calma",
+  "src/components/juego/mapa-vocales.tsx:172": "min-h-16",
+  "src/app/ajustes/page.tsx:104": "ARASAAC",
+  "src/components/imprimibles/imprimibles-cliente.tsx:22": "function Pie",
+  "tests/unit/gate-idiomas.test.ts:18": "PROHIBIDO_EN",
+  "tests/unit/idioma.test.ts:21": "import.meta.glob",
+  "tests/unit/privacidad-voice.test.ts:57": "regla dura 2",
+  "tests/unit/sensibilidad.test.ts:64": "gate: cero coincidencias",
+};
+
 describe("convenciones de la familia v0.1.0", () => {
   it("declara su versión y que es una propuesta", () => {
     expect(DOC).toMatch(/\*\*Versión: 0\.1\.0 — propuesta\.\*\*/);
@@ -31,7 +46,12 @@ describe("convenciones de la familia v0.1.0", () => {
     for (const [, linea, ruta] of refs) {
       const abs = join(RAIZ, ruta);
       expect(existsSync(abs), ruta).toBe(true);
-      expect(readFileSync(abs, "utf8").split("\n").length, `${ruta}:${linea}`).toBeGreaterThanOrEqual(Number(linea));
+      const lineas = readFileSync(abs, "utf8").split("\n");
+      expect(lineas.length, `${ruta}:${linea}`).toBeGreaterThanOrEqual(Number(linea));
+      // Y esa línea sigue señalando lo citado: si alguien inserta líneas arriba, esto falla.
+      const ancla = ANCLAS[`${ruta}:${linea}`];
+      expect(ancla, `${ruta}:${linea} necesita su ancla en ANCLAS`).toBeTruthy();
+      expect(lineas[Number(linea) - 1], `${ruta}:${linea}`).toContain(ancla);
     }
   });
 

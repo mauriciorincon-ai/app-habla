@@ -56,10 +56,11 @@ export const vocales = {
     u: { es: "u", en: "oo" },
   },
   celebracion: {
-    antes: { es: "¡Sonaron", en: "You played with" },
+    antes: { es: "¡Sonaron", en: "Their voice lit up" },
+    antesUna: { es: "¡Sonó", en: "Their voice lit up" },
     una: { es: "{n} zona del mapa", en: "{n} spot on the map" },
     varias: { es: "{n} zonas del mapa", en: "{n} spots on the map" },
-    despues: { es: "con su voz!", en: "with their voice!" },
+    despues: { es: "con su voz!", en: "today!" },
     cambios: { es: "Y pasó de una a otra", en: "And it moved from one to another" },
     cuerpo: {
       es: "Eso es lo que el medidor escuchó, con margen de error: la forma de su sonido se parecía a esas vocales. Si dijo bien la vocal, el que lo sabe eres tú — la app solo sugiere y no va a fingir que juzga.",

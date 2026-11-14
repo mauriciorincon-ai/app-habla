@@ -168,7 +168,7 @@ function Logro({
         <>
           <FormaVocal vocal="a" letra="A" className="size-20" encendida />
           <h2 className="font-display text-4xl">
-            {tx(v.antes)}{" "}
+            {tx(metrica.zonas === 1 ? v.antesUna : v.antes)}{" "}
             {cifra(
               tx(metrica.zonas === 1 ? v.una : v.varias, { n: metrica.zonas }),
             )}{" "}
