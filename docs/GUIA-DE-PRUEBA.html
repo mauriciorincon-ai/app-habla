@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s11 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s10 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s9 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s8 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
@@ -158,7 +159,7 @@
 <body>
 <div class="pagina">
   <header>
-    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 006 (segundo de H2) · 2026-09-27</p>
+    <p class="eyebrow">Hablemos San · Guía de prueba viva · al cierre del Sprint 011 (quinto y último de la construcción del H-2) · 2026-11-14</p>
     <h1>Guía de prueba</h1>
     <p class="suave">Cada línea responde las tres preguntas: <strong>qué probar</strong>, <strong>cómo</strong> y —lo más importante— <strong>qué esperar</strong> como resultado correcto. Donde hay una forma clara de fallar, también dice cuál. La guía es <strong>acumulativa</strong>: contiene todas las pruebas vigentes de la app, con el sprint del que viene cada una. Todo se hace <strong>en el computador</strong> (Chrome, con micrófono), salvo el bloque Q, que va <strong>en tu teléfono</strong>; lo que necesita la tablet está al final.</p>
 
@@ -177,6 +178,7 @@
       </ul>
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
+        <li><span class="origen o-s11">Nuevo · S11</span> Nació en este sprint (la segunda opinión «¿Dijo la palabra?», bloque S). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s10">Nuevo · S10</span> Nació en este sprint (pasar a la otra casa, el mapa de las vocales y las hojas para imprimir). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s9">S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s8">S8</span> Del Sprint 8 (practicar en inglés y los videos de la familia). <span class="suave">Nunca lo has probado.</span></li>
@@ -190,21 +192,22 @@
       </ul>
       <p style="margin-top:12px"><strong>¿Poco tiempo hoy?</strong> Las pruebas marcadas <span class="origen o-clave">⭐ gate mínimo</span> son las que <strong>ninguna máquina puede verificar por ti</strong>: tu voz real en tu micrófono, tu juicio de padre. Son <strong>23</strong>, unos <strong>40 minutos</strong>. El resto está respaldado por los tests automáticos del sprint y puede esperar a otro día. <strong>El S6 añade su gate acotado:</strong> el bloque Q —la pirámide en tu teléfono real y tu lectura de todas las fichas— son <strong>6 pruebas</strong>, unos <strong>10 minutos</strong> más la lectura (tu teléfono, tu impresora, tu juicio de padre).</p>
       <div class="recorrido">
-        <p style="margin:0 0 6px"><strong>Recorrido del gate ⭐ ACUMULADO (S1+S2+S3+S4)</strong> — orden sugerido para hacerlo de una vez, en el computador y con micrófono:</p>
-        <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong> — pega esa ruta al final de la dirección de la app (p. ej. <code>…<strong>/spike/audio</strong></code>) y arrancas a la segura, sin buscar el camino. <em>(Mejora nacida del gate S4.)</em></p>
+        <p style="margin:0 0 6px"><strong>UN recorrido: el día de una familia, de punta a punta</strong>, en el computador y con micrófono. <strong>Sin tope de tiempo</strong>: es el ensayo general del H-2, y lo que no se ve no cuenta. Cada bloque va en este orden y <strong>ningún paso se repite</strong>; cada paso declara qué funcionalidad de la visión cubre (<code>data-cubre</code>) y un test (<code>guia-cobertura</code>) comprueba que las 21 estén.</p>
+        <p class="chica suave" style="margin:0 0 8px"><strong>Cada bloque trae su “Empieza en:”</strong>: pega esa ruta al final de la dirección de la app (p. ej. <code>…<strong>/ajustes</strong></code>).</p>
         <ol class="chica suave" style="margin:0; padding-left:1.2rem">
-          <li>El oído de la app (bloque A) — tu tono real. <strong>~8 min</strong></li>
-          <li>“Hoy” y la etapa del habla (B–C). <strong>~4 min</strong></li>
-          <li>Los juegos: globo, cohete, palabra&nbsp;y&nbsp;dibujo, gemelas (E–I). <strong>~12 min</strong></li>
-          <li>La voz de la familia: grabar y escuchar (J–L). <strong>~8 min</strong></li>
-          <li><strong>El rumbo</strong> (bloque N). <strong>~4 min</strong></li>
-          <li><strong>El objetivo de la semana</strong> (bloque O). <strong>~5 min</strong></li>
+          <li><strong>Abres la app:</strong> «Hoy» y la etapa del habla (B–C), y el oído de la app con tu tono real (A).</li>
+          <li><strong>Juegas con él:</strong> el selector, el globo, el cohete, palabra y dibujo, y la segunda opinión «¿Dijo la palabra?» (D–G, S), y las gemelas (L).</li>
+          <li><strong>Pones tu voz:</strong> grabarla y oírla dentro de los juegos (J–K).</li>
+          <li><strong>Miras cómo van:</strong> el rumbo y el objetivo de la semana (N–O), y la pirámide en tu teléfono (Q).</li>
+          <li><strong>Ajustas la casa:</strong> ajustes, idioma English, videos, cuentos y borrar datos (H), el catálogo (I).</li>
+          <li><strong>Lejos de la pantalla:</strong> la otra casa, las vocales, el papel y las convenciones (R), y el kit de prueba (M).</li>
         </ol>
-        <p class="chica suave" style="margin:8px 0 0">La <strong>lista de tablet</strong> (al final) es <strong>post-ciclo</strong>: cierra los ADR de audio/tono/banco en el aparato real cuando el niño regrese. <strong>No gatea el cierre del ciclo</strong> — el gate de escritorio + teléfono sí.</p>
+        <p class="chica suave" style="margin:8px 0 0">La <strong>lista de tablet</strong> (al final) es <strong>post-ciclo</strong>: cierra los ADR de audio/tono/banco en el aparato real cuando el niño regrese. <strong>No gatea el cierre del hito.</strong></p>
       </div>
       <div class="filtros" role="group" aria-label="Filtrar pruebas por origen">
         <button type="button" data-filtro="todo" aria-pressed="true">Ver todo</button>
         <button type="button" data-filtro="clave" aria-pressed="false">⭐ Solo el gate mínimo</button>
+        <button type="button" data-filtro="s11" aria-pressed="false">Solo lo nuevo del S11</button>
         <button type="button" data-filtro="s10" aria-pressed="false">Solo lo nuevo del S10</button>
         <button type="button" data-filtro="s9" aria-pressed="false">Solo lo del S9</button>
         <button type="button" data-filtro="s8" aria-pressed="false">Solo lo del S8</button>
@@ -225,116 +228,48 @@
     <button type="button" class="reiniciar" id="reiniciar">Empezar de cero</button>
   </div>
 
-  <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">A</span><h2>El oído de la app: energía y tono</h2></div>
-    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/spike/audio</code></p>
-    <p class="meta-bloque chica suave">~12 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. El S1 validó la <strong>energía</strong> (qué tan fuerte suena la voz); el S2 le suma el <strong>tono</strong> (qué tan aguda es), que es el motor del cohete. <strong>Es el bloque más importante del sprint.</strong></p>
-    <ul class="pasos">
-      <li data-origen="s1"><input type="checkbox" id="v2-a1"><div>
-        <label for="v2-a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. <span class="origen o-s1">S1</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La línea de estado dice <strong>estado: activo · motor: worklet</strong>.</p>
-        <p class="mal"><span class="et">Mal</span> Dice <em>motor: analyser</em> (es el plan B, no rompe nada, pero necesito saberlo) · no arranca del todo.</p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-a2"><div>
-        <label for="v2-a2">Con la casa en silencio normal, mira el <strong>“piso (mín. sesión)”</strong> durante unos segundos y <strong>anótalo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Un número pequeño y quieto, normalmente entre <strong>0,001 y 0,03</strong> — y <strong>0,0000 también es sano</strong>: es un MÍNIMO de toda la sesión, así que captura el instante más silencioso que tu micrófono entregue (hallazgo del gate S4). El juego NO usa este mínimo: calibra con 2 segundos de silencio y un piso duro de 0,002.</p>
-        <p class="mal"><span class="et">Mal</span> Un piso alto (&gt;0,05) en silencio: el micrófono está metiendo ruido y el juego va a costar.</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-a3"><div>
-        <label for="v2-a3">Haz un <strong>“aaaah” sostenido</strong> a unos 50 cm del computador. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La barra sube <strong>en el instante</strong> en que empiezas (rms sube a ~0,1–0,5) y baja apenas te callas.</p>
-        <p class="mal"><span class="et">Mal</span> Un retraso que se siente entre tu voz y la barra (eso sería fatal para un niño pequeño).</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-a4"><div>
-        <label for="v2-a4">Déjalo corriendo <strong>2–3 minutos</strong>, hablando de a ratos. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> “frames/s” se mantiene <strong>estable (~30)</strong> todo el rato; nada se congela ni se corta.</p>
-        <p class="mal"><span class="et">Mal</span> Los frames caen, se congela, o la barra deja de responder con el tiempo.</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-a5"><div>
-        <label for="v2-a5"><strong>Copia o fotografía el bloque gris de datos</strong> (sampleRate, baseLatency, settings) y mándamelo. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <code>echoCancellation</code>, <code>noiseSuppression</code> y <code>autoGainControl</code> los tres en <strong>false</strong> (si el navegador “ayuda” filtrando, nos daña la medición) · <code>sampleRate</code> 44100 o 48000 · <code>baseLatency</code> idealmente &lt; 0,05. <em>En Safari verás solo <code>echoCancellation</code> (y un <code>volume</code>): Safari no reporta los otros dos aunque la app los pide en false — verifica los tres en <strong>Chrome</strong>, que es el navegador real de la app (gate S4).</em></p>
-        <p class="mal"><span class="et">Mal</span> Alguno de los tres settings en <strong>true</strong> (en un navegador que sí los reporte).</p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-a6"><div>
-        <label for="v2-a6">Pon <strong>música o TV de fondo</strong>, y CON la música ya sonando toca <strong>Detener → Empezar</strong> (sesión nueva). No hables. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El piso de la sesión NUEVA arranca más alto (es normal: la app medirá el umbral relativo a ESE ruido). Anota cuánto. <em>Ojo: dentro de una sesión ya empezada el piso JAMÁS sube — es un mínimo corrido, y un mínimo solo baja (la instrucción vieja pedía un imposible; lo cazó el gate S4).</em></p>
-        <p class="mal"><span class="et">Mal</span> Nada aquí es “defecto”: es el dato que necesito para calibrar bien. Solo anótalo.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a7"><div>
-        <label for="v2-a7">El mismo panel ahora trae <strong>“tono (F0)”</strong>. Míralo con la casa en <strong>silencio</strong>, sin hablar. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Se queda en <strong>“—”</strong>, siempre. El ruido no tiene tono.</p>
-        <p class="mal"><span class="et">Mal</span> Aparece un número en Hz sin que nadie hable: <strong>defecto grave</strong>, el cohete se movería solo. Repórtalo enseguida.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a8"><div>
-        <label for="v2-a8">Di <strong>“aaaah” sostenido</strong> y mira el tono. Si sale “—”, <strong>sube el tono</strong> (una “aaaah” aguda cómoda, o falsete) hasta que aparezca un número. <strong>Anota el rango de Hz</strong> que logras. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <strong>Ojo: el oído del tono empieza en 150 Hz</strong> (abajo de eso no hay voz de niño, solo zumbidos). Tu voz normal de hombre adulto (~100–140 Hz) queda <strong>por debajo</strong> y mostrará “—”: eso <strong>NO es un defecto</strong>. Subiendo un poco el tono aparece un número <strong>estable</strong> y la barra se llena. <em>Verificado por ti el 2026-07-12: llegaste a 160–170 Hz.</em></p>
-        <p class="mal"><span class="et">Mal</span> Incluso con voz claramente aguda no aparece nada · el número brinca sin control (250 → 450 → 200) con la voz quieta.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a9"><div>
-        <label for="v2-a9">Haz la <strong>voz de sirena</strong>: “aaaAAAaaa”, subiendo y bajando el tono sin cortar el sonido. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La barra de tono <strong>te sigue</strong>: sube cuando subes, baja cuando bajas, sin retraso notorio.</p>
-        <p class="mal"><span class="et">Mal</span> La barra va a saltos, se queda pegada, o sube cuando gritas más fuerte (eso sería volumen, no tono).</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a10"><div>
-        <label for="v2-a10">Mira <strong>“cobertura”</strong> mientras sostienes la voz <strong>AGUDA</strong> (dentro del rango que encontraste en la prueba anterior): es el % de tu voz en el que la app <em>entendió</em> el tono. <strong>Anótalo — es el dato más importante del sprint.</strong> <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <strong>Más de 70 %, medido con voz aguda.</strong> Con eso, el cohete se queda como está. <em>Con tu voz grave normal saldrá baja — esa medición no cuenta: estás por fuera del oído infantil.</em></p>
-        <p class="mal"><span class="et">Mal</span> Por debajo de ~50 % <strong>con voz aguda sostenida</strong>: el tono no es confiable con micrófonos reales y le cambio la mecánica al cohete (pasaría a “voz fuerte / voz suave”, dicho honestamente). No es un desastre: es justo la decisión que este número existe para tomar.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a11"><div>
-        <label for="v2-a11">Mira <strong>“inversiones”</strong> mientras haces la sirena. Luego prueba a <strong>temblar</strong> la voz sin cambiar de sentido. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Sube <strong>una</strong> por cada cambio de sentido real (subir→bajar o bajar→subir). Con el temblor <strong>no</strong> sube.</p>
-        <p class="mal"><span class="et">Mal</span> Se dispara sola (cuenta 10 cuando hiciste 3): el contador estaría inflando el logro del niño, y eso rompe la honestidad de la app.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-a12"><div>
-        <label for="v2-a12">Ahora <strong>imita la voz de él</strong>: aguda y suave, no la tuya de adulto. <strong>Este es el número más representativo</strong> — su voz vive en ese rango. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Sigue detectando tono y la cobertura se mantiene alta incluso con voz suave (bajita). La app está afinada para voz infantil (200–450 Hz).</p>
-        <p class="mal"><span class="et">Mal</span> Con voz aguda deja de detectar o la cobertura se desploma: habría que mover el rango. <em>La prueba de verdad es con SU voz, en la tablet (lista diferida).</em></p>
-      </div></li>
-    </ul>
-    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> la <strong>cobertura</strong> y el <strong>rango de F0</strong> (lo más crítico) · el bloque gris de datos · el piso en silencio y con ruido · si el tono aparece con solo ruido.</p></div>
-  </section>
 
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">B</span><h2>“Hoy”: la respuesta del día</h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — la raíz de la app (si es la primera vez, ahí vive el onboarding)</p>
     <p class="meta-bloque chica suave">~10 min. La estrella del S1, que este sprint creció: la misma pantalla, pero con 50 cápsulas organizadas por etapa detrás.</p>
     <ul class="pasos">
-      <li data-origen="s1"><input type="checkbox" id="v2-b1"><div>
+      <li data-origen="s1" data-cubre="capsulas"><input type="checkbox" id="v2-b1"><div>
         <label for="v2-b1"><strong>Onboarding</strong> (solo la primera vez). Prueba dejar el apodo <strong>vacío</strong> y elige 1–3 temas. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sin apodo entra igual (el apodo nunca es obligatorio: es la app de tu hijo, no un formulario) y llegas directo a la cápsula de hoy.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-b2"><div>
+      <li data-origen="s2" data-cubre="capsulas intereses"><input type="checkbox" id="v2-b2"><div>
         <label for="v2-b2"><strong>Los temas ya sirven para algo.</strong> En el S1 los elegías y no hacían nada (deuda que te declaré). Elige los que de verdad le gustan a él. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Nada visible <em>todavía</em>: la comprobación llega en el bloque G, donde los dibujos que salen deben ser <strong>de esos temas</strong>. Anota cuáles elegiste.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-b3"><div>
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v2-b3"><div>
         <label for="v2-b3">Lee <strong>la cápsula de hoy</strong> completa (es la tarjeta grande: la etiqueta, el título, la explicación, “Tu línea de hoy” y “La actividad de hoy”). <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> La línea la dirías <strong>tal cual</strong> en tu casa (sin jerga, sin culpa) y la actividad se puede hacer <strong>hoy</strong>, sin comprar nada. <strong>Visualmente</strong> (mejora del gate S4): “Tu línea de hoy” y “La actividad de hoy” son <strong>dos cajas hermanas</strong> con borde acentuado, cada una con su icono grande a la izquierda (burbuja de diálogo para lo que TÚ dices · dos figuras juntas para lo que HACEN) — la actividad ya NO se lee como una introducción al pie.</p>
         <p class="mal"><span class="et">Mal</span> Suena frío o técnico, o te promete resultados con un plazo. Eso está prohibido en esta app.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-b4"><div>
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v2-b4"><div>
         <label for="v2-b4">Abre <strong>“¿De dónde sale esto?”</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cita un estudio real de respaldo. <strong>Ninguna cápsula es un consejo inventado.</strong> Se ve como lo que es (mejora del gate S4): <strong>icono de comillas</strong> a la izquierda y la fuente en <em>cursiva</em>.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-b5"><div>
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v2-b5"><div>
         <label for="v2-b5">Mira la etiqueta gris de arriba de la cápsula: nombra <strong>qué es cada cosa</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“Técnica: Modelar · Etapa: Palabras sueltas”</strong> (antes iba “Hoy practicamos · X · Y” y no se sabía cuál era cuál — hallazgo del gate S4). La etapa dice <strong>“Palabras sueltas”</strong> sin que hayas elegido nada: es el nivel por defecto <strong>permanente</strong> de la app (es donde está él hoy).</p>
         <p class="mal"><span class="et">Mal</span> Arranca en “Primeras frases” o en otra etapa: nunca debe pasar sola a un nivel más exigente.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-b6"><div>
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v2-b6"><div>
         <label for="v2-b6">Antes de tocar nada, <strong>lee la línea que hay sobre el botón</strong> y mira su icono. Luego tócalo. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Pendiente y hecho se ven <strong>en pareja</strong> (mejora del gate S4): mientras está pendiente, encima del botón hay una <strong>pregunta</strong> —“¿Ya hicieron la actividad de hoy?”— y el botón es su respuesta: <strong>“Sí, ya lo hicimos”</strong>, con un <strong>círculo vacío</strong> a la izquierda (antes decía “Ya lo hicimos” a secas y se leía como una afirmación ya cierta); al tocarlo cambia a <strong>“Hecho hoy. Mañana hay otra.”</strong> en verde con su <strong>check</strong>. Justo debajo, DENTRO de la misma tarjeta, el contador: <strong>“Han practicado juntos <em>N</em> días en total. Este número nunca baja: si un día no entran, no se pierde nada.”</strong> — con el número grande y destacado (antes iba al pie de la página, como nota al margen; y antes decía “…no la racha”, que sembraba la duda de que hubiera una — tu observación del gate: aquí NO hay rachas, el número es acumulado y solo crece al marcar “Sí, ya lo hicimos”).</p>
         <p class="mal"><span class="et">Mal</span> Cualquier cosa que parezca una racha que se pierde o un regaño por faltar.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-b7"><div>
+      <li data-origen="s1" data-cubre="capsulas"><input type="checkbox" id="v2-b7"><div>
         <label for="v2-b7"><strong>Recarga</strong> la página. Cierra el navegador y vuelve a entrar. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sigue siendo <strong>la misma cápsula</strong> y sigue marcada como hecha. El día no se reinicia por recargar.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-b8"><div>
+      <li data-origen="s1" data-cubre="capsulas"><input type="checkbox" id="v2-b8"><div>
         <label for="v2-b8">Si alcanzas a probar <strong>dos días seguidos</strong>: entra mañana. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Aparece <strong>otra cápsula distinta</strong>, y no se repite ninguna hasta que se agoten las de la etapa.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-b9"><div>
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v2-b9"><div>
         <label for="v2-b9">Mira la tarjeta que está <strong>siempre</strong> debajo de la cápsula (el arreglo del S1: la puerta al juego no puede desaparecer los días sin pantalla). <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“Los juegos de voz”</strong> y abre el selector de <strong>cuatro</strong> (las gemelas llegaron en el S3 y la tarjeta seguía anunciando tres — hallazgo del gate S4). Muestra los <strong>cuatro iconos</strong> (globo · cohete · dibujo · gemelas) y van <strong>a la IZQUIERDA</strong> del texto: en toda la app el icono precede a lo que acompaña.</p>
       </div></li>
@@ -347,32 +282,100 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
     <p class="meta-bloque chica suave">~8 min. Bloque nuevo entero: la app ahora sabe en qué etapa está él y le da las cápsulas de esa etapa. <strong>Lo que se prueba aquí es que cambiar de etapa NO te cueste tu progreso.</strong></p>
     <ul class="pasos">
-      <li data-origen="s2"><input type="checkbox" id="v2-c1"><div>
+      <li data-origen="s2" data-cubre="capsulas"><input type="checkbox" id="v2-c1"><div>
         <label for="v2-c1">Ve a <strong>Ajustes → “¿Cómo habla su hijo hoy?”</strong> y lee las tres etapas. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Describen <strong>lo que se ve en casa</strong>, no una evaluación (“Dice palabras de a una: agua, mamá, carro. Todavía no las junta — y no hace falta apurarlo”). <strong>“Palabras sueltas”</strong> aparece como <em>Elegida</em> y <em>Recomendada</em>. Dice claro: <strong>“Cambiarla no borra nada.”</strong></p>
         <p class="mal"><span class="et">Mal</span> Lenguaje técnico, niveles con número, o algo que lo compare con otros niños.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-c2"><div>
+      <li data-origen="s2" data-cubre="capsulas"><input type="checkbox" id="v2-c2"><div>
         <label for="v2-c2"><strong>La prueba clave.</strong> 1) Marca la cápsula de hoy como hecha. 2) Entra a <strong>Ajustes</strong> (el enlace del encabezado) → primera sección, <strong>“¿Cómo habla su hijo hoy?”</strong> → elige <strong>“Sonidos e intentos”</strong>. 3) Vuelve a “Hoy”. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sale <strong>otra</strong> cápsula (de esa etapa, sin hacer) y el <strong>contador de días NO se perdió</strong>.</p>
         <p class="mal"><span class="et">Mal</span> El contador se fue a cero, o la app se comporta como si fuera tu primer día.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-c3"><div>
+      <li data-origen="s2" data-cubre="capsulas"><input type="checkbox" id="v2-c3"><div>
         <label for="v2-c3">Ahora, otra vez en <strong>Ajustes → “¿Cómo habla su hijo hoy?”</strong>, <strong>vuelve a “Palabras sueltas”</strong> y mira “Hoy”. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Reaparece <strong>LA MISMA cápsula de antes, todavía marcada como hecha</strong>. Cada etapa recuerda su propio día.</p>
         <p class="mal"><span class="et">Mal</span> Sale una cápsula distinta y tu “hecho” de hoy desapareció. <em>(Esto pasaba de verdad: lo cazó un test durante el sprint. Por eso está aquí.)</em></p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-c4"><div>
+      <li data-origen="s2" data-cubre="capsulas"><input type="checkbox" id="v2-c4"><div>
         <label for="v2-c4">Entra a <strong>“Primeras frases”</strong>, mira una cápsula, y vuelve a “Palabras sueltas”. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Existe y funciona, <strong>pero nunca se activó sola</strong>: tuviste que elegirla a mano. Guardada para cuando llegue el momento.</p>
         <p class="mal"><span class="et">Mal</span> La app te empuja a subir de etapa, o lo sugiere “porque va bien”. Eso no lo decide una app.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-c5"><div>
+      <li data-origen="s2" data-cubre="capsulas"><input type="checkbox" id="v2-c5"><div>
         <label for="v2-c5">Recarga la página. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> La etapa elegida y la cápsula del día siguen igual.</p>
       </div></li>
     </ul>
     <div class="promesa"><p><strong>La promesa del bloque:</strong> cambiar de etapa cambia la cápsula del día y <strong>no borra absolutamente nada</strong>. Puedes curiosear sin miedo.</p></div>
+  </section>
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">A</span><h2>El oído de la app: energía y tono</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/spike/audio</code></p>
+    <p class="meta-bloque chica suave">~12 min. Página sin enlace visible: agrega <code>/spike/audio</code> a la URL. El S1 validó la <strong>energía</strong> (qué tan fuerte suena la voz); el S2 le suma el <strong>tono</strong> (qué tan aguda es), que es el motor del cohete. <strong>Es el bloque más importante del sprint.</strong></p>
+    <ul class="pasos">
+      <li data-origen="s1" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a1"><div>
+        <label for="v2-a1">Abre <code>/spike/audio</code> → <strong>Empezar</strong> → acepta el micrófono. <span class="origen o-s1">S1</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La línea de estado dice <strong>estado: activo · motor: worklet</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Dice <em>motor: analyser</em> (es el plan B, no rompe nada, pero necesito saberlo) · no arranca del todo.</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a2"><div>
+        <label for="v2-a2">Con la casa en silencio normal, mira el <strong>“piso (mín. sesión)”</strong> durante unos segundos y <strong>anótalo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Un número pequeño y quieto, normalmente entre <strong>0,001 y 0,03</strong> — y <strong>0,0000 también es sano</strong>: es un MÍNIMO de toda la sesión, así que captura el instante más silencioso que tu micrófono entregue (hallazgo del gate S4). El juego NO usa este mínimo: calibra con 2 segundos de silencio y un piso duro de 0,002.</p>
+        <p class="mal"><span class="et">Mal</span> Un piso alto (&gt;0,05) en silencio: el micrófono está metiendo ruido y el juego va a costar.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a3"><div>
+        <label for="v2-a3">Haz un <strong>“aaaah” sostenido</strong> a unos 50 cm del computador. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La barra sube <strong>en el instante</strong> en que empiezas (rms sube a ~0,1–0,5) y baja apenas te callas.</p>
+        <p class="mal"><span class="et">Mal</span> Un retraso que se siente entre tu voz y la barra (eso sería fatal para un niño pequeño).</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a4"><div>
+        <label for="v2-a4">Déjalo corriendo <strong>2–3 minutos</strong>, hablando de a ratos. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> “frames/s” se mantiene <strong>estable (~30)</strong> todo el rato; nada se congela ni se corta.</p>
+        <p class="mal"><span class="et">Mal</span> Los frames caen, se congela, o la barra deja de responder con el tiempo.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a5"><div>
+        <label for="v2-a5"><strong>Copia o fotografía el bloque gris de datos</strong> (sampleRate, baseLatency, settings) y mándamelo. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <code>echoCancellation</code>, <code>noiseSuppression</code> y <code>autoGainControl</code> los tres en <strong>false</strong> (si el navegador “ayuda” filtrando, nos daña la medición) · <code>sampleRate</code> 44100 o 48000 · <code>baseLatency</code> idealmente &lt; 0,05. <em>En Safari verás solo <code>echoCancellation</code> (y un <code>volume</code>): Safari no reporta los otros dos aunque la app los pide en false — verifica los tres en <strong>Chrome</strong>, que es el navegador real de la app (gate S4).</em></p>
+        <p class="mal"><span class="et">Mal</span> Alguno de los tres settings en <strong>true</strong> (en un navegador que sí los reporte).</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a6"><div>
+        <label for="v2-a6">Pon <strong>música o TV de fondo</strong>, y CON la música ya sonando toca <strong>Detener → Empezar</strong> (sesión nueva). No hables. <span class="origen o-mejora">Mejorado en S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El piso de la sesión NUEVA arranca más alto (es normal: la app medirá el umbral relativo a ESE ruido). Anota cuánto. <em>Ojo: dentro de una sesión ya empezada el piso JAMÁS sube — es un mínimo corrido, y un mínimo solo baja (la instrucción vieja pedía un imposible; lo cazó el gate S4).</em></p>
+        <p class="mal"><span class="et">Mal</span> Nada aquí es “defecto”: es el dato que necesito para calibrar bien. Solo anótalo.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a7"><div>
+        <label for="v2-a7">El mismo panel ahora trae <strong>“tono (F0)”</strong>. Míralo con la casa en <strong>silencio</strong>, sin hablar. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Se queda en <strong>“—”</strong>, siempre. El ruido no tiene tono.</p>
+        <p class="mal"><span class="et">Mal</span> Aparece un número en Hz sin que nadie hable: <strong>defecto grave</strong>, el cohete se movería solo. Repórtalo enseguida.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a8"><div>
+        <label for="v2-a8">Di <strong>“aaaah” sostenido</strong> y mira el tono. Si sale “—”, <strong>sube el tono</strong> (una “aaaah” aguda cómoda, o falsete) hasta que aparezca un número. <strong>Anota el rango de Hz</strong> que logras. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <strong>Ojo: el oído del tono empieza en 150 Hz</strong> (abajo de eso no hay voz de niño, solo zumbidos). Tu voz normal de hombre adulto (~100–140 Hz) queda <strong>por debajo</strong> y mostrará “—”: eso <strong>NO es un defecto</strong>. Subiendo un poco el tono aparece un número <strong>estable</strong> y la barra se llena. <em>Verificado por ti el 2026-07-12: llegaste a 160–170 Hz.</em></p>
+        <p class="mal"><span class="et">Mal</span> Incluso con voz claramente aguda no aparece nada · el número brinca sin control (250 → 450 → 200) con la voz quieta.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a9"><div>
+        <label for="v2-a9">Haz la <strong>voz de sirena</strong>: “aaaAAAaaa”, subiendo y bajando el tono sin cortar el sonido. <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La barra de tono <strong>te sigue</strong>: sube cuando subes, baja cuando bajas, sin retraso notorio.</p>
+        <p class="mal"><span class="et">Mal</span> La barra va a saltos, se queda pegada, o sube cuando gritas más fuerte (eso sería volumen, no tono).</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a10"><div>
+        <label for="v2-a10">Mira <strong>“cobertura”</strong> mientras sostienes la voz <strong>AGUDA</strong> (dentro del rango que encontraste en la prueba anterior): es el % de tu voz en el que la app <em>entendió</em> el tono. <strong>Anótalo — es el dato más importante del sprint.</strong> <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <strong>Más de 70 %, medido con voz aguda.</strong> Con eso, el cohete se queda como está. <em>Con tu voz grave normal saldrá baja — esa medición no cuenta: estás por fuera del oído infantil.</em></p>
+        <p class="mal"><span class="et">Mal</span> Por debajo de ~50 % <strong>con voz aguda sostenida</strong>: el tono no es confiable con micrófonos reales y le cambio la mecánica al cohete (pasaría a “voz fuerte / voz suave”, dicho honestamente). No es un desastre: es justo la decisión que este número existe para tomar.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a11"><div>
+        <label for="v2-a11">Mira <strong>“inversiones”</strong> mientras haces la sirena. Luego prueba a <strong>temblar</strong> la voz sin cambiar de sentido. <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Sube <strong>una</strong> por cada cambio de sentido real (subir→bajar o bajar→subir). Con el temblor <strong>no</strong> sube.</p>
+        <p class="mal"><span class="et">Mal</span> Se dispara sola (cuenta 10 cuando hiciste 3): el contador estaría inflando el logro del niño, y eso rompe la honestidad de la app.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="sabe-cuando-hablo"><input type="checkbox" id="v2-a12"><div>
+        <label for="v2-a12">Ahora <strong>imita la voz de él</strong>: aguda y suave, no la tuya de adulto. <strong>Este es el número más representativo</strong> — su voz vive en ese rango. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Sigue detectando tono y la cobertura se mantiene alta incluso con voz suave (bajita). La app está afinada para voz infantil (200–450 Hz).</p>
+        <p class="mal"><span class="et">Mal</span> Con voz aguda deja de detectar o la cobertura se desploma: habría que mover el rango. <em>La prueba de verdad es con SU voz, en la tablet (lista diferida).</em></p>
+      </div></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> la <strong>cobertura</strong> y el <strong>rango de F0</strong> (lo más crítico) · el bloque gris de datos · el piso en silencio y con ruido · si el tono aparece con solo ruido.</p></div>
   </section>
 
   <section class="bloque">
@@ -380,15 +383,15 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — se llega por la tarjeta “Los juegos de voz” de “Hoy” (eso es parte de la prueba)</p>
     <p class="meta-bloque chica suave">~3 min. En el S1 la puerta llevaba directo al globo; ahora abre cinco juegos (el quinto, experimental). Esta pantalla la va a tocar <strong>él</strong>: tiene que ser la más predecible de la app.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v2-d1"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-d1"><div>
         <label for="v2-d1">Desde “Hoy” → tarjeta <strong>“Los juegos de voz”</strong>. Mira también <strong>arriba del todo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Aparecen <strong>exactamente 5</strong> tarjetas: el globo, el cohete, palabra y dibujo, palabras gemelas y, <strong>al final, el mapa de las vocales</strong>, marcado <strong>«experimental»</strong> con texto. Cada una con su dibujo grande. Arriba, el mismo chip <strong>“← Hoy”</strong> de Rumbo, Objetivo y Ajustes (mejora del gate S4: antes esta pantalla lo tenía como enlace suelto al pie).</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-d2"><div>
+      <li data-origen="s2" data-cubre="voz-juegos"><input type="checkbox" id="v2-d2"><div>
         <label for="v2-d2">Lee lo que dice cada tarjeta debajo del nombre. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cada una declara <strong>qué mide</strong>, sin adornos: “Mide cuánto dura su voz” · “Mide el tono de su voz” · <strong>“Mide que hubo voz — nunca qué palabra dijo”</strong>. ¿Te parece honesto?</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-d3"><div>
+      <li data-origen="s2" data-cubre="voz-juegos hecho-para-el"><input type="checkbox" id="v2-d3"><div>
         <label for="v2-d3">Míralas como las vería él: tamaño, orden, y prueba a moverte con el <strong>tabulador</strong> del teclado. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Son grandes (un niño las toca sin apuntar), están <strong>siempre en el mismo orden</strong>, y con el tabulador se ve un borde claro en la que está seleccionada.</p>
       </div></li>
@@ -400,61 +403,56 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~12 min, con micrófono. <strong>Ya lo aprobaste, pero este sprint le cambió el motor por dentro</strong> (ahora lo comparte con los otros dos juegos): hay que probarlo entero otra vez. Vuela con cualquier sonido sostenido — nunca exige palabras.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v2-e1"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-e1"><div>
         <label for="v2-e1">Selector → <strong>El globo</strong> → lee tu guion → <strong>“Estamos listos”</strong> → acepta el micrófono. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> El guion trae arriba su chip <strong>“← Juegos”</strong> (la salida estándar, mejora del gate S4) — y dentro del juego, <strong>“Salir” vuelve a ESTE guion</strong> (apagando el micrófono), no al selector: puedes releer tu línea sin perder la pantalla. Antes de pedir el permiso te explica por qué: <strong>“No se graba nada, no se guarda nada y nada sale de aquí.”</strong> El guion es para ti (fondo oscuro); en cuanto empieza el juego, la pantalla se vuelve del niño (clara) y el texto de adulto se retira.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e2"><div>
+      <li data-origen="s1" data-cubre="voz-juegos sabe-cuando-hablo"><input type="checkbox" id="v2-e2"><div>
         <label for="v2-e2"><strong>Calibración:</strong> quédate callado 2 segundos. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“Shhh… un momentico de silencio”</strong> mientras mide el ruido de tu casa, la barra se llena sola y pasa a <strong>“Haz sonar tu voz: aaaaah”</strong> sin que toques nada.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-e3"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos sabe-cuando-hablo"><input type="checkbox" id="v2-e3"><div>
         <label for="v2-e3">Haz <strong>“aaaah”</strong> sostenido. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> El globo <strong>reacciona de inmediato a tu voz</strong>: se eleva un poco y avanza <strong>solo mientras suenas</strong>; el medidor lateral se llena. El título cambia a “¡El globo está volando!”. Ojo: el globo <strong>no despega desde el suelo</strong> — arranca flotando en su sitio de reposo (la palabra “despega” de la versión anterior de esta prueba prometía un efecto que nunca existió; ese despegue inicial vive en el backlog como cosmético y NO es un defecto).</p>
         <p class="mal"><span class="et">Mal</span> Avanza sin que suenes · tarda en reaccionar · va a tirones.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e4"><div>
+      <li data-origen="s1" data-cubre="voz-juegos sabe-cuando-hablo"><input type="checkbox" id="v2-e4"><div>
         <label for="v2-e4"><strong>Cállate a mitad de camino</strong> y espera. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> El globo <strong>se detiene y espera</strong>, quieto donde iba. <strong>No cae, no retrocede, no hay derrota</strong> — y al rato aparece una invitación amable, sin regaño.</p>
         <p class="mal"><span class="et">Mal</span> El globo cae, aparece un “perdiste”, o cualquier castigo por callarse.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-e5"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-e5"><div>
         <label for="v2-e5">Haz “aaah — <em>pausa cortica de respirar</em> — aaah”. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> La racha no se pierde por respirar (histéresis) y, desde el gate S4, el globo tampoco <strong>frena en seco</strong>: en la pausa <strong>desacelera suave y planea</strong>, como algo que de verdad flota. Ojo: es solo el movimiento — la métrica sigue contando <strong>únicamente voz real</strong>.</p>
         <p class="mal"><span class="et">Mal</span> El globo se frena y arranca en cada respiro, parpadeando — o avanza “gratis” en silencios largos (eso sería mentir con la posición).</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-e6"><div>
+      <li data-origen="mejora" data-cubre="celebracion-honesta sesiones-cortas"><input type="checkbox" id="v2-e6"><div>
         <label for="v2-e6">Acumula unos <strong>3 segundos</strong> de voz y mira qué pasa al cruzar la línea. Sigue jugando un rato más y luego toca <strong>“Ya jugamos”</strong>. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>El juego NO se termina solo</strong> (ADR-012, nació de tu hallazgo E6 en este gate): al cruzar la línea el globo completa <strong>una VUELTA</strong> — aparece <strong>“¡Ya dio 1 vuelta!”</strong> y estalla un <strong>confeti con serpentinas sobre la línea</strong> (llueve una vez, ~1,6 s, sin detener nada — pedido en tu re-mirada del bloque), el globo reaparece entrando por la izquierda y sigue volando. Cada vuelta nueva trae su propio estallido. Las vueltas son <strong>infinitas</strong> (2, 3, 10…). Cuando TÚ tocas <strong>“Ya jugamos”</strong>, ahí sí la celebración, con <strong>tres números distintos</strong>: <strong>“¡Su voz sonó X segundos!”</strong> (el total), <strong>“Con esa voz el globo dio N vueltas completas”</strong> (las mismas que celebraron en vivo; en modo calma esta línea no sale — allí no hay línea de vuelta) y <strong>“la vez más larga la sostuvo N segundos seguidos”</strong> (la racha). Y aclara que <strong>si además dijo la palabra, el que lo sabe eres tú</strong>.</p>
         <p class="mal"><span class="et">Mal</span> El juego se cierra solo (a los 3 s o cuando sea) · el globo vuelve <strong>en reversa</strong> al dar la vuelta · el confeti queda en <strong>bucle</strong> o parpadea (es un estallido, no una discoteca) · un “¡muy bien!” genérico · que diga que <strong>“sostuvo”</strong> un tiempo hecho de <strong>soplidos sueltos</strong>.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-e7"><div>
+      <li data-origen="s2" data-cubre="celebracion-honesta"><input type="checkbox" id="v2-e7"><div>
         <label for="v2-e7">Esa celebración ahora es <strong>la misma pieza</strong> para los tres juegos. Fíjate en lo que dice la del globo. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sigue hablando de <strong>segundos sostenidos</strong> (no de inversiones ni de dibujos). Cada juego celebra <em>su</em> métrica.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e8"><div>
+      <li data-origen="s1" data-cubre="voz-juegos"><input type="checkbox" id="v2-e8"><div>
         <label for="v2-e8">En la celebración, toca <strong>“Otra vez”</strong>. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Vuelve a calibrar y se juega de nuevo <strong>sin volver a pedir permiso del micrófono</strong>.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e9"><div>
+      <li data-origen="s1" data-cubre="celebracion-honesta logros-sin-caramelos sesiones-cortas"><input type="checkbox" id="v2-e9"><div>
         <label for="v2-e9">Entra otra vez y toca <strong>“Ya jugamos”</strong> enseguida, <strong>sin hacer ningún sonido</strong>. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“Hoy el globo casi no voló”</strong> y explica sin culpa: <em>“No pasa nada y no se perdió nada: estar juntos frente al juego ya cuenta.”</em> <strong>La app no finge un logro que no hubo.</strong></p>
         <p class="mal"><span class="et">Mal</span> Te celebra igual aunque no hubo voz (ese es exactamente el error de la competencia).</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e10"><div>
+      <li data-origen="s1" data-cubre="voz-juegos"><input type="checkbox" id="v2-e10"><div>
         <label for="v2-e10"><strong>Fluidez:</strong> juega un rato mirando solo cómo se mueve el globo. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Movimiento <strong>suave y continuo</strong>, como algo que flota. Nada de saltos.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e11"><div>
-        <label for="v2-e11">Pon <strong>música o TV fuerte</strong> y entra a jugar de nuevo. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Al calibrar avisa <strong>“Hay bastante ruido por ahí”</strong>, te lo explica sin drama y te deja elegir: <strong>“Volver a medir”</strong> o <strong>“Jugar así”</strong>. Si eliges “Jugar así”, el globo <strong>sigue sin moverse solo</strong> con el ruido: solo tendrá que hablar más fuerte.</p>
-        <p class="mal"><span class="et">Mal</span> El globo vuela solo con la música (el umbral no se está midiendo contra el ruido real).</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-e12"><div>
+      <li data-origen="s1" data-cubre="voz-juegos"><input type="checkbox" id="v2-e12"><div>
         <label for="v2-e12"><strong>Micrófono negado:</strong> candado de la barra de direcciones → Micrófono → Bloquear → recarga → intenta jugar. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Pantalla honesta: <strong>“No pude abrir el micrófono”</strong>, con los <strong>3 pasos</strong> para habilitarlo, un botón “Intentar de nuevo” y una salida sin culpa (<em>“la actividad de hoy también se puede hacer sin pantalla”</em>). Nada roto, nada en inglés. <strong>Vuelve a permitirlo al terminar.</strong></p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-e13"><div>
+      <li data-origen="mejora" data-cubre="hecho-para-el"><input type="checkbox" id="v2-e13"><div>
         <label for="v2-e13"><strong>Modo calma</strong> (el botón de arriba a la derecha, dentro del juego). Actívalo y juega. Luego sal y vuelve a entrar. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> Los colores bajan a “atardecer” y <strong>el cambio se nota en toda la pantalla</strong>; desaparecen el medidor y la meta. El globo <strong>NO se pausa</strong>: flota <strong>en el CENTRO del cielo</strong> (mejora del gate S4 — antes se quedaba pegado al borde izquierdo), sube mientras la voz suena y <strong>baja despacio</strong> en el silencio, como un globo de verdad. <strong>En calma NO hay meta ni celebración automática: el juego no “termina” solo</strong> — se cierra cuando tú tocas <strong>“Ya jugamos”</strong>, y ahí sí llega la celebración con lo que de verdad hubo. <em>Es a propósito (sin presión, sin meta que alcanzar).</em> Al volver a entrar, <strong>el modo calma se recordó</strong>.</p>
         <p class="mal"><span class="et">Mal</span> El globo se congela (eso era el defecto que encontraste en el S1) · el cambio de color casi no se ve.</p>
@@ -468,38 +466,30 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~10 min, con micrófono. Sube cuando la voz sube de <strong>tono</strong> (no de volumen). Jugar con la voz —estirarla, subirla, bajarla— es el objetivo; <strong>no hay que decir ninguna palabra</strong>.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v2-f1"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-f1"><div>
         <label for="v2-f1">Selector → <strong>El cohete</strong> → lee tu guion → <strong>“Estamos listos”</strong> → micrófono → calibración. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Arriba, el titular <strong>“Su voz sube el cohete”</strong> lleva <strong>el cohete al lado</strong> — el mismo icono de su tarjeta del selector, para saber dónde estás sin leer (pedido tuyo en el gate; así en los <strong>cuatro</strong> juegos). El guion te dice <strong>tu papel</strong>: “Hazlo tú primero, exagerado y riéndote…”, y aclara que el cohete responde al TONO, no a las palabras. Luego: <strong>“Haz la voz de sirena: aaaAAAaaa”</strong>.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-f2"><div>
+      <li data-origen="s2" data-cubre="voz-juegos"><input type="checkbox" id="v2-f2"><div>
         <label for="v2-f2"><strong>La prueba de fondo:</strong> haz la sirena <strong>con tu propia voz</strong> (no hace falta falsete: empieza donde te salga cómodo y sube desde ahí). Después <strong>grita grave</strong>, bien fuerte. <span class="origen o-s2">S2</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cuando el tono sube, el cohete <strong>sube</strong>; cuando baja, <strong>baja</strong>. Al gritar grave <strong>NO sube</strong>: el volumen no lo mueve. <em>El cohete <strong>se ancla a la voz de quien está jugando</strong> (arreglo de tu hallazgo del 2026-07-12): vuela igual contigo que con él, sin suponer nada de ninguno de los dos.</em></p>
         <p class="mal"><span class="et">Mal</span> Sube cuando gritas fuerte: estaría respondiendo al volumen y el juego sería una mentira. Repórtalo · no responde aunque subas y bajes claramente el tono.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-f3"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-f3"><div>
         <label for="v2-f3">Haz la <strong>sirena completa</strong> (en tu registro agudo): sube y baja la voz <strong>3 veces</strong>, contándolas. Sigue un rato más y luego toca <strong>“Ya jugamos”</strong>. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>El juego NO se termina solo</strong> (ADR-013, tu pedido del bloque F): cada subida-y-bajada es un <strong>HITO</strong> — estalla el <strong>confeti</strong> en el cielo y aparece el contador <strong>“¡Ya subió y bajó N veces!”</strong>. La <strong>capa de nubes y estrellas</strong> pasa hacia abajo <strong>en la SIGUIENTE subida de tu voz</strong> — el mundo corre solo mientras el cohete sube (tu hallazgo de la re-mirada: si pasara en la bajada, la bajada parecería subida). Los hitos son <strong>infinitos</strong>. Cuando TÚ tocas <strong>“Ya jugamos”</strong>, la celebración dice <strong>“¡Tu voz subió y bajó N veces!”</strong> — <strong>el MISMO número del contador</strong> (o más, si seguiste), y coincide con lo que hiciste.</p>
         <p class="mal"><span class="et">Mal</span> El juego se cierra solo (a las 3 o cuando sea) · el número está inflado (dice 8 cuando hiciste 3) o se queda corto · la capa de cielo pasa <strong>mientras tu voz BAJA</strong> (haría parecer subida la bajada) · el confeti o el cielo quedan en <strong>bucle</strong> (es un paso, no una discoteca). Dime cuántas hiciste y cuántas contó.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-f4"><div>
+      <li data-origen="s2" data-cubre="voz-juegos sabe-cuando-hablo"><input type="checkbox" id="v2-f4"><div>
         <label for="v2-f4"><strong>Cállate a mitad</strong> y espera. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> El cohete <strong>se queda quieto y espera</strong>. <strong>No cae, no explota, no hay derrota</strong> — igual que el globo.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-f5"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos sabe-cuando-hablo"><input type="checkbox" id="v2-f5"><div>
         <label for="v2-f5">Con <strong>música o TV de fondo</strong>, sin hablar, mira el cohete un rato. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>No se mueve solo</strong> con ruido, motores, percusión o murmullo: eso no tiene tono, y la app no lo inventa. <strong>Matiz honesto (tu hallazgo del gate):</strong> si en la música hay <strong>alguien CANTANDO agudo y fuerte, sí puede moverlo</strong> — una voz cantada sonando en el cuarto ES una voz con tono, y el medidor no sabe quién canta. No es defecto: es la app negándose a adivinar.</p>
         <p class="mal"><span class="et">Mal</span> El cohete flota o cuenta inversiones con ruido SIN voz (motores, golpes, murmullo): <strong>defecto grave</strong> (el niño creería que su voz hizo algo que no hizo).</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-f6"><div>
-        <label for="v2-f6">Activa el <strong>modo calma</strong> dentro del cohete y sigue jugando. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Colores de atardecer, <strong>sin medidor y sin hitos</strong> (ni contador, ni confeti, ni capa de cielo — carga sensorial) — pero el cohete <strong>sigue respondiendo a tu voz</strong>. Calma no es pausa.</p>
-      </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-f7"><div>
-        <label for="v2-f7"><strong>Micrófono negado</strong> también aquí (bloquéalo y entra al cohete). <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La misma pantalla honesta con los 3 pasos, igual que en el globo. <strong>Vuelve a permitirlo al terminar.</strong> <em>Nota Safari: ahí no se puede revocar el micrófono por sitio — esta prueba va en <strong>Chrome</strong> (diferida junto a E12; la CI la cubre con e2e).</em></p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-f8"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-f8"><div>
         <label for="v2-f8"><strong>Fluidez:</strong> mira solo cómo se mueve el cohete mientras haces la sirena. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sube y baja <strong>suave</strong>, siguiendo la voz sin tirones — desde el gate S4 persigue el tono con el <strong>mismo planeo del globo</strong> (y un poco más de absorción, porque el tono llega a saltos). No debe sentirse “con retraso”: si notas que llega tarde a tu sirena, repórtalo.</p>
         <p class="mal"><span class="et">Mal</span> Va a saltos o vibra en el sitio (el tono estaría llegando sucio) · o al revés: se siente lento, arrastrado, llegando tarde a la voz.</p>
@@ -513,44 +503,40 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
     <p class="meta-bloque chica suave">~8 min. El andamio visual: el dibujo invita a nombrarlo, pero <strong>la app JAMÁS exige la palabra</strong>. Esa es la regla más importante de todo el producto.</p>
     <ul class="pasos">
-      <li data-origen="s2"><input type="checkbox" id="v2-g1"><div>
+      <li data-origen="s2" data-cubre="voz-juegos apuntador sesiones-para-dos"><input type="checkbox" id="v2-g1"><div>
         <label for="v2-g1">Selector → <strong>Palabra y dibujo</strong> → lee tu guion → micrófono → calibración. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> El guion te da tu papel exacto: <strong>“Señala el dibujo, nómbralo UNA vez —‘¡perro!’— y espera tres segundos en silencio.”</strong> Y te avisa: se enciende con <strong>cualquier</strong> sonido, no tiene que pronunciar bien.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-g2"><div>
+      <li data-origen="s2" data-cubre="voz-juegos pictogramas"><input type="checkbox" id="v2-g2"><div>
         <label for="v2-g2">Mira el <strong>dibujo</strong> y la <strong>palabra escrita</strong> debajo. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> El dibujo se entiende de un vistazo y la palabra está en <strong>nuestro español</strong>: debe decir <strong>“carro”</strong> (no “coche”) y <strong>“bus”</strong> (no “autobús”).</p>
         <p class="mal"><span class="et">Mal</span> Aparece una palabra de España, o un dibujo que ni tú reconoces. Dime cuál.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-g3"><div>
+      <li data-origen="mejora" data-cubre="sabe-cuando-hablo celebracion-honesta"><input type="checkbox" id="v2-g3"><div>
         <label for="v2-g3"><strong>LA PRUEBA IMPORTANTE:</strong> di algo que <strong>NO</strong> sea la palabra — un “mmm”, un “aaah”, un “pe”. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> El dibujo <strong>igual se enciende</strong> — y desde el gate S4 el instante <strong>se siente</strong>: el marco hace un <strong>pop</strong> breve y un <strong>halo se expande UNA vez</strong> (pediste un encendido más llamativo; con “reducir animaciones” no hay pop y el borde + el texto siguen contando). Cualquier intento cuenta: él dice palabras de a una y muchas veces solo le sale un pedacito. <strong>Eso también es hablar.</strong></p>
         <p class="mal"><span class="et">Mal</span> Si alguna vez te <strong>exige decir la palabra bien</strong> para avanzar: <strong>defecto gravísimo</strong>. Repórtalo de inmediato — rompe la regla fundacional de la app.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-g4"><div>
+      <li data-origen="s2" data-cubre="celebracion-honesta"><input type="checkbox" id="v2-g4"><div>
         <label for="v2-g4">Lee <strong>lo que dice la app</strong> en el momento en que el dibujo se enciende. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>“¡Le salió la voz! Lo intentó.”</strong> — afirma <em>solo</em> lo que midió (hubo voz). <strong>Nunca</strong> dice “¡dijiste perro!”, porque la app no oye palabras: el que sabe si la dijo <strong>eres tú</strong>.</p>
         <p class="mal"><span class="et">Mal</span> Cualquier frase que dé por hecho que dijo la palabra.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-g8"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-g8"><div>
         <label for="v2-g8"><strong>La celebración de la palabra — la pediste tú en el gate.</strong> El botón del juez ahora vive <strong>al FINAL de la pantalla</strong>, debajo de “Otro dibujo / Ya jugamos”, en letra pequeña y discreta: <strong>“¿Dijo «perro»? Tócalo tú”</strong> (lo pediste más oculto: tu hijo es perspicaz y este control no es suyo). Haz un sonido cualquiera (se enciende normal) y <strong>luego tócalo</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sube una <strong>bandada de globos de colores</strong> por encima del dibujo (una vez, y se van), el borde se pone verde y dice <strong>“¡Dijo la palabra! Lo oíste tú.”</strong> Al terminar, la celebración lo atribuye a <strong>ti</strong>: <em>“Y tú oíste N palabras. Eso lo sabes tú, que estabas ahí.”</em> Además, los <strong>globos fantasma</strong> que viste al entrar por primera vez tienen su defensa: mientras no se ha oído voz, el botón <strong>ignora toques durante el primer segundo</strong> (el click fantasma del diálogo de permisos llega antes que cualquier juicio real).</p>
         <p class="mal"><span class="et">Mal</span> Que la app encienda esa celebración <strong>sola</strong>, sin que la toques — como te pasó al entrar con el permiso recién dado: si lo vuelves a ver, <strong>repórtalo con los pasos exactos</strong> (la defensa nueva debería matarlo) · que el botón llame la atención del niño (es control de adulto, no suyo).</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-g5"><div>
+      <li data-origen="mejora" data-cubre="voz-juegos"><input type="checkbox" id="v2-g5"><div>
         <label for="v2-g5">Toca <strong>“Otro dibujo”</strong> y recorre 5 o 6. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Son de <strong>los temas que elegiste</strong> en el onboarding (bloque B2). Ahí se ve que los temas por fin sirven para algo. El grupo de vehículos ahora se llama <strong>“Transporte”</strong> (tu hallazgo: decía “Carros” pero trae carro, camión, bus, moto, tren, avión y bici — el nombre mentía).</p>
         <p class="mal"><span class="et">Mal</span> Salen dibujos de temas que no elegiste, o siempre los mismos dos.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-g6"><div>
+      <li data-origen="s2" data-cubre="voz-juegos"><input type="checkbox" id="v2-g6"><div>
         <label for="v2-g6">Cuenta cuántos dibujos encendiste y toca <strong>“Ya jugamos”</strong>. <span class="origen o-s2">S2</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>“¡Encendió N dibujos con su voz!”</strong> — el número <strong>coincide</strong>, y aclara otra vez que <em>si dijo la palabra o se acercó, el que lo sabe eres tú: la app no juzga eso y no va a fingir que sí</em>.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-g7"><div>
-        <label for="v2-g7">Activa el <strong>modo calma</strong> aquí también. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Desaparece el contador de dibujos: <strong>ninguna cuenta, ninguna presión</strong>. El dibujo sigue encendiéndose con su voz.</p>
-      </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-g9"><div>
+      <li data-origen="s4" data-cubre="voz-juegos"><input type="checkbox" id="v4-g9"><div>
         <label for="v4-g9">Enciende un dibujo, toca <strong>“Salir”</strong> (arriba a la izquierda) y vuelve a entrar con <strong>“Estamos listos”</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> <strong>No queda rastro de la sesión pasada</strong> (tu regla del gate: “Salir” reinicia por completo): al encender el primer dibujo, el contador dice <strong>“Dibujos encendidos con su voz: 1”</strong> — no 2, no lo que llevaras antes. Los juicios tuyos también arrancan de cero. Vale para los cinco juegos.</p>
         <p class="mal"><span class="et">Mal</span> El contador sigue sumando lo de antes de salir (era el defecto que cazaste en este gate).</p>
@@ -558,123 +544,81 @@
     </ul>
     <div class="promesa"><p><strong>La promesa del bloque:</strong> el juego se mueve con <strong>cualquier</strong> sonido y jamás juzga la palabra. Si alguna vez parece exigirla, es un defecto — no una función.</p></div>
   </section>
-
+<!-- s11:inicio -->
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">H</span><h2>Ajustes, honestidad y borrar datos</h2></div>
+    <div class="bloque-cabeza"><span class="letra">S</span><h2>¿Dijo la palabra? <span class="chica suave">(S11 — una segunda opinión solo para ti)</span></h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
-    <p class="meta-bloque chica suave">~7 min. El cuarto del padre: lo que se puede cambiar, y lo que la app promete y no promete.</p>
+    <p class="meta-bloque chica suave">~12 min, con internet solo la primera vez (la descarga del modelo, unos 40 MB) y <strong>micrófono real o el kit de prueba</strong>. Viene <strong>apagada</strong>. <strong>La app no le dice «no» a nadie</strong>: solo, a veces, te dice «quizás» a ti.</p>
     <ul class="pasos">
-      <li data-origen="s4"><input type="checkbox" id="v4-h6"><div>
-        <label for="v4-h6">Nada más entrar a <strong>Ajustes</strong>, mira <strong>arriba del todo</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El mismo chip <strong>“← Hoy”</strong> que tienen “El rumbo” y “Objetivo”, arriba y con la misma forma (antes la salida era un enlace suelto al final de la página). Los tres cuartos del padre se salen igual.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra"><input type="checkbox" id="v11-s1"><div>
+        <label for="v11-s1">En <strong>Ajustes → «¿Dijo la palabra?»</strong> mira el interruptor <strong>antes de tocarlo</strong>, y luego enciéndelo. <span class="origen o-s11">Nuevo · S11</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Viene <strong>apagado</strong>. Al encenderlo avisa del tamaño <strong>(unos 40 MB)</strong>, muestra el avance y termina en «listo» con el idioma activo. <strong>No baja nada hasta que lo tocas.</strong> Si la descarga falla, el interruptor se queda apagado y lo dice.</p>
+        <p class="mal"><span class="et">Mal</span> Viene encendido · baja algo sin tocarlo · no dice el tamaño.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-h1"><div>
-        <label for="v2-h1">En <strong>Ajustes</strong>, mueve los <strong>interruptores</strong> (modo calma, reducir animaciones) y recarga. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Responden al toque y <strong>quedan guardados</strong> tras recargar.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra sabe-cuando-hablo"><input type="checkbox" id="v11-s2"><div>
+        <label for="v11-s2">Entra a <strong>Palabra y dibujo</strong> y di <strong>la palabra del dibujo</strong> clara, UNA vez (o usa el kit de prueba). Mira debajo de los botones. <span class="origen o-s11">Nuevo · S11</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Aparece, para ti, una línea con un <strong>«?»</strong> y <strong>«Quizás dijo “…”»</strong>. <strong>No celebra</strong>: la celebración sigue siendo solo tu botón. Si dices otra cosa o callas, <strong>no aparece nada</strong>, nunca un «no».</p>
+        <p class="mal"><span class="et">Mal</span> Dice «no» o «incorrecto» · celebra solo · el niño ve el texto · la línea se distingue solo por color.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-h2"><div>
-        <label for="v2-h2">El <strong>modo calma</strong> ya no es solo del globo: compruébalo en <strong>los cuatro juegos de voz</strong> (globo, cohete, palabra y dibujo y el mapa de las vocales). <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> En los cuatro: paleta de atardecer, sin medidor ni meta, sin contadores — y el personaje <strong>sigue respondiendo a la voz</strong>.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra celebracion-honesta"><input type="checkbox" id="v11-s3"><div>
+        <label for="v11-s3">Toca el <strong>botón del juicio</strong> (el tuyo). Luego vuelve a <strong>Ajustes → «Cómo le va»</strong>. <span class="origen o-s11">Nuevo · S11</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Cuatro números (coincidió o no × tú dijiste que sí o que no); con <strong>menos de 20 rondas</strong> dice <strong>«todavía no se puede decir»</strong>. Si le sirve o no <strong>lo decides tú</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Da un porcentaje con pocas rondas · decide por ti · el conteo aparece en el archivo de la otra casa.</p>
       </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-h3"><div>
-        <label for="v2-h3"><strong>“Apodo y temas”</strong>: mira los actuales, cámbialos, guarda, y vuelve a “Hoy”. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El resumen se actualiza y <strong>el progreso sigue intacto</strong>: no vuelve el onboarding y la cápsula que marcaste hecha sigue hecha.</p>
-        <p class="mal"><span class="et">Mal</span> Cambiar el apodo te devuelve al onboarding o borra el día.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra palabras-gemelas"><input type="checkbox" id="v11-s4"><div>
+        <label for="v11-s4">Entra a <strong>Palabras gemelas</strong> con el reconocedor encendido y toca <strong>«Escuchar con el reconocedor»</strong>. <span class="origen o-s11">Nuevo · S11</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El micrófono <strong>solo se abre cuando tú lo tocas</strong> (el navegador te lo pregunta); la línea te dice cuál de las dos cree que oyó, siempre con «quizás», y tu marca sigue siendo la que cuenta.</p>
+        <p class="mal"><span class="et">Mal</span> Abre el micrófono solo · marca por ti.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v2-h4"><div>
-        <label for="v2-h4">Lee <strong>“Qué mide y qué NO mide esta app”</strong> entero. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Declara sin rodeos: mide que hubo voz, cuánto duró y cómo cambió el tono; <strong>no</strong> reconoce palabras, <strong>no</strong> es terapia, <strong>no</strong> diagnostica, y <strong>el audio nunca se graba ni sale del dispositivo</strong>. Y se declara complementaria a las <strong>terapias integrales del lenguaje</strong> de tu hijo — tu pedido del gate: no solo fonoaudiología, todo el equipo que lo atiende (terapia ocupacional, psicología, pedagogía…). Ese término reemplazó a “fonoaudiología” en TODA la app. ¿Te suena honesto y en tu idioma?</p>
-        <p class="mal"><span class="et">Mal</span> Cualquier promesa de resultados, plazos o mejora “garantizada” · que quede algún “fonoaudiología” suelto donde debería hablar del equipo completo.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra"><input type="checkbox" id="v11-s5"><div>
+        <label for="v11-s5">En Ajustes enciende <strong>«Mostrarle al niño una animación suave»</strong> y juega Palabra y dibujo diciendo la palabra. <span class="origen o-s11">Nuevo · S11</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Viene apagada y <strong>solo existe con el reconocedor encendido</strong>. Encendida, el dibujo muestra un <strong>halo suave</strong>, <strong>sin texto, sin veredicto</strong>, más tenue que la celebración que tú disparas, y no cuenta. Con «reducir animaciones» solo cambia la transparencia.</p>
+        <p class="mal"><span class="et">Mal</span> Aparece una palabra o un «bien» en la pantalla del niño · reemplaza la celebración · cuenta como acierto.</p>
       </div></li>
-      <li data-origen="s2"><input type="checkbox" id="v2-h5"><div>
-        <label for="v2-h5">Lee <strong>“Acerca de los dibujos”</strong> (sección nueva). <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>ARASAAC</strong> (autor Sergio Palao · Gobierno de Aragón · licencia CC BY-NC-SA). Es una obligación legal de su licencia, y además es lo correcto.</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-h6"><div>
-        <label for="v2-h6"><strong>Claro u oscuro</strong> (sección nueva en Ajustes, tras tu hallazgo del 2026-07-12): prueba las tres opciones — <strong>El del sistema · Claro · Oscuro</strong> — y recarga. Luego entra a un juego. <span class="origen o-s2">S2</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Tu elección <strong>le gana al sistema</strong> (con el computador en oscuro puedes ver la app clara) y <strong>sobrevive a la recarga sin parpadear</strong>. Con “El del sistema” vuelve a seguir a tu computador. Y pase lo que pase, <strong>los juegos del niño siguen claros SIEMPRE</strong>: su mundo no cambia de color según la hora.</p>
-        <p class="mal"><span class="et">Mal</span> Al recargar parpadea del tema del sistema al tuyo · el juego del niño se pone oscuro.</p>
-      </div></li>
-      <li data-origen="s7"><input type="checkbox" id="v7-h1"><div>
-        <label for="v7-h1">En <strong>Ajustes</strong>, busca <strong>“Idioma / Language”</strong> y toca <strong>English</strong>; luego recorre <strong>Hoy</strong>, <strong>Objetivo</strong>, <strong>Rumbo</strong> y <strong>Ajustes</strong>. <span class="origen o-s7">Nuevo · S7</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Todo cambia a inglés <strong>sin recargar</strong>; el botón elegido lleva una <strong>«✓»</strong> además del color; la cápsula del día es <strong>la misma</strong> que tenías en español. El Objetivo se prueba aparte, en la prueba nueva de este bloque.</p>
-        <p class="mal"><span class="et">Mal</span> Queda texto en español a medias · la cápsula de hoy es otra · el cambio pide recargar.</p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v7-h2"><div>
-        <label for="v7-h2">Con English activo, abre los juegos y toca <strong>Words</strong> y <strong>Twins</strong>; después juega el <strong>globo</strong>. Vuelve a <strong>Español</strong> al terminar. <span class="origen o-mejora">Mejorado en S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Words y Twins <strong>se practican en inglés</strong>, con palabras, dibujos y parejas de sonidos del inglés, y <strong>sin tarjeta de «solo en español»</strong>; Twins no pide el micrófono; el globo juega igual que en español.</p>
-        <p class="mal"><span class="et">Mal</span> Aparece una tarjeta de «solo en español» · las palabras salen en español · Twins pide micrófono.</p>
-      </div></li>
-      <li data-origen="s8"><input type="checkbox" id="v8-h1"><div>
-        <label for="v8-h1">Con English activo, abre <strong>Objetivo</strong>, toca una sugerencia (por ejemplo <strong>animals</strong>) y luego escribe media palabra, como <strong>“anim”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Las sugerencias y los chips salen <strong>en inglés</strong>, la tarjeta <strong>no avisa</strong> de ningún idioma ajeno y el aviso de lo que encuentra habla de palabras en inglés.</p>
-        <p class="mal"><span class="et">Mal</span> Los chips salen en español · aparece un aviso de «solo español».</p>
-      </div></li>
-      <li data-origen="s8"><input type="checkbox" id="v8-h2"><div>
-        <label for="v8-h2">Con English activo, abre <code>/mirada</code> y toca <strong>Español</strong> y <strong>English</strong> en el selector de arriba. <span class="origen o-s8">Nuevo · S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Todo el documento («La pirámide, en casa») cambia de idioma <strong>sin recargar</strong>, el botón elegido lleva una <strong>«✓»</strong> además del color, y en cada idioma se lee escrito para él (no traducido palabra por palabra). Al imprimir, el selector no sale.</p>
-        <p class="mal"><span class="et">Mal</span> Queda texto en el otro idioma a medias · el selector tapa el contenido en el teléfono.</p>
-      </div></li>
-      <li data-origen="s8"><input type="checkbox" id="v8-h3"><div>
-        <label for="v8-h3">En el <strong>Estudio</strong>, entra a <strong>“Videos de la familia”</strong>. Elige un clip corto de tu galería, dile qué muestra (<strong>pedir, saludar o jugar</strong>) y míralo. Luego bórralo con <strong>dos toques</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La app <strong>no abre la cámara</strong> en ningún momento: solo el selector de archivos. El clip se ve y se oye, queda <strong>solo en este dispositivo</strong> y se va con el segundo toque. Un archivo que no es video, o muy largo o pesado, se rechaza con un motivo claro.</p>
-        <p class="mal"><span class="et">Mal</span> Se enciende la cámara · el clip sigue ahí tras borrarlo · un rechazo sin explicación.</p>
-      </div></li>
-      <li data-origen="s8"><input type="checkbox" id="v8-h4"><div>
-        <label for="v8-h4">Con un clip guardado, ve a <strong>Ajustes → Borrar mis datos</strong> y confirma; luego vuelve a <strong>“Videos de la familia”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La videoteca queda <strong>vacía</strong>: borrar tus datos también borra los videos.</p>
-        <p class="mal"><span class="et">Mal</span> El clip sigue guardado después de borrar todo.</p>
-      </div></li>
-      <li data-origen="s8"><input type="checkbox" id="v8-h5"><div>
-        <label for="v8-h5">Lee <strong>“Acerca de las palabras”</strong> en Ajustes. <span class="origen o-s8">Nuevo · S8</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>Google Books Ngram</strong> bajo la licencia <strong>CC BY 3.0</strong> (corrige el crédito anterior, que era otro).</p>
-        <p class="mal"><span class="et">Mal</span> Nombra otra fuente o licencia · falta el crédito.</p>
-      </div></li>
-      <li data-origen="s9"><input type="checkbox" id="v9-h1"><div>
-        <label for="v9-h1">Abre <strong>Hoy</strong> y baja hasta <strong>“Y también hoy · contacto visual”</strong>. Cambia la fecha del aparato un día y vuelve a mirar. <span class="origen o-s9">Nuevo · S9</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Debajo de la cápsula de habla hay <strong>una sola actividad de mirada</strong>, con <strong>tu línea primero</strong>, cuánto dura y lo que no se hace, y dice <strong>«Sin pantalla»</strong>. Cambia de un día a otro y no repite en la semana. En inglés sale escrita en inglés.</p>
-        <p class="mal"><span class="et">Mal</span> Salen varias actividades de mirada a la vez · la actividad va antes que tu línea · repite al día siguiente.</p>
-      </div></li>
-      <li data-origen="s9"><input type="checkbox" id="v9-h2"><div>
-        <label for="v9-h2">En <strong>Estudio → “Cuentos de casa”</strong>, escribe <strong>“trenes, animales”</strong> y una palabra que practican, toca <strong>Guardar</strong> y luego <strong>“Descargar el pedido”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Se descarga un archivo <code>pedido-….json</code> que lleva <strong>solo los gustos y las palabras</strong>: ni nombre, ni edad, ni voz. Si escribes un número como gusto, la app lo rechaza con un aviso.</p>
-        <p class="mal"><span class="et">Mal</span> El archivo trae algo más que los gustos y las palabras · un número entra como gusto.</p>
-      </div></li>
-      <li data-origen="s9"><input type="checkbox" id="v9-h3"><div>
-        <label for="v9-h3">Abre <code>/cuentos</code> desde <strong>Hoy → “Un cuento para leer juntos”</strong> y lee un cuento de la app, página por página. <span class="origen o-s9">Nuevo · S9</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Arriba va <strong>el guion del adulto</strong>; cada página tiene texto grande y <strong>una palabra enorme</strong>; los botones son grandes; no hay tiempo ni puntaje. Los seis cuentos de la app aparecen en el idioma activo, <strong>sin pasos que exijan decir la palabra</strong>.</p>
-        <p class="mal"><span class="et">Mal</span> Hay cronómetro, puntaje o un «¡muy bien!» automático · el texto o los botones quedan chicos.</p>
-      </div></li>
-      <li data-origen="s9"><input type="checkbox" id="v9-h4"><div>
-        <label for="v9-h4">Si tienes un lote de <code>/bandeja</code>, en <strong>Cuentos de casa → “Traer un lote”</strong> elige el archivo. Si no, <strong>elige un archivo cualquiera que no sea un lote</strong>. Aprueba uno y rechaza otro; luego abre <code>/cuentos</code>. <span class="origen o-s9">Nuevo · S9</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Un archivo que no es lote dice que <strong>no entró nada</strong>. En un lote, cada cuento <strong>espera tu lectura</strong>: solo el que <strong>apruebas</strong> aparece del lado del niño; el rechazado no. La app <strong>no hace ninguna petición a internet</strong>.</p>
-        <p class="mal"><span class="et">Mal</span> Un cuento sin aprobar aparece del lado del niño · un archivo ajeno entra a medias.</p>
-      </div></li>
-      <li data-origen="s9"><input type="checkbox" id="v9-h5"><div>
-        <label for="v9-h5">En <strong>Cuentos de casa → “Grabar mi voz”</strong>, graba una página. Luego, del lado del niño, abre ese cuento y toca <strong>“Con mi voz grabada”</strong> y <strong>“▶ Tu voz”</strong>; después toca <strong>“Lo leo yo”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Suena <strong>tu voz</strong> (no una voz de máquina) y el modo activo lleva una <strong>«✓»</strong> además del color. «Lo leo yo» deja solo el texto. Después de <strong>Ajustes → Borrar mis datos</strong>, los cuentos importados y las grabaciones desaparecen.</p>
-        <p class="mal"><span class="et">Mal</span> Suena una voz sintética · la grabación sigue tras borrar tus datos · el modo activo se distingue solo por color.</p>
-      </div></li>
-      <li data-origen="s1"><input type="checkbox" id="v2-h7"><div>
-        <label for="v2-h7"><strong>DE ÚLTIMO</strong>, cuando termines toda la guía: <strong>“Borrar mis datos”</strong> → confirma. <span class="origen o-s1">S1</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Vuelve al <strong>onboarding como el primer día</strong>: apodo, temas, progreso — todo se fue. Nada queda escondido.</p>
+      <li data-origen="s11" data-cubre="dijo-palabra"><input type="checkbox" id="v11-s6"><div>
+        <label for="v11-s6">Toca <strong>«Borrar el reconocedor»</strong>. Mira que el interruptor se apague. <span class="origen o-s11">Nuevo · S11</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El modelo se va del aparato, el interruptor queda apagado y el juego sigue igual que antes. <strong>Con internet cortado, el juego con el reconocedor encendido no falla ni pide nada.</strong></p>
+        <p class="mal"><span class="et">Mal</span> Sigue «listo» tras borrar · el juego se rompe sin internet.</p>
       </div></li>
     </ul>
+    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> si el «quizás» te sirve con su voz o lo descartas (<strong>tu decisión, con nombre</strong>) · si el texto del aviso de 40 MB se entiende · si la animación suave le agrada o la dejas apagada.</p></div>
   </section>
+<!-- s11:fin -->
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">I</span><h2>La biblioteca — tu veredicto, EN EL CATÁLOGO</h2></div>
-    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>docs/CATALOGO-CAPSULAS.html</code> — <strong>este bloque NO se revisa en la app</strong>: se revisa en el catálogo (doble clic al archivo, sin internet). La app solo muestra una cápsula por día; el catálogo trae <strong>las 50 enteras</strong>.</p>
-    <p class="meta-bloque chica suave">Solo leer, cuando quieras. Aquí <strong>no hay nada técnico que probar</strong>: es tu <strong>aprobación de padre</strong>. En el S1 aprobaste las 14 cápsulas una por una; <strong>esas 14 siguen adentro</strong>, ahora con 36 más (50 en total). <span class="origen o-mejora">Mejorado en S4</span></p>
-    <p class="chica suave"><strong>Cómo revisarlas:</strong> abre el catálogo y léelas de corrido, marcando la casilla “Revisada” de cada una (tu avance se guarda). Cada cápsula trae su explicación, su línea textual, su actividad y su fuente — <strong>tal cual viven en la app</strong> (el catálogo se genera del contenido real). Los grupos de abajo son tu mapa: resumen de qué va cada bloque y qué juzgar en él. Si además quieres verlas en pantalla real, la cápsula del día está en <code>/</code> y la etapa se cambia en <code>/ajustes</code>. <strong>Qué esperar de cada una:</strong> que la línea la <strong>dirías tal cual</strong> en tu casa, que la actividad se pueda hacer <strong>hoy</strong> y que reconozcas <strong>tu día real</strong> en ella. Si una no cumple eso, dime cuál (por su título) y por qué — se reemplaza.</p>
+    <div class="bloque-cabeza"><span class="letra">L</span><h2>Palabras gemelas <span class="chica suave">(el 4.º juego, sin micrófono, nuevo)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
+    <p class="meta-bloque chica suave">~6 min. Dos dibujos que suenan casi igual (pato/gato, mano/mono). <strong>No usa micrófono</strong>: es co-uso puro — el que oye la palabra eres tú.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v4-i1"><div>
-        <label for="v4-i1">Abre <code>docs/CATALOGO-CAPSULAS.html</code>, lee <strong>las 50 de corrido</strong> marcando la casilla <strong>“Revisada”</strong> de cada una, y trae tu veredicto. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El catálogo trae las <strong>preguntas de juicio de cada grupo</strong> (“Qué juzgar aquí”) — y las tres de siempre por cápsula: la línea la <strong>dirías tal cual</strong> en tu casa, la actividad se puede hacer <strong>hoy</strong>, y reconoces <strong>tu día real</strong> en ella. Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (ninguna se botó). Cuando el contador del catálogo llegue a <strong>50 de 50</strong>, marca esta única casilla y el bloque queda listo.</p>
-        <p class="mal"><span class="et">Mal</span> Una cápsula cuya línea no dirías, cuya actividad no se puede hacer hoy, o donde no reconoces tu casa — repórtala <strong>por su título</strong>: se reemplaza.</p>
+      <li data-origen="s3" data-cubre="palabras-gemelas"><input type="checkbox" id="v3-l1"><div>
+        <label for="v3-l1">Desde el selector, entra a <strong>“Palabras gemelas”</strong> y lee el guion. <span class="origen o-s3">S3</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Tu guion: <strong>“Señala los dos dibujos, pídele que diga UNO, y marca tú el que oíste.”</strong> <strong>NO pide permiso de micrófono</strong> ni mide silencio.</p>
+        <p class="mal"><span class="et">Mal</span> Pide el micrófono: gemelas no debe usarlo nunca.</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="palabras-gemelas sesiones-para-dos"><input type="checkbox" id="v3-l2"><div>
+        <label for="v3-l2"><strong>Juega una ronda con él.</strong> Aparecen dos dibujos; pídele que diga uno; <strong>marca tú</strong> el que oíste en la línea discreta <strong>“¿Cuál oíste?”</strong> de abajo (tu stopper del gate: los botonezotes “Oí «pato»” desaparecieron). <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Dos dibujos grandes con su palabra. Al marcar, <strong>el dibujo elegido FESTEJA</strong> como en palabra↔objeto: se enciende con su pop y su halo, <strong>suena la palabra con tu voz</strong> (si la grabaste) y aparece <strong>“¡Dijo «pato»!”</strong> con el botón <strong>“Siguiente pareja”</strong> — tú decides cuándo seguir. Arriba, el contador <strong>“Palabras que le oíste: N”</strong> sube. La app <strong>no dice si acertó</strong> — celebra lo que TÚ marcaste. <em>Este juicio de padre ninguna máquina lo da.</em></p>
+        <p class="mal"><span class="et">Mal</span> Marcas y no pasa nada visible · el festejo aparece sin que tú marcaras (el niño no puede auto-certificarse) · la app dice “correcto/acertó”.</p>
+      </div></li>
+      <li data-origen="s3" data-cubre="palabras-gemelas"><input type="checkbox" id="v3-l3"><div>
+        <label for="v3-l3">En otra ronda, toca <strong>“Hoy solo miramos esta”</strong>. <span class="origen o-s3">S3</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Avanza sin marcar y <strong>sin castigo</strong>: mirar también cuenta.</p>
+      </div></li>
+      <li data-origen="s3" data-cubre="palabras-gemelas celebracion-honesta"><input type="checkbox" id="v3-l4"><div>
+        <label for="v3-l4">Termina las <strong>6 rondas</strong> y mira la celebración. <span class="origen o-s3">S3</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Honesta: <strong>“¡Jugaron 6 rondas de gemelas!”</strong> y <strong>“Tú marcaste lo que oíste en N”</strong> — nunca “acertó”. Si saltaste todas: <strong>“Estar juntos frente al juego ya cuenta.”</strong></p>
+        <p class="mal"><span class="et">Mal</span> Dice que el niño “acertó” o “ganó”, o cuenta aciertos que la app no puede saber.</p>
+      </div></li>
+      <li data-origen="s3" data-cubre="palabras-gemelas"><input type="checkbox" id="v3-l5"><div>
+        <label for="v3-l5">En <strong>Ajustes</strong> cambia la etapa a <strong>“Sonidos e intentos”</strong> y entra a gemelas. Luego vuelve a <strong>“Palabras sueltas”</strong>. <span class="origen o-s3">S3</span></label>
+        <p class="esperar"><span class="et">Esperado</span> En “Sonidos e intentos” dice con cariño <strong>“Las gemelas llegan un poquito después”</strong> (necesita que ya diga palabras sueltas) y no rompe. En “Palabras sueltas” sí se juega.</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="palabras-gemelas sesiones-para-dos"><input type="checkbox" id="v3-l6"><div>
+        <label for="v3-l6">Si grabaste las palabras del par (bloque J), <strong>toca cada dibujo</strong> de la ronda — y deja que él también los toque. <span class="origen o-mejora">Mejorado en S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> <strong>El dibujo mismo es el botón</strong> (trae una insignia de altavoz en la esquina): al tocarlo suena la palabra <strong>con tu voz</strong> — el niño puede explorar la pareja mínima antes de intentar. Tocar el dibujo <strong>solo lo hace sonar, JAMÁS marca</strong>: el juicio sigue siendo tuyo, en la línea de abajo. Sin grabación, el dibujo se queda quieto y sin insignia.</p>
+        <p class="mal"><span class="et">Mal</span> Tocar un dibujo dispara el festejo o avanza la ronda — eso sería el niño certificándose solo; repórtalo.</p>
       </div></li>
     </ul>
-    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> qué bloque te sirve tal cual · qué cápsula concreta cambiarías · <strong>qué rutina de TU casa falta</strong> (mejor 50 buenas que 60 de relleno).</p></div>
   </section>
 
   <section class="bloque">
@@ -682,31 +626,31 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/estudio</code></p>
     <p class="meta-bloque chica suave">~10 min. La estrella del S3: grabar <strong>tu</strong> voz para que los juegos suenen con ella. Necesitas el micrófono. <strong>Graba primero unas 5–6 palabras aquí</strong>: el bloque K las usa.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v3-j1"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-j1"><div>
         <label for="v3-j1">Entra a <strong>Ajustes → “La voz de la familia” → “Grabar mi voz”</strong> (o escribe <code>/estudio</code> en la URL). Lee el encabezado. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Arriba del todo, el chip estándar <strong>“← Ajustes”</strong> (tu pedido del gate: la salida es siempre la misma y va arriba — el enlace suelto del final desapareció). Título <strong>“La voz de la familia”</strong> y, bien claro, <strong>“La voz de tu hijo nunca se graba.”</strong> Abajo, una barra de <strong>“Con tu voz vas”</strong> (empieza en 0 de N).</p>
         <p class="mal"><span class="et">Mal</span> Que en algún lado diga o dé a entender que se graba la voz del niño. Eso es la promesa más delicada de la app.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-j2"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-j2"><div>
         <label for="v3-j2"><strong>Graba tu voz de verdad.</strong> Toca <strong>“Grabar mi voz”</strong> → sale una palabra (p. ej. “perro”) → toca <strong>“Grabar”</strong>, dila, toca el botón rojo <strong>“■ Parar”</strong>, y <strong>“Escuchar cómo quedó”</strong>. <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Pide el micrófono una vez; mientras grabas aparece un <strong>botón rojo “■ Parar”</strong> (se VE como botón, con fondo — tu ajuste del gate: antes era un texto que confundía), debajo la línea <strong>“● Grabando…”</strong> con el punto latiendo, y <strong>una barra baila con tu voz</strong> (tu stopper del gate: sin ella grababas a ciegas) con la nota <em>“Si la barra se mueve cuando hablas, te está oyendo bien.”</em> Al escuchar suena <strong>tu voz</strong>, clara y completa. <em>Esto ninguna máquina lo puede probar: es tu voz real en tu micrófono.</em></p>
         <p class="mal"><span class="et">Mal</span> No graba nada · sale muda o cortada · la app se rompe al pedir el micrófono · la barra se queda QUIETA mientras hablas (estarías grabando a ciegas otra vez — repórtalo).</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-j3"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-j3"><div>
         <label for="v3-j3">Toca <strong>“Está bien, guardar”</strong> y sigue con <strong>4–5 palabras más</strong>. Si alguna no te gustó, <strong>“Regrabar”</strong>. Mira el contador <strong>“N de 20 de esta tanda”</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cada “guardar” <strong>avanza el número</strong> (1 de 20 → 2 de 20…); “Regrabar” te deja repetir la misma sin avanzar. El contador dice <strong>“de esta tanda”</strong>: el lote propone máximo 20 por sesión — el reto completo (58 palabras, 2 consignas, 3 celebraciones) se sigue en <strong>“Con tu voz vas”</strong>, en el banco. Y cada botón lleva ahora <strong>su icono a la izquierda</strong> (tu pedido del gate): altavoz en “Escuchar cómo quedó”, chulo en “Está bien, guardar”, flecha que da la vuelta en “Regrabar” — y micrófono en “Grabar”. Al tocar “Escuchar cómo quedó”, debajo aparece <strong>una barrita que se va llenando con el avance del audio</strong> (tu pedido del gate: antes escuchar era un acto de fe).</p>
         <p class="mal"><span class="et">Mal</span> Tocas “Escuchar cómo quedó” y no aparece la barrita o no avanza mientras suena — repórtalo.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-j4"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-j4"><div>
         <label for="v3-j4">Sal del lote con <strong>“← Tu banco de voz”</strong> (arriba — atrás es la pantalla ANTERIOR, tu regla: del lote se vuelve al banco, y solo desde el banco “← Ajustes”). Mira <strong>“Con tu voz vas”</strong> y <strong>“Lo que ya grabaste”</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Caes directo en tu banco: la cobertura de <strong>Palabras</strong> subió (ya no es 0) y lo que grabaste aparece en una lista <strong>agrupada por los tres grupos</strong> (Palabras · Consignas del juego · Celebraciones, cada uno con su conteo) y <strong>numerada dentro de cada grupo</strong>, donde cada botón lleva su icono: <strong>altavoz en “Escuchar”</strong> y <strong>papelera en “Borrar”</strong> (tus pedidos del gate) — salir y volver <strong>no perdió nada</strong> (el banco es local y persiste). Y si sales <strong>en plena grabación</strong>, el micrófono se apaga solo.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-j5"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-j5"><div>
         <label for="v3-j5">En la lista, <strong>“Escuchar”</strong> una y <strong>“Borrar”</strong> otra. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> “Escuchar” suena tu voz y <strong>en esa fila aparece la barrita de avance</strong> (sabes cuál suena y cuánto va). “Borrar” pide un <strong>segundo toque</strong>: el botón se pone rojo con <strong>“¿Seguro?”</strong> (si te arrepientes, espera unos segundos y se desarma solo); al confirmar, la fila <strong>se despide con un desvanecido</strong>, la numeración se corre y <strong>la cobertura baja</strong> — el borrado se NOTA, tu pedido del gate.</p>
         <p class="mal"><span class="et">Mal</span> Un solo toque borra sin preguntar · borras y la lista queda igual · la barrita suena en una fila distinta a la que tocaste.</p>
       </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-j6"><div>
+      <li data-origen="s3" data-cubre="voz-familia"><input type="checkbox" id="v3-j6"><div>
         <label for="v3-j6">Si tu navegador te deja <strong>negar el micrófono</strong> (candado de la barra de direcciones → bloquear → recarga), entra al lote e intenta grabar. <span class="origen o-s3">S3</span></label>
         <p class="esperar"><span class="et">Esperado</span> No se rompe: dice <strong>“No pude abrir el micrófono”</strong> y te explica cómo darle permiso. <span class="suave">(Si no quieres tocar permisos, sáltala: la cubre un test automático.)</span></p>
       </div></li>
@@ -719,25 +663,25 @@
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar/palabras</code> — con al menos una palabra ya grabada en el estudio (bloque J)</p>
     <p class="meta-bloque chica suave">~6 min. <strong>Necesitas haber grabado en el bloque J.</strong> Ahora los juegos suenan con tu voz.</p>
     <ul class="pasos">
-      <li data-origen="s3"><input type="checkbox" id="v3-k1"><div>
+      <li data-origen="s3" data-cubre="voz-familia"><input type="checkbox" id="v3-k1"><div>
         <label for="v3-k1">Entra a <strong>“Palabra y dibujo”</strong> y juega hasta que salga <strong>una palabra que grabaste</strong>. <span class="origen o-s3">S3</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Al aparecer el dibujo <strong>suena tu voz</strong> diciendo la palabra, y hay un <strong>botón de altavoz redondo y grande</strong> (el niño lo puede tocar) que la <strong>repite</strong>. <em>“El nombre vive en la cosa”, con una voz que él conoce — eso solo lo juzgas tú.</em></p>
         <p class="mal"><span class="et">Mal</span> No suena aunque grabaste esa palabra (revisa que el toggle esté activo) · suena una voz que no es la tuya.</p>
       </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-k2"><div>
+      <li data-origen="s3" data-cubre="voz-familia"><input type="checkbox" id="v3-k2"><div>
         <label for="v3-k2">Toca <strong>“Otro dibujo”</strong> varias veces, mezclando palabras grabadas y no grabadas. <span class="origen o-s3">S3</span></label>
         <p class="esperar"><span class="et">Esperado</span> Las grabadas suenan con tu voz y muestran el altavoz; las <strong>no grabadas quedan mudas</strong> (sin altavoz) y el juego <strong>funciona igual que antes</strong>, sin error ni silencio roto.</p>
       </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-k3"><div>
+      <li data-origen="s3" data-cubre="voz-familia"><input type="checkbox" id="v3-k3"><div>
         <label for="v3-k3">Con el <strong>volumen del computador alto</strong> y el micrófono abierto, toca el altavoz para oír tu voz por los parlantes <strong>sin que el niño hable</strong>. <span class="origen o-s3">S3</span></label>
         <p class="esperar"><span class="et">Esperado</span> El dibujo <strong>no se enciende</strong> por el eco de tu propia voz grabada: solo la voz de quien juega debe encenderlo. <em>Donde esto de verdad se ve es en la <strong>tablet con parlante</strong> (lista diferida): con audífonos casi no hay eco.</em></p>
         <p class="mal"><span class="et">Mal</span> El dibujo se enciende solo con el eco del parlante (contaría la voz grabada como si fuera la del niño). Repórtalo.</p>
       </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-k4"><div>
+      <li data-origen="s3" data-cubre="voz-familia"><input type="checkbox" id="v3-k4"><div>
         <label for="v3-k4">Ve a <strong>Ajustes → “Usar la voz de la familia”</strong> y <strong>apágalo</strong>. Vuelve al juego. Luego enciéndelo otra vez. <span class="origen o-s3">S3</span></label>
         <p class="esperar"><span class="et">Esperado</span> Apagado: el dibujo ya <strong>no suena</strong> ni muestra altavoz (pero <strong>no se borró nada</strong>). Encendido: vuelve a sonar. El banco sigue intacto.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-k5"><div>
+      <li data-origen="mejora" data-cubre="voz-familia"><input type="checkbox" id="v3-k5"><div>
         <label for="v3-k5">En tu banco, toca <strong>“Grabar” junto a “Consignas del juego”</strong> (tu stopper del gate: cada grupo de “Con tu voz vas” tiene ahora su propio botón — ya no hay que atravesar las decenas de palabras) y graba las dos <strong>consignas</strong> (“Haz la voz de sirena: aaaAAAaaa” y “Haz sonar tu voz: aaaaah”). Luego entra al <strong>globo</strong> y al <strong>cohete</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Al entrar a la tanda acotada, el contador dice <strong>“1 de 2 de esta tanda · Consignas del juego”</strong> — solo las consignas, nada más. Ya grabadas: debajo del título del juego aparece un <strong>altavoz redondo</strong> que dice la invitación <strong>con tu voz</strong>. Mientras tu voz grabada suena, <strong>el globo/cohete no se mueve solo</strong> (el medidor espera al niño). Sin grabación, no hay altavoz y el juego es el de siempre.</p>
         <p class="mal"><span class="et">Mal</span> El globo vuela o el cohete sube <strong>mientras suena tu grabación</strong> sin que nadie hable: la guarda del bucle estaría rota — repórtalo enseguida.</p>
@@ -746,77 +690,19 @@
   </section>
 
   <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">L</span><h2>Palabras gemelas <span class="chica suave">(el 4.º juego, sin micrófono, nuevo)</span></h2></div>
-    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/jugar</code></p>
-    <p class="meta-bloque chica suave">~6 min. Dos dibujos que suenan casi igual (pato/gato, mano/mono). <strong>No usa micrófono</strong>: es co-uso puro — el que oye la palabra eres tú.</p>
-    <ul class="pasos">
-      <li data-origen="s3"><input type="checkbox" id="v3-l1"><div>
-        <label for="v3-l1">Desde el selector, entra a <strong>“Palabras gemelas”</strong> y lee el guion. <span class="origen o-s3">S3</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Tu guion: <strong>“Señala los dos dibujos, pídele que diga UNO, y marca tú el que oíste.”</strong> <strong>NO pide permiso de micrófono</strong> ni mide silencio.</p>
-        <p class="mal"><span class="et">Mal</span> Pide el micrófono: gemelas no debe usarlo nunca.</p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-l2"><div>
-        <label for="v3-l2"><strong>Juega una ronda con él.</strong> Aparecen dos dibujos; pídele que diga uno; <strong>marca tú</strong> el que oíste en la línea discreta <strong>“¿Cuál oíste?”</strong> de abajo (tu stopper del gate: los botonezotes “Oí «pato»” desaparecieron). <span class="origen o-mejora">Mejorado en S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Dos dibujos grandes con su palabra. Al marcar, <strong>el dibujo elegido FESTEJA</strong> como en palabra↔objeto: se enciende con su pop y su halo, <strong>suena la palabra con tu voz</strong> (si la grabaste) y aparece <strong>“¡Dijo «pato»!”</strong> con el botón <strong>“Siguiente pareja”</strong> — tú decides cuándo seguir. Arriba, el contador <strong>“Palabras que le oíste: N”</strong> sube. La app <strong>no dice si acertó</strong> — celebra lo que TÚ marcaste. <em>Este juicio de padre ninguna máquina lo da.</em></p>
-        <p class="mal"><span class="et">Mal</span> Marcas y no pasa nada visible · el festejo aparece sin que tú marcaras (el niño no puede auto-certificarse) · la app dice “correcto/acertó”.</p>
-      </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-l3"><div>
-        <label for="v3-l3">En otra ronda, toca <strong>“Hoy solo miramos esta”</strong>. <span class="origen o-s3">S3</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Avanza sin marcar y <strong>sin castigo</strong>: mirar también cuenta.</p>
-      </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-l7"><div>
-        <label for="v4-l7">En plena ronda, toca <strong>“Salir”</strong> (arriba a la izquierda — tu hallazgo del gate: la ronda no tenía puerta) y vuelve a entrar con <strong>“Estamos listos”</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> “Salir” te deja en el <strong>guion</strong> (y de ahí “← Juegos” va al selector). Al volver a entrar, el juego está <strong>reiniciado por completo</strong>: Ronda 1 y “Palabras que le oíste: 0” — tu regla del bloque G, ahora también en gemelas.</p>
-        <p class="mal"><span class="et">Mal</span> Al volver, la ronda o el contador conservan lo de antes.</p>
-      </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-l4"><div>
-        <label for="v3-l4">Termina las <strong>6 rondas</strong> y mira la celebración. <span class="origen o-s3">S3</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Honesta: <strong>“¡Jugaron 6 rondas de gemelas!”</strong> y <strong>“Tú marcaste lo que oíste en N”</strong> — nunca “acertó”. Si saltaste todas: <strong>“Estar juntos frente al juego ya cuenta.”</strong></p>
-        <p class="mal"><span class="et">Mal</span> Dice que el niño “acertó” o “ganó”, o cuenta aciertos que la app no puede saber.</p>
-      </div></li>
-      <li data-origen="s3"><input type="checkbox" id="v3-l5"><div>
-        <label for="v3-l5">En <strong>Ajustes</strong> cambia la etapa a <strong>“Sonidos e intentos”</strong> y entra a gemelas. Luego vuelve a <strong>“Palabras sueltas”</strong>. <span class="origen o-s3">S3</span></label>
-        <p class="esperar"><span class="et">Esperado</span> En “Sonidos e intentos” dice con cariño <strong>“Las gemelas llegan un poquito después”</strong> (necesita que ya diga palabras sueltas) y no rompe. En “Palabras sueltas” sí se juega.</p>
-      </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v3-l6"><div>
-        <label for="v3-l6">Si grabaste las palabras del par (bloque J), <strong>toca cada dibujo</strong> de la ronda — y deja que él también los toque. <span class="origen o-mejora">Mejorado en S4</span></label>
-        <p class="esperar"><span class="et">Esperado</span> <strong>El dibujo mismo es el botón</strong> (trae una insignia de altavoz en la esquina): al tocarlo suena la palabra <strong>con tu voz</strong> — el niño puede explorar la pareja mínima antes de intentar. Tocar el dibujo <strong>solo lo hace sonar, JAMÁS marca</strong>: el juicio sigue siendo tuyo, en la línea de abajo. Sin grabación, el dibujo se queda quieto y sin insignia.</p>
-        <p class="mal"><span class="et">Mal</span> Tocar un dibujo dispara el festejo o avanza la ronda — eso sería el niño certificándose solo; repórtalo.</p>
-      </div></li>
-    </ul>
-  </section>
-
-  <section class="bloque">
-    <div class="bloque-cabeza"><span class="letra">M</span><h2>El kit de prueba <span class="chica suave">(opcional, para repetir el bloque A sin hablar)</span></h2></div>
-    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>docs/kit-de-prueba/</code> — archivos del repo, no una ruta de la app</p>
-    <p class="meta-bloque chica suave">Solo si quieres. En el repo, la carpeta <code>docs/kit-de-prueba/</code> trae dos audios sintéticos para probar el oído de la app sin usar la voz del niño.</p>
-    <ul class="pasos">
-      <li data-origen="s3"><input type="checkbox" id="v3-m1"><div>
-        <label for="v3-m1">Abre <code>docs/kit-de-prueba/README.md</code> y mira los dos WAV (<code>voz-sintetica.wav</code>, <code>barrido-tono.wav</code>). <span class="origen o-s3">S3</span></label>
-        <p class="esperar"><span class="et">Esperado</span> El README explica qué es cada audio (voz sostenida · barrido de tono) y para qué sirve (los mismos que usan los tests automáticos). No hay nada que “aprobar”: es material de apoyo.</p>
-      </div></li>
-    </ul>
-  </section>
-
-  <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">N</span><h2>El rumbo <span class="chica suave">(cómo van — S4)</span></h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — el acceso “El rumbo” del encabezado (eso es parte de la prueba)</p>
     <ul class="pasos">
-      <li data-origen="s4"><input type="checkbox" id="v4-n1"><div>
-        <label for="v4-n1"><strong>Con la app recién empezada</strong> (o borrando todo con <strong>“Borrar mis datos”</strong> en Ajustes — ojo: borra TODO, incluido tu banco de voz; si no quieres perderlo, prueba esta en una <strong>ventana de incógnito</strong>), desde “Hoy” toca <strong>“El rumbo”</strong> en el encabezado. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> Un vacío honesto: <strong>“Todavía no hay nada que contar”</strong> y un botón “Ir a los juegos”. Cero números, cero notas.</p>
-        <p class="mal"><span class="et">Mal</span> Muestra números inventados, un puntaje, un porcentaje o una “nota”.</p>
-      </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-n2"><div>
+      <li data-origen="s4" data-cubre="progreso-honesto"><input type="checkbox" id="v4-n2"><div>
         <label for="v4-n2">Ahora <strong>juega un rato de verdad</strong> (el globo o “palabra y dibujo”), <strong>sal con “Ya jugamos”</strong> hasta la celebración, y vuelve a <strong>“El rumbo”</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Aparece <strong>“Esta semana”</strong> con números REALES de lo que acabas de hacer — tu regla del gate: “si quiero ver el rumbo debería ver todo”. Las líneas posibles: días que practicaron · cápsulas del día completadas · palabras distintas · dibujos encendidos · <strong>vueltas completas del globo</strong> · veces que su voz subió y bajó · rondas de gemelas · palabras que TÚ le oíste · <strong>segundos que sonó su voz en el globo (sumados)</strong> · segundos de su voz más larga sin cortarse. Cada línea aparece solo si tiene algo que contar (los ceros no regañan), y son los MISMOS números de la celebración. <strong>Regla honesta:</strong> el Rumbo cuenta lo que llegó a la celebración — si sales con “Salir” a mitad de juego, ese intento no se registra (a propósito: solo se cuenta lo que el juego ya te mostró).</p>
         <p class="mal"><span class="et">Mal</span> Los números no cuadran con lo que pasó, o la pantalla sigue vacía tras haber jugado Y celebrado.</p>
       </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-n3"><div>
+      <li data-origen="s4" data-cubre="progreso-honesto logros-sin-caramelos"><input type="checkbox" id="v4-n3"><div>
         <label for="v4-n3">Mira la sección <strong>“Lo que ya lograron”</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Hitos celebrables, con su fecha. Existen <strong>16 posibles</strong> (tu pedido del gate: “al menos 10”): su primer rato de práctica juntos · la primera palabra que TÚ le oíste · el primer dibujo que su voz encendió · la primera vuelta completa del globo · la primera sirena (su voz subió y bajó) · su primera ronda de palabras gemelas · su voz sonó 5 segundos seguidos · su voz sonó 10 segundos seguidos · 10 y 25 palabras distintas practicadas · 50 dibujos encendidos · 10 palabras que TÚ le oíste · una semana de 3 y de 5 días juntos · 10 y 25 días de práctica en total. Cada uno aparece SOLO cuando de verdad ocurrió, con su fecha, y una vez ganado no se pierde. Nunca un “nivel” ni un puntaje.</p>
       </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-n4"><div>
+      <li data-origen="s4" data-cubre="progreso-honesto"><input type="checkbox" id="v4-n4"><div>
         <label for="v4-n4"><strong>Lee TODO el texto</strong> de la pantalla del rumbo, despacio. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cálido y honesto, y <strong>sin lenguaje técnico</strong>: ni números de nota, ni etiquetas, ni “%”, ni plazos. Solo lo que de verdad pasó.</p>
         <p class="mal"><span class="et">Mal</span> Cualquier palabra de examen o de nota — incluso para decir que “no es” eso.</p>
@@ -828,74 +714,68 @@
     <div class="bloque-cabeza"><span class="letra">O</span><h2>El objetivo de la semana <span class="chica suave">(la sintonía con la fono — S4)</span></h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/</code> — el acceso “Objetivo” del encabezado (eso es parte de la prueba)</p>
     <ul class="pasos">
-      <li data-origen="s4"><input type="checkbox" id="v4-o1"><div>
+      <li data-origen="s4" data-cubre="sintonia-terapias"><input type="checkbox" id="v4-o1"><div>
         <label for="v4-o1">Desde “Hoy” toca <strong>“Objetivo”</strong>. Escribe <strong>animales despacio, letra a letra</strong> — prueba también escribirlo MAL (“animles”) y guardarlo, una palabra <strong>con eñe a medias</strong> (“bañ”), y una que <strong>NO esté en la app</strong> a medias: “medi” (ibas a escribir “medios”). <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Todo pasa en <strong>UNA tarjeta</strong>: campo → preview → botón (tu pedido del gate: la conexión). A medio teclazo (“anim”) la app <strong>no regaña</strong>: sugiere — <strong>“¿Vas hacia alguna de estas? Tócala y listo”</strong> con términos reales del contenido. Con la palabra completa, el preview honesto: <strong>“Con «animales», la app pone primero N cápsulas · M dibujos…”</strong>. El botón <strong>nombra lo que va a guardar</strong>: “Guardar «animales»”. Si guardas un error de ortografía (“animles”), <strong>pregunta primero</strong>: “¿Quisiste decir «animales»?” con las dos salidas — “Sí, guardar «animales»” o “No, guardar «animles» tal cual”. Al guardar: la tarjeta <strong>“Objetivo activo”</strong> y el aviso <strong>“Listo. La cápsula de hoy y los juegos ya lo tienen en cuenta.”</strong> Solo cuando lo escrito está <strong>completamente lejos</strong> de todo aparece el mensaje honesto de “todavía no está en el contenido”. Las sugerencias vienen en <strong>DOS grupos con su etiqueta</strong>: chips <strong>verdes</strong> “Están en la app — alinean la cápsula y los juegos” y chips <strong>neutros</strong> “Bien escritas, aunque aún no están en la app” (el diccionario del idioma activo, de 16.000 palabras, que viaja con la app). Con “bañ”: <strong>«baño» con su eñe</strong> en verde, sin palabras de relleno que apenas se parecen (rana, lana, mano). Con “medi”: <strong>«medio», «media»…</strong> en el grupo neutro — la app no tiene esas palabras, pero te ayuda a escribirlas bien; al tocar «medio» ves el mensaje honesto (no alinea nada) MÁS sus continuaciones («medios»), y <strong>guardar una palabra bien escrita no pregunta nada</strong>. Además el navegador subraya en rojo lo mal escrito (corrector del sistema). Y los <strong>nombres de los temas tal como salen en Ajustes también valen:</strong> escribe “transporte” (el tema que por dentro se llama “carros”) — se sugiere en verde y alinea cápsulas y dibujos como cualquier término de la app. <em>(Si “animales” NO está entre sus temas, verás el aviso honesto de O6 — usa una sugerencia que sí coincida.)</em></p>
         <p class="mal"><span class="et">Mal</span> Te regaña con “no está en el contenido” mientras vas a media palabra · guarda un error de ortografía sin preguntar · pregunta “¿quisiste decir?” por una palabra <strong>bien escrita</strong> (“medios”) · el botón dice “Guardar el objetivo” genérico con texto ya escrito · un chip sale <strong>sin su eñe o su tilde</strong> (“bano”, “musica”) · los dos grupos salen <strong>sin etiqueta</strong> que diga cuál es cuál · yendo bien encaminado te ofrecen palabras que no tienen que ver (rana, lana) · escribes un tema <strong>tal como sale en Ajustes</strong> (“transporte”) y te dice que no está en la app.</p>
       </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-o2"><div>
-        <label for="v4-o2">Con “animales” guardado: vuelve a <strong>“Hoy”</strong>, luego entra a <strong>“palabra y dibujo”</strong>, y por último al <strong>Estudio → “Grabar más”</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> En “Hoy”, una línea <strong>“Objetivo de la semana: «animales»”</strong>. En “palabra y dibujo”, los <strong>primeros dibujos son animales</strong>. En el Estudio, lo primero a grabar es una <strong>palabra de animal</strong> — y en <strong>“Lo que ya grabaste”</strong>, las grabaciones que sirven al objetivo llevan su <strong>diana</strong> junto a la palabra (tu pedido del gate: se ve cuáles hacen parte del objetivo de la semana). El objetivo alinea las tres cosas.</p>
-        <p class="mal"><span class="et">Mal</span> Los dibujos o el lote salen igual que sin objetivo (no se movió nada) · una palabra de animal grabada aparece sin diana.</p>
-      </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-o3"><div>
+      <li data-origen="s4" data-cubre="sintonia-terapias"><input type="checkbox" id="v4-o3"><div>
         <label for="v4-o3">En <strong>“Objetivo”</strong>, borra lo que había y escribe <strong>colores</strong> — y esta vez <strong>guárdalo</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> La app lo dice honesto: <strong>“«colores» todavía no está en el contenido de la app, así que no hay nada que priorizar.”</strong> No finge que alineó algo (no hay palabras de color en la app — a propósito). Al guardarlo (tu propuesta del gate), la tarjeta “Objetivo activo” <strong>NO se ve como una más</strong>: sale en <strong>ROJO con el triángulo de alerta</strong> y el aviso <strong>“Priorizado, pero la app aún no tiene contenido de esto: por ahora la cápsula y los juegos no cambian.”</strong></p>
         <p class="mal"><span class="et">Mal</span> Dice que priorizó cápsulas o dibujos de “colores” · guardado se ve <strong>verde con diana, igual que un objetivo que sí alinea</strong>.</p>
       </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-o6"><div>
+      <li data-origen="s4" data-cubre="sintonia-terapias intereses"><input type="checkbox" id="v4-o6"><div>
         <label for="v4-o6">Sigue en “Objetivo”: borra y escribe el nombre de un tema que <strong>NO</strong> hayan elegido en el onboarding (p. ej. <strong>dinosaurios</strong>, si no está entre sus temas). <span class="origen o-s4">Nuevo · S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> El segundo caso honesto (nació de la auditoría de cierre): <strong>“«dinosaurios» sí está en la app, pero no en lo que él ve hoy (su etapa y sus temas), así que la cápsula y los juegos no cambian.”</strong> — y si hay palabras de eso para grabar, añade: <strong>“En el estudio de grabación sí se pone primero al grabar.”</strong> El preview jamás promete dibujos que el mazo del niño no trae. Si lo guardas, la tarjeta activa sale en <strong>azul con el círculo de info</strong> diciendo por qué los juegos no cambian, con el enlace <strong>“revisa sus temas en Ajustes”</strong> para arreglarlo con un toque.</p>
         <p class="mal"><span class="et">Mal</span> Promete que “pone primero N dibujos” de un tema que él no verá en sus juegos · guardado se ve <strong>verde como si alineara</strong> (así nació el stopper de O5: “guardé animales y el juego no los trajo” — el tema no estaba elegido y la tarjeta no lo decía).</p>
       </div></li>
-      <li data-origen="s4"><input type="checkbox" id="v4-o4"><div>
+      <li data-origen="s4" data-cubre="sintonia-terapias progreso-honesto"><input type="checkbox" id="v4-o4"><div>
         <label for="v4-o4">Guarda “animales” otra vez — <strong>mira el color de la tarjeta</strong>. Los tres estados (colores + iconos DISTINTOS, aptos para daltonismo): <strong>VERDE con diana</strong> = los juegos cambian, con el desglose “Alineando ahora: N cápsulas · M dibujos”; <strong>AZUL con círculo de info</strong> = “la cápsula sí, los dibujos de los juegos no cambian: ese tema no está entre los elegidos” (tu caso del stopper — con el enlace a Ajustes); <strong>ROJO con triángulo</strong> = sin contenido aún. Si sale AZUL, elige “Animales” en Ajustes y vuelve a mirar. Con la tarjeta VERDE, ve a “palabra y dibujo”; luego, en “Objetivo”, toca <strong>“Quitar el objetivo”</strong> y vuelve al juego. <span class="origen o-s4">Nuevo · S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Con la tarjeta VERDE (y solo con ella), los primeros dibujos del juego son animales — el objetivo solo puede priorizar lo que el niño ve: sus temas y su etapa, jamás mete contenido ajeno. Al quitarlo, la tarjeta desaparece y los dibujos vuelven a salir <strong>como antes</strong> (variados, no solo animales). Quitarlo no deja rastro: la app vuelve a su comportamiento por etapa.</p>
         <p class="mal"><span class="et">Mal</span> La tarjeta está verde con desglose de dibujos y aun así el juego no los trae primero · la tarjeta se ve igual alinee o no alinee · dos estados comparten color E icono (deben distinguirse sin depender del color).</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v4-o5"><div>
+      <li data-origen="mejora" data-cubre="sintonia-terapias"><input type="checkbox" id="v4-o5"><div>
         <label for="v4-o5">En “Hoy”, mira el <strong>encabezado</strong>. <span class="origen o-mejora">Mejorado en S4</span></label>
         <p class="esperar"><span class="et">Esperado</span> Tres accesos del padre, arriba y visibles sin bajar la página: <strong>“El rumbo”, “Objetivo” y “Ajustes”</strong>. La vista del niño (los juegos) no cambia.</p>
       </div></li>
     </ul>
   </section>
-
 <!-- s6:inicio -->
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">Q</span><h2>La pirámide, en tu teléfono (S6)</h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/mirada</code> — <strong>en tu teléfono</strong>, no en el computador (la dirección de la app te la sabes; esta guía no la escribe)</p>
     <p class="meta-bloque chica suave">Este sprint no toca la app del niño: rehace el <strong>documento de la mamá</strong> por los seis grupos de la pirámide, con fichas de actividad, y <strong>retira el registro</strong> (a ella no le resultó factible llevarlo). Q1–Q6 son de <strong>forma</strong> —cómo se ve y se lee en un teléfono real—; Q7 es el <strong>contenido</strong>: tu G-Contenido, que ninguna máquina puede hacer por ti.</p>
     <ul class="pasos">
-      <li data-origen="mejora"><input type="checkbox" id="v6-q1"><div>
+      <li data-origen="mejora" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q1"><div>
         <label for="v6-q1">Abre <code>/mirada</code> en tu teléfono y lee la portada completa, sin tocar nada. <span class="origen o-mejora">Mejorado en S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Título <strong>“La pirámide, en casa”</strong>; debajo, el índice con los <strong>seis grupos</strong> (imitación, atención conjunta y juego con el borde más marcado) y <strong>“Qué no hacer”</strong>; las cajas <strong>“Lo que ya le gusta”</strong>, <strong>“Esto no es una prueba.”</strong> y <strong>“El único semáforo:”</strong>; luego <strong>“La pirámide: un mapa, no una escalera”</strong> con una frase por grupo, <strong>“Cómo se lee una ficha”</strong> y <strong>“Qué no hacer”</strong>. Todo legible sin zoom.</p>
         <p class="esperar"><span class="et">Mal</span> Hay que hacer zoom para leer, un texto sale cortado, o la página se mueve a lo ancho con el dedo.</p>
       </div></li>
-      <li data-origen="s6"><input type="checkbox" id="v6-q2"><div>
+      <li data-origen="s6" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q2"><div>
         <label for="v6-q2">Toca <strong>“Imitación”</strong> en el índice y lee la primera ficha entera. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cada ficha empieza con una <strong>franja verde arriba</strong>, el nombre de su grupo en pequeño (<strong>IMITACIÓN</strong>) y el <strong>título grande</strong>; entre una ficha y la siguiente hay aire: se ve dónde termina una y dónde empieza la otra sin buscarlo. Bajo el título, sus etiquetas (la manera de jugar, los minutos, el momento del día). Después, <strong>seis partes siempre en el mismo orden</strong>, cada una con su rótulo en mayúsculas: <strong>TEN A LA MANO</strong>, <strong>HAZ</strong> (pasos numerados), <strong>TU LÍNEA</strong>, <strong>ESPERA VER</strong>, <strong>FUNCIONÓ SI</strong> (en un recuadro) y <strong>SI NO PASA</strong>. Al final, la cita en letra pequeña.</p>
         <p class="esperar"><span class="et">Mal</span> Falta una parte, van en otro orden, los pasos no tienen número, o hay que buscar dónde empieza la ficha siguiente.</p>
       </div></li>
-      <li data-origen="s6"><input type="checkbox" id="v6-q3"><div>
+      <li data-origen="s6" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q3"><div>
         <label for="v6-q3">Busca una ficha con la etiqueta <strong>“con el hermano”</strong>. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Sus pasos o su línea dicen <strong>qué hace el hermano</strong> (“Al hermano: …”) y qué hace la mamá mientras tanto. Se entiende quién hace qué sin preguntar.</p>
         <p class="esperar"><span class="et">Mal</span> No se sabe si un paso es de la mamá o del hermano.</p>
       </div></li>
-      <li data-origen="s6"><input type="checkbox" id="v6-q4"><div>
+      <li data-origen="s6" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q4"><div>
         <label for="v6-q4">Busca una ficha con la etiqueta <strong>“Paso: …”</strong> (con borde punteado). <span class="origen o-s6">Nuevo · S6</span></label>
         <p class="esperar"><span class="et">Esperado</span> El paso es una frase de lo que se ve (p. ej. <strong>“Paso: Copia cuando le muestras”</strong>), y en la portada, bajo “Cómo se lee una ficha”, está dicho que el paso <strong>es para ubicarse, no una meta</strong>. Las fichas de intención comunicativa no llevan paso.</p>
       </div></li>
-      <li data-origen="s6"><input type="checkbox" id="v6-q5"><div>
+      <li data-origen="s6" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q5"><div>
         <label for="v6-q5">Desde el menú del navegador, <strong>Imprimir</strong> (basta la vista previa). <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Las fichas salen <strong>completas, sin partirse</strong> entre dos hojas, sin el índice y sin casillas. No hay cuadrícula ni botones: el registro ya no existe.</p>
         <p class="esperar"><span class="et">Mal</span> Una ficha queda partida entre dos páginas, o sale algo para tocar.</p>
       </div></li>
-      <li data-origen="mejora"><input type="checkbox" id="v6-q6"><div>
+      <li data-origen="mejora" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q6"><div>
         <label for="v6-q6">Abre <code>/mirada?revision</code> (solo tú). Marca <strong>“Revisada”</strong> en una ficha y recarga. <span class="origen o-mejora">Mejorado en S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Aparece la caja <strong>“Modo revisión”</strong> con cuatro preguntas; cada ficha gana su casilla <strong>“Revisada”</strong> y una línea azul <strong>“Viene de (…)”</strong> que dice de qué cápsula o de qué parte de la investigación salió. El conteo <strong>“N de M revisadas”</strong> sube y <strong>sigue marcado al recargar</strong>. Al final de la caja, <strong>“Quedaron fuera del documento (11); siguen en la app:”</strong> con cada cápsula y su razón. Sin <code>?revision</code>, nada de eso se ve: la mamá no lo verá.</p>
         <p class="esperar"><span class="et">Mal</span> Con <code>?revision</code> las fichas cambian de letra, de tamaño o de color, o algo se monta encima del texto: el modo revisión solo agrega, no cambia cómo se ve.</p>
       </div></li>
-      <li data-origen="s6"><input type="checkbox" id="v6-q7"><div>
+      <li data-origen="s6" data-cubre="sesiones-para-dos"><input type="checkbox" id="v6-q7"><div>
         <label for="v6-q7"><strong>Tu G-Contenido:</strong> en <code>/mirada?revision</code>, lee <strong>las 56 fichas</strong> con las cuatro preguntas de la caja. <span class="origen o-s6">Nuevo · S6</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Cada ficha la puede hacer la mamá <strong>tal cual</strong>, en un momento corto; cada paso es <strong>una sola acción</strong> y se entiende sin ti; y en todas reconoces <strong>a tu hijo y su casa</strong>. Ninguna le pide forzarlo.</p>
         <p class="esperar"><span class="et">Mal</span> Una ficha que ella no podría hacer así, un paso que necesita tu explicación, o algo que no es él — repórtala <strong>por su título</strong>.</p>
@@ -904,46 +784,180 @@
   </section>
 <!-- s6:fin -->
 
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">H</span><h2>Ajustes, honestidad y borrar datos</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
+    <p class="meta-bloque chica suave">~7 min. El cuarto del padre: lo que se puede cambiar, y lo que la app promete y no promete.</p>
+    <ul class="pasos">
+      <li data-origen="s4" data-cubre="hecho-para-el"><input type="checkbox" id="v4-h6"><div>
+        <label for="v4-h6">Nada más entrar a <strong>Ajustes</strong>, mira <strong>arriba del todo</strong>. <span class="origen o-s4">Nuevo · S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El mismo chip <strong>“← Hoy”</strong> que tienen “El rumbo” y “Objetivo”, arriba y con la misma forma (antes la salida era un enlace suelto al final de la página). Los tres cuartos del padre se salen igual.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h1"><div>
+        <label for="v2-h1">En <strong>Ajustes</strong>, mueve los <strong>interruptores</strong> (modo calma, reducir animaciones) y recarga. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Responden al toque y <strong>quedan guardados</strong> tras recargar.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h2"><div>
+        <label for="v2-h2">El <strong>modo calma</strong> ya no es solo del globo: compruébalo en <strong>los cuatro juegos de voz</strong> (globo, cohete, palabra y dibujo y el mapa de las vocales). <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> En los cuatro: paleta de atardecer, sin medidor ni meta, sin contadores — y el personaje <strong>sigue respondiendo a la voz</strong>.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="intereses"><input type="checkbox" id="v2-h3"><div>
+        <label for="v2-h3"><strong>“Apodo y temas”</strong>: mira los actuales, cámbialos, guarda, y vuelve a “Hoy”. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El resumen se actualiza y <strong>el progreso sigue intacto</strong>: no vuelve el onboarding y la cápsula que marcaste hecha sigue hecha.</p>
+        <p class="mal"><span class="et">Mal</span> Cambiar el apodo te devuelve al onboarding o borra el día.</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h4"><div>
+        <label for="v2-h4">Lee <strong>“Qué mide y qué NO mide esta app”</strong> entero. <span class="origen o-mejora">Mejorado en S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Declara sin rodeos: mide que hubo voz, cuánto duró y cómo cambió el tono; <strong>no</strong> reconoce palabras, <strong>no</strong> es terapia, <strong>no</strong> diagnostica, y <strong>el audio nunca se graba ni sale del dispositivo</strong>. Y se declara complementaria a las <strong>terapias integrales del lenguaje</strong> de tu hijo — tu pedido del gate: no solo fonoaudiología, todo el equipo que lo atiende (terapia ocupacional, psicología, pedagogía…). Ese término reemplazó a “fonoaudiología” en TODA la app. ¿Te suena honesto y en tu idioma?</p>
+        <p class="mal"><span class="et">Mal</span> Cualquier promesa de resultados, plazos o mejora “garantizada” · que quede algún “fonoaudiología” suelto donde debería hablar del equipo completo.</p>
+      </div></li>
+      <li data-origen="s2" data-cubre="pictogramas"><input type="checkbox" id="v2-h5"><div>
+        <label for="v2-h5">Lee <strong>“Acerca de los dibujos”</strong> (sección nueva). <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>ARASAAC</strong> (autor Sergio Palao · Gobierno de Aragón · licencia CC BY-NC-SA). Es una obligación legal de su licencia, y además es lo correcto.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h6"><div>
+        <label for="v2-h6"><strong>Claro u oscuro</strong> (sección nueva en Ajustes, tras tu hallazgo del 2026-07-12): prueba las tres opciones — <strong>El del sistema · Claro · Oscuro</strong> — y recarga. Luego entra a un juego. <span class="origen o-s2">S2</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Tu elección <strong>le gana al sistema</strong> (con el computador en oscuro puedes ver la app clara) y <strong>sobrevive a la recarga sin parpadear</strong>. Con “El del sistema” vuelve a seguir a tu computador. Y pase lo que pase, <strong>los juegos del niño siguen claros SIEMPRE</strong>: su mundo no cambia de color según la hora.</p>
+        <p class="mal"><span class="et">Mal</span> Al recargar parpadea del tema del sistema al tuyo · el juego del niño se pone oscuro.</p>
+      </div></li>
+      <li data-origen="s7" data-cubre="hecho-para-el"><input type="checkbox" id="v7-h1"><div>
+        <label for="v7-h1">En <strong>Ajustes</strong>, busca <strong>“Idioma / Language”</strong> y toca <strong>English</strong>; luego recorre <strong>Hoy</strong>, <strong>Objetivo</strong>, <strong>Rumbo</strong> y <strong>Ajustes</strong>. <span class="origen o-s7">Nuevo · S7</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Todo cambia a inglés <strong>sin recargar</strong>; el botón elegido lleva una <strong>«✓»</strong> además del color; la cápsula del día es <strong>la misma</strong> que tenías en español. El Objetivo se prueba aparte, en la prueba nueva de este bloque.</p>
+        <p class="mal"><span class="et">Mal</span> Queda texto en español a medias · la cápsula de hoy es otra · el cambio pide recargar.</p>
+      </div></li>
+      <li data-origen="mejora" data-cubre="hecho-para-el"><input type="checkbox" id="v7-h2"><div>
+        <label for="v7-h2">Con English activo, abre los juegos y toca <strong>Words</strong> y <strong>Twins</strong>; después juega el <strong>globo</strong>. Vuelve a <strong>Español</strong> al terminar. <span class="origen o-mejora">Mejorado en S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Words y Twins <strong>se practican en inglés</strong>, con palabras, dibujos y parejas de sonidos del inglés, y <strong>sin tarjeta de «solo en español»</strong>; Twins no pide el micrófono; el globo juega igual que en español.</p>
+        <p class="mal"><span class="et">Mal</span> Aparece una tarjeta de «solo en español» · las palabras salen en español · Twins pide micrófono.</p>
+      </div></li>
+      <li data-origen="s8" data-cubre="hecho-para-el"><input type="checkbox" id="v8-h1"><div>
+        <label for="v8-h1">Con English activo, abre <strong>Objetivo</strong>, toca una sugerencia (por ejemplo <strong>animals</strong>) y luego escribe media palabra, como <strong>“anim”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Las sugerencias y los chips salen <strong>en inglés</strong>, la tarjeta <strong>no avisa</strong> de ningún idioma ajeno y el aviso de lo que encuentra habla de palabras en inglés.</p>
+        <p class="mal"><span class="et">Mal</span> Los chips salen en español · aparece un aviso de «solo español».</p>
+      </div></li>
+      <li data-origen="s8" data-cubre="hecho-para-el"><input type="checkbox" id="v8-h2"><div>
+        <label for="v8-h2">Con English activo, abre <code>/mirada</code> y toca <strong>Español</strong> y <strong>English</strong> en el selector de arriba. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Todo el documento («La pirámide, en casa») cambia de idioma <strong>sin recargar</strong>, el botón elegido lleva una <strong>«✓»</strong> además del color, y en cada idioma se lee escrito para él (no traducido palabra por palabra). Al imprimir, el selector no sale.</p>
+        <p class="mal"><span class="et">Mal</span> Queda texto en el otro idioma a medias · el selector tapa el contenido en el teléfono.</p>
+      </div></li>
+      <li data-origen="s8" data-cubre="videoteca"><input type="checkbox" id="v8-h3"><div>
+        <label for="v8-h3">En el <strong>Estudio</strong>, entra a <strong>“Videos de la familia”</strong>. Elige un clip corto de tu galería, dile qué muestra (<strong>pedir, saludar o jugar</strong>) y míralo. Luego bórralo con <strong>dos toques</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La app <strong>no abre la cámara</strong> en ningún momento: solo el selector de archivos. El clip se ve y se oye, queda <strong>solo en este dispositivo</strong> y se va con el segundo toque. Un archivo que no es video, o muy largo o pesado, se rechaza con un motivo claro.</p>
+        <p class="mal"><span class="et">Mal</span> Se enciende la cámara · el clip sigue ahí tras borrarlo · un rechazo sin explicación.</p>
+      </div></li>
+      <li data-origen="s8" data-cubre="videoteca"><input type="checkbox" id="v8-h4"><div>
+        <label for="v8-h4">Con un clip guardado, ve a <strong>Ajustes → Borrar mis datos</strong> y confirma; luego vuelve a <strong>“Videos de la familia”</strong>. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La videoteca queda <strong>vacía</strong>: borrar tus datos también borra los videos.</p>
+        <p class="mal"><span class="et">Mal</span> El clip sigue guardado después de borrar todo.</p>
+      </div></li>
+      <li data-origen="s8" data-cubre="hecho-para-el"><input type="checkbox" id="v8-h5"><div>
+        <label for="v8-h5">Lee <strong>“Acerca de las palabras”</strong> en Ajustes. <span class="origen o-s8">Nuevo · S8</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Da el crédito a <strong>Google Books Ngram</strong> bajo la licencia <strong>CC BY 3.0</strong> (corrige el crédito anterior, que era otro).</p>
+        <p class="mal"><span class="et">Mal</span> Nombra otra fuente o licencia · falta el crédito.</p>
+      </div></li>
+      <li data-origen="s9" data-cubre="cuentos"><input type="checkbox" id="v9-h1"><div>
+        <label for="v9-h1">Abre <strong>Hoy</strong> y baja hasta <strong>“Y también hoy · contacto visual”</strong>. Cambia la fecha del aparato un día y vuelve a mirar. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Debajo de la cápsula de habla hay <strong>una sola actividad de mirada</strong>, con <strong>tu línea primero</strong>, cuánto dura y lo que no se hace, y dice <strong>«Sin pantalla»</strong>. Cambia de un día a otro y no repite en la semana. En inglés sale escrita en inglés.</p>
+        <p class="mal"><span class="et">Mal</span> Salen varias actividades de mirada a la vez · la actividad va antes que tu línea · repite al día siguiente.</p>
+      </div></li>
+      <li data-origen="s9" data-cubre="cuentos"><input type="checkbox" id="v9-h2"><div>
+        <label for="v9-h2">En <strong>Estudio → “Cuentos de casa”</strong>, escribe <strong>“trenes, animales”</strong> y una palabra que practican, toca <strong>Guardar</strong> y luego <strong>“Descargar el pedido”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Se descarga un archivo <code>pedido-….json</code> que lleva <strong>solo los gustos y las palabras</strong>: ni nombre, ni edad, ni voz. Si escribes un número como gusto, la app lo rechaza con un aviso.</p>
+        <p class="mal"><span class="et">Mal</span> El archivo trae algo más que los gustos y las palabras · un número entra como gusto.</p>
+      </div></li>
+      <li data-origen="s9" data-cubre="cuentos"><input type="checkbox" id="v9-h3"><div>
+        <label for="v9-h3">Abre <code>/cuentos</code> desde <strong>Hoy → “Un cuento para leer juntos”</strong> y lee un cuento de la app, página por página. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Arriba va <strong>el guion del adulto</strong>; cada página tiene texto grande y <strong>una palabra enorme</strong>; los botones son grandes; no hay tiempo ni puntaje. Los seis cuentos de la app aparecen en el idioma activo, <strong>sin pasos que exijan decir la palabra</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Hay cronómetro, puntaje o un «¡muy bien!» automático · el texto o los botones quedan chicos.</p>
+      </div></li>
+      <li data-origen="s9" data-cubre="cuentos"><input type="checkbox" id="v9-h4"><div>
+        <label for="v9-h4">Si tienes un lote de <code>/bandeja</code>, en <strong>Cuentos de casa → “Traer un lote”</strong> elige el archivo. Si no, <strong>elige un archivo cualquiera que no sea un lote</strong>. Aprueba uno y rechaza otro; luego abre <code>/cuentos</code>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Un archivo que no es lote dice que <strong>no entró nada</strong>. En un lote, cada cuento <strong>espera tu lectura</strong>: solo el que <strong>apruebas</strong> aparece del lado del niño; el rechazado no. La app <strong>no hace ninguna petición a internet</strong>.</p>
+        <p class="mal"><span class="et">Mal</span> Un cuento sin aprobar aparece del lado del niño · un archivo ajeno entra a medias.</p>
+      </div></li>
+      <li data-origen="s9" data-cubre="cuentos"><input type="checkbox" id="v9-h5"><div>
+        <label for="v9-h5">En <strong>Cuentos de casa → “Grabar mi voz”</strong>, graba una página. Luego, del lado del niño, abre ese cuento y toca <strong>“Con mi voz grabada”</strong> y <strong>“▶ Tu voz”</strong>; después toca <strong>“Lo leo yo”</strong>. <span class="origen o-s9">Nuevo · S9</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Suena <strong>tu voz</strong> (no una voz de máquina) y el modo activo lleva una <strong>«✓»</strong> además del color. «Lo leo yo» deja solo el texto. Después de <strong>Ajustes → Borrar mis datos</strong>, los cuentos importados y las grabaciones desaparecen.</p>
+        <p class="mal"><span class="et">Mal</span> Suena una voz sintética · la grabación sigue tras borrar tus datos · el modo activo se distingue solo por color.</p>
+      </div></li>
+      <li data-origen="s1" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h7"><div>
+        <label for="v2-h7"><strong>DE ÚLTIMO</strong>, cuando termines toda la guía: <strong>“Borrar mis datos”</strong> → confirma. <span class="origen o-s1">S1</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Vuelve al <strong>onboarding como el primer día</strong>: apodo, temas, progreso — todo se fue. Nada queda escondido.</p>
+      </div></li>
+    </ul>
+  </section>
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">I</span><h2>La biblioteca — tu veredicto, EN EL CATÁLOGO</h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>docs/CATALOGO-CAPSULAS.html</code> — <strong>este bloque NO se revisa en la app</strong>: se revisa en el catálogo (doble clic al archivo, sin internet). La app solo muestra una cápsula por día; el catálogo trae <strong>las 50 enteras</strong>.</p>
+    <p class="meta-bloque chica suave">Solo leer, cuando quieras. Aquí <strong>no hay nada técnico que probar</strong>: es tu <strong>aprobación de padre</strong>. En el S1 aprobaste las 14 cápsulas una por una; <strong>esas 14 siguen adentro</strong>, ahora con 36 más (50 en total). <span class="origen o-mejora">Mejorado en S4</span></p>
+    <p class="chica suave"><strong>Cómo revisarlas:</strong> abre el catálogo y léelas de corrido, marcando la casilla “Revisada” de cada una (tu avance se guarda). Cada cápsula trae su explicación, su línea textual, su actividad y su fuente — <strong>tal cual viven en la app</strong> (el catálogo se genera del contenido real). Los grupos de abajo son tu mapa: resumen de qué va cada bloque y qué juzgar en él. Si además quieres verlas en pantalla real, la cápsula del día está en <code>/</code> y la etapa se cambia en <code>/ajustes</code>. <strong>Qué esperar de cada una:</strong> que la línea la <strong>dirías tal cual</strong> en tu casa, que la actividad se pueda hacer <strong>hoy</strong> y que reconozcas <strong>tu día real</strong> en ella. Si una no cumple eso, dime cuál (por su título) y por qué — se reemplaza.</p>
+    <ul class="pasos">
+      <li data-origen="mejora" data-cubre="capsulas"><input type="checkbox" id="v4-i1"><div>
+        <label for="v4-i1">Abre <code>docs/CATALOGO-CAPSULAS.html</code>, lee <strong>las 50 de corrido</strong> marcando la casilla <strong>“Revisada”</strong> de cada una, y trae tu veredicto. <span class="origen o-mejora">Mejorado en S4</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El catálogo trae las <strong>preguntas de juicio de cada grupo</strong> (“Qué juzgar aquí”) — y las tres de siempre por cápsula: la línea la <strong>dirías tal cual</strong> en tu casa, la actividad se puede hacer <strong>hoy</strong>, y reconoces <strong>tu día real</strong> en ella. Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (ninguna se botó). Cuando el contador del catálogo llegue a <strong>50 de 50</strong>, marca esta única casilla y el bloque queda listo.</p>
+        <p class="mal"><span class="et">Mal</span> Una cápsula cuya línea no dirías, cuya actividad no se puede hacer hoy, o donde no reconoces tu casa — repórtala <strong>por su título</strong>: se reemplaza.</p>
+      </div></li>
+    </ul>
+    <div class="reportame"><p><strong>Repórtame de este bloque:</strong> qué bloque te sirve tal cual · qué cápsula concreta cambiarías · <strong>qué rutina de TU casa falta</strong> (mejor 50 buenas que 60 de relleno).</p></div>
+  </section>
 <!-- s10:inicio -->
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">R</span><h2>Lejos de la pantalla <span class="chica suave">(S10 — la otra casa, las vocales, el papel)</span></h2></div>
     <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>/ajustes</code></p>
     <p class="meta-bloque chica suave">~12 min. Tres cosas nuevas. Para la primera necesitas <strong>dos navegadores o dos perfiles</strong> (la «otra casa»); para el mapa de las vocales, micrófono (con el kit de prueba o tu voz). <strong>Nada de esto cambia lo que ya probaste.</strong></p>
     <ul class="pasos">
-      <li data-origen="s10"><input type="checkbox" id="v10-r1"><div>
+      <li data-origen="s10" data-cubre="progreso-honesto"><input type="checkbox" id="v10-r1"><div>
         <label for="v10-r1">En <strong>Ajustes → “Pasar a la otra casa”</strong>, escribe una frase de <strong>menos de diez letras</strong> y toca <strong>“Crear y descargar”</strong>. Luego una de diez o más, escrita <strong>dos veces distinta</strong>. Por último, igual las dos y descarga. <span class="origen o-s10">Nuevo · S10</span></label>
         <p class="esperar"><span class="et">Esperado</span> La corta dice que necesita <strong>al menos diez letras</strong>; las dos distintas dicen que <strong>no son iguales</strong>; con las dos iguales baja un archivo <code>habla-otra-casa-….habla</code> que, abierto con un editor de texto, <strong>no deja leer nada</strong> (solo versión y datos de cifrado). La pantalla avisa que <strong>si se olvida la frase, el archivo no se abre</strong>.</p>
         <p class="mal"><span class="et">Mal</span> Acepta una frase corta · el archivo se lee en claro · no avisa qué pasa si olvidas la frase.</p>
       </div></li>
-      <li data-origen="s10"><input type="checkbox" id="v10-r2"><div>
+      <li data-origen="s10" data-cubre="progreso-honesto"><input type="checkbox" id="v10-r2"><div>
         <label for="v10-r2">En el <strong>otro navegador o perfil</strong>, <strong>Ajustes → “Abrir un archivo de la otra casa”</strong>: elige el archivo, escribe <strong>una frase equivocada</strong> y toca <strong>“Ver qué trae”</strong>. Luego la buena. <span class="origen o-s10">Nuevo · S10</span></label>
         <p class="esperar"><span class="et">Esperado</span> Con la equivocada: <strong>“La frase no abre este archivo. No se cambió nada.”</strong> Con la buena: aparece <strong>“Esto es lo que cambia aquí”</strong> (objetivo antes → después, juegos y actividades que se suman) y <strong>“Nada de este aparato se borra”</strong>. Hasta ahora <strong>no se escribió nada</strong>.</p>
         <p class="mal"><span class="et">Mal</span> La frase equivocada deja pasar algo · se cambia algo antes de que toques confirmar · no se ve qué cambia.</p>
       </div></li>
-      <li data-origen="s10"><input type="checkbox" id="v10-r3"><div>
+      <li data-origen="s10" data-cubre="progreso-honesto"><input type="checkbox" id="v10-r3"><div>
         <label for="v10-r3">Toca <strong>“Sí, sumarlo”</strong> y mira el <strong>Rumbo</strong> y el <strong>Objetivo</strong> de ese aparato. <span class="origen o-s10">Nuevo · S10</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> La página se recarga con <strong>“Listo: ya está en este aparato”</strong>; el objetivo y lo practicado de la otra casa están ahí, <strong>y lo que ese aparato ya tenía sigue</strong>. <strong>No aparece el apodo</strong> ni la voz del niño: no viajan. <span class="suave">Es tu juicio: ¿lo que llegó es lo que esperabas llevar?</span></p>
         <p class="mal"><span class="et">Mal</span> Se borra algo de lo que había · llega el apodo, un video o algo del niño · la misma sesión se cuenta dos veces al devolver el archivo.</p>
       </div></li>
-      <li data-origen="s10"><input type="checkbox" id="v10-r4"><div>
+      <li data-origen="s10" data-cubre="tono-avanzado"><input type="checkbox" id="v10-r4"><div>
         <label for="v10-r4">Desde <strong>Hoy → “Los juegos de voz”</strong> abre <strong>el mapa de las vocales</strong> (la quinta tarjeta). Lee la pantalla de tu guion antes de empezar. <span class="origen o-s10">Nuevo · S10</span></label>
         <p class="esperar"><span class="et">Esperado</span> Dice <strong>«Experimental · en prueba»</strong> en texto, explica que <strong>adivina con margen de error</strong> y que <strong>nada de lo que diga se graba ni sale</strong>, y trae <strong>tu línea primero</strong>. No hay tiempo ni puntaje.</p>
         <p class="mal"><span class="et">Mal</span> No dice que es experimental · promete acertar · empieza sin tu línea.</p>
       </div></li>
-      <li data-origen="s10"><input type="checkbox" id="v10-r5"><div>
+      <li data-origen="s10" data-cubre="tono-avanzado"><input type="checkbox" id="v10-r5"><div>
         <label for="v10-r5">Entra al juego y estira <strong>aaaa, eeee, iiii, oooo, uuuu</strong>, una por una y luego de una a otra. Toca <strong>“Ya jugamos”</strong>. <span class="origen o-s10">Nuevo · S10</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
         <p class="esperar"><span class="et">Esperado</span> Se enciende una zona con <strong>letra, forma con nombre y color</strong> y dice <strong>«Quizás suena como…»</strong>, nunca «bien» ni «mal». Con tu voz de adulto suele acertar; con voces agudas <strong>se puede equivocar</strong>. La celebración final cuenta <strong>zonas que sonaron y cambios</strong>, y dice que <strong>quien sabe si la vocal salió bien eres tú</strong>. <span class="suave">Es tu juicio: ¿sirve la idea? El resultado del spike lo decides tú.</span></p>
         <p class="mal"><span class="et">Mal</span> Dice «¡muy bien!» o «correcta» · la zona se distingue solo por color · se enciende con silencio · se queda con la última vocal sin voz.</p>
       </div></li>
-      <li data-origen="s10"><input type="checkbox" id="v10-r6"><div>
+      <li data-origen="s10" data-cubre="imprimibles"><input type="checkbox" id="v10-r6"><div>
         <label for="v10-r6">Abre <strong>Estudio → “Hojas para imprimir”</strong>, elige <strong>Español</strong> y luego <strong>Inglés</strong>, y toca <strong>“Imprimir”</strong> (la vista previa basta). <span class="origen o-s10">Nuevo · S10</span></label>
         <p class="esperar"><span class="et">Esperado</span> Hay <strong>tarjetas con dibujo y su palabra</strong> y un <strong>tablero «Mi turno / Tu turno»</strong>. En la vista de impresión <strong>desaparecen los botones</strong> y <strong>cada hoja trae al pie</strong> “Hoja n de N” y el crédito de <strong>ARASAAC</strong>. <strong>Ninguna hoja lleva nombre ni edad</strong>, ni lo que escribiste en «Cuentos de casa».</p>
         <p class="mal"><span class="et">Mal</span> Una hoja sin crédito · aparece el apodo, una edad o un gusto con nombre propio · se imprimen los botones.</p>
+      </div></li>
+      <li data-origen="s11" data-cubre="convenciones"><input type="checkbox" id="v11-r7"><div>
+        <label for="v11-r7">Abre <strong><code>docs/convenciones-familia/README.md</code></strong> (en el repo, no en la app). <span class="origen o-s11">Nuevo · S11</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Es una <strong>propuesta de convenciones</strong> (versión 0.1.0) para que esta app y la de la dieta se parezcan en cómo cuidan al niño; <strong>ninguna app escribe en la otra</strong>, no hay datos compartidos y no menciona a nadie de tu familia.</p>
+        <p class="mal"><span class="et">Mal</span> Una app que lee o escribe archivos de la otra · aparece un nombre o una edad.</p>
       </div></li>
     </ul>
     <div class="reportame"><p><strong>Repórtame de este bloque:</strong> si la frase y la pantalla de «qué cambia» se entienden sin ayuda · si el mapa de las vocales te sirve o lo descartas (tu decisión, con nombre) · si las hojas se pueden usar tal cual en tu casa.</p></div>
   </section>
 <!-- s10:fin -->
+
+  <section class="bloque">
+    <div class="bloque-cabeza"><span class="letra">M</span><h2>El kit de prueba <span class="chica suave">(opcional, para repetir el bloque A sin hablar)</span></h2></div>
+    <p class="meta-bloque chica suave inicio"><strong>Empieza en:</strong> <code>docs/kit-de-prueba/</code> — archivos del repo, no una ruta de la app</p>
+    <p class="meta-bloque chica suave">Solo si quieres. En el repo, la carpeta <code>docs/kit-de-prueba/</code> trae dos audios sintéticos para probar el oído de la app sin usar la voz del niño.</p>
+    <ul class="pasos">
+      <li data-origen="s3" data-cubre="voz-juegos"><input type="checkbox" id="v3-m1"><div>
+        <label for="v3-m1">Abre <code>docs/kit-de-prueba/README.md</code> y mira los dos WAV (<code>voz-sintetica.wav</code>, <code>barrido-tono.wav</code>). <span class="origen o-s3">S3</span></label>
+        <p class="esperar"><span class="et">Esperado</span> El README explica qué es cada audio (voz sostenida · barrido de tono) y para qué sirve (los mismos que usan los tests automáticos). No hay nada que “aprobar”: es material de apoyo.</p>
+      </div></li>
+    </ul>
+  </section>
 
   <section class="bloque diferida">
     <span class="pill-diferida">Diferido · cuando regrese la tablet</span>
@@ -997,7 +1011,6 @@
       </div></li>
     </ul>
   </section>
-
   <div class="aviso-final">
     <p style="margin:0"><strong>Qué mandarme al terminar</strong>:</p>
     <ol class="reporte">
@@ -1022,6 +1035,9 @@
     <p class="chica suave"><strong>Regla de la bola de nieve</strong> (2026-07-12): la guía es acumulativa. La última versión contiene <strong>todas</strong> las pruebas vigentes de la app, con el <strong>origen</strong> de cada una (de qué sprint nació y si un sprint posterior la cambió). Una prueba solo se elimina cuando la feature que probaba deja de existir — y se anota abajo.</p>
 
     <p class="eyebrow" style="margin-top:16px">Historial</p>
+<!-- s11:inicio -->
+    <p class="chica suave"><strong>Sprint 011 (2026-11-14) — cierre de la construcción del H-2, «¿Dijo la palabra?»:</strong> bloque S nuevo (la segunda opinión del aparato, apagada de fábrica, que dice «quizás» solo al adulto) y un paso en R para las convenciones. La guía se reordena como <strong>un solo recorrido</strong>, sin pasos repetidos (se quitaron los repetidos de modo calma, micrófono negado, volver a entrar, música de fondo, guardar «animales» y borrar datos como precondición) y con <code>data-cubre</code> en cada paso y su test.</p>
+<!-- s11:fin -->
 <!-- s8:inicio -->
     <p class="chica suave"><strong>Sprint 008 (2026-11-12) — «En inglés también se practica»:</strong> Palabras, Gemelas y el Objetivo se practican en inglés; <code>/mirada</code> y el catálogo de cápsulas salen en español y English; el Estudio trae <strong>Videos de la familia</strong> (clips de tu galería, sin cámara, solo en el dispositivo); el crédito del diccionario se corrigió. <strong>Nuevo:</strong> cinco pruebas en el bloque H. <strong>Mejorado:</strong> la prueba de Words y Twins en English. <strong>Eliminado:</strong> nada. Toda prueba anterior se hereda como regresión.</p>
 <!-- s8:fin -->
