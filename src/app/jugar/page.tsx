@@ -6,6 +6,7 @@ import {
   IconoGemelas,
   IconoPictograma,
 } from "@/components/iconos";
+import { FormaVocal } from "@/components/juego/forma-vocal";
 import { Tx, TituloDePagina } from "@/components/idioma/tx";
 import { comunes } from "@/lib/idioma/textos/comunes";
 import { jugar } from "@/lib/idioma/textos/jugar";
@@ -45,6 +46,18 @@ const JUEGOS = [
     testid: "juego-gemelas",
     ...jugar.gemelas,
     icono: <IconoGemelas className="text-acento h-20 w-24" />,
+  },
+  {
+    href: "/jugar/vocales",
+    testid: "juego-vocales",
+    ...jugar.vocales,
+    icono: (
+      <span className="flex items-end gap-1">
+        <FormaVocal vocal="a" letra="A" className="size-9" encendida />
+        <FormaVocal vocal="i" letra="I" className="size-9" encendida />
+        <FormaVocal vocal="u" letra="U" className="size-9" encendida />
+      </span>
+    ),
   },
 ];
 

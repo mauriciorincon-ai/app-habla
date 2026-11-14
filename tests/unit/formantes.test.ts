@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { estimarFormantes } from "../../src/worklets/formantes";
-import { clasificarVocal, vocalEstable, type Lectura } from "@/lib/voice/vocales";
+import { clasificarVocal, crearSeguimientoVocales, vocalEstable, type Lectura } from "@/lib/voice/vocales";
 import {
   F0,
   FORMANTES_ADULTO,
@@ -142,5 +142,39 @@ describe("lo que el spike NO inventa", () => {
   it("el F0 elige el mapa: la misma pareja es «o» en un niño y «a» en un adulto", () => {
     expect(clasificarVocal({ f1: 680, f2: 1220 }, 300)?.vocal).toBe("o");
     expect(clasificarVocal({ f1: 720, f2: 1280 }, null)?.vocal).toBe("a");
+  });
+});
+
+describe("seguimiento de vocales (lo único que el juego afirma)", () => {
+  const a = { f1: 1000, f2: 1750 };
+  const i = { f1: 390, f2: 3000 };
+
+  it("cuenta zonas y cambios solo con vocales estables", () => {
+    const s = crearSeguimientoVocales();
+    for (let k = 0; k < 4; k++) s.empujar(a, 300, true);
+    expect(s.actual()).toBe("a");
+    expect(s.zonas()).toBe(1);
+    expect(s.cambios()).toBe(0);
+    for (let k = 0; k < 4; k++) s.empujar(i, 300, true);
+    expect(s.actual()).toBe("i");
+    expect(s.zonas()).toBe(2);
+    expect(s.cambios()).toBe(1);
+  });
+
+  it("una lectura suelta no cuenta (transición)", () => {
+    const s = crearSeguimientoVocales();
+    s.empujar(a, 300, true);
+    s.empujar(i, 300, true);
+    s.empujar(a, 300, true);
+    expect(s.zonas()).toBe(0);
+  });
+
+  it("sin voz activa no se sostiene nada, y reiniciar limpia todo", () => {
+    const s = crearSeguimientoVocales();
+    for (let k = 0; k < 5; k++) s.empujar(a, 300, false);
+    expect(s.actual()).toBeNull();
+    for (let k = 0; k < 4; k++) s.empujar(a, 300, true);
+    s.reiniciar();
+    expect([s.actual(), s.zonas(), s.cambios()]).toEqual([null, 0, 0]);
   });
 });

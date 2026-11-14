@@ -71,3 +71,50 @@ export function vocalEstable(ultimas: readonly Lectura[], n = 3): Vocal | null {
   if (!primera) return null;
   return tramo.every((l) => l?.vocal === primera) ? primera : null;
 }
+
+export type SeguimientoVocales = {
+  /** Un frame medido. Sin voz, la ventana se vacía: el silencio no «sostiene» ninguna vocal. */
+  empujar: (
+    formantes: Formantes | null | undefined,
+    pitchHz: number | null,
+    vozActiva: boolean,
+  ) => void;
+  /** La vocal que suena AHORA (estable), o null. */
+  actual: () => Vocal | null;
+  /** Cuántas vocales distintas sonaron estables en el intento (0..5). */
+  zonas: () => number;
+  /** Cuántas veces pasó de una vocal estable a otra distinta. */
+  cambios: () => number;
+  reiniciar: () => void;
+};
+
+/** Ventana de lecturas, conteo de zonas y de cambios: lo único que el juego puede afirmar (regla 3). */
+export function crearSeguimientoVocales(ventana = 3): SeguimientoVocales {
+  let ultimas: Lectura[] = [];
+  let actual: Vocal | null = null;
+  let previa: Vocal | null = null;
+  let vistas = new Set<Vocal>();
+  let cambios = 0;
+  return {
+    empujar(formantes, pitchHz, vozActiva) {
+      ultimas.push(vozActiva ? clasificarVocal(formantes, pitchHz) : null);
+      if (ultimas.length > ventana) ultimas = ultimas.slice(-ventana);
+      actual = vocalEstable(ultimas, ventana);
+      if (actual) {
+        vistas.add(actual);
+        if (previa && previa !== actual) cambios++;
+        previa = actual;
+      }
+    },
+    actual: () => actual,
+    zonas: () => vistas.size,
+    cambios: () => cambios,
+    reiniciar() {
+      ultimas = [];
+      actual = null;
+      previa = null;
+      vistas = new Set();
+      cambios = 0;
+    },
+  };
+}
