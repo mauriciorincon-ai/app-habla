@@ -123,7 +123,7 @@ function GemelasListo({
   const [sinMic, setSinMic] = useState(false);
   const abriendoRef = useRef(false);
   async function escuchar() {
-    // One tap, one microphone: a second tap while the permission prompt is open does nothing.
+    // A guard ref: only the first tap opens a microphone session.
     if (micRef.current || abriendoRef.current) return;
     abriendoRef.current = true;
     setSinMic(false);

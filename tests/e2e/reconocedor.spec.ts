@@ -145,7 +145,7 @@ test("gemelas: el micrófono solo se abre si el adulto toca «Escuchar»; con «
   await expect(page.getByTestId("gemelas-ronda")).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { __gum: number }).__gum)).toBe(0);
 
-  // Two taps in a row open ONE microphone (the second one, with the permission prompt open, does nothing).
+  // Two quick taps in a row must open exactly one microphone session.
   const escuchar = page.getByTestId("escuchar-reconocedor");
   await escuchar.dblclick();
   await expect(page.getByTestId("reconocedor-escuchando")).toBeVisible({ timeout: 60_000 });
