@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  BarrasVoz,
   Cohete,
   Globo,
   IconoGemelas,
   IconoPictograma,
+  Molino,
 } from "@/components/iconos";
 import { FormaVocal } from "@/components/juego/forma-vocal";
 import { Tx, TituloDePagina } from "@/components/idioma/tx";
@@ -17,8 +19,9 @@ export const metadata: Metadata = {
 
 // EL SELECTOR DE JUEGOS (COGA §C): opciones grandes, con iconografía propia y SIEMPRE en el mismo
 // orden — la predictibilidad importa más que la variedad. El niño puede elegir por el dibujo, sin
-// leer nada; el texto pequeño es para el padre. En el S3 pasa de 3 a 4 juegos (llega gemelas): el
-// orden de los tres primeros NO cambia — el niño encuentra su juego donde siempre estuvo.
+// leer nada; el texto pequeño es para el padre. El orden es FIJO y declarado (ADR-024, S12): globo,
+// soplar, fuerte y suave, cohete, palabras, gemelas y vocales (experimental, siempre al final). En el S12
+// llegan los dos juegos de aire y de volumen; el orden se fija una sola vez y no vuelve a cambiar.
 //
 // LCP estático (patrón lcp-nace-estatico): esta página es 100% servidor. Nada nace en el cliente.
 
@@ -28,6 +31,18 @@ const JUEGOS = [
     testid: "juego-globo",
     ...jugar.globo,
     icono: <Globo className="h-24 w-16" />,
+  },
+  {
+    href: "/jugar/soplar",
+    testid: "juego-soplar",
+    ...jugar.soplar,
+    icono: <Molino className="h-24 w-16" />,
+  },
+  {
+    href: "/jugar/fuerte-suave",
+    testid: "juego-fuerte-suave",
+    ...jugar["fuerte-suave"],
+    icono: <BarrasVoz className="size-20" />,
   },
   {
     href: "/jugar/cohete",

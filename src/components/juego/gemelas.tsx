@@ -30,8 +30,11 @@ import {
   secuenciaDeRondas,
   type Marca,
 } from "@/lib/gemelas/rondas";
+import { topeValido } from "@/lib/pantalla/tope";
+import { AvisoTope, LineaHoy } from "./aviso-tope";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
+import { hayLineaHoy, minutosDeHoy, useTopePantalla } from "./use-tope-pantalla";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { useReconocedor } from "./use-reconocedor";
 import { QuizasDijo } from "./quizas-dijo";
@@ -54,6 +57,7 @@ export function Gemelas() {
       etapa={ajustes.etapa}
       reconocedorActivo={ajustes.reconocedor}
       animacionReconocedor={ajustes.reconocedor && ajustes.animacionReconocedor}
+      topeMinutos={topeValido(ajustes.topeMinutos)}
     />
   );
 }
@@ -62,8 +66,11 @@ function GemelasListo({
   etapa,
   reconocedorActivo,
   animacionReconocedor,
+  topeMinutos,
 }: {
   etapa: Etapa;
+  /** Sesiones cortas (S12): minutos de juego por día; al llegar, aviso al adulto y cierre calmo como «Salir». */
+  topeMinutos: number;
   /** «¿Dijo la palabra?» (S11): off by default; Gemelas has no microphone unless the adult asks. */
   reconocedorActivo: boolean;
   animacionReconocedor: boolean;
@@ -91,6 +98,13 @@ function GemelasListo({
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);
+  // Sesiones cortas (S12, ADR-024): corre mientras se juega; al tope, el aviso va al adulto y la ronda
+  // se cierra como «Salir» (vuelve al guion). Después del aviso no vuelve a cortar ese día.
+  const { avisoMinutos } = useTopePantalla({
+    jugando: fase === "jugando",
+    topeMinutos,
+    alAlcanzar: () => otraVez(),
+  });
   const [marcas, setMarcas] = useState<Marca[]>([]);
   // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
   // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
@@ -222,13 +236,20 @@ function GemelasListo({
 
   if (fase === "guion") {
     return (
-      <GuionCard
-        etiqueta={tx(g.guion.etiqueta)}
-        guion={tx(g.guion.guion)}
-        nota={tx(g.guion.nota)}
-        onEmpezar={() => setFase("jugando")}
-        listo
-      />
+      <div className="flex flex-col gap-6">
+        {avisoMinutos !== null ? (
+          <AvisoTope minutos={avisoMinutos} />
+        ) : hayLineaHoy(topeMinutos) ? (
+          <LineaHoy minutos={minutosDeHoy()} />
+        ) : null}
+        <GuionCard
+          etiqueta={tx(g.guion.etiqueta)}
+          guion={tx(g.guion.guion)}
+          nota={tx(g.guion.nota)}
+          onEmpezar={() => setFase("jugando")}
+          listo
+        />
+      </div>
     );
   }
 
