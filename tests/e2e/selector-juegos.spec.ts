@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // EL SELECTOR DE JUEGOS (COGA §C): opciones grandes, siempre las mismas y en el mismo orden.
 // La predictibilidad importa más que la variedad — y el niño elige por el dibujo, sin leer.

@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 import { GRUPOS, GRUPOS_PRIORITARIOS } from "../../content/schema";
 
 // El documento de la mamá, «La pirámide, en casa», servido en /mirada (Sprint 006). La fuente es

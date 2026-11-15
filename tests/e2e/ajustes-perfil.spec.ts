@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // Hallazgo del gate (2026-07-12): el onboarding solo aparece la primera vez y no había forma de
 // volver a cambiar el apodo/los temas sin borrar todo. Ahora se cambian desde Ajustes, y la

@@ -1,6 +1,6 @@
 // «¿Dijo la palabra?» — the listening half (S11, ADR-023). Talks to the on-device recognizer (a vosk
-// Worker the caller already created, network removed by its prelude) and hands back ONLY a word and a
-// confidence. Nothing else crosses back: not text, not timings, not audio.
+// Worker the caller already created, network removed by its prelude and, in production, fenced by the CSP) and
+// hands back ONLY a word and a confidence. Nothing else crosses back: not text, not timings, not audio.
 //
 // Hard rule 2: this module has no storage, no network and no logs (tests/unit/privacidad-voice.test.ts).
 // Audio blocks arrive by transfer from the pcm-tap worklet, go to the Worker by transfer, and die there.

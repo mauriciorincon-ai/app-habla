@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // «Cuentos de casa» (S9, ADR-019), de punta a punta y en español, con un lote FIJO de un perfil inventado
 // (tests/fixtures/lote-cuentos-prueba.json): pedir → traer el lote → aprobar → verlo del lado del niño →

@@ -140,7 +140,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
               aria-live="polite"
             >
               {tx(juegos.cohete.subioYBajo)}{" "}
-              <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+              <span className="text-celebracion-texto font-sans font-semibold tabular-nums">
                 {tx(subidas === 1 ? juegos.cohete.vez : juegos.cohete.veces, {
                   n: subidas,
                 })}

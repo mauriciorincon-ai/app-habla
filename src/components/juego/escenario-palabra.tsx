@@ -200,7 +200,7 @@ export function EscenarioPalabra({
         </p>
       ) : encendido ? (
         <p
-          className="text-celebracion-fuerte text-lg font-medium"
+          className="text-celebracion-texto text-lg font-medium"
           role="status"
         >
           {tx(txp.escenario.salio)}

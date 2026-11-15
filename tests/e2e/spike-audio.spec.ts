@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // Spike barato en CI (orden §Tareas 3): valida TEMPRANO que el fake-mic de Chromium alimenta el
 // pipeline completo (getUserMedia → AudioWorklet → RMS en pantalla). Si esto es estable, los

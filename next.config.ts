@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { cabecerasSeguridad } from "./src/lib/seguridad/csp";
 
 const nextConfig: NextConfig = {
   // El indicador de desarrollo de Next (esquina inferior) tapa la navegación inferior
@@ -15,6 +16,12 @@ const nextConfig: NextConfig = {
       { source: "/conoce", destination: "/conoce.html" },
       { source: "/mirada", destination: "/mirada.html" },
     ];
+  },
+
+  // CSP and friends only in production (src/lib/seguridad/csp.ts): `connect-src 'self' blob:` backs the
+  // recognizer Worker's offline guard with the browser's own enforcement.
+  async headers() {
+    return cabecerasSeguridad(process.env.NODE_ENV);
   },
 };
 

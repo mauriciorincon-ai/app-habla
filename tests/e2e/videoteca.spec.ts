@@ -1,5 +1,5 @@
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // LA VIDEOTECA DE LA FAMILIA (S8) — se llega POR LA UI: Estudio → «Abrir los videos». El clip se
 // FABRICA en la prueba (un lienzo grabado un segundo con MediaRecorder): jamás hay video real en el

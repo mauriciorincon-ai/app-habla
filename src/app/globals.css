@@ -20,6 +20,7 @@
   --color-coral-300: #f5b4a0;
   --color-coral-500: #dd7b5e;
   --color-coral-700: #a95239;
+  --color-coral-800: #8e4630;
 
   /* Ámbar — voz parental/avisos */
   --color-ambar-100: #f8e9c8;
@@ -109,6 +110,9 @@
   --sobre-peligro: var(--color-cream-50);
   --celebracion: var(--color-coral-500);
   --celebracion-fuerte: var(--color-coral-700);
+  /* Text only (S11 payment): coral-500 on cream was 2.83:1. Fills, borders and the halo keep
+     --celebracion*; text reads this one (>= 4.5:1, checked in tests/unit/contraste.test.ts). */
+  --celebracion-texto: var(--color-coral-700);
   --exito: #527947;
   --aviso: #c99432;
   --peligro: #b14b3d;
@@ -141,6 +145,7 @@
     --aviso: var(--oscuro-aviso);
     --peligro: var(--oscuro-peligro);
     --info: var(--oscuro-info);
+    --celebracion-texto: var(--color-coral-300);
   }
 }
 
@@ -158,6 +163,7 @@
   --aviso: var(--oscuro-aviso);
   --peligro: var(--oscuro-peligro);
   --info: var(--oscuro-info);
+  --celebracion-texto: var(--color-coral-300);
 }
 
 /*
@@ -177,6 +183,7 @@
   --sobre-acento: var(--color-kid-ink);
   --celebracion: var(--color-kid-peach);
   --celebracion-fuerte: var(--color-coral-500);
+  --celebracion-texto: var(--color-coral-700);
   background: var(--fondo);
   color: var(--tinta);
 }
@@ -206,6 +213,7 @@ html[data-en-juego="true"] [data-intro-padre] {
   --acento-suave: var(--color-sage-50);
   --celebracion: var(--color-cream-200);
   --celebracion-fuerte: var(--color-sage-400);
+  --celebracion-texto: var(--color-coral-800);
   /* Los primitivos del niño también se atenúan: el globo y el suelo los leen en vivo. */
   --color-kid-peach: #e8cbbd;
   --color-kid-sage: #b3c2ad;
@@ -227,6 +235,7 @@ html[data-en-juego="true"] [data-intro-padre] {
   --color-sobre-peligro: var(--sobre-peligro);
   --color-celebracion: var(--celebracion);
   --color-celebracion-fuerte: var(--celebracion-fuerte);
+  --color-celebracion-texto: var(--celebracion-texto);
   --color-exito: var(--exito);
   --color-aviso: var(--aviso);
   --color-peligro: var(--peligro);

@@ -53,18 +53,21 @@ saturación.
 La UI usa utilidades semánticas (`bg-fondo`, `bg-superficie`, `text-tinta`, `text-tinta-suave`,
 `bg-acento`, `border-borde`, `bg-celebracion`, …), nunca primitivos ni hex directos.
 
-| Token                                  | Operador light                                | Operador dark | Niño (`.tema-nino`) |
-| -------------------------------------- | --------------------------------------------- | ------------- | ------------------- |
-| `fondo`                                | cream-50 `#FBF8F2`                            | `#14171A`     | kid-bg `#FFF9EE`    |
-| `superficie`                           | cream-100 `#F5F0E5`                           | `#1B1F22`     | cream-50 `#FBF8F2`  |
-| `borde`                                | cream-200 `#ECE4D2`                           | `#232830`     | cream-200 `#ECE4D2` |
-| `tinta`                                | ink-900 `#1F2420`                             | `#F2EFE8`     | kid-ink `#2B3530`   |
-| `tinta-suave`                          | ink-500 `#5A615C`                             | `#969994`     | ink-500 `#5A615C`   |
-| `acento`                               | sage-700 `#2E4628`                            | `#B5D5AB`     | kid-sage `#A8C9A0`  |
-| `acento-hover`                         | sage-600 `#3F5F37`                            | `#94BB89`     | sage-400 `#7AA070`  |
-| `acento-suave`                         | sage-100 `#DCE6D8`                            | `#233022`     | sage-50 `#EEF2EC`   |
-| `celebracion`                          | coral-500 `#DD7B5E`                           | coral-500     | kid-peach `#FFC7B0` |
-| `exito` / `aviso` / `peligro` / `info` | `#527947` / `#C99432` / `#B14B3D` / `#4A6E84` | =             | =                   |
+| Token                                  | Operador light                                | Operador dark       | Niño (`.tema-nino`)                             |
+| -------------------------------------- | --------------------------------------------- | ------------------- | ----------------------------------------------- |
+| `fondo`                                | cream-50 `#FBF8F2`                            | `#14171A`           | kid-bg `#FFF9EE`                                |
+| `superficie`                           | cream-100 `#F5F0E5`                           | `#1B1F22`           | cream-50 `#FBF8F2`                              |
+| `borde`                                | cream-200 `#ECE4D2`                           | `#232830`           | cream-200 `#ECE4D2`                             |
+| `tinta`                                | ink-900 `#1F2420`                             | `#F2EFE8`           | kid-ink `#2B3530`                               |
+| `tinta-suave`                          | ink-500 `#5A615C`                             | `#969994`           | ink-500 `#5A615C`                               |
+| `acento`                               | sage-700 `#2E4628`                            | `#B5D5AB`           | kid-sage `#A8C9A0`                              |
+| `acento-hover`                         | sage-600 `#3F5F37`                            | `#94BB89`           | sage-400 `#7AA070`                              |
+| `acento-suave`                         | sage-100 `#DCE6D8`                            | `#233022`           | sage-50 `#EEF2EC`                               |
+| `celebracion`                          | coral-500 `#DD7B5E`                           | coral-500           | kid-peach `#FFC7B0`                             |
+| `celebracion-texto` (solo texto)       | coral-700 `#A95239` (5,0:1)                   | coral-300 `#F5B4A0` | coral-700 (5,1:1; en calma coral-800 `#8E4630`) |
+| `exito` / `aviso` / `peligro` / `info` | `#527947` / `#C99432` / `#B14B3D` / `#4A6E84` | =                   | =                                               |
+
+**Coral como texto (S11).** El coral-500 sobre crema da 2,83:1 y no sirve para letra. Todo texto de celebración (la línea «¡Le salió la voz!», las cifras reales de la celebración honesta, las subidas del cohete) lee `text-celebracion-texto`, que llega a ≥ 4,5:1 en claro, oscuro, niño y calma; rellenos, bordes y el halo del reconocedor siguen en `celebracion` / `celebracion-fuerte`. Lo guarda `tests/unit/contraste.test.ts`.
 
 **Modo calma** (`.tema-nino--calma`): "atardecer" — el cambio debe ser PERCEPTIBLE en todo el
 escenario, no solo en los acentos (hallazgo del gate 2026-07-12). Fondo baja a cream-200,
@@ -79,7 +82,7 @@ hay voz real y baja despacio en el silencio — jamás se congela.
 
 - **Sage:** 50 `#EEF2EC` · 100 `#DCE6D8` · 200 `#B8CDB1` · 400 `#7AA070` · 500 `#527947` ·
   600 `#3F5F37` · 700 `#2E4628`
-- **Coral (logros):** 100 `#FBE3DA` · 300 `#F5B4A0` · 500 `#DD7B5E` · 700 `#A95239`
+- **Coral (logros):** 100 `#FBE3DA` · 300 `#F5B4A0` · 500 `#DD7B5E` · 700 `#A95239` · 800 `#8E4630` (solo texto en modo calma)
 - **Ámbar (voz parental):** 100 `#F8E9C8` · 300 `#ECC56F` · 500 `#C99432` · 700 `#8C6113`
 - **Cream:** 50 `#FBF8F2` · 100 `#F5F0E5` · 200 `#ECE4D2` · 300 `#DDD2BB`
 - **Ink:** 900 `#1F2420` · 700 `#353B36` · 500 `#5A615C` · 400 `#7A8079` · 300 `#9CA29C`

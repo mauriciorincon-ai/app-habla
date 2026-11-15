@@ -3,7 +3,8 @@
 // It takes the network away from the Worker: the only addresses it can read are the blob: URLs of the
 // files the adult already downloaded and the app already checked by hash (the wasm and the model). Any
 // other request fails, and the other network APIs are removed. So whatever the Worker does with the
-// child's audio, it has no way out (hard rule 2). A unit test runs this text in a sandbox and checks it.
+// child's audio, it has no way out (hard rule 2); in production the page's CSP (src/lib/seguridad/csp.ts) backs this with
+// `connect-src 'self' blob:`, so no OTHER origin is reachable even if the prelude were bypassed. A unit test runs this text in a sandbox and checks it.
 //
 // The model keeps a stable address (`/modelos/<lang>.zip?v=<hash>`) because vosk names its unpacked copy
 // after it; the prelude answers that address with the verified blob.

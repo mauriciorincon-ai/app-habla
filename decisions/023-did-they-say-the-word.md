@@ -31,6 +31,7 @@ the other-home file; and an honest measurement on Lingua Libre recordings.
 3. **The Worker has no network.** A prelude (`src/lib/reconocer/preludio.ts`) runs before the vosk code:
    `fetch` answers only the verified blobs; `XMLHttpRequest`, `WebSocket`, `EventSource`, `WebTransport`,
    `importScripts` and `sendBeacon` are removed. Its console is silenced: `set logLevel -2` goes to the engine before it loads and again when it is ready (`src/lib/voice/escucha.ts`, checked in `tests/unit/reconocer.test.ts`). `Worker` and `SharedWorker` are removed as well.
+   **In production the browser backs the prelude with a Content-Security-Policy** (`src/lib/seguridad/csp.ts`, `next.config.ts`): `connect-src 'self' blob:` and `worker-src 'self' blob:`, no other origin anywhere. It closes OTHER origins, not every request (`'self'` stays reachable): the guarantee is «no other origin», and the prelude removes the rest. **Cost, owner decision of the S11 payment:** vosk-browser's Emscripten glue builds its embind invokers with `new Function`, and a blob Worker inherits the page's policy, so `script-src` carries `'unsafe-eval'` page-wide (next to the `'unsafe-inline'` the static Next pages already need). The e2e job runs under `next start` and fails on any CSP violation (`tests/e2e/base.ts`, `tests/e2e/csp.spec.ts`).
 4. **The audio path.** A second worklet branch (`src/worklets/pcm-tap.ts`), mounted only while the
    recognizer is on, moves ≈ 85 ms blocks by transfer to `src/lib/voice/escucha.ts`, which moves them on to
    the Worker. The listener hands the page **only `{palabra, conf}`** for words of the grammar; text,
@@ -42,7 +43,7 @@ the other-home file; and an honest measurement on Lingua Libre recordings.
    word with `conf ≥ 0.6`. Anything else shows nothing. The adult's button stays the only way to a
    recognized word (ADR-009 stands: two numbers, two owners).
 7. **The child's animation (option b), against hard rule 3.** Rule 3 forbids showing automatic recognition as a verdict and a «well done» that cheers whatever the child says. The glow is neither: it is a soft light with no text, no word and no verdict, it appears only when the recognizer is on, the adult switched the second option on, and the recognizer itself thinks it heard the round's word; it never counts, never triggers or replaces the celebration the adult fires (hard rule 3's «the adult judges»), and it is smaller than it. A miss shows nothing, so the child never sees a «no». The owner decides in the rehearsal whether it stays.
-    A second switch, off by default and only present while the
+   A second switch, off by default and only present while the
    recognizer is on, shows a soft halo on the drawing: `aria-hidden`, no text, no verdict, does not count,
    smaller than the celebration the adult triggers, and under reduced motion only its opacity changes.
 8. **The count.** «Matched» means the recognizer showed a «maybe» for the round (in Gemelas: for a side); «judged yes» means the adult marked THAT word or side (a «maybe» for one side while the adult marked the other is matched · judged no). Four local numbers (recognizer matched yes/no × adult judged yes/no) in
@@ -72,7 +73,7 @@ Wordless controls (the synthetic sounds of the other e2e tests): `voz-sintetica.
 languages; `barrido-tono.wav` → «huevo» at 0.65 (es) and «moon» at **1.00** (en); `vocales-nino.wav` →
 «huevo» at 0.77 (es), nothing in en.
 
-**Finding.** With a closed grammar the recognizer must pick *something* of the grammar, so a sound with no
+**Finding.** With a closed grammar the recognizer must pick _something_ of the grammar, so a sound with no
 word can still come out as one, with a confidence **above the threshold** (even 1.00). Confidence does not
 separate a real word from a noise; the threshold is a starting value, and a smaller grammar (Gemelas: two
 words per round pair) makes a false «maybe» more likely, not less. Consequence by design: a «maybe» is a
@@ -92,6 +93,7 @@ owner.
 - **Build dependency.** `pnpm build` and `pnpm dev` download the two model zips from the Vosk project's host
   (`alphacephei.com`) and stop if a SHA-256 differs from `scripts/modelos.json`; the engine and wasm are only
   _copied_ from `node_modules/@lichess-org/vosk-browser` into `public/vosk/`. At run time the app never talks to that host.
+- The page carries `'unsafe-eval'` in production because of the recognizer's engine (decision 3); a Sentry DSN, if ever set, needs its ingest origin added to `connect-src` by the owner.
 - A false «maybe» is possible; it is worded as a suggestion and the adult's button decides.
 - Tests: `tests/unit/reconocer.test.ts` (grammar, matcher, guards, listener, prelude sandbox, hashes,
   download/verify/delete), `tests/unit/privacidad-voice.test.ts` (sealed folders + the new split), the

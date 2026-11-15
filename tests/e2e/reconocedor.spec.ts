@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // «¿DIJO LA PALABRA?» (S11, ADR-023), por la UI y con el micrófono falso: una grabación de Lingua Libre
 // («gato», voluntaria adulta, CC BY-SA 4.0, nunca de la familia; tests/e2e/fixtures/palabras/mic-es.wav).

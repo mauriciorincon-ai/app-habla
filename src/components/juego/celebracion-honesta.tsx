@@ -71,7 +71,7 @@ function Logro({
   const v = vocalesTextos.celebracion;
   const cifra = (texto: string) => (
     <span
-      className="text-celebracion-fuerte font-sans font-semibold tabular-nums"
+      className="text-celebracion-texto font-sans font-semibold tabular-nums"
       data-testid="metrica-real"
     >
       {texto}
@@ -95,7 +95,7 @@ function Logro({
           {vueltas > 0 ? (
             <p className="text-lg" data-testid="celebracion-vueltas">
               {tx(c.globo.vueltasAntes)}{" "}
-              <strong className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+              <strong className="text-celebracion-texto font-sans font-semibold tabular-nums">
                 {tx(vueltas === 1 ? c.globo.vuelta : c.globo.vueltas, {
                   n: vueltas,
                 })}
@@ -177,7 +177,7 @@ function Logro({
           {metrica.cambios > 0 ? (
             <p className="text-lg" data-testid="celebracion-cambios">
               {tx(v.cambios)}{" "}
-              <strong className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+              <strong className="text-celebracion-texto font-sans font-semibold tabular-nums">
                 {tx(
                   metrica.cambios === 1
                     ? vocalesTextos.vez

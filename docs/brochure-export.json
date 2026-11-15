@@ -299,26 +299,26 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 886,
+      "valor": 899,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 42 archivos, 886 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 44 archivos, 899 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 271,
+      "valor": 275,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` (Playwright, --workers=1, servidor de desarrollo local) el 2026-11-13 sobre la rama del S10: 257 pruebas en verde en sus cuatro proyectos (móvil, escritorio, escritorio con voz que canta y escritorio con vocales), con micrófono falso: un WAV sintético inyectado como dispositivo de captura."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-14 sobre la rama del pago del S11: 275 pruebas en verde."
     },
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 94.97,
+      "valor": 94.98,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,97 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,98 % de líneas."
     },
     {
       "clave": "capsulas",

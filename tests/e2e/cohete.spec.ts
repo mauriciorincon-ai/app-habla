@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // EL COHETE DEL TONO (Outcome 2). Corre en el proyecto `desktop-chromium-tono`, cuyo micrófono
 // falso CANTA: un barrido continuo 230↔420 Hz (sube·baja·sube·baja = 3 inversiones).

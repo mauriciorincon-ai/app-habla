@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 // EL CONTACTO VISUAL EN «HOY» (S9). Lo que blinda:
 //   - Cada día trae UNA actividad de contacto visual junto a la cápsula del habla, con la línea del adulto primero.

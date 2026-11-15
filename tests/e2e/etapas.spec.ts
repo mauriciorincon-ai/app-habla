@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // LAS ETAPAS DEL HABLA (Outcome 1, ADR 006). Lo que este test blinda:
 //   - "Palabras sueltas" es el DEFAULT: nadie tiene que elegir nada para que la app funcione.

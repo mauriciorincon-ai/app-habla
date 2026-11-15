@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // EL MAPA DE LAS VOCALES (S10, experimental). Corre en `desktop-chromium-vocales`: el micrófono
 // falso reproduce vocales sintéticas de voz infantil (a·e·i·o·u, 0,4 s de pausa entre cada una;
