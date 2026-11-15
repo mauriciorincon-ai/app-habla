@@ -19,6 +19,7 @@ export const objetivo = {
     comida: { es: "la comida", en: "food" },
     bano: { es: "el baño", en: "bath time" },
     acciones: { es: "acciones", en: "actions" },
+    colores: { es: "colores", en: "colors" },
     pedir: { es: "pedir cosas", en: "asking for things" },
     sonidos: { es: "los sonidos", en: "sounds" },
   },

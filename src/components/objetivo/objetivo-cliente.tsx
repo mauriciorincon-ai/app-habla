@@ -140,6 +140,7 @@ const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
   { testid: "la-comida", texto: txt.sugerencias.comida },
   { testid: "el-baño", texto: txt.sugerencias.bano },
   { testid: "acciones", texto: txt.sugerencias.acciones },
+  { testid: "colores", texto: txt.sugerencias.colores },
   { testid: "pedir-cosas", texto: txt.sugerencias.pedir },
   { testid: "los-sonidos", texto: txt.sugerencias.sonidos },
 ];

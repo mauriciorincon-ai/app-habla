@@ -218,3 +218,14 @@ test("una meta sin contenido que se parece a una etiqueta real la sugiere («col
   await expect(page.getByTestId("objetivo-activo")).toHaveAttribute("data-estado", "sin-contenido");
   await expect(page.getByTestId("objetivo-activo-cercana")).toHaveCount(0);
 });
+
+test("el chip «colores» del objetivo alinea de verdad: la tarjeta sale «alineado» y los dibujos de color cuentan", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["mar"] });
+  await page.goto("/objetivo");
+  await page.getByTestId("sugerencia-colores").click();
+  await expect(page.getByTestId("objetivo-input")).toHaveValue("colores");
+  await page.getByTestId("guardar-objetivo").click();
+  await expect(page.getByTestId("objetivo-activo")).toHaveAttribute("data-estado", "alineado");
+});
