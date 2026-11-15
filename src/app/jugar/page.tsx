@@ -105,7 +105,7 @@ export default function JugarPage() {
           <li key={juego.href}>
             <Link
               href={juego.href}
-              // Sin prefetch: entrar al selector descargaba de golpe el JS de los TRES juegos
+              // Sin prefetch: entrar al selector descargaba de golpe el JS de los juegos
               // (incluida la biblioteca entera de cápsulas). El niño abre uno, no tres — y el
               // salto entre pantallas es local e instantáneo igual. (Lo destapó el gate de
               // performance del S2: LCP 4.5 s y +130 KB de script en esta ruta.)

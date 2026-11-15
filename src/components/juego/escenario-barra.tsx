@@ -6,7 +6,7 @@
 // símbolo de forma distinta por nivel: el color nunca va solo.
 //
 // Se pinta a 60 fps desde los refs del medidor; el texto del nivel es lo único que pasa por React
-// (cambia pocas veces por segundo y lo lee el lector de pantalla con `aria-live="polite"`).
+// (cambia varias veces por segundo, así que NO es una región viva: el lector de pantalla oye el contador de cambios, que sí lo es).
 //
 // «Reducir animaciones»: la columna salta de una altura a otra sin deslizarse. Modo calma: sin el
 // conteo de cambios ni confeti (lo decide el juego); la columna sigue la voz.
@@ -34,13 +34,30 @@ function sinMovimiento(): boolean {
 /** Un símbolo por nivel (forma distinta, sin color): punto, onda baja, onda alta. */
 function Simbolo({ nivel }: { nivel: "silencio" | "suave" | "fuerte" }) {
   return (
-    <svg viewBox="0 0 24 24" className="size-6" aria-hidden="true" focusable="false">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-6"
+      aria-hidden="true"
+      focusable="false"
+    >
       {nivel === "silencio" ? (
         <circle cx="12" cy="12" r="2.5" fill="currentColor" />
       ) : nivel === "suave" ? (
-        <path d="M4 12c2-3 4-3 8 0s6 3 8 0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path
+          d="M4 12c2-3 4-3 8 0s6 3 8 0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       ) : (
-        <path d="M4 18c3-12 5-12 8 0s5 12 8 0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path
+          d="M4 18c3-12 5-12 8 0s5 12 8 0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       )}
     </svg>
   );
@@ -53,7 +70,11 @@ export function EscenarioBarra({ medidas, hito, modoCalma, invitando }: Props) {
   // Se lee en cada render (el juego re-renderiza con cada TICK, ~10/s).
   const nivel = medidas.nivelVoz();
   const palabra =
-    nivel === "fuerte" ? fuerteSuave.fuerte : nivel === "suave" ? fuerteSuave.suave : fuerteSuave.silencio;
+    nivel === "fuerte"
+      ? fuerteSuave.fuerte
+      : nivel === "suave"
+        ? fuerteSuave.suave
+        : fuerteSuave.silencio;
 
   useEffect(() => {
     let id = 0;
@@ -80,8 +101,13 @@ export function EscenarioBarra({ medidas, hito, modoCalma, invitando }: Props) {
         role="img"
         aria-label={tx(fuerteSuave.barraEtiqueta)}
       >
-        <div className="bg-kid-sage/30 absolute inset-x-0 bottom-0 h-8" aria-hidden="true" />
-        {!modoCalma && hito > 0 ? <ConfetiVuelta key={`confeti-${hito}`} centrado /> : null}
+        <div
+          className="bg-kid-sage/30 absolute inset-x-0 bottom-0 h-8"
+          aria-hidden="true"
+        />
+        {!modoCalma && hito > 0 ? (
+          <ConfetiVuelta key={`confeti-${hito}`} centrado />
+        ) : null}
         <div
           ref={columnaRef}
           className="bg-kid-sky border-kid-ink relative mb-8 h-[78%] w-28 origin-bottom rounded-3xl border-2 will-change-transform sm:w-36"
@@ -101,7 +127,6 @@ export function EscenarioBarra({ medidas, hito, modoCalma, invitando }: Props) {
         className="text-tinta flex items-center justify-center gap-2 text-xl font-medium"
         data-testid="nivel-voz"
         data-nivel={nivel}
-        aria-live="polite"
       >
         <Simbolo nivel={nivel} />
         {tx(palabra)}

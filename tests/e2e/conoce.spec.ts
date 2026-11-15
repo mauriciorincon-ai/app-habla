@@ -93,6 +93,8 @@ test("cada tarjeta y cada juego enlazan a su ruta real", async ({ page }) => {
     "/rumbo",
     "/ajustes",
     "/jugar/globo",
+    "/jugar/soplar",
+    "/jugar/fuerte-suave",
     "/jugar/cohete",
     "/jugar/palabras",
     "/jugar/gemelas",

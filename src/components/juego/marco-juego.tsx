@@ -1,6 +1,6 @@
 "use client";
 
-// El MARCO que comparten los tres juegos de voz: la cáscara (paleta del niño, salir, modo calma)
+// El MARCO que comparten los juegos de voz: la cáscara (paleta del niño, salir, modo calma)
 // y las fases que no dependen del juego (pedir micrófono, mic denegado, calibrar, ruido alto).
 // Cada juego solo aporta su guion, su escenario y su celebración.
 //

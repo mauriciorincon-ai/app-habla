@@ -195,7 +195,7 @@ export const REGISTRO_GEMELAS_VACIO: RegistroGemelas = { juicios: [] };
 // registro lo arregla. Guarda SOLO los números que la CELEBRACIÓN ya le muestra al padre —los
 // mismos "intentos y logros" que VISION § 5 sanciona— NUNCA el audio ni el tono (Hz) del niño: el
 // sello de la regla dura 2 sigue intacto. Se escribe UNA vez por intento, en un solo punto
-// (CelebracionHonesta, compartida por los 4 juegos). Discriminado por juego: cada juego mide algo
+// (CelebracionHonesta, compartida por los juegos). Discriminado por juego: cada juego mide algo
 // distinto y no se mezclan (mismo principio que la Metrica de session-flow).
 
 export const JUEGOS = [

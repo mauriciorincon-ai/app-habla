@@ -13,7 +13,7 @@ export type Ajustes = {
 };
 
 /**
- * Lo que el juego MIDIÓ de verdad (Sprint 2: el flujo es compartido por los tres juegos, y lo
+ * Lo que el juego MIDIÓ de verdad (Sprint 2: el flujo es compartido por los juegos, y lo
  * único que cambia entre ellos es la métrica). La celebración solo puede afirmar esto — jamás
  * un elogio desacoplado de lo medido (regla dura 3).
  */

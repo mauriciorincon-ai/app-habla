@@ -300,7 +300,7 @@ export function CelebracionHonesta({
 }: Props) {
   const tx = useT();
   // R1: un intento = una sesión registrada. Es el ÚNICO punto de escritura del Rumbo (compartido
-  // por los 4 juegos). Se escribe al montar la celebración; el ref evita el doble registro del
+  // por los juegos). Se escribe al montar la celebración; el ref evita el doble registro del
   // doble-efecto de StrictMode. Solo números —los mismos que se muestran arriba— jamás audio.
   const registrado = useRef(false);
   useEffect(() => {
