@@ -56,9 +56,9 @@ export const DESCRIPCION_ETAPA: Record<Etapa, string> = {
 /**
  * Vocabulario CONTROLADO de etiquetas del objetivo de la semana (S4). El padre escribe un objetivo
  * libre ("animales", "el baño") y el motor lo alinea contra estas etiquetas (ver lib/objetivo). Es
- * un enum a propósito: sin typos, sin etiquetas huérfanas, y —clave para la honestidad— NO existe
- * ninguna palabra de color aquí, así que un objetivo como "colores" no coincide con nada y la app
- * lo dice de frente. Cinco coinciden con TEMAS del onboarding: así un objetivo por tema alinea
+ * un enum a propósito: sin typos, sin etiquetas huérfanas, y —clave para la honestidad— una meta sin
+ * contenido detrás («números») no coincide con nada y la app lo dice de frente. «colores» entró en el
+ * S14 (ADR-026) CON su contenido: cápsulas, dibujos y la expansión a «rojo, azul…». Cinco coinciden con TEMAS del onboarding: así un objetivo por tema alinea
  * también las cápsulas, no solo los pictogramas. (El sexto tema, "dinosaurios", no rotula ninguna
  * cápsula —no hay contenido de dinosaurios en la biblioteca— pero un objetivo así igual alinea sus
  * pictogramas por tema; se excluye del enum para no dejar una etiqueta huérfana.)
@@ -94,6 +94,8 @@ export const ETIQUETAS_CAPSULA = [
   "imitación",
   "agua",
   "juego",
+  // S14 (ADR-026): los colores, pegados a lo que le encanta («un carro ROJO»).
+  "colores",
 ] as const;
 
 export type EtiquetaCapsula = (typeof ETIQUETAS_CAPSULA)[number];

@@ -13,7 +13,10 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PICTOGRAMAS } from "@content/pictogramas";
+import { PICTOGRAMAS, type PictogramaDeEtiqueta } from "@content/pictogramas";
+
+/** Un dibujo del mazo: de sus temas o de la etiqueta que pide la meta (S14). */
+type DibujoDelMazo = Pick<PictogramaDeEtiqueta, "id" | "palabra" | "en" | "archivo">;
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { palabras as txp } from "@/lib/idioma/textos/palabras";
@@ -27,7 +30,8 @@ import { useHidratado } from "@/components/use-hidratado";
 import { barajar } from "@/lib/barajar";
 import { alinear } from "@/lib/objetivo/alinear";
 import { priorizarEstable } from "@/lib/objetivo/prioridad";
-import { leerObjetivo } from "@/lib/storage/local";
+import { useObjetivo } from "@/components/estado-local";
+import { dibujosDeLaMeta } from "@/lib/su-mundo/su-mundo";
 import { invitacionAmable, type Metrica } from "@/lib/session-flow";
 import type { Tema } from "@/lib/storage/temas";
 import { CelebracionHonesta } from "./celebracion-honesta";
@@ -80,21 +84,26 @@ function JuegoListo({
   // La baraja del día: los pictos de SUS temas, en orden estable durante toda la sesión. Si hay un
   // objetivo de la semana, sus dibujos van al frente (partición estable). SIN objetivo, el orden es
   // idéntico al barajado por semilla (identidad) — lo que mantiene deterministas los e2e del S3.
+  // S14 (ADR-026): la meta se lee REACTIVA (antes se leía una vez y el mazo no cambiaba con ella), y
+  // los dibujos de etiqueta que pide (colores, acciones) entran al frente, antes que los de sus temas.
+  const textoObjetivo = useObjetivo()?.texto ?? null;
   const mazo = useMemo(() => {
     const candidatos = temas
       ? PICTOGRAMAS.filter((p) => temas.includes(p.tema))
       : PICTOGRAMAS;
     const base = candidatos.length > 0 ? candidatos : PICTOGRAMAS;
     const barajado = barajar(base, base.length * 7919);
-    const objetivo = alinear(leerObjetivo()?.texto);
-    return priorizarEstable(
+    const objetivo = alinear(textoObjetivo);
+    const deTemas: DibujoDelMazo[] = priorizarEstable(
       barajado,
       (p) =>
         objetivo.coincidePalabra(p.palabra) ||
         objetivo.coincidePalabra(p.en) ||
-        objetivo.coincideTema(p.tema),
+        objetivo.coincideTema(p.tema) ||
+        (p.etiquetas ? objetivo.coincideEtiquetas(p.etiquetas) : false),
     );
-  }, [temas]);
+    return [...dibujosDeLaMeta(textoObjetivo), ...deTemas];
+  }, [temas, textoObjetivo]);
 
   const [indice, setIndice] = useState(0);
   const [encendido, setEncendido] = useState(false);
@@ -308,6 +317,7 @@ function JuegoListo({
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="palabras"
         />
       ) : null}
 

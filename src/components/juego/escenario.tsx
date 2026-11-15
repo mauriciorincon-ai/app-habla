@@ -16,6 +16,7 @@ import { Globo } from "@/components/iconos";
 import { useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
+import { Protagonista } from "./protagonista";
 import type { MedidasVivas } from "./use-voice-session";
 
 /** En calma: ms de voz sostenida para que el globo llegue a su altura máxima. */
@@ -143,6 +144,11 @@ export function Escenario({
         <div
           className="bg-kid-sage/30 absolute inset-x-0 bottom-0 h-10"
           aria-hidden="true"
+        />
+
+        <Protagonista
+          juego="globo"
+          className="absolute right-[16%] bottom-10 h-20 w-20 sm:h-24 sm:w-24"
         />
 
         <div className="absolute bottom-10 left-[6%] h-32 w-24">

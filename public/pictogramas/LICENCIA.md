@@ -24,3 +24,5 @@ atribución es obligatoria.
 palabras (nivel "palabras sueltas", ADR 005). **En runtime la app no llama a ARASAAC:** sirve
 estos archivos desde el repo, y un test e2e verifica que no hay ninguna petición de red durante
 los juegos. `lote.json` guarda la trazabilidad (qué id de ARASAAC quedó en cada archivo). Las imágenes añadidas en el S8 para los pares del inglés (hat, mouse, cone, sock, foot, rain) vienen de `node scripts/descargar-gemelas-en.mjs`, con su traza en `lote-gemelas-en.json`; misma licencia y misma atribución.
+
+Los dibujos añadidos en el S14 para los colores, las acciones y el baño (rojo, azul, amarillo, verde, comer, beber, saltar, correr, dormir, lavar, tocar, cavar, cerdo, bañar) vienen de `node scripts/descargar-pictos-su-mundo.mjs`, con su traza en `lote-su-mundo.json`; misma licencia y misma atribución.

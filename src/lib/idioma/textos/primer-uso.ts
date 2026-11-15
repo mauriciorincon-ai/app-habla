@@ -2,7 +2,7 @@ import type { Catalogo } from "../index";
 
 // La primera vez (onboarding en Hoy) y el formulario de apodo + temas, que Ajustes reutiliza.
 export const primerUso = {
-  titulo: { es: "Antes de empezar, dos cositas", en: "Before we start, two quick things" },
+  titulo: { es: "Antes de empezar, unas cositas", en: "Before we start, a few quick things" },
   privacidad: {
     antes: { es: "Todo lo que escribas aquí se queda", en: "Everything you write here stays" },
     enfasis: { es: "en este dispositivo", en: "on this device" },

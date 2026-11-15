@@ -30,8 +30,8 @@ sin movimiento) y **se recuerda** entre sesiones.
 
 *C2 · One-tap calm mode, visible on every child screen, remembered between sessions.*
 
-- **Habla:** [src/lib/storage/schemas.ts:20](../../src/lib/storage/schemas.ts) (`modoCalma` guardado) ·
-  [src/components/juego/marco-juego.tsx:147](../../src/components/juego/marco-juego.tsx) (el interruptor).
+- **Habla:** [src/lib/storage/schemas.ts:30](../../src/lib/storage/schemas.ts) (`modoCalma` guardado) ·
+  [src/components/juego/marco-juego.tsx:148](../../src/components/juego/marco-juego.tsx) (el interruptor).
 - **Nutri-Kids:** **le falta.** Su sistema de diseño no define modo calma; es la única brecha de esta versión.
 
 ## C3 · Tamaño de los toques
@@ -40,8 +40,8 @@ Toque del niño **≥ 64 px**; toque del adulto **≥ 44 px**.
 
 *C3 · Child touch targets ≥ 64 px; adult ≥ 44 px.*
 
-- **Habla:** [src/components/juego/mapa-vocales.tsx:175](../../src/components/juego/mapa-vocales.tsx) (`min-h-16` = 64 px, el niño) ·
-  [src/components/juego/marco-juego.tsx:147](../../src/components/juego/marco-juego.tsx) (`min-h-11` = 44 px, el adulto).
+- **Habla:** [src/components/juego/mapa-vocales.tsx:180](../../src/components/juego/mapa-vocales.tsx) (`min-h-16` = 64 px, el niño) ·
+  [src/components/juego/marco-juego.tsx:148](../../src/components/juego/marco-juego.tsx) (`min-h-11` = 44 px, el adulto).
 - **Nutri-Kids:** cumple el piso del adulto (≥ 44 px, `design-system.md:71`); el del niño no aplica hoy (la usa el adulto).
 
 ## C4 · Microcopy sin plazos, sin puntajes, sin culpa
@@ -64,7 +64,7 @@ no comercial; si algún día dejara de serlo, se reemplazan antes.
 *C5 · ARASAAC pictograms carry their credit in the app and on every printed sheet; non-commercial use.*
 
 - **Habla:** [src/app/ajustes/page.tsx:104](../../src/app/ajustes/page.tsx) (Acerca de) ·
-  [src/components/imprimibles/imprimibles-cliente.tsx:22](../../src/components/imprimibles/imprimibles-cliente.tsx) (pie de cada hoja).
+  [src/components/imprimibles/imprimibles-cliente.tsx:23](../../src/components/imprimibles/imprimibles-cliente.tsx) (pie de cada hoja).
 - **Nutri-Kids:** si usa pictogramas, debe llevar el mismo crédito; hoy no los usa.
 
 ## C6 · Nada de la familia viaja

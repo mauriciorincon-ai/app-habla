@@ -19,12 +19,14 @@ export const cuentos = {
     },
   },
   pedido: {
-    titulo: { es: "Lo que le gusta", en: "What your child enjoys" },
+    titulo: { es: "Lo que le encanta", en: "What your child loves" },
     ayuda: {
-      es: "En palabras generales, separadas por comas: «trenes, animales». Llenan los cuentos de la app y van en el pedido. Nada más viaja: ni su nombre, ni su edad, ni su voz.",
-      en: "In general words, separated by commas: «trains, animals». They fill the app's stories and go in the request. Nothing else travels: not their name, not their age, not their voice.",
+      es: "Lo que le encanta sale de su perfil, en palabras generales, y va en el pedido. Las palabras que practican, aquí abajo, separadas por comas; si no escribes ninguna, van las de la meta de la semana. Nada más viaja: ni su nombre, ni su edad, ni su voz.",
+      en: "What they love comes from their profile, in general words, and goes in the request. The words you are practicing go below, separated by commas; if you write none, the ones from this week's goal go. Nothing else travels: not their name, not their age, not their voice.",
     },
-    intereses: { es: "Le gusta", en: "Enjoys" },
+    intereses: { es: "Lo que le encanta (de su perfil)", en: "What they love (from their profile)" },
+    sinIntereses: { es: "Aún no hay nada en su perfil.", en: "Nothing in their profile yet." },
+    cambiarEnPerfil: { es: "Cambiar en el perfil", en: "Change in the profile" },
     palabras: {
       es: "Palabras que están practicando",
       en: "Words you are practicing",
@@ -39,8 +41,8 @@ export const cuentos = {
       en: "One of those words cannot go in a request. Use general words, no names.",
     },
     error: {
-      es: "Revisa: cada gusto de una a tres palabras, sin números (hasta cinco); cada palabra, una sola (hasta ocho).",
-      en: "Check: each interest one to three words, no numbers (up to five); each practice word a single word (up to eight).",
+      es: "Revisa: cada palabra, una sola, sin números (hasta ocho).",
+      en: "Check: each practice word a single word, no numbers (up to eight).",
     },
     pedirTitulo: { es: "Pedir cuentos nuevos", en: "Ask for new stories" },
     pedirAyuda: {
@@ -49,8 +51,8 @@ export const cuentos = {
     },
     descargar: { es: "Descargar el pedido", en: "Download the request" },
     faltaGusto: {
-      es: "Escribe al menos un gusto y guárdalo para pedir cuentos.",
-      en: "Write and save at least one interest to ask for stories.",
+      es: "Añade al menos una cosa que le encante en su perfil (Ajustes) para pedir cuentos.",
+      en: "Add at least one thing they love in their profile (Settings) to ask for stories.",
     },
   },
   importar: {

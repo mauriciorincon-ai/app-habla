@@ -7,7 +7,7 @@
 // Al guardar o quitar, la cápsula de hoy se re-alinea si aún no está hecha (aplicarObjetivoAHoy).
 //
 // Los bancos de contenido se cargan BAJO DEMANDA (import dinámico al primer teclazo): esta ruta
-// del padre no arrastra las 50 cápsulas ni los pictogramas en su bundle inicial — la misma
+// del padre no arrastra las 60 cápsulas ni los pictogramas en su bundle inicial — la misma
 // lección del gate de performance del S2 (ver estado-capsulas.ts), cazada aquí por el gate de
 // Lighthouse del PR del S4.
 
@@ -39,6 +39,8 @@ import {
   normalizar,
 } from "@/lib/objetivo/alinear";
 import { acotarContenido } from "@/lib/objetivo/alcance";
+import { ETIQUETA_EN } from "@/lib/objetivo/etiquetas-en";
+import { etiquetaCercanaDe } from "@/lib/su-mundo/su-mundo";
 import {
   sugerir,
   vocabularioDe,
@@ -86,6 +88,8 @@ type Bancos = {
   capsulas: readonly Capsula[];
   pictos: readonly Pictograma[];
   pares: readonly ParGemelo[];
+  /** Dibujos de ETIQUETA (colores, acciones), con la palabra del idioma activo (S14). */
+  pictosDeEtiqueta: readonly { palabra: string; tema: string; etiquetas: readonly string[] }[];
   parJugableEn: (par: ParGemelo, etapa: Etapa) => boolean;
   grabables: readonly ItemGrabable[];
   coincideGrabable: (objetivo: Alineacion, i: ItemGrabable) => boolean;
@@ -111,6 +115,13 @@ function cargarBancos(idioma: Idioma): Promise<Bancos> {
     capsulas: capsulas.CAPSULAS,
     // En inglés se alinea contra la etiqueta inglesa del dibujo (`en`), no contra la española.
     pictos: idioma === "en" ? pictos.PICTOGRAMAS.map((p) => ({ ...p, palabra: p.en })) : pictos.PICTOGRAMAS,
+    // Los dibujos de ETIQUETA (colores, acciones) entran al mazo cuando la meta los pide (S14): se cuentan
+    // aparte del filtro por temas, que no los conoce.
+    pictosDeEtiqueta: pictos.PICTOGRAMAS_DE_ETIQUETA.map((p) => ({
+      palabra: idioma === "en" ? p.en : p.palabra,
+      tema: "",
+      etiquetas: p.etiquetas,
+    })),
     pares: pares.paresDe(idioma),
     parJugableEn: pares.parJugableEn,
     grabables: catalogo.catalogoGrabable(idioma),
@@ -121,7 +132,7 @@ function cargarBancos(idioma: Idioma): Promise<Bancos> {
 }
 
 // Sugerencias que SÍ alinean (nacen de las etiquetas reales): el padre elige una y garantiza
-// coincidencia. Escribir libre también vale — y "colores" enseña el caso honesto sin matches.
+// coincidencia. Escribir libre también vale — y "números" enseña el caso honesto sin matches.
 // El testid sale de la clave en español (estable en los dos idiomas); lo que se escribe en el
 // campo es la forma del idioma activo (S8: el alineador y el diccionario entienden los dos).
 const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
@@ -129,6 +140,7 @@ const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [
   { testid: "la-comida", texto: txt.sugerencias.comida },
   { testid: "el-baño", texto: txt.sugerencias.bano },
   { testid: "acciones", texto: txt.sugerencias.acciones },
+  { testid: "colores", texto: txt.sugerencias.colores },
   { testid: "pedir-cosas", texto: txt.sugerencias.pedir },
   { testid: "los-sonidos", texto: txt.sugerencias.sonidos },
 ];
@@ -210,16 +222,20 @@ function contarPara(
 ) {
   const alineacion = alinear(texto);
   // Lo que el niño verá: cápsulas de SU etapa, pictos de SUS temas, pares jugables en su etapa.
-  const alcance = contarAlineacion(
-    alineacion,
-    acotarContenido(bancos, {
-      etapa,
-      temas,
-      parJugable: (p) => bancos.parJugableEn(p, etapa),
-    }),
-  );
+  const acotado = acotarContenido(bancos, {
+    etapa,
+    temas,
+    parJugable: (p) => bancos.parJugableEn(p, etapa),
+  });
+  const alcance = contarAlineacion(alineacion, {
+    ...acotado,
+    pictos: [...acotado.pictos, ...bancos.pictosDeEtiqueta],
+  });
   // Contra la app entera (para distinguir "no existe" de "existe pero fuera de su alcance").
-  const global = contarAlineacion(alineacion, bancos);
+  const global = contarAlineacion(alineacion, {
+    ...bancos,
+    pictos: [...bancos.pictos, ...bancos.pictosDeEtiqueta],
+  });
   // El lote del estudio matchea el catálogo completo (mismo predicado que siguienteLote).
   const estudio = bancos.grabables.filter((i) =>
     bancos.coincideGrabable(alineacion, i),
@@ -380,6 +396,14 @@ export function ObjetivoCliente() {
     setGuardado(false);
   }
 
+  // Una meta sin contenido que se parece a una etiqueta real («colres»): se dice cuál (S14, ADR-026).
+  const cercanaClave = activo ? etiquetaCercanaDe(activo.texto) : null;
+  const cercana = cercanaClave
+    ? idioma === "en"
+      ? (ETIQUETA_EN[cercanaClave][0] ?? cercanaClave)
+      : cercanaClave
+    : null;
+
   return (
     <div className="flex flex-col gap-6">
       {activo ? (
@@ -445,12 +469,19 @@ export function ObjetivoCliente() {
                   .
                 </p>
               ) : estadoActivo === "sin-contenido" ? (
-                <p
-                  className="text-tinta mt-2 text-sm font-medium"
-                  data-testid="objetivo-activo-sin-contenido"
-                >
-                  {tx(txt.activo.sinContenido)}
-                </p>
+                <>
+                  <p
+                    className="text-tinta mt-2 text-sm font-medium"
+                    data-testid="objetivo-activo-sin-contenido"
+                  >
+                    {tx(txt.activo.sinContenido)}
+                  </p>
+                  {cercana ? (
+                    <p className="text-tinta mt-1 text-sm" data-testid="objetivo-activo-cercana">
+                      {tx(txt.activo.cercana, { valor: cercana })}
+                    </p>
+                  ) : null}
+                </>
               ) : estadoActivo === "fuera-de-alcance" ? (
                 <p
                   className="text-tinta mt-2 text-sm font-medium"

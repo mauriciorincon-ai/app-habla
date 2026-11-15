@@ -38,3 +38,24 @@ describe("hojas imprimibles: qué dibujos salen", () => {
     expect(paginar(Array.from({ length: 19 }, (_, i) => i)).map((h) => h.length)).toEqual([8, 8, 3]);
   });
 });
+
+describe("la meta de la semana llega a las hojas (S14, ADR-026)", () => {
+  it("«colores» pone los cuatro dibujos de color primero, en español y en inglés", () => {
+    const es = elegirPictogramas([], [], "es", undefined, "colores").pictos;
+    expect(es.slice(0, 4).map((p) => p.palabra)).toEqual(["rojo", "azul", "amarillo", "verde"]);
+    const en = elegirPictogramas([], [], "en", undefined, "colors").pictos;
+    expect(en.slice(0, 4).map((p) => p.en)).toEqual(["red", "blue", "yellow", "green"]);
+  });
+
+  it("sin meta la lista es la de siempre, y una meta sin dibujos no la altera", () => {
+    const base = elegirPictogramas([], [], "es").pictos.map((p) => p.id);
+    expect(elegirPictogramas([], [], "es", undefined, null).pictos.map((p) => p.id)).toEqual(base);
+    expect(elegirPictogramas([], [], "es", undefined, "números").pictos.map((p) => p.id)).toEqual(base);
+  });
+
+  it("sin repetir dibujos y sin pasar del tope", () => {
+    const { pictos } = elegirPictogramas(["rojo"], ["mar"], "es", 10, "colores y acciones");
+    expect(new Set(pictos.map((p) => p.id)).size).toBe(pictos.length);
+    expect(pictos.length).toBeLessThanOrEqual(10);
+  });
+});

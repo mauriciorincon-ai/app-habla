@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { guardarGrabacion, listarIds, obtenerGrabacion, eliminarBanco } from "@/lib/banco-voz/almacen";
-import { abrirArchivo, aplicar, crearArchivo } from "@/lib/otra-casa/casa";
+import { abrirArchivo, aplicar, armarPaquete, crearArchivo } from "@/lib/otra-casa/casa";
 import { cifrar, descifrar, fraseValida, FORMATO } from "@/lib/otra-casa/cifrado";
 import { fusionar, type Local } from "@/lib/otra-casa/fusion";
 import { CAMPOS_DEL_PAQUETE, leerPaquete, nombreArchivo, type Paquete } from "@/lib/otra-casa/paquete";
@@ -84,9 +84,22 @@ describe("qué viaja y qué no (regla dura 2 y regla 8)", () => {
     expect(CAMPOS_DEL_PAQUETE).toEqual(
       ["app", "banco", "creado", "esquema", "gemelas", "objetivo", "progreso", "sesiones"].sort(),
     );
-    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino", "coincidencias", "reconocedor", "pantalla", "topeMinutos"]) {
+    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino", "coincidencias", "reconocedor", "pantalla", "topeMinutos", "otrasCosas", "intereses", "recordatorioPospuesto"]) {
       expect(CAMPOS_DEL_PAQUETE).not.toContain(prohibido);
     }
+  });
+
+  it("sus intereses (S14) no viajan: ni los temas ni «otras cosas que le encantan» van en el paquete", async () => {
+    localStorage.clear();
+    guardarPerfil({ temas: ["dinosaurios"], otrasCosas: ["trenes de vapor", "burbujas"] });
+    guardar(CLAVES.objetivo, ObjetivoSchema, { texto: "colores", desde: "2026-11-10" });
+    const paquete = JSON.stringify(await armarPaquete(false, "2026-11-16"));
+    expect(paquete).not.toContain("trenes de vapor");
+    expect(paquete).not.toContain("burbujas");
+    expect(paquete).not.toContain("dinosaurios");
+    // La meta viajaba desde el S10 y sigue igual: nada NUEVO viaja.
+    expect(paquete).toContain("colores");
+    localStorage.clear();
   });
 
   it("un paquete con un campo de más se rechaza entero", () => {

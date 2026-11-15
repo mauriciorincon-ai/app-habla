@@ -109,6 +109,7 @@ export function MarcoJuego({
           sesion={sesion}
           historial={historial}
           onCambiarTurno={onCambiarTurno}
+          juego={nombre}
         />
       ) : null}
     <div

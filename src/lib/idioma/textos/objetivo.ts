@@ -19,6 +19,7 @@ export const objetivo = {
     comida: { es: "la comida", en: "food" },
     bano: { es: "el baño", en: "bath time" },
     acciones: { es: "acciones", en: "actions" },
+    colores: { es: "colores", en: "colors" },
     pedir: { es: "pedir cosas", en: "asking for things" },
     sonidos: { es: "los sonidos", en: "sounds" },
   },
@@ -54,6 +55,10 @@ export const objetivo = {
         en: "If you want the games to bring it, ",
       },
       enlace: { es: "revisa sus temas en Ajustes", en: "check the topics in Settings" },
+    },
+    cercana: {
+      es: "¿Quisiste decir «{valor}»? Cámbialo arriba y guárdalo.",
+      en: "Did you mean “{valor}”? Change it above and save.",
     },
     sinContenido: {
       es: "Priorizado, pero la app aún no tiene contenido de esto: por ahora la cápsula y los juegos no cambian.",

@@ -22,7 +22,7 @@ interacción con usted; la pantalla es apenas la excusa para jugar juntos.
 2. **Instálela como app** (opcional pero recomendado): en el menú del navegador, "Añadir a la
    pantalla de inicio". Así abre a pantalla completa y funciona sin conexión.
 3. La primera vez le pregunta dos cosas: cómo le dicen a su hijo en casa (opcional) y hasta tres
-   temas que le gusten. **Todo eso se queda en el dispositivo**, no hay cuentas ni registro.
+   temas que le gusten. En **Ajustes** puede sumar **«Otras cosas que le encantan»** (hasta ocho, palabras generales): es el único lugar donde se escriben sus intereses. **Todo eso se queda en el dispositivo**, no hay cuentas ni registro.
 4. ¿Quiere cambiar el apodo o los temas después? En **Ajustes → "Apodo y temas" → "Cambiar apodo
    y temas"**. Cambiarlos no borra nada: el progreso se queda como está.
 
@@ -321,13 +321,13 @@ valen: escribir "transporte" alinea todo lo de ese tema.
 Si escribe con un error de ortografía ("animles") y le da guardar, **pregunta primero**:
 _"¿Quisiste decir «animales»?"_ — puede corregir con un toque o guardar tal cual (escribir
 libre sigue siendo su derecho: en las terapias pueden pedirle algo que la app aún no tiene).
-Una palabra **bien escrita** nunca recibe esa pregunta: "medios" o "colores" se guardan a la
+Una palabra **bien escrita** nunca recibe esa pregunta: "medios" o "números" se guardan a la
 primera, aunque no alineen nada.
 
 Con la palabra completa, le dice **con honestidad** cuánto encuentra — y cuenta **solo lo que su
 hijo de verdad va a ver**: las cápsulas de su etapa y los dibujos de los temas que eligieron ("con
 «animales», la app pone primero N cápsulas · M dibujos"). Si escribe algo que no está en el
-contenido de la app —por ejemplo, "colores", que a propósito no existe—, se lo dice de frente en
+contenido de la app —por ejemplo, "números", que a propósito no existe—, se lo dice de frente en
 vez de fingir que alineó algo. Y si escribe algo que sí existe pero **fuera de lo que él ve hoy**
 (un tema que no eligieron en el onboarding), también se lo dice claro: los juegos no cambian,
 aunque el Estudio sí le propondrá grabar esas palabras primero. El objetivo **no caduca solo**: se
@@ -394,7 +394,7 @@ palabra por palabra). Sin que usted haga nada, **sigue al idioma de su navegador
 otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el elegido lleva una
 «✓»). El cambio es inmediato, sin recargar, y se queda en el dispositivo como cualquier otro ajuste.
 
-- **Qué cambia:** Hoy, la cápsula del día (las 50), el primer uso, los juegos, el Estudio, el
+- **Qué cambia:** Hoy, la cápsula del día (las 60), el primer uso, los juegos, el Estudio, el
   Objetivo, el Rumbo, Ajustes y también `/conoce`, que trae su propio selector.
 - **La cápsula del día es la misma** en los dos idiomas: cambiar de idioma no cambia lo que toca hoy.
 - **Palabras y Gemelas, en English (S8):** esos dos juegos **se practican en inglés**: las palabras, los
@@ -439,8 +439,9 @@ en voz alta y su hijo mira la palabra: si la dice, la imita o la señala, cuenta
 - **Dónde:** el niño los abre desde **«Hoy» → «Un cuento para leer juntos»** (`/cuentos`). Usted los prepara
   en **Estudio → «Cuentos de casa»**.
 - **Los de la app:** vienen **seis listos**, escritos en español y en English. Se llenan con lo que usted
-  escriba en **«Lo que le gusta»** (palabras generales, «trenes, animales») y **«Palabras que están
-  practicando»** (una palabra cada una). Sin escribir nada, usan palabras de ejemplo.
+  escribió en el perfil, **«Otras cosas que le encantan»** (palabras generales, «trenes, nubes»; en Cuentos solo
+  se lee, con un enlace a Ajustes para cambiarlo) y con **«Palabras que están practicando»** (una palabra cada
+  una; si no escribe ninguna, usa las de la meta de la semana). Sin nada, usan palabras de ejemplo.
 - **Qué viaja y qué no:** lo único que sale en un pedido son esos **gustos en palabras generales y las
   palabras meta**. **Nunca** su nombre, su edad, su voz ni nada de su condición; si escribe un número, la
   app no lo acepta como gusto.
@@ -548,6 +549,15 @@ Cada juego de micrófono (globo, soplar, fuerte y suave, cohete, palabra y dibuj
 
 Nada de esto guarda su voz ni la de él: solo se guarda **cuántos turnos de él** hubo, y «Borrar mis datos» lo borra.
 
+### Su mundo en todo — sus temas y la meta, en cada juego (nuevo · S14)
+
+- **El protagonista:** en globo, soplar, fuerte y suave, cohete y vocales aparece, en una esquina, un dibujo de **uno de sus temas** (un dinosaurio, un carrito, un planeta…). Rota con los días y cambia de un juego a otro. **Solo viste la escena**: no cambia lo que se mide ni cuándo se celebra. Sin temas, la escena es la de siempre.
+- **Palabras para modelar:** con una meta de la semana, la tarjeta de guion dice **«Modele una palabra de su meta: …»** (hasta cuatro) y la franja del apuntador dice **«Puede decir: …»** solo en el turno de usted. Es un consejo para usted, nunca algo que la app compruebe ni que el niño vea. Sin meta no aparece nada.
+- **Palabra y dibujo y Gemelas:** el mazo y las parejas ponen primero los de su meta y luego los de sus temas.
+- **Colores y acciones:** «colores» ya existe (cuatro cápsulas y cuatro dibujos) y «acciones» llega a dibujos y parejas (come/tome, toca/boca; en English run/sun, dig/pig). Una meta como «números» sigue diciéndose de frente: sin contenido, no se finge.
+- **Recordatorio de cuentos:** en Hoy, una tarjeta **solo para usted** avisa cuando nunca pidió el lote del mes o el último tiene 30 días o más, con **«Pedir los cuentos del mes»** y **«Ahora no»** (la oculta hasta mañana). No usa notificaciones ni permisos, y el niño nunca la ve como alarma.
+- **Las hojas imprimibles** ponen primero los dibujos de su meta.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -601,7 +611,7 @@ Esta es la promesa más importante de la app:
   esas grabaciones viven en este dispositivo y **nunca salen de él**: no van a internet ni al
   proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
   sola llamada de red**. Y aun con el Estudio, **la voz de su hijo nunca se graba.**
-- Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes, qué
+- Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas y «otras cosas que le encantan», sus ajustes, qué
   cápsulas completó, lo que marcó en "palabras gemelas", cuántas zonas del mapa de las vocales sonaron, cuántos minutos de juego lleva hoy (el tope de Sesiones cortas, solo la fecha y los minutos), —si las grabó— **sus** voces y —si los eligió—
   **los videos de la familia** (clips de su propia galería: la app no abre la cámara y no salen de aquí). Puede
   borrarlo todo en **Ajustes → Borrar mis datos**, o solo el banco de voz con **"Borrar solo el
@@ -694,4 +704,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 011    | **«¿Dijo la palabra?»**: un reconocedor en el aparato (apagado de fábrica, unos 40 MB que usted baja y puede borrar) que en Palabra y dibujo y Palabras gemelas le muestra **solo a usted** un «quizás dijo…»; una animación suave opcional para el niño (apagada, sin texto ni veredicto); cuatro números locales de coincidencia, fuera del archivo de la otra casa. |
 | 012    | **«Su voz lo mueve todo»**: dos juegos nuevos sin palabras, **Soplar** (cuenta soplos de aire) y **Fuerte y suave** (celebra los cambios de volumen, nunca un volumen «correcto»); el selector con siete juegos en orden fijo; **Sesiones cortas**: un tope de juego por día (5 a 10 min, 10 de fábrica) que cierra el juego con calma y avisa una vez al adulto, sin bloquear; el rumbo suma soplos, cambios de volumen y dos hitos. |
 | 013    | **«Juntos de verdad»**: los seis juegos de micrófono por turnos que usted marca con un toque (en el suyo, el dibujo se mueve pero nada se le cuenta a él), un indicador de turno que el niño entiende sin leer, **Tu apuntador** (una línea para usted en el momento justo, apagable) y «N turnos de él» en la celebración y el Rumbo. |
+| 014    | **«Su mundo en todo»**: un protagonista de sus temas en cinco juegos, palabras para modelar de la meta en la tarjeta y el apuntador, «colores» y más acciones y cápsulas del baño, «Otras cosas que le encantan» como único lugar de sus intereses (Cuentos lo lee de ahí) y la tarjeta de recordatorio de cuentos en Hoy. |
 <!-- s5:fin -->

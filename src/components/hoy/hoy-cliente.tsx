@@ -30,6 +30,7 @@ import {
   marcarCapsulaHecha,
 } from "@/components/estado-capsulas";
 import { diasPracticados } from "@/lib/coach/daily";
+import { TextoCapsula } from "@/components/capsula-textos";
 import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
 import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
@@ -38,6 +39,7 @@ import { hoy } from "@/lib/idioma/textos/hoy";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { ContactoVisualHoy } from "./contacto-visual-hoy";
 import { Onboarding } from "./onboarding";
+import { RecordatorioCuentos } from "./recordatorio-cuentos";
 
 export function HoyCliente() {
   const tx = useT();
@@ -95,6 +97,7 @@ export function HoyCliente() {
           </span>
         </Link>
       ) : null}
+      <RecordatorioCuentos />
       <article
         className="bg-superficie shadow-tarjeta rounded-2xl p-6"
         data-testid="capsula"
@@ -115,10 +118,12 @@ export function HoyCliente() {
         </p>
 
         <h2 className="mt-3 text-2xl font-medium" data-testid="capsula-titulo">
-          {tx(capsula.titulo)}
+          {<TextoCapsula capsula={capsula} campo="titulo" />}
         </h2>
 
-        <p className="mt-4 leading-relaxed">{tx(capsula.explicacion)}</p>
+        <p className="mt-4 leading-relaxed">
+          {<TextoCapsula capsula={capsula} campo="explicacion" />}
+        </p>
 
         {/* El guion y la actividad son las DOS cosas que el padre va a hacer hoy: se ven como
             pareja (misma caja, mismo peso, cada una con su icono). Antes la actividad era texto
@@ -135,7 +140,7 @@ export function HoyCliente() {
               className="font-display mt-2 text-xl italic"
               data-testid="capsula-guion"
             >
-              {tx(capsula.guion)}
+              {<TextoCapsula capsula={capsula} campo="guion" />}
             </p>
           </div>
         </div>
@@ -147,7 +152,7 @@ export function HoyCliente() {
               {tx(hoy.laActividad)}
             </p>
             <p className="mt-2 text-lg leading-relaxed">
-              {tx(capsula.actividad.texto)}
+              {<TextoCapsula capsula={capsula} campo="actividad" />}
             </p>
           </div>
         </div>
@@ -260,9 +265,7 @@ export function HoyCliente() {
           <IconoGemelas className="text-acento h-8 w-9" />
         </span>
         <span>
-          <span className="block font-medium">
-            {tx(hoy.juegos.titulo)}
-          </span>
+          <span className="block font-medium">{tx(hoy.juegos.titulo)}</span>
           <span className="text-tinta-suave block text-sm">
             {tx(hoy.juegos.detalle)}
           </span>

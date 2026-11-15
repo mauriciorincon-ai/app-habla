@@ -25,9 +25,16 @@ test("pedir, traer el lote, aprobar uno y verlo del lado del niño, sin red", as
     await route.continue();
   });
 
+  // Sus intereses viven en el perfil (S14, ADR-026): Cuentos solo los lee.
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "habla:v1:perfil",
+      JSON.stringify({ temas: ["animales"], otrasCosas: ["trenes", "nubes"] }),
+    );
+  });
   await page.goto("/estudio/cuentos");
   await expect(page.getByTestId("cuentos-guardar-gustos")).toBeEnabled();
-  await page.getByTestId("cuentos-intereses").fill("trenes, nubes");
+  await expect(page.getByTestId("cuentos-intereses")).toContainText("trenes, nubes, Animales");
   await page.getByTestId("cuentos-palabras").fill("sube");
   await page.getByTestId("cuentos-guardar-gustos").click();
   await expect(page.getByTestId("cuentos-aviso")).toContainText("Guardado");
@@ -40,7 +47,7 @@ test("pedir, traer el lote, aprobar uno y verlo del lado del niño, sin red", as
   expect(descarga.suggestedFilename()).toMatch(/^pedido-\d{4}-\d{2}-\d{2}\.json$/);
   const pedido = JSON.parse(readFileSync((await descarga.path())!, "utf8"));
   expect(Object.keys(pedido.entrada).sort()).toEqual(["intereses", "palabrasMeta"]);
-  expect(pedido.entrada).toEqual({ intereses: ["trenes", "nubes"], palabrasMeta: ["sube"] });
+  expect(pedido.entrada).toEqual({ intereses: ["trenes", "nubes", "Animales"], palabrasMeta: ["sube"] });
   expect(pedido.pedido_por).toBe("usuario");
 
   // El lote: dos entran pendientes, el del plazo no entra.

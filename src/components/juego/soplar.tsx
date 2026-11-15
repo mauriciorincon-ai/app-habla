@@ -109,6 +109,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="soplar"
         />
       ) : null}
 
