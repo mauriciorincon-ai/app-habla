@@ -66,6 +66,7 @@
   .o-s2 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
+  .o-s13 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s12 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s11 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s10 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
@@ -180,6 +181,7 @@
       <p><strong>De qué sprint viene cada prueba:</strong></p>
       <ul>
         <li><span class="origen o-s12">Nuevo · S12</span> Nació en este sprint (los juegos de aire y de volumen, y el tope de juego por día, bloque T). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s13">Nuevo · S13</span> Nació en este sprint (los turnos dentro de los juegos y el apuntador). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s11">Nuevo · S11</span> Nació en este sprint (la segunda opinión «¿Dijo la palabra?», bloque S). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s10">Nuevo · S10</span> Nació en este sprint (pasar a la otra casa, el mapa de las vocales y las hojas para imprimir). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s9">S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
@@ -587,6 +589,9 @@
     <div class="reportame"><p><strong>Repórtame de este bloque:</strong> si el «quizás» te sirve con su voz o lo descartas (<strong>tu decisión, con nombre</strong>) · si el texto del aviso de 40 MB se entiende · si la animación suave le agrada o la dejas apagada.</p></div>
   </section>
 <!-- s11:fin -->
+<!-- s13:inicio -->
+    <p class="chica suave"><strong>Sprint 013 (2026-11-15) — «Juntos de verdad»:</strong> un paso nuevo en T (los turnos y el apuntador dentro del juego, que cubre «sesiones diseñadas para dos» y «tu apuntador invisible» ya en la UI). El resto del recorrido no cambia.</p>
+<!-- s13:fin -->
 <!-- s12:inicio -->
   <section class="bloque">
     <div class="bloque-cabeza"><span class="letra">T</span><h2>Soplar, fuerte y suave, y las sesiones cortas <span class="chica suave">(S12 — la voz y el aire mueven el juego)</span></h2></div>
@@ -609,6 +614,11 @@
       <li data-origen="s12" data-cubre="sesiones-cortas"><input type="checkbox" id="v12-t4"><div>
         <label for="v12-t4">En <strong>Ajustes → Sesiones cortas</strong> mira el tope <strong>(5 a 10 minutos, 10 de fábrica)</strong> y elige uno. <span class="origen o-s12">Nuevo · S12</span></label>
         <p class="esperar"><span class="et">Esperado</span> Seis botones, el elegido con <strong>✓ y texto</strong>, y recuerda tu elección al recargar. Dice que el contador es local, de hoy, y que <strong>no viaja al archivo de la otra casa</strong>.</p>
+      </div></li>
+      <li data-origen="s13" data-cubre="sesiones-para-dos apuntador celebracion-honesta"><input type="checkbox" id="v13-t1"><div>
+        <label for="v13-t1">Entra al <strong>globo</strong>, toca <strong>“Estamos listos”</strong> y, en cuanto calibre, toca <strong>“Pasarle el turno”</strong> / <strong>“Mi turno”</strong> en la franja de arriba. Haz tú el “aaa” largo; luego pásale el turno y que lo haga él; al final toca <strong>“Ya jugamos”</strong>. <span class="origen o-s13">Nuevo · S13</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> En <strong>tu turno</strong> el globo se mueve con tu voz pero <strong>no avanza ni se cuenta</strong>, y él ve un indicador distinto (<strong>ojo · “Mira y escucha”</strong>). En <strong>su turno</strong> el indicador es <strong>“Tu voz”</strong> con ondas y lo que su voz hace cuenta. En la franja, <strong>una línea para ti</strong> (“modela despacio, una sola vez”, “expande…”, “espera tres segundos…”, “nombra lo que hicieron juntos”) aparece unos segundos, <strong>no se repite</strong> y habla en positivo. La celebración dice <strong>“N turnos de él”</strong>. Con <strong>modo calma</strong> o <strong>Ajustes → “Tu apuntador”</strong> apagado, la línea no aparece.</p>
+        <p class="mal"><span class="et">Mal</span> La voz que haces tú en tu turno suma a su número · la franja aparece en el guion o dice algo de lo que él “no hizo” · un “no” o “perdiste” a la vista del niño.</p>
       </div></li>
       <li data-origen="s12" data-cubre="sesiones-cortas"><input type="checkbox" id="v12-t5"><div>
         <label for="v12-t5">Con el tope en 5, juega cualquier juego de voz hasta llegar a los 5 minutos de juego de hoy. <span class="origen o-s12">Nuevo · S12</span> <span class="origen o-clave">⭐ gate mínimo</span></label>

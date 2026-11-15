@@ -63,6 +63,11 @@ export const AjustesSchema = z.object({
    * calmly — it never blocks, punishes or says "over". `.catch(10)` migrates every earlier setting.
    */
   topeMinutos: z.number().int().min(5).max(10).catch(10),
+  /**
+   * Your prompter (S13, ADR-025): the thin strip with one line for the adult at the right moment of the
+   * game. On by default; `.catch(true)` migrates every earlier setting. Calm mode turns the line off too.
+   */
+  apuntador: z.boolean().catch(true),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -78,6 +83,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   reconocedor: false,
   animacionReconocedor: false,
   topeMinutos: 10,
+  apuntador: true,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */
@@ -209,11 +215,18 @@ export const JUEGOS = [
 ] as const;
 export type Juego = (typeof JUEGOS)[number];
 
+/**
+ * Turns of the child's (S13, ADR-025): in how many of HIS turns his voice was measured. Optional: sessions
+ * from before the turns (and Gemelas, which already alternates) carry none. A counter, never audio.
+ */
+const TURNOS_NINO = { turnosNino: z.number().int().min(0).max(500).optional() };
+
 export const SesionSchema = z.discriminatedUnion("juego", [
   // Globo: total de voz del intento y la racha más larga sin cortarse (lo que ya muestra).
   z.object({
     juego: z.literal("globo"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     vozMs: z.number().int().min(0),
     rachaMs: z.number().int().min(0),
   }),
@@ -222,6 +235,7 @@ export const SesionSchema = z.discriminatedUnion("juego", [
   z.object({
     juego: z.literal("soplar"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     soplos: z.number().int().min(0),
     soploMs: z.number().int().min(0),
   }),
@@ -230,12 +244,14 @@ export const SesionSchema = z.discriminatedUnion("juego", [
   z.object({
     juego: z.literal("fuerte-suave"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     cambios: z.number().int().min(0),
   }),
   // Cohete: veces que la voz subió y bajó.
   z.object({
     juego: z.literal("cohete"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     inversiones: z.number().int().min(0),
   }),
   // Palabra↔objeto: dibujos que su voz encendió (medido), palabras que el PADRE marcó (juzgado
@@ -244,6 +260,7 @@ export const SesionSchema = z.discriminatedUnion("juego", [
   z.object({
     juego: z.literal("palabras"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     encendidos: z.number().int().min(0),
     reconocidas: z.number().int().min(0),
     palabras: z.array(z.string().min(1).max(20)).max(200),
@@ -252,6 +269,7 @@ export const SesionSchema = z.discriminatedUnion("juego", [
   z.object({
     juego: z.literal("gemelas"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     rondas: z.number().int().min(0),
     participadas: z.number().int().min(0),
   }),
@@ -260,6 +278,7 @@ export const SesionSchema = z.discriminatedUnion("juego", [
   z.object({
     juego: z.literal("vocales"),
     fecha: FechaSchema,
+    ...TURNOS_NINO,
     zonas: z.number().int().min(0).max(5),
     cambios: z.number().int().min(0),
   }),

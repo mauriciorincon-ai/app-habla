@@ -9,14 +9,29 @@ export function construirSesion(
   metrica: Metrica,
   fecha: string,
   palabras: readonly string[] = [],
+  turnosNino = 0,
+): Sesion {
+  const base = construirBase(metrica, fecha, palabras);
+  // Solo si hubo turnos suyos medidos: un cero no se guarda (el Rumbo no lo muestra).
+  return turnosNino > 0
+    ? { ...base, turnosNino: Math.min(500, Math.round(turnosNino)) }
+    : base;
+}
+
+function construirBase(
+  metrica: Metrica,
+  fecha: string,
+  palabras: readonly string[],
 ): Sesion {
   switch (metrica.tipo) {
     case "sostenido":
       return {
         juego: "globo",
         fecha,
-        vozMs: metrica.ms,
-        rachaMs: metrica.rachaMs,
+        // Enteros: el motor suma deltas de reloj fraccionarios y el esquema pide enteros; sin redondear,
+        // el registro entero se descartaba en silencio y el Rumbo nunca veía el globo.
+        vozMs: Math.round(metrica.ms),
+        rachaMs: Math.round(metrica.rachaMs),
       };
     case "inversiones":
       return { juego: "cohete", fecha, inversiones: metrica.veces };

@@ -18,7 +18,7 @@ pr: "#24"
 - **Desviaciones:** `grave` es una señal nueva (no cambia umbral ni histéresis); el brochure ganó dos canchas nuevas; `design-sync` no se corrió (lo invoca el dueño; `.design-sync/` sin cambios en el diff); la VISION de la planeadora es v1.0.2 y el encabezado de CLAUDE.md dice 1.0.1.
 - **CI:** `lighthouse` falló con el script de la portada en 358 601 B contra 358 400 B (350 KB). Sacar el almacén del contador del paquete de la portada (commit «perf: [F3] the cap counter's storage…», −310 B gzip) pasó una vez y falló otra con el mismo código (358 605 B): la medida baila ±4 B y el margen era nulo. Decisión técnica mía, reportada: el presupuesto de script de `perf-budget.json` sube de 350 a 354 KB (el S12 sumó esquemas y textos compartidos); el resto de presupuestos (FCP, LCP, TBT, CLS, total) no cambió. La unit del ventilador pasó a 30 s (expiró a 5 s una vez en un runner lento).
 - **Decisiones:** ADR-024. **Deuda:** ninguna. Pregunta abierta del S11 (`'unsafe-eval'` en toda la página o aislar el Worker): sigue el default A.
-- **Modelo por fase:** Sonnet 5.5 en las tres; Fable no usado. **Relevos:** 0. **Tokens:** no medidos.
+- **Modelo por fase:** F1 Opus 5.5 · F2 y F3 Sonnet 5.5 (corregido en el S13: la F1 corrió en Opus); Fable no usado. **Relevos:** 0. **Tokens:** no medidos.
 - **Servidores:** `lsof` LISTEN en este repo: 0 (3500 cerrado).
 - **Sensibilidad:** 0 coincidencias en lo que vigila.
 - **Para mergear:** squash y borrar la rama; después `/cierre-sprint habla`.

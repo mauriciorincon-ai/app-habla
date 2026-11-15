@@ -34,6 +34,15 @@ Dos audiencias, una paleta dual:
 Regla de oro: **la vista del niño es soberana** — ningún elemento del operador se filtra al
 escenario del juego (solo un botón de salir, pequeño y discreto, para el padre).
 
+**Excepción única (S13, ADR-025): la franja del apuntador.** Una banda fina arriba del juego, en la
+**paleta del adulto** (superficie y tinta del adulto, nunca la del niño), **quieta** (sin movimiento ni
+sonido), **fuera de la zona de toque del niño** (su botón de turno es de adulto, ≥ 44 px), con el botón de turno
+y la etiqueta de turno siempre presentes (cromo del adulto) y una línea de
+texto que aparece unos 7 s y se va sola. Es el **único** texto para el adulto que la vista del niño admite;
+el modo calma y el ajuste «Tu apuntador» apagan la línea (nunca el botón de turno). El **indicador de turno** sí es del niño: figura
+(redonda con ondas = suena tu voz; ojo con cuadro = mira y escucha) + palabra corta + nombre accesible, el
+color nunca solo.
+
 ### Colores de fiesta (los instantes de logro)
 
 `--color-fiesta-*` (coral · verde · cielo · sol · uva): los primos **saturados** de la paleta del

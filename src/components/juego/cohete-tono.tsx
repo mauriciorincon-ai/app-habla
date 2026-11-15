@@ -70,6 +70,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     terminar,
     otraVez,
     volverAlGuion,
+    cambiarTurno,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
@@ -111,6 +112,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
       onSalir={volverAlGuion}
+      onCambiarTurno={cambiarTurno}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -119,6 +121,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           nota={tx(juegos.cohete.nota)}
           onEmpezar={empezar}
           listo
+          porTurnos
         />
       ) : null}
 
@@ -161,6 +164,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
             hito={subidas}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
+            turnoDeEl={sesion.turno === "nino"}
           />
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -187,6 +191,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          turnosNino={sesion.turnosNino}
           onOtraVez={otraVez}
           onTerminar={() => router.push("/jugar")}
           etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}

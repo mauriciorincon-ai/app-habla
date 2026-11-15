@@ -96,3 +96,105 @@ describe("celebration text contrast (AA, both themes)", () => {
     expect(malos).toEqual([]);
   });
 });
+
+/**
+ * The prompter strip and the turn indicator (S13, ADR-025). The strip sits OUTSIDE the child's theme, so
+ * it reads the adult's tokens (light, dark by setting, dark by system); the indicator lives inside
+ * `.tema-nino` (and its calm variant). Every text/background pair they use reaches AA.
+ */
+describe("prompter strip and turn indicator contrast (AA)", () => {
+  const bloque = (selector: string): string => {
+    const i = css.indexOf(selector);
+    if (i < 0) throw new Error(`selector ${selector} not found`);
+    return css.slice(i, css.indexOf("}", i));
+  };
+  /** `--nombre` resolved to a hex inside the given rule, falling back to the light `:root`. */
+  const token = (selectores: string[], nombre: string): string => {
+    for (const s of [...selectores, ":root {\n  --fondo"]) {
+      const m = bloque(s).match(
+        new RegExp(`--${nombre}:\\s*var\\(--([a-z0-9-]+)\\)`),
+      );
+      if (m) return primitivo(m[1]!);
+    }
+    throw new Error(`token ${nombre} not found`);
+  };
+
+  const CONTEXTOS: Array<[string, string[], Array<[string, string]>]> = [
+    [
+      "adult · light",
+      [":root {\n  --fondo"],
+      [
+        ["tinta", "superficie"],
+        ["tinta-suave", "superficie"],
+        ["sobre-acento", "acento"],
+      ],
+    ],
+    [
+      "adult · dark (setting)",
+      [':root[data-tema="oscuro"]'],
+      [
+        ["tinta", "superficie"],
+        ["tinta-suave", "superficie"],
+        ["sobre-acento", "acento"],
+      ],
+    ],
+    [
+      "adult · dark (system)",
+      [':root:not([data-tema="claro"])'],
+      [
+        ["tinta", "superficie"],
+        ["tinta-suave", "superficie"],
+        ["sobre-acento", "acento"],
+      ],
+    ],
+    [
+      "gemelas indicator · adult light",
+      [":root {\n  --fondo"],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "gemelas indicator · adult dark (setting)",
+      [':root[data-tema="oscuro"]'],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "gemelas indicator · adult dark (system)",
+      [':root:not([data-tema="claro"])'],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "child indicator",
+      [".tema-nino {"],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "child indicator · calm",
+      [".tema-nino--calma {", ".tema-nino {"],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+  ];
+
+  it.each(CONTEXTOS)("%s reaches 4.5:1 on each pair", (_n, sel, pares) => {
+    for (const [t, f] of pares) {
+      expect(
+        razon(token(sel, t), token(sel, f)),
+        `${_n}: ${t} on ${f}`,
+      ).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+});

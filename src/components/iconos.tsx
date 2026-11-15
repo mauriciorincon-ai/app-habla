@@ -586,3 +586,36 @@ export function IconoReloj({ className }: IconoProps) {
     </svg>
   );
 }
+
+/** Turno del niño (S13): una boca que suena. Círculo + ondas: forma redonda. */
+export function IconoSuTurno({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="8" cy="12" r="4" {...trazo} />
+      <path d="M15 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" {...trazo} />
+    </svg>
+  );
+}
+
+/** Turno del adulto (S13): un ojo que mira. Forma de almendra con cuadro: ángulos, no círculo. */
+export function IconoTurnoDelAdulto({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"
+        {...trazo}
+      />
+      <rect x="9.5" y="9.5" width="5" height="5" rx="0.8" {...trazo} />
+    </svg>
+  );
+}

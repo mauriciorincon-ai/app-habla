@@ -120,7 +120,7 @@ describe("la ida y vuelta entre dos casas", () => {
   it("A crea el archivo sin el perfil ni el banco si no se marca; B lo abre con su frase", async () => {
     guardarPerfil({ apodo: "Pipo", temas: ["animales"] });
     guardar(CLAVES.objetivo, ObjetivoSchema, { texto: "animales", desde: "2026-11-10" });
-    registrarSesion({ juego: "globo", fecha: "2026-11-12", vozMs: 4000, rachaMs: 2000 });
+    registrarSesion({ juego: "globo", fecha: "2026-11-12", vozMs: 4000, rachaMs: 2000, turnosNino: 3 });
     await guardarGrabacion("palabra:casa", {
       blob: new Blob([new Uint8Array([1, 2, 3])], { type: "audio/webm;codecs=opus" }),
       mimeType: "audio/webm;codecs=opus",
@@ -153,6 +153,7 @@ describe("la ida y vuelta entre dos casas", () => {
     await aplicar(r.fusion);
     expect(leerObjetivo()?.texto).toBe("animales");
     expect(leerSesiones().sesiones).toHaveLength(1);
+    expect(leerSesiones().sesiones[0]).toMatchObject({ turnosNino: 3 }); // los turnos de él viajan con la sesión
     expect(localStorage.getItem(CLAVES.perfil)).toBeNull();
     expect(await listarIds()).toEqual(["palabra:casa"]);
     const g = await obtenerGrabacion("palabra:casa");

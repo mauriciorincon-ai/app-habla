@@ -172,6 +172,20 @@ export function hitosAlcanzados(
     });
   }
 
+  // Juntos (S13, ADR-025): una sesión con tres turnos suyos medidos. Solo se llega a 3 si el adulto fue
+  // pasando el turno, así que el hito es de VERDAD «por turnos», no de una voz suelta.
+  const porTurnos = orden.find((s) => (s.turnosNino ?? 0) >= 3);
+  if (porTurnos) {
+    hitos.push({
+      id: "juntos-por-turnos",
+      titulo: {
+        es: "Jugaron por turnos: tres turnos suyos en un mismo juego",
+        en: "You took turns: three of their turns in one game",
+      },
+      fecha: porTurnos.fecha,
+    });
+  }
+
   // Primeras veces de cada juego (gate S4, N3): logros concretos, celebrables, con fecha.
   const primerEncendido = orden.find(
     (s) => s.juego === "palabras" && s.encendidos > 0,

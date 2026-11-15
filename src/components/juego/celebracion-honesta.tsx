@@ -25,6 +25,7 @@ import { fechaHoy } from "@/lib/fecha";
 import { registrarSesion } from "@/lib/storage/local";
 import type { Idioma } from "@/lib/idioma";
 import { useIdioma, useT } from "@/lib/idioma/estado";
+import { apuntador as apuntadorTextos } from "@/lib/idioma/textos/apuntador";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { vocales as vocalesTextos } from "@/lib/idioma/textos/vocales";
 import { fuerteSuave, soplar } from "@/lib/idioma/textos/voz-juegos";
@@ -43,6 +44,8 @@ type Props = {
    * vuelta y la celebración no afirma lo que el juego no mostró.
    */
   vueltas?: number;
+  /** Los turnos de él en que su voz se midió (S13, ADR-025): «N turnos de él». */
+  turnosNino?: number;
 };
 
 function segundos(ms: number, idioma: Idioma): string {
@@ -297,6 +300,7 @@ export function CelebracionHonesta({
   etiquetaTerminar,
   palabrasEncendidas = [],
   vueltas = 0,
+  turnosNino = 0,
 }: Props) {
   const tx = useT();
   // R1: un intento = una sesión registrada. Es el ÚNICO punto de escritura del Rumbo (compartido
@@ -306,7 +310,9 @@ export function CelebracionHonesta({
   useEffect(() => {
     if (registrado.current) return;
     registrado.current = true;
-    registrarSesion(construirSesion(metrica, fechaHoy(), palabrasEncendidas));
+    registrarSesion(
+      construirSesion(metrica, fechaHoy(), palabrasEncendidas, turnosNino),
+    );
     // deps vacías a propósito: se registra la métrica del montaje, una sola vez por intento.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -322,6 +328,20 @@ export function CelebracionHonesta({
       ) : (
         <SinVoz metrica={metrica} />
       )}
+
+      {turnosNino > 0 ? (
+        <p
+          className="text-tinta-suave text-base font-medium"
+          data-testid="celebracion-turnos"
+        >
+          {tx(
+            turnosNino === 1
+              ? apuntadorTextos.turnos.uno
+              : apuntadorTextos.turnos.varios,
+            { n: turnosNino },
+          )}
+        </p>
+      ) : null}
 
       <div className="flex w-full flex-col gap-3 sm:flex-row">
         <button
