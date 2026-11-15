@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "./base";
+import { axeLimpio, jugar, sembrar } from "./su-mundo-ayuda";
 
 // SOPLAR (S12, ADR-024). Corre en `desktop-chromium-soplo`: el micrófono falso reproduce tres soplos con
 // una vocal y una «sh» entre ellos (scripts/gen-senales-soplo.mjs; tests/unit/senales-e2e.test.ts cuenta,
@@ -85,4 +86,19 @@ test("con «reducir animaciones» el árbol es el mismo y el juego sigue contand
   await expect(page.getByTestId("molino")).toBeAttached();
   await expect(page.getByTestId("escenario")).toBeVisible();
   await expect(page.getByTestId("soplos")).toBeVisible({ timeout: 25_000 });
+});
+
+test("Su mundo (S14): el protagonista de soplar es de SU tema, con nombre, y la mecánica sigue ahí (axe en claro y oscuro)", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["espacio"] });
+  await jugar(page, "/jugar/soplar");
+  const p = page.getByTestId("protagonista");
+  await expect(p).toHaveAttribute("data-tema", "espacio");
+  await expect(p).toHaveAttribute("role", "img");
+  await expect(p).toHaveAttribute("aria-label", /Un planeta/i);
+  await expect(p.locator("svg")).toHaveCount(1);
+  await expect(page.getByTestId("molino")).toBeAttached();
+  await axeLimpio(page);
+  await page.screenshot({ path: "test-results/su-mundo-soplar-espacio.png" });
 });

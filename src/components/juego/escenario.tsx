@@ -148,7 +148,7 @@ export function Escenario({
 
         <Protagonista
           juego="globo"
-          className="absolute right-[6%] bottom-10 h-20 w-20 sm:h-24 sm:w-24"
+          className="absolute right-[16%] bottom-10 h-20 w-20 sm:h-24 sm:w-24"
         />
 
         <div className="absolute bottom-10 left-[6%] h-32 w-24">

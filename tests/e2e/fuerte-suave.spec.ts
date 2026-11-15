@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "./base";
+import { axeLimpio, jugar, sembrar } from "./su-mundo-ayuda";
 
 // FUERTE Y SUAVE (S12, ADR-024). Corre en `desktop-chromium-fuerte-suave`: el micrófono falso alterna una
 // voz suave y una fuerte (scripts/gen-senales-soplo.mjs; tests/unit/senales-e2e.test.ts cuenta, exacto,
@@ -61,4 +62,19 @@ test("en modo calma no hay conteo de cambios", async ({ page }) => {
   await expect(page.getByTestId("juego")).toHaveAttribute("data-fase", "jugando", { timeout: 20_000 });
   await expect(page.getByTestId("cambios-voz")).toHaveCount(0);
   await expect(page.getByTestId("nivel-voz")).toBeVisible();
+});
+
+test("Su mundo (S14): el protagonista de fuerte-suave es de SU tema, con nombre, y la mecánica sigue ahí (axe en claro y oscuro)", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["musica"] });
+  await jugar(page, "/jugar/fuerte-suave");
+  const p = page.getByTestId("protagonista");
+  await expect(p).toHaveAttribute("data-tema", "musica");
+  await expect(p).toHaveAttribute("role", "img");
+  await expect(p).toHaveAttribute("aria-label", /notas/i);
+  await expect(p.locator("svg")).toHaveCount(1);
+  await expect(page.getByTestId("columna-voz")).toBeAttached();
+  await axeLimpio(page);
+  await page.screenshot({ path: "test-results/su-mundo-fuerte-suave-musica.png" });
 });

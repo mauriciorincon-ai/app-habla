@@ -1,4 +1,5 @@
 import { expect, test } from "./base";
+import { axeLimpio, jugar, sembrar } from "./su-mundo-ayuda";
 
 // EL COHETE DEL TONO (Outcome 2). Corre en el proyecto `desktop-chromium-tono`, cuyo micrófono
 // falso CANTA: un barrido continuo 230↔420 Hz (sube·baja·sube·baja = 3 inversiones).
@@ -92,4 +93,19 @@ test("modo calma en el cohete: sin medidor y sin meta (el cohete solo flota)", a
   await expect(page.getByTestId("celebracion")).toHaveCount(0);
   await expect(page.getByTestId("subidas")).toHaveCount(0);
   await expect(page.getByTestId("confeti-vuelta")).toHaveCount(0);
+});
+
+test("Su mundo (S14): el protagonista de cohete es de SU tema, con nombre, y la mecánica sigue ahí (axe en claro y oscuro)", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["carros"] });
+  await jugar(page, "/jugar/cohete");
+  const p = page.getByTestId("protagonista");
+  await expect(p).toHaveAttribute("data-tema", "carros");
+  await expect(p).toHaveAttribute("role", "img");
+  await expect(p).toHaveAttribute("aria-label", /carrito/i);
+  await expect(p.locator("svg")).toHaveCount(1);
+  await expect(page.getByTestId("cohete")).toBeAttached();
+  await axeLimpio(page);
+  await page.screenshot({ path: "test-results/su-mundo-cohete-carros.png" });
 });
