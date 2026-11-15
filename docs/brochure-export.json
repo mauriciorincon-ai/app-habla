@@ -317,26 +317,26 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 899,
+      "valor": 957,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-14 sobre la rama del S11: 44 archivos, 899 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S12: 49 archivos, 957 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 275,
+      "valor": 304,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-14 sobre la rama del pago del S11: 275 pruebas en verde."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-15 sobre la rama del S12: 304 pruebas en verde."
     },
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 94.98,
+      "valor": 95.28,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-14 sobre la rama del S11: 94,98 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-15 sobre la rama del S12: 95,28 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -397,7 +397,7 @@
     {
       "clave": "peso_brochure",
       "etiqueta": "Peso de este brochure",
-      "valor": 125567,
+      "valor": 190346,
       "unidad": "bytes",
       "fuente": "medido",
       "detalle": "Archivo autocontenido, cero peticiones externas, abre con doble clic. `wc -c docs/BROCHURE.html`."
