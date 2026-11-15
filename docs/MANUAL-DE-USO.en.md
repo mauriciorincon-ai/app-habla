@@ -34,7 +34,7 @@ your browser's language**. To pick the other one, open **Settings → "Idioma / 
 **English** (the chosen one shows a «✓»). The change is immediate, needs no reload, and stays on the device like
 any other setting.
 
-- **What changes:** Today, the daily capsule (all 50), first use, the games, the Studio, the Goal, the Path,
+- **What changes:** Today, the daily capsule (all 60), first use, the games, the Studio, the Goal, the Path,
   Settings, and the brochure page `/conoce`, which has its own switch.
 - **The daily capsule is the same** in both languages: switching language never changes what is on for today.
 - **Words and Twins, in English (S8):** both games **are practised in English**: the words, the pictures and the
@@ -332,12 +332,12 @@ lines up everything under that topic.
 
 If you type with a spelling mistake ("animles") and tap save, the app **asks first**: _"Did you mean «animales»?"_
 You can fix it with one tap or save it as typed (writing freely stays your right: in therapy they may ask for
-something the app does not have). A **correctly spelled** word never gets that question: "media" or "colors" are
+something the app does not have). A **correctly spelled** word never gets that question: "media" or "numbers" are
 saved the first time, even if they line nothing up.
 
 Once the word is complete, the app tells you **honestly** how much it finds, and it counts **only what your child
 will actually see**: the capsules for their stage and the pictures from the topics you chose ("with «animales», the
-app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "colors",
+app puts first N capsules · M pictures"). If you type something that is not in the app's content, such as "numbers",
 which deliberately does not exist, it tells you so openly instead of pretending it lined something up. And if you
 type something that does exist but is **outside what your child sees today** (a topic you did not choose during
 first use), it also says so clearly: the games do not change, although the Studio will suggest recording those
@@ -425,8 +425,9 @@ your child looks at the word: saying it, copying it or pointing to it all count.
 - **Where:** your child opens them from **"Today" → "A story to read together"** (`/cuentos`). You set them up in
   **Studio → "Stories at home"**.
 - **The app's own:** **six come ready** (four pages each), written in English and in Spanish. They are filled in with
-  what you type under **"What your child enjoys"** (general words, like "trains, animals") and **"Words you are
-  practicing"** (one word each). Type nothing and they use example words.
+  what you wrote in the profile, **"Other things they love"** (general words, like "trains, clouds"; Stories only
+  reads it, with a link to Settings to change it), and **"Words you are practicing"** (one word each; if you type
+  none, the weekly goal's words are used). Type nothing and they use example words.
 - **What travels and what does not:** all a request carries is those **general interests and the practice words**.
   **Never** their name, their age, their voice or anything about a condition; a number is not accepted as an interest,
   and neither is a word this app does not write.
@@ -534,6 +535,16 @@ Every microphone game (balloon, blowing, loud and soft, rocket, word and picture
 - At the end the celebration says **"N turns of theirs"**: it counts only the turns of theirs in which their voice was measured. The Path adds them per week, and a new milestone, **"You took turns"**, arrives with three of their turns in one game.
 
 None of this stores your voice or theirs: only **how many of their turns** there were is saved, and "Delete my data" erases it.
+
+### Their world everywhere — their topics and the goal, in every game (new · S14)
+
+- **The companion:** in balloon, blowing, loud and soft, rocket and vowels, a drawing of **one of their topics** (a dinosaur, a little car, a planet…) sits in a corner. It rotates by day and differs between games. **It only dresses the scene**: what is measured and when it celebrates do not change. With no topics, the scene is the usual one.
+- **Words to model:** with a weekly goal, the guide card says **"Model a word from their goal: …"** (up to four) and the prompter strip says **"You could say: …"** only in your turn. It is advice for you, never something the app checks or the child sees. With no goal, nothing shows.
+- **Word and picture, and Twin words:** the deck and the pairs put the goal's first, then their topics'.
+- **Colours and actions:** "colors" now exists (four capsules, four pictures) and "actions" reaches pictures and pairs (run/sun, dig/pig; in Spanish come/tome, toca/boca). A goal like "numbers" is still told plainly: no content, no pretending.
+- **Stories reminder:** on Today, a card **for you only** shows when you never ordered the month's batch or the last one is 30+ days old, with **"Order this month's stories"** and **"Not now"** (hides it until tomorrow). No notifications, no permissions, never an alarm for the child.
+- **Printable sheets** put the goal's pictures first.
+- **Interests live in one place:** Settings → profile → **"Other things they love"** (up to eight, general words).
 
 ### What the app measures and what it does NOT (important)
 
@@ -669,3 +680,4 @@ and load only when you write a goal.
 | 011    | **"Did they say the word?"**: an on-device recognizer (off by default; about 40 MB that you download and can delete) that in Word and picture and Word twins shows **only you** a "maybe they said…"; an optional soft animation for the child (off, no text or verdict); four local match numbers, outside the other-home file. |
 | 012    | **"Their voice moves it all"**: two new games with no words, **Blowing** (counts blows of air) and **Loud and soft** (celebrates volume changes, never a "right" volume); the selector with seven games in a fixed order; **Short sessions**: a daily play cap (5 to 10 min, 10 by default) that closes the game calmly and tells the adult once, without blocking; the path adds blows, volume changes and two milestones. |
 | 013    | **"Together, for real"**: the six microphone games played in turns you set with one tap (in yours the drawing moves but nothing is counted for them), a turn indicator the child understands without reading, **Your prompter** (one line for you at the right moment, can be turned off) and "N turns of theirs" in the celebration and the Path. |
+| 014    | **"Their world everywhere"**: a companion from their topics in five games, words to model from the goal on the guide card and the prompter, "colors", more actions and bath capsules, "Other things they love" as the single home of their interests (Stories reads it) and a stories reminder card on Today. |

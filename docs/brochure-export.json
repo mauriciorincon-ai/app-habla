@@ -12,7 +12,7 @@
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
   "schema_version": "1.0.0",
-  "actualizado": "2026-11-14",
+  "actualizado": "2026-11-16",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
@@ -29,7 +29,7 @@
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. El acierto de la palabra lo juzgas tú, que estabas ahí; si activas la segunda opinión del aparato, solo te dice «quizás», nunca «no», y jamás sola. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 34,
+    "total": 35,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -264,6 +264,12 @@
             "nombre": "Turnos y apuntador: jugar de a dos",
             "que_hace": "Los juegos de micrófono se juegan por turnos que tú marcas con un toque: en el tuyo el dibujo se mueve, pero nada se le cuenta a él; en el suyo, lo que su voz hace cuenta y se celebra («N turnos de él»). Una línea breve, solo para ti, aparece en el momento justo y se va sola; se apaga en Ajustes y en modo calma. Nada identifica de quién es una voz.",
             "seccion_manual": "Turnos y apuntador — jugar de a dos, con una línea para usted"
+          },
+          {
+            "id": "35",
+            "nombre": "Su mundo en todo: sus temas y su meta, en cada juego",
+            "que_hace": "Los temas que elegiste y la meta de la semana se notan en cada juego: un dibujo de uno de sus temas acompaña la escena sin cambiar lo que se mide, y solo para ti la tarjeta de guion y la franja del apuntador proponen hasta cuatro palabras de su meta para que las modeles. «Colores» ya existe y una tarjeta en Hoy te recuerda pedir los cuentos del mes, sin notificaciones. Sus intereses se escriben en un solo lugar: el perfil.",
+            "seccion_manual": "Su mundo en todo — sus temas y la meta, en cada juego"
           }
         ]
       },
@@ -307,10 +313,10 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 34,
+      "valor": 35,
       "unidad": "funcionalidades",
       "fuente": "medido",
-      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (34 con «Soplar», «Fuerte y suave» y «Sesiones cortas», S12, y «Turnos y apuntador», S13), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
+      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (35 con «Soplar», «Fuerte y suave» y «Sesiones cortas», S12, y «Turnos y apuntador», S13, y «Su mundo en todo», S14), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
     },
     {
       "clave": "pantallas",
@@ -323,10 +329,10 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 957,
+      "valor": 1041,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S12: 49 archivos, 957 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S14: 54 archivos, 1041 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
@@ -339,15 +345,15 @@
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 95.28,
+      "valor": 95.67,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-15 sobre la rama del S12: 95,28 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-16 sobre la rama del S14: 95,67 % de líneas."
     },
     {
       "clave": "capsulas",
       "etiqueta": "Cápsulas de práctica diaria",
-      "valor": 50,
+      "valor": 60,
       "unidad": "cápsulas",
       "fuente": "medido",
       "detalle": "Entradas de content/capsulas.ts. Cada una cita la técnica de estimulación del lenguaje en la que se apoya; el selector diario es determinista y no repite hasta agotarlas."
@@ -403,7 +409,7 @@
     {
       "clave": "peso_brochure",
       "etiqueta": "Peso de este brochure",
-      "valor": 190346,
+      "valor": 193208,
       "unidad": "bytes",
       "fuente": "medido",
       "detalle": "Archivo autocontenido, cero peticiones externas, abre con doble clic. `wc -c docs/BROCHURE.html`."
@@ -411,10 +417,10 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 24,
+      "valor": 26,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-11-14 sobre la rama del S12 (hasta el ADR-024)."
+      "detalle": "Archivos de decisions/ el 2026-11-16 sobre la rama del S14 (hasta el ADR-026)."
     }
   ],
   "stack": [

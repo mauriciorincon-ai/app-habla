@@ -67,6 +67,7 @@
   .o-s3 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s4 { color: var(--tinta-suave); border-color: var(--borde); background: var(--viejo-suave); }
   .o-s13 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
+  .o-s14 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s12 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s11 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
   .o-s10 { color: var(--nuevo); border-color: var(--nuevo); background: var(--nuevo-suave); font-weight: 600; }
@@ -182,6 +183,7 @@
       <ul>
         <li><span class="origen o-s12">Nuevo · S12</span> Nació en este sprint (los juegos de aire y de volumen, y el tope de juego por día, bloque T). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s13">Nuevo · S13</span> Nació en este sprint (los turnos dentro de los juegos y el apuntador). <span class="suave">Nunca lo has probado.</span></li>
+        <li><span class="origen o-s14">Nuevo · S14</span> Nació en este sprint (su mundo en los juegos, la meta en el apuntador y el recordatorio de cuentos).</li>
         <li><span class="origen o-s11">Nuevo · S11</span> Nació en este sprint (la segunda opinión «¿Dijo la palabra?», bloque S). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s10">Nuevo · S10</span> Nació en este sprint (pasar a la otra casa, el mapa de las vocales y las hojas para imprimir). <span class="suave">Nunca lo has probado.</span></li>
         <li><span class="origen o-s9">S9</span> Nació en este sprint (los cuentos de casa y el contacto visual en Hoy). <span class="suave">Nunca lo has probado.</span></li>
@@ -770,9 +772,9 @@
         <p class="mal"><span class="et">Mal</span> Te regaña con “no está en el contenido” mientras vas a media palabra · guarda un error de ortografía sin preguntar · pregunta “¿quisiste decir?” por una palabra <strong>bien escrita</strong> (“medios”) · el botón dice “Guardar el objetivo” genérico con texto ya escrito · un chip sale <strong>sin su eñe o su tilde</strong> (“bano”, “musica”) · los dos grupos salen <strong>sin etiqueta</strong> que diga cuál es cuál · yendo bien encaminado te ofrecen palabras que no tienen que ver (rana, lana) · escribes un tema <strong>tal como sale en Ajustes</strong> (“transporte”) y te dice que no está en la app.</p>
       </div></li>
       <li data-origen="s4" data-cubre="sintonia-terapias"><input type="checkbox" id="v4-o3"><div>
-        <label for="v4-o3">En <strong>“Objetivo”</strong>, borra lo que había y escribe <strong>colores</strong> — y esta vez <strong>guárdalo</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
-        <p class="esperar"><span class="et">Esperado</span> La app lo dice honesto: <strong>“«colores» todavía no está en el contenido de la app, así que no hay nada que priorizar.”</strong> No finge que alineó algo (no hay palabras de color en la app — a propósito). Al guardarlo (tu propuesta del gate), la tarjeta “Objetivo activo” <strong>NO se ve como una más</strong>: sale en <strong>ROJO con el triángulo de alerta</strong> y el aviso <strong>“Priorizado, pero la app aún no tiene contenido de esto: por ahora la cápsula y los juegos no cambian.”</strong></p>
-        <p class="mal"><span class="et">Mal</span> Dice que priorizó cápsulas o dibujos de “colores” · guardado se ve <strong>verde con diana, igual que un objetivo que sí alinea</strong>.</p>
+        <label for="v4-o3">En <strong>“Objetivo”</strong>, borra lo que había y escribe <strong>números</strong> — y esta vez <strong>guárdalo</strong>. <span class="origen o-s4">Nuevo · S4</span> <span class="origen o-clave">⭐ gate mínimo</span></label>
+        <p class="esperar"><span class="et">Esperado</span> La app lo dice honesto: <strong>“«números» todavía no está en el contenido de la app, así que no hay nada que priorizar.”</strong> No finge que alineó algo (no hay contenido de números en la app — a propósito). Al guardarlo (tu propuesta del gate), la tarjeta “Objetivo activo” <strong>NO se ve como una más</strong>: sale en <strong>ROJO con el triángulo de alerta</strong> y el aviso <strong>“Priorizado, pero la app aún no tiene contenido de esto: por ahora la cápsula y los juegos no cambian.”</strong></p>
+        <p class="mal"><span class="et">Mal</span> Dice que priorizó cápsulas o dibujos de “números” · guardado se ve <strong>verde con diana, igual que un objetivo que sí alinea</strong>.</p>
       </div></li>
       <li data-origen="s4" data-cubre="sintonia-terapias intereses"><input type="checkbox" id="v4-o6"><div>
         <label for="v4-o6">Sigue en “Objetivo”: borra y escribe el nombre de un tema que <strong>NO</strong> hayan elegido en el onboarding (p. ej. <strong>dinosaurios</strong>, si no está entre sus temas). <span class="origen o-s4">Nuevo · S4</span></label>
@@ -855,6 +857,16 @@
         <label for="v2-h3"><strong>“Apodo y temas”</strong>: mira los actuales, cámbialos, guarda, y vuelve a “Hoy”. <span class="origen o-s1">S1</span></label>
         <p class="esperar"><span class="et">Esperado</span> El resumen se actualiza y <strong>el progreso sigue intacto</strong>: no vuelve el onboarding y la cápsula que marcaste hecha sigue hecha.</p>
         <p class="mal"><span class="et">Mal</span> Cambiar el apodo te devuelve al onboarding o borra el día.</p>
+      </div></li>
+      <li data-origen="s14" data-cubre="intereses sintonia-terapias apuntador voz-juegos"><input type="checkbox" id="v14-m1"><div>
+        <label for="v14-m1">En <strong>Ajustes → “Apodo y temas”</strong> elige un tema y suma una cosa en <strong>“Otras cosas que le encantan”</strong> (por ejemplo “trenes”); en <strong>“Objetivo”</strong> guarda <strong>colores</strong>. Abre el <strong>globo</strong>: mira la tarjeta de guion y, en <strong>tu turno</strong>, la franja del apuntador. <span class="origen o-s14">Nuevo · S14</span></label>
+        <p class="esperar"><span class="et">Esperado</span> En una esquina de la escena hay un dibujo de <strong>uno de sus temas</strong> (cambia de un juego a otro y de un día a otro). La tarjeta dice <strong>“Modele una palabra de su meta: rojo · azul…”</strong> y la franja, solo en tu turno, <strong>“Puede decir: …”</strong>. Entra a <strong>Cuentos</strong> (Estudio): lee “trenes” como interés, sin campo para escribirlo, con un enlace a Ajustes.</p>
+        <p class="mal"><span class="et">Mal</span> El dibujo cambia cuándo sube el globo o qué se mide · las palabras se ven en el turno de él · sin meta aparece una línea “Modele…” · Cuentos vuelve a pedir “Lo que le gusta”.</p>
+      </div></li>
+      <li data-origen="s14" data-cubre="cuentos capsulas"><input type="checkbox" id="v14-m2"><div>
+        <label for="v14-m2">Si nunca pediste el lote del mes (o el último pasó de 30 días), mira <strong>“Hoy”</strong>: la tarjeta <strong>“Pedir los cuentos del mes”</strong>. Toca <strong>“Ahora no”</strong> y recarga. <span class="origen o-s14">Nuevo · S14</span></label>
+        <p class="esperar"><span class="et">Esperado</span> Es una tarjeta <strong>para el adulto</strong>, sin notificación ni permiso; “Pedir…” te lleva a Cuentos y <strong>“Ahora no” la oculta hasta mañana</strong>. El niño nunca la ve como alarma.</p>
+        <p class="mal"><span class="et">Mal</span> Te pide permiso de notificaciones · reaparece tras “Ahora no” el mismo día · aparece en la vista del niño.</p>
       </div></li>
       <li data-origen="mejora" data-cubre="hecho-para-el"><input type="checkbox" id="v2-h4"><div>
         <label for="v2-h4">Lee <strong>“Qué mide y qué NO mide esta app”</strong> entero. <span class="origen o-mejora">Mejorado en S4</span></label>
@@ -1073,7 +1085,7 @@
       <li><strong>La voz de la familia:</strong> ¿se grabó TU voz y suena en los juegos? ¿la de tu hijo quedó fuera (nunca se graba)?</li>
       <li><strong>Palabras gemelas:</strong> ¿es claro que tú marcas y la app no juzga qué dijo?</li>
       <li><strong>El rumbo (S4):</strong> ¿los números cuadran con lo que jugaron? ¿el texto se siente honesto y cálido, sin una sola palabra de nota ni de evaluación?</li>
-      <li><strong>El objetivo (S4):</strong> ¿escribir “animales” de verdad movió la cápsula de hoy, los dibujos y el lote? ¿“colores” lo dijo honesto (sin fingir)? ¿quitarlo dejó todo como antes?</li>
+      <li><strong>El objetivo (S4):</strong> ¿escribir “animales” de verdad movió la cápsula de hoy, los dibujos y el lote? ¿“números” lo dijo honesto (sin fingir)? ¿quitarlo dejó todo como antes?</li>
       <li>Cualquier <span class="et" style="color:var(--alerta)">Mal</span> que hayas visto, y cualquier cosa rara: pantalla rota, texto confuso, botón muerto.</li>
       <li>Veredicto de diseño: ¿aprobado visualmente, o qué cambiar?</li>
     </ol>
