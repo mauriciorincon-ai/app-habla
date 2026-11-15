@@ -555,7 +555,7 @@ Nada de esto guarda su voz ni la de él: solo se guarda **cuántos turnos de él
 - **Palabras para modelar:** con una meta de la semana, la tarjeta de guion dice **«Modele una palabra de su meta: …»** (hasta cuatro) y la franja del apuntador dice **«Puede decir: …»** solo en el turno de usted. Es un consejo para usted, nunca algo que la app compruebe ni que el niño vea. Sin meta no aparece nada.
 - **Palabra y dibujo y Gemelas:** el mazo y las parejas ponen primero los de su meta y luego los de sus temas.
 - **Colores y acciones:** «colores» ya existe (cuatro cápsulas y cuatro dibujos) y «acciones» llega a dibujos y parejas (come/tome, toca/boca; en English run/sun, dig/pig). Una meta como «números» sigue diciéndose de frente: sin contenido, no se finge.
-- **Recordatorio de cuentos:** en Hoy, una tarjeta **solo para usted** avisa cuando nunca pidió el lote del mes o el último tiene 30 días o más, con **«Pedir los cuentos del mes»** y **«Ahora no»** (la oculta hasta mañana). No usa notificaciones ni permisos, y el niño nunca la ve como alarma.
+- **Recordatorio de cuentos:** en Hoy, una tarjeta **solo para usted** avisa cuando nunca pidió el lote del mes o el último tiene 30 días o más, con **«Pedir los cuentos del mes»** y **«Ahora no»** (la oculta 7 días). Si no piensa usar Cuentos, apáguela en **Ajustes → «Recordarme los cuentos del mes»** (viene encendido); apagada, no vuelve. No usa notificaciones ni permisos, y el niño nunca la ve como alarma.
 - **Las hojas imprimibles** ponen primero los dibujos de su meta.
 
 ### Qué mide y qué NO mide la app (importante)

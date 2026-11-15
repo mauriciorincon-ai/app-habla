@@ -95,6 +95,21 @@ export function AjustesSesion() {
         }
       />
 
+      <Interruptor
+        id="interruptor-recordatorio"
+        titulo={textos.recordatorioCuentos.titulo}
+        descripcion={textos.recordatorioCuentos.descripcion}
+        activo={ajustes.recordatorioCuentos}
+        listo={listo}
+        estado={{
+          encendido: textos.recordatorioCuentos.encendido,
+          apagado: textos.recordatorioCuentos.apagado,
+        }}
+        onCambiar={(activo) =>
+          guardarAjustesEnStore({ ...ajustes, recordatorioCuentos: activo })
+        }
+      />
+
       <TopeDiario />
 
       <SeccionVozFamiliar
@@ -441,6 +456,7 @@ function Interruptor({
   descripcion,
   activo,
   listo,
+  estado,
   onCambiar,
 }: {
   id: string;
@@ -449,6 +465,8 @@ function Interruptor({
   activo: boolean;
   /** false hasta que hidrata: aún no sabemos el valor guardado, así que no se puede tocar. */
   listo: boolean;
+  /** Si viene, el estado también se dice con símbolo + texto (el color nunca va solo). */
+  estado?: { encendido: Texto; apagado: Texto };
   onCambiar: (activo: boolean) => void;
 }) {
   const tx = useT();
@@ -460,6 +478,15 @@ function Interruptor({
             {tx(titulo)}
           </h2>
           <p className="text-tinta-suave mt-2 text-sm">{tx(descripcion)}</p>
+          {estado ? (
+            <p
+              className="mt-2 text-sm font-medium"
+              data-testid={`${id}-estado`}
+            >
+              <span aria-hidden="true">{activo ? "✓" : "–"}</span>{" "}
+              {tx(activo ? estado.encendido : estado.apagado)}
+            </p>
+          ) : null}
         </div>
         <button
           type="button"

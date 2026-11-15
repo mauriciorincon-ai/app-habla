@@ -542,7 +542,7 @@ None of this stores your voice or theirs: only **how many of their turns** there
 - **Words to model:** with a weekly goal, the guide card says **"Model a word from their goal: …"** (up to four) and the prompter strip says **"You could say: …"** only in your turn. It is advice for you, never something the app checks or the child sees. With no goal, nothing shows.
 - **Word and picture, and Twin words:** the deck and the pairs put the goal's first, then their topics'.
 - **Colours and actions:** "colors" now exists (four capsules, four pictures) and "actions" reaches pictures and pairs (run/sun, dig/pig; in Spanish come/tome, toca/boca). A goal like "numbers" is still told plainly: no content, no pretending.
-- **Stories reminder:** on Today, a card **for you only** shows when you never ordered the month's batch or the last one is 30+ days old, with **"Order this month's stories"** and **"Not now"** (hides it until tomorrow). No notifications, no permissions, never an alarm for the child.
+- **Stories reminder:** on Today, a card **for you only** shows when you never ordered the month's batch or the last one is 30+ days old, with **"Order this month's stories"** and **"Not now"** (hides it for 7 days). If you won't use Stories, switch it off in **Settings → "Remind me about this month's stories"** (it starts on); switched off, it doesn't come back. No notifications, no permissions, never an alarm for the child.
 - **Printable sheets** put the goal's pictures first.
 - **Interests live in one place:** Settings → profile → **"Other things they love"** (up to eight, general words).
 
