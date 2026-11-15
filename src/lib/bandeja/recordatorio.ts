@@ -5,7 +5,7 @@
 // más (la misma vigencia del pedido, `DIAS_DE_VIGENCIA`). «Ahora no» la esconde hasta el día siguiente.
 // La fecha es una perilla (regla 23): nada aquí lee el reloj.
 
-import { DIAS_DE_VIGENCIA } from "./cuentos-del-mes";
+import { DIAS_DE_VIGENCIA } from "./intereses-base";
 import type { CuentosGuardados } from "@/lib/cuentos/estado";
 
 export type Recordatorio = { motivo: "nunca" } | { motivo: "vencido"; dias: number };

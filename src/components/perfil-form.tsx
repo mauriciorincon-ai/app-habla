@@ -5,7 +5,7 @@
 // forma de volver a esta pantalla era borrar todos los datos o una ventana de incógnito).
 
 import { useState } from "react";
-import { InteresSchema } from "@/lib/bandeja/cuentos-del-mes";
+import { InteresSchema } from "@/lib/bandeja/intereses-base";
 import { tocaLaLista } from "@/lib/bandeja/sensibilidad";
 import { useT } from "@/lib/idioma/estado";
 import { nombreTema } from "@/lib/idioma/textos/nombres";

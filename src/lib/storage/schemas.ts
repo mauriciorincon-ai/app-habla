@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ETAPA_DEFECTO, ETAPAS, NIVELES_CONTACTO_VISUAL } from "@content/schema";
-import { InteresSchema } from "@/lib/bandeja/cuentos-del-mes";
+import { InteresSchema } from "@/lib/bandeja/intereses-base";
 import { TEMAS } from "./temas";
 
 // Lo ÚNICO que esta app guarda: progreso de cápsulas, ajustes y el onboarding local.

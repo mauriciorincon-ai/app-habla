@@ -7,7 +7,7 @@
 // Ninguno de los dos viaja a ningún lado nuevo: el perfil no va en el paquete de la otra casa (lo prueba
 // `otra-casa.test`), y al pedido de cuentos van, como siempre, solo intereses genéricos.
 
-import { MAX_INTERESES } from "@/lib/bandeja/cuentos-del-mes";
+import { MAX_INTERESES } from "@/lib/bandeja/intereses-base";
 import type { CuentosGuardados } from "@/lib/cuentos/estado";
 import type { Idioma } from "@/lib/idioma";
 import { nombreTema } from "@/lib/idioma/textos/nombres";
