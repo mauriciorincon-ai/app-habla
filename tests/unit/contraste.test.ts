@@ -148,6 +148,30 @@ describe("prompter strip and turn indicator contrast (AA)", () => {
       ],
     ],
     [
+      "gemelas indicator · adult light",
+      [":root {\n  --fondo"],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "gemelas indicator · adult dark (setting)",
+      [':root[data-tema="oscuro"]'],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
+      "gemelas indicator · adult dark (system)",
+      [':root:not([data-tema="claro"])'],
+      [
+        ["tinta", "acento-suave"],
+        ["tinta", "superficie"],
+      ],
+    ],
+    [
       "child indicator",
       [".tema-nino {"],
       [

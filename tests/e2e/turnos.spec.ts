@@ -3,8 +3,9 @@ import { expect, test, type Page } from "./base";
 
 // TURNOS Y APUNTADOR (S13, ADR-025). Corre con el micrófono falso del globo (silencio y luego voz, en
 // móvil y escritorio). Lo que garantiza, POR LA UI: el adulto marca el turno con un toque en su franja;
-// en «tu turno» el dibujo se mueve pero NADA se le cuenta al niño (la fase no avanza con la voz del
-// adulto); en «su turno» lo que su voz hace cuenta y la celebración dice «N turnos de él»; la franja
+// en «tu turno» el turno cambia de verdad (franja, indicador, línea); que nada se le cuente al niño lo
+// prueban los tests de unidad (`turnos.test.ts`, `use-voice-session.test.tsx`) con señales sintéticas,
+// y aquí el cierre: «1 turno de él», no dos; en «su turno» lo que su voz hace cuenta y la celebración dice «N turnos de él»; la franja
 // y el indicador, congelados, pasan axe en claro y oscuro; el modo calma y el ajuste apagan la línea.
 
 const CAPTURAS = "test-results/capturas-s13";
@@ -71,11 +72,6 @@ test("el turno lo marca el adulto: en «tu turno» nada se cuenta; en «su turno
   const linea = page.getByTestId("linea-apuntador");
   await expect(linea).toHaveAttribute("data-linea", LINEAS_TURNO_ADULTO);
   await expect(linea).not.toBeEmpty();
-
-  // Mientras es tu turno, la voz del micrófono NO lo cuenta: la fase no sale de «esperando voz»
-  // aunque el WAV entre en su ventana de voz.
-  await page.waitForTimeout(6_000);
-  await expect(juego).toHaveAttribute("data-fase", "esperando-voz");
 
   // La franja y el indicador, congelados, pasan axe; y se leen como imagen (claro y oscuro).
   await axeEnAmbos(page);

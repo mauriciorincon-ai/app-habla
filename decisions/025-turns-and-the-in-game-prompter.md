@@ -28,7 +28,9 @@ kept as the child's. The advice came before the moment it was useful, never at i
    frame only in the child's turn; in the adult's turn it receives the same instant **in silence**
    (`frameEnSilencio`: RMS 0, no pitch, no formants, same clock). Every counter that is shown, recorded or
    celebrated (seconds and best run, rocket turns, vowels, blows, loud/soft changes, the picture lighting up
-   in «Palabras») reads the child's pack (`use-voice-session.ts`). Silence — rather than not feeding the
+   in «Palabras», the local recognizer's «maybe» and its count, the «they said it» tap) reads the child's
+   pack or is inert in the adult's turn (`use-voice-session.ts`). The tail of the adult's voice when the
+   turn passes to the child is cut: the tick's voice flag follows the pack of the turn that is current. Silence — rather than not feeding the
    engines — closes runs cleanly: the meter releases after its grace, the blow ends, the pitch is forgotten,
    so nothing from the adult's turn leaks into his next run. The adult's own judgement in «Palabras» (the
    «they said the word» tap) stays the adult's, as ADR-009 says.
@@ -46,7 +48,12 @@ kept as the child's. The advice came before the moment it was useful, never at i
 5. **The strip on screen** (F2) belongs to the adult: text in the adult's palette, still, no sound (the mic
    games emit none), outside the child's ≥ 64 px touch zone, shown about seven seconds; calm mode and the
    «Your prompter» setting (on by default) turn it off. It is the **only** adult text allowed on the
-   child's view; `design-system.md` records the exception.
+   child's view; `design-system.md` records the exception. **As built:** the strip itself (the turn button
+   and the «his turn / your turn» label) is permanent adult chrome while a game is on; only the _line_
+   shows for about seven seconds. Calm mode and the setting turn off the line, never the button, because
+   the adult must always be able to hand over the turn (declared as a deviation in the closing).
+6. **Prompter history is per game session** and survives «again» and recalibration, so a line never
+   repeats within a session. The card before the game tells the adult when to tap «My turn» (`guion.turnos`).
 
 ## Consequences
 
@@ -57,5 +64,8 @@ kept as the child's. The advice came before the moment it was useful, never at i
 - In the adult's turn the balloon rises with the voice but does not travel (travel is the child's seconds);
   the picture in «Palabras» glows but does not light up. Movement shows the model; achievement stays his.
 - Gemelas already alternate (he says, the adult marks): they only gain the same turn indicator.
-- Nothing new is stored but `turnosNino` in the session record; it does not travel in the other-home
-  package beyond what sessions already carry, and «Delete my data» erases it with them.
+- Stored: `turnosNino` (a counter) in the session record, which travels in the other-home package with the
+  sessions (a number, never audio), and `ajustes.apuntador`, a local setting that does not travel. «Delete
+  my data» erases both.
+- Honest limit: modelling before tapping «My turn» still counts as his, because the app never guesses
+  whose voice it hears; the manual says so.

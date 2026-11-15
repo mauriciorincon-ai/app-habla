@@ -2,7 +2,8 @@
 
 // La carta del padre ANTES del juego: la app orquesta al adulto, no lo reemplaza.
 // Esta pantalla es del padre (paleta operador), no del niño — por eso el guion vive aquí y no
-// dentro del juego (regla del design-system: la vista del niño es soberana).
+// dentro del juego (regla del design-system: la vista del niño es soberana; la única excepción es
+// la franja del apuntador, ADR-025).
 
 import Link from "next/link";
 import { useT } from "@/lib/idioma/estado";
