@@ -190,3 +190,37 @@ test("la línea aparece unos segundos y se va sola, y no se repite en la sesión
   const segunda = await linea.getAttribute("data-linea");
   if (segunda) expect(segunda).not.toBe(primera);
 });
+
+test("in English: the strip, the indicator and “N turns of theirs” are written for English, and pass axe", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "habla:v1:ajustes",
+      JSON.stringify({ idioma: "en" }),
+    );
+  });
+  await hastaLaFranja(page);
+  await expect(page.getByTestId("turno-actual")).toHaveText("It's their turn");
+  await page.getByTestId("cambiar-turno").click();
+  await expect(page.getByTestId("cambiar-turno")).toHaveText(
+    "Hand the turn over",
+  );
+  await expect(page.getByTestId("indicador-turno")).toHaveAttribute(
+    "aria-label",
+    "Now it is time to watch and listen",
+  );
+  await expect(page.getByTestId("linea-apuntador")).not.toBeEmpty();
+  await axeEnAmbos(page);
+  await page.getByTestId("cambiar-turno").click();
+  await expect(page.getByTestId("juego")).toHaveAttribute(
+    "data-fase",
+    "jugando",
+    { timeout: 20_000 },
+  );
+  await page.getByTestId("terminar").click();
+  await expect(page.getByTestId("celebracion-turnos")).toHaveText(
+    "1 turn of theirs",
+  );
+  await axeEnAmbos(page);
+});

@@ -29,7 +29,7 @@
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. El acierto de la palabra lo juzgas tú, que estabas ahí; si activas la segunda opinión del aparato, solo te dice «quizás», nunca «no», y jamás sola. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 33,
+    "total": 34,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -258,6 +258,12 @@
             "nombre": "Sesiones cortas: el tope de juego por día",
             "que_hace": "Eliges un tope de juego por día, de 5 a 10 minutos (10 de fábrica). Al llegar, el juego se cierra con calma, como «Salir», y te avisa a ti, una sola vez al día; nunca bloquea nada ni dice «se acabó». El contador es local, de hoy, y no viaja al archivo de la otra casa.",
             "seccion_manual": "Sesiones cortas — el tope de juego por día"
+          },
+          {
+            "id": "34",
+            "nombre": "Turnos y apuntador: jugar de a dos",
+            "que_hace": "Los juegos de micrófono se juegan por turnos que tú marcas con un toque: en el tuyo el dibujo se mueve, pero nada se le cuenta a él; en el suyo, lo que su voz hace cuenta y se celebra («N turnos de él»). Una línea breve, solo para ti, aparece en el momento justo y se va sola; se apaga en Ajustes y en modo calma. Nada identifica de quién es una voz.",
+            "seccion_manual": "Turnos y apuntador — jugar de a dos, con una línea para usted"
           }
         ]
       },
@@ -301,10 +307,10 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 33,
+      "valor": 34,
       "unidad": "funcionalidades",
       "fuente": "medido",
-      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (33 con «Soplar», «Fuerte y suave» y «Sesiones cortas», S12), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
+      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (34 con «Soplar», «Fuerte y suave» y «Sesiones cortas», S12, y «Turnos y apuntador», S13), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
     },
     {
       "clave": "pantallas",

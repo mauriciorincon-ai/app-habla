@@ -522,6 +522,18 @@ games count today's minutes of play **on this device**. When the cap is reached 
 The counter is **local and for today only** (it keeps the date and the minutes, nothing else): it does not travel in the
 other-home file and "Delete my data" wipes it.
 
+### Turns and the prompter — playing as two, with one line for you (new · S13)
+
+Every microphone game (balloon, blowing, loud and soft, rocket, word and picture, vowels) is played **in turns**, and you set them:
+
+- Above the game there is a **thin strip** with one button: **"Hand the turn over"** or **"My turn"**. **One tap** changes the turn. The app **never guesses whose voice it hears**: you decide that.
+- **In their turn** (everything starts there, no tap needed) what their voice does **counts and is celebrated**. **In your turn** the drawing moves with your model so they can see it, but **nothing is counted for them**: no seconds, no blows, no changes, no picture lighting up.
+- They see a **turn indicator** that needs no reading: a round figure with waves and "Your voice", or an eye with "Watch and listen". Twin words (where they say it and you mark it) only gains that indicator.
+- **Your prompter:** the strip shows, for a few seconds, **one line for you** at the right moment: when your turn starts ("model it slowly, just once"), when their voice sounded ("build on it: say it back plus one word"), after a long quiet ("wait three seconds"), and at the close ("name what you did together"). It **never repeats** within a session, always speaks in the positive, and each line rests on the same technique and source as the capsules. Turn it off in **Settings → "Your prompter"**; **calm mode turns it off too** (the turn button stays).
+- At the end the celebration says **"N turns of theirs"**: it counts only the turns of theirs in which their voice was measured. The Path adds them per week, and a new milestone, **"You took turns"**, arrives with three of their turns in one game.
+
+None of this stores your voice or theirs: only **how many of their turns** there were is saved, and "Delete my data" erases it.
+
 ### What the app measures and what it does NOT (important)
 
 - **It does measure:** whether there is voice (sound above the noise of the house), how long it is held, and, in
@@ -655,3 +667,4 @@ and load only when you write a goal.
 | 010    | **"Away from the screen"**: **Take it to the other home** (a file locked with a phrase carries the goal, what was practiced and what was achieved to another device, with no internet, showing first what will change); **the vowel map**, fifth game, **experimental** ("maybe it sounds like…", never a verdict); **Printable sheets** (picture cards and a turn board, with the ARASAAC credit on every sheet and no name or age). |
 | 011    | **"Did they say the word?"**: an on-device recognizer (off by default; about 40 MB that you download and can delete) that in Word and picture and Word twins shows **only you** a "maybe they said…"; an optional soft animation for the child (off, no text or verdict); four local match numbers, outside the other-home file. |
 | 012    | **"Their voice moves it all"**: two new games with no words, **Blowing** (counts blows of air) and **Loud and soft** (celebrates volume changes, never a "right" volume); the selector with seven games in a fixed order; **Short sessions**: a daily play cap (5 to 10 min, 10 by default) that closes the game calmly and tells the adult once, without blocking; the path adds blows, volume changes and two milestones. |
+| 013    | **"Together, for real"**: the six microphone games played in turns you set with one tap (in yours the drawing moves but nothing is counted for them), a turn indicator the child understands without reading, **Your prompter** (one line for you at the right moment, can be turned off) and "N turns of theirs" in the celebration and the Path. |
