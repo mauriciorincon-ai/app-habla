@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { TEMAS } from "@/lib/storage/temas";
+import { ETIQUETAS_CAPSULA } from "./schema";
 
 /**
  * El lote de pictogramas del juego palabra↔objeto (ADR 008).
@@ -33,9 +34,24 @@ export const PictogramaSchema = z.object({
   archivo: z.string().regex(/^[a-z0-9-]+\.png$/),
   /** Trazabilidad del pictograma original en ARASAAC (atribución y reemplazo futuro). */
   arasaacId: z.number().int().positive(),
+  /**
+   * Etiquetas del objetivo de la semana (S14, ADR-026): un dibujo de un tema también puede servir a una
+   * rutina o a un foco («agua» es del mar y del baño). Opcional: el tema sigue mandando en el mazo.
+   */
+  etiquetas: z.array(z.enum(ETIQUETAS_CAPSULA)).min(1).optional(),
 });
 
 export type Pictograma = z.infer<typeof PictogramaSchema>;
+
+/**
+ * Los dibujos que no son de un TEMA sino de una ETIQUETA del objetivo (S14, ADR-026): los colores y las
+ * acciones. No entran al mazo por sus temas; llegan cuando la meta de la semana los pide («colores»,
+ * «verbos de acción»), y así la meta de la terapia llega a los dibujos aunque no sea un interés suyo.
+ */
+export const PictogramaDeEtiquetaSchema = PictogramaSchema.omit({ tema: true, etiquetas: true }).extend({
+  etiquetas: z.array(z.enum(ETIQUETAS_CAPSULA)).min(1),
+});
+export type PictogramaDeEtiqueta = z.infer<typeof PictogramaDeEtiquetaSchema>;
 
 /** Mínimo del sprint: ≥40 pictogramas cubriendo los 6 temas del onboarding. */
 export const LotePictogramasSchema = z
@@ -340,6 +356,7 @@ export const PICTOGRAMAS: Pictograma[] = [
   },
   {
     id: "mar-agua",
+    etiquetas: ["agua", "baño"],
     palabra: "agua",
     en: "water",
     tema: "mar",
@@ -388,7 +405,28 @@ export const PICTOGRAMAS: Pictograma[] = [
   },
 ];
 
+/**
+ * Colores y acciones (S14): `scripts/descargar-pictos-su-mundo.mjs`, traza en `lote-su-mundo.json`. Las
+ * palabras son nuestras: «tomar» y no «beber» (así se dice en la casa, es-CO); en inglés, la palabra
+ * corriente de los niños. Los colores se ven como una mancha del color: la palabra escrita va siempre
+ * debajo (el color nunca va solo).
+ */
+export const PICTOGRAMAS_DE_ETIQUETA: PictogramaDeEtiqueta[] = [
+  { id: "colores-rojo", palabra: "rojo", en: "red", etiquetas: ["colores"], archivo: "rojo.png", arasaacId: 2808 },
+  { id: "colores-azul", palabra: "azul", en: "blue", etiquetas: ["colores"], archivo: "azul.png", arasaacId: 3355 },
+  { id: "colores-amarillo", palabra: "amarillo", en: "yellow", etiquetas: ["colores"], archivo: "amarillo.png", arasaacId: 2648 },
+  { id: "colores-verde", palabra: "verde", en: "green", etiquetas: ["colores"], archivo: "verde.png", arasaacId: 4886 },
+  { id: "acciones-comer", palabra: "comer", en: "eat", etiquetas: ["acciones", "comida"], archivo: "comer.png", arasaacId: 2349 },
+  { id: "acciones-tomar", palabra: "tomar", en: "drink", etiquetas: ["acciones", "agua"], archivo: "beber.png", arasaacId: 2276 },
+  { id: "acciones-saltar", palabra: "saltar", en: "jump", etiquetas: ["acciones", "parque"], archivo: "saltar.png", arasaacId: 2804 },
+  { id: "acciones-correr", palabra: "correr", en: "run", etiquetas: ["acciones", "parque"], archivo: "correr.png", arasaacId: 2719 },
+  { id: "acciones-dormir", palabra: "dormir", en: "sleep", etiquetas: ["acciones", "dormir"], archivo: "dormir.png", arasaacId: 2369 },
+  { id: "acciones-lavar", palabra: "lavar", en: "wash", etiquetas: ["acciones", "baño"], archivo: "lavar.png", arasaacId: 8975 },
+  { id: "acciones-tocar", palabra: "tocar", en: "touch", etiquetas: ["acciones"], archivo: "tocar.png", arasaacId: 3293 },
+  { id: "bano-banar", palabra: "bañar", en: "bath", etiquetas: ["baño", "agua", "acciones"], archivo: "banar.png", arasaacId: 2271 },
+];
+
 /** La ruta pública del pictograma (los archivos viven en el repo — cero red en runtime). */
-export function rutaPictograma(picto: Pictograma): string {
+export function rutaPictograma(picto: { archivo: string }): string {
   return `/pictogramas/${picto.archivo}`;
 }

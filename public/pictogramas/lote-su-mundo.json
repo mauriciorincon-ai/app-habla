@@ -1,0 +1,86 @@
+[
+  {
+    "busqueda": "rojo",
+    "archivo": "rojo.png",
+    "arasaacId": 2808,
+    "etiqueta": "rojo"
+  },
+  {
+    "busqueda": "azul",
+    "archivo": "azul.png",
+    "arasaacId": 3355,
+    "etiqueta": "azul"
+  },
+  {
+    "busqueda": "amarillo",
+    "archivo": "amarillo.png",
+    "arasaacId": 2648,
+    "etiqueta": "amarillo"
+  },
+  {
+    "busqueda": "verde",
+    "archivo": "verde.png",
+    "arasaacId": 4886,
+    "etiqueta": "verde"
+  },
+  {
+    "busqueda": "comer",
+    "archivo": "comer.png",
+    "arasaacId": 2349,
+    "etiqueta": "comer"
+  },
+  {
+    "busqueda": "beber",
+    "archivo": "beber.png",
+    "arasaacId": 2276,
+    "etiqueta": "beber"
+  },
+  {
+    "busqueda": "saltar",
+    "archivo": "saltar.png",
+    "arasaacId": 2804,
+    "etiqueta": "saltar"
+  },
+  {
+    "busqueda": "correr",
+    "archivo": "correr.png",
+    "arasaacId": 2719,
+    "etiqueta": "correr"
+  },
+  {
+    "busqueda": "dormir",
+    "archivo": "dormir.png",
+    "arasaacId": 2369,
+    "etiqueta": "dormir"
+  },
+  {
+    "busqueda": "lavar las manos",
+    "archivo": "lavar.png",
+    "arasaacId": 8975,
+    "etiqueta": "lavar las manos"
+  },
+  {
+    "busqueda": "tocar",
+    "archivo": "tocar.png",
+    "arasaacId": 3293,
+    "etiqueta": "tocar"
+  },
+  {
+    "busqueda": "cavar",
+    "archivo": "cavar.png",
+    "arasaacId": 5952,
+    "etiqueta": "cavar"
+  },
+  {
+    "busqueda": "cerdo",
+    "archivo": "cerdo.png",
+    "arasaacId": 2327,
+    "etiqueta": "cerdo"
+  },
+  {
+    "busqueda": "bañar",
+    "archivo": "banar.png",
+    "arasaacId": 2271,
+    "etiqueta": "bañar"
+  }
+]

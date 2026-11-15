@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "./base";
 
 // OBJETIVO DE LA SEMANA (Outcome 2). Se prueba POR LA UI, de punta a punta: escribir "animales"
-// alinea la cápsula de Hoy, el mazo de palabra↔objeto y el lote del estudio; "colores" no coincide
+// alinea la cápsula de Hoy, el mazo de palabra↔objeto y el lote del estudio; "números" no coincide
 // con nada y la app lo dice honesto; y borrarlo restaura el orden por defecto (identidad).
 
 const ANIMALES = [
@@ -79,20 +79,20 @@ test("«animales» alinea la cápsula de Hoy, el mazo y el lote del estudio", as
   expect(ANIMALES).toContain(item);
 });
 
-test("«colores» no coincide con nada y la app lo dice honesto (sin fingir)", async ({
+test("«números» no coincide con nada y la app lo dice honesto (sin fingir)", async ({
   page,
 }) => {
   await page.goto("/objetivo");
-  await page.getByTestId("objetivo-input").fill("colores");
+  await page.getByTestId("objetivo-input").fill("números");
   await expect(page.getByTestId("objetivo-sin-matches")).toBeVisible();
   await expect(page.getByTestId("objetivo-preview")).toHaveCount(0);
 
   // Propuesta O3 del gate: si igual lo guarda, la tarjeta activa NO se ve como una más — va
-  // en ámbar y dice que está priorizado a la espera de contenido ("colores" es palabra bien
+  // en ámbar y dice que está priorizado a la espera de contenido ("números" es palabra bien
   // escrita: se guarda sin pregunta).
   await page.getByTestId("guardar-objetivo").click();
   const activo = page.getByTestId("objetivo-activo");
-  await expect(activo).toContainText("colores");
+  await expect(activo).toContainText("números");
   await expect(activo).toHaveAttribute("data-estado", "sin-contenido");
   await expect(page.getByTestId("objetivo-activo-sin-contenido")).toContainText(
     "aún no tiene contenido de esto",

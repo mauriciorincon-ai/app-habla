@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Idioma } from "@/lib/idioma";
-import { ETAPAS, type Etapa } from "./schema";
+import { ETAPAS, ETIQUETAS_CAPSULA, type Etapa } from "./schema";
 
 /**
  * PALABRAS GEMELAS — pares mínimos en es-CO (Outcome 3, VISION § 1).
@@ -45,6 +45,12 @@ export const ParGemeloSchema = z.object({
   contraste: z.string().min(1).max(40),
   a: PalabraGemelaSchema,
   b: PalabraGemelaSchema,
+  /**
+   * Etiquetas del objetivo de la semana (S14, ADR-026): los pares de ACCIÓN dicen `acciones`, y así una
+   * meta como «verbos de acción» llega también a gemelas. El TEMA de un par no se etiqueta a mano: sale de
+   * sus dibujos (pato.png es de «animales»), en `src/lib/su-mundo`.
+   */
+  etiquetas: z.array(z.enum(ETIQUETAS_CAPSULA)).min(1).optional(),
 });
 
 export type ParGemelo = z.infer<typeof ParGemeloSchema>;
@@ -148,6 +154,23 @@ export const PARES_GEMELOS: ParGemelo[] = [
     a: { palabra: "moto", archivo: "moto.png" },
     b: { palabra: "mono", archivo: "mono.png" },
   },
+  // ── S14: pares de ACCIÓN (la meta «acciones» llega a gemelas). «tome» es como se pide agua en casa. ──
+  {
+    id: "come-tome",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la c y la t al empezar",
+    a: { palabra: "come", archivo: "comer.png" },
+    b: { palabra: "tome", archivo: "beber.png" },
+    etiquetas: ["acciones", "comida"],
+  },
+  {
+    id: "toca-boca",
+    etapaMinima: "palabras-sueltas",
+    contraste: "la t y la b al empezar",
+    a: { palabra: "toca", archivo: "tocar.png" },
+    b: { palabra: "boca", archivo: "boca.png" },
+    etiquetas: ["acciones"],
+  },
 ];
 
 /**
@@ -183,6 +206,11 @@ export const PARES_GEMELOS_EN: ParGemelo[] = [
     a: { palabra: "shell", archivo: "concha.png" }, b: { palabra: "bell", archivo: "campana.png" } },
   { id: "horse-house", etapaMinima: "palabras-sueltas", contraste: "the or and the ou in the middle",
     a: { palabra: "horse", archivo: "caballo.png" }, b: { palabra: "house", archivo: "casa.png" } },
+  // S14: ACTION pairs, written for English (run/sun, dig/pig), not the Spanish ones translated.
+  { id: "run-sun", etapaMinima: "palabras-sueltas", contraste: "the r and the s at the start",
+    a: { palabra: "run", archivo: "correr.png" }, b: { palabra: "sun", archivo: "sol.png" }, etiquetas: ["acciones"] },
+  { id: "dig-pig", etapaMinima: "palabras-sueltas", contraste: "the d and the p at the start",
+    a: { palabra: "dig", archivo: "cavar.png" }, b: { palabra: "pig", archivo: "cerdo.png" }, etiquetas: ["acciones", "animales"] },
 ];
 
 /** Los pares del idioma de la pantalla: en inglés se juega con los del inglés, no con los del español. */

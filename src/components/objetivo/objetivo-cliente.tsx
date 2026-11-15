@@ -121,7 +121,7 @@ function cargarBancos(idioma: Idioma): Promise<Bancos> {
 }
 
 // Sugerencias que SÍ alinean (nacen de las etiquetas reales): el padre elige una y garantiza
-// coincidencia. Escribir libre también vale — y "colores" enseña el caso honesto sin matches.
+// coincidencia. Escribir libre también vale — y "números" enseña el caso honesto sin matches.
 // El testid sale de la clave en español (estable en los dos idiomas); lo que se escribe en el
 // campo es la forma del idioma activo (S8: el alineador y el diccionario entienden los dos).
 const SUGERENCIAS: readonly { testid: string; texto: Texto }[] = [

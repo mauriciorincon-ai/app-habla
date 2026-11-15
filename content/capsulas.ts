@@ -1,12 +1,13 @@
 import { CAPSULAS_EN } from "./capsulas-en/index.ts";
+import { CAPSULAS_SU_MUNDO } from "./capsulas-su-mundo.ts";
 import type { Capsula, CapsulaEs, EtiquetaCapsula } from "./schema";
 
 /**
- * Biblioteca de "Hoy" — la respuesta diaria al padre. 50 cápsulas es-CO organizadas por
+ * Biblioteca de "Hoy" — la respuesta diaria al padre. 60 cápsulas organizadas por
  * **etapa del habla** (ADR 006), que el padre elige en Ajustes:
  *
- *   - `sonidos-e-intentos` (8): todavía explora. Sonidos, gestos y miradas YA son comunicación.
- *   - `palabras-sueltas` (35): **el DEFAULT PERMANENTE de esta app** (ADR 005, ratificado por el
+ *   - `sonidos-e-intentos` (9): todavía explora. Sonidos, gestos y miradas YA son comunicación.
+ *   - `palabras-sueltas` (44): **el DEFAULT PERMANENTE de esta app** (ADR 005, ratificado por el
  *     padre 2026-07-12). El niño dice palabras de a una; el objetivo es despertar la ASOCIACIÓN
  *     palabra↔objeto/actividad. Ninguna cápsula asume que arma frases.
  *   - `primeras-frases` (7): **OPT-IN**. Jamás se activa sola — el padre la elige cuando su hijo
@@ -945,7 +946,7 @@ const ETIQUETAS_POR_CAPSULA: Record<string, EtiquetaCapsula[]> = {
 
 /** La biblioteca con sus etiquetas adjuntas. Si a alguna cápsula le faltara etiqueta, el schema
  *  (etiquetas.min(1)) y el unit lo cazan — nunca llega al niño sin curar. */
-export const CAPSULAS: Capsula[] = BASE.map((c) => {
+export const CAPSULAS: Capsula[] = [...BASE.map((c): Capsula => {
   const en = CAPSULAS_EN[c.id];
   if (!en) throw new Error(`Falta la cápsula en inglés: ${c.id} (content/capsulas-en/)`);
   return {
@@ -956,4 +957,7 @@ export const CAPSULAS: Capsula[] = BASE.map((c) => {
     actividad: { texto: { es: c.actividad.texto, en: en.actividad }, conPantalla: c.actividad.conPantalla },
     etiquetas: ETIQUETAS_POR_CAPSULA[c.id] ?? [],
   };
-});
+}),
+  // S14 (ADR-026): colores y baño, nacidas con sus dos caras y sus etiquetas (content/capsulas-su-mundo.ts).
+  ...CAPSULAS_SU_MUNDO,
+];

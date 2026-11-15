@@ -70,7 +70,7 @@ describe("alinear: objetivo → predicados de coincidencia", () => {
     // La clave de siempre sigue funcionando tal cual.
     expect(alinear("carros").coincideTema("carros")).toBe(true);
     // Y la expansión no inventa nada: ni con texto lejano ni con el objetivo vacío.
-    expect(alinear("colores").coincideTema("carros")).toBe(false);
+    expect(alinear("números").coincideTema("carros")).toBe(false);
     expect(alinear("").activo).toBe(false);
   });
 });
@@ -84,8 +84,8 @@ describe("contarAlineacion: el preview honesto y el caso sin coincidencias", () 
     expect(resumen.palabras).toBe(8); // los 8 pictos del tema animales
   });
 
-  it('"colores" es el caso HONESTO sin coincidencias (no existe color en el contenido)', () => {
-    const resumen = contarAlineacion(alinear("colores"), CONTENIDO);
+  it('"números" es el caso HONESTO sin coincidencias (no hay números en el contenido)', () => {
+    const resumen = contarAlineacion(alinear("números"), CONTENIDO);
     expect(resumen.activo).toBe(true);
     expect(resumen.vacio).toBe(true);
     expect(resumen.capsulas).toBe(0);
@@ -247,7 +247,7 @@ describe("estadoDeAlineacion: la tarjeta activa dice la verdad (O3+O5 del gate)"
     expect(estadoDeAlineacion(vacio, vacio, 2)).toBe("fuera-de-alcance");
   });
 
-  it("la app no tiene nada de esto → «sin-contenido» (el caso O3: colores)", () => {
+  it("la app no tiene nada de esto → «sin-contenido» (el caso O3: números)", () => {
     expect(estadoDeAlineacion(vacio, vacio, 0)).toBe("sin-contenido");
   });
 });
@@ -269,20 +269,17 @@ describe("etiquetas del contenido (R8): curaduría completa y honesta", () => {
     }
   });
 
-  it("el vocabulario NO contiene ninguna palabra de color (por eso «colores» es honesto)", () => {
-    const colores = [
-      "rojo",
-      "azul",
-      "verde",
-      "amarillo",
-      "colores",
-      "color",
-      "negro",
-      "blanco",
-    ];
-    for (const c of colores) {
+  it("«colores» es una etiqueta con contenido detrás (S14, ADR-026): ya no es el caso honesto", () => {
+    expect(ETIQUETAS_CAPSULA as readonly string[]).toContain("colores");
+    expect(CAPSULAS.filter((c) => c.etiquetas.includes("colores")).length).toBeGreaterThanOrEqual(4);
+    // Las palabras de cada color NO son etiquetas: son dibujos (content/pictogramas.ts).
+    for (const c of ["rojo", "azul", "verde", "amarillo"]) {
       expect(ETIQUETAS_CAPSULA as readonly string[]).not.toContain(c);
     }
+  });
+
+  it("el baño tiene al menos 8 cápsulas (S14)", () => {
+    expect(CAPSULAS.filter((c) => c.etiquetas.includes("baño")).length).toBeGreaterThanOrEqual(8);
   });
 });
 
@@ -308,8 +305,11 @@ describe("alinear en inglés (S8): el objetivo se escribe en cualquiera de los d
     expect(alinear("dog").coincidePalabra("cat")).toBe(false);
   });
 
-  it("«colors» sigue sin coincidir con nada: la honestidad es la misma en inglés", () => {
-    const a = alinear("colors");
+  it("«colors» alinea `colores` como «colores», y «numbers» sigue sin coincidir con nada", () => {
+    expect(alinear("colors").coincideEtiquetas(["colores"])).toBe(true);
+    expect(alinear("colores").coincideEtiquetas(["colores"])).toBe(true);
+    expect(alinear("color rojo").coincideEtiquetas(["colores"])).toBe(true);
+    const a = alinear("numbers");
     expect(a.activo).toBe(true);
     expect(a.coincideTema("animales")).toBe(false);
     for (const etiqueta of ETIQUETAS_CAPSULA) expect(a.coincideEtiquetas([etiqueta])).toBe(false);
@@ -317,6 +317,16 @@ describe("alinear en inglés (S8): el objetivo se escribe en cualquiera de los d
 
   it("las palabras estructurales del inglés no cuentan: «the water and the sea»", () => {
     expect(normalizar("the water and the sea")).toEqual(["water", "sea"]);
+  });
+});
+
+describe("alinear: singular y plural cuentan igual (S14)", () => {
+  it("«verbos de acción» alinea la etiqueta `acciones`; «rojos» alinea el dibujo «rojo»", () => {
+    expect(alinear("verbos de acción").coincideEtiquetas(["acciones"])).toBe(true);
+    expect(alinear("rojos").coincidePalabra("rojo")).toBe(true);
+    expect(alinear("carro").coincideTema("carros")).toBe(true);
+    // Y no inventa: «mar» no alinea «mares» de ninguna etiqueta inexistente, ni «sea» suelto el mar.
+    expect(alinear("que sea claro").coincideTema("mar")).toBe(false);
   });
 });
 
