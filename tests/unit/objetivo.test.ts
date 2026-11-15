@@ -9,7 +9,7 @@ import { acotarContenido } from "@/lib/objetivo/alcance";
 import { priorizarEstable } from "@/lib/objetivo/prioridad";
 import { CAPSULAS } from "@content/capsulas";
 import { ETIQUETAS_CAPSULA } from "@content/schema";
-import { PICTOGRAMAS } from "@content/pictogramas";
+import { PICTOGRAMAS, PICTOGRAMAS_DE_ETIQUETA } from "@content/pictogramas";
 import { PARES_GEMELOS } from "@content/pares-gemelos";
 
 const CONTENIDO = {
@@ -104,6 +104,35 @@ describe("contarAlineacion: el preview honesto y el caso sin coincidencias", () 
     // siempre 0 pasaba verde. "pato" vive en el par pato/gato del contenido real.
     const resumen = contarAlineacion(alinear("pato"), CONTENIDO);
     expect(resumen.pares).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("contarAlineacion con los dibujos de ETIQUETA: «colores» y «acciones» no son una meta vacía (S14)", () => {
+  const conEtiqueta = {
+    ...CONTENIDO,
+    pictos: [
+      ...PICTOGRAMAS,
+      ...PICTOGRAMAS_DE_ETIQUETA.map((p) => ({ palabra: p.palabra, tema: "", etiquetas: p.etiquetas })),
+    ],
+  };
+
+  it("«colores» cuenta sus cuatro dibujos y la tarjeta dice «alineado», no «sin-juegos»", () => {
+    const r = contarAlineacion(alinear("colores"), conEtiqueta);
+    expect(r.palabras).toBe(4);
+    expect(r.capsulas).toBeGreaterThan(0);
+    expect(estadoDeAlineacion(r, r, 0)).toBe("alineado");
+  });
+
+  it("sin los dibujos de etiqueta, «colores» se quedaba en «sin-juegos» (el defecto que esto cierra)", () => {
+    const r = contarAlineacion(alinear("colores"), CONTENIDO);
+    expect(r.palabras).toBe(0);
+    expect(estadoDeAlineacion(r, r, 0)).toBe("sin-juegos");
+  });
+
+  it("«acciones» cuenta dibujos y los pares de acción (por etiqueta, no solo por palabra)", () => {
+    const r = contarAlineacion(alinear("acciones"), conEtiqueta);
+    expect(r.palabras).toBeGreaterThanOrEqual(6);
+    expect(r.pares).toBe(2);
   });
 });
 

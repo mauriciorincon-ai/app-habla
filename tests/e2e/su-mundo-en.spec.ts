@@ -1,5 +1,5 @@
 import { expect, test } from "./base";
-import { axeLimpio, jugar, sembrar } from "./su-mundo-ayuda";
+import { axeLimpio, sembrar } from "./su-mundo-ayuda";
 
 // THEIR WORLD EVERYWHERE (S14, ADR-026), in English (rule 20: the sprint's e2e ran in Spanish, this closes
 // the milestone's other language). Invented profiles. English is practised in English: the words to model

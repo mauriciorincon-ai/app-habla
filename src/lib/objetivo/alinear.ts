@@ -153,13 +153,22 @@ export function alinear(texto: string | null | undefined): Alineacion {
 
 export type Contenido = {
   capsulas: readonly { etiquetas: readonly string[] }[];
-  pictos: readonly { palabra: string; tema: string }[];
-  pares: readonly { a: { palabra: string }; b: { palabra: string } }[];
+  pictos: readonly {
+    palabra: string;
+    tema: string;
+    /** Los dibujos de ETIQUETA (colores, acciones) alinean por su etiqueta (S14). */
+    etiquetas?: readonly string[];
+  }[];
+  pares: readonly {
+    a: { palabra: string };
+    b: { palabra: string };
+    etiquetas?: readonly string[];
+  }[];
 };
 
 export type ResumenAlineacion = {
   activo: boolean;
-  /** `activo` pero sin ninguna coincidencia (el caso honesto "colores"). */
+  /** `activo` pero sin ninguna coincidencia (el caso honesto "números"). */
   vacio: boolean;
   capsulas: number;
   /** Pictogramas distintos que coinciden (por palabra o por tema). */
@@ -209,12 +218,15 @@ export function contarAlineacion(
   ).length;
   const palabras = contenido.pictos.filter(
     (p) =>
-      alineacion.coincidePalabra(p.palabra) || alineacion.coincideTema(p.tema),
+      alineacion.coincidePalabra(p.palabra) ||
+      alineacion.coincideTema(p.tema) ||
+      (p.etiquetas ? alineacion.coincideEtiquetas(p.etiquetas) : false),
   ).length;
   const pares = contenido.pares.filter(
     (p) =>
       alineacion.coincidePalabra(p.a.palabra) ||
-      alineacion.coincidePalabra(p.b.palabra),
+      alineacion.coincidePalabra(p.b.palabra) ||
+      (p.etiquetas ? alineacion.coincideEtiquetas(p.etiquetas) : false),
   ).length;
 
   return {

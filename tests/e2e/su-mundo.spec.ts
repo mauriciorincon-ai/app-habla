@@ -76,6 +76,8 @@ test("palabra↔objeto sigue a la meta: sin meta abre con un dibujo de sus temas
   await page.getByTestId("objetivo-input").fill("colores");
   await page.getByTestId("guardar-objetivo").click();
   await expect(page.getByTestId("objetivo-activo")).toContainText("colores");
+  // La tarjeta dice la verdad: «colores» SÍ cambia los juegos (no «sin-juegos»).
+  await expect(page.getByTestId("objetivo-activo")).toHaveAttribute("data-estado", "alineado");
   expect(await primero()).toBe("rojo");
 });
 

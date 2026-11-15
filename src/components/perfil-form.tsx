@@ -8,7 +8,6 @@ import { useState } from "react";
 import { InteresSchema } from "@/lib/bandeja/cuentos-del-mes";
 import { tocaLaLista } from "@/lib/bandeja/sensibilidad";
 import { useT } from "@/lib/idioma/estado";
-import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { nombreTema } from "@/lib/idioma/textos/nombres";
 import { suMundo } from "@/lib/idioma/textos/su-mundo";
 import { primerUso } from "@/lib/idioma/textos/primer-uso";
@@ -47,7 +46,7 @@ export function PerfilForm({
   // «Otras cosas que le encantan» (S14, ADR-026): la única casa de sus intereses fuera de los temas.
   const [otras, setOtras] = useState<string[]>(inicial?.otrasCosas ?? []);
   const [nueva, setNueva] = useState("");
-  const [aviso, setAviso] = useState<"error" | "sensible" | null>(null);
+  const [aviso, setAviso] = useState<"error" | "sensible" | "noComprobado" | "tope" | null>(null);
 
   function anadir() {
     const r = InteresSchema.safeParse(nueva);
@@ -72,12 +71,30 @@ export function PerfilForm({
 
   async function guardar() {
     const limpio = apodo.trim();
-    // El gate de sensibilidad corre ANTES de escribir: un nombre o una edad jamás llegan al almacenamiento.
-    const pendiente = InteresSchema.safeParse(nueva).success ? [nueva.trim()] : [];
-    const todas = unirSinRepetir(otras, pendiente).slice(0, MAX_OTRAS_COSAS);
-    if (await tocaLaLista([limpio, ...todas].join("\n"), await cargarHuellas())) {
-      setAviso("sensible");
+    // Lo escrito y no añadido todavía no se pierde en silencio: o entra, o se dice por qué no.
+    const escrito = nueva.trim();
+    if (escrito && !InteresSchema.safeParse(nueva).success) {
+      setAviso("error");
       return;
+    }
+    if (escrito && otras.length >= MAX_OTRAS_COSAS && !otras.includes(escrito)) {
+      setAviso("tope");
+      return;
+    }
+    const todas = unirSinRepetir(otras, escrito ? [escrito] : []).slice(0, MAX_OTRAS_COSAS);
+    // El gate de sensibilidad corre ANTES de escribir sobre lo que se escribe como «otras cosas»; el apodo
+    // es de la familia y se queda en el aparato (regla 2-bis), así que no pasa por la lista.
+    if (todas.length > 0) {
+      try {
+        if (await tocaLaLista(todas.join("\n"), await cargarHuellas())) {
+          setAviso("sensible");
+          return;
+        }
+      } catch {
+        // Sin poder comprobar, no se guarda: se dice y se puede reintentar (el primer uso no se traba mudo).
+        setAviso("noComprobado");
+        return;
+      }
     }
     onGuardar({
       ...(limpio ? { apodo: limpio } : {}),
@@ -188,8 +205,12 @@ export function PerfilForm({
           </ul>
         ) : null}
         <p className="mt-2 text-sm" role="status" data-testid="otras-cosas-aviso">
-          {aviso === "sensible" ? tx(cuentos.pedido.sensible) : null}
+          {aviso === "sensible" ? tx(suMundo.perfil.sensible) : null}
           {aviso === "error" ? tx(suMundo.perfil.error) : null}
+          {aviso === "noComprobado" ? tx(suMundo.perfil.noComprobado) : null}
+          {aviso === "tope" || (aviso === null && otras.length >= MAX_OTRAS_COSAS)
+            ? tx(suMundo.perfil.tope)
+            : null}
         </p>
       </div>
 

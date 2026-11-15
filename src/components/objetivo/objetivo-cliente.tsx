@@ -86,6 +86,8 @@ type Bancos = {
   capsulas: readonly Capsula[];
   pictos: readonly Pictograma[];
   pares: readonly ParGemelo[];
+  /** Dibujos de ETIQUETA (colores, acciones), con la palabra del idioma activo (S14). */
+  pictosDeEtiqueta: readonly { palabra: string; tema: string; etiquetas: readonly string[] }[];
   parJugableEn: (par: ParGemelo, etapa: Etapa) => boolean;
   grabables: readonly ItemGrabable[];
   coincideGrabable: (objetivo: Alineacion, i: ItemGrabable) => boolean;
@@ -111,6 +113,13 @@ function cargarBancos(idioma: Idioma): Promise<Bancos> {
     capsulas: capsulas.CAPSULAS,
     // En inglés se alinea contra la etiqueta inglesa del dibujo (`en`), no contra la española.
     pictos: idioma === "en" ? pictos.PICTOGRAMAS.map((p) => ({ ...p, palabra: p.en })) : pictos.PICTOGRAMAS,
+    // Los dibujos de ETIQUETA (colores, acciones) entran al mazo cuando la meta los pide (S14): se cuentan
+    // aparte del filtro por temas, que no los conoce.
+    pictosDeEtiqueta: pictos.PICTOGRAMAS_DE_ETIQUETA.map((p) => ({
+      palabra: idioma === "en" ? p.en : p.palabra,
+      tema: "",
+      etiquetas: p.etiquetas,
+    })),
     pares: pares.paresDe(idioma),
     parJugableEn: pares.parJugableEn,
     grabables: catalogo.catalogoGrabable(idioma),
@@ -210,16 +219,20 @@ function contarPara(
 ) {
   const alineacion = alinear(texto);
   // Lo que el niño verá: cápsulas de SU etapa, pictos de SUS temas, pares jugables en su etapa.
-  const alcance = contarAlineacion(
-    alineacion,
-    acotarContenido(bancos, {
-      etapa,
-      temas,
-      parJugable: (p) => bancos.parJugableEn(p, etapa),
-    }),
-  );
+  const acotado = acotarContenido(bancos, {
+    etapa,
+    temas,
+    parJugable: (p) => bancos.parJugableEn(p, etapa),
+  });
+  const alcance = contarAlineacion(alineacion, {
+    ...acotado,
+    pictos: [...acotado.pictos, ...bancos.pictosDeEtiqueta],
+  });
   // Contra la app entera (para distinguir "no existe" de "existe pero fuera de su alcance").
-  const global = contarAlineacion(alineacion, bancos);
+  const global = contarAlineacion(alineacion, {
+    ...bancos,
+    pictos: [...bancos.pictos, ...bancos.pictosDeEtiqueta],
+  });
   // El lote del estudio matchea el catálogo completo (mismo predicado que siguienteLote).
   const estudio = bancos.grabables.filter((i) =>
     bancos.coincideGrabable(alineacion, i),

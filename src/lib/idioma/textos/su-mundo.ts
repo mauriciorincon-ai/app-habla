@@ -61,14 +61,26 @@ export const suMundo = {
       en: "Other things they love",
     },
     ayuda: {
-      es: "Una por una, en una o dos palabras. Se queda en este aparato y sirve para vestir los juegos y los cuentos.",
-      en: "One at a time, in a word or two. It stays on this device and dresses the games and the stories.",
+      es: "Una por una, de una a tres palabras. Se queda en este aparato y sirve para los cuentos y las hojas para imprimir.",
+      en: "One at a time, from one to three words. It stays on this device and is used for the stories and the printable sheets.",
     },
     anadir: { es: "Añadir", en: "Add" },
     quitar: { es: "Quitar {valor}", en: "Remove {valor}" },
     error: {
       es: "Una a tres palabras, solo letras: «trenes», «burbujas de jabón».",
       en: "One to three words, letters only: “trains”, “soap bubbles”.",
+    },
+    sensible: {
+      es: "Alguna de esas palabras no puede guardarse. Usa palabras generales, sin nombres.",
+      en: "One of those words cannot be saved. Use general words, no names.",
+    },
+    noComprobado: {
+      es: "No se pudo comprobar las palabras en este momento. Inténtalo de nuevo.",
+      en: "The words could not be checked just now. Please try again.",
+    },
+    tope: {
+      es: "Ya hay ocho: quita una para añadir otra.",
+      en: "There are already eight: remove one to add another.",
     },
     marcador: {
       es: "Por ejemplo: trenes, burbujas",
