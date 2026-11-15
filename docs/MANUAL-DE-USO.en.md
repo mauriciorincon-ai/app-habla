@@ -39,7 +39,7 @@ any other setting.
 - **The daily capsule is the same** in both languages: switching language never changes what is on for today.
 - **Words and Twins, in English (S8):** both games **are practised in English**: the words, the pictures and the
   look-alike sound pairs are English ones (not the Spanish ones put into English), and the cues you record in the
-  Studio come in English as well. The voice games (balloon and rocket)
+  Studio come in English as well. The voice games (balloon, blowing, loud and soft, rocket and vowels)
   play the same in both languages.
 - **The weekly Goal, in English (S8):** it writes and suggests in English, with its own spelling dictionary, and
   no longer warns you about anything. Each language has its own.
@@ -246,8 +246,8 @@ from **Settings → "Your family's voice" → "Record my voice"** (or straight f
 - When there are recordings, "word and picture" and "word twins" show a **speaker button** (large, so your child can
   tap it), and the word **plays by itself** when the picture appears. That way the name "lives in the thing", in a
   voice your child knows.
-- **In the balloon and the rocket too:** if you recorded the game invitations ("Make your voice sound: aaaaah" and
-  "Make a siren voice: aaaAAAaaa"), a speaker appears under the title that says them in your voice. While your
+- **In the voice games too:** if you recorded the game invitations ("Make your voice sound: aaaaah",
+  "Make a siren voice: aaaAAAaaa", "Take a breath and blow: fooo" and "Tiny voice… and big voice"), a speaker appears under the title that says them in your voice. While your
   recorded voice is playing, **the game stands still**: the meter waits for your child's real voice, so the balloon
   never flies because of a recording.
 - You can **switch your family's voice off** with the _"Use your family's voice"_ switch **without deleting
@@ -584,7 +584,7 @@ This is the most important promise of the app:
 **Does it help if my child does not talk yet?**
 Yes. Many capsules do not need your child to speak: they are things you do (modelling words, waiting in silence,
 handing back the full word). And in the balloon, the rocket and word and picture any sound is enough: it moves the balloon, lifts the
-rocket, and lights up the picture. It does not have to be a word.
+rocket, and lights up the picture. It does not have to be a word. In blowing, plain air is enough (no voice), and in loud and soft what counts is that the volume changes, not which volume it is.
 
 **How much time a day?**
 A little and often is better than a lot at once: 5 to 10 minutes is plenty. The app will not ask for more.

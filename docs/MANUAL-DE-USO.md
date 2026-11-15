@@ -234,8 +234,9 @@ pantalla del **Estudio**).
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
-- **En el globo y el cohete también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
-  aaaaah" y "Haz la voz de sirena: aaaAAAaaa"), aparece un altavoz debajo del título que las dice
+- **En los juegos de voz también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
+  aaaaah", "Haz la voz de sirena: aaaAAAaaa", "Toma aire y sopla: fuuuu" y "Voz chiquita… y voz
+  grandota"), aparece un altavoz debajo del título que las dice
   con su voz. Mientras su voz grabada suena, **el juego no se mueve**: el medidor espera a que
   hable el niño de verdad — así el globo no vuela con una grabación.
 - Puede **apagar** la voz de la familia con el interruptor _"Usar la voz de la familia"_ **sin
@@ -399,7 +400,7 @@ otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el
 - **Palabras y Gemelas, en English (S8):** esos dos juegos **se practican en inglés**: las palabras, los
   dibujos y las parejas de sonidos son propios del inglés (no las del español puestas en inglés), y la
   consigna que usted graba en el Estudio también tiene su versión en inglés. Ya no hay tarjeta de «solo en
-  español». Los de voz (globo y cohete) juegan igual en los dos idiomas.
+  español». Los de voz (globo, soplar, fuerte y suave, cohete y vocales) juegan igual en los dos idiomas.
 - **El Objetivo de la semana, en English (S8):** escribe y sugiere en inglés, con su propio diccionario de
   ortografía; ya no avisa nada. Cada idioma tiene el suyo.
 - **`/mirada` y el catálogo de cápsulas, en los dos idiomas (S8):** «La pirámide, en casa» y el catálogo
@@ -598,7 +599,8 @@ Esta es la promesa más importante de la app:
 **¿Sirve si mi hijo no habla todavía?**
 Sí. Muchas cápsulas no necesitan que el niño hable: son cosas que hace usted (modelar palabras,
 esperar en silencio, devolver la palabra completa). Y en el globo, el cohete y palabra y dibujo, cualquier sonido basta:
-mueve el globo, sube el cohete y enciende el dibujo — no hace falta que sea una palabra.
+mueve el globo, sube el cohete y enciende el dibujo — no hace falta que sea una palabra. En soplar
+basta con aire (sin voz) y en fuerte y suave cuenta que el volumen cambie, no qué volumen sea.
 
 **¿Cuánto tiempo al día?**
 Poco y seguido es mejor que mucho de golpe: 5 a 10 minutos bastan. La app no le va a pedir más.
