@@ -329,10 +329,10 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 1053,
+      "valor": 1057,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S14: 56 archivos, 1053 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S14: 57 archivos, 1057 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
