@@ -17,7 +17,7 @@ import {
   seleccionarCapsula,
 } from "@/lib/coach/daily";
 import { alinear } from "@/lib/objetivo/alinear";
-import { leerObjetivo } from "@/lib/storage/local";
+import { leerObjetivo, leerPerfil } from "@/lib/storage/local";
 import type { Progreso } from "@/lib/storage/schemas";
 import {
   ajustesActuales,
@@ -28,7 +28,14 @@ import {
 /** El predicado del objetivo de la semana ACTIVO: ¿esta cápsula sirve al objetivo escrito? */
 function coincideConObjetivo(): (c: Capsula) => boolean {
   const objetivo = alinear(leerObjetivo()?.texto);
-  return (c) => objetivo.coincideEtiquetas(c.etiquetas);
+  if (objetivo.activo) return (c) => objetivo.coincideEtiquetas(c.etiquetas);
+  // Sin meta de la semana, su mundo (S14, ADR-026) inclina la cápsula nueva del día hacia lo que le
+  // encanta: una cápsula etiquetada con uno de SUS temas se prefiere (dentro de la etapa, jamás fuera).
+  // Sin temas el predicado no existe y el motor es el de siempre.
+  const temas = leerPerfil()?.temas ?? [];
+  if (temas.length === 0) return () => true;
+  const deSusTemas = temas.map((t) => alinear(t));
+  return (c) => deSusTemas.some((a) => a.coincideEtiquetas(c.etiquetas));
 }
 
 /**

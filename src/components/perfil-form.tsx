@@ -5,14 +5,26 @@
 // forma de volver a esta pantalla era borrar todos los datos o una ventana de incógnito).
 
 import { useState } from "react";
+import { InteresSchema } from "@/lib/bandeja/cuentos-del-mes";
+import { tocaLaLista } from "@/lib/bandeja/sensibilidad";
 import { useT } from "@/lib/idioma/estado";
+import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { nombreTema } from "@/lib/idioma/textos/nombres";
+import { suMundo } from "@/lib/idioma/textos/su-mundo";
 import { primerUso } from "@/lib/idioma/textos/primer-uso";
+import { unirSinRepetir } from "@/lib/su-mundo/intereses";
 import {
+  MAX_OTRAS_COSAS,
   TEMAS,
   type Perfil,
   type Tema,
 } from "@/lib/storage/schemas";
+
+/** Las huellas del gate de sensibilidad (datos públicos, se cargan solo al guardar). */
+async function cargarHuellas(): Promise<Set<string>> {
+  const { hashes } = await import("../../tests/fixtures/sensibilidad-hashes.json");
+  return new Set(hashes);
+}
 
 export function PerfilForm({
   inicial,
@@ -32,6 +44,21 @@ export function PerfilForm({
   const tx = useT();
   const [apodo, setApodo] = useState(inicial?.apodo ?? "");
   const [temas, setTemas] = useState<Tema[]>(inicial?.temas ?? []);
+  // «Otras cosas que le encantan» (S14, ADR-026): la única casa de sus intereses fuera de los temas.
+  const [otras, setOtras] = useState<string[]>(inicial?.otrasCosas ?? []);
+  const [nueva, setNueva] = useState("");
+  const [aviso, setAviso] = useState<"error" | "sensible" | null>(null);
+
+  function anadir() {
+    const r = InteresSchema.safeParse(nueva);
+    if (!r.success) {
+      setAviso("error");
+      return;
+    }
+    setOtras((a) => unirSinRepetir(a, [r.data]).slice(0, MAX_OTRAS_COSAS));
+    setNueva("");
+    setAviso(null);
+  }
 
   function alternarTema(tema: Tema) {
     setTemas((actuales) =>
@@ -43,11 +70,19 @@ export function PerfilForm({
     );
   }
 
-  function guardar() {
+  async function guardar() {
     const limpio = apodo.trim();
+    // El gate de sensibilidad corre ANTES de escribir: un nombre o una edad jamás llegan al almacenamiento.
+    const pendiente = InteresSchema.safeParse(nueva).success ? [nueva.trim()] : [];
+    const todas = unirSinRepetir(otras, pendiente).slice(0, MAX_OTRAS_COSAS);
+    if (await tocaLaLista([limpio, ...todas].join("\n"), await cargarHuellas())) {
+      setAviso("sensible");
+      return;
+    }
     onGuardar({
       ...(limpio ? { apodo: limpio } : {}),
       temas: temas.length > 0 ? temas : ["animales"],
+      ...(todas.length > 0 ? { otrasCosas: todas } : {}),
     });
   }
 
@@ -99,10 +134,69 @@ export function PerfilForm({
         </div>
       </fieldset>
 
+      <div className="mt-6">
+        <label htmlFor="otras-cosas" className="block text-sm font-medium">
+          {tx(suMundo.perfil.etiqueta)}{" "}
+          <span className="text-tinta-suave">{tx(primerUso.form.opcional)}</span>
+        </label>
+        <p className="text-tinta-suave mt-1 text-sm">{tx(suMundo.perfil.ayuda)}</p>
+        <div className="mt-2 flex gap-2">
+          <input
+            id="otras-cosas"
+            type="text"
+            value={nueva}
+            maxLength={24}
+            autoComplete="off"
+            onChange={(e) => {
+              setNueva(e.target.value);
+              setAviso(null);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                anadir();
+              }
+            }}
+            placeholder={tx(suMundo.perfil.marcador)}
+            className="border-borde bg-fondo text-tinta min-h-11 min-w-0 flex-1 rounded-xl border px-4"
+            data-testid="otras-cosas-entrada"
+          />
+          <button
+            type="button"
+            onClick={anadir}
+            disabled={otras.length >= MAX_OTRAS_COSAS}
+            className="border-borde text-tinta min-h-11 rounded-xl border px-4 text-sm font-medium disabled:opacity-50"
+            data-testid="otras-cosas-anadir"
+          >
+            {tx(suMundo.perfil.anadir)}
+          </button>
+        </div>
+        {otras.length > 0 ? (
+          <ul className="mt-3 flex flex-wrap gap-2" data-testid="otras-cosas">
+            {otras.map((o) => (
+              <li key={o}>
+                <button
+                  type="button"
+                  onClick={() => setOtras((a) => a.filter((x) => x !== o))}
+                  aria-label={tx(suMundo.perfil.quitar, { valor: o })}
+                  className="bg-acento text-sobre-acento min-h-11 rounded-full px-4 text-sm"
+                >
+                  {o} <span aria-hidden="true">×</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <p className="mt-2 text-sm" role="status" data-testid="otras-cosas-aviso">
+          {aviso === "sensible" ? tx(cuentos.pedido.sensible) : null}
+          {aviso === "error" ? tx(suMundo.perfil.error) : null}
+        </p>
+      </div>
+
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <button
           type="button"
-          onClick={guardar}
+          onClick={() => void guardar()}
           className="bg-acento text-sobre-acento min-h-12 flex-1 rounded-xl px-6 font-medium"
           data-testid={testIdGuardar}
         >

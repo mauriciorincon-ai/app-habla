@@ -38,6 +38,7 @@ import { hoy } from "@/lib/idioma/textos/hoy";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
 import { ContactoVisualHoy } from "./contacto-visual-hoy";
 import { Onboarding } from "./onboarding";
+import { RecordatorioCuentos } from "./recordatorio-cuentos";
 
 export function HoyCliente() {
   const tx = useT();
@@ -95,6 +96,7 @@ export function HoyCliente() {
           </span>
         </Link>
       ) : null}
+      <RecordatorioCuentos />
       <article
         className="bg-superficie shadow-tarjeta rounded-2xl p-6"
         data-testid="capsula"
