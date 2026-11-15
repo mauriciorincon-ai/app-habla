@@ -69,10 +69,10 @@ activity. When you have done it, the app asks "Did you do today's activity?" and
 
 ### The voice games — "their voice moves the world"
 
-On Today there is a permanent card, **"Voice games"**. Open it and choose among **five games** (the fifth is experimental). None asks the child
+On Today there is a permanent card, **"Voice games"**. Open it and choose among **seven games**, always in the same order (the last, the vowel map, is experimental). None asks the child
 for words: they respond to voice (or to taking part), not to vocabulary.
 
-**Four of them listen to the microphone** (balloon, rocket, word and picture, and the vowel map). Before any of those, the same
+**Six of them listen to the microphone** (balloon, blowing, loud and soft, rocket, word and picture, and the vowel map). Before any of those, the same
 three things always happen:
 
 1. **Your line first.** The app shows the line you will say. You lead the game; the child does not play alone
@@ -87,7 +87,7 @@ three things always happen:
 Tap **"We played"** whenever you like: there is no minimum time, no required goal, and never a game over. If you
 tap **"Exit"** inside a game, you return to your line screen (the microphone turns off right there) and **the game
 restarts completely**: when you go back in, the counters start from zero and nothing of the earlier session
-remains. From your line screen, **"← Games"** takes you back to the five.
+remains. From your line screen, **"← Games"** takes you back to the seven.
 
 #### 1. The balloon — a voice that keeps going
 
@@ -109,7 +109,28 @@ measured, in **three separate things**:
 A breath does not take the stretch away: a short pause to take air does not count as breaking it. **The app never
 says your child held a sound longer than they did**, even when adding the stretches up would give a nicer number.
 
-#### 2. The rocket — a voice that goes up and down
+#### 2. Blowing — air turns the pinwheel (new · S12)
+
+A game of air, **with no words and no voice sound**: your child blows as if at a candle or a feather, and every blow
+turns the pinwheel. Go first, with your lips in a small "o" and a long breath. **A soft blow counts the same as a strong
+one**: the app only counts the blows it heard and never judges how they blew.
+
+The counter says _"Blows I heard: N"_ and, when you tap **"We played"**, the celebration says **the same number**. The
+app tells air from voice: if your child makes a voice sound or a "shhh" instead of blowing, the pinwheel does not
+count that moment (no scolding: keep playing). If there were no blows it says _"Today the pinwheel stayed waiting"_,
+with no blame.
+
+#### 3. Loud and soft — the bar celebrates the changes (new · S12)
+
+The bar rises with a **big** voice and falls with a **tiny** one, measured against **the noise in your room**, not against
+an ideal volume. Any voice sound works: a vowel, an animal, a laugh. Go first and exaggerate the contrast with your
+body (hands together for soft, arms wide for loud), and **never ask for louder than is comfortable**.
+
+**There is no "right" volume**: what is celebrated is the **changes** between soft and loud. The level is always said
+with a word (_soft_, _loud_ or _quiet_), not only with colour, and the celebration says _"Their voice changed N times
+between soft and loud"_, the same number as the counter.
+
+#### 4. The rocket — a voice that goes up and down
 
 The rocket listens to the **pitch** of the voice: when the voice goes up, the rocket goes up; when it comes down,
 the rocket comes down. No word has to be said. **A vowel stretched like a siren is exactly what we are after**
@@ -127,7 +148,7 @@ One honest detail: the rocket's **height** is always the pitch sounding at that 
 when the voice comes down. It is not a punishment; it is simply the pitch. The total climb is counted by the passing
 sky and the counter, not by the rocket's position.
 
-#### 3. Word and picture — the name lives in the thing
+#### 5. Word and picture — the name lives in the thing
 
 A **large picture appears with its word written under it** (dog, car, water…). The pictures come from the **topics
 you chose** for your child.
@@ -151,7 +172,7 @@ you know. If you turn on the device's second opinion (the "Did they say the word
 a line **for you only**, always as a "maybe"; your button stays the only thing that celebrates. At the end, the
 celebration says it plainly: _"And **you** heard 3 words. That is something you know, because you were there."_
 
-#### 4. Word twins — two pictures that sound almost the same
+#### 6. Word twins — two pictures that sound almost the same
 
 **Two pictures appear at once**, and their words differ by a single sound: _pato_ and _gato_, _mano_ and _mono_,
 _foca_ and _boca_. These are called **minimal pairs**, and practising that contrast helps sharpen speech. Your
@@ -169,7 +190,7 @@ hear?"_ line at the bottom. (This game practises Spanish words; see the Language
 - **"Next pair"** is yours to tap when you want to go on. You can repeat, touch the pictures again, or stay a
   while. At the top, _"Words you heard: N"_ keeps count for the session.
 
-This game is **different from the other four**:
+This game is **different from the other six**:
 
 - **By default it uses no microphone and records nothing.** The app does not decide which word was said: **you are the one who
   hears it**, which is why the marking buttons are yours. If you switch on "Did they say the word?" in Settings, only when you
@@ -185,7 +206,7 @@ This game is **different from the other four**:
 If you recorded your voice (below), each picture has a **speaker button** so your child can hear the word in the
 family's voice before trying it.
 
-#### 5. The vowel map — ah, eh, ee, oh, oo (new · S10 · experimental)
+#### 7. The vowel map — ah, eh, ee, oh, oo (new · S10 · experimental)
 
 A game **still being tested**, and the screen says so ("Experimental · still testing"). Your child **stretches a
 vowel** (ahhh, ehhh, eeee, ohhh, oooo) and the **spot on the map** that sounds most like it lights up. Every spot has
@@ -271,9 +292,9 @@ lost. If in doubt, stay with _single words_.
 In the header of Today there is a link, **"The path"**. It is the honest answer to "how are we doing?". It shows,
 **week by week**, only what really happened: the days you practised together, the capsules completed, the different
 words you practised, how many pictures your child lit up with their voice, the balloon's laps, the times their
-voice went up and down, the twins rounds, the words you heard them say, and the seconds of their voice in the
+voice went up and down, the blows, the volume changes, the twins rounds, the words you heard them say, and the seconds of their voice in the
 balloon (the total and the longest unbroken stretch). Each line appears only when it has something to tell. There is
-also a section of celebratory **milestones**, **16 possible ones**: from "your first time practising together" and
+also a section of celebratory **milestones**, **18 possible ones**: from "your first time practising together" and
 the first time with each game, to running totals such as "25 days of practice in all". Once earned, they are never
 lost.
 
@@ -487,10 +508,24 @@ picture's word. It gets things wrong, so it **never** decides anything: you keep
   miss more, and sometimes it will think it heard a word where there was only a sound. That is why it is a hint,
   not an answer.
 
+### Short sessions — the daily play cap (new · S12)
+
+In **Settings → "Short sessions"** you choose a **daily play cap between 5 and 10 minutes** (10 by default). The voice
+games count today's minutes of play **on this device**. When the cap is reached this happens, and only this:
+
+- **The game closes calmly**, as if you had tapped "Exit" (the microphone turns off).
+- **You are told, never your child, once a day**: _"You've played as much as you planned today"_, with a clock and text.
+  It is a note, not an order: **you know best how your child is today**.
+- **Nothing is blocked.** You can start again whenever you like and it will not cut it again that day; your line screen
+  just shows a calm line, _"You've played N min today"_. There is never an "all done" or a punishment.
+
+The counter is **local and for today only** (it keeps the date and the minutes, nothing else): it does not travel in the
+other-home file and "Delete my data" wipes it.
+
 ### What the app measures and what it does NOT (important)
 
 - **It does measure:** whether there is voice (sound above the noise of the house), how long it is held, and, in
-  the rocket, whether the **pitch** of that voice goes up or down, and, in the vowel map (experimental), which
+  blowing, how many **blows** of air there were (energy with no pitch, never a voice), in loud and soft, how many times the **volume** changed against the noise of your home, and, in the rocket, whether the **pitch** of that voice goes up or down, and, in the vowel map (experimental), which
   vowel the shape of the sound **resembles**, always as a "maybe".
 - **It does NOT measure with certainty:** which word was said, or whether it was said well (the optional second opinion only gives you a "maybe"). No system today assesses reliably the
   pronunciation of a very young child who is just starting to talk, so the app does not pretend to. In "Word and
@@ -506,7 +541,7 @@ One tap, in the game or in Settings, and the screen drops to dusk colours: **no 
 celebration**. The balloon does not stop: it **rises while the voice sounds and settles slowly in silence**, like a
 real balloon, with no race and no finish line. The rocket does the same: it floats with the voice, with no goal. It
 helps when your child is overstimulated or when a game with a goal is too much. It is available in the voice games
-(balloon, rocket, word and picture and the vowel map).
+(balloon, blowing, loud and soft, rocket, word and picture and the vowel map).
 
 There is also a setting to **reduce animation** (and if your system already asks for less motion, the app follows
 it without you touching anything). With it on, the word balloons, the milestone confetti, and the rocket's sky
@@ -526,7 +561,7 @@ you choose. Their game looks the same every day, and that sameness is part of th
 This is the most important promise of the app:
 
 - **Your child's voice is NEVER recorded, saved, or sent off the device.** The sound is analysed on the spot, inside
-  the phone or tablet, to work out two numbers, how much energy there is and, in the rocket, how high the pitch is,
+  the phone or tablet, to work out a few numbers: how much energy there is, whether it is air or voice (blowing), how much the volume changed (loud and soft) and, in the rocket, how high the pitch is,
   and it is discarded right away (the vowel map also works out the shape of the sound, also on the spot). **Pitch is also data about the voice and follows the same rule:** it is not
   saved, not sent, and not kept anywhere.
 - **No servers, no accounts, no cloud.** During play the app makes **no** request to the internet. Automated tests
@@ -540,7 +575,7 @@ This is the most important promise of the app:
   child's voice is never recorded.**
 - Switching the app's language sends nothing anywhere.
 - All that is kept on the device: the nickname (if you set one), the topics, your settings, which capsules you
-  completed, what you marked in "word twins", how many vowel-map spots sounded, if you recorded them **your** voices, and, if you chose them, **the
+  completed, what you marked in "word twins", how many vowel-map spots sounded, how many minutes of play today (the Short sessions cap: only the date and the minutes), if you recorded them **your** voices, and, if you chose them, **the
   family videos** (clips from your own gallery: the app never opens the camera and they never leave here). You can delete it all in
   **Settings → Delete my data**, or only the voice bank with **"Delete only the voice bank"**.
 
@@ -619,3 +654,4 @@ and load only when you write a goal.
 | 009    | **"Stories at home"**: six fallback stories in English and Spanish, filled in with the interests and practice words the adult types; requests and batches of new stories through the AI tray (outside the app, with the adult approving each story); narration in the adult's recorded voice on the device or "I'll read it". **"Today"** adds one eye-contact activity a day next to the capsule (two domains). English sound pairs go from 9 to 12. |
 | 010    | **"Away from the screen"**: **Take it to the other home** (a file locked with a phrase carries the goal, what was practiced and what was achieved to another device, with no internet, showing first what will change); **the vowel map**, fifth game, **experimental** ("maybe it sounds like…", never a verdict); **Printable sheets** (picture cards and a turn board, with the ARASAAC credit on every sheet and no name or age). |
 | 011    | **"Did they say the word?"**: an on-device recognizer (off by default; about 40 MB that you download and can delete) that in Word and picture and Word twins shows **only you** a "maybe they said…"; an optional soft animation for the child (off, no text or verdict); four local match numbers, outside the other-home file. |
+| 012    | **"Their voice moves it all"**: two new games with no words, **Blowing** (counts blows of air) and **Loud and soft** (celebrates volume changes, never a "right" volume); the selector with seven games in a fixed order; **Short sessions**: a daily play cap (5 to 10 min, 10 by default) that closes the game calmly and tells the adult once, without blocking; the path adds blows, volume changes and two milestones. |
