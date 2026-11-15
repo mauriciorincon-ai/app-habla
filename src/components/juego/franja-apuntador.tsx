@@ -15,7 +15,6 @@ import { useT } from "@/lib/idioma/estado";
 import { apuntador as textos } from "@/lib/idioma/textos/apuntador";
 import {
   elegirLinea,
-  HISTORIAL_VACIO,
   momentoDeTransicion,
   MS_LINEA_VISIBLE,
   registrarLinea,
@@ -26,10 +25,15 @@ import type { Sesion, Turno } from "@/lib/session-flow";
 
 type Props = {
   sesion: Sesion;
+  /** Lo que ya se dijo en ESTA partida: vive en el marco para sobrevivir a «Otra vez» y a recalibrar. */
+  historial: {
+    leer: () => HistorialApuntador;
+    escribir: (h: HistorialApuntador) => void;
+  };
   onCambiarTurno: (turno: Turno) => void;
 };
 
-export function FranjaApuntador({ sesion, onCambiarTurno }: Props) {
+export function FranjaApuntador({ sesion, historial, onCambiarTurno }: Props) {
   const tx = useT();
   const ajustes = useAjustes();
   const progreso = useProgreso();
@@ -44,7 +48,6 @@ export function FranjaApuntador({ sesion, onCambiarTurno }: Props) {
 
   const [linea, setLinea] = useState<LineaApuntador | null>(null);
   const antes = useRef<Sesion>(sesion);
-  const historial = useRef<HistorialApuntador>(HISTORIAL_VACIO);
 
   // Qué pasó en el juego → ¿hay línea? (la memoria de «ya se dijo» vive solo en esta sesión).
   useEffect(() => {
@@ -56,14 +59,14 @@ export function FranjaApuntador({ sesion, onCambiarTurno }: Props) {
     const ahora = Date.now();
     const elegida = elegirLinea(
       momento,
-      historial.current,
+      historial.leer(),
       ahora,
       tecnicaDelDia,
     );
     if (!elegida) return;
-    historial.current = registrarLinea(historial.current, elegida, ahora);
+    historial.escribir(registrarLinea(historial.leer(), elegida, ahora));
     setLinea(elegida);
-  }, [sesion, lineaActiva, tecnicaDelDia]);
+  }, [sesion, lineaActiva, tecnicaDelDia, historial]);
 
   // La línea aparece unos segundos y se va.
   useEffect(() => {
@@ -107,7 +110,7 @@ export function FranjaApuntador({ sesion, onCambiarTurno }: Props) {
       )}
       <p
         aria-live="polite"
-        className="text-tinta min-h-5 flex-1 basis-56 text-sm"
+        className="text-tinta min-w-0 flex-1 text-sm"
         data-testid="linea-apuntador"
         data-linea={visible?.id ?? ""}
       >

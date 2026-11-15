@@ -156,6 +156,7 @@ function JuegoListo({
           nota={tx(juegos.globo.nota)}
           onEmpezar={empezar}
           listo
+          porTurnos
         />
       ) : null}
 

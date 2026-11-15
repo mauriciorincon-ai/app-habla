@@ -6,6 +6,7 @@
 
 import Link from "next/link";
 import { useT } from "@/lib/idioma/estado";
+import { apuntador } from "@/lib/idioma/textos/apuntador";
 import { juegos } from "@/lib/idioma/textos/juegos";
 
 type Props = {
@@ -17,9 +18,18 @@ type Props = {
   nota: string;
   onEmpezar: () => void;
   listo: boolean;
+  /** Los juegos de micrófono se juegan por turnos (S13): el guion dice cuándo tocar «Mi turno». */
+  porTurnos?: boolean;
 };
 
-export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
+export function GuionCard({
+  etiqueta,
+  guion,
+  nota,
+  onEmpezar,
+  listo,
+  porTurnos = false,
+}: Props) {
   const tx = useT();
   return (
     <section className="mx-auto flex w-full max-w-xl flex-col gap-6">
@@ -49,6 +59,14 @@ export function GuionCard({ etiqueta, guion, nota, onEmpezar, listo }: Props) {
         </blockquote>
 
         <p className="text-tinta-suave mt-5 text-sm">{nota}</p>
+        {porTurnos ? (
+          <p
+            className="text-tinta mt-3 text-sm font-medium"
+            data-testid="guion-turnos"
+          >
+            {tx(apuntador.guion.turnos)}
+          </p>
+        ) : null}
       </div>
 
       <button

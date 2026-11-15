@@ -9,7 +9,7 @@
 // apuntador, arriba, en la paleta del adulto, quieta y fuera de la zona de toque del niño.
 
 import Link from "next/link";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { useAjustes } from "@/components/estado-local";
 import { topeValido } from "@/lib/pantalla/tope";
 import { AvisoTope, LineaHoy } from "./aviso-tope";
@@ -23,6 +23,10 @@ import { useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import type { Sesion, Turno } from "@/lib/session-flow";
 import { CalibracionStep } from "./calibracion-step";
+import {
+  HISTORIAL_VACIO,
+  type HistorialApuntador,
+} from "@/lib/coach/apuntador";
 import { FranjaApuntador } from "./franja-apuntador";
 import { IndicadorTurno } from "./indicador-turno";
 import type { MedidasVivas } from "./use-voice-session";
@@ -82,6 +86,17 @@ export function MarcoJuego({
     };
   }, [esPantallaDelNino]);
 
+  // Lo que el apuntador ya dijo en esta partida (sobrevive a «Otra vez» y a recalibrar: no se repite).
+  const historialApuntador = useRef<HistorialApuntador>(HISTORIAL_VACIO);
+  const historial = useMemo(
+    () => ({
+      leer: () => historialApuntador.current,
+      escribir: (h: HistorialApuntador) => {
+        historialApuntador.current = h;
+      },
+    }),
+    [],
+  );
   const enPartida =
     actual.fase === "esperando-voz" ||
     actual.fase === "jugando" ||
@@ -90,7 +105,11 @@ export function MarcoJuego({
   return (
     <>
       {enPartida ? (
-        <FranjaApuntador sesion={sesion} onCambiarTurno={onCambiarTurno} />
+        <FranjaApuntador
+          sesion={sesion}
+          historial={historial}
+          onCambiarTurno={onCambiarTurno}
+        />
       ) : null}
     <div
       className={[

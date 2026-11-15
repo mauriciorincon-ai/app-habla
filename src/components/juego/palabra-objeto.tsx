@@ -307,6 +307,7 @@ function JuegoListo({
           nota={tx(txp.guion.nota)}
           onEmpezar={empezar}
           listo
+          porTurnos
         />
       ) : null}
 

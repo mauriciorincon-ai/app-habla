@@ -96,6 +96,13 @@ export const apuntador = {
       en: "You took turns: yours and theirs.",
     },
   },
+  // En el guion del adulto, antes de empezar (S13): cuándo tocar «Mi turno».
+  guion: {
+    turnos: {
+      es: "Cuando vayas a modelar, toca «Mi turno» en la franja de arriba: así tu voz mueve el dibujo pero no se cuenta como suya. Al terminar, «Pasarle el turno».",
+      en: "When you model, tap “My turn” on the strip above: your voice moves the drawing but is not counted as theirs. Afterwards, tap “Hand the turn over”.",
+    },
+  },
   indicador: {
     suTurno: {
       es: "Tu voz",

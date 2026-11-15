@@ -24,7 +24,7 @@ export function IndicadorTurno({ turno }: { turno: Turno }) {
       data-testid="indicador-turno"
       data-turno={turno}
       className={[
-        "text-tinta flex min-h-11 items-center gap-2 border-2 px-3 text-base font-medium",
+        "text-tinta flex min-h-11 items-center gap-2 border-2 px-3 text-lg font-medium",
         suyo ? "bg-acento-suave rounded-full" : "bg-superficie rounded-lg",
         suyo ? "border-acento" : "border-borde",
       ].join(" ")}

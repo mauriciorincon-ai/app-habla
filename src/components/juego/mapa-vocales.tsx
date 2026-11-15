@@ -102,6 +102,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           nota={tx(textos.nota)}
           onEmpezar={empezar}
           listo
+          porTurnos
         />
       ) : null}
 

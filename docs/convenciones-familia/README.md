@@ -31,7 +31,7 @@ sin movimiento) y **se recuerda** entre sesiones.
 *C2 · One-tap calm mode, visible on every child screen, remembered between sessions.*
 
 - **Habla:** [src/lib/storage/schemas.ts:20](../../src/lib/storage/schemas.ts) (`modoCalma` guardado) ·
-  [src/components/juego/marco-juego.tsx:128](../../src/components/juego/marco-juego.tsx) (el interruptor).
+  [src/components/juego/marco-juego.tsx:147](../../src/components/juego/marco-juego.tsx) (el interruptor).
 - **Nutri-Kids:** **le falta.** Su sistema de diseño no define modo calma; es la única brecha de esta versión.
 
 ## C3 · Tamaño de los toques
@@ -40,8 +40,8 @@ Toque del niño **≥ 64 px**; toque del adulto **≥ 44 px**.
 
 *C3 · Child touch targets ≥ 64 px; adult ≥ 44 px.*
 
-- **Habla:** [src/components/juego/mapa-vocales.tsx:174](../../src/components/juego/mapa-vocales.tsx) (`min-h-16` = 64 px, el niño) ·
-  [src/components/juego/marco-juego.tsx:128](../../src/components/juego/marco-juego.tsx) (`min-h-11` = 44 px, el adulto).
+- **Habla:** [src/components/juego/mapa-vocales.tsx:175](../../src/components/juego/mapa-vocales.tsx) (`min-h-16` = 64 px, el niño) ·
+  [src/components/juego/marco-juego.tsx:147](../../src/components/juego/marco-juego.tsx) (`min-h-11` = 44 px, el adulto).
 - **Nutri-Kids:** cumple el piso del adulto (≥ 44 px, `design-system.md:71`); el del niño no aplica hoy (la usa el adulto).
 
 ## C4 · Microcopy sin plazos, sin puntajes, sin culpa

@@ -121,6 +121,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           nota={tx(juegos.cohete.nota)}
           onEmpezar={empezar}
           listo
+          porTurnos
         />
       ) : null}
 
