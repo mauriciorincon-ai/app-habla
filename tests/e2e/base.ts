@@ -9,7 +9,7 @@ export * from "@playwright/test";
  * included. Under the dev server there is no CSP, so the guard has nothing to catch.
  */
 const MARCA =
-  /content security policy|violates the following|securitypolicyviolation/i;
+  /content security policy|violates the following|csp violation/i;
 
 function vigilar(context: BrowserContext, violaciones: string[]): void {
   const mirar = (page: import("@playwright/test").Page) => {
@@ -20,8 +20,26 @@ function vigilar(context: BrowserContext, violaciones: string[]): void {
       if (MARCA.test(e.message)) violaciones.push(e.message.slice(0, 300));
     });
   };
+  // Pages also report violations as DOM events (workers fire theirs inside the probe in csp.spec.ts).
+  void context.addInitScript(() => {
+    document.addEventListener("securitypolicyviolation", (e) =>
+      console.error(`CSP violation: ${e.violatedDirective} ${e.blockedURI}`),
+    );
+  });
+  // Pages also report violations as DOM events (the Worker's own are probed in csp.spec.ts).
+  void context.addInitScript(() => {
+    document.addEventListener("securitypolicyviolation", (e) =>
+      console.error(`CSP violation: ${e.violatedDirective} ${e.blockedURI}`),
+    );
+  });
   context.pages().forEach(mirar);
   context.on("page", mirar);
+}
+
+if (!process.env.CI) {
+  console.warn(
+    "e2e CSP guard: the dev server sends no CSP; run with CI=1 (next start) to exercise it.",
+  );
 }
 
 export const test = base.extend<{ violacionesCsp: string[] }>({

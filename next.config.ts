@@ -11,17 +11,17 @@ const nextConfig: NextConfig = {
   // familia no dice ".html":
   //   /conoce → el brochure (docs/BROCHURE.html)
   //   /mirada → el documento de la mamá, «La pirámide, en casa» (docs/LA-PIRAMIDE.html)
-  // CSP only in production (src/lib/seguridad/csp.ts): `connect-src 'self' blob:` backs the recognizer
-  // Worker's offline guard with the browser's own enforcement.
-  async headers() {
-    return cabecerasSeguridad(process.env.NODE_ENV);
-  },
-
   async rewrites() {
     return [
       { source: "/conoce", destination: "/conoce.html" },
       { source: "/mirada", destination: "/mirada.html" },
     ];
+  },
+
+  // CSP and friends only in production (src/lib/seguridad/csp.ts): `connect-src 'self' blob:` backs the
+  // recognizer Worker's offline guard with the browser's own enforcement.
+  async headers() {
+    return cabecerasSeguridad(process.env.NODE_ENV);
   },
 };
 

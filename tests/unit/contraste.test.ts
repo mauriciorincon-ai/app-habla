@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -79,13 +79,20 @@ describe("celebration text contrast (AA, both themes)", () => {
     ).toBeLessThan(3);
   });
 
-  it("no component paints text with the fill token any more", () => {
-    const fuentes = [
-      "escenario-palabra",
-      "cohete-tono",
-      "voice-game",
-      "celebracion-honesta",
-    ].map((f) => readFileSync(`src/components/juego/${f}.tsx`, "utf8"));
-    for (const f of fuentes) expect(f).not.toMatch(/text-celebracion-fuerte/);
+  it("no component paints text with a fill coral token or a raw coral", () => {
+    const recorrer = (dir: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory()
+          ? recorrer(`${dir}/${e.name}`)
+          : e.name.endsWith(".tsx")
+            ? [`${dir}/${e.name}`]
+            : [],
+      );
+    const malos = recorrer("src").filter((f) =>
+      /\btext-(celebracion(-fuerte)?|coral-\d+)(?![\w-])/.test(
+        readFileSync(f, "utf8"),
+      ),
+    );
+    expect(malos).toEqual([]);
   });
 });

@@ -20,7 +20,7 @@ refuerza. Los colores de estado tienen versión clara y oscura con contraste AA.
 *C1 · State is never color alone. Every state uses symbol + text + color; color only reinforces.*
 
 - **Habla:** [src/components/juego/forma-vocal.tsx:30](../../src/components/juego/forma-vocal.tsx) (letra + forma + color) ·
-  [src/app/globals.css:112](../../src/app/globals.css) (tokens de estado) · axe en claro y oscuro en `tests/e2e/a11y.spec.ts`.
+  [src/app/globals.css:116](../../src/app/globals.css) (tokens de estado) · axe en claro y oscuro en `tests/e2e/a11y.spec.ts`.
 - **Nutri-Kids:** ya la cumple: su semáforo es símbolo + texto + color (`design-system.md:35-45`).
 
 ## C2 · Modo calma de un toque

@@ -82,7 +82,7 @@ hay voz real y baja despacio en el silencio — jamás se congela.
 
 - **Sage:** 50 `#EEF2EC` · 100 `#DCE6D8` · 200 `#B8CDB1` · 400 `#7AA070` · 500 `#527947` ·
   600 `#3F5F37` · 700 `#2E4628`
-- **Coral (logros):** 100 `#FBE3DA` · 300 `#F5B4A0` · 500 `#DD7B5E` · 700 `#A95239`
+- **Coral (logros):** 100 `#FBE3DA` · 300 `#F5B4A0` · 500 `#DD7B5E` · 700 `#A95239` · 800 `#8E4630` (solo texto en modo calma)
 - **Ámbar (voz parental):** 100 `#F8E9C8` · 300 `#ECC56F` · 500 `#C99432` · 700 `#8C6113`
 - **Cream:** 50 `#FBF8F2` · 100 `#F5F0E5` · 200 `#ECE4D2` · 300 `#DDD2BB`
 - **Ink:** 900 `#1F2420` · 700 `#353B36` · 500 `#5A615C` · 400 `#7A8079` · 300 `#9CA29C`

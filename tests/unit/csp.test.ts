@@ -15,9 +15,14 @@ describe("Content-Security-Policy (S11)", () => {
     const prod = cabecerasSeguridad("production");
     expect(prod).toHaveLength(1);
     expect(prod[0]!.source).toBe("/:path*");
-    expect(prod[0]!.headers).toEqual([
-      { key: "Content-Security-Policy", value: CSP },
+    expect(prod[0]!.headers.map((h) => h.key)).toEqual([
+      "Content-Security-Policy",
+      "Permissions-Policy",
+      "X-Content-Type-Options",
     ]);
+    expect(prod[0]!.headers[0]!.value).toBe(CSP);
+    expect(prod[0]!.headers[1]!.value).toContain("camera=()");
+    expect(prod[0]!.headers[1]!.value).toContain("microphone=(self)");
   });
 
   it("next.config wires it through headers() from NODE_ENV", async () => {
@@ -49,6 +54,12 @@ describe("Content-Security-Policy (S11)", () => {
     expect(scripts.filter((x) => /^(https?:|\*)/.test(x))).toEqual([]);
     expect(CSP).not.toMatch(/https?:/);
     expect(CSP).not.toContain("*");
+  });
+
+  it("a Sentry DSN needs its ingest origin in connect-src (owner decision), never silently", () => {
+    const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
+    if (!dsn) return; // inert without DSN: nothing to allow
+    expect(directiva("connect-src").join(" ")).toContain(new URL(dsn).host);
   });
 
   it("closes the doors the app never uses", () => {
