@@ -45,6 +45,10 @@ export const rumbo = {
       uno: { es: "cambio de su voz entre suave y fuerte", en: "change of their voice between soft and loud" },
       otro: { es: "cambios de su voz entre suave y fuerte", en: "changes of their voice between soft and loud" },
     },
+    turnos: {
+      uno: { es: "turno de él en el juego", en: "turn of theirs in play" },
+      otro: { es: "turnos de él en el juego", en: "turns of theirs in play" },
+    },
     rondas: {
       uno: { es: "ronda de gemelas", en: "round of twin words" },
       otro: { es: "rondas de gemelas", en: "rounds of twin words" },

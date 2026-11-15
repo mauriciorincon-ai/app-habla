@@ -153,6 +153,7 @@ function JuegoListo({
     terminar,
     otraVez,
     volverAlGuion,
+    cambiarTurno,
     cambiarCalma,
     silenciar,
     fuente,
@@ -290,6 +291,7 @@ function JuegoListo({
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
       onSalir={salirAlGuion}
+      onCambiarTurno={cambiarTurno}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -401,6 +403,7 @@ function JuegoListo({
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          turnosNino={sesion.turnosNino}
           palabrasEncendidas={palabrasEncendidas}
           onOtraVez={reiniciarSesion}
           onTerminar={() => router.push("/jugar")}

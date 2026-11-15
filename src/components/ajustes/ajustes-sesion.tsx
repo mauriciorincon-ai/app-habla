@@ -83,6 +83,17 @@ export function AjustesSesion() {
         }
       />
 
+      <Interruptor
+        id="apuntador"
+        titulo={textos.apuntador.titulo}
+        descripcion={textos.apuntador.descripcion}
+        activo={ajustes.apuntador}
+        listo={listo}
+        onCambiar={(activo) =>
+          guardarAjustesEnStore({ ...ajustes, apuntador: activo })
+        }
+      />
+
       <TopeDiario />
 
       <SeccionVozFamiliar

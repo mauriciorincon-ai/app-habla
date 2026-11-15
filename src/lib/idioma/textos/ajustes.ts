@@ -125,6 +125,13 @@ export const ajustes = {
       en: "Removes the movement that isn't part of the game. (If your system already asks for less motion, the app respects that without you touching anything.)",
     },
   },
+  apuntador: {
+    titulo: { es: "Tu apuntador", en: "Your prompter" },
+    descripcion: {
+      es: "Una línea breve para ti, arriba del juego, en el momento justo: cuando empieza tu turno, cuando él hace voz, si hay un silencio largo y al cerrar. Aparece unos segundos y se va; el modo calma la apaga.",
+      en: "One short line for you, above the game, at the right moment: when your turn starts, when their voice sounds, after a long quiet, and at the close. It shows for a few seconds and goes; calm mode turns it off.",
+    },
+  },
   voz: {
     titulo: { es: "La voz de la familia", en: "The family's voice" },
     texto: {

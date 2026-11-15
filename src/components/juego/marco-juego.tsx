@@ -5,7 +5,8 @@
 // Cada juego solo aporta su guion, su escenario y su celebración.
 //
 // Regla del design-system: la vista del niño es SOBERANA — en cuanto el juego pasa del guion, el
-// texto dirigido al padre se retira de la pantalla.
+// texto dirigido al padre se retira de la pantalla. ÚNICA excepción (S13, ADR-025): la franja fina del
+// apuntador, arriba, en la paleta del adulto, quieta y fuera de la zona de toque del niño.
 
 import Link from "next/link";
 import { useEffect, type ReactNode } from "react";
@@ -20,8 +21,10 @@ import {
 } from "@/components/iconos";
 import { useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
-import type { Sesion } from "@/lib/session-flow";
+import type { Sesion, Turno } from "@/lib/session-flow";
 import { CalibracionStep } from "./calibracion-step";
+import { FranjaApuntador } from "./franja-apuntador";
+import { IndicadorTurno } from "./indicador-turno";
 import type { MedidasVivas } from "./use-voice-session";
 
 type Props = {
@@ -35,6 +38,8 @@ type Props = {
   onContinuarConRuido: () => void;
   /** "Salir" dentro del juego: de vuelta al GUION (gate S4) — el hook apaga el micrófono. */
   onSalir: () => void;
+  /** El adulto marca el turno con un toque en su franja (S13, ADR-025). */
+  onCambiarTurno: (turno: Turno) => void;
   /** El contenido propio del juego (guion, escenario, celebración). */
   children: ReactNode;
 };
@@ -48,6 +53,7 @@ export function MarcoJuego({
   onRecalibrar,
   onContinuarConRuido,
   onSalir,
+  onCambiarTurno,
   children,
 }: Props) {
   const tx = useT();
@@ -76,7 +82,16 @@ export function MarcoJuego({
     };
   }, [esPantallaDelNino]);
 
+  const enPartida =
+    actual.fase === "esperando-voz" ||
+    actual.fase === "jugando" ||
+    actual.fase === "celebracion";
+
   return (
+    <>
+      {enPartida ? (
+        <FranjaApuntador sesion={sesion} onCambiarTurno={onCambiarTurno} />
+      ) : null}
     <div
       className={[
         "flex min-h-[28rem] flex-col gap-6 rounded-3xl p-4 sm:p-6",
@@ -102,6 +117,9 @@ export function MarcoJuego({
           >
             {tx(juegos.comun.salir)}
           </button>
+          {enPartida && actual.fase !== "celebracion" ? (
+            <IndicadorTurno turno={sesion.turno} />
+          ) : null}
           <button
             type="button"
             onClick={onAlternarCalma}
@@ -212,5 +230,6 @@ export function MarcoJuego({
 
       {children}
     </div>
+    </>
   );
 }

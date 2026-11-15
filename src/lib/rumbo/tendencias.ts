@@ -41,6 +41,8 @@ export type ResumenSemana = {
   rondasGemelas: number;
   /** Lo que el PADRE marcó haber oído (palabras reconocidas + participación en gemelas). */
   marcadasPorTi: number;
+  /** Turnos suyos en que su voz se midió (S13, ADR-025): solo los de él, jamás los del adulto. */
+  turnosNino: number;
 };
 
 function resumirSemana(
@@ -59,9 +61,11 @@ function resumirSemana(
   let marcadas = 0;
   let soplos = 0;
   let cambiosVolumen = 0;
+  let turnos = 0;
 
   for (const s of sesiones) {
     dias.add(s.fecha);
+    turnos += s.turnosNino ?? 0;
     switch (s.juego) {
       case "palabras":
         dibujos += s.encendidos;
@@ -109,6 +113,7 @@ function resumirSemana(
     cambiosDeVolumen: cambiosVolumen,
     rondasGemelas: rondas,
     marcadasPorTi: marcadas,
+    turnosNino: turnos,
   };
 }
 

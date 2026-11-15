@@ -9,6 +9,19 @@ export function construirSesion(
   metrica: Metrica,
   fecha: string,
   palabras: readonly string[] = [],
+  turnosNino = 0,
+): Sesion {
+  const base = construirBase(metrica, fecha, palabras);
+  // Solo si hubo turnos suyos medidos: un cero no se guarda (el Rumbo no lo muestra).
+  return turnosNino > 0
+    ? { ...base, turnosNino: Math.min(500, Math.round(turnosNino)) }
+    : base;
+}
+
+function construirBase(
+  metrica: Metrica,
+  fecha: string,
+  palabras: readonly string[],
 ): Sesion {
   switch (metrica.tipo) {
     case "sostenido":

@@ -98,6 +98,7 @@ function JuegoListo({
     terminar,
     otraVez,
     volverAlGuion,
+    cambiarTurno,
     cambiarCalma,
     silenciar,
   } = useVoiceSession({
@@ -146,6 +147,7 @@ function JuegoListo({
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
       onSalir={volverAlGuion}
+      onCambiarTurno={cambiarTurno}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -222,6 +224,7 @@ function JuegoListo({
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          turnosNino={sesion.turnosNino}
           // Las vueltas salen del MISMO total medido; en calma van en 0 (allí no hay línea de
           // vuelta y la celebración no afirma lo que el juego no mostró).
           vueltas={

@@ -58,6 +58,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     terminar,
     otraVez,
     volverAlGuion,
+    cambiarTurno,
     cambiarCalma,
   } = useVoiceSession({
     modoCalmaInicial,
@@ -92,6 +93,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       onRecalibrar={recalibrar}
       onContinuarConRuido={continuarConRuido}
       onSalir={volverAlGuion}
+      onCambiarTurno={cambiarTurno}
     >
       {actual.fase === "guion" ? (
         <GuionCard
@@ -189,6 +191,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       {actual.fase === "celebracion" ? (
         <CelebracionHonesta
           metrica={actual.metrica}
+          turnosNino={sesion.turnosNino}
           onOtraVez={otraVez}
           onTerminar={() => router.push("/jugar")}
           etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}

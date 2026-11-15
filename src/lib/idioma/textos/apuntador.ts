@@ -63,4 +63,55 @@ export const apuntador = {
       en: "Tell it back: your turn, their turn, and what their voice moved.",
     },
   },
+  // La franja y el indicador de turno (S13, ADR-025). La franja es del adulto; el indicador lo ve el niño
+  // y se entiende sin leer (figura + símbolo + palabra corta).
+  franja: {
+    etiqueta: {
+      es: "Tu apuntador",
+      en: "Your prompter",
+    },
+    turnoDeEl: {
+      es: "Es su turno",
+      en: "It's their turn",
+    },
+    turnoTuyo: {
+      es: "Es tu turno",
+      en: "It's your turn",
+    },
+    pasarleElTurno: {
+      es: "Pasarle el turno",
+      en: "Hand the turn over",
+    },
+    tomarElTurno: {
+      es: "Mi turno",
+      en: "My turn",
+    },
+  },
+  // El resumen de la celebración y el Rumbo: solo cuenta SUS turnos (los que su voz midió).
+  turnos: {
+    uno: { es: "{n} turno de él", en: "{n} turn of theirs" },
+    varios: { es: "{n} turnos de él", en: "{n} turns of theirs" },
+    juntos: {
+      es: "Jugaron por turnos: el tuyo y el suyo.",
+      en: "You took turns: yours and theirs.",
+    },
+  },
+  indicador: {
+    suTurno: {
+      es: "Tu voz",
+      en: "Your voice",
+    },
+    turnoDelAdulto: {
+      es: "Mira y escucha",
+      en: "Watch and listen",
+    },
+    etiquetaSuTurno: {
+      es: "Ahora suena tu voz",
+      en: "Now it is your voice's turn",
+    },
+    etiquetaTurnoDelAdulto: {
+      es: "Ahora te toca mirar y escuchar",
+      en: "Now it is time to watch and listen",
+    },
+  },
 } satisfies Catalogo;

@@ -14,7 +14,7 @@
 The two promises at the heart of the VISION, «sessions designed for two» and «your invisible prompter»,
 lived only in the card before the game: once play started the script left the screen, and the session
 counted **every** voice. When the adult modelled a long «aaa», the balloon flew and the achievement was
-recorded as the child's. The coaching came before the moment it was useful, never at it.
+kept as the child's. The advice came before the moment it was useful, never at it.
 
 ## Decision
 
