@@ -23,7 +23,7 @@ The screen is only the excuse to play together.
 2. **Install it as an app** (optional, recommended): in the browser menu, choose "Add to home screen". It then
    opens full screen and works offline.
 3. The first time, it asks two things: what your child is called at home (optional) and up to three topics they
-   like. **All of it stays on the device**; there are no accounts and no sign-up.
+   like. In **Settings** you can add **"Other things they love"** (up to eight, general words): the single place for their interests. **All of it stays on the device**; there are no accounts and no sign-up.
 4. Want to change the nickname or topics later? Go to **Settings → "Nickname and topics" → "Change nickname and
    topics"**. Changing them erases nothing: progress stays as it is.
 
@@ -598,7 +598,7 @@ This is the most important promise of the app:
   that recording and playing back your voice **triggers no network call at all**. And even with the Studio, **your
   child's voice is never recorded.**
 - Switching the app's language sends nothing anywhere.
-- All that is kept on the device: the nickname (if you set one), the topics, your settings, which capsules you
+- All that is kept on the device: the nickname (if you set one), the topics and "other things they love", your settings, which capsules you
   completed, what you marked in "word twins", how many vowel-map spots sounded, how many minutes of play today (the Short sessions cap: only the date and the minutes), if you recorded them **your** voices, and, if you chose them, **the
   family videos** (clips from your own gallery: the app never opens the camera and they never leave here). You can delete it all in
   **Settings → Delete my data**, or only the voice bank with **"Delete only the voice bank"**.

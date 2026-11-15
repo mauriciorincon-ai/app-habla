@@ -42,7 +42,7 @@
           {
             "id": "01",
             "nombre": "La idea del día",
-            "que_hace": "Cada día recibes una idea de práctica lista para usar: la frase que puedes decirle y la actividad para hacer juntos. Sale de una biblioteca de 50 y no se repite hasta agotarlas. Cada idea cita el estudio que la respalda.",
+            "que_hace": "Cada día recibes una idea de práctica lista para usar: la frase que puedes decirle y la actividad para hacer juntos. Sale de una biblioteca de 60 y no se repite hasta agotarlas. Cada idea cita el estudio que la respalda.",
             "seccion_manual": "La pantalla \"Hoy\""
           },
           {
@@ -268,7 +268,7 @@
           {
             "id": "35",
             "nombre": "Su mundo en todo: sus temas y su meta, en cada juego",
-            "que_hace": "Los temas que elegiste y la meta de la semana se notan en cada juego: un dibujo de uno de sus temas acompaña la escena sin cambiar lo que se mide, y solo para ti la tarjeta de guion y la franja del apuntador proponen hasta cuatro palabras de su meta para que las modeles. «Colores» ya existe y una tarjeta en Hoy te recuerda pedir los cuentos del mes, sin notificaciones. Sus intereses se escriben en un solo lugar: el perfil.",
+            "que_hace": "Los temas que elegiste y la meta de la semana se notan en cada juego: un dibujo de uno de sus temas acompaña la escena sin cambiar lo que se mide, y solo para ti la tarjeta de guion y la franja del apuntador proponen hasta cuatro palabras de su meta para que las modeles. Hay cápsulas, dibujos y metas de colores, y una tarjeta en Hoy te recuerda pedir los cuentos del mes, sin notificaciones. Sus intereses se escriben en un solo lugar: el perfil.",
             "seccion_manual": "Su mundo en todo — sus temas y la meta, en cada juego"
           }
         ]
@@ -329,10 +329,10 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 1041,
+      "valor": 1053,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S14: 54 archivos, 1041 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S14: 56 archivos, 1053 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
@@ -409,7 +409,7 @@
     {
       "clave": "peso_brochure",
       "etiqueta": "Peso de este brochure",
-      "valor": 193208,
+      "valor": 193256,
       "unidad": "bytes",
       "fuente": "medido",
       "detalle": "Archivo autocontenido, cero peticiones externas, abre con doble clic. `wc -c docs/BROCHURE.html`."

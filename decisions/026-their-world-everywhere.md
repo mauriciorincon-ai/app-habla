@@ -86,7 +86,8 @@ There were also two sources of interests: the profile themes and «Enjoys» in S
      - does nothing without a profile.
    - It runs before the first read of the profile or the stories store.
    - The stories order and the printables read `interesesDe(perfil, idioma)`: their own things first, then
-     their theme names.
+     their theme names. The stories' own fill-in slots read `interesesParaCuentos`: only their own things,
+     never a theme name, because a name like «the sea» does not fit the story templates' grammar.
    - The profile has never been part of the other-home package, and `otra-casa.test` now proves that neither
      the themes nor «other things» travel.
 6. **The reminder is a pure rule.**
