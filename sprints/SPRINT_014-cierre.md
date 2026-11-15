@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-15
 closed: 2026-11-15
 branch: sprint-014/su-mundo-en-todo + sprint-014/recordatorio-7-dias (PR corto)
-pr: "#26"
+pr: "#26 + #27 (PR corto)"
 ---
 - **Nombre / objetivo:** «Su mundo en todo» — sus temas y la meta de la semana visten y orientan los siete juegos, los cuentos del mes y las hojas; sus intereses viven en un solo lugar.
 - **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño.
