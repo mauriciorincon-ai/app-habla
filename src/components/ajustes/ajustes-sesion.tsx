@@ -478,7 +478,7 @@ function Interruptor({
             {tx(titulo)}
           </h2>
           <p className="text-tinta-suave mt-2 text-sm">{tx(descripcion)}</p>
-          {estado ? (
+          {estado && listo ? (
             <p
               className="mt-2 text-sm font-medium"
               data-testid={`${id}-estado`}

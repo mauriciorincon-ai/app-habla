@@ -2,7 +2,8 @@
 
 // La tarjeta del ADULTO que recuerda pedir los cuentos del mes (S14, ADR-026, decisión «1a»): una tarjeta
 // quieta en Hoy con un botón. Sin notificaciones, sin permisos y sin sonido; jamás se le muestra al niño
-// como alarma (Hoy es la pantalla del adulto). «Ahora no» la esconde 7 días y el interruptor de Ajustes la apaga. La regla vive en
+// como alarma (Hoy es la pantalla del adulto). «Ahora no» la esconde 7 días y el interruptor de Ajustes la
+// apaga. La regla vive en
 // lib/bandeja/recordatorio (pura); la fecha se lee una vez por montaje (regla 23: es una perilla).
 
 import Link from "next/link";
@@ -25,7 +26,12 @@ export function RecordatorioCuentos() {
   const ajustes = useAjustes();
   const [hoy] = useState(fechaHoy);
   if (!cuentos || !ajustes) return null;
-  const r = recordatorioCuentos(hoy, cuentos, ajustes.recordatorioPospuesto, ajustes.recordatorioCuentos);
+  const r = recordatorioCuentos(
+    hoy,
+    cuentos,
+    ajustes.recordatorioPospuesto,
+    ajustes.recordatorioCuentos,
+  );
   if (!r) return null;
   const t = suMundo.recordatorio;
 
