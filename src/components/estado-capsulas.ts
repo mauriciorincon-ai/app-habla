@@ -1,7 +1,7 @@
 "use client";
 
 // La cápsula del día, del lado del cliente. Vive APARTE de `estado-local` a propósito: importar
-// este módulo arrastra la biblioteca entera (50 cápsulas ≈ 65 KB de JS), y solo dos pantallas la
+// este módulo arrastra la biblioteca entera (60 cápsulas ≈ 75 KB de JS), y solo dos pantallas la
 // necesitan —"Hoy" y el juego del globo, que marca el día como hecho—. El cohete y palabra↔objeto
 // solo necesitan los ajustes, así que no la cargan.
 //
@@ -30,12 +30,13 @@ function coincideConObjetivo(): (c: Capsula) => boolean {
   const objetivo = alinear(leerObjetivo()?.texto);
   if (objetivo.activo) return (c) => objetivo.coincideEtiquetas(c.etiquetas);
   // Sin meta de la semana, su mundo (S14, ADR-026) inclina la cápsula nueva del día hacia lo que le
-  // encanta: una cápsula etiquetada con uno de SUS temas se prefiere (dentro de la etapa, jamás fuera).
-  // Sin temas el predicado no existe y el motor es el de siempre.
-  const temas = leerPerfil()?.temas ?? [];
-  if (temas.length === 0) return () => true;
-  const deSusTemas = temas.map((t) => alinear(t));
-  return (c) => deSusTemas.some((a) => a.coincideEtiquetas(c.etiquetas));
+  // encanta: una cápsula etiquetada con uno de SUS temas o de «otras cosas que le encantan» se prefiere
+  // (dentro de la etapa, jamás fuera). Sin nada de eso el predicado es el de siempre: no coincide con nada.
+  const perfil = leerPerfil();
+  const suyos = [...(perfil?.temas ?? []), ...(perfil?.otrasCosas ?? [])];
+  if (suyos.length === 0) return () => false;
+  const deSuMundo = suyos.map((t) => alinear(t));
+  return (c) => deSuMundo.some((a) => a.coincideEtiquetas(c.etiquetas));
 }
 
 /**

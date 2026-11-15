@@ -173,7 +173,6 @@ export const borrarObjetivo = (): void => {
   window.localStorage.removeItem(CLAVES.objetivo);
 };
 
-/** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
 /**
  * Intereses en un solo lugar (S14, ADR-026): pasa el «Le gusta» de Cuentos a `perfil.otrasCosas` (motor
  * puro en lib/su-mundo/intereses). Se corre antes de leer el perfil o los cuentos en la app; idempotente.
@@ -186,6 +185,7 @@ export function migrarInteresesAlPerfil(): void {
   guardarCuentos(cuentos);
 }
 
+/** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
 export function leerCuentos(): CuentosGuardados {
   return leer(CLAVES.cuentos, CuentosGuardadosSchema) ?? CUENTOS_VACIO;
 }

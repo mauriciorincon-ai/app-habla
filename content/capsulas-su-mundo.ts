@@ -58,7 +58,7 @@ export const CAPSULAS_SU_MUNDO: Capsula[] = [
       conPantalla: false,
     },
     fuente:
-      "Modelado por padres en rutinas diarias: el adulto nombra lo que el niño está mirando o tocando, en el momento (Roberts y Kaiser 2011, AJSLP; Heidlage et al. 2019).",
+      "Modelado por padres en rutinas diarias: el adulto nombra lo que el niño está mirando o tocando, en el momento (Roberts y Kaiser 2011, AJSLP).",
     etiquetas: ["colores", "vestirse"],
   },
   {
@@ -109,7 +109,7 @@ export const CAPSULAS_SU_MUNDO: Capsula[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés y ofrecer elecciones aumenta la iniciación comunicativa (Crank et al. 2021); el adulto modela la palabra justo antes de entregar (Kaiser y Roberts 2013, enseñanza en el ambiente).",
+      "Seguir el interés y ofrecer elecciones aumenta la iniciación comunicativa y el adulto modela la palabra justo antes de entregar (Kaiser y Roberts 2013, enseñanza en el ambiente).",
     etiquetas: ["colores", "elegir"],
   },
   // ── Baño ───────────────────────────────────────────────────────────────────────────────────────
@@ -245,7 +245,7 @@ export const CAPSULAS_SU_MUNDO: Capsula[] = [
       conPantalla: false,
     },
     fuente:
-      "Seguir el interés del niño: nombrar el foco de atención que él eligió se asocia con más vocabulario (Crank et al. 2021; Roberts y Kaiser 2011).",
+      "Seguir el interés del niño: nombrar el foco de atención que él eligió se asocia con más vocabulario (Roberts y Kaiser 2011).",
     etiquetas: ["baño", "juego", "acciones"],
   },
   {

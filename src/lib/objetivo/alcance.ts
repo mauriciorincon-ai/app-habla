@@ -1,7 +1,7 @@
 // ALCANCE del objetivo (S4, auditoría de cierre) — motor PURO.
 //
 // El preview de /objetivo prometía contar "lo que se pone primero", pero contaba contra los
-// bancos COMPLETOS (las 50 cápsulas de las 3 etapas, todos los pictogramas). La priorización
+// bancos COMPLETOS (las 60 cápsulas de las 3 etapas, todos los pictogramas). La priorización
 // real está acotada: la cápsula del día sale de la ETAPA ACTIVA (daily.ts), el mazo de
 // palabra↔objeto sale de los TEMAS del perfil (palabra-objeto.tsx) y las gemelas de los pares
 // JUGABLES en la etapa. Esto acota los bancos a ESO — lo que el niño de verdad verá — para que

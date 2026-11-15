@@ -413,9 +413,9 @@ export const PICTOGRAMAS: Pictograma[] = [
  */
 export const PICTOGRAMAS_DE_ETIQUETA: PictogramaDeEtiqueta[] = [
   { id: "colores-rojo", palabra: "rojo", en: "red", etiquetas: ["colores"], archivo: "rojo.png", arasaacId: 2808 },
-  { id: "colores-azul", palabra: "azul", en: "blue", etiquetas: ["colores"], archivo: "azul.png", arasaacId: 3355 },
+  { id: "colores-azul", palabra: "azul", en: "blue", etiquetas: ["colores"], archivo: "azul.png", arasaacId: 4869 },
   { id: "colores-amarillo", palabra: "amarillo", en: "yellow", etiquetas: ["colores"], archivo: "amarillo.png", arasaacId: 2648 },
-  { id: "colores-verde", palabra: "verde", en: "green", etiquetas: ["colores"], archivo: "verde.png", arasaacId: 4886 },
+  { id: "colores-verde", palabra: "verde", en: "green", etiquetas: ["colores"], archivo: "verde.png", arasaacId: 4887 },
   { id: "acciones-comer", palabra: "comer", en: "eat", etiquetas: ["acciones", "comida"], archivo: "comer.png", arasaacId: 2349 },
   { id: "acciones-tomar", palabra: "tomar", en: "drink", etiquetas: ["acciones", "agua"], archivo: "beber.png", arasaacId: 2276 },
   { id: "acciones-saltar", palabra: "saltar", en: "jump", etiquetas: ["acciones", "parque"], archivo: "saltar.png", arasaacId: 2804 },

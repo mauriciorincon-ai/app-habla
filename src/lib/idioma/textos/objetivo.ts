@@ -55,6 +55,10 @@ export const objetivo = {
       },
       enlace: { es: "revisa sus temas en Ajustes", en: "check the topics in Settings" },
     },
+    cercana: {
+      es: "¿Quisiste decir «{valor}»? Cámbialo arriba y guárdalo.",
+      en: "Did you mean “{valor}”? Change it above and save.",
+    },
     sinContenido: {
       es: "Priorizado, pero la app aún no tiene contenido de esto: por ahora la cápsula y los juegos no cambian.",
       en: "Prioritized, but the app doesn't have content for this yet: for now the capsule and the games don't change.",

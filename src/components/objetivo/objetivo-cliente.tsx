@@ -7,7 +7,7 @@
 // Al guardar o quitar, la cápsula de hoy se re-alinea si aún no está hecha (aplicarObjetivoAHoy).
 //
 // Los bancos de contenido se cargan BAJO DEMANDA (import dinámico al primer teclazo): esta ruta
-// del padre no arrastra las 50 cápsulas ni los pictogramas en su bundle inicial — la misma
+// del padre no arrastra las 60 cápsulas ni los pictogramas en su bundle inicial — la misma
 // lección del gate de performance del S2 (ver estado-capsulas.ts), cazada aquí por el gate de
 // Lighthouse del PR del S4.
 
@@ -39,6 +39,8 @@ import {
   normalizar,
 } from "@/lib/objetivo/alinear";
 import { acotarContenido } from "@/lib/objetivo/alcance";
+import { ETIQUETA_EN } from "@/lib/objetivo/etiquetas-en";
+import { etiquetaCercanaDe } from "@/lib/su-mundo/su-mundo";
 import {
   sugerir,
   vocabularioDe,
@@ -393,6 +395,14 @@ export function ObjetivoCliente() {
     setGuardado(false);
   }
 
+  // Una meta sin contenido que se parece a una etiqueta real («colres»): se dice cuál (S14, ADR-026).
+  const cercanaClave = activo ? etiquetaCercanaDe(activo.texto) : null;
+  const cercana = cercanaClave
+    ? idioma === "en"
+      ? (ETIQUETA_EN[cercanaClave][0] ?? cercanaClave)
+      : cercanaClave
+    : null;
+
   return (
     <div className="flex flex-col gap-6">
       {activo ? (
@@ -458,12 +468,19 @@ export function ObjetivoCliente() {
                   .
                 </p>
               ) : estadoActivo === "sin-contenido" ? (
-                <p
-                  className="text-tinta mt-2 text-sm font-medium"
-                  data-testid="objetivo-activo-sin-contenido"
-                >
-                  {tx(txt.activo.sinContenido)}
-                </p>
+                <>
+                  <p
+                    className="text-tinta mt-2 text-sm font-medium"
+                    data-testid="objetivo-activo-sin-contenido"
+                  >
+                    {tx(txt.activo.sinContenido)}
+                  </p>
+                  {cercana ? (
+                    <p className="text-tinta mt-1 text-sm" data-testid="objetivo-activo-cercana">
+                      {tx(txt.activo.cercana, { valor: cercana })}
+                    </p>
+                  ) : null}
+                </>
               ) : estadoActivo === "fuera-de-alcance" ? (
                 <p
                   className="text-tinta mt-2 text-sm font-medium"

@@ -204,3 +204,17 @@ test("el protagonista no cambia la privacidad: cero red jugando con su mundo pue
   await page.waitForTimeout(1_000);
   expect(fuera, `salió tráfico del dispositivo: ${fuera.join(", ")}`).toEqual([]);
 });
+
+test("una meta sin contenido que se parece a una etiqueta real la sugiere («colres» → colores); «números» calla", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["mar"], objetivo: "colres" });
+  await page.goto("/objetivo");
+  await expect(page.getByTestId("objetivo-activo")).toHaveAttribute("data-estado", "sin-contenido");
+  await expect(page.getByTestId("objetivo-activo-cercana")).toContainText("«colores»");
+  // Una meta que no se parece a nada no inventa una sugerencia.
+  await page.getByTestId("objetivo-input").fill("números");
+  await page.getByTestId("guardar-objetivo").click();
+  await expect(page.getByTestId("objetivo-activo")).toHaveAttribute("data-estado", "sin-contenido");
+  await expect(page.getByTestId("objetivo-activo-cercana")).toHaveCount(0);
+});

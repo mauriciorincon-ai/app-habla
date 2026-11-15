@@ -19,7 +19,7 @@ export const cuentos = {
     },
   },
   pedido: {
-    titulo: { es: "Lo que le gusta", en: "What your child enjoys" },
+    titulo: { es: "Lo que le encanta", en: "What your child loves" },
     ayuda: {
       es: "Lo que le encanta sale de su perfil, en palabras generales, y va en el pedido. Las palabras que practican, aquí abajo, separadas por comas; si no escribes ninguna, van las de la meta de la semana. Nada más viaja: ni su nombre, ni su edad, ni su voz.",
       en: "What they love comes from their profile, in general words, and goes in the request. The words you are practicing go below, separated by commas; if you write none, the ones from this week's goal go. Nothing else travels: not their name, not their age, not their voice.",
@@ -51,8 +51,8 @@ export const cuentos = {
     },
     descargar: { es: "Descargar el pedido", en: "Download the request" },
     faltaGusto: {
-      es: "Escribe al menos un gusto y guárdalo para pedir cuentos.",
-      en: "Write and save at least one interest to ask for stories.",
+      es: "Añade al menos una cosa que le encante en su perfil (Ajustes) para pedir cuentos.",
+      en: "Add at least one thing they love in their profile (Settings) to ask for stories.",
     },
   },
   importar: {

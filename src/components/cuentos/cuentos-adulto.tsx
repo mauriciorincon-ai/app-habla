@@ -1,7 +1,7 @@
 "use client";
 
 // «CUENTOS DE CASA», el lado del ADULTO (S9, ADR-019). Tres cosas, en orden:
-// 1. Lo que le gusta y las palabras que practican: llenan la biblioteca y son TODO lo que lleva el pedido
+// 1. Lo que le encanta (de su perfil) y las palabras que practican: llenan la biblioteca y son TODO lo que lleva el pedido
 //    (decisión «1a»). El pedido se descarga; la app no envía nada (no hay red aquí).
 // 2. Traer el lote que dejó `/bandeja`: `JSON.parse` + `validarLote` (esquema, plazos y puntajes, texto
 //    dirigido a un agente, gate de sensibilidad). Lo que entra, entra `pendiente`.

@@ -17,9 +17,10 @@ const RESOLUCION = 500;
 // Búsqueda en ARASAAC (español) → archivo. La palabra visible vive en content/pictogramas.ts.
 const NUEVAS = [
   ["rojo", "rojo.png"],
-  ["azul", "azul.png"],
+  // Azul y verde con id fijo: la búsqueda traía un celeste y un verde lima, ambiguos junto al amarillo.
+  ["azul", "azul.png", 4869],
   ["amarillo", "amarillo.png"],
-  ["verde", "verde.png"],
+  ["verde", "verde.png", 4887],
   ["comer", "comer.png"],
   ["beber", "beber.png"],
   ["saltar", "saltar.png"],
@@ -36,10 +37,10 @@ const salida = resolve(dirname(fileURLToPath(import.meta.url)), "../public/picto
 mkdirSync(salida, { recursive: true });
 
 const traza = [];
-for (const [busqueda, archivo] of NUEVAS) {
+for (const [busqueda, archivo, idFijo] of NUEVAS) {
   const destino = resolve(salida, archivo);
-  const res = await fetch(`${API}/${encodeURIComponent(busqueda)}`);
-  const mejor = res.ok ? (await res.json())[0] : null;
+  const res = idFijo ? null : await fetch(`${API}/${encodeURIComponent(busqueda)}`);
+  const mejor = idFijo ? { _id: idFijo, keywords: [{ keyword: busqueda }] } : res.ok ? (await res.json())[0] : null;
   if (!mejor?._id) {
     console.warn(`⚠️  sin pictograma para "${busqueda}"`);
     continue;
