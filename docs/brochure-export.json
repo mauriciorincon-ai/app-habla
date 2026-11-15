@@ -12,7 +12,7 @@
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
   "schema_version": "1.0.0",
-  "actualizado": "2026-11-16",
+  "actualizado": "2026-11-15",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
@@ -332,7 +332,7 @@
       "valor": 1053,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S14: 56 archivos, 1053 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S14: 56 archivos, 1053 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
@@ -340,7 +340,7 @@
       "valor": 350,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-16 sobre la rama del S14: 350 pruebas en verde."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-15 sobre la rama del S14: 350 pruebas en verde."
     },
     {
       "clave": "cobertura_lineas",
@@ -348,7 +348,7 @@
       "valor": 95.67,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-16 sobre la rama del S14: 95,67 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-15 sobre la rama del S14: 95,67 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -420,7 +420,7 @@
       "valor": 26,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-11-16 sobre la rama del S14 (hasta el ADR-026)."
+      "detalle": "Archivos de decisions/ el 2026-11-15 sobre la rama del S14 (hasta el ADR-026)."
     }
   ],
   "stack": [
