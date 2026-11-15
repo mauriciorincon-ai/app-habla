@@ -163,6 +163,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
             hito={subidas}
             modoCalma={!muestraMedidor(sesion)}
             invitando={invitacionAmable(sesion)}
+            turnoDeEl={sesion.turno === "nino"}
           />
 
           <div className="flex flex-col gap-3 sm:flex-row">

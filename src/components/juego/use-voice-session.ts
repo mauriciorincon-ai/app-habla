@@ -247,7 +247,12 @@ export function useVoiceSession({
       despachar({
         tipo: "TICK",
         deltaMs: MS_POR_TICK,
-        vozActiva: vivoLecturaRef.current.vozActiva,
+        // La fase y los turnos de él avanzan solo con SU voz: en «tu turno» lee el paquete del niño (que
+        // oye silencio), así la cola de gracia del medidor en vivo no cuenta la voz del adulto como suya.
+        vozActiva:
+          turnoRef.current === "nino"
+            ? ninoLecturaRef.current.vozActiva
+            : vivoLecturaRef.current.vozActiva,
         metrica: metricaRef.current(medidas),
       });
     }, MS_POR_TICK);

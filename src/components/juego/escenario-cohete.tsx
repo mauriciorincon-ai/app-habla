@@ -37,6 +37,8 @@ type Props = {
   hito: number;
   modoCalma: boolean;
   invitando: boolean;
+  /** S13: la capa del hito (un logro de él) solo se suelta con SU voz, no con el modelo del adulto. */
+  turnoDeEl?: boolean;
 };
 
 /**
@@ -67,7 +69,12 @@ export function EscenarioCohete({
   hito,
   modoCalma,
   invitando,
+  turnoDeEl = true,
 }: Props) {
+  const turnoDeElRef = useRef(turnoDeEl);
+  useEffect(() => {
+    turnoDeElRef.current = turnoDeEl;
+  }, [turnoDeEl]);
   const tx = useT();
   const cieloRef = useRef<HTMLDivElement | null>(null);
   const coheteRef = useRef<HTMLDivElement | null>(null);
@@ -123,7 +130,11 @@ export function EscenarioCohete({
           medidas.vozActiva() && vuelo.y < subida.yAnterior - 0.4;
         subida.frames = subiendo ? subida.frames + 1 : 0;
         subida.yAnterior = vuelo.y;
-        if (capaPendienteRef.current && subida.frames >= 4) {
+        if (
+          capaPendienteRef.current &&
+          turnoDeElRef.current &&
+          subida.frames >= 4
+        ) {
           capaPendienteRef.current = false;
           setCapasLanzadas((c) => c + 1);
         }

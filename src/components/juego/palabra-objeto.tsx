@@ -177,8 +177,15 @@ function JuegoListo({
     idioma,
     activo: reconocedorActivo,
   });
-  const quizas = quizasDijo(rec.oidoDe(palabraVisible), palabraVisible);
-  const { conectar, desconectar } = rec;
+  const turnoDeEl = sesion.turno === "nino";
+  // El reconocedor escucha el cuarto entero; en «tu turno» lo que oye es del adulto: ni «quizás», ni halo,
+  // ni conteo (ADR-025). Al volver su turno, lo oído antes se olvida.
+  const quizas =
+    turnoDeEl && quizasDijo(rec.oidoDe(palabraVisible), palabraVisible);
+  const { conectar, desconectar, nuevaRonda } = rec;
+  useEffect(() => {
+    if (turnoDeEl) nuevaRonda();
+  }, [turnoDeEl, nuevaRonda]);
 
   const fase = actual.fase;
   // The recognizer taps the real microphone session while a round is on, and closes with it.
@@ -221,7 +228,7 @@ function JuegoListo({
 
   /** El padre oyó la palabra y lo dice. Es el ÚNICO camino a este estado. */
   function marcarPalabra() {
-    if (reconocidaAhora) return;
+    if (reconocidaAhora || !turnoDeEl) return;
     // Guarda del juez: sin voz oída todavía, un toque en el primer segundo es un fantasma
     // (click-through del permiso), no un juicio.
     if (!yaContadoRef.current && Date.now() - armadoDesdeRef.current < 1000)
@@ -337,7 +344,8 @@ function JuegoListo({
               </span>
               {reconocidas > 0 ? (
                 <>
-                  {" · "}{tx(txp.juego.tuOiste)}{" "}
+                  {" · "}
+                  {tx(txp.juego.tuOiste)}{" "}
                   <span className="text-exito font-sans font-semibold tabular-nums">
                     {reconocidas}
                   </span>
@@ -383,7 +391,7 @@ function JuegoListo({
           <button
             type="button"
             onClick={marcarPalabra}
-            disabled={reconocidaAhora}
+            disabled={reconocidaAhora || !turnoDeEl}
             aria-pressed={reconocidaAhora}
             className={[
               "mx-auto min-h-11 rounded-xl px-3 text-sm",

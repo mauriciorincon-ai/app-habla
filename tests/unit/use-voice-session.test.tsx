@@ -130,10 +130,24 @@ describe("use-voice-session: soplo e intensidad están cableados (S12)", () => {
   });
 
   /** A blow frame: energy, no pitch, few zero crossings (the worklet's zcr). */
-  const frameSoplo = (tMs: number): MeterFrame => ({ rms: 0.08, pitchHz: null, tMs, zcr: 0.03 });
-  const frameVoz = (tMs: number, rms: number): MeterFrame => ({ rms, pitchHz: 300, tMs, zcr: 0.012 });
+  const frameSoplo = (tMs: number): MeterFrame => ({
+    rms: 0.08,
+    pitchHz: null,
+    tMs,
+    zcr: 0.03,
+  });
+  const frameVoz = (tMs: number, rms: number): MeterFrame => ({
+    rms,
+    pitchHz: 300,
+    tMs,
+    zcr: 0.012,
+  });
 
-  function empujarFrames(desde: number, hasta: number, hacer: (t: number) => MeterFrame) {
+  function empujarFrames(
+    desde: number,
+    hasta: number,
+    hacer: (t: number) => MeterFrame,
+  ) {
     act(() => {
       for (let t = desde; t <= hasta; t += 50) fuente.cb?.(hacer(t));
     });
@@ -207,5 +221,18 @@ describe("use-voice-session: los turnos están cableados (S13, ADR-025)", () => 
       vi.advanceTimersByTime(300);
     });
     expect(result.current.sesion.turnosNino).toBe(1);
+  });
+
+  it("la cola de la voz del adulto no se cuenta como un turno de él al pasarle el turno", async () => {
+    const { result } = await montarYCalibrar();
+    act(() => result.current.cambiarTurno("adulto"));
+    empujar(2050, 3500, 0.2);
+    // Le pasa el turno con la voz del medidor en vivo todavía en su gracia: nadie hizo voz de él.
+    act(() => result.current.cambiarTurno("nino"));
+    act(() => {
+      vi.advanceTimersByTime(600);
+    });
+    expect(result.current.sesion.turnosNino).toBe(0);
+    expect(result.current.sesion.actual.fase).toBe("esperando-voz");
   });
 });
