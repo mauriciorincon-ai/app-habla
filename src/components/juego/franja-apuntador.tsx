@@ -76,27 +76,35 @@ export function FranjaApuntador({ sesion, onCambiarTurno }: Props) {
   const visible = lineaActiva ? linea : null;
 
   const alTurnoDeEl = turno === "adulto";
+  // En el cierre ya no hay turnos que marcar: queda solo la línea.
+  const enCierre = sesion.actual.fase === "celebracion";
   return (
     <div
       className="bg-superficie border-borde text-tinta flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border px-3 py-2"
       data-testid="franja-apuntador"
       data-turno={turno}
     >
-      <button
-        type="button"
-        onClick={() => onCambiarTurno(alTurnoDeEl ? "nino" : "adulto")}
-        className="bg-acento text-sobre-acento min-h-11 shrink-0 rounded-xl px-4 text-sm font-medium"
-        data-testid="cambiar-turno"
-      >
-        {tx(
-          alTurnoDeEl
-            ? textos.franja.pasarleElTurno
-            : textos.franja.tomarElTurno,
-        )}
-      </button>
-      <p className="text-tinta-suave text-sm" data-testid="turno-actual">
-        {tx(alTurnoDeEl ? textos.franja.turnoTuyo : textos.franja.turnoDeEl)}
-      </p>
+      {enCierre ? null : (
+        <>
+          <button
+            type="button"
+            onClick={() => onCambiarTurno(alTurnoDeEl ? "nino" : "adulto")}
+            className="bg-acento text-sobre-acento min-h-11 shrink-0 rounded-xl px-4 text-sm font-medium"
+            data-testid="cambiar-turno"
+          >
+            {tx(
+              alTurnoDeEl
+                ? textos.franja.pasarleElTurno
+                : textos.franja.tomarElTurno,
+            )}
+          </button>
+          <p className="text-tinta-suave text-sm" data-testid="turno-actual">
+            {tx(
+              alTurnoDeEl ? textos.franja.turnoTuyo : textos.franja.turnoDeEl,
+            )}
+          </p>
+        </>
+      )}
       <p
         aria-live="polite"
         className="text-tinta min-h-5 flex-1 basis-56 text-sm"

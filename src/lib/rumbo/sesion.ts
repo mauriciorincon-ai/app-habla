@@ -28,8 +28,10 @@ function construirBase(
       return {
         juego: "globo",
         fecha,
-        vozMs: metrica.ms,
-        rachaMs: metrica.rachaMs,
+        // Enteros: el motor suma deltas de reloj fraccionarios y el esquema pide enteros; sin redondear,
+        // el registro entero se descartaba en silencio y el Rumbo nunca veía el globo.
+        vozMs: Math.round(metrica.ms),
+        rachaMs: Math.round(metrica.rachaMs),
       };
     case "inversiones":
       return { juego: "cohete", fecha, inversiones: metrica.veces };

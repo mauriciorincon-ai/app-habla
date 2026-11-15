@@ -24,6 +24,15 @@ describe("turnos: lo guardado y lo que se resume", () => {
     });
   });
 
+  it("el globo guarda ms enteros: una medida fraccionaria no descarta la sesión", () => {
+    const s = construirSesion(
+      { tipo: "sostenido", ms: 3123.7, rachaMs: 2999.2 },
+      "2026-11-10",
+    );
+    expect(s).toMatchObject({ vozMs: 3124, rachaMs: 2999 });
+    expect(SesionSchema.safeParse(s).success).toBe(true);
+  });
+
   it("el esquema acepta los turnos, y una sesión vieja sin ellos sigue valiendo", () => {
     const nueva = construirSesion(globo, "2026-11-10", [], 3);
     expect(SesionSchema.parse(nueva)).toEqual(nueva);

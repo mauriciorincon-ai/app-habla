@@ -33,6 +33,7 @@ import {
 import { topeValido } from "@/lib/pantalla/tope";
 import { AvisoTope, LineaHoy } from "./aviso-tope";
 import { CelebracionHonesta } from "./celebracion-honesta";
+import { IndicadorTurno } from "./indicador-turno";
 import { GuionCard } from "./guion-card";
 import { hayLineaHoy, minutosDeHoy, useTopePantalla } from "./use-tope-pantalla";
 import { useVozFamiliar } from "./use-voz-familiar";
@@ -271,7 +272,7 @@ function GemelasListo({
       {/* La salida de la ronda (gate S4: gemelas no usa el marco de los juegos de voz y se había
           quedado sin puerta): "Salir" vuelve al GUION y reinicia POR COMPLETO (regla del bloque
           G) — el guion tiene su propio "← Juegos" hacia el selector. */}
-      <div className="flex items-center">
+      <div className="flex items-center justify-between gap-3">
         <button
           type="button"
           onClick={otraVez}
@@ -280,6 +281,8 @@ function GemelasListo({
         >
           {tx(g.salir)}
         </button>
+        {/* Gemelas ya alternan (él dice, el adulto marca): solo gana el indicador de turno (S13). */}
+        <IndicadorTurno turno={festejo ? "adulto" : "nino"} />
       </div>
       <div className="text-center">
         <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
