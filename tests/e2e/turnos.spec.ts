@@ -214,6 +214,10 @@ test("in English: the strip, the indicator and “N turns of theirs” are writt
     "jugando",
     { timeout: 20_000 },
   );
+  // El micrófono falso repite su ventana de voz cada ~8 s: se deja pasar una vuelta completa para que
+  // su voz suene dentro de SU turno antes de cerrar (en un runner lento la fase «jugando» ya venía del
+  // primer turno y cerrar de inmediato podía caer en el silencio del WAV).
+  await page.waitForTimeout(9_000);
   await page.getByTestId("terminar").click();
   await expect(page.getByTestId("celebracion-turnos")).toHaveText(
     "1 turn of theirs",
