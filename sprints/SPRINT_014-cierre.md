@@ -1,0 +1,24 @@
+---
+sprint: 014
+app: habla
+hito: H-2
+opened: 2026-11-15
+closed: 2026-11-15
+branch: sprint-014/su-mundo-en-todo
+pr: "#PR"
+---
+- **Nombre / objetivo:** «Su mundo en todo» — sus temas y la meta de la semana visten y orientan los siete juegos, los cuentos del mes y las hojas; sus intereses viven en un solo lugar.
+- **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño.
+- **Tiempo:** estimado 3 h · real **1,8 h** (`horas-sprint.mjs`: 17 commits, 1 sesión, span 1,3 h) · diferencia −1,2 h (−40 %).
+- **Fases:** F1 0,7 h (selector puro, contenido de colores/acciones/baño, regla del recordatorio, ADR-026) · F2 0,4 h (protagonistas, palabras a modelar, tarjeta de Hoy, perfil, Cuentos, hojas) · F3 0,6 h (inglés, documentos, auditoría pagada).
+- **Entregables:** `lib/su-mundo` (selector puro + `useSuMundo`); seis protagonistas SVG con `import()` por tema; «Modele…» en la tarjeta y «Puede decir…» en el apuntador (solo en el turno del adulto); etiqueta `colores`, 14 dibujos, 4 pares de acción, 10 cápsulas nuevas (60 en total, 8 del baño); `Perfil.otrasCosas` con migración sin pérdida del «Le gusta»; tarjeta de recordatorio en Hoy (sin notificaciones); manual ES/EN, guía (pasos `v14-m1`/`v14-m2`, «colores» → «números» como caso honesto), BLUEPRINT, brochure (35) y export.
+- **Evidencia:** unit 1053 de 1053 (56 archivos; 95,67 % de líneas) · e2e 350 de 350 con `CI=1` · lint y typecheck limpios · `cero-enlaces` limpio · `cmp` del núcleo = 0 · Lighthouse local sin incumplimientos (script: globo 327,7 KB, palabras 339,6 KB; Hoy 340,9–362,4 KB según la corrida: la CI lo confirma).
+- **Auditoría (Sonnet 5.5 high, solo lectura):** Alcance · intereses en un lugar y cápsula de Hoy que no leía «otras cosas»: pagado · cbc6efb; `etiquetaCercana` sin UI (ahora sugiere en la tarjeta): pagado · cbc6efb. Calidad · la tarjeta del objetivo decía «los dibujos no cambian» con «colores» y «acciones»: pagado · 08de7a7; el gate del perfil bloqueaba el apodo y fallaba mudo: pagado · 08de7a7; ayuda del perfil prometía de más, entrada pendiente descartada en silencio: pagado · 08de7a7; verde y azul ambiguos junto al amarillo (ids 4887 y 4869): pagado · cbc6efb; comentarios falsos y citas no verificables: pagado · cbc6efb; chip «colores»: pagado · c2f0534. Seguridad/privacidad · sin hallazgos. Frases caducadas · `faltaGusto` y título de Cuentos: pagado · cbc6efb; guía y catálogo con «50 cápsulas», export, manual EN, ADR y folleto: pagado · 022a71e. Abierto · recordatorio sin salida para quien no usará Cuentos (`recordatorio.ts:36-41`): decisión del dueño pendiente (abajo). Veredicto: listo para cierre.
+- **Desviaciones:** (1) otras cosas es una lista de hasta 8 intereses, no un texto de 120 caracteres; (2) Gemelas no tiene franja de apuntador (no usa el marco): solo la línea del guion; (3) los cuentos se rellenan con «otras cosas» y no con nombres de tema (gramática); (4) sin meta, la cápsula de Hoy se inclina hacia sus temas y otras cosas; (5) «Le gusta» salió de Cuentos; (6) los e2e se escribieron en F2; (7) el gate del perfil cubre «otras cosas» y no el apodo (es local); (8) el protagonista es un acompañante de esquina, nunca toca la mecánica.
+- **Decisiones técnicas (mías, con default):** palabras a modelar ≤ 4, solo para el adulto; el recordatorio vuelve cada día tras «Ahora no» hasta que haya lote; `design-sync` y el bundle no se corrieron (lo invoca el dueño al cierre del hito).
+- **Para decidir (una pregunta cerrada, default = lo actual):** ¿«Ahora no» pospone un día (hoy) o siete? Con 7, quien no usa Cuentos lo ve cada semana, no cada día.
+- **Decisiones:** ADR-026. **Deuda:** ninguna.
+- **Modelo por fase:** F1 Opus 5.5 · F2 y F3 Sonnet 5.5 (auditor Sonnet high); Fable no usado. **Relevos:** 0. **`/compact`:** 2. **Tokens:** no medidos.
+- **Servidores:** `lsof` LISTEN en este repo: 0 (3500 cerrado).
+- **Sensibilidad:** 0 coincidencias en lo que vigila.
+- **Para mergear:** squash y borrar la rama; después `/cierre-sprint habla`.
