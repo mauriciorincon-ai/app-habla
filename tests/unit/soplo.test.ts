@@ -68,7 +68,7 @@ describe("blow detector: energy without pitch and with little hiss (ADR-024)", (
     const aire = S.unir([S.soplo(1.5, 0.12)]);
     for (let i = 0; i < aire.length; i++) sobre[i] += aire[i];
     expect(jugar(fan(), sobre).soplos).toBe(1);
-  });
+  }, 30_000); // synthesizes seconds of audio at 48 kHz: slow runners under coverage need room
 
   it("a short puff under the confirmation time does not count", () => {
     expect(
