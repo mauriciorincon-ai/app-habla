@@ -18,6 +18,7 @@ import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
 import { OtraCasa } from "./otra-casa";
+import { TopeDiario } from "./tope-diario";
 import { Reconocedor } from "./reconocedor";
 import {
   AJUSTES_DEFECTO,
@@ -81,6 +82,8 @@ export function AjustesSesion() {
           guardarAjustesEnStore({ ...ajustes, reducirAnimaciones: activo })
         }
       />
+
+      <TopeDiario />
 
       <SeccionVozFamiliar
         vozFamiliar={ajustes.vozFamiliar}

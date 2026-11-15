@@ -17,6 +17,12 @@ import {
 } from "@/lib/voice/meter";
 import { AnalyserSource } from "@/lib/voice/analyser-source";
 import { crearGuardaBucle } from "@/lib/voice/guarda-bucle";
+import { crearDetectorSoplo, type DetectorSoplo } from "@/lib/voice/soplo";
+import {
+  crearLectorIntensidad,
+  type EstadoIntensidad,
+  type LectorIntensidad,
+} from "@/lib/voice/intensidad";
 import { MicSession } from "@/lib/voice/mic-session";
 import {
   crearPitchTracker,
@@ -59,6 +65,20 @@ export type MedidasVivas = {
   vocalActual: () => Vocal | null;
   vocalesZonas: () => number;
   vocalesCambios: () => number;
+  /** Soplar (S12): ¿sopla ahora? (energía sin tono, sin siseo). */
+  soplando: () => boolean;
+  /** Soplos contados en el intento. */
+  soplos: () => number;
+  /** ms totales de soplo. */
+  soploMs: () => number;
+  /** 0..1 — fuerza del aire sobre el piso, para el dibujo (no se guarda). */
+  fuerzaSoplo: () => number;
+  /** Fuerte y suave (S12): suave, fuerte o silencio, medido contra el piso del cuarto. */
+  nivelVoz: () => EstadoIntensidad["nivel"];
+  /** 0..1 — altura de la barra. */
+  alturaVoz: () => number;
+  /** Cambios entre suave y fuerte. */
+  cambiosVoz: () => number;
 };
 
 export type VoiceSession = {
@@ -121,6 +141,16 @@ export function useVoiceSession({
   const pitchRef = useRef<PitchTracker | null>(null);
   const vocalesRef = useRef(crearSeguimientoVocales());
   const calibracionRef = useRef<Calibracion | null>(null);
+  const soploRef = useRef<DetectorSoplo | null>(null);
+  const intensidadRef = useRef<LectorIntensidad | null>(null);
+  // Lo último que dijeron los detectores de S12 (escalares: nada de audio, regla dura 2).
+  const soploEstadoRef = useRef({ soplando: false, soplos: 0, soploMs: 0, fuerza: 0 });
+  const intensidadEstadoRef = useRef<EstadoIntensidad>({
+    nivel: "silencio",
+    db: 0,
+    altura: 0,
+    cambios: 0,
+  });
 
   // Valores vivos que la UI pinta a 60 fps sin re-render.
   const nivelRef = useRef(0);
@@ -152,6 +182,13 @@ export function useVoiceSession({
       vocalActual: () => vocalesRef.current.actual(),
       vocalesZonas: () => vocalesRef.current.zonas(),
       vocalesCambios: () => vocalesRef.current.cambios(),
+      soplando: () => soploEstadoRef.current.soplando,
+      soplos: () => soploEstadoRef.current.soplos,
+      soploMs: () => soploEstadoRef.current.soploMs,
+      fuerzaSoplo: () => soploEstadoRef.current.fuerza,
+      nivelVoz: () => intensidadEstadoRef.current.nivel,
+      alturaVoz: () => intensidadEstadoRef.current.altura,
+      cambiosVoz: () => intensidadEstadoRef.current.cambios,
     }),
     [],
   );
@@ -190,6 +227,10 @@ export function useVoiceSession({
           ...CONFIG_METER_DEFECTO,
         });
         pitchRef.current = crearPitchTracker();
+        soploRef.current = crearDetectorSoplo({ pisoRuido: estado.pisoRuido });
+        intensidadRef.current = crearLectorIntensidad({ pisoRuido: estado.pisoRuido });
+        soploEstadoRef.current = soploRef.current.estado();
+        intensidadEstadoRef.current = intensidadRef.current.estado();
         sostenidoRef.current = 0;
         vozActivaRef.current = false;
         alturaPitchRef.current = 0;
@@ -231,6 +272,12 @@ export function useVoiceSession({
         frame.pitchHz,
         estado.vozActiva,
       );
+      // S12: el MISMO frame alimenta al detector de soplo (energía sin tono) y al lector de
+      // intensidad (dB sobre el piso). Solo escalares entran; mueren en estos refs.
+      if (soploRef.current) soploEstadoRef.current = soploRef.current.procesar(frame);
+      if (intensidadRef.current) {
+        intensidadEstadoRef.current = intensidadRef.current.procesar(frame);
+      }
     }
   }, []);
 
@@ -312,6 +359,10 @@ export function useVoiceSession({
     direccionRef.current = "quieto";
     inversionesRef.current = 0;
     vocalesRef.current.reiniciar();
+    soploRef.current?.reiniciar();
+    intensidadRef.current?.reiniciar();
+    soploEstadoRef.current = { soplando: false, soplos: 0, soploMs: 0, fuerza: 0 };
+    intensidadEstadoRef.current = { nivel: "silencio", db: 0, altura: 0, cambios: 0 };
   }, []);
 
   const recalibrar = useCallback(() => {

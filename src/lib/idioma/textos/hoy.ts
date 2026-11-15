@@ -51,8 +51,8 @@ export const hoy = {
   juegos: {
     titulo: { es: "Los juegos de voz", en: "The voice games" },
     detalle: {
-      es: "El globo, el cohete, los dibujos y las gemelas. Para jugar juntos — hoy o cualquier día.",
-      en: "The balloon, the rocket, the pictures and the twin words. To play together — today or any day.",
+      es: "Siete juegos con su voz y su aire: el globo, soplar, fuerte y suave, el cohete, los dibujos, las gemelas y las vocales. Para jugar juntos — hoy o cualquier día.",
+      en: "Seven games with their voice and their breath: the balloon, blowing, loud and soft, the rocket, the pictures, the twin words and the vowels. To play together — today or any day.",
     },
   },
 } satisfies Catalogo;

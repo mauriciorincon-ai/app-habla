@@ -468,3 +468,121 @@ export function IconoAlerta({ className }: IconoProps) {
     </svg>
   );
 }
+
+/**
+ * El molino de «Soplar» (S12): como el globo y el cohete, no es un icono sino el personaje, con la
+ * paleta del niño. Las aspas viven en un grupo cuyo `ref` mueve el escenario (rotación), así que el
+ * dibujo gira sin pasar por React.
+ */
+export function Molino({
+  className,
+  aspasRef,
+}: IconoProps & { aspasRef?: React.Ref<SVGGElement> }) {
+  return (
+    <svg
+      viewBox="0 0 64 96"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* Palo */}
+      <path
+        d="M30 36h4v56h-4z"
+        fill="var(--color-kid-peach)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <g
+        ref={aspasRef}
+        style={{ transformOrigin: "32px 32px", transformBox: "view-box" }}
+      >
+        {/* Cuatro aspas, cada una de su color y de su forma: el color nunca va solo */}
+        <path
+          d="M32 32L32 6C46 8 52 20 32 32z"
+          fill="var(--color-kid-yellow)"
+          stroke="var(--color-kid-ink)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M32 32L58 32C56 46 44 52 32 32z"
+          fill="var(--color-kid-sky)"
+          stroke="var(--color-kid-ink)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M32 32L32 58C18 56 12 44 32 32z"
+          fill="var(--color-kid-sage)"
+          stroke="var(--color-kid-ink)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M32 32L6 32C8 18 20 12 32 32z"
+          fill="var(--color-kid-peach)"
+          stroke="var(--color-kid-ink)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <circle
+          cx="32"
+          cy="32"
+          r="4"
+          fill="#FFFFFF"
+          stroke="var(--color-kid-ink)"
+          strokeWidth="1.5"
+        />
+      </g>
+    </svg>
+  );
+}
+
+/** Fuerte y suave: dos barras, una baja y otra alta (la forma dice «suave» y «fuerte» sin leer). */
+export function BarrasVoz({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect
+        x="8"
+        y="38"
+        width="20"
+        height="18"
+        rx="5"
+        fill="var(--color-kid-sky)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+      />
+      <rect
+        x="36"
+        y="8"
+        width="20"
+        height="48"
+        rx="5"
+        fill="var(--color-kid-peach)"
+        stroke="var(--color-kid-ink)"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+/** Un reloj sereno, para el aviso del tope de juego (va al adulto, nunca al niño). */
+export function IconoReloj({ className }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="12" cy="12" r="8.5" {...trazo} />
+      <path d="M12 7v5l3 2" {...trazo} />
+    </svg>
+  );
+}

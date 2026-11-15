@@ -6,7 +6,7 @@
 // app (HTML, JS, CSS, iconos). No intercepta ni almacena nada del micrófono — el audio del niño
 // nunca sale del hilo de análisis, así que nunca llega a la red.
 
-const CACHE = "habla-v3";
+const CACHE = "habla-v4";
 // The recognizer cache (S11, ADR-023) belongs to Ajustes: only the adult fills or empties it.
 const CACHE_RECONOCEDOR = "habla-reconocedor-v1";
 
@@ -15,8 +15,9 @@ const SHELL = [
   "/",
   "/jugar",
   "/ajustes",
-  "/worklets/rms-processor.js?v=3",
+  "/worklets/rms-processor.js?v=4",
   "/worklets/formantes.js",
+  "/worklets/analisis.js",
 ];
 
 self.addEventListener("install", (event) => {

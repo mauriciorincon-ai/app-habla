@@ -6,7 +6,7 @@ const origen = () => new URL(test.info().project.use.baseURL ?? "http://127.0.0.
 
 // LA PROMESA MÁS SAGRADA DE LA APP, bajo test (regla dura 2):
 // el audio del niño no sale del dispositivo — y durante el juego no sale NADA.
-// Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los cuatro juegos que escuchan el micrófono.
+// Desde el Sprint 2 esto incluye el PITCH (dato derivado de su voz) y cubre los juegos que escuchan el micrófono.
 //
 // Doble candado:
 //   A) Ninguna petición cross-origin en toda la sesión (si algún día Sentry despertara con DSN,
@@ -19,6 +19,8 @@ const origen = () => new URL(test.info().project.use.baseURL ?? "http://127.0.0.
 
 const JUEGOS = [
   { ruta: "/jugar/globo", nombre: "el globo" },
+  { ruta: "/jugar/soplar", nombre: "soplar" },
+  { ruta: "/jugar/fuerte-suave", nombre: "fuerte y suave" },
   { ruta: "/jugar/cohete", nombre: "el cohete" },
   { ruta: "/jugar/palabras", nombre: "palabra↔objeto" },
   { ruta: "/jugar/vocales", nombre: "el mapa de las vocales" },
@@ -162,9 +164,10 @@ test("cero red al grabar y reproducir en el estudio (banco 100 % local)", async 
 
 // Lista blanca CONSCIENTE de claves locales (ADR-002). El S4 le suma `sesiones` (números del
 // Rumbo) y `objetivo` (texto del padre) a las del S1/S3; el candado de CONTENIDO sigue vetando
-// cualquier rastro de audio o de tono, sea cual sea la clave.
+// cualquier rastro de audio o de tono, sea cual sea la clave. El S12 le suma `pantalla`: el contador del
+// tope diario (una fecha y milisegundos de juego; ADR-024) — local, sin audio, fuera del archivo de la otra casa.
 const LISTA_BLANCA =
-  /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo|cuentos)$/;
+  /^habla:v1:(perfil|ajustes|progreso|gemelas|sesiones|objetivo|cuentos|pantalla)$/;
 const RASTRO_DE_AUDIO = /audio|rms|pcm|wav|pitch|hz|blob:|data:audio/i;
 
 /** Foto del almacenamiento del navegador, para correr el candado en un momento dado. */

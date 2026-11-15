@@ -33,6 +33,10 @@ export type ResumenSemana = {
   vueltasGlobo: number;
   /** Cápsulas del día completadas esa semana (lo que el padre marcó "Sí, ya lo hicimos"). */
   capsulasHechas: number;
+  /** Soplos que el detector contó en «Soplar» (medido, S12). */
+  soplos: number;
+  /** Cambios entre suave y fuerte en «Fuerte y suave» (medido, S12). */
+  cambiosDeVolumen: number;
   /** Rondas de gemelas jugadas. */
   rondasGemelas: number;
   /** Lo que el PADRE marcó haber oído (palabras reconocidas + participación en gemelas). */
@@ -53,6 +57,8 @@ function resumirSemana(
   let vueltas = 0;
   let rondas = 0;
   let marcadas = 0;
+  let soplos = 0;
+  let cambiosVolumen = 0;
 
   for (const s of sesiones) {
     dias.add(s.fecha);
@@ -76,6 +82,12 @@ function resumirSemana(
         rondas += s.rondas;
         marcadas += s.participadas;
         break;
+      case "soplar":
+        soplos += s.soplos;
+        break;
+      case "fuerte-suave":
+        cambiosVolumen += s.cambios;
+        break;
       case "vocales":
         // Experimental: cuenta como día de práctica y sesión de voz, pero no entra en ninguna cifra.
         break;
@@ -93,6 +105,8 @@ function resumirSemana(
     vozMsTotal: vozTotal,
     vueltasGlobo: vueltas,
     capsulasHechas: diasCapsula.size,
+    soplos,
+    cambiosDeVolumen: cambiosVolumen,
     rondasGemelas: rondas,
     marcadasPorTi: marcadas,
   };

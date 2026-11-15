@@ -158,7 +158,7 @@ test("salir del juego vuelve al GUION, y el guion sale al selector (gate S4)", a
   await page.getByTestId("salir-al-guion").click();
   await expect(page.getByTestId("empezar-juego")).toBeVisible();
 
-  // Y desde el guion, "← Juegos" sí lleva al selector de los cuatro.
+  // Y desde el guion, "← Juegos" sí lleva al selector de los siete.
   await page.getByTestId("volver-a-juegos").click();
   await expect(page.getByTestId("juego-globo")).toBeVisible();
 });

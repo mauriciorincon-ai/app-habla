@@ -47,6 +47,8 @@ export const CLAVES = {
   cuentos: `${PREFIJO}v1:cuentos`,
   /** The recognizer-vs-adult 2×2 (S11, ADR-023): four local numbers, never in the other-home package. */
   coincidencias: `${PREFIJO}v1:coincidencias`,
+  /** The daily play cap's counter (S12, ADR-024): a date and milliseconds, local, never in the other-home package. */
+  pantalla: `${PREFIJO}v1:pantalla`,
 } as const;
 
 function disponible(): boolean {

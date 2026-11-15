@@ -250,9 +250,9 @@ export function HoyCliente() {
         className="bg-superficie shadow-tarjeta flex min-h-16 items-center gap-4 rounded-2xl p-5"
         data-testid="ir-al-juego"
       >
-        {/* Los CUATRO juegos, y a la IZQUIERDA: los iconos acompañan al texto por delante en
+        {/* Cuatro de los siete juegos como muestra (el texto nombra los siete), y a la IZQUIERDA: los iconos acompañan al texto por delante en
             toda la app (regla del design system, gate S4). Las gemelas llegaron en el S3 y esta
-            tarjeta seguía anunciando tres. */}
+            tarjeta seguía anunciando tres; en el S12 el texto vuelve a decir la verdad. */}
         <span className="flex shrink-0 items-center gap-1">
           <Globo className="h-12 w-8" />
           <Cohete className="h-12 w-8" />
