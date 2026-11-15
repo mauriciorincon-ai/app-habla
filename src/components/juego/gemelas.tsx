@@ -16,8 +16,8 @@ import { useHidratado } from "@/components/use-hidratado";
 import { IconoAltavoz } from "@/components/iconos";
 import { fechaHoy } from "@/lib/fecha";
 import { fnv1a } from "@/lib/coach/daily";
-import { alinear } from "@/lib/objetivo/alinear";
-import { agregarJuiciosGemelas, leerObjetivo } from "@/lib/storage/local";
+import { useSuMundo } from "./use-su-mundo";
+import { agregarJuiciosGemelas } from "@/lib/storage/local";
 import { idPalabra } from "@/lib/banco-voz/catalogo";
 import { type Etapa } from "@content/schema";
 import { useIdioma, useT } from "@/lib/idioma/estado";
@@ -84,18 +84,19 @@ function GemelasListo({
   // día trae su mezcla de parejas, determinista y sin Math.random — el patrón de la cápsula
   // diaria. Estable por montaje: el orden no cambia al re-renderizar. Con objetivo de la semana,
   // los pares que coinciden entran primero; sin él, el orden es idéntico.
+  // S14 (ADR-026): prefiere los pares de su meta y luego los de SUS temas (por sus dibujos), leídos
+  // reactivos de su mundo; sin meta ni temas, el orden es idéntico al de siempre.
+  const { paresPreferidos } = useSuMundo("gemelas");
   const rondas = useMemo(() => {
-    const objetivo = alinear(leerObjetivo()?.texto);
+    const preferidos = new Set(paresPreferidos);
     return secuenciaDeRondas(
       etapa,
       fnv1a(fechaHoy()),
       6,
       paresDe(idioma),
-      (par) =>
-        objetivo.coincidePalabra(par.a.palabra) ||
-        objetivo.coincidePalabra(par.b.palabra),
+      (par) => preferidos.has(par.id),
     );
-  }, [etapa, idioma]);
+  }, [etapa, idioma, paresPreferidos]);
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);

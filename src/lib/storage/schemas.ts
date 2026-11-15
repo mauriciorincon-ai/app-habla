@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ETAPA_DEFECTO, ETAPAS, NIVELES_CONTACTO_VISUAL } from "@content/schema";
+import { InteresSchema } from "@/lib/bandeja/cuentos-del-mes";
 import { TEMAS } from "./temas";
 
 // Lo ÚNICO que esta app guarda: progreso de cápsulas, ajustes y el onboarding local.
@@ -13,8 +14,17 @@ export const PerfilSchema = z.object({
   /** Como el niño quiere que le digan. Opcional a propósito: la app funciona igual sin él. */
   apodo: z.string().trim().max(30).optional(),
   temas: z.array(z.enum(TEMAS)).min(1).max(3),
+  /**
+   * «Otras cosas que le encantan» (S14, ADR-026): lo que no cabe en los seis temas, en palabras genéricas
+   * (mismo esquema que los intereses del pedido de cuentos). Es el ÚNICO lugar de sus intereses: Cuentos
+   * y las hojas lo leen de aquí. Opcional; vive solo en el aparato y no va en el paquete de la otra casa.
+   */
+  otrasCosas: z.array(InteresSchema).max(8).optional(),
 });
 export type Perfil = z.infer<typeof PerfilSchema>;
+
+/** Cuántas «otras cosas que le encantan» guarda el perfil. */
+export const MAX_OTRAS_COSAS = 8;
 
 export const AjustesSchema = z.object({
   modoCalma: z.boolean().catch(false),
@@ -68,6 +78,11 @@ export const AjustesSchema = z.object({
    * game. On by default; `.catch(true)` migrates every earlier setting. Calm mode turns the line off too.
    */
   apuntador: z.boolean().catch(true),
+  /**
+   * The monthly-stories reminder (S14, ADR-026): the day the adult tapped «Not now» on its card in Today,
+   * so it hides until the next day. `null` = never postponed; `.catch(null)` migrates earlier settings.
+   */
+  recordatorioPospuesto: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().catch(null),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -84,6 +99,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   animacionReconocedor: false,
   topeMinutos: 10,
   apuntador: true,
+  recordatorioPospuesto: null,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

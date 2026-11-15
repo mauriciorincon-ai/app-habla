@@ -21,6 +21,7 @@ import {
   leerObjetivo,
   leerPerfil,
   leerProgreso,
+  migrarInteresesAlPerfil,
 } from "@/lib/storage/local";
 import { fechaHoy } from "@/lib/fecha";
 import type { CuentosGuardados } from "@/lib/cuentos/estado";
@@ -68,7 +69,11 @@ function crearStore<T>(leer: () => T, guardar: (valor: T) => void): Store<T> {
 
 const storeProgreso = crearStore<Progreso>(leerProgreso, guardarProgreso);
 const storeAjustes = crearStore<AjustesGuardados>(leerAjustes, guardarAjustes);
-const storePerfil = crearStore<Perfil | null>(leerPerfil, (perfil) => {
+// Antes de la primera lectura del perfil o de los cuentos, el «Le gusta» viejo pasa al perfil (S14).
+const storePerfil = crearStore<Perfil | null>(() => {
+  migrarInteresesAlPerfil();
+  return leerPerfil();
+}, (perfil) => {
   if (perfil) guardarPerfil(perfil);
 });
 const storeObjetivo = crearStore<Objetivo | null>(leerObjetivo, (obj) => {
@@ -76,7 +81,10 @@ const storeObjetivo = crearStore<Objetivo | null>(leerObjetivo, (obj) => {
   else borrarObjetivo();
 });
 
-const storeCuentos = crearStore<CuentosGuardados>(leerCuentos, guardarCuentos);
+const storeCuentos = crearStore<CuentosGuardados>(() => {
+  migrarInteresesAlPerfil();
+  return leerCuentos();
+}, guardarCuentos);
 
 const sinDatosEnServidor = () => null;
 

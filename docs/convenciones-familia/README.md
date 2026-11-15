@@ -30,7 +30,7 @@ sin movimiento) y **se recuerda** entre sesiones.
 
 *C2 · One-tap calm mode, visible on every child screen, remembered between sessions.*
 
-- **Habla:** [src/lib/storage/schemas.ts:20](../../src/lib/storage/schemas.ts) (`modoCalma` guardado) ·
+- **Habla:** [src/lib/storage/schemas.ts:30](../../src/lib/storage/schemas.ts) (`modoCalma` guardado) ·
   [src/components/juego/marco-juego.tsx:147](../../src/components/juego/marco-juego.tsx) (el interruptor).
 - **Nutri-Kids:** **le falta.** Su sistema de diseño no define modo calma; es la única brecha de esta versión.
 

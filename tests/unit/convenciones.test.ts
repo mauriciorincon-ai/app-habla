@@ -16,7 +16,7 @@ const REGLAS = ["C1", "C2", "C3", "C4", "C5", "C6"];
 const ANCLAS: Record<string, string> = {
   "src/components/juego/forma-vocal.tsx:30": "export function FormaVocal",
   "src/app/globals.css:116": "--exito",
-  "src/lib/storage/schemas.ts:20": "modoCalma",
+  "src/lib/storage/schemas.ts:30": "modoCalma",
   "src/components/juego/marco-juego.tsx:147": "modo-calma",
   "src/components/juego/mapa-vocales.tsx:175": "min-h-16",
   "src/app/ajustes/page.tsx:104": "ARASAAC",
