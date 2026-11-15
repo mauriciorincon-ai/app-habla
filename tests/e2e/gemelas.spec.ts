@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "./base";
 
 // PALABRAS GEMELAS (Outcome 3) — el juego SIN micrófono (co-uso puro, ADR-009). El niño dice una
@@ -101,4 +102,23 @@ test("el padre puede saltar una ronda sin castigo (COGA: estar juntos ya cuenta)
   await expect(
     page.getByText("Estar juntos frente al juego ya cuenta."),
   ).toBeVisible();
+});
+
+test("Gemelas lleva el indicador de turno (S13) y pasa axe en claro y oscuro", async ({
+  page,
+}) => {
+  await page.goto("/jugar/gemelas");
+  await page.getByTestId("empezar-juego").click();
+  await expect(page.getByTestId("gemelas-ronda")).toBeVisible();
+  await expect(page.getByTestId("indicador-turno")).toHaveAttribute(
+    "data-turno",
+    "nino",
+  );
+  for (const esquema of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme: esquema });
+    const { violations } = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
+  }
 });

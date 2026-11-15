@@ -535,6 +535,19 @@ voz cuentan los minutos de juego de **hoy en este aparato**. Cuando se llega al 
 El contador es **local y solo de hoy** (guarda la fecha y los minutos, nada más): no viaja al archivo de la otra casa y
 «Borrar mis datos» lo borra.
 
+### Turnos y apuntador — jugar de a dos, con una línea para usted (nuevo · S13)
+
+Cada juego de micrófono (globo, soplar, fuerte y suave, cohete, palabra y dibujo, vocales) se juega **por turnos**, y usted los marca:
+
+- Arriba del juego hay una **franja fina** con un botón: **«Pasarle el turno»** o **«Mi turno»**. **Un toque** cambia de turno. La app **nunca adivina de quién es una voz**: eso lo decide usted.
+- **En su turno** (así empieza todo, sin tocar nada) lo que su voz hace **cuenta y se celebra**. **En el turno de usted** el dibujo se mueve con su modelo para que él lo vea, pero **nada se le cuenta a él**: ni segundos, ni soplos, ni cambios, ni el dibujo que se enciende.
+- **Toque «Mi turno» antes de modelar.** La app no sabe de quién es la voz: si usted modela sin tocar, lo que suene cuenta como de él.
+- Él ve un **indicador de turno** que se entiende sin leer: una figura redonda con ondas y «Tu voz», o un ojo con «Mira y escucha». Palabras gemelas (donde él dice y usted marca) solo gana ese indicador.
+- **Tu apuntador:** en la franja aparece, unos segundos, **una línea para usted** en el momento justo: cuando empieza su turno («modela despacio, una sola vez»), cuando él hizo voz («expande: repite lo que dijo y suma una palabra»), si hay un silencio largo («espera tres segundos»), y al cerrar («nombra lo que hicieron juntos»). **No se repite** en la sesión, habla siempre en positivo y cada línea se apoya en la misma técnica y fuente de las cápsulas. Se apaga en **Ajustes → «Tu apuntador»** y **el modo calma también la apaga** (el botón de turno se queda).
+- Al terminar, la celebración dice **«N turnos de él»**: solo cuenta los turnos de él en que su voz se midió. El Rumbo los suma por semana y un hito nuevo, **«Jugaron por turnos»**, llega con tres turnos suyos en un mismo juego.
+
+Nada de esto guarda su voz ni la de él: solo se guarda **cuántos turnos de él** hubo, y «Borrar mis datos» lo borra.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
@@ -680,4 +693,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 010    | **«Lejos de la pantalla»**: **Pasar a la otra casa** (un archivo cifrado con una frase lleva el objetivo, lo practicado y lo logrado a otro aparato, sin internet, mostrando antes qué cambia); **el mapa de las vocales**, quinto juego, **experimental** («quizás suena como…», nunca un veredicto); **Hojas para imprimir** (tarjetas con dibujo y tablero de turnos, con el crédito de ARASAAC en cada hoja y sin nombre ni edad). |
 | 011    | **«¿Dijo la palabra?»**: un reconocedor en el aparato (apagado de fábrica, unos 40 MB que usted baja y puede borrar) que en Palabra y dibujo y Palabras gemelas le muestra **solo a usted** un «quizás dijo…»; una animación suave opcional para el niño (apagada, sin texto ni veredicto); cuatro números locales de coincidencia, fuera del archivo de la otra casa. |
 | 012    | **«Su voz lo mueve todo»**: dos juegos nuevos sin palabras, **Soplar** (cuenta soplos de aire) y **Fuerte y suave** (celebra los cambios de volumen, nunca un volumen «correcto»); el selector con siete juegos en orden fijo; **Sesiones cortas**: un tope de juego por día (5 a 10 min, 10 de fábrica) que cierra el juego con calma y avisa una vez al adulto, sin bloquear; el rumbo suma soplos, cambios de volumen y dos hitos. |
+| 013    | **«Juntos de verdad»**: los seis juegos de micrófono por turnos que usted marca con un toque (en el suyo, el dibujo se mueve pero nada se le cuenta a él), un indicador de turno que el niño entiende sin leer, **Tu apuntador** (una línea para usted en el momento justo, apagable) y «N turnos de él» en la celebración y el Rumbo. |
 <!-- s5:fin -->

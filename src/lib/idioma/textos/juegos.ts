@@ -186,8 +186,8 @@ export const juegos = {
       dibujos: { es: "Hoy los dibujos se quedaron esperando", en: "Today the pictures stayed waiting" },
       globo: { es: "Hoy el globo casi no voló", en: "Today the balloon hardly flew" },
       cuerpo: {
-        es: "El micrófono no alcanzó a escuchar su voz. No pasa nada y no se perdió nada: estar juntos frente al juego ya cuenta. Mañana lo intentamos otra vez.",
-        en: "The microphone couldn't pick up their voice. That's okay, and nothing was lost: being together at the game already counts. We'll try again tomorrow.",
+        es: "Esta vez no se midió su voz en su turno. No pasa nada y no se perdió nada: estar juntos frente al juego ya cuenta. Mañana lo intentamos otra vez.",
+        en: "This time their voice wasn't measured in their turn. That's okay, and nothing was lost: being together at the game already counts. We'll try again tomorrow.",
       },
     },
   },

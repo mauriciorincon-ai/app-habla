@@ -126,6 +126,12 @@ function Semana({
           plural={rumbo.datos.cambiosDeVolumen.otro}
         />
         <Dato
+          n={semana.turnosNino}
+          id="turnos"
+          singular={rumbo.datos.turnos.uno}
+          plural={rumbo.datos.turnos.otro}
+        />
+        <Dato
           n={semana.rondasGemelas}
           id="rondas"
           singular={rumbo.datos.rondas.uno}

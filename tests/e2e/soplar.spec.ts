@@ -15,10 +15,14 @@ test("Soplar cuenta soplos de verdad, celebra solo eso y pasa axe jugando y cele
   await expect(page.getByTestId("empezar-juego")).toBeEnabled();
   await expect(page.getByText("Hágalo usted primero")).toBeVisible();
 
+  await expect(page.getByTestId("guion-turnos")).toBeVisible();
   await page.getByTestId("empezar-juego").click();
   await expect(page.getByTestId("calibrando")).toBeVisible();
   await expect(page.getByTestId("juego")).toHaveAttribute("data-fase", "jugando", { timeout: 20_000 });
   await expect(page.getByTestId("juego")).toHaveAttribute("data-juego", "soplar");
+  // S13: el guion avisó de los turnos y el juego trae su franja e indicador (nace en su turno).
+  await expect(page.getByTestId("franja-apuntador")).toHaveAttribute("data-turno", "nino");
+  await expect(page.getByTestId("indicador-turno")).toBeVisible();
 
   // El primer soplo aparece en el contador vivo, con texto (el color no va solo).
   await expect(page.getByTestId("soplos")).toContainText("Soplos que oí", { timeout: 25_000 });
@@ -54,7 +58,7 @@ test("Soplar cuenta soplos de verdad, celebra solo eso y pasa axe jugando y cele
   const guardado = await page.evaluate(() => window.localStorage.getItem("habla:v1:sesiones"));
   const sesiones = JSON.parse(guardado!).sesiones as Array<Record<string, unknown>>;
   const ultima = sesiones[sesiones.length - 1]!;
-  expect(Object.keys(ultima).sort()).toEqual(["fecha", "juego", "soploMs", "soplos"]);
+  expect(Object.keys(ultima).sort()).toEqual(["fecha", "juego", "soploMs", "soplos", "turnosNino"]);
   expect(ultima.juego).toBe("soplar");
 });
 

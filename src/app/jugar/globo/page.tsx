@@ -27,7 +27,7 @@ export default function JugarGloboPage() {
         <Tx t={juegos.globo.titulo} />
       </h1>
       {/* Nace visible en el HTML (es el candidato LCP), pero se retira en cuanto el juego
-          arranca: la vista del niño es soberana — ningún texto del padre se filtra al escenario.
+          arranca: la vista del niño es soberana — ningún texto del padre se filtra al escenario, salvo la franja del apuntador (ADR-025).
           Lo esconde el CSS con `html[data-en-juego]` (Lightning CSS descarta `:has()`). */}
       <p
         data-intro-padre
