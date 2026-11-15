@@ -51,7 +51,7 @@ test("Fuerte y suave celebra los cambios, nombra el nivel con texto y símbolo, 
   const guardado = await page.evaluate(() => window.localStorage.getItem("habla:v1:sesiones"));
   const sesiones = JSON.parse(guardado!).sesiones as Array<Record<string, unknown>>;
   const ultima = sesiones[sesiones.length - 1]!;
-  expect(Object.keys(ultima).sort()).toEqual(["cambios", "fecha", "juego"]);
+  expect(Object.keys(ultima).sort()).toEqual(["cambios", "fecha", "juego", "turnosNino"]);
 });
 
 test("en modo calma no hay conteo de cambios", async ({ page }) => {

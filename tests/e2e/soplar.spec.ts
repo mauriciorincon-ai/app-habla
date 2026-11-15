@@ -54,7 +54,7 @@ test("Soplar cuenta soplos de verdad, celebra solo eso y pasa axe jugando y cele
   const guardado = await page.evaluate(() => window.localStorage.getItem("habla:v1:sesiones"));
   const sesiones = JSON.parse(guardado!).sesiones as Array<Record<string, unknown>>;
   const ultima = sesiones[sesiones.length - 1]!;
-  expect(Object.keys(ultima).sort()).toEqual(["fecha", "juego", "soploMs", "soplos"]);
+  expect(Object.keys(ultima).sort()).toEqual(["fecha", "juego", "soploMs", "soplos", "turnosNino"]);
   expect(ultima.juego).toBe("soplar");
 });
 
