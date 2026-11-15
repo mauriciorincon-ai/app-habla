@@ -15,6 +15,7 @@ import { useEffect, useRef } from "react";
 import { useT } from "@/lib/idioma/estado";
 import { fuerteSuave } from "@/lib/idioma/textos/voz-juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
+import { Protagonista } from "./protagonista";
 import type { MedidasVivas } from "./use-voice-session";
 
 const SUAVIZADO_MS = 160;
@@ -108,6 +109,10 @@ export function EscenarioBarra({ medidas, hito, modoCalma, invitando }: Props) {
         {!modoCalma && hito > 0 ? (
           <ConfetiVuelta key={`confeti-${hito}`} centrado />
         ) : null}
+        <Protagonista
+          juego="fuerte-suave"
+          className="absolute bottom-8 left-[6%] h-16 w-16 sm:h-20 sm:w-20"
+        />
         <div
           ref={columnaRef}
           className="bg-kid-sky border-kid-ink relative mb-8 h-[78%] w-28 origin-bottom rounded-3xl border-2 will-change-transform sm:w-36"

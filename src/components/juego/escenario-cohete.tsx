@@ -20,6 +20,7 @@ import { Cohete } from "@/components/iconos";
 import { useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
+import { Protagonista } from "./protagonista";
 import type { MedidasVivas } from "./use-voice-session";
 
 /**
@@ -180,6 +181,11 @@ export function EscenarioCohete({
         {!modoCalma && hito > 0 ? (
           <ConfetiVuelta key={`confeti-${hito}`} centrado />
         ) : null}
+
+        <Protagonista
+          juego="cohete"
+          className="absolute right-[6%] bottom-10 h-16 w-16 sm:h-20 sm:w-20"
+        />
 
         <div className="absolute bottom-10 left-1/2 h-32 w-20 -translate-x-1/2">
           <div

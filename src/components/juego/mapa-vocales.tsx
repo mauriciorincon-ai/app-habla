@@ -23,6 +23,7 @@ import { CelebracionHonesta } from "./celebracion-honesta";
 import { FormaVocal } from "./forma-vocal";
 import { GuionCard } from "./guion-card";
 import { MarcoJuego } from "./marco-juego";
+import { Protagonista } from "./protagonista";
 import { useVoiceSession, type MedidasVivas } from "./use-voice-session";
 
 export function MapaVocales() {
@@ -103,14 +104,18 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="vocales"
         />
       ) : null}
 
       {jugando ? (
         <section className="flex flex-col gap-5">
-          <h2 className="font-display text-center text-3xl sm:text-4xl">
-            {tx(ahora ? textos.escuchando : textos.invitacion)}
-          </h2>
+          <div className="flex items-center justify-center gap-3">
+            <Protagonista juego="vocales" className="size-12 shrink-0 sm:size-14" />
+            <h2 className="font-display text-center text-3xl sm:text-4xl">
+              {tx(ahora ? textos.escuchando : textos.invitacion)}
+            </h2>
+          </div>
 
           {/* Las cinco zonas: letra + dibujo + color; la que suena queda grande y con su nombre. */}
           <ul

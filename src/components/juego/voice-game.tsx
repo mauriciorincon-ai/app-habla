@@ -157,6 +157,7 @@ function JuegoListo({
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="globo"
         />
       ) : null}
 

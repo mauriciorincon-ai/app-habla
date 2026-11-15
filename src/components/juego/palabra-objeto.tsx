@@ -317,6 +317,7 @@ function JuegoListo({
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="palabras"
         />
       ) : null}
 

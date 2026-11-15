@@ -9,6 +9,9 @@ import Link from "next/link";
 import { useT } from "@/lib/idioma/estado";
 import { apuntador } from "@/lib/idioma/textos/apuntador";
 import { juegos } from "@/lib/idioma/textos/juegos";
+import { suMundo as textosSuMundo } from "@/lib/idioma/textos/su-mundo";
+import type { JuegoSuMundo } from "@/lib/su-mundo/su-mundo";
+import { useSuMundo } from "./use-su-mundo";
 
 type Props = {
   /** Etiqueta pequeña de contexto (la técnica del día, o el nombre del juego). */
@@ -21,7 +24,22 @@ type Props = {
   listo: boolean;
   /** Los juegos de micrófono se juegan por turnos (S13): el guion dice cuándo tocar «Mi turno». */
   porTurnos?: boolean;
+  /** Su mundo (S14): con el juego, la tarjeta le propone al ADULTO las palabras de la meta de la semana. */
+  juego?: JuegoSuMundo;
 };
+
+/** «Modele una palabra de su meta: rojo · azul…» — solo con una meta que tenga palabras detrás. */
+function LineaModele({ juego }: { juego: JuegoSuMundo }) {
+  const tx = useT();
+  const { palabrasAModelar } = useSuMundo(juego);
+  if (palabrasAModelar.length === 0) return null;
+  return (
+    <p className="text-tinta mt-3 text-sm" data-testid="guion-modele">
+      <span className="font-medium">{tx(textosSuMundo.modele)}</span>{" "}
+      {palabrasAModelar.join(" · ")}
+    </p>
+  );
+}
 
 export function GuionCard({
   etiqueta,
@@ -30,6 +48,7 @@ export function GuionCard({
   onEmpezar,
   listo,
   porTurnos = false,
+  juego,
 }: Props) {
   const tx = useT();
   return (
@@ -60,6 +79,7 @@ export function GuionCard({
         </blockquote>
 
         <p className="text-tinta-suave mt-5 text-sm">{nota}</p>
+        {juego ? <LineaModele juego={juego} /> : null}
         {porTurnos ? (
           <p
             className="text-tinta mt-3 text-sm font-medium"

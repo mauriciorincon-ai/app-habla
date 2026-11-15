@@ -250,6 +250,7 @@ function GemelasListo({
           nota={tx(g.guion.nota)}
           onEmpezar={() => setFase("jugando")}
           listo
+          juego="gemelas"
         />
       </div>
     );
