@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-15
 closed: 2026-11-15
 branch: sprint-012/su-voz-lo-mueve-todo
-pr: "(se completa al abrirlo)"
+pr: "#24"
 ---
 - **Nombre / objetivo:** «Su voz lo mueve todo» — soplar, fuerte y suave y sesiones cortas (tope diario de 5 a 10 min), sin tocar la voz del niño ni ningún umbral existente.
 - **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño.
