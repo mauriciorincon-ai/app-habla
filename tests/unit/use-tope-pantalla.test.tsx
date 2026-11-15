@@ -5,7 +5,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useTopePantalla } from "@/components/juego/use-tope-pantalla";
 import { claveFechaLocal } from "@/lib/fecha";
-import { guardarPantalla, leerPantalla } from "@/lib/storage/local";
+import { guardarPantalla, leerPantalla } from "@/lib/pantalla/almacen";
 
 const HOY = claveFechaLocal(new Date());
 const MIN = 60_000;

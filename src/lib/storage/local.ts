@@ -30,11 +30,6 @@ import {
 } from "./schemas";
 import { fechaHoy } from "@/lib/fecha";
 import {
-  PANTALLA_VACIA,
-  PantallaSchema,
-  type EstadoPantalla,
-} from "@/lib/pantalla/tope";
-import {
   CUENTOS_VACIO,
   CuentosGuardadosSchema,
   type CuentosGuardados,
@@ -176,12 +171,6 @@ export const borrarObjetivo = (): void => {
   if (!disponible()) return;
   window.localStorage.removeItem(CLAVES.objetivo);
 };
-
-/** The minutes of play today on this device (S12): a date and a number, nothing else. */
-export const leerPantalla = (): EstadoPantalla =>
-  leer(CLAVES.pantalla, PantallaSchema) ?? PANTALLA_VACIA;
-export const guardarPantalla = (estado: EstadoPantalla): void =>
-  guardar(CLAVES.pantalla, PantallaSchema, estado);
 
 /** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
 export function leerCuentos(): CuentosGuardados {

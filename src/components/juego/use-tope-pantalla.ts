@@ -17,7 +17,7 @@ import {
   marcarAvisado,
   minutosJugados,
 } from "@/lib/pantalla/tope";
-import { guardarPantalla, leerPantalla } from "@/lib/storage/local";
+import { guardarPantalla, leerPantalla } from "@/lib/pantalla/almacen";
 
 const CADA_MS = 1000;
 

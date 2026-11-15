@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { AjustesSchema } from "@/lib/storage/schemas";
-import { borrarTodo, CLAVES, guardarPantalla, leerPantalla } from "@/lib/storage/local";
+import { borrarTodo, CLAVES } from "@/lib/storage/local";
+import { guardarPantalla, leerPantalla } from "@/lib/pantalla/almacen";
 import {
   DELTA_MAX_MS,
   PANTALLA_VACIA,
@@ -82,7 +83,11 @@ describe("daily play cap (S12)", () => {
     expect(minutosJugados(ayer, MANANA)).toBe(0);
     expect(alcanzado(ayer, MANANA, 5)).toBe(false);
     expect(debeAvisar(ayer, MANANA, 5)).toBe(false);
-    expect(delDia(ayer, MANANA)).toEqual({ fecha: MANANA, ms: 0, avisado: false });
+    expect(delDia(ayer, MANANA)).toEqual({
+      fecha: MANANA,
+      ms: 0,
+      avisado: false,
+    });
     const hoyDeNuevo = acumular(ayer, MANANA, 100);
     expect(hoyDeNuevo).toEqual({ fecha: MANANA, ms: 100, avisado: false });
   });
@@ -105,7 +110,10 @@ describe("daily play cap (S12)", () => {
   });
 
   it("the stored shape is validated: only a date, a number of ms and a flag", () => {
-    expect(PantallaSchema.safeParse({ fecha: HOY, ms: 1200, avisado: false }).success).toBe(true);
+    expect(
+      PantallaSchema.safeParse({ fecha: HOY, ms: 1200, avisado: false })
+        .success,
+    ).toBe(true);
     for (const malo of [
       { fecha: "hoy", ms: 1, avisado: false },
       { fecha: HOY, ms: -1, avisado: false },
@@ -113,7 +121,9 @@ describe("daily play cap (S12)", () => {
       { fecha: HOY, ms: 1 },
       null,
     ]) {
-      expect(PantallaSchema.safeParse(malo).success, JSON.stringify(malo)).toBe(false);
+      expect(PantallaSchema.safeParse(malo).success, JSON.stringify(malo)).toBe(
+        false,
+      );
     }
   });
 });
@@ -125,11 +135,11 @@ describe("the cap's counter in storage (S12)", () => {
     expect(leerPantalla()).toEqual(PANTALLA_VACIA);
     guardarPantalla({ fecha: HOY, ms: 90_000, avisado: true });
     expect(leerPantalla()).toEqual({ fecha: HOY, ms: 90_000, avisado: true });
-    expect(Object.keys(JSON.parse(window.localStorage.getItem(CLAVES.pantalla)!)).sort()).toEqual([
-      "avisado",
-      "fecha",
-      "ms",
-    ]);
+    expect(
+      Object.keys(
+        JSON.parse(window.localStorage.getItem(CLAVES.pantalla)!),
+      ).sort(),
+    ).toEqual(["avisado", "fecha", "ms"]);
     window.localStorage.setItem(CLAVES.pantalla, "{mal");
     expect(leerPantalla()).toEqual(PANTALLA_VACIA);
   });
