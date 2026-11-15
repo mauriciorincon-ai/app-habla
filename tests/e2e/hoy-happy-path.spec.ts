@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // El camino completo del sprint, con micrófono falso real (el pipeline de audio se ejerce de
 // verdad: getUserMedia → AudioWorklet → RMS → histéresis → celebración).

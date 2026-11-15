@@ -1,5 +1,5 @@
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // EL IDIOMA (S7, ADR-017). Los demás e2e corren en español (locale es-CO); este cubre el inglés:
 //   · el dispositivo en inglés arranca en inglés (sigue al navegador) y `lang` es «en»;

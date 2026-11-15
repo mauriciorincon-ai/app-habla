@@ -174,7 +174,7 @@ function JuegoListo({
               aria-live="polite"
             >
               {tx(juegos.globo.vueltaYa)}{" "}
-              <span className="text-celebracion-fuerte font-sans font-semibold tabular-nums">
+              <span className="text-celebracion-texto font-sans font-semibold tabular-nums">
                 {tx(vueltas === 1 ? juegos.globo.vuelta : juegos.globo.vueltas, {
                   n: vueltas,
                 })}

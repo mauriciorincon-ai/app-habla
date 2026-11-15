@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // SPIKE DE SUPUESTOS — Sprint 003 F0 (se puede borrar tras validar; documenta el ADR-010).
 // Verifica en el MISMO Chromium que usa la CI que el banco de voz es construible ANTES de

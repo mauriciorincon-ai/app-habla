@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // El brochure vivo servido en /conoce (entrega puntual ENTREGA-BROCHURE, kit v1.9.0).
 // La fuente es docs/BROCHURE.html; build:documentos lo copia a public/conoce.html y el

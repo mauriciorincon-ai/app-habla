@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 // PALABRA↔OBJETO (Outcome 3). Usa el micrófono falso COMPARTIDO: una voz sostenida genérica
 // (un tono, ninguna palabra).

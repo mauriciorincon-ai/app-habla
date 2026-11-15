@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./base";
 
 /** El origen propio de la app, tomado del baseURL de la config (el puerto puede moverse con
  *  E2E_PORT): todo lo que no empiece por aquí es red hacia afuera. */
