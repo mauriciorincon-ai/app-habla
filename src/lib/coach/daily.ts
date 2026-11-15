@@ -9,7 +9,10 @@
 //   - Cambiar de etapa y volver el mismo día devuelve LA MISMA cápsula (determinismo por
 //     fecha+etapa+ciclo, no por orden de eventos).
 
-import type { Capsula, Etapa } from "@content/schema";
+import type { Etapa } from "@content/schema";
+
+/** Lo único que el selector lee de una cápsula: no necesita sus textos ni sus caras. */
+export type CapsulaElegible = { id: string; etapa: Etapa; tecnica: string };
 import { ETAPA_VACIA, type Progreso } from "@/lib/storage/schemas";
 import { claveFechaLocal } from "@/lib/fecha";
 
@@ -28,8 +31,8 @@ export function fnv1a(texto: string): number {
   return hash >>> 0;
 }
 
-export type SeleccionDiaria = {
-  capsula: Capsula;
+export type SeleccionDiaria<C extends CapsulaElegible = CapsulaElegible> = {
+  capsula: C;
   progreso: Progreso;
   /** true si esta cápsula ya se completó (la pantalla "Hoy" muestra el estado sobrio). */
   completada: boolean;
@@ -42,13 +45,13 @@ export type SeleccionDiaria = {
  * prefiere una que coincida; si ninguna coincide, se elige como siempre (sin saltarse la etapa,
  * ADR-005 — el objetivo alinea DENTRO de la etapa, jamás fuerza contenido de otra).
  */
-export function seleccionarCapsula(
+export function seleccionarCapsula<C extends CapsulaElegible>(
   fecha: string,
   progreso: Progreso,
-  biblioteca: readonly Capsula[],
+  biblioteca: readonly C[],
   etapa: Etapa,
-  coincide?: (c: Capsula) => boolean,
-): SeleccionDiaria {
+  coincide?: (c: C) => boolean,
+): SeleccionDiaria<C> {
   const deEtapa = biblioteca.filter((c) => c.etapa === etapa);
   if (deEtapa.length === 0) {
     throw new Error(
@@ -127,12 +130,12 @@ export function seleccionarCapsula(
  * borra el logro del día. Si la cápsula actual ya coincide (o no había ninguna asignada), no hay
  * cambio. Es explícita (se llama al cambiar el objetivo), no un efecto de cada render.
  */
-export function realinearObjetivo(
+export function realinearObjetivo<C extends CapsulaElegible>(
   fecha: string,
   progreso: Progreso,
-  biblioteca: readonly Capsula[],
+  biblioteca: readonly C[],
   etapa: Etapa,
-  coincide: (c: Capsula) => boolean,
+  coincide: (c: C) => boolean,
 ): Progreso {
   const estadoEtapa = progreso.porEtapa[etapa] ?? ETAPA_VACIA;
   const asignada = estadoEtapa.asignacionHoy;

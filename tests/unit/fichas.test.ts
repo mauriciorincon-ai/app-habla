@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { CAPSULAS } from "@content/capsulas";
-import { CAPSULAS_SU_MUNDO } from "@content/capsulas-su-mundo";
+import { CAPSULAS_SU_MUNDO_ES as CAPSULAS_SU_MUNDO } from "@content/capsulas-su-mundo";
 import { CAPSULAS_CONTACTO_VISUAL } from "@content/contacto-visual";
 import { CAEN_DEL_DOCUMENTO, FICHAS } from "@content/fichas";
 import {

@@ -8,8 +8,8 @@
 // (Lo destapó el gate de performance del S2: los tres juegos descargaban la biblioteca completa
 // aunque dos de ellos no muestren ni una cápsula.)
 
-import { CAPSULAS } from "@content/capsulas";
-import type { Capsula, Etapa } from "@content/schema";
+import { CAPSULAS_ES as CAPSULAS } from "@content/capsulas-es";
+import type { CapsulaEs, Etapa } from "@content/schema";
 import {
   claveFechaLocal,
   marcarCompletada,
@@ -26,7 +26,7 @@ import {
 } from "./estado-local";
 
 /** El predicado del objetivo de la semana ACTIVO: ¿esta cápsula sirve al objetivo escrito? */
-function coincideConObjetivo(): (c: Capsula) => boolean {
+function coincideConObjetivo(): (c: CapsulaEs) => boolean {
   const objetivo = alinear(leerObjetivo()?.texto);
   if (objetivo.activo) return (c) => objetivo.coincideEtiquetas(c.etiquetas);
   // Sin meta de la semana, su mundo (S14, ADR-026) inclina la cápsula nueva del día hacia lo que le
