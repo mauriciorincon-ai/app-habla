@@ -13,7 +13,7 @@ import {
 // Sufijo de versión manual: el archivo estático no lleva hash de contenido (ADR 004).
 // Súbelo si cambia src/worklets/rms-processor.ts o src/worklets/formantes.ts
 // (el import interno `./formantes.js` no lleva sufijo: el módulo principal manda la caché).
-const WORKLET_URL = "/worklets/rms-processor.js?v=3";
+const WORKLET_URL = "/worklets/rms-processor.js?v=4";
 /** Second branch, only while the recognizer is on (S11, ADR-023). Bump `v` when pcm-tap.ts changes. */
 const TAP_URL = "/worklets/pcm-tap.js?v=1";
 

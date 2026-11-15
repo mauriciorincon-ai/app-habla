@@ -17,6 +17,12 @@ export type MeterFrame = {
    * vive en memoria como el pitch.
    */
   formantes?: Formantes | null;
+  /**
+   * Zero crossings per sample (0..1) of the samples behind this frame (S12, ADR-024). Only the worklet
+   * publishes it: the fallback source has no pitch, so without it a voice would look like a blow, and
+   * the blow detector ignores frames that lack it.
+   */
+  zcr?: number;
 };
 
 export type Formantes = { f1: number; f2: number };
@@ -32,6 +38,7 @@ export function esMeterFrame(v: unknown): v is MeterFrame {
   const f = v as Record<string, unknown>;
   if (!numeroFinito(f.rms) || !numeroFinito(f.tMs)) return false;
   if (f.pitchHz !== null && !numeroFinito(f.pitchHz)) return false;
+  if (f.zcr !== undefined && (!numeroFinito(f.zcr) || f.zcr < 0 || f.zcr > 1)) return false;
   if (f.formantes === undefined || f.formantes === null) return true;
   if (typeof f.formantes !== "object") return false;
   const fo = f.formantes as Record<string, unknown>;

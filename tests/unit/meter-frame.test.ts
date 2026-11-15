@@ -7,6 +7,9 @@ describe("esMeterFrame", () => {
     expect(esMeterFrame({ rms: 0.1, pitchHz: null, tMs: 5 })).toBe(true);
     expect(esMeterFrame({ rms: 0.1, pitchHz: 300, tMs: 5, formantes: null })).toBe(true);
     expect(esMeterFrame({ rms: 0.1, pitchHz: 300, tMs: 5, formantes: { f1: 700, f2: 1200 } })).toBe(true);
+    // S12 (ADR-024): zero crossings per sample, 0..1.
+    expect(esMeterFrame({ rms: 0.1, pitchHz: null, tMs: 5, formantes: null, zcr: 0.04 })).toBe(true);
+    expect(esMeterFrame({ rms: 0.1, pitchHz: null, tMs: 5, zcr: 0 })).toBe(true);
   });
 
   it("rechaza lo que no tiene la forma", () => {
@@ -19,6 +22,9 @@ describe("esMeterFrame", () => {
       { rms: 0.1, pitchHz: null },
       { rms: 0.1, pitchHz: null, tMs: 5, formantes: { f1: 700 } },
       { rms: 0.1, pitchHz: null, tMs: 5, formantes: 3 },
+      { rms: 0.1, pitchHz: null, tMs: 5, zcr: "0.1" },
+      { rms: 0.1, pitchHz: null, tMs: 5, zcr: 1.5 },
+      { rms: 0.1, pitchHz: null, tMs: 5, zcr: -0.1 },
     ]) {
       expect(esMeterFrame(malo), JSON.stringify(malo)).toBe(false);
     }
