@@ -19,17 +19,17 @@
     "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 11,
+    "sprints_cerrados": 12,
     "version_repo": "0.1.0"
   },
   "promesa": {
     "tagline": "Su voz mueve el mundo: tu hijo juega hablando y tú diriges a su lado.",
-    "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y cinco juegos —uno, experimental—, donde su voz hace volar un globo, sube un cohete, enciende dibujos y ilumina el mapa de las vocales.",
+    "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y siete juegos —uno, experimental—, donde su voz hace volar un globo, su aire mueve un molino, su volumen sube una barra, su tono sube un cohete, enciende dibujos y ilumina el mapa de las vocales.",
     "para_quien": "Para la mamá o el papá de un niño de 4 a 6 años que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. El acierto de la palabra lo juzgas tú, que estabas ahí; si activas la segunda opinión del aparato, solo te dice «quizás», nunca «no», y jamás sola. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
-    "total": 30,
+    "total": 33,
     "fuente_del_conteo": "docs/MANUAL-DE-USO.md",
     "descartadas": [],
     "grupos": [
@@ -56,7 +56,7 @@
       {
         "orden": 2,
         "estrella": false,
-        "nombre": "Cinco juegos que se juegan hablando",
+        "nombre": "Siete juegos que se juegan hablando",
         "linea": "Su voz hace que algo pase en la pantalla, con un adulto que dirige al lado. Ninguno le exige palabras.",
         "features": [
           {
@@ -72,28 +72,40 @@
             "seccion_manual": "Los juegos de voz § 1"
           },
           {
+            "id": "31",
+            "nombre": "Soplar: el aire mueve el molino",
+            "que_hace": "Tu hijo sopla como a una vela y cada soplo hace girar el molino; no pide palabras ni voz. La app cuenta los soplos que oyó (aire sin tono): un sonido de voz o un «shhh» no cuentan, y un soplo suave vale igual que uno fuerte. La celebración dice el mismo número que el contador.",
+            "seccion_manual": "Los juegos de voz § 2"
+          },
+          {
+            "id": "32",
+            "nombre": "Fuerte y suave: la barra celebra los cambios",
+            "que_hace": "La barra sube con una voz grandota y baja con una chiquita, medidas contra el ruido de tu cuarto. No existe un volumen «correcto»: lo que se celebra son los cambios entre suave y fuerte, y el nivel siempre se dice con una palabra, no solo con el color.",
+            "seccion_manual": "Los juegos de voz § 3"
+          },
+          {
             "id": "05",
             "nombre": "El cohete: la voz que sube y baja",
             "que_hace": "Tu hijo juega con la entonación: el cohete sube cuando su voz se hace aguda y baja cuando se hace grave. Cada vez que la voz sube y baja de verdad, estalla un confeti. La app cuenta cuántas veces pasó, sin pedirle una sola palabra.",
-            "seccion_manual": "Los juegos de voz § 2"
+            "seccion_manual": "Los juegos de voz § 4"
           },
           {
             "id": "06",
             "nombre": "Palabra y dibujo",
             "que_hace": "Un dibujo grande con su palabra escrita se enciende con cualquier sonido de tu hijo: un intento, un balbuceo, una sílaba. Si dijo la palabra, eres tú quien lo marca con un toque, y entonces sube una bandada de globos.",
-            "seccion_manual": "Los juegos de voz § 3"
+            "seccion_manual": "Los juegos de voz § 5"
           },
           {
             "id": "07",
             "nombre": "Palabras gemelas",
             "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego, por defecto, no usa el micrófono: quien escucha eres tú.",
-            "seccion_manual": "Los juegos de voz § 4"
+            "seccion_manual": "Los juegos de voz § 6"
           },
           {
             "id": "27",
             "nombre": "El mapa de las vocales (experimental)",
             "que_hace": "Tu hijo estira una vocal —a, e, i, o, u— y se enciende la zona del mapa que más se parece, con su letra, su forma y su color. Es un juego en prueba y lo dice en pantalla: la app solo adivina, con margen de error, «quizás suena como…», y nunca dice que una vocal salió bien o mal. Al final cuenta las zonas que sonaron y los cambios de una a otra, y lo que diga no se graba ni sale del aparato.",
-            "seccion_manual": "Los juegos de voz § 5"
+            "seccion_manual": "Los juegos de voz § 7"
           }
         ]
       },
@@ -240,6 +252,12 @@
             "nombre": "Pasar a la otra casa",
             "que_hace": "Si tu hijo practica en dos casas, llevas el objetivo, lo practicado y lo logrado de un aparato al otro en un archivo que tú mueves y que se protege con una frase que solo tú sabes: sin la frase, no se abre. Antes de escribir nada, la app te muestra qué va a cambiar, y nada de lo que ya estaba se borra. Nunca viajan la voz de tu hijo, los videos ni su apodo, y la app no se conecta a internet.",
             "seccion_manual": "Pasar a la otra casa"
+          },
+          {
+            "id": "33",
+            "nombre": "Sesiones cortas: el tope de juego por día",
+            "que_hace": "Eliges un tope de juego por día, de 5 a 10 minutos (10 de fábrica). Al llegar, el juego se cierra con calma, como «Salir», y te avisa a ti, una sola vez al día; nunca bloquea nada ni dice «se acabó». El contador es local, de hoy, y no viaja al archivo de la otra casa.",
+            "seccion_manual": "Sesiones cortas — el tope de juego por día"
           }
         ]
       },
@@ -283,18 +301,18 @@
     {
       "clave": "funcionalidades",
       "etiqueta": "Funcionalidades del MVP",
-      "valor": 30,
+      "valor": 33,
       "unidad": "funcionalidades",
       "fuente": "medido",
-      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (30 con «¿Dijo la palabra?», S11), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
+      "detalle": "Contadas contra docs/MANUAL-DE-USO.md (33 con «Soplar», «Fuerte y suave» y «Sesiones cortas», S12), con la tabla de mapeo feature→sección publicada en sprints/ENTREGA-brochure-summary.md. El documento aparte para jugar sin pantallas, que el manual describe fuera de la app, no se cuenta. Nada se construyó y se retiró: descartadas[] va vacío."
     },
     {
       "clave": "pantallas",
       "etiqueta": "Pantallas de la app",
-      "valor": 15,
+      "valor": 17,
       "unidad": "pantallas",
       "fuente": "medido",
-      "detalle": "Archivos page.tsx bajo src/app/ (17 en total) menos /spike/audio y /spike/reconocer, que son bancos de prueba del motor de voz y del reconocedor y no pantallas del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-14 sobre la rama del S11."
+      "detalle": "Archivos page.tsx bajo src/app/ (19 en total) menos /spike/audio y /spike/reconocer, que son bancos de prueba del motor de voz y del reconocedor y no pantallas del producto. Las rutas /conoce y /mirada sirven documentos por reescritura y tampoco son pantallas. Contados el 2026-11-14 sobre la rama del S12."
     },
     {
       "clave": "pruebas_unitarias",
@@ -331,10 +349,10 @@
     {
       "clave": "hitos",
       "etiqueta": "Hitos del rumbo",
-      "valor": 16,
+      "valor": 18,
       "unidad": "hitos",
       "fuente": "medido",
-      "detalle": "src/lib/rumbo/hitos.ts: 8 hitos de primera vez y 8 por umbral (palabras, constancia, días, dibujos, palabras oídas)."
+      "detalle": "src/lib/rumbo/hitos.ts: 10 hitos de primera vez y 8 por umbral (palabras, constancia, días, dibujos, palabras oídas)."
     },
     {
       "clave": "palabras_diccionario",
@@ -387,10 +405,10 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 23,
+      "valor": 24,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-11-14 sobre la rama del S11 (hasta el ADR-023)."
+      "detalle": "Archivos de decisions/ el 2026-11-14 sobre la rama del S12 (hasta el ADR-024)."
     }
   ],
   "stack": [

@@ -382,6 +382,18 @@
      abajo, y la palabra va DEBAJO del marco. Con la palabra dentro, el altavoz le caía
      encima — no había esquina libre en un marco de 100 px que ya tenía texto. */
   .cancha[data-juego="gemelas"] { height: 218px; }
+  /* Canchas 5 y 6 (S12): el molino y la barra. */
+  .cancha[data-juego="soplar"] { background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--nino-sky) 35%, var(--nino-bg)) 0%, var(--nino-bg) 82%); }
+  .molino-juego { position: absolute; left: 50%; bottom: 30px; width: 72px; height: 112px;
+    margin-left: -36px; }
+  .molino-juego .aspas { transform-origin: 36px 36px; }
+  .cancha[data-juego="fuerte"] .columna { position: absolute; bottom: 30px; width: 44px;
+    border: 1.5px solid var(--nino-ink); border-radius: 12px 12px 4px 4px;
+    background: var(--nino-sky); height: 28px; }
+  .cancha[data-juego="fuerte"] .c1 { left: 24%; }
+  .cancha[data-juego="fuerte"] .c2 { left: 46%; background: var(--nino-peach); height: 28px; }
+  .cancha[data-juego="fuerte"] .c3 { left: 68%; }
   .pareja { position: absolute; inset: 12px 0 auto; display: flex; justify-content: center;
     gap: 16px; }
   .pareja .picto { width: 100px; padding: 9px; border-width: 2.5px; }
@@ -675,7 +687,7 @@
     .tarjeta[data-abierta] .escenario .llama { animation: hervir .34s steps(2) 4; }
     @keyframes hervir { 50% { transform: translate(.6px, -.6px) scaleY(1.06); } }
 
-    /* ── E05 · LAS CUATRO CANCHAS. Cada una corre UNA vez, al verse de verdad: es
+    /* ── E05 · LAS SEIS CANCHAS. Cada una corre UNA vez, al verse de verdad: es
           una demostración, no un letrero de neón. Medidas en cqw: el recorrido se
           mide contra la cancha, no contra la ventana. ────────────────────────── */
 
@@ -691,6 +703,20 @@
     @keyframes caer {
       0%   { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--r)); }
       100% { opacity: 0; transform: translate3d(var(--x), 104px, 0) rotate(calc(var(--r) * 3)); }
+    }
+
+    /* 5 · el molino: tres soplos, un cuarto de vuelta cada uno. */
+    .cancha.corre .aspas { animation: soplos 3s var(--ease-suave) forwards; }
+    @keyframes soplos {
+      0%, 8%   { transform: rotate(0deg); }
+      30%, 38% { transform: rotate(90deg); }
+      60%, 68% { transform: rotate(180deg); }
+      90%, 100% { transform: rotate(270deg); }
+    }
+    /* 6 · la barra: suave, fuerte, suave; cada cambio se celebra, ningún nivel es el bueno. */
+    .cancha[data-juego="fuerte"].corre .c2 { animation: fuerte 3s var(--ease-suave) forwards; }
+    @keyframes fuerte {
+      0%, 15% { height: 28px; } 45%, 65% { height: 104px; } 100% { height: 28px; }
     }
 
     /* 2 · el cohete: la voz sube y baja como una sirena; el cielo pasa hacia abajo
@@ -843,11 +869,13 @@
     .revela { opacity: 1; transform: none; }
     .detalle, .chevron, .acto-cabeza .raya { transition: none; }
     .acto-cabeza .raya { transform: scaleX(1); }
-    /* Las cuatro canchas se quedan en su CUADRO FINAL: la jugada ya contada, quieta.
+    /* Las seis canchas se quedan en su CUADRO FINAL: la jugada ya contada, quieta.
        El globo junto a su meta, el cohete arriba con su hito, el dibujo encendido y
        la pareja con su elegido marcado — sin un solo frame de movimiento. */
     .globo-juego { transform: translateX(calc(83cqw - 21px)); }
     .cohete-juego { transform: translateY(-30px); }
+    .molino-juego .aspas { transform: rotate(270deg); }
+    .cancha[data-juego="fuerte"] .c2 { height: 104px; }
     .marcador, .dijo { opacity: 1; }
     .cancha[data-juego="dibujo"] .picto { border-color: var(--fiesta-verde); }
     .halo, .globitos, .onda { display: none; }
@@ -1081,9 +1109,9 @@
             <span class="tarjeta-titulos">
               <span data-l="es" class="t-nombre">Jugar con la voz</span>
               <span data-l="en" class="t-nombre">Playing with the voice</span>
-              <span data-l="es" class="t-linea">Cinco juegos donde su voz es el control —uno, experimental— y tú
+              <span data-l="es" class="t-linea">Siete juegos donde su voz y su aire son el control —uno, experimental— y tú
                 diriges.</span>
-              <span data-l="en" class="t-linea">Five games where their voice is the controller — one of them experimental — and you lead.</span>
+              <span data-l="en" class="t-linea">Seven games where their voice and their breath are the controller — one of them experimental — and you lead.</span>
             </span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
@@ -1156,6 +1184,18 @@
                 sounded for 7.3 seconds!”), how many loops the balloon made, and the longest
                 stretch without a break. The app never says they held a sound longer than they
                 did.</p>
+            </div>
+            <div class="feature" style="--j:2">
+              <h4 data-l="es">Soplar — el aire mueve el molino</h4>
+              <h4 data-l="en">Blowing — air turns the pinwheel</h4>
+              <p data-l="es" class="como">Tu hijo <strong>sopla</strong> como a una vela y cada soplo hace girar el molino; sin palabras y sin voz. El aviso honesto: la app cuenta <strong>los soplos que oyó</strong> (aire sin tono) y un sonido de voz o un «shhh» no cuentan; un soplo suave vale igual que uno fuerte. La celebración dice el mismo número del contador.</p>
+              <p data-l="en" class="como">Your child <strong>blows</strong> as if at a candle and every blow turns the pinwheel; no words, no voice. The honest part: the app counts <strong>the blows it heard</strong> (air with no pitch), and a voice sound or a “shhh” doesn't count; a soft blow is worth the same as a strong one. The celebration says the same number as the counter.</p>
+            </div>
+            <div class="feature" style="--j:3">
+              <h4 data-l="es">Fuerte y suave — la barra celebra los cambios</h4>
+              <h4 data-l="en">Loud and soft — the bar celebrates the changes</h4>
+              <p data-l="es" class="como">La barra sube con una voz grandota y baja con una chiquita, medidas contra <strong>el ruido de tu cuarto</strong>. <strong>No existe un volumen «correcto»</strong>: lo que se celebra son los cambios entre suave y fuerte («Su voz cambió 4 veces entre suave y fuerte»), y el nivel siempre se dice con una palabra, no solo con el color.</p>
+              <p data-l="en" class="como">The bar rises with a big voice and falls with a tiny one, measured against <strong>the noise in your room</strong>. <strong>There is no “right” volume</strong>: what is celebrated is the changes between soft and loud (“Their voice changed 4 times between soft and loud”), and the level is always said with a word, not only with color.</p>
             </div>
             <div class="feature" style="--j:2">
               <h4 data-l="es"><span class="escenario" aria-hidden="true">
@@ -1293,8 +1333,8 @@
               <p data-l="en" class="tip"><strong>What it will never do:</strong> tell your child “no”, celebrate for you, or keep their voice: it listens in memory and only returns a word and its confidence.</p>
             </div>
           
-            <a data-l="es" class="enlace" href="/jugar">Ver los cinco juegos <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <a data-l="en" class="enlace" href="/jugar">See the five games <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="es" class="enlace" href="/jugar">Ver los siete juegos <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-l="en" class="enlace" href="/jugar">See the seven games <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div></div>
         </div>
       </article>
@@ -1661,8 +1701,8 @@
                 “We're done playing” so the attempt is saved.</p>
             </div>
             <div class="feature" style="--j:1">
-              <h4 data-l="es">16 hitos que no se pierden</h4>
-              <h4 data-l="en">16 milestones that are never lost</h4>
+              <h4 data-l="es">18 hitos que no se pierden</h4>
+              <h4 data-l="en">18 milestones that are never lost</h4>
               <p data-l="es" class="como">Desde «su primer rato de práctica juntos» y las primeras
                 veces de cada juego, hasta acumulados como «25 días de práctica en total».
                 Una vez ganados, no se pierden nunca.</p>
@@ -1754,15 +1794,21 @@
             <div class="feature" style="--j:3">
               <h4 data-l="es">Reducir animaciones</h4>
               <h4 data-l="en">Reduce animations</h4>
-              <p data-l="es" class="como">Con este ajuste, los globos de la palabra, el confeti y la
+              <p data-l="es" class="como">Con este ajuste, los globos de la palabra, el confeti, el giro suave del molino y la
                 capa de cielo del cohete no se muestran — el texto sigue contando cada
                 logro. Y si tu aparato ya pide menos movimiento, la app lo respeta sin que
                 toques nada.</p>
-              <p data-l="en" class="como">With this setting, the word balloons, the confetti and the rocket's sky layer aren't
+              <p data-l="en" class="como">With this setting, the word balloons, the confetti, the pinwheel's smooth spin and the rocket's sky layer aren't
                 shown — the text still tells each achievement. And if your device already asks
                 for less motion, the app respects it without you touching anything.</p>
             </div>
             <div class="feature" style="--j:4">
+              <h4 data-l="es">Sesiones cortas</h4>
+              <h4 data-l="en">Short sessions</h4>
+              <p data-l="es" class="como">Tú eliges un <strong>tope de juego por día, de 5 a 10 minutos</strong>. Al llegar, el juego se cierra con calma, como «Salir», y <strong>te</strong> avisa a ti, una sola vez al día; nunca bloquea nada y jamás dice «se acabó». El contador es local y de hoy.</p>
+              <p data-l="en" class="como">You choose a <strong>daily play cap, from 5 to 10 minutes</strong>. When it's reached, the game closes calmly, like “Exit”, and tells <strong>you</strong> once a day; it never blocks anything and never says “all done”. The counter is local and for today.</p>
+            </div>
+            <div class="feature" style="--j:5">
               <h4 data-l="es">Claro u oscuro</h4>
               <h4 data-l="en">Light or dark</h4>
               <p data-l="es" class="como">Decide cómo se ve <strong>tu</strong> pantalla: seguir al
@@ -1809,9 +1855,9 @@
       <h2 data-l="es" id="t-vuelta" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">
         Así se ve <em>jugar</em>.</h2>
       <h2 data-l="en" id="t-vuelta-en" class="revela" style="font-size:clamp(1.9rem,6.4vw,2.7rem);line-height:1.06;margin:14px 0 6px">This is what <em>playing</em> looks like.</h2>
-      <p data-l="es" class="suave revela">Cuatro de los cinco juegos, tal como se ven en su pantalla (el quinto, el mapa de las vocales, es experimental). Ninguno le
+      <p data-l="es" class="suave revela">Seis de los siete juegos, tal como se ven en su pantalla (el séptimo, el mapa de las vocales, es experimental). Ninguno le
         exige palabras.</p>
-      <p data-l="en" class="suave revela">Four of the five games, just as they look on their screen (the fifth, the vowel map, is experimental). None of them asks for words.</p>
+      <p data-l="en" class="suave revela">Six of the seven games, just as they look on their screen (the seventh, the vowel map, is experimental). None of them asks for words.</p>
 
       <div class="galeria">
 
@@ -2012,6 +2058,59 @@
               focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none"
               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
               stroke-linejoin="round"/></svg></a></p>
+        </div>
+
+        <!-- 5 · soplar -->
+        <div class="juego revela">
+          <h3 data-l="es"><span class="num">05</span>Soplar</h3>
+          <h3 data-l="en"><span class="num">05</span>Blowing</h3>
+          <div class="cancha" data-juego="soplar" aria-hidden="true">
+            <span class="suelo"></span>
+            <span class="molino-juego">
+              <svg viewBox="0 0 72 112" focusable="false">
+                <path d="M34 40h4v66h-4z" fill="var(--nino-ink)" opacity=".5"/>
+                <g class="aspas">
+                  <path d="M36 36V6a14 14 0 0 1 0 30z" fill="var(--nino-yellow)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M36 36h30a14 14 0 0 1-30 0z" fill="var(--nino-sky)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M36 36v30a14 14 0 0 1 0-30z" fill="var(--nino-sage)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M36 36H6a14 14 0 0 1 30 0z" fill="var(--nino-peach)" stroke="var(--nino-ink)" stroke-width="1.5" stroke-linejoin="round"/>
+                </g>
+                <circle cx="36" cy="36" r="4" fill="var(--nino-bg)" stroke="var(--nino-ink)" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span data-l="es" class="marcador">Soplos que oí: 3</span>
+            <span data-l="en" class="marcador">Blows I heard: 3</span>
+          </div>
+          <p data-l="es" class="leyenda"><b>aire</b> <span>Cada soplo hace girar el molino. La app
+            cuenta los soplos que oyó —aire, sin tono—; un sonido de voz o un «shhh» no cuentan,
+            y un soplo suave vale igual que uno fuerte.</span></p>
+          <p data-l="en" class="leyenda"><b>air</b> <span>Every blow turns the pinwheel. The app counts the blows it
+            heard —air, with no pitch—; a voice sound or a “shhh” doesn't count, and a soft blow
+            is worth the same as a strong one.</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/soplar">Abrir soplar <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/soplar">Open blowing <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+        </div>
+
+        <!-- 6 · fuerte y suave -->
+        <div class="juego revela">
+          <h3 data-l="es"><span class="num">06</span>Fuerte y suave</h3>
+          <h3 data-l="en"><span class="num">06</span>Loud and soft</h3>
+          <div class="cancha" data-juego="fuerte" aria-hidden="true">
+            <span class="suelo"></span>
+            <span class="columna c1"></span>
+            <span class="columna c2"></span>
+            <span class="columna c3"></span>
+            <span data-l="es" class="marcador">Su voz cambió 2 veces entre suave y fuerte</span>
+            <span data-l="en" class="marcador">Their voice changed 2 times between soft and loud</span>
+          </div>
+          <p data-l="es" class="leyenda"><b>volumen</b> <span>La barra sube con una voz grandota y
+            baja con una chiquita, contra el ruido de tu cuarto. Ningún volumen es el
+            «correcto»: se celebran los cambios, y el nivel siempre se dice con una palabra.</span></p>
+          <p data-l="en" class="leyenda"><b>volume</b> <span>The bar rises with a big voice and falls with a tiny one,
+            against the noise in your room. No volume is the “right” one: the changes are celebrated,
+            and the level is always said with a word.</span></p>
+          <p data-l="es"><a class="enlace" href="/jugar/fuerte-suave">Abrir fuerte y suave <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+          <p data-l="en"><a class="enlace" href="/jugar/fuerte-suave">Open loud and soft <svg class="punta" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6.5l6 5.5-6 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
 
       </div>
@@ -2274,7 +2373,7 @@
       <div class="cuerpo chica">
         <ul class="mapa">
           <li><code>/</code> — «Hoy»: la cápsula del día y la puerta a todo lo demás.</li>
-          <li><code>/jugar</code> — los cinco juegos, siempre en el mismo orden.</li>
+          <li><code>/jugar</code> — los siete juegos, siempre en el mismo orden.</li>
           <li><code>/jugar/globo</code> — el globo (la voz que se sostiene).</li>
           <li><code>/jugar/cohete</code> — el cohete (la voz que sube y baja).</li>
           <li><code>/jugar/palabras</code> — palabra y dibujo.</li>
@@ -2293,7 +2392,7 @@
       <div class="cuerpo chica">
         <ul class="mapa">
           <li><code>/</code> — “Today”: the daily capsule and the door to everything else.</li>
-          <li><code>/jugar</code> — the five games, always in the same order.</li>
+          <li><code>/jugar</code> — the seven games, always in the same order.</li>
           <li><code>/jugar/globo</code> — the balloon (the voice that holds).</li>
           <li><code>/jugar/cohete</code> — the rocket (the voice that goes up and down).</li>
           <li><code>/jugar/palabras</code> — word and picture.</li>
@@ -2314,13 +2413,13 @@
        el SELLO mira hacia arriba —lo que acabas de leer está completo— y el HISTORIAL
        hacia atrás en el tiempo —cómo ha cambiado este documento—. ══ -->
   <footer class="revela">
-    <strong data-l="es" class="conteo"><span data-contador>30</span> funcionalidades</strong>
-    <strong data-l="en" class="conteo"><span data-contador>30</span> features</strong>
+    <strong data-l="es" class="conteo"><span data-contador>33</span> funcionalidades</strong>
+    <strong data-l="en" class="conteo"><span data-contador>33</span> features</strong>
     <p data-l="es" class="chica suave" style="margin-top:0">Ese es el total que tiene la app hoy — y
-      todas están repartidas arriba, entre las seis puertas, los cinco juegos y lo fino.
+      todas están repartidas arriba, entre las seis puertas, los siete juegos y lo fino.
       Este número existe como promesa: aquí no se escogieron las bonitas; está todo.</p>
     <p data-l="en" class="chica suave" style="margin-top:0">That's the total the app has today — and all of them are spread out above, among the
-      six doors, the five games and the fine print. This number exists as a promise: we didn't
+      six doors, the seven games and the fine print. This number exists as a promise: we didn't
       pick the pretty ones here; everything is in.</p>
     <div class="historial-doc">
       <p data-l="es" class="eyebrow">Este documento crece con la app</p>
@@ -2337,6 +2436,7 @@
             actividad de contacto visual al día en «Hoy».</li>
           <li><strong>Sprint 10 · noviembre de 2026:</strong> «El mapa de las vocales», experimental (la 27), «Pasar a la otra casa» (la 28) y «Hojas para imprimir» (la 29).</li>
           <li><strong>Sprint 11 · noviembre de 2026:</strong> «¿Dijo la palabra?», una segunda opinión solo para el adulto (la funcionalidad 30).</li>
+          <li><strong>Sprint 12 · noviembre de 2026:</strong> «Soplar» (la 31), «Fuerte y suave» (la 32) y «Sesiones cortas» (la 33).</li>
         </ul>
       </details>
       <details data-l="en" class="chica">
@@ -2350,6 +2450,7 @@
             eye-contact activity a day on “Today”.</li>
           <li><strong>Sprint 10 · November 2026:</strong> “The vowel map”, experimental (27), “Take it to the other home” (28) and “Printable sheets” (29).</li>
           <li><strong>Sprint 11 · November 2026:</strong> “Did they say the word?”, a second opinion for the adult only (feature 30).</li>
+          <li><strong>Sprint 12 · November 2026:</strong> “Blowing” (31), “Loud and soft” (32) and “Short sessions” (33).</li>
         </ul>
       </details>
     </div>
@@ -2461,7 +2562,7 @@
     if (dentro) { el.classList.add("visto"); }
   }, true, 0.5);
 
-  /* ── E05 · las cuatro canchas. Cada jugada arranca UNA vez, cuando la cancha se
+  /* ── E05 · las seis canchas. Cada jugada arranca UNA vez, cuando la cancha se
         ve de verdad. Las partículas llevan variación PRECALCULADA (nada de azar en
         runtime): misma entrada, mismos fotogramas — el determinismo del estudio. ── */
   var CONFETI = [
