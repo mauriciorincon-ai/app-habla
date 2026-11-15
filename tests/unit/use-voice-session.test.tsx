@@ -115,3 +115,64 @@ describe("use-voice-session: la guarda del bucle está cableada (ADR-010, regla 
     expect(result.current.medidas.sostenidoMs()).toBeGreaterThanOrEqual(400);
   });
 });
+
+// S12 (ADR-024): los dos detectores nuevos están CABLEADOS a la sesión. Si alguien quita la línea que los
+// alimenta, o el reinicio entre intentos, este test se cae.
+describe("use-voice-session: soplo e intensidad están cableados (S12)", () => {
+  beforeEach(() => {
+    ahora = 0;
+    vi.useFakeTimers();
+    vi.spyOn(performance, "now").mockImplementation(() => ahora);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  /** A blow frame: energy, no pitch, few zero crossings (the worklet's zcr). */
+  const frameSoplo = (tMs: number): MeterFrame => ({ rms: 0.08, pitchHz: null, tMs, zcr: 0.03 });
+  const frameVoz = (tMs: number, rms: number): MeterFrame => ({ rms, pitchHz: 300, tMs, zcr: 0.012 });
+
+  function empujarFrames(desde: number, hasta: number, hacer: (t: number) => MeterFrame) {
+    act(() => {
+      for (let t = desde; t <= hasta; t += 50) fuente.cb?.(hacer(t));
+    });
+  }
+
+  it("un soplo sostenido se cuenta una vez; una vocal no; el eco de la voz familiar no", async () => {
+    const { result } = await montarYCalibrar();
+    expect(result.current.medidas.soplos()).toBe(0);
+
+    // Una vocal (con tono): no es un soplo.
+    empujarFrames(2050, 2850, (t) => frameVoz(t, 0.08));
+    expect(result.current.medidas.soplos()).toBe(0);
+
+    // Suena la voz familiar: ni un soplo falso por el eco.
+    act(() => result.current.silenciar(2000));
+    empujarFrames(2900, 3500, frameSoplo);
+    expect(result.current.medidas.soplos()).toBe(0);
+    act(() => result.current.silenciar(0));
+
+    // Un soplo de verdad: sin tono y con pocos cruces, más de lo que tarda en confirmarse.
+    empujarFrames(3550, 4300, frameSoplo);
+    expect(result.current.medidas.soplando()).toBe(true);
+    expect(result.current.medidas.soplos()).toBe(1);
+
+    // Otra vez (reinicio del intento): vuelve a cero.
+    act(() => result.current.recalibrar());
+    expect(result.current.medidas.soplos()).toBe(0);
+  });
+
+  it("la voz suave y la fuerte se leen contra el piso del cuarto, y cada cambio se cuenta", async () => {
+    const { result } = await montarYCalibrar(); // piso ≈ 0.01
+    const piso = 0.01;
+    empujarFrames(2050, 2650, (t) => frameVoz(t, piso * 5));
+    expect(result.current.medidas.nivelVoz()).toBe("suave");
+    empujarFrames(2700, 3300, (t) => frameVoz(t, piso * 40));
+    expect(result.current.medidas.nivelVoz()).toBe("fuerte");
+    empujarFrames(3350, 3950, (t) => frameVoz(t, piso * 5));
+    expect(result.current.medidas.nivelVoz()).toBe("suave");
+    expect(result.current.medidas.cambiosVoz()).toBe(2);
+    expect(result.current.medidas.alturaVoz()).toBeGreaterThan(0);
+  });
+});

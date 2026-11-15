@@ -37,6 +37,14 @@ export const rumbo = {
       uno: { es: "vez que su voz subió y bajó", en: "time their voice went up and down" },
       otro: { es: "veces que su voz subió y bajó", en: "times their voice went up and down" },
     },
+    soplos: {
+      uno: { es: "soplo que oyó el molino", en: "blow the pinwheel heard" },
+      otro: { es: "soplos que oyó el molino", en: "blows the pinwheel heard" },
+    },
+    cambiosDeVolumen: {
+      uno: { es: "cambio de su voz entre suave y fuerte", en: "change of their voice between soft and loud" },
+      otro: { es: "cambios de su voz entre suave y fuerte", en: "changes of their voice between soft and loud" },
+    },
     rondas: {
       uno: { es: "ronda de gemelas", en: "round of twin words" },
       otro: { es: "rondas de gemelas", en: "rounds of twin words" },

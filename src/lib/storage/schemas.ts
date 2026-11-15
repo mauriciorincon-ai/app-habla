@@ -57,6 +57,12 @@ export const AjustesSchema = z.object({
   reconocedor: z.boolean().catch(false),
   /** La animación suave opcional para el niño (ADR-023 §7): apagada por defecto, sin texto ni veredicto. */
   animacionReconocedor: z.boolean().catch(false),
+  /**
+   * Short sessions (S12, ADR-024): the most minutes of play per day on this device, chosen by the adult
+   * between 5 and 10 (10 by default). Reaching it shows a gentle notice to the adult and closes the game
+   * calmly — it never blocks, punishes or says "over". `.catch(10)` migrates every earlier setting.
+   */
+  topeMinutos: z.number().int().min(5).max(10).catch(10),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -71,6 +77,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   nivelMirada: "n1",
   reconocedor: false,
   animacionReconocedor: false,
+  topeMinutos: 10,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */
@@ -191,7 +198,15 @@ export const REGISTRO_GEMELAS_VACIO: RegistroGemelas = { juicios: [] };
 // (CelebracionHonesta, compartida por los 4 juegos). Discriminado por juego: cada juego mide algo
 // distinto y no se mezclan (mismo principio que la Metrica de session-flow).
 
-export const JUEGOS = ["globo", "cohete", "palabras", "gemelas", "vocales"] as const;
+export const JUEGOS = [
+  "globo",
+  "soplar",
+  "fuerte-suave",
+  "cohete",
+  "palabras",
+  "gemelas",
+  "vocales",
+] as const;
 export type Juego = (typeof JUEGOS)[number];
 
 export const SesionSchema = z.discriminatedUnion("juego", [
@@ -201,6 +216,21 @@ export const SesionSchema = z.discriminatedUnion("juego", [
     fecha: FechaSchema,
     vozMs: z.number().int().min(0),
     rachaMs: z.number().int().min(0),
+  }),
+  // Soplar (S12, ADR-024): soplos que el detector contó (energía sin tono) y los ms que duraron. Solo
+  // contadores: ni la señal ni la fuerza entran (regla dura 2).
+  z.object({
+    juego: z.literal("soplar"),
+    fecha: FechaSchema,
+    soplos: z.number().int().min(0),
+    soploMs: z.number().int().min(0),
+  }),
+  // Fuerte y suave (S12, ADR-024): cambios entre voz suave y fuerte (calibrados contra el piso). Nunca un
+  // volumen «correcto»: solo cuántas veces cambió.
+  z.object({
+    juego: z.literal("fuerte-suave"),
+    fecha: FechaSchema,
+    cambios: z.number().int().min(0),
   }),
   // Cohete: veces que la voz subió y bajó.
   z.object({

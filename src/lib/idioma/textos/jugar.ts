@@ -22,6 +22,22 @@ export const jugar = {
     que: { es: "Sube cuando su voz sube de tono.", en: "It rises when their voice goes higher." },
     mide: { es: "Mide el tono de su voz.", en: "Measures the pitch of their voice." },
   },
+  soplar: {
+    nombre: { es: "Soplar", en: "Blowing" },
+    que: { es: "Cada soplo hace girar el molino.", en: "Every blow turns the pinwheel." },
+    mide: {
+      es: "Mide aire sin voz: cuenta los soplos que oyó.",
+      en: "Measures air without voice: counts the blows it heard.",
+    },
+  },
+  "fuerte-suave": {
+    nombre: { es: "Fuerte y suave", en: "Loud and soft" },
+    que: { es: "La barra sube con la voz fuerte y baja con la suave.", en: "The bar rises with a loud voice and falls with a soft one." },
+    mide: {
+      es: "Mide el volumen contra el ruido del cuarto; celebra los cambios, ninguno es el «correcto».",
+      en: "Measures volume against the room's noise; celebrates the changes, none is the “right” one.",
+    },
+  },
   vocales: {
     nombre: { es: "El mapa de las vocales", en: "The vowel map" },
     que: { es: "Cada vocal enciende su zona del mapa.", en: "Each vowel lights up its own spot on the map." },

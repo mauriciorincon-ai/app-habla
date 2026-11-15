@@ -135,6 +135,24 @@ export function hitosAlcanzados(
       fecha: primeraSirena.fecha,
     });
   }
+  const primerSoplo = orden.find((s) => s.juego === "soplar" && s.soplos > 0);
+  if (primerSoplo) {
+    hitos.push({
+      id: "primer-soplo",
+      titulo: { es: "El primer soplo que hizo girar el molino", en: "The first blow that spun the pinwheel" },
+      fecha: primerSoplo.fecha,
+    });
+  }
+  const primerCambio = orden.find(
+    (s) => s.juego === "fuerte-suave" && s.cambios > 0,
+  );
+  if (primerCambio) {
+    hitos.push({
+      id: "primer-cambio-de-volumen",
+      titulo: { es: "La primera vez que su voz pasó de suave a fuerte", en: "The first time their voice went from soft to loud" },
+      fecha: primerCambio.fecha,
+    });
+  }
   const primeraGemela = orden.find(
     (s) => s.juego === "gemelas" && s.rondas > 0,
   );

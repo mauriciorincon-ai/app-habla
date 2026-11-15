@@ -44,7 +44,18 @@ export type Metrica =
    *   - `zonas`: vocales distintas (de las cinco) que sonaron estables en el intento.
    *   - `cambios`: veces que pasó de una vocal estable a otra distinta.
    */
-  | { tipo: "vocales"; zonas: number; cambios: number };
+  | { tipo: "vocales"; zonas: number; cambios: number }
+  /**
+   * Soplar (S12, ADR-024). Solo lo que el detector midió: aire sin voz.
+   *   - `soplos`: soplos contados (energía sin tono, sin siseo).
+   *   - `soploMs`: lo que duraron en total. Ni la señal ni su fuerza se guardan.
+   */
+  | { tipo: "soplos"; soplos: number; soploMs: number }
+  /**
+   * Fuerte y suave (S12, ADR-024). Cuántas veces la voz cambió entre suave y fuerte, medida contra el
+   * piso de ruido del cuarto. Jamás un volumen «correcto»: solo se cuentan los cambios.
+   */
+  | { tipo: "intensidad"; cambios: number };
 
 /** El número que la métrica lleva dentro — con eso se compara contra la meta. */
 export function valorDeMetrica(metrica: Metrica): number {
@@ -55,6 +66,10 @@ export function valorDeMetrica(metrica: Metrica): number {
       return metrica.participadas;
     case "vocales":
       return metrica.zonas;
+    case "soplos":
+      return metrica.soplos;
+    case "intensidad":
+      return metrica.cambios;
     default:
       return metrica.veces;
   }
@@ -66,6 +81,8 @@ export const METRICA_CERO: Record<Metrica["tipo"], Metrica> = {
   activaciones: { tipo: "activaciones", veces: 0, reconocidas: 0 },
   gemelas: { tipo: "gemelas", rondas: 0, participadas: 0 },
   vocales: { tipo: "vocales", zonas: 0, cambios: 0 },
+  soplos: { tipo: "soplos", soplos: 0, soploMs: 0 },
+  intensidad: { tipo: "intensidad", cambios: 0 },
 };
 
 export type Fase =

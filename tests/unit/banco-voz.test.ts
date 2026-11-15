@@ -60,6 +60,8 @@ describe("banco-voz: el catálogo grabable", () => {
     expect(ids.filter((id) => claves.has(id))).toEqual([]);
     expect(en.filter((i) => i.categoria === "consigna").map((i) => i.texto)).toEqual([
       "Make a siren voice: aaaAAAaaa",
+      "Take a breath and blow: fooo",
+      "Tiny voice… and big voice",
       "Make your voice sound: aaaaah",
     ]);
     expect(ids.every((id) => esDelIdioma(id, "en"))).toBe(true);

@@ -154,3 +154,43 @@ export function unir(
 
 export const silencio = (segundos: number): Float32Array =>
   new Float32Array(n(segundos));
+
+/** The quiet the app calibrates on at the start of every e2e microphone file (≥ 2.8 s, never digital zero). */
+const ARRANQUE_S = 2.8;
+
+/**
+ * The e2e microphone for «Soplar» (S12): room quiet, then three blows with a vowel and a «sh» between them
+ * (neither must count). One pass = 3 blows. Chromium loops the file, so the e2e asserts «at least one»
+ * and shows only that the vowel and the hiss do not add (the unit test below counts exactly 3 per pass).
+ */
+export function secuenciaSoplo(): Float32Array {
+  return unir([
+    silencio(ARRANQUE_S),
+    soplo(0.7, 0.09, 31),
+    silencio(0.7),
+    vocal(0.8, 300, 0.09),
+    silencio(0.7),
+    soplo(0.7, 0.09, 32),
+    silencio(0.7),
+    sh(0.6, 0.09, 33),
+    silencio(0.7),
+    soplo(0.7, 0.09, 34),
+    silencio(1.2),
+  ]);
+}
+
+/**
+ * The e2e microphone for «Fuerte y suave» (S12): room quiet, then a soft voice, a loud one, soft, loud, soft.
+ * One pass = 4 changes. The levels are far from the thresholds so the e2e is not a coin flip.
+ */
+export function secuenciaFuerteSuave(): Float32Array {
+  return unir([
+    silencio(ARRANQUE_S),
+    vocal(1.0, 300, 0.015),
+    vocal(1.0, 300, 0.25),
+    vocal(1.0, 300, 0.015),
+    vocal(1.0, 300, 0.25),
+    vocal(1.0, 300, 0.015),
+    silencio(1.2),
+  ]);
+}
