@@ -95,8 +95,22 @@ export type Fase =
   | { fase: "jugando"; pisoRuido: number; metrica: Metrica }
   | { fase: "celebracion"; metrica: Metrica };
 
+/**
+ * De quién es el turno (S13, ADR-025). Lo marca el ADULTO con un toque en su franja: la app jamás
+ * adivina de quién es una voz (eso sería biometría, regla dura 4). En «tu turno» (`adulto`) el adulto
+ * modela y el personaje se mueve, pero nada se le cuenta al niño; en «su turno» (`nino`) lo que su voz
+ * hace cuenta y se celebra.
+ */
+export type Turno = "adulto" | "nino";
+
 export type Sesion = {
   ajustes: Ajustes;
+  /** El turno de ahora. Empieza en «su turno»: sin tocar la franja, el juego cuenta como siempre. */
+  turno: Turno;
+  /** Turnos de él en el intento en que hubo voz medida (lo que dice el resumen: «N turnos de él»). */
+  turnosNino: number;
+  /** ¿Ya hubo voz en el turno de él que está corriendo? (para no contar dos veces el mismo turno). */
+  vozEnEsteTurno: boolean;
   /**
    * El valor de métrica que cierra el intento con celebración (3 inversiones del cohete).
    * `null` = sin meta: el juego dura lo que el padre quiera (el GLOBO desde el gate S4 —sus
@@ -132,7 +146,9 @@ export type Evento =
    * (el guion es pantalla del padre; el audio no la sobrevive).
    */
   | { tipo: "VOLVER_AL_GUION" }
-  | { tipo: "CAMBIAR_CALMA"; activo: boolean };
+  | { tipo: "CAMBIAR_CALMA"; activo: boolean }
+  /** El adulto tocó su franja: pasa el turno (S13). Vale en cualquier fase y no borra lo logrado. */
+  | { tipo: "CAMBIAR_TURNO"; turno: Turno };
 
 /**
  * El HITO del globo: cada 3000 ms de voz acumulada es UNA VUELTA. Desde el gate S4 el globo ya
@@ -157,10 +173,44 @@ export function sesionInicial(
   tipoMetrica: Metrica["tipo"] = "sostenido",
   meta: number | null = HITO_VUELTA_MS,
 ): Sesion {
-  return { ajustes, meta, tipoMetrica, actual: { fase: "guion" } };
+  return {
+    ajustes,
+    meta,
+    tipoMetrica,
+    turno: "nino",
+    turnosNino: 0,
+    vozEnEsteTurno: false,
+    actual: { fase: "guion" },
+  };
+}
+
+/** Un intento nuevo (otra vez, recalibrar, volver al guion): los turnos del intento vuelven a cero. */
+function intentoNuevo(sesion: Sesion, actual: Fase): Sesion {
+  return { ...sesion, turno: "nino", turnosNino: 0, vozEnEsteTurno: false, actual };
 }
 
 export function reducir(sesion: Sesion, evento: Evento): Sesion {
+  const siguiente = reducirFase(sesion, evento);
+  // Un turno de él cuenta UNA vez, cuando su voz suena por primera vez en ese turno (S13).
+  if (
+    evento.tipo === "TICK" &&
+    evento.vozActiva &&
+    siguiente.turno === "nino" &&
+    !siguiente.vozEnEsteTurno &&
+    (sesion.actual.fase === "esperando-voz" || sesion.actual.fase === "jugando")
+  ) {
+    return { ...siguiente, turnosNino: siguiente.turnosNino + 1, vozEnEsteTurno: true };
+  }
+  return siguiente;
+}
+
+function reducirFase(sesion: Sesion, evento: Evento): Sesion {
+  if (evento.tipo === "CAMBIAR_TURNO") {
+    return evento.turno === sesion.turno
+      ? sesion
+      : { ...sesion, turno: evento.turno, vozEnEsteTurno: false };
+  }
+
   // El modo calma se puede cambiar en cualquier fase (1 toque) sin perder el progreso.
   if (evento.tipo === "CAMBIAR_CALMA") {
     return {
@@ -174,7 +224,7 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
   if (evento.tipo === "VOLVER_AL_GUION") {
     return sesion.actual.fase === "guion"
       ? sesion
-      : { ...sesion, actual: { fase: "guion" } };
+      : intentoNuevo(sesion, { fase: "guion" });
   }
 
   // Recalibrar es un derecho permanente: en 1 toque, desde donde sea (menos antes del permiso).
@@ -185,7 +235,7 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
       fase === "esperando-voz" ||
       fase === "jugando"
     ) {
-      return { ...sesion, actual: { fase: "calibrando", msTranscurridos: 0 } };
+      return intentoNuevo(sesion, { fase: "calibrando", msTranscurridos: 0 });
     }
     return sesion;
   }
@@ -299,7 +349,7 @@ export function reducir(sesion: Sesion, evento: Evento): Sesion {
     case "celebracion":
       // Volver a jugar no re-pide permiso: el mic sigue abierto, pero el piso se remide.
       return evento.tipo === "OTRA_VEZ"
-        ? avanzar(sesion, { fase: "calibrando", msTranscurridos: 0 })
+        ? intentoNuevo(sesion, { fase: "calibrando", msTranscurridos: 0 })
         : sesion;
 
     default: {
@@ -315,7 +365,9 @@ function avanzar(sesion: Sesion, actual: Fase): Sesion {
 
 /** ¿Toca invitar amablemente a hablar? (nunca es un error ni un castigo: solo una invitación) */
 export function invitacionAmable(sesion: Sesion): boolean {
+  // En «tu turno» el silencio es del adulto, no de él: no hay a quién invitar.
   return (
+    sesion.turno === "nino" &&
     sesion.actual.fase === "esperando-voz" &&
     sesion.actual.msSinVoz >= MS_PARA_INVITAR
   );

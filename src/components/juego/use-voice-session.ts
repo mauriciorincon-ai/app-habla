@@ -1,7 +1,7 @@
 "use client";
 
-// Puente entre el micrófono (Web Audio) y la máquina de estados pura. Lo comparten los TRES
-// juegos: el flujo (guion → permiso → calibración → jugar → celebración) es el mismo; lo único
+// Puente entre el micrófono (Web Audio) y la máquina de estados pura. Lo comparten los SEIS
+// juegos de micrófono: el flujo (guion → permiso → calibración → jugar → celebración) es el mismo; lo único
 // que cambia es qué mide cada uno (la métrica) y cuándo se cierra el intento (la meta).
 //
 // Los frames del medidor (~31/s) NO pasan por React: viven en refs y el juego los pinta a 60 fps
@@ -10,41 +10,37 @@
 
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { crearCalibracion, type Calibracion } from "@/lib/voice/calibration";
-import {
-  CONFIG_METER_DEFECTO,
-  crearMeter,
-  type Meter,
-} from "@/lib/voice/meter";
 import { AnalyserSource } from "@/lib/voice/analyser-source";
 import { crearGuardaBucle } from "@/lib/voice/guarda-bucle";
-import { crearDetectorSoplo, type DetectorSoplo } from "@/lib/voice/soplo";
-import {
-  crearLectorIntensidad,
-  type EstadoIntensidad,
-  type LectorIntensidad,
-} from "@/lib/voice/intensidad";
+import type { EstadoIntensidad } from "@/lib/voice/intensidad";
 import { MicSession } from "@/lib/voice/mic-session";
 import {
-  crearPitchTracker,
-  type Direccion,
-  type PitchTracker,
-} from "@/lib/voice/pitch-tracker";
+  crearMotores,
+  frameEnSilencio,
+  LECTURA_CERO,
+  type LecturaMotores,
+  type Motores,
+} from "@/lib/voice/motores";
+import type { Direccion } from "@/lib/voice/pitch-tracker";
 import type { MeterFrame, MeterSource } from "@/lib/voice/types";
-import {
-  crearSeguimientoVocales,
-  type Vocal,
-} from "@/lib/voice/vocales";
+import type { Vocal } from "@/lib/voice/vocales";
 import { DURACION_CALIBRACION_MS } from "@/lib/voice/calibration";
 import {
   reducir,
   sesionInicial,
   type Metrica,
   type Sesion,
+  type Turno,
 } from "@/lib/session-flow";
 
 /** Cadencia de las transiciones de fase. 100 ms es imperceptible y evita renders inútiles. */
 const MS_POR_TICK = 100;
 
+/**
+ * Lo que el juego lee del micrófono. Dos dueños (S13, ADR-025): lo que MUEVE el dibujo sale del paquete
+ * EN VIVO (todas las voces: el modelo del adulto se ve); los CONTADORES —lo que se cuenta, se muestra
+ * como logro y se celebra— salen del paquete DEL NIÑO, que en «tu turno» solo oye silencio.
+ */
 export type MedidasVivas = {
   /** 0..1 — para la barra del medidor. */
   nivel: () => number;
@@ -98,6 +94,8 @@ export type VoiceSession = {
    */
   volverAlGuion: () => void;
   cambiarCalma: (activo: boolean) => void;
+  /** El adulto pasa el turno con un toque en su franja (S13): nada adivina de quién es una voz. */
+  cambiarTurno: (turno: Turno) => void;
   /**
    * Silencia el medidor por `ms` (+ cola): mientras la app REPRODUCE la voz familiar por los
    * parlantes, sus frames no deben contar como voz del niño (regla dura 3 — el juego mentiría).
@@ -137,30 +135,19 @@ export function useVoiceSession({
   );
 
   const fuenteRef = useRef<MeterSource | null>(null);
-  const meterRef = useRef<Meter | null>(null);
-  const pitchRef = useRef<PitchTracker | null>(null);
-  const vocalesRef = useRef(crearSeguimientoVocales());
   const calibracionRef = useRef<Calibracion | null>(null);
-  const soploRef = useRef<DetectorSoplo | null>(null);
-  const intensidadRef = useRef<LectorIntensidad | null>(null);
-  // Lo último que dijeron los detectores de S12 (escalares: nada de audio, regla dura 2).
-  const soploEstadoRef = useRef({ soplando: false, soplos: 0, soploMs: 0, fuerza: 0 });
-  const intensidadEstadoRef = useRef<EstadoIntensidad>({
-    nivel: "silencio",
-    db: 0,
-    altura: 0,
-    cambios: 0,
-  });
-
-  // Valores vivos que la UI pinta a 60 fps sin re-render.
-  const nivelRef = useRef(0);
-  const sostenidoRef = useRef(0);
-  const mejorRachaRef = useRef(0);
-  const vozActivaRef = useRef(false);
-  const alturaPitchRef = useRef(0);
-  const direccionRef = useRef<Direccion>("quieto");
-  const inversionesRef = useRef(0);
+  // Dos paquetes de motores (S13): el en vivo mueve el dibujo, el del niño cuenta.
+  const vivoRef = useRef<Motores | null>(null);
+  const ninoRef = useRef<Motores | null>(null);
+  // Lo último que leyeron (escalares: nada de audio, regla dura 2). La UI los pinta a 60 fps sin re-render.
+  const vivoLecturaRef = useRef<LecturaMotores>(LECTURA_CERO);
+  const ninoLecturaRef = useRef<LecturaMotores>(LECTURA_CERO);
   const progresoCalibracionRef = useRef(0);
+  // El turno de ahora, legible desde el callback de audio sin re-suscribir nada.
+  const turnoRef = useRef<Turno>(sesion.turno);
+  useEffect(() => {
+    turnoRef.current = sesion.turno;
+  }, [sesion.turno]);
   // La fase actual, legible desde el callback de audio sin re-suscribir nada.
   const faseRef = useRef(sesion.actual.fase);
   useEffect(() => {
@@ -169,29 +156,32 @@ export function useVoiceSession({
 
   // Objeto estable de "lectores": las funciones leen los refs cuando se las llama (en el rAF del
   // escenario o en el reloj de ticks), nunca durante el render.
-  const medidas: MedidasVivas = useMemo(
-    () => ({
-      nivel: () => nivelRef.current,
-      sostenidoMs: () => sostenidoRef.current,
-      mejorRachaMs: () => mejorRachaRef.current,
-      vozActiva: () => vozActivaRef.current,
-      alturaPitch: () => alturaPitchRef.current,
-      direccionPitch: () => direccionRef.current,
-      inversiones: () => inversionesRef.current,
+  const medidas: MedidasVivas = useMemo(() => {
+    const vivo = () => vivoLecturaRef.current;
+    const nino = () => ninoLecturaRef.current;
+    return {
+      // Lo que se mueve: todas las voces.
+      nivel: () => vivo().nivel,
+      vozActiva: () => vivo().vozActiva,
+      alturaPitch: () => vivo().alturaPitch,
+      direccionPitch: (): Direccion => vivo().direccionPitch,
+      vocalActual: (): Vocal | null => vivo().vocalActual,
+      soplando: () => vivo().soplo.soplando,
+      fuerzaSoplo: () => vivo().soplo.fuerza,
+      nivelVoz: (): EstadoIntensidad["nivel"] => vivo().intensidad.nivel,
+      alturaVoz: () => vivo().intensidad.altura,
       progresoCalibracion: () => progresoCalibracionRef.current,
-      vocalActual: () => vocalesRef.current.actual(),
-      vocalesZonas: () => vocalesRef.current.zonas(),
-      vocalesCambios: () => vocalesRef.current.cambios(),
-      soplando: () => soploEstadoRef.current.soplando,
-      soplos: () => soploEstadoRef.current.soplos,
-      soploMs: () => soploEstadoRef.current.soploMs,
-      fuerzaSoplo: () => soploEstadoRef.current.fuerza,
-      nivelVoz: () => intensidadEstadoRef.current.nivel,
-      alturaVoz: () => intensidadEstadoRef.current.altura,
-      cambiosVoz: () => intensidadEstadoRef.current.cambios,
-    }),
-    [],
-  );
+      // Lo que se cuenta: solo su turno.
+      sostenidoMs: () => nino().sostenidoMs,
+      mejorRachaMs: () => nino().mejorRachaMs,
+      inversiones: () => nino().inversiones,
+      vocalesZonas: () => nino().vocalesZonas,
+      vocalesCambios: () => nino().vocalesCambios,
+      soplos: () => nino().soplo.soplos,
+      soploMs: () => nino().soplo.soploMs,
+      cambiosVoz: () => nino().intensidad.cambios,
+    };
+  }, []);
 
   // Guarda del bucle (motor puro): mientras esté activa, el medidor ignora los frames — porque
   // está sonando la voz familiar por los parlantes y no es el niño.
@@ -222,21 +212,10 @@ export function useVoiceSession({
         // Se descarta la calibración: los frames que lleguen mientras React procesa el cambio de
         // fase no deben volver a medir el piso ni re-despachar la transición.
         calibracionRef.current = null;
-        meterRef.current = crearMeter({
-          pisoRuido: estado.pisoRuido,
-          ...CONFIG_METER_DEFECTO,
-        });
-        pitchRef.current = crearPitchTracker();
-        soploRef.current = crearDetectorSoplo({ pisoRuido: estado.pisoRuido });
-        intensidadRef.current = crearLectorIntensidad({ pisoRuido: estado.pisoRuido });
-        soploEstadoRef.current = soploRef.current.estado();
-        intensidadEstadoRef.current = intensidadRef.current.estado();
-        sostenidoRef.current = 0;
-        vozActivaRef.current = false;
-        alturaPitchRef.current = 0;
-        direccionRef.current = "quieto";
-        inversionesRef.current = 0;
-        vocalesRef.current.reiniciar();
+        vivoRef.current = crearMotores(estado.pisoRuido);
+        ninoRef.current = crearMotores(estado.pisoRuido);
+        vivoLecturaRef.current = LECTURA_CERO;
+        ninoLecturaRef.current = LECTURA_CERO;
         despachar(
           estado.ruidoAlto
             ? { tipo: "CALIBRACION_RUIDOSA", pisoRuido: estado.pisoRuido }
@@ -247,37 +226,16 @@ export function useVoiceSession({
     }
 
     if (fase === "esperando-voz" || fase === "jugando") {
-      const meter = meterRef.current;
-      if (!meter) return;
+      const vivo = vivoRef.current;
+      const nino = ninoRef.current;
+      if (!vivo || !nino) return;
       // Suena la voz familiar: se ignoran los frames para que su eco no cuente como voz del niño.
       if (guardaRef.current.activa(performance.now())) return;
-      const estado = meter.empujar(frame);
-      nivelRef.current = estado.nivel;
-      sostenidoRef.current = estado.sostenidoMs;
-      mejorRachaRef.current = estado.mejorRachaMs;
-      vozActivaRef.current = estado.vozActiva;
-
-      // El pitch se alimenta del MISMO frame y del veredicto de energía del meter: el ruido de
-      // la casa no produce tono fantasma (ADR 007).
-      const pitch = pitchRef.current?.empujar(frame, estado.vozActiva);
-      if (pitch) {
-        alturaPitchRef.current = pitch.altura;
-        direccionRef.current = pitch.direccion;
-        inversionesRef.current = pitch.inversiones;
-      }
-      // Las vocales usan el MISMO frame y el mismo veredicto de energía; solo dos números (F1, F2)
-      // entran, y mueren en este ref de contadores (regla dura 2).
-      vocalesRef.current.empujar(
-        frame.formantes,
-        frame.pitchHz,
-        estado.vozActiva,
+      vivoLecturaRef.current = vivo.empujar(frame);
+      // En «tu turno», para el paquete del niño el cuarto calla: nada de lo que suena se le cuenta.
+      ninoLecturaRef.current = nino.empujar(
+        turnoRef.current === "nino" ? frame : frameEnSilencio(frame),
       );
-      // S12: el MISMO frame alimenta al detector de soplo (energía sin tono) y al lector de
-      // intensidad (dB sobre el piso). Solo escalares entran; mueren en estos refs.
-      if (soploRef.current) soploEstadoRef.current = soploRef.current.procesar(frame);
-      if (intensidadRef.current) {
-        intensidadEstadoRef.current = intensidadRef.current.procesar(frame);
-      }
     }
   }, []);
 
@@ -289,7 +247,7 @@ export function useVoiceSession({
       despachar({
         tipo: "TICK",
         deltaMs: MS_POR_TICK,
-        vozActiva: vozActivaRef.current,
+        vozActiva: vivoLecturaRef.current.vozActiva,
         metrica: metricaRef.current(medidas),
       });
     }, MS_POR_TICK);
@@ -350,19 +308,10 @@ export function useVoiceSession({
   const remedir = useCallback(() => {
     calibracionRef.current = crearCalibracion();
     progresoCalibracionRef.current = 0;
-    meterRef.current?.reiniciar();
-    pitchRef.current?.reiniciar();
-    sostenidoRef.current = 0;
-    vozActivaRef.current = false;
-    nivelRef.current = 0;
-    alturaPitchRef.current = 0;
-    direccionRef.current = "quieto";
-    inversionesRef.current = 0;
-    vocalesRef.current.reiniciar();
-    soploRef.current?.reiniciar();
-    intensidadRef.current?.reiniciar();
-    soploEstadoRef.current = { soplando: false, soplos: 0, soploMs: 0, fuerza: 0 };
-    intensidadEstadoRef.current = { nivel: "silencio", db: 0, altura: 0, cambios: 0 };
+    vivoRef.current?.reiniciar();
+    ninoRef.current?.reiniciar();
+    vivoLecturaRef.current = LECTURA_CERO;
+    ninoLecturaRef.current = LECTURA_CERO;
   }, []);
 
   const recalibrar = useCallback(() => {
@@ -404,6 +353,10 @@ export function useVoiceSession({
     volverAlGuion,
     cambiarCalma: useCallback(
       (activo: boolean) => despachar({ tipo: "CAMBIAR_CALMA", activo }),
+      [],
+    ),
+    cambiarTurno: useCallback(
+      (turno: Turno) => despachar({ tipo: "CAMBIAR_TURNO", turno }),
       [],
     ),
     silenciar,

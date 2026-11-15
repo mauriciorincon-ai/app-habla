@@ -176,3 +176,36 @@ describe("use-voice-session: soplo e intensidad están cableados (S12)", () => {
     expect(result.current.medidas.alturaVoz()).toBeGreaterThan(0);
   });
 });
+
+describe("use-voice-session: los turnos están cableados (S13, ADR-025)", () => {
+  beforeEach(() => {
+    ahora = 0;
+    vi.useFakeTimers();
+    vi.spyOn(performance, "now").mockImplementation(() => ahora);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  it("en «tu turno» el dibujo se mueve con tu voz pero nada se le cuenta a él; en su turno, sí", async () => {
+    const { result } = await montarYCalibrar();
+    act(() => result.current.cambiarTurno("adulto"));
+    expect(result.current.sesion.turno).toBe("adulto");
+
+    empujar(2050, 3500, 0.2);
+    expect(result.current.medidas.nivel()).toBeGreaterThan(0.5);
+    expect(result.current.medidas.vozActiva()).toBe(true);
+    expect(result.current.medidas.sostenidoMs()).toBe(0);
+    expect(result.current.medidas.mejorRachaMs()).toBe(0);
+
+    act(() => result.current.cambiarTurno("nino"));
+    empujar(3550, 5000, 0.2);
+    expect(result.current.medidas.sostenidoMs()).toBeGreaterThan(1000);
+    // El reloj de ticks ve la voz de su turno y la cuenta como UN turno de él.
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(result.current.sesion.turnosNino).toBe(1);
+  });
+});
