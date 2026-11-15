@@ -34,7 +34,7 @@ import {
   retirar,
 } from "@/lib/cuentos/estado";
 import { fechaHoy } from "@/lib/fecha";
-import { interesesDe } from "@/lib/su-mundo/intereses";
+import { interesesDe, interesesParaCuentos } from "@/lib/su-mundo/intereses";
 import { palabrasDeLaMeta } from "@/lib/su-mundo/su-mundo";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
@@ -169,7 +169,11 @@ export function CuentosAdulto() {
 
   const pendientes = conEstado(estado, "pendiente");
   const decididos = estado.cuentos.filter((c) => c.estado !== "pendiente");
-  const delNino = cuentosDelNino(estado, CUENTOS, idioma);
+  const delNino = cuentosDelNino(
+    { ...estado, intereses: interesesParaCuentos(perfil, estado.intereses) },
+    CUENTOS,
+    idioma,
+  );
 
   return (
     <div className="flex flex-col gap-6" data-testid="cuentos-adulto">

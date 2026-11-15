@@ -60,3 +60,12 @@ export function interesesDe(
   const temas = (perfil?.temas ?? []).map((t) => nombreTema[t][idioma]);
   return unirSinRepetir(unirSinRepetir(perfil?.otrasCosas ?? [], legado), temas).slice(0, MAX_INTERESES);
 }
+
+/**
+ * Lo que llena los huecos `{interes}` de los cuentos de la biblioteca: solo SUS «otras cosas» (y lo que no
+ * cupo al migrar), jamás el nombre de un tema («El mar» no cabe en «le encantan {interes}»). Sin nada,
+ * la plantilla usa su propio relleno.
+ */
+export function interesesParaCuentos(perfil: Perfil | null, legado: readonly string[] = []): string[] {
+  return unirSinRepetir(perfil?.otrasCosas ?? [], legado).slice(0, MAX_INTERESES);
+}

@@ -11,7 +11,8 @@ import { CUENTOS } from "@content/cuentos";
 import { useReproductor } from "@/components/use-reproductor";
 import { listarIds, obtenerGrabacion } from "@/lib/banco-voz/almacen";
 import { esDeCuento, idCuento } from "@/lib/banco-voz/catalogo";
-import { useCuentos } from "@/components/estado-local";
+import { useCuentos, usePerfil } from "@/components/estado-local";
+import { interesesParaCuentos } from "@/lib/su-mundo/intereses";
 import { CUENTOS_VACIO, cuentosDelNino } from "@/lib/cuentos/estado";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
@@ -24,7 +25,10 @@ const PASO =
 export function CuentosNino() {
   const tx = useT();
   const idioma = useIdioma();
-  const estado = useCuentos() ?? CUENTOS_VACIO;
+  const guardado = useCuentos() ?? CUENTOS_VACIO;
+  const perfil = usePerfil();
+  // Sus intereses viven en el perfil (S14, ADR-026); Cuentos solo los lee.
+  const estado = { ...guardado, intereses: interesesParaCuentos(perfil, guardado.intereses) };
   const [grabadas, setGrabadas] = useState<Set<string>>(new Set());
   const [abierto, setAbierto] = useState<string | null>(null);
   const [pagina, setPagina] = useState(0);
