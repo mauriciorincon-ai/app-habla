@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-15
 closed: 2026-11-15
 branch: sprint-013/juntos-de-verdad
-pr: "pendiente"
+pr: "#25"
 ---
 - **Nombre / objetivo:** «Juntos de verdad» — turnos dentro de los seis juegos de micrófono y un apuntador que le habla al adulto en el momento justo (Gemelas solo gana el indicador).
 - **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño.
