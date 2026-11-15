@@ -16,7 +16,7 @@ const WINDOW_SIZE = 2048;
 const RMS_MINIMO_PARA_PITCH = 0.01;
 
 import { estimarFormantes, type Formantes } from "./formantes.js";
-import { detectarPitch, tasaCruces } from "./analisis.js";
+import { detectarPitch, hayPeriodoGrave, tasaCruces } from "./analisis.js";
 
 class RmsProcessor extends AudioWorkletProcessor {
   private sumSquares = 0;
@@ -51,19 +51,33 @@ class RmsProcessor extends AudioWorkletProcessor {
       for (let i = 0; i < WINDOW_SIZE; i++) {
         this.ordenada[i] = this.ventana[(this.escritura + i) % WINDOW_SIZE];
       }
-      const zcr = tasaCruces(this.ordenada, Math.min(this.sampleCount, WINDOW_SIZE));
+      const zcr = tasaCruces(
+        this.ordenada,
+        Math.min(this.sampleCount, WINDOW_SIZE),
+      );
 
       // Gating por energía: sin voz no se calcula pitch (ni se emite uno fantasma).
       let pitchHz: number | null = null;
       let formantes: Formantes | null = null;
+      // S12 audit (ADR-024): a boolean that vetoes a blow when a low adult voice (70–150 Hz) is periodic.
+      let grave = false;
       if (rms >= RMS_MINIMO_PARA_PITCH) {
         // The ring buffer is already unrolled in chronological order (above).
         pitchHz = detectarPitch(this.ordenada, sampleRate);
+        if (pitchHz === null)
+          grave = hayPeriodoGrave(this.ordenada, sampleRate);
         // El mismo gate de energía: bajo el umbral no hay formantes (ni fantasmas del ruido).
         formantes = estimarFormantes(this.ordenada, sampleRate);
       }
 
-      this.port.postMessage({ rms, pitchHz, tMs: currentTime * 1000, formantes, zcr });
+      this.port.postMessage({
+        rms,
+        pitchHz,
+        tMs: currentTime * 1000,
+        formantes,
+        zcr,
+        grave,
+      });
       this.sumSquares = 0;
       this.sampleCount = 0;
       this.blockCount = 0;

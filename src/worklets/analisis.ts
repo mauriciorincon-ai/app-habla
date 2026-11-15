@@ -9,6 +9,8 @@
  */
 export const MIN_HZ = 150;
 export const MAX_HZ = 500;
+/** Lower edge of the extra «is there a low periodic voice?» look (an adult's voice, S12 audit, ADR-024). */
+export const MIN_HZ_GRAVE = 70;
 
 /** Umbral de la CMND: por debajo de esto el periodo se considera confiable (valor clásico). */
 const YIN_THRESHOLD = 0.15;
@@ -20,10 +22,12 @@ const YIN_THRESHOLD = 0.15;
 export function detectarPitch(
   buffer: Float32Array,
   sampleRateHz: number,
+  minHz: number = MIN_HZ,
+  maxHz: number = MAX_HZ,
 ): number | null {
-  const tauMin = Math.floor(sampleRateHz / MAX_HZ);
+  const tauMin = Math.floor(sampleRateHz / maxHz);
   const tauMax = Math.min(
-    Math.floor(sampleRateHz / MIN_HZ),
+    Math.floor(sampleRateHz / minHz),
     Math.floor(buffer.length / 2),
   );
   if (tauMax <= tauMin) return null;
@@ -74,7 +78,19 @@ export function detectarPitch(
   }
 
   const hz = sampleRateHz / tauFinal;
-  return hz >= MIN_HZ && hz <= MAX_HZ ? hz : null;
+  return hz >= minHz && hz <= maxHz ? hz : null;
+}
+
+/**
+ * Is there a reliable period BELOW the product pitch range (70–150 Hz)? An adult's voice (a deep one, or on
+ * the TV) has no pitch for the 150–500 Hz search and low zero crossings, so energy + no pitch alone would
+ * count it as a blow. A boolean, never the Hz: it only vetoes a blow (S12 audit, ADR-024).
+ */
+export function hayPeriodoGrave(
+  buffer: Float32Array,
+  sampleRateHz: number,
+): boolean {
+  return detectarPitch(buffer, sampleRateHz, MIN_HZ_GRAVE, MIN_HZ) !== null;
 }
 
 /**

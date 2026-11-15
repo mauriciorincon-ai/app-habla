@@ -23,11 +23,17 @@ export type MeterFrame = {
    * the blow detector ignores frames that lack it.
    */
   zcr?: number;
+  /**
+   * True when the window has a reliable period BELOW the product pitch range (70–150 Hz): a deep adult
+   * voice. Only the worklet publishes it, and the blow detector treats it as «not a blow» (S12 audit, ADR-024).
+   */
+  grave?: boolean;
 };
 
 export type Formantes = { f1: number; f2: number };
 
-const numeroFinito = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+const numeroFinito = (v: unknown): v is number =>
+  typeof v === "number" && Number.isFinite(v);
 
 /**
  * Guardia del contrato worklet → página (regla 19): un mensaje que no tiene la forma del frame se
@@ -38,7 +44,9 @@ export function esMeterFrame(v: unknown): v is MeterFrame {
   const f = v as Record<string, unknown>;
   if (!numeroFinito(f.rms) || !numeroFinito(f.tMs)) return false;
   if (f.pitchHz !== null && !numeroFinito(f.pitchHz)) return false;
-  if (f.zcr !== undefined && (!numeroFinito(f.zcr) || f.zcr < 0 || f.zcr > 1)) return false;
+  if (f.zcr !== undefined && (!numeroFinito(f.zcr) || f.zcr < 0 || f.zcr > 1))
+    return false;
+  if (f.grave !== undefined && typeof f.grave !== "boolean") return false;
   if (f.formantes === undefined || f.formantes === null) return true;
   if (typeof f.formantes !== "object") return false;
   const fo = f.formantes as Record<string, unknown>;

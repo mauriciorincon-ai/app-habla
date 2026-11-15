@@ -1,7 +1,11 @@
 // Turns a synthetic signal into the frames the AudioWorklet would publish (same block size, same window,
 // same YIN and zero-crossing code: src/worklets/analisis.ts). Unit tests only.
 
-import { detectarPitch, tasaCruces } from "../../src/worklets/analisis";
+import {
+  detectarPitch,
+  hayPeriodoGrave,
+  tasaCruces,
+} from "../../src/worklets/analisis";
 import type { MeterFrame } from "@/lib/voice/types";
 import { TASA } from "./senales-soplo";
 
@@ -21,8 +25,12 @@ export function framesDe(x: Float32Array): MeterFrame[] {
       ventana[i] = desde + i >= 0 ? x[desde + i] : 0;
     const pitchHz =
       rms >= RMS_MINIMO_PARA_PITCH ? detectarPitch(ventana, TASA) : null;
+    const grave =
+      rms >= RMS_MINIMO_PARA_PITCH && pitchHz === null
+        ? hayPeriodoGrave(ventana, TASA)
+        : false;
     const zcr = tasaCruces(ventana, BLOQUE);
-    frames.push({ rms, pitchHz, tMs: (fin / TASA) * 1000, zcr });
+    frames.push({ rms, pitchHz, tMs: (fin / TASA) * 1000, zcr, grave });
   }
   return frames;
 }

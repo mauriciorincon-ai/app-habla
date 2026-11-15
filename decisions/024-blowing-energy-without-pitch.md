@@ -32,6 +32,22 @@ absence of pitch alone would celebrate a «sh» as a blow.
    200 ms. It counts **changes** between soft and loud, both ways; silence in between does not hide a
    change. The height of the character is capped at 24 dB: a shout is not higher than a firm voice, and a
    shout held for any time is **zero changes**. The game never names a «right» volume.
+5. **A deep adult voice is not air.** Below the YIN range of the child (150 Hz) a low male voice can read
+   as «no pitch». The worklet runs a second YIN pass over 70–150 Hz only when the main one found nothing
+   and publishes `grave` (a boolean, `MIN_HZ_GRAVE = 70`, `hayPeriodoGrave`). `grave === true` is never air
+   and ends an active blow. It is a new cue: no existing threshold or hysteresis changed.
+
+## Short sessions (daily cap)
+
+- The adult picks a daily cap of 5–10 minutes in Ajustes (10 by default, `AjustesSchema.topeMinutos`).
+- `src/lib/pantalla/tope.ts` holds pure functions of state and date. A one-second tick credits at most
+  2 s (`DELTA_MAX_MS`), so a sleeping tab or a clock jump cannot spend the day.
+- At the cap the adult gets ONE gentle notice per day (`avisado`) and the game closes calmly like «Salir»
+  (Gemelas goes to its start). It never blocks: playing again is possible and is not cut a second time.
+  No «se acabó», no punishment, nothing on the child's screen.
+- The counter lives in the key `habla:v1:pantalla` with only `{fecha, ms, avisado}`. It is outside
+  `PaqueteSchema` (it never travels to the other home) and `borrarTodo` wipes it.
+- Demo in red: breaking `alcanzado` in `tope.ts` turned the cap tests red; restored, green.
 
 ## Measurement (synthetic signals, `tests/fixtures/senales-soplo.ts`, frames as the worklet makes them)
 

@@ -51,6 +51,8 @@ describe("blow detector: energy without pitch and with little hiss (ADR-024)", (
   it.each([
     ["a vowel", () => S.vocal(1.5, 280, 0.12)],
     ["a low hum", () => S.vocal(1.5, 180, 0.1)],
+    ["a deep adult voice (110 Hz)", () => S.vocal(1.5, 110, 0.1)],
+    ["a very deep adult voice (85 Hz)", () => S.vocal(1.5, 85, 0.1)],
     ["«sh»", () => S.sh(1.5, 0.08)],
     ["«s»", () => S.ese(1.5, 0.06)],
     ["silence", () => S.silencio(1.5)],

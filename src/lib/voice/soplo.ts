@@ -82,6 +82,7 @@ export function crearDetectorSoplo(
       const esAire =
         f.zcr !== undefined &&
         f.pitchHz === null &&
+        f.grave !== true &&
         f.zcr <= c.zcrMaximo &&
         f.rms >= (soplando ? salida : entrada);
 
@@ -106,7 +107,7 @@ export function crearDetectorSoplo(
         candidatoMs = 0;
         if (soplando) {
           huecoMs += dt;
-          if (huecoMs >= c.graciaMs || f.pitchHz !== null) {
+          if (huecoMs >= c.graciaMs || f.pitchHz !== null || f.grave === true) {
             soplando = false;
             huecoMs = 0;
           }
