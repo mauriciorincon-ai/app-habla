@@ -18,29 +18,85 @@ export type Hito = {
 };
 
 const UMBRALES_PALABRAS = [
-  { n: 10, id: "palabras-10", titulo: { es: "10 palabras distintas practicadas", en: "10 different words practiced" } },
-  { n: 25, id: "palabras-25", titulo: { es: "25 palabras distintas practicadas", en: "25 different words practiced" } },
+  {
+    n: 10,
+    id: "palabras-10",
+    titulo: {
+      es: "10 palabras distintas practicadas",
+      en: "10 different words practiced",
+    },
+  },
+  {
+    n: 25,
+    id: "palabras-25",
+    titulo: {
+      es: "25 palabras distintas practicadas",
+      en: "25 different words practiced",
+    },
+  },
 ];
 
 const UMBRALES_CONSTANCIA = [
-  { d: 3, id: "constancia-3", titulo: { es: "Una semana de 3 días juntos", en: "A week of 3 days together" } },
-  { d: 5, id: "constancia-5", titulo: { es: "Una semana de 5 días juntos", en: "A week of 5 days together" } },
+  {
+    d: 3,
+    id: "constancia-3",
+    titulo: {
+      es: "Una semana de 3 días juntos",
+      en: "A week of 3 days together",
+    },
+  },
+  {
+    d: 5,
+    id: "constancia-5",
+    titulo: {
+      es: "Una semana de 5 días juntos",
+      en: "A week of 5 days together",
+    },
+  },
 ];
 
 /** Días de práctica ACUMULADOS (total histórico — el número que nunca baja). */
 const UMBRALES_DIAS_TOTALES = [
-  { d: 10, id: "dias-10", titulo: { es: "10 días de práctica en total", en: "10 days of practice in total" } },
-  { d: 25, id: "dias-25", titulo: { es: "25 días de práctica en total", en: "25 days of practice in total" } },
+  {
+    d: 10,
+    id: "dias-10",
+    titulo: {
+      es: "10 días de práctica en total",
+      en: "10 days of practice in total",
+    },
+  },
+  {
+    d: 25,
+    id: "dias-25",
+    titulo: {
+      es: "25 días de práctica en total",
+      en: "25 days of practice in total",
+    },
+  },
 ];
 
 /** Dibujos encendidos ACUMULADOS (cuentan las repeticiones: cada encendido fue voz real). */
 const UMBRALES_DIBUJOS = [
-  { n: 50, id: "dibujos-50", titulo: { es: "50 dibujos encendidos con su voz", en: "50 pictures lit up with their voice" } },
+  {
+    n: 50,
+    id: "dibujos-50",
+    titulo: {
+      es: "50 dibujos encendidos con su voz",
+      en: "50 pictures lit up with their voice",
+    },
+  },
 ];
 
 /** Palabras que el PADRE marcó haber oído, acumuladas (reconocidas + participación gemelas). */
 const UMBRALES_OIDAS = [
-  { n: 10, id: "oidas-10", titulo: { es: "10 palabras que TÚ le oíste", en: "10 words YOU heard them say" } },
+  {
+    n: 10,
+    id: "oidas-10",
+    titulo: {
+      es: "10 palabras que TÚ le oíste",
+      en: "10 words YOU heard them say",
+    },
+  },
 ];
 
 /**
@@ -65,7 +121,10 @@ export function hitosAlcanzados(
   if (fechas.length === 0) return hitos;
   hitos.push({
     id: "primer-dia",
-    titulo: { es: "Su primer rato de práctica juntos", en: "Your first practice time together" },
+    titulo: {
+      es: "Su primer rato de práctica juntos",
+      en: "Your first practice time together",
+    },
     fecha: fechas[0],
   });
 
@@ -78,7 +137,10 @@ export function hitosAlcanzados(
   if (primeraOida) {
     hitos.push({
       id: "primera-oida",
-      titulo: { es: "La primera palabra que TÚ le oíste", en: "The first word YOU heard them say" },
+      titulo: {
+        es: "La primera palabra que TÚ le oíste",
+        en: "The first word YOU heard them say",
+      },
       fecha: primeraOida.fecha,
     });
   }
@@ -89,7 +151,10 @@ export function hitosAlcanzados(
   if (vozLarga) {
     hitos.push({
       id: "voz-larga",
-      titulo: { es: "Su voz sonó 5 segundos seguidos", en: "Their voice sounded for 5 seconds in a row" },
+      titulo: {
+        es: "Su voz sonó 5 segundos seguidos",
+        en: "Their voice sounded for 5 seconds in a row",
+      },
       fecha: vozLarga.fecha,
     });
   }
@@ -99,7 +164,10 @@ export function hitosAlcanzados(
   if (vozMuyLarga) {
     hitos.push({
       id: "voz-larga-10",
-      titulo: { es: "Su voz sonó 10 segundos seguidos", en: "Their voice sounded for 10 seconds in a row" },
+      titulo: {
+        es: "Su voz sonó 10 segundos seguidos",
+        en: "Their voice sounded for 10 seconds in a row",
+      },
       fecha: vozMuyLarga.fecha,
     });
   }
@@ -111,7 +179,10 @@ export function hitosAlcanzados(
   if (primerEncendido) {
     hitos.push({
       id: "primer-encendido",
-      titulo: { es: "El primer dibujo que su voz encendió", en: "The first picture their voice lit up" },
+      titulo: {
+        es: "El primer dibujo que su voz encendió",
+        en: "The first picture their voice lit up",
+      },
       fecha: primerEncendido.fecha,
     });
   }
@@ -121,7 +192,10 @@ export function hitosAlcanzados(
   if (primeraVuelta) {
     hitos.push({
       id: "primera-vuelta",
-      titulo: { es: "La primera vuelta completa del globo", en: "The balloon's first full lap" },
+      titulo: {
+        es: "La primera vuelta completa del globo",
+        en: "The balloon's first full lap",
+      },
       fecha: primeraVuelta.fecha,
     });
   }
@@ -131,8 +205,35 @@ export function hitosAlcanzados(
   if (primeraSirena) {
     hitos.push({
       id: "primera-sirena",
-      titulo: { es: "La primera sirena: su voz subió y bajó", en: "The first siren: their voice went up and down" },
+      titulo: {
+        es: "La primera sirena: su voz subió y bajó",
+        en: "The first siren: their voice went up and down",
+      },
       fecha: primeraSirena.fecha,
+    });
+  }
+  const primerSoplo = orden.find((s) => s.juego === "soplar" && s.soplos > 0);
+  if (primerSoplo) {
+    hitos.push({
+      id: "primer-soplo",
+      titulo: {
+        es: "El primer soplo que hizo girar el molino",
+        en: "The first blow that spun the pinwheel",
+      },
+      fecha: primerSoplo.fecha,
+    });
+  }
+  const primerCambio = orden.find(
+    (s) => s.juego === "fuerte-suave" && s.cambios > 0,
+  );
+  if (primerCambio) {
+    hitos.push({
+      id: "primer-cambio-de-volumen",
+      titulo: {
+        es: "La primera vez que su voz cambió entre suave y fuerte",
+        en: "The first time their voice changed between soft and loud",
+      },
+      fecha: primerCambio.fecha,
     });
   }
   const primeraGemela = orden.find(
@@ -141,7 +242,10 @@ export function hitosAlcanzados(
   if (primeraGemela) {
     hitos.push({
       id: "primera-gemela",
-      titulo: { es: "Su primera ronda de palabras gemelas", en: "Your first round of twin words" },
+      titulo: {
+        es: "Su primera ronda de palabras gemelas",
+        en: "Your first round of twin words",
+      },
       fecha: primeraGemela.fecha,
     });
   }

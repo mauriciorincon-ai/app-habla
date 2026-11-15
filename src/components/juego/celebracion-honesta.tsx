@@ -16,6 +16,8 @@ import {
   IconoBrote,
   IconoGemelas,
   IconoPictograma,
+  BarrasVoz,
+  Molino,
 } from "@/components/iconos";
 import { valorDeMetrica, type Metrica } from "@/lib/session-flow";
 import { construirSesion } from "@/lib/rumbo/sesion";
@@ -25,6 +27,7 @@ import type { Idioma } from "@/lib/idioma";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { vocales as vocalesTextos } from "@/lib/idioma/textos/vocales";
+import { fuerteSuave, soplar } from "@/lib/idioma/textos/voz-juegos";
 import { FormaVocal } from "./forma-vocal";
 
 type Props = {
@@ -115,6 +118,46 @@ function Logro({
             ) : null}
             {tx(c.globo.medidor)}
           </p>
+        </>
+      );
+
+    case "soplos":
+      return (
+        <>
+          <Molino className="h-24 w-16" />
+          <h2 className="font-display text-4xl">
+            {tx(soplar.celebracion.antes)}{" "}
+            {cifra(
+              tx(
+                metrica.soplos === 1
+                  ? soplar.celebracion.uno
+                  : soplar.celebracion.varios,
+                { n: metrica.soplos },
+              ),
+            )}
+            !
+          </h2>
+          <p className="text-tinta-suave">{tx(soplar.celebracion.cuerpo)}</p>
+        </>
+      );
+
+    case "intensidad":
+      return (
+        <>
+          <BarrasVoz className="size-20" />
+          <h2 className="font-display text-4xl">
+            {tx(fuerteSuave.celebracion.antes)}{" "}
+            {cifra(
+              tx(
+                metrica.cambios === 1
+                  ? fuerteSuave.celebracion.uno
+                  : fuerteSuave.celebracion.varios,
+                { n: metrica.cambios },
+              ),
+            )}{" "}
+            {tx(fuerteSuave.celebracion.despues)}
+          </h2>
+          <p className="text-tinta-suave">{tx(fuerteSuave.celebracion.cuerpo)}</p>
         </>
       );
 
@@ -232,7 +275,11 @@ function SinVoz({ metrica }: { metrica: Metrica }) {
         ? c.dibujos
         : metrica.tipo === "vocales"
           ? vocalesTextos.celebracion.sinVoz
-          : c.globo;
+          : metrica.tipo === "soplos"
+            ? soplar.celebracion.sinSoplo
+            : metrica.tipo === "intensidad"
+              ? fuerteSuave.celebracion.sinCambios
+              : c.globo;
 
   return (
     <>
@@ -253,7 +300,7 @@ export function CelebracionHonesta({
 }: Props) {
   const tx = useT();
   // R1: un intento = una sesión registrada. Es el ÚNICO punto de escritura del Rumbo (compartido
-  // por los 4 juegos). Se escribe al montar la celebración; el ref evita el doble registro del
+  // por los juegos). Se escribe al montar la celebración; el ref evita el doble registro del
   // doble-efecto de StrictMode. Solo números —los mismos que se muestran arriba— jamás audio.
   const registrado = useRef(false);
   useEffect(() => {

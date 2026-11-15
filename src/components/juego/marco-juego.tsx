@@ -1,6 +1,6 @@
 "use client";
 
-// El MARCO que comparten los tres juegos de voz: la cáscara (paleta del niño, salir, modo calma)
+// El MARCO que comparten los juegos de voz: la cáscara (paleta del niño, salir, modo calma)
 // y las fases que no dependen del juego (pedir micrófono, mic denegado, calibrar, ruido alto).
 // Cada juego solo aporta su guion, su escenario y su celebración.
 //
@@ -9,6 +9,10 @@
 
 import Link from "next/link";
 import { useEffect, type ReactNode } from "react";
+import { useAjustes } from "@/components/estado-local";
+import { topeValido } from "@/lib/pantalla/tope";
+import { AvisoTope, LineaHoy } from "./aviso-tope";
+import { hayLineaHoy, minutosDeHoy, useTopePantalla } from "./use-tope-pantalla";
 import {
   IconoMicrofono,
   IconoMicrofonoApagado,
@@ -24,7 +28,7 @@ type Props = {
   sesion: Sesion;
   medidas: MedidasVivas;
   /** Identifica el juego en los tests y en los estilos. */
-  nombre: "globo" | "cohete" | "palabras" | "vocales";
+  nombre: "globo" | "soplar" | "fuerte-suave" | "cohete" | "palabras" | "vocales";
   onAlternarCalma: () => void;
   onReintentarMic: () => void;
   onRecalibrar: () => void;
@@ -49,6 +53,16 @@ export function MarcoJuego({
   const tx = useT();
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
+
+  // Sesiones cortas (S12): mientras se juega corre el contador de hoy; al tope, aviso al adulto y el
+  // juego se cierra con calma, igual que «Salir» (que apaga el micrófono y vuelve al guion).
+  const ajustesGuardados = useAjustes();
+  const topeMinutos = topeValido(ajustesGuardados?.topeMinutos);
+  const { avisoMinutos } = useTopePantalla({
+    jugando: actual.fase === "esperando-voz" || actual.fase === "jugando",
+    topeMinutos,
+    alAlcanzar: onSalir,
+  });
 
   // El guion es del padre (paleta operador). El juego es del niño (paleta clara, siempre).
   const esPantallaDelNino = actual.fase !== "guion";
@@ -100,6 +114,15 @@ export function MarcoJuego({
               : tx(juegos.comun.modoCalma)}
           </button>
         </div>
+      ) : null}
+
+      {actual.fase === "guion" && avisoMinutos !== null ? (
+        <AvisoTope minutos={avisoMinutos} />
+      ) : null}
+      {actual.fase === "guion" &&
+      avisoMinutos === null &&
+      hayLineaHoy(topeMinutos) ? (
+        <LineaHoy minutos={minutosDeHoy()} />
       ) : null}
 
       {actual.fase === "pidiendo-mic" ? (

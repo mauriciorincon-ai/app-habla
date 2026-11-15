@@ -9,6 +9,8 @@ const RUTAS = [
   "/",
   "/jugar",
   "/jugar/globo",
+  "/jugar/soplar",
+  "/jugar/fuerte-suave",
   "/jugar/cohete",
   "/jugar/palabras",
   "/jugar/gemelas",

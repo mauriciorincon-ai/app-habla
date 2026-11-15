@@ -36,6 +36,15 @@ export function construirSesion(
         rondas: metrica.rondas,
         participadas: metrica.participadas,
       };
+    case "soplos":
+      return {
+        juego: "soplar",
+        fecha,
+        soplos: metrica.soplos,
+        soploMs: Math.round(metrica.soploMs),
+      };
+    case "intensidad":
+      return { juego: "fuerte-suave", fecha, cambios: metrica.cambios };
     case "vocales":
       return {
         juego: "vocales",

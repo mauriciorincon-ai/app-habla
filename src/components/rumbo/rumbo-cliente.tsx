@@ -114,6 +114,18 @@ function Semana({
           plural={rumbo.datos.inversiones.otro}
         />
         <Dato
+          n={semana.soplos}
+          id="soplos"
+          singular={rumbo.datos.soplos.uno}
+          plural={rumbo.datos.soplos.otro}
+        />
+        <Dato
+          n={semana.cambiosDeVolumen}
+          id="cambios-volumen"
+          singular={rumbo.datos.cambiosDeVolumen.uno}
+          plural={rumbo.datos.cambiosDeVolumen.otro}
+        />
+        <Dato
           n={semana.rondasGemelas}
           id="rondas"
           singular={rumbo.datos.rondas.uno}

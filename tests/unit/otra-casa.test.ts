@@ -15,7 +15,8 @@ import {
   leerSesiones,
   registrarSesion,
 } from "@/lib/storage/local";
-import { ObjetivoSchema, PROGRESO_INICIAL } from "@/lib/storage/schemas";
+import { AJUSTES_DEFECTO, AjustesSchema, ObjetivoSchema, PROGRESO_INICIAL } from "@/lib/storage/schemas";
+import { PantallaSchema } from "@/lib/pantalla/tope";
 
 // «Pasar a la otra casa» (S10, ADR-020). Decisión «1a»: cifrado con una frase. Perfil inventado.
 // En las pruebas, 100 000 iteraciones (el mínimo que un archivo puede pedir) para no tardar.
@@ -83,7 +84,7 @@ describe("qué viaja y qué no (regla dura 2 y regla 8)", () => {
     expect(CAMPOS_DEL_PAQUETE).toEqual(
       ["app", "banco", "creado", "esquema", "gemelas", "objetivo", "progreso", "sesiones"].sort(),
     );
-    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino", "coincidencias", "reconocedor"]) {
+    for (const prohibido of ["perfil", "apodo", "ajustes", "cuentos", "videoteca", "video", "audioNino", "coincidencias", "reconocedor", "pantalla", "topeMinutos"]) {
       expect(CAMPOS_DEL_PAQUETE).not.toContain(prohibido);
     }
   });
@@ -401,5 +402,38 @@ describe("lo que el auditor del S10 pidió cerrar", () => {
     expect(leerPaquete(JSON.stringify(grande))).toBeNull();
     const ok = paquete({ banco: Array.from({ length: 29 }, (_, i) => ({ ...g, id: `p${i}` })) });
     expect(leerPaquete(JSON.stringify(ok))).not.toBeNull();
+  });
+});
+
+describe("sesiones cortas y juegos nuevos con el archivo de la otra casa (S12, ADR-024)", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  it("el contador del tope y el tope elegido NO viajan: el archivo armado no los contiene", async () => {
+    guardar(CLAVES.pantalla, PantallaSchema, { fecha: "2026-11-14", ms: 7 * 60_000, avisado: true });
+    guardar(CLAVES.ajustes, AjustesSchema, { ...AJUSTES_DEFECTO, topeMinutos: 6 });
+    registrarSesion({ juego: "cohete", fecha: "2026-11-14", inversiones: 2 });
+    const texto = await crearArchivo(false, FRASE, "2026-11-14", IT);
+    const abierto = await descifrar(JSON.parse(texto), FRASE);
+    expect(abierto.ok).toBe(true);
+    if (!abierto.ok) return;
+    expect(abierto.texto).not.toContain("420000");
+    expect(abierto.texto).not.toContain("avisado");
+    expect(abierto.texto).not.toContain("topeMinutos");
+    expect(Object.keys(JSON.parse(abierto.texto)).sort()).toEqual(CAMPOS_DEL_PAQUETE);
+  });
+
+  it("las sesiones de Soplar y de Fuerte y suave sí viajan, con solo sus contadores", async () => {
+    registrarSesion({ juego: "soplar", fecha: "2026-11-14", soplos: 3, soploMs: 2100 });
+    registrarSesion({ juego: "fuerte-suave", fecha: "2026-11-14", cambios: 4 });
+    const texto = await crearArchivo(false, FRASE, "2026-11-14", IT);
+    const abierto = await descifrar(JSON.parse(texto), FRASE);
+    expect(abierto.ok).toBe(true);
+    if (!abierto.ok) return;
+    expect(JSON.parse(abierto.texto).sesiones.sesiones).toEqual([
+      { juego: "soplar", fecha: "2026-11-14", soplos: 3, soploMs: 2100 },
+      { juego: "fuerte-suave", fecha: "2026-11-14", cambios: 4 },
+    ]);
   });
 });

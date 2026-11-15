@@ -48,11 +48,11 @@ toca **"Sí, ya lo hicimos"**.
 
 ### Los juegos de voz — "su voz mueve el mundo"
 
-En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **cinco
-juegos** (el quinto es experimental). Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
+En "Hoy" hay una tarjeta permanente, **"Los juegos de voz"**. Ábrala y elija entre **siete
+juegos**, siempre en el mismo orden (el último, el mapa de las vocales, es experimental). Ninguno le exige palabras al niño: miden su voz (o la participación), no su vocabulario.
 
-**Cuatro de ellos escuchan el micrófono** (el globo, el cohete, "palabra y dibujo" y el mapa de las vocales). Antes de
-cualquiera de esos cuatro pasa siempre lo mismo:
+**Seis de ellos escuchan el micrófono** (el globo, soplar, fuerte y suave, el cohete, "palabra y dibujo" y el mapa de las vocales). Antes de
+cualquiera de esos seis pasa siempre lo mismo:
 
 1. **Su guion primero.** La app le muestra la línea que usted va a decir. Usted dirige el juego;
    el niño no juega solo (no existe un "modo niño solo", y es a propósito).
@@ -67,7 +67,7 @@ Puede tocar **"Ya jugamos"** cuando quiera: no hay tiempo mínimo ni meta obliga
 "game over". Y si toca **"Salir"** dentro de un juego, vuelve a la pantalla de su guion (el
 micrófono se apaga ahí mismo) y **el juego se reinicia por completo**: al volver a entrar, los
 contadores arrancan en cero — no queda rastro de la sesión pasada. Desde el guion, **"← Juegos"**
-lo lleva de vuelta a los cinco.
+lo lleva de vuelta a los siete.
 
 #### 1. El globo — la voz que se sostiene
 
@@ -92,7 +92,28 @@ La respiración no le quita la racha: una pausa cortita para tomar aire no cuent
 **La app nunca dice que sostuvo un tiempo que no sostuvo**, aunque sumar los ratos daría un número
 más bonito.
 
-#### 2. El cohete — la voz que sube y baja (nuevo)
+#### 2. Soplar — el aire mueve el molino (nuevo · S12)
+
+Un juego de aire, **sin palabras y sin sonido de voz**: el niño sopla como a una vela o a una pluma, y cada
+soplo hace girar el molino. Hágalo usted primero, con los labios en una «o» chiquita y el aire largo. **Un soplo
+suave cuenta igual que uno fuerte**: la app solo cuenta los soplos que oyó, nunca juzga cómo sopló.
+
+El contador dice _"Soplos que oí: N"_ y, al tocar **"Ya jugamos"**, la celebración dice **el mismo número**. La app
+distingue el aire de la voz: si el niño hace un sonido de voz o un «shhh» en vez de soplar, el molino no cuenta ese
+rato (sin regaño: sigan jugando). Si no hubo soplos, dice _"Hoy el molino se quedó esperando"_, sin culpa.
+
+#### 3. Fuerte y suave — la barra celebra los cambios (nuevo · S12)
+
+La barra sube con una voz **grandota** y baja con una **chiquita**, medidas contra **el ruido de su cuarto**, no contra un
+volumen ideal. Cualquier sonido de voz sirve: una vocal, un animal, una risa. Hágalo usted primero exagerando el
+contraste con el cuerpo (manos juntas para lo suave, brazos abiertos para lo fuerte) y **nunca le pida más fuerte de lo
+cómodo**.
+
+**No existe un volumen «correcto»**: lo que se celebra son los **cambios** entre suave y fuerte. El nivel siempre se
+dice con una palabra (_suave_, _fuerte_ o _en silencio_), no solo con el color, y la celebración dice _"Su voz cambió N
+veces entre suave y fuerte"_, el mismo número del contador.
+
+#### 4. El cohete — la voz que sube y baja (nuevo)
 
 El cohete escucha el **tono** de la voz: cuando la voz sube, el cohete sube; cuando baja, baja.
 No hay que decir ninguna palabra — **una vocal estirada como una sirena es exactamente lo que
@@ -111,7 +132,7 @@ Un detalle honesto: la **altura** del cohete siempre es el tono que está sonand
 (por eso baja cuando la voz baja — no es un castigo, es el tono). El ascenso acumulado lo
 cuentan el cielo que pasa y el contador, no la posición.
 
-#### 3. Palabra y dibujo — el nombre vive en la cosa (nuevo)
+#### 5. Palabra y dibujo — el nombre vive en la cosa (nuevo)
 
 Aparece un **dibujo grande con su palabra escrita** (perro, carro, agua…). Los dibujos salen de
 los **temas que usted eligió** para su hijo.
@@ -137,7 +158,7 @@ palabra?», más abajo), la app puede añadir una línea **solo para usted**, si
 el botón sigue siendo el único que celebra. Al final, la celebración lo dice tal cual: _"Y **tú**
 oíste 3 palabras. Eso lo sabes tú, que estabas ahí."_
 
-#### 4. Palabras gemelas — dos dibujos que suenan casi igual (nuevo)
+#### 6. Palabras gemelas — dos dibujos que suenan casi igual (nuevo)
 
 Aparecen **dos dibujos a la vez** cuyas palabras se diferencian por un solo sonido: _pato_ y
 _gato_, _mano_ y _mono_, _foca_ y _boca_. Son las llamadas **parejas mínimas**: practicar ese
@@ -155,7 +176,7 @@ contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga
 - **"Siguiente pareja"** lo toca usted cuando quieran seguir: pueden repetir, volver a tocar los
   dibujos o quedarse un rato. Arriba, _"Palabras que le oíste: N"_ va contando la sesión.
 
-Este juego es **distinto a los otros cuatro**:
+Este juego es **distinto a los otros seis**:
 
 - **Por defecto no usa micrófono y no graba nada.** La app no decide qué palabra se dijo: **el que la oye es
   usted**, y por eso las teclas de marcar son suyas. Si enciende «¿Dijo la palabra?» en Ajustes, solo cuando usted
@@ -171,7 +192,7 @@ Este juego es **distinto a los otros cuatro**:
 Si grabó su voz (más abajo), cada dibujo trae un **botón de altavoz** para que el niño oiga la
 palabra en la voz de la familia antes de intentarla.
 
-#### 5. El mapa de las vocales — a, e, i, o, u (nuevo · S10 · experimental)
+#### 7. El mapa de las vocales — a, e, i, o, u (nuevo · S10 · experimental)
 
 Un juego **en prueba**, y se lo dice en pantalla («Experimental · en prueba»). El niño **estira una vocal**
 —aaaa, eeee, iiii, oooo, uuuu— y la **zona del mapa** que más se parece se enciende. Cada zona tiene su
@@ -213,8 +234,9 @@ pantalla del **Estudio**).
 - Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
   altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
-- **En el globo y el cohete también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
-  aaaaah" y "Haz la voz de sirena: aaaAAAaaa"), aparece un altavoz debajo del título que las dice
+- **En los juegos de voz también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
+  aaaaah", "Haz la voz de sirena: aaaAAAaaa", "Toma aire y sopla: fuuuu" y "Voz chiquita… y voz
+  grandota"), aparece un altavoz debajo del título que las dice
   con su voz. Mientras su voz grabada suena, **el juego no se mueve**: el medidor espera a que
   hable el niño de verdad — así el globo no vuela con una grabación.
 - Puede **apagar** la voz de la familia con el interruptor _"Usar la voz de la familia"_ **sin
@@ -259,10 +281,10 @@ practicados no se pierden. Si duda, quédese en _palabras sueltas_.
 En el encabezado de "Hoy" hay un acceso, **"El rumbo"**. Es la respuesta honesta a "¿cómo vamos?".
 Muestra, **semana a semana**, solo lo que de verdad pasó: los días que practicaron juntos, las
 cápsulas completadas, las palabras distintas que practicaron, cuántos dibujos encendió con su
-voz, las vueltas del globo, las veces que su voz subió y bajó, las rondas de gemelas, las
+voz, las vueltas del globo, las veces que su voz subió y bajó, los soplos, los cambios de volumen, las rondas de gemelas, las
 palabras que usted le oyó, y los segundos de su voz en el globo (el total y la más larga sin
 cortarse). Cada línea aparece solo cuando tiene algo que contar. Y una sección de **hitos**
-celebrables —hay **16 posibles**—: desde "su primer rato de práctica juntos" y las primeras
+celebrables —hay **18 posibles**—: desde "su primer rato de práctica juntos" y las primeras
 veces de cada juego, hasta acumulados como "25 días de práctica en total". Una vez ganados, no
 se pierden.
 
@@ -378,7 +400,7 @@ otro, en **Ajustes → "Idioma / Language"** toca **Español** o **English** (el
 - **Palabras y Gemelas, en English (S8):** esos dos juegos **se practican en inglés**: las palabras, los
   dibujos y las parejas de sonidos son propios del inglés (no las del español puestas en inglés), y la
   consigna que usted graba en el Estudio también tiene su versión en inglés. Ya no hay tarjeta de «solo en
-  español». Los de voz (globo y cohete) juegan igual en los dos idiomas.
+  español». Los de voz (globo, soplar, fuerte y suave, cohete y vocales) juegan igual en los dos idiomas.
 - **El Objetivo de la semana, en English (S8):** escribe y sugiere en inglés, con su propio diccionario de
   ortografía; ya no avisa nada. Cada idioma tiene el suyo.
 - **`/mirada` y el catálogo de cápsulas, en los dos idiomas (S8):** «La pirámide, en casa» y el catálogo
@@ -499,10 +521,24 @@ del dibujo. Se equivoca, y por eso **nunca** decide nada: usted sigue juzgando c
 - **Limite honesto:** medido con voces de adultos, acierta mucho; con un niño que apenas empieza, fallará más, y a
   veces creerá oír una palabra donde solo hubo un sonido. Por eso es una pista, no una respuesta.
 
+### Sesiones cortas — el tope de juego por día (nuevo · S12)
+
+En **Ajustes → "Sesiones cortas"** usted elige un **tope de juego por día, entre 5 y 10 minutos** (10 de fábrica). Los juegos de
+voz cuentan los minutos de juego de **hoy en este aparato**. Cuando se llega al tope pasa esto, y solo esto:
+
+- **El juego se cierra con calma**, como si usted hubiera tocado «Salir» (el micrófono se apaga).
+- **Se le avisa a usted, nunca al niño, una sola vez al día**: _"Ya jugaron lo que habían pensado hoy"_, con un reloj y
+  texto. Es una nota, no una orden: **usted conoce mejor que nadie cómo está hoy el niño**.
+- **No bloquea nada.** Pueden volver a empezar cuando quieran y ese día no se vuelve a cortar; el guion solo muestra
+  una línea tranquila, _"Hoy ya jugaron N min"_. Nunca aparece un «se acabó» ni un castigo.
+
+El contador es **local y solo de hoy** (guarda la fecha y los minutos, nada más): no viaja al archivo de la otra casa y
+«Borrar mis datos» lo borra.
+
 ### Qué mide y qué NO mide la app (importante)
 
 - **Sí mide:** si hay voz (sonido por encima del ruido de la casa), cuánto tiempo se sostiene, y
-  —en el cohete— si el **tono** de esa voz sube o baja y —en el mapa de las vocales, que es experimental— a qué
+  —en soplar— cuántos **soplos** de aire hubo (energía sin tono, nunca una voz), —en fuerte y suave— cuántas veces el **volumen** cambió contra el ruido de su casa y —en el cohete— si el **tono** de esa voz sube o baja y —en el mapa de las vocales, que es experimental— a qué
   vocal **se parece** la forma del sonido, siempre como «quizás».
 - **NO mide con certeza:** qué palabra dijo, ni si la pronunció bien (la segunda opinión opcional solo da un «quizás» para usted). Hoy ningún sistema evalúa con fiabilidad
   la pronunciación de un niño pequeño que apenas empieza a hablar, en español, y por eso la app no lo finge. En "Palabra
@@ -518,11 +554,11 @@ Un toque —en el juego o en Ajustes— y la pantalla baja a colores de atardece
 sin meta y sin celebración automática**. El globo no se detiene: **sube mientras su voz suena y
 baja despacito cuando hay silencio**, como un globo de verdad — sin carrera y sin llegada. El
 cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está sobreestimulado o
-cuando el juego con meta le resulta demasiado. Está disponible en los juegos de voz (globo, cohete, palabra y dibujo y el mapa de las vocales).
+cuando el juego con meta le resulta demasiado. Está disponible en los juegos de voz (globo, soplar, fuerte y suave, cohete, palabra y dibujo y el mapa de las vocales).
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
 app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra, el confeti
-de los hitos y la capa de cielo del cohete no se muestran — el texto sigue contando cada logro.
+de los hitos y la capa de cielo del cohete no se muestran, el molino da saltos de un cuarto de vuelta en vez de girar suave y la barra salta de nivel — el texto sigue contando cada logro.
 
 ### Claro u oscuro
 
@@ -539,7 +575,7 @@ diseño.
 Esta es la promesa más importante de la app:
 
 - **La voz de su hijo NUNCA se graba, ni se guarda, ni sale del dispositivo.** El sonido se analiza
-  en el momento, dentro del teléfono o la tablet, para calcular dos números —cuánta energía hay y,
+  en el momento, dentro del teléfono o la tablet, para calcular unos pocos números —cuánta energía hay, si es aire o voz (soplar), cuánto cambió el volumen (fuerte y suave) y,
   en el cohete, qué tan agudo es el tono— y se descarta enseguida (el mapa de las vocales calcula además la
   forma del sonido, también en el momento). **Ese tono es también un dato
   de su voz, y se trata con la misma regla:** no se guarda, no se envía, no queda en ningún lado.
@@ -553,7 +589,7 @@ Esta es la promesa más importante de la app:
   proyecto. Hay pruebas automáticas que verifican que grabar y reproducir su voz **no dispara una
   sola llamada de red**. Y aun con el Estudio, **la voz de su hijo nunca se graba.**
 - Lo único que se guarda en el dispositivo es: el apodo (si lo puso), los temas, sus ajustes, qué
-  cápsulas completó, lo que marcó en "palabras gemelas", cuántas zonas del mapa de las vocales sonaron, —si las grabó— **sus** voces y —si los eligió—
+  cápsulas completó, lo que marcó en "palabras gemelas", cuántas zonas del mapa de las vocales sonaron, cuántos minutos de juego lleva hoy (el tope de Sesiones cortas, solo la fecha y los minutos), —si las grabó— **sus** voces y —si los eligió—
   **los videos de la familia** (clips de su propia galería: la app no abre la cámara y no salen de aquí). Puede
   borrarlo todo en **Ajustes → Borrar mis datos**, o solo el banco de voz con **"Borrar solo el
   banco de voz"**.
@@ -563,7 +599,8 @@ Esta es la promesa más importante de la app:
 **¿Sirve si mi hijo no habla todavía?**
 Sí. Muchas cápsulas no necesitan que el niño hable: son cosas que hace usted (modelar palabras,
 esperar en silencio, devolver la palabra completa). Y en el globo, el cohete y palabra y dibujo, cualquier sonido basta:
-mueve el globo, sube el cohete y enciende el dibujo — no hace falta que sea una palabra.
+mueve el globo, sube el cohete y enciende el dibujo — no hace falta que sea una palabra. En soplar
+basta con aire (sin voz) y en fuerte y suave cuenta que el volumen cambie, no qué volumen sea.
 
 **¿Cuánto tiempo al día?**
 Poco y seguido es mejor que mucho de golpe: 5 a 10 minutos bastan. La app no le va a pedir más.
@@ -642,4 +679,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 009    | **«Cuentos de casa»**: seis cuentos de respaldo en español e inglés que se llenan con los gustos y las palabras meta que escribe el adulto; pedidos y lotes de cuentos nuevos por la bandeja de IA (fuera de la app, solo con aprobación del adulto de cada cuento); narración con la voz del adulto grabada en el dispositivo o «lo leo yo». **«Hoy»** suma una actividad de contacto visual al día junto a la cápsula (dos dominios). Las parejas de sonidos del inglés pasan de 9 a 12. |
 | 010    | **«Lejos de la pantalla»**: **Pasar a la otra casa** (un archivo cifrado con una frase lleva el objetivo, lo practicado y lo logrado a otro aparato, sin internet, mostrando antes qué cambia); **el mapa de las vocales**, quinto juego, **experimental** («quizás suena como…», nunca un veredicto); **Hojas para imprimir** (tarjetas con dibujo y tablero de turnos, con el crédito de ARASAAC en cada hoja y sin nombre ni edad). |
 | 011    | **«¿Dijo la palabra?»**: un reconocedor en el aparato (apagado de fábrica, unos 40 MB que usted baja y puede borrar) que en Palabra y dibujo y Palabras gemelas le muestra **solo a usted** un «quizás dijo…»; una animación suave opcional para el niño (apagada, sin texto ni veredicto); cuatro números locales de coincidencia, fuera del archivo de la otra casa. |
+| 012    | **«Su voz lo mueve todo»**: dos juegos nuevos sin palabras, **Soplar** (cuenta soplos de aire) y **Fuerte y suave** (celebra los cambios de volumen, nunca un volumen «correcto»); el selector con siete juegos en orden fijo; **Sesiones cortas**: un tope de juego por día (5 a 10 min, 10 de fábrica) que cierra el juego con calma y avisa una vez al adulto, sin bloquear; el rumbo suma soplos, cambios de volumen y dos hitos. |
 <!-- s5:fin -->

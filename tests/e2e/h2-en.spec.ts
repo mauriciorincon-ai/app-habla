@@ -18,6 +18,8 @@ const PANTALLAS: { ruta: string; nombre: string }[] = [
   { ruta: "/", nombre: "hoy" },
   { ruta: "/jugar", nombre: "selector" },
   { ruta: "/jugar/globo", nombre: "globo" },
+  { ruta: "/jugar/soplar", nombre: "soplar" },
+  { ruta: "/jugar/fuerte-suave", nombre: "fuerte-suave" },
   { ruta: "/jugar/cohete", nombre: "cohete" },
   { ruta: "/jugar/palabras", nombre: "palabras" },
   { ruta: "/jugar/gemelas", nombre: "gemelas" },

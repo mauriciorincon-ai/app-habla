@@ -269,3 +269,49 @@ describe("hitosAlcanzados: logros funcionales, jamás clínicos", () => {
     ]);
   });
 });
+
+describe("Soplar y Fuerte y suave en el Rumbo (S12, ADR-024)", () => {
+  it("construirSesion guarda solo contadores: soplos y ms, o cambios", () => {
+    expect(
+      construirSesion({ tipo: "soplos", soplos: 4, soploMs: 3210.6 }, "2026-07-15"),
+    ).toEqual({ juego: "soplar", fecha: "2026-07-15", soplos: 4, soploMs: 3211 });
+    expect(
+      construirSesion({ tipo: "intensidad", cambios: 5 }, "2026-07-15"),
+    ).toEqual({ juego: "fuerte-suave", fecha: "2026-07-15", cambios: 5 });
+  });
+
+  it("la semana suma los soplos y los cambios de volumen, y cuentan como día y sesión de voz", () => {
+    const sesiones: Sesion[] = [
+      { juego: "soplar", fecha: diaDeLaSemana(0), soplos: 3, soploMs: 2000 },
+      { juego: "soplar", fecha: diaDeLaSemana(1), soplos: 2, soploMs: 1500 },
+      { juego: "fuerte-suave", fecha: diaDeLaSemana(1), cambios: 4 },
+      { juego: "fuerte-suave", fecha: OTRA_SEMANA, cambios: 9 },
+    ];
+    const t = tendenciasPorSemana(sesiones);
+    const semana = t.find((s) => s.semana === LUNES)!;
+    expect(semana.soplos).toBe(5);
+    expect(semana.cambiosDeVolumen).toBe(4);
+    expect(semana.sesionesDeVoz).toBe(3);
+    expect(semana.diasConPractica).toBe(2);
+    const otra = t.find((s) => s.semana !== LUNES)!;
+    expect(otra.cambiosDeVolumen).toBe(9);
+    expect(otra.soplos).toBe(0);
+  });
+
+  it("los hitos: el primer soplo y el primer cambio, con su fecha; una sesión sin ellos no los da", () => {
+    const sesiones: Sesion[] = [
+      { juego: "soplar", fecha: diaDeLaSemana(0), soplos: 0, soploMs: 0 },
+      { juego: "soplar", fecha: diaDeLaSemana(2), soplos: 1, soploMs: 400 },
+      { juego: "fuerte-suave", fecha: diaDeLaSemana(1), cambios: 0 },
+      { juego: "fuerte-suave", fecha: diaDeLaSemana(3), cambios: 2 },
+    ];
+    const hitos = hitosAlcanzados(sesiones);
+    const soplo = hitos.find((h) => h.id === "primer-soplo");
+    const cambio = hitos.find((h) => h.id === "primer-cambio-de-volumen");
+    expect(soplo?.fecha).toBe(diaDeLaSemana(2));
+    expect(cambio?.fecha).toBe(diaDeLaSemana(3));
+    const sinLogro = hitosAlcanzados([sesiones[0], sesiones[2]]).map((h) => h.id);
+    expect(sinLogro).not.toContain("primer-soplo");
+    expect(sinLogro).not.toContain("primer-cambio-de-volumen");
+  });
+});

@@ -82,6 +82,10 @@ export const esDeCuento = (id: string): boolean => /^cuento(-en)?:/.test(id);
 const CONSIGNAS: { clave: string; texto: Record<Idioma, string> }[] = [
   // suena en el cohete
   { clave: "sirena", texto: { es: "Haz la voz de sirena: aaaAAAaaa", en: "Make a siren voice: aaaAAAaaa" } },
+  // suena en Soplar (S12)
+  { clave: "sopla", texto: { es: "Toma aire y sopla: fuuuu", en: "Take a breath and blow: fooo" } },
+  // suena en Fuerte y suave (S12)
+  { clave: "fuerte-suave", texto: { es: "Voz chiquita… y voz grandota", en: "Tiny voice… and big voice" } },
   // suena en el globo
   { clave: "aaah", texto: { es: "Haz sonar tu voz: aaaaah", en: "Make your voice sound: aaaaah" } },
 ];
