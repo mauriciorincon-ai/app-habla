@@ -14,6 +14,7 @@ import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
 import type { Texto } from "@/lib/idioma";
 import { nombreTema } from "@/lib/idioma/textos/nombres";
+import { suMundo } from "@/lib/idioma/textos/su-mundo";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
@@ -198,6 +199,12 @@ function SeccionPerfil() {
                 {perfil.temas.map((tema) => tx(nombreTema[tema])).join(" · ")}
               </dd>
             </div>
+            {perfil.otrasCosas && perfil.otrasCosas.length > 0 ? (
+              <div className="flex gap-2">
+                <dt className="text-tinta-suave">{tx(suMundo.perfil.etiqueta)}</dt>
+                <dd data-testid="perfil-otras-cosas">{perfil.otrasCosas.join(" · ")}</dd>
+              </div>
+            ) : null}
           </dl>
           <p className="text-tinta-suave mt-3 text-sm">
             {tx(textos.perfil.noBorra)}

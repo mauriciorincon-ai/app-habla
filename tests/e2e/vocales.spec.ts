@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "./base";
+import { axeLimpio, jugar, sembrar } from "./su-mundo-ayuda";
 
 // EL MAPA DE LAS VOCALES (S10, experimental). Corre en `desktop-chromium-vocales`: el micrófono
 // falso reproduce vocales sintéticas de voz infantil (a·e·i·o·u, 0,4 s de pausa entre cada una;
@@ -68,4 +69,19 @@ test("en modo calma no hay conteo ni texto de lectura, y sin vocales no se inven
   );
   await expect(page.getByTestId("vocales-conteo")).toHaveCount(0);
   await expect(page.getByTestId("vocal-actual")).toHaveText("");
+});
+
+test("Su mundo (S14): el protagonista de vocales es de SU tema, con nombre, y la mecánica sigue ahí (axe en claro y oscuro)", async ({
+  page,
+}) => {
+  await sembrar(page, { temas: ["mar"] });
+  await jugar(page, "/jugar/vocales");
+  const p = page.getByTestId("protagonista");
+  await expect(p).toHaveAttribute("data-tema", "mar");
+  await expect(p).toHaveAttribute("role", "img");
+  await expect(p).toHaveAttribute("aria-label", /pez/i);
+  await expect(p.locator("svg")).toHaveCount(1);
+  await expect(page.getByTestId("mapa-vocales")).toBeAttached();
+  await axeLimpio(page);
+  await page.screenshot({ path: "test-results/su-mundo-vocales-mar.png" });
 });

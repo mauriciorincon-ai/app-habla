@@ -15,6 +15,7 @@ import { Molino } from "@/components/iconos";
 import { useT } from "@/lib/idioma/estado";
 import { soplar } from "@/lib/idioma/textos/voz-juegos";
 import { ConfetiVuelta } from "./confeti-vuelta";
+import { Protagonista } from "./protagonista";
 import type { MedidasVivas } from "./use-voice-session";
 
 /** Grados por segundo a fuerza completa; y lo que tarda en frenar o arrancar (suavizado). */
@@ -81,6 +82,11 @@ export function EscenarioMolino({ medidas, hito, modoCalma, invitando }: Props) 
         {!modoCalma && hito > 0 ? (
           <ConfetiVuelta key={`confeti-${hito}`} centrado />
         ) : null}
+
+        <Protagonista
+          juego="soplar"
+          className="absolute right-[6%] bottom-6 h-16 w-16 sm:h-20 sm:w-20"
+        />
 
         <div className="absolute bottom-6 left-1/2 h-44 w-28 -translate-x-1/2 sm:h-56 sm:w-36">
           <Molino

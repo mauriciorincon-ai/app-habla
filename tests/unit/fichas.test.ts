@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { CAPSULAS } from "@content/capsulas";
+import { CAPSULAS_SU_MUNDO_ES as CAPSULAS_SU_MUNDO } from "@content/capsulas-su-mundo";
 import { CAPSULAS_CONTACTO_VISUAL } from "@content/contacto-visual";
 import { CAEN_DEL_DOCUMENTO, FICHAS } from "@content/fichas";
 import {
@@ -257,9 +258,12 @@ describe("la biblioteca real del repo", () => {
   });
 
   it("el mapa quedó ejecutado: cada una de las 74 aparece exactamente una vez (en una ficha o en las que caen)", () => {
+    // El mapa se aprobó sobre las 74 que había (S6); las cápsulas del S14 (colores y baño, ADR-026) nacieron
+    // después y viven en Hoy, no en el documento: el mapa no las cuenta.
+    const delS14 = new Set(CAPSULAS_SU_MUNDO.map((c) => c.id));
     const todas = [
       ...CAPSULAS_CONTACTO_VISUAL.map((c) => `mirada:${c.id}`),
-      ...CAPSULAS.map((c) => `habla:${c.id}`),
+      ...CAPSULAS.filter((c) => !delS14.has(c.id)).map((c) => `habla:${c.id}`),
     ];
     const mirada = new Set(CAPSULAS_CONTACTO_VISUAL.map((c) => c.id));
     const usos = [

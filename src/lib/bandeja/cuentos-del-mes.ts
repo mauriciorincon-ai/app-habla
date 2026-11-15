@@ -16,10 +16,10 @@ import {
   type Toma,
 } from "./contrato.ts";
 import { tocaLaLista } from "./sensibilidad.ts";
+import { DIAS_DE_VIGENCIA, InteresSchema, MAX_INTERESES } from "./intereses-base.ts";
 
 export const TIPO_CUENTOS = "cuentos-del-mes";
-export const DIAS_DE_VIGENCIA = 30;
-export const MAX_INTERESES = 5;
+export { DIAS_DE_VIGENCIA, InteresSchema, MAX_INTERESES };
 export const MAX_PALABRAS_META = 8;
 export const MAX_CUENTOS_POR_LOTE = 12;
 
@@ -34,14 +34,6 @@ export const TIPO_CUENTOS_DEL_MES = {
 export const REGISTRO_HABLA = crearRegistro([TIPO_CUENTOS_DEL_MES]);
 
 const FECHA = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
-
-/** Algo que le gusta, en palabras genéricas: de una a tres palabras, solo letras. */
-export const InteresSchema = z
-  .string()
-  .trim()
-  .min(2)
-  .max(24)
-  .regex(/^\p{L}+(?:[ '-]\p{L}+){0,2}$/u);
 
 /** Una palabra que están practicando: una sola, solo letras. */
 export const PalabraMetaSchema = z

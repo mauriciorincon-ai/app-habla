@@ -8,7 +8,8 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
-import type { Capsula } from "@content/schema";
+import { useCapsulaTextos } from "@/components/capsula-textos";
+import type { CapsulaEs } from "@content/schema";
 import {
   ajustesActuales,
   guardarAjustesEnStore,
@@ -69,12 +70,13 @@ function JuegoListo({
   fecha,
   modoCalmaInicial,
 }: {
-  capsula: Capsula;
+  capsula: CapsulaEs;
   fecha: string;
   modoCalmaInicial: boolean;
 }) {
   const router = useRouter();
   const tx = useT();
+  const textosCapsula = useCapsulaTextos(capsula);
   const idioma = useIdioma();
 
   // Lo que mide el globo: el total de voz del intento (lo que lo hace volar) y, aparte, la racha
@@ -152,11 +154,12 @@ function JuegoListo({
       {actual.fase === "guion" ? (
         <GuionCard
           etiqueta={tx(nombreTecnica[capsula.tecnica])}
-          guion={tx(capsula.guion)}
+          guion={textosCapsula?.guion ?? ""}
           nota={tx(juegos.globo.nota)}
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="globo"
         />
       ) : null}
 
@@ -178,9 +181,12 @@ function JuegoListo({
             >
               {tx(juegos.globo.vueltaYa)}{" "}
               <span className="text-celebracion-texto font-sans font-semibold tabular-nums">
-                {tx(vueltas === 1 ? juegos.globo.vuelta : juegos.globo.vueltas, {
-                  n: vueltas,
-                })}
+                {tx(
+                  vueltas === 1 ? juegos.globo.vuelta : juegos.globo.vueltas,
+                  {
+                    n: vueltas,
+                  },
+                )}
               </span>
               !
             </p>

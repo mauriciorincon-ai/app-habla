@@ -7,12 +7,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useCuentos } from "@/components/estado-local";
+import { useCuentos, useObjetivo, usePerfil } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { rutaPictograma } from "@content/pictogramas";
 import { t, type Idioma } from "@/lib/idioma";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { imprimibles as textos } from "@/lib/idioma/textos/imprimibles";
+import { interesesDe } from "@/lib/su-mundo/intereses";
 import {
   elegirPictogramas,
   paginar,
@@ -42,6 +43,8 @@ export function ImprimiblesCliente() {
   const idioma = elegido ?? idiomaApp;
   const hidratado = useHidratado();
   const cuentos = useCuentos();
+  const perfil = usePerfil();
+  const objetivo = useObjetivo();
 
   if (!hidratado || !cuentos) {
     return <div className="min-h-[20rem]" aria-hidden="true" />;
@@ -49,8 +52,11 @@ export function ImprimiblesCliente() {
 
   const { pictos } = elegirPictogramas(
     cuentos.palabrasMeta,
-    cuentos.intereses,
+    // Sus intereses salen del perfil (S14, ADR-026); se leen solo para ENCONTRAR el dibujo, jamás se imprimen.
+    interesesDe(perfil, idioma, cuentos.intereses),
     idioma,
+    undefined,
+    objetivo?.texto ?? null,
   );
   const hojasDeTarjetas = paginar(pictos);
   const total = hojasDeTarjetas.length + 1;

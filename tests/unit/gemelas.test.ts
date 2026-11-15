@@ -112,9 +112,9 @@ describe("gemelas: los pares mínimos del inglés (S8, regla 20)", () => {
     expect(paresDe("es")).toBe(PARES_GEMELOS);
   });
 
-  it("hay tantos pares en inglés como en español (12 y 12) y ningún id se repite entre idiomas", () => {
-    expect(PARES_GEMELOS).toHaveLength(12);
-    expect(PARES_GEMELOS_EN).toHaveLength(12);
+  it("hay tantos pares en inglés como en español (14 y 14, con los de acción del S14) y ningún id se repite entre idiomas", () => {
+    expect(PARES_GEMELOS).toHaveLength(14);
+    expect(PARES_GEMELOS_EN).toHaveLength(14);
     const ids = [...PARES_GEMELOS, ...PARES_GEMELOS_EN].map((p) => p.id);
     expect(new Set(ids).size).toBe(ids.length);
   });

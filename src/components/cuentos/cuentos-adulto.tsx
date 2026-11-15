@@ -1,7 +1,7 @@
 "use client";
 
 // «CUENTOS DE CASA», el lado del ADULTO (S9, ADR-019). Tres cosas, en orden:
-// 1. Lo que le gusta y las palabras que practican: llenan la biblioteca y son TODO lo que lleva el pedido
+// 1. Lo que le encanta (de su perfil) y las palabras que practican: llenan la biblioteca y son TODO lo que lleva el pedido
 //    (decisión «1a»). El pedido se descarga; la app no envía nada (no hay red aquí).
 // 2. Traer el lote que dejó `/bandeja`: `JSON.parse` + `validarLote` (esquema, plazos y puntajes, texto
 //    dirigido a un agente, gate de sensibilidad). Lo que entra, entra `pendiente`.
@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CUENTOS } from "@content/cuentos";
 import { NarrarCuento } from "@/components/cuentos/narrar-cuento";
-import { cuentosActuales, guardarCuentosEnStore, useCuentos } from "@/components/estado-local";
+import { cuentosActuales, guardarCuentosEnStore, useCuentos, usePerfil, useObjetivo } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
 import { listarIds } from "@/lib/banco-voz/almacen";
 import { esDeCuento } from "@/lib/banco-voz/catalogo";
@@ -34,6 +34,8 @@ import {
   retirar,
 } from "@/lib/cuentos/estado";
 import { fechaHoy } from "@/lib/fecha";
+import { interesesDe, interesesParaCuentos } from "@/lib/su-mundo/intereses";
+import { palabrasDeLaMeta } from "@/lib/su-mundo/su-mundo";
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
 
@@ -68,9 +70,12 @@ export function CuentosAdulto() {
   const hidratado = useHidratado();
   const estado = useCuentos() ?? CUENTOS_VACIO;
   // null = el adulto aún no escribió: se muestra lo guardado.
-  const [editIntereses, setTextoIntereses] = useState<string | null>(null);
   const [editPalabras, setTextoPalabras] = useState<string | null>(null);
-  const textoIntereses = editIntereses ?? estado.intereses.join(", ");
+  // Sus intereses viven en UN solo lugar, el perfil (S14, ADR-026): aquí solo se leen. Lo que no cupo en
+  // el perfil al migrar («legado») sigue sumando, para no perder nada.
+  const perfil = usePerfil();
+  const objetivo = useObjetivo();
+  const intereses = interesesDe(perfil, idioma, estado.intereses);
   const textoPalabras = editPalabras ?? estado.palabrasMeta.join(", ");
   const [aviso, setAviso] = useState<"guardado" | "error" | "falta" | "sensible" | null>(
     null,
@@ -95,14 +100,13 @@ export function CuentosAdulto() {
   const guardarGustos = async () => {
     const r = CuentosGuardadosSchema.safeParse({
       ...estado,
-      intereses: separarLista(textoIntereses),
       palabrasMeta: separarLista(textoPalabras),
     });
     if (!r.success) {
       setAviso("error");
       return;
     }
-    if (await tocaGate([...r.data.intereses, ...r.data.palabrasMeta])) {
+    if (await tocaGate(r.data.palabrasMeta)) {
       setAviso("sensible");
       return;
     }
@@ -111,12 +115,18 @@ export function CuentosAdulto() {
   };
 
   const descargarPedido = async () => {
-    if (await tocaGate([...estado.intereses, ...estado.palabrasMeta])) {
+    // Sin palabras escritas a mano, el pedido lleva las de la meta de la semana (S14): los cuentos y la
+    // terapia apuntan al mismo sitio.
+    const palabrasMeta =
+      estado.palabrasMeta.length > 0
+        ? estado.palabrasMeta
+        : palabrasDeLaMeta(objetivo?.texto ?? null, idioma);
+    if (await tocaGate([...intereses, ...palabrasMeta])) {
       setAviso("sensible");
       return;
     }
     const pedido = armarPedido(
-      { intereses: estado.intereses, palabrasMeta: estado.palabrasMeta },
+      { intereses, palabrasMeta },
       fechaHoy(),
     );
     if (!pedido) {
@@ -159,7 +169,11 @@ export function CuentosAdulto() {
 
   const pendientes = conEstado(estado, "pendiente");
   const decididos = estado.cuentos.filter((c) => c.estado !== "pendiente");
-  const delNino = cuentosDelNino(estado, CUENTOS, idioma);
+  const delNino = cuentosDelNino(
+    { ...estado, intereses: interesesParaCuentos(perfil, estado.intereses) },
+    CUENTOS,
+    idioma,
+  );
 
   return (
     <div className="flex flex-col gap-6" data-testid="cuentos-adulto">
@@ -190,24 +204,20 @@ export function CuentosAdulto() {
         <p className="text-tinta-suave mt-2 text-sm">
           {tx(cuentos.pedido.ayuda)}
         </p>
-        <label
-          className="mt-4 block text-sm font-medium"
-          htmlFor="cuentos-intereses"
-        >
-          {tx(cuentos.pedido.intereses)}
-        </label>
-        <input
-          id="cuentos-intereses"
-          className="border-borde bg-fondo mt-1 min-h-11 w-full rounded-lg border px-3"
-          value={textoIntereses}
-          maxLength={140}
-          autoComplete="off"
-          onChange={(e) => {
-            setTextoIntereses(e.target.value);
-            setAviso(null);
-          }}
-          data-testid="cuentos-intereses"
-        />
+        <p className="mt-4 text-sm font-medium">{tx(cuentos.pedido.intereses)}</p>
+        <p className="mt-1 text-sm" data-testid="cuentos-intereses">
+          {intereses.length > 0
+            ? intereses.join(", ")
+            : tx(cuentos.pedido.sinIntereses)}{" "}
+          <Link
+            href="/ajustes"
+            prefetch={false}
+            className="underline underline-offset-4"
+            data-testid="cuentos-ir-al-perfil"
+          >
+            {tx(cuentos.pedido.cambiarEnPerfil)}
+          </Link>
+        </p>
         <label
           className="mt-3 block text-sm font-medium"
           htmlFor="cuentos-palabras"

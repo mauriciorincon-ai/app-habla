@@ -4,7 +4,7 @@
 // convierte en un mapeo DETERMINISTA sobre el contenido: qué cápsulas, pictogramas y pares
 // coinciden. Sin IA (quinto sprint con cero LLM) — es comparación de palabras normalizadas.
 //
-// Honestidad (regla dura 3 llevada al objetivo): si el objetivo no coincide con NADA ("colores",
+// Honestidad (regla dura 3 llevada al objetivo): si el objetivo no coincide con NADA ("números",
 // que no existe en el contenido), la app lo dice claro y no finge alinear algo. El objetivo NUNCA
 // salta de etapa (ADR-005): alinea DENTRO de la etapa activa, jamás fuerza contenido de otra.
 
@@ -91,6 +91,14 @@ export type Alineacion = {
   coincideTema: (tema: string) => boolean;
 };
 
+/** Una palabra normalizada con su singular y su plural sencillos (-s, -es). */
+function formasDeNumero(t: string): string[] {
+  const formas = [t, `${t}s`, `${t}es`];
+  if (t.length > 4 && t.endsWith("es")) formas.push(t.slice(0, -2));
+  if (t.length > 3 && t.endsWith("s")) formas.push(t.slice(0, -1));
+  return formas;
+}
+
 /**
  * Construye la alineación de un objetivo. Con texto vacío o solo estructural, `activo=false` y
  * todos los predicados devuelven `false` → el contenido se comporta EXACTAMENTE como sin objetivo
@@ -99,7 +107,9 @@ export type Alineacion = {
 export function alinear(texto: string | null | undefined): Alineacion {
   const tokens = texto ? normalizar(texto) : [];
   const activo = tokens.length > 0;
-  const objetivo = new Set(tokens);
+  // Singular y plural cuentan igual (S14, ADR-026): «verbos de acción» tiene que alinear `acciones`, y
+  // «rojos» el dibujo «rojo». Solo se suman las formas con -s y -es y las que las quitan: nada más fino.
+  const objetivo = new Set(tokens.flatMap(formasDeNumero));
 
   // El padre escribe «feelings» o «animals»: las etiquetas y los temas son claves en español, así que
   // las palabras inglesas se traducen a la CLAVE del contenido. Sirve en los dos idiomas a la vez (un
@@ -143,13 +153,22 @@ export function alinear(texto: string | null | undefined): Alineacion {
 
 export type Contenido = {
   capsulas: readonly { etiquetas: readonly string[] }[];
-  pictos: readonly { palabra: string; tema: string }[];
-  pares: readonly { a: { palabra: string }; b: { palabra: string } }[];
+  pictos: readonly {
+    palabra: string;
+    tema: string;
+    /** Los dibujos de ETIQUETA (colores, acciones) alinean por su etiqueta (S14). */
+    etiquetas?: readonly string[];
+  }[];
+  pares: readonly {
+    a: { palabra: string };
+    b: { palabra: string };
+    etiquetas?: readonly string[];
+  }[];
 };
 
 export type ResumenAlineacion = {
   activo: boolean;
-  /** `activo` pero sin ninguna coincidencia (el caso honesto "colores"). */
+  /** `activo` pero sin ninguna coincidencia (el caso honesto "números"). */
   vacio: boolean;
   capsulas: number;
   /** Pictogramas distintos que coinciden (por palabra o por tema). */
@@ -199,12 +218,15 @@ export function contarAlineacion(
   ).length;
   const palabras = contenido.pictos.filter(
     (p) =>
-      alineacion.coincidePalabra(p.palabra) || alineacion.coincideTema(p.tema),
+      alineacion.coincidePalabra(p.palabra) ||
+      alineacion.coincideTema(p.tema) ||
+      (p.etiquetas ? alineacion.coincideEtiquetas(p.etiquetas) : false),
   ).length;
   const pares = contenido.pares.filter(
     (p) =>
       alineacion.coincidePalabra(p.a.palabra) ||
-      alineacion.coincidePalabra(p.b.palabra),
+      alineacion.coincidePalabra(p.b.palabra) ||
+      (p.etiquetas ? alineacion.coincideEtiquetas(p.etiquetas) : false),
   ).length;
 
   return {

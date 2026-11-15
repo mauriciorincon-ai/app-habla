@@ -34,6 +34,7 @@ import {
   CuentosGuardadosSchema,
   type CuentosGuardados,
 } from "@/lib/cuentos/estado";
+import { moverIntereses } from "@/lib/su-mundo/intereses";
 
 const PREFIJO = "habla:";
 
@@ -171,6 +172,18 @@ export const borrarObjetivo = (): void => {
   if (!disponible()) return;
   window.localStorage.removeItem(CLAVES.objetivo);
 };
+
+/**
+ * Intereses en un solo lugar (S14, ADR-026): pasa el «Le gusta» de Cuentos a `perfil.otrasCosas` (motor
+ * puro en lib/su-mundo/intereses). Se corre antes de leer el perfil o los cuentos en la app; idempotente.
+ */
+export function migrarInteresesAlPerfil(): void {
+  if (!disponible()) return;
+  const { perfil, cuentos, movidos } = moverIntereses(leerPerfil(), leerCuentos());
+  if (movidos === 0 || !perfil) return;
+  guardarPerfil(perfil);
+  guardarCuentos(cuentos);
+}
 
 /** «Cuentos de casa» (S9): intereses, palabras meta y cada cuento importado con su estado. */
 export function leerCuentos(): CuentosGuardados {

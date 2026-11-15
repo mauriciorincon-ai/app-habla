@@ -151,14 +151,14 @@ ${IDIOMA_CONMUTADOR}
   tal cual viven en la app (generado directo de <code>content/capsulas.ts</code> el ${fecha}; se regenera con
   <code>node scripts/gen-catalogo-capsulas.mjs</code>). La pregunta de siempre por cada una: ¿la línea la dirías tal cual
   en tu casa? ¿La actividad se puede hacer hoy? ¿Reconoces tu día real en ella? Si una no cumple, dime cuál y por qué — se reemplaza.
-  Las <strong>14 originales del S1</strong> siguen vivas dentro de las 50 (las aprobaste el 2026-07-12 y ninguna se botó):
+  Las <strong>14 originales del S1</strong> siguen vivas dentro de las 60 (las aprobaste el 2026-07-12 y ninguna se botó):
   confirma que las reconoces cuando te las cruces.`,
     `Review instrument for the ⭐ gate (S4): the app delivers the tip <strong>one per day</strong> and does not yet have a
   browsable history (it is in the backlog) — this catalog exists so you can read <strong>all of them, straight through</strong>,
   exactly as they live in the app (generated directly from <code>content/capsulas.ts</code> on ${fecha}; regenerate with
   <code>node scripts/gen-catalogo-capsulas.mjs</code>). The usual question for each one: would you say the line as written
   at home? Can the activity be done today? Do you recognize your real day in it? If one does not work, tell me which and why — it gets replaced.
-  The <strong>14 originals from S1</strong> are still alive inside the 50 (you approved them on 2026-07-12 and none was dropped):
+  The <strong>14 originals from S1</strong> are still alive inside the 60 (you approved them on 2026-07-12 and none was dropped):
   confirm you recognize them when you come across them.`,
   )}</p>
   <p class="progreso"><span id="hechas">0</span> ${par(`de ${CAPSULAS.length} revisadas · tu avance queda guardado en este navegador`, `of ${CAPSULAS.length} reviewed · your progress is saved in this browser`)}</p>

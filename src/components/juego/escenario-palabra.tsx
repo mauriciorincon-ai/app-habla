@@ -12,6 +12,9 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { rutaPictograma, type Pictograma } from "@content/pictogramas";
+
+/** Lo que la escena necesita de un dibujo: de un tema o de una etiqueta de la meta (S14). */
+type DibujoEnEscena = Pick<Pictograma, "id" | "palabra" | "en" | "archivo">;
 import { IconoAltavoz } from "@/components/iconos";
 import { idCelebracion, idPalabra } from "@/lib/banco-voz/catalogo";
 import { useIdioma, useT } from "@/lib/idioma/estado";
@@ -24,7 +27,7 @@ import type { VozFamiliar } from "./use-voz-familiar";
 const MS_PARA_ENCENDER = 250;
 
 type Props = {
-  picto: Pictograma;
+  picto: DibujoEnEscena;
   medidas: MedidasVivas;
   encendido: boolean;
   /**

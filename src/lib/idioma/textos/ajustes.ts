@@ -159,8 +159,8 @@ export const ajustes = {
   borrar: {
     titulo: { es: "Borrar todos los datos", en: "Delete all data" },
     antes: {
-      es: "Borra el apodo, los temas, los ajustes, el progreso y ",
-      en: "Deletes the nickname, topics, settings, what you've done and ",
+      es: "Borra el apodo, los temas y lo que le encanta, los ajustes, el progreso y ",
+      en: "Deletes the nickname, topics and what they love, settings, what you've done and ",
     },
     fuerte: { es: "el banco de voz de la familia", en: "the family's voice bank" },
     despues: {

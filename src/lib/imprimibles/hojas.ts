@@ -3,8 +3,14 @@
 // SU palabra salen en la hoja —nunca el texto libre de la familia, ni el perfil, ni el apodo (regla
 // dura 8)—: el texto escrito se usa únicamente para ENCONTRAR el dibujo.
 
-import { PICTOGRAMAS, type Pictograma } from "@content/pictogramas";
+import {
+  PICTOGRAMAS,
+  type Pictograma,
+  type PictogramaDeEtiqueta,
+} from "@content/pictogramas";
 import type { Idioma } from "@/lib/idioma";
+import { dibujosDeLaMeta } from "@/lib/su-mundo/su-mundo";
+import { alinear } from "@/lib/objetivo/alinear";
 
 export const TARJETAS_POR_HOJA = 8;
 export const MAX_TARJETAS = 24;
@@ -17,7 +23,10 @@ const norm = (s: string): string =>
     .trim();
 
 /** La palabra del pictograma en el idioma de la hoja. */
-export const palabraDe = (p: Pictograma, idioma: Idioma): string =>
+export const palabraDe = (
+  p: Pick<Pictograma, "palabra" | "en">,
+  idioma: Idioma,
+): string =>
   idioma === "en" ? p.en : p.palabra;
 
 /**
@@ -30,16 +39,35 @@ export function elegirPictogramas(
   intereses: readonly string[],
   idioma: Idioma,
   max = MAX_TARJETAS,
-): { pictos: Pictograma[]; delLoteBase: number } {
+  /**
+   * La meta de la semana (S14, ADR-026): sus dibujos van PRIMERO, los de etiqueta (colores, acciones) y
+   * los de tema alineados. Sin meta, la lista es la de siempre.
+   */
+  objetivo: string | null = null,
+): { pictos: (Pictograma | PictogramaDeEtiqueta)[]; delLoteBase: number } {
   const claves = new Set(
     [...palabrasMeta, ...intereses].flatMap((t) => norm(t).split(/[^a-z0-9]+/).filter(Boolean)),
   );
-  const coinciden = PICTOGRAMAS.filter((p) => claves.has(norm(palabraDe(p, idioma))));
-  const pictos = coinciden.slice(0, max);
+  const meta = alinear(objetivo);
+  const deLaMeta = PICTOGRAMAS.filter(
+    (p) =>
+      meta.coincidePalabra(p.palabra) ||
+      meta.coincidePalabra(p.en) ||
+      meta.coincideTema(p.tema) ||
+      (p.etiquetas ? meta.coincideEtiquetas(p.etiquetas) : false),
+  );
+  const coinciden = PICTOGRAMAS.filter(
+    (p) => !deLaMeta.includes(p) && claves.has(norm(palabraDe(p, idioma))),
+  );
+  const pictos: (Pictograma | PictogramaDeEtiqueta)[] = [
+    ...dibujosDeLaMeta(objetivo),
+    ...deLaMeta,
+    ...coinciden,
+  ].slice(0, max);
   let delLoteBase = 0;
   for (const p of PICTOGRAMAS) {
     if (pictos.length >= TARJETAS_POR_HOJA) break;
-    if (!pictos.includes(p)) {
+    if (!pictos.some((q) => q.id === p.id)) {
       pictos.push(p);
       delLoteBase++;
     }

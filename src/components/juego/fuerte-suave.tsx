@@ -108,6 +108,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
           onEmpezar={empezar}
           listo
           porTurnos
+          juego="fuerte-suave"
         />
       ) : null}
 

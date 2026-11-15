@@ -77,6 +77,7 @@ describe("persistencia local (ADR 002)", () => {
       animacionReconocedor: false,
       topeMinutos: 10,
       apuntador: true,
+      recordatorioPospuesto: null,
     });
     guardarProgreso({
       ...PROGRESO_INICIAL,

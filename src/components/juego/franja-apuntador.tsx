@@ -13,6 +13,9 @@ import { useAjustes, useProgreso } from "@/components/estado-local";
 import { capsulaDeHoy } from "@/components/estado-capsulas";
 import { useT } from "@/lib/idioma/estado";
 import { apuntador as textos } from "@/lib/idioma/textos/apuntador";
+import { suMundo as textosSuMundo } from "@/lib/idioma/textos/su-mundo";
+import type { JuegoSuMundo } from "@/lib/su-mundo/su-mundo";
+import { useSuMundo } from "./use-su-mundo";
 import {
   elegirLinea,
   momentoDeTransicion,
@@ -31,9 +34,29 @@ type Props = {
     escribir: (h: HistorialApuntador) => void;
   };
   onCambiarTurno: (turno: Turno) => void;
+  /** Su mundo (S14): en el turno del adulto, la franja le propone una palabra de la meta de la semana. */
+  juego?: JuegoSuMundo;
 };
 
-export function FranjaApuntador({ sesion, historial, onCambiarTurno }: Props) {
+/** En tu turno: «Puedes decir: rojo · azul». Solo para el adulto; jamás una orden al niño. */
+function PalabrasParaTuTurno({ juego }: { juego: JuegoSuMundo }) {
+  const tx = useT();
+  const { palabrasAModelar } = useSuMundo(juego);
+  if (palabrasAModelar.length === 0) return null;
+  return (
+    <p className="text-tinta basis-full text-sm" data-testid="apuntador-palabras">
+      <span className="font-medium">{tx(textosSuMundo.apuntadorPalabra)}</span>{" "}
+      {palabrasAModelar.join(" · ")}
+    </p>
+  );
+}
+
+export function FranjaApuntador({
+  sesion,
+  historial,
+  onCambiarTurno,
+  juego,
+}: Props) {
   const tx = useT();
   const ajustes = useAjustes();
   const progreso = useProgreso();
@@ -116,6 +139,9 @@ export function FranjaApuntador({ sesion, historial, onCambiarTurno }: Props) {
       >
         {visible ? tx(visible.texto) : null}
       </p>
+      {juego && alTurnoDeEl && !enCierre ? (
+        <PalabrasParaTuTurno juego={juego} />
+      ) : null}
     </div>
   );
 }
