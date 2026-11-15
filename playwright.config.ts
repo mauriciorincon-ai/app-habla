@@ -41,12 +41,12 @@ export default defineConfig({
     {
       name: "mobile-chromium",
       use: { ...devices["Pixel 7"] },
-      testIgnore: /(cohete|spike-pitch|vocales|soplar|fuerte-suave|reconocedor[\w-]*)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales|soplar[\w-]*|fuerte-suave[\w-]*|reconocedor[\w-]*)\.spec\.ts/,
     },
     {
       name: "desktop-chromium",
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: /(cohete|spike-pitch|vocales|soplar|fuerte-suave|reconocedor[\w-]*)\.spec\.ts/,
+      testIgnore: /(cohete|spike-pitch|vocales|soplar[\w-]*|fuerte-suave[\w-]*|reconocedor[\w-]*)\.spec\.ts/,
     },
     {
       // El cohete necesita una voz que CANTE (barrido de tono), no una voz plana: proyecto
@@ -74,7 +74,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         launchOptions: fakeMic("soplo.wav"),
       },
-      testMatch: /soplar\.spec\.ts/,
+      testMatch: /soplar[\w-]*\.spec\.ts/,
     },
     {
       // Fuerte y suave (S12, ADR-024): a soft voice and a loud one, taking turns (same generator).
@@ -83,7 +83,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         launchOptions: fakeMic("fuerte-suave.wav"),
       },
-      testMatch: /fuerte-suave\.spec\.ts/,
+      testMatch: /fuerte-suave[\w-]*\.spec\.ts/,
     },
     {
       // «¿Dijo la palabra?» (S11, ADR-023): the real recognizer with a Lingua Libre recording (an adult
