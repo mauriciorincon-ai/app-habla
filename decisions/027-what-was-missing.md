@@ -53,7 +53,9 @@ and live in the manual.
 - `public/sw.js` loads that list with `importScripts`. The cache is named after the build id, so a deploy
   installs a new cache and drops the old one. Navigation stays network-first.
 - `scripts/precache.mjs` (pure) refuses audio extensions, `/modelos/` and `/vosk/`, so the worker can never be
-  told to cache them.
+  told to cache them. At run time `public/sw.js` also lets any audio request (`wav`, `mp3`, `ogg`, `webm`,
+  `m4a`, `aac`, `opus`, `mp4`) pass without touching it; `tests/unit/precache.test.ts` reads the worker and
+  asserts that guard.
 - `tests/e2e/sin-red.spec.ts` (under `next start`) visits `/` once, cuts the network and reloads every route.
 - **Size:** about 45 chunks plus 83 pictograms (≈ 3 MB) on the first visit. Accepted: the games are useless
   offline without their pictograms.

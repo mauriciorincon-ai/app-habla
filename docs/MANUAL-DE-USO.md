@@ -225,7 +225,7 @@ pantalla del **Estudio**).
   Y al escuchar cualquier grabación, **una barrita se va llenando con el avance del audio**: así
   sabe que sí está sonando y cuánto falta.
 - En **"Con tu voz vas"** cada grupo (Palabras · Consignas del juego · Celebraciones) tiene su
-  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las dos
+  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las siete
   consignas sin pasar por todas las palabras—. El botón grande ("Grabar más") sigue siendo el
   recorrido guiado de siempre, que propone primero lo que más le sirve al niño.
 - En **"Lo que ya grabaste"** las grabaciones se agrupan por esos mismos tres grupos, numeradas

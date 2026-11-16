@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   admisible,
@@ -80,5 +81,17 @@ describe("la lista del precache", () => {
   it("el script que importa el worker declara la lista", () => {
     const s = scriptPrecache({ version: "B1", urls: ["/"] });
     expect(s).toContain('self.HABLA_PRECACHE = {"version":"B1","urls":["/"]}');
+  });
+});
+
+describe("el service worker en tiempo de ejecución", () => {
+  const sw = readFileSync("public/sw.js", "utf8");
+  it("nunca intercepta audio, el reconocedor ni nada del micrófono", () => {
+    expect(sw).toContain('"/modelos/"');
+    expect(sw).toContain('"/vosk/"');
+    const guarda = sw.match(/\/\\\.\(([^)]*)\)\$\/i\.test\(url\.pathname\)/);
+    expect(guarda, "audio-extension guard").not.toBeNull();
+    for (const ext of ["wav", "mp3", "ogg", "webm", "m4a", "aac", "opus", "mp4"])
+      expect(guarda![1].split("|")).toContain(ext);
   });
 });

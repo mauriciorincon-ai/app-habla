@@ -2,8 +2,10 @@
 
 // LA SORPRESA (S15): una escena pequeña del tema de su mundo que aparece con los TURNOS del niño y se va
 // sola. No es un premio: sale al llegar a su tercer turno con voz medida (acierte o no), una vez por
-// partida, no se cuenta ni se guarda, y no hay monedas, fichas ni colección. Fija abajo y sin captar
-// toques: no tapa nada ni cambia el layout. Con «reducir animaciones» solo cambia la opacidad.
+// partida, no se cuenta ni se guarda, y no hay monedas, fichas ni colección. Es un aviso fijo abajo, sin
+// animación (aparece y desaparece, así que «reducir animaciones» no cambia nada) y sin captar toques
+// (`pointer-events-none`): sale del flujo, así que no mueve el layout; en un móvil pequeño puede cubrir a
+// la vista el borde inferior unos segundos, pero los botones de abajo siguen recibiendo el toque.
 
 import { useEffect, useRef, useState } from "react";
 import { IconoBurbuja } from "@/components/iconos";

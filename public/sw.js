@@ -56,6 +56,8 @@ self.addEventListener("fetch", (event) => {
   // Recognizer assets (≈ 40 MB each): never cached here. Ajustes downloads them on the adult's
   // tap, checks their hash and keeps them in CACHE_RECONOCEDOR (src/lib/reconocer/modelo.ts).
   if (url.pathname.startsWith("/modelos/") || url.pathname.startsWith("/vosk/")) return;
+  // Audio (the family's recordings and anything from the microphone): never intercepted, never cached.
+  if (/\.(wav|mp3|ogg|webm|m4a|aac|opus|mp4)$/i.test(url.pathname)) return;
 
   // Navegaciones: red primero (para no servir un HTML viejo tras un deploy), caché si no hay red.
   if (request.mode === "navigate") {

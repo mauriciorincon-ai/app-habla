@@ -237,7 +237,7 @@ from **Settings → "Your family's voice" → "Record my voice"** (or straight f
   for looking; it saves nothing.) And when you play back any recording, **a small bar fills as the audio advances**,
   so you know it is playing and how much is left.
 - Under **"Your voice is on its way"** each group (Words · Game invitations · Celebrations) has its own **"Record"**
-  button. You can go straight to the group you want, for example recording the two invitations without going
+  button. You can go straight to the group you want, for example recording the seven invitations without going
   through all the words. The big button ("Record more") remains the usual guided route, which suggests first what
   helps your child most.
 - Under **"What you have recorded"**, recordings are grouped by those same three groups, numbered within each one,

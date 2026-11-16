@@ -89,9 +89,9 @@ export const AjustesSchema = z.object({
    */
   recordatorioCuentos: z.boolean().catch(true),
   /**
-   * «Sonidos de la app» (S15, ADR-027): the app's OWN audio — the device voice that says a pictogram
-   * nobody recorded and the volume of the celebration. «suave» halves it, «apagado» silences it. The
-   * family's recorded voice has its own switch (`vozFamiliar`). `.catch` migrates older settings.
+   * «Sonidos de la app» (S15, ADR-027): governs the app's OWN voice only — the device voice that says a
+   * pictogram nobody recorded. «suave» halves its volume, «apagado» silences it. The app has no other
+   * sound effects, and the family's recorded voice has its own switch (`vozFamiliar`). `.catch` migrates older settings.
    */
   sonidos: z.enum(["normal", "suave", "apagado"]).catch("normal"),
   /** «Intensidad de colores» (S15, ADR-027): «suave» softens the palette of both registers. */
