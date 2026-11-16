@@ -445,7 +445,9 @@ function GemelasListo({
                   data-testid={`marcar-${lado}`}
                   className="text-tinta-suave min-h-11 rounded-xl px-3 text-sm underline decoration-dotted underline-offset-4"
                 >
-                  «{par[lado].palabra}»
+                  {idioma === "en"
+                    ? `“${par[lado].palabra}”`
+                    : `«${par[lado].palabra}»`}
                 </button>
               ))}
             </div>
