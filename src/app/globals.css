@@ -221,6 +221,18 @@ html[data-en-juego="true"] [data-intro-padre] {
   --color-kid-yellow: #ecdfbe;
 }
 
+/* Intensidad de colores «suave» (S15, regla dura 6: carga sensorial ajustable). Atenúa SOLO los rellenos
+   —los primitivos del niño, con los mismos valores que ya valida el modo calma, y la celebración del
+   adulto—. Ningún token de TEXTO se toca aquí (tests/unit/contraste.test.ts lo vigila): el contraste AA
+   no se negocia. Va en <html>, así que alcanza a los dos registros y a los siete juegos. */
+html[data-intensidad="suave"] {
+  --color-kid-peach: #e8cbbd;
+  --color-kid-sage: #b3c2ad;
+  --color-kid-sky: #ccd8db;
+  --color-kid-yellow: #ecdfbe;
+  --celebracion: color-mix(in srgb, var(--color-coral-500) 55%, var(--superficie));
+}
+
 /* Utilidades semánticas: @theme inline referencia las vars vivas (cambian por contexto). */
 @theme inline {
   --color-fondo: var(--fondo);

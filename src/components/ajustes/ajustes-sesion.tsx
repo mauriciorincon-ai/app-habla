@@ -23,6 +23,8 @@ import { TopeDiario } from "./tope-diario";
 import { Reconocedor } from "./reconocedor";
 import {
   AJUSTES_DEFECTO,
+  INTENSIDADES,
+  SONIDOS,
   type Apariencia,
   type Perfil,
 } from "@/lib/storage/schemas";
@@ -70,6 +72,30 @@ export function AjustesSesion() {
         listo={listo}
         onCambiar={(apariencia) =>
           guardarAjustesEnStore({ ...ajustes, apariencia })
+        }
+      />
+
+      <SelectorSensorial
+        id="sonidos"
+        titulo={textos.sonidos.titulo}
+        ayuda={textos.sonidos.ayuda}
+        elegida={textos.sonidos.elegida}
+        opciones={SONIDOS.map((v) => ({ valor: v, ...textos.sonidos.opciones[v] }))}
+        valor={ajustes.sonidos}
+        listo={listo}
+        onCambiar={(sonidos) => guardarAjustesEnStore({ ...ajustes, sonidos })}
+      />
+
+      <SelectorSensorial
+        id="intensidad"
+        titulo={textos.intensidad.titulo}
+        ayuda={textos.intensidad.ayuda}
+        elegida={textos.intensidad.elegida}
+        opciones={INTENSIDADES.map((v) => ({ valor: v, ...textos.intensidad.opciones[v] }))}
+        valor={ajustes.intensidad}
+        listo={listo}
+        onCambiar={(intensidad) =>
+          guardarAjustesEnStore({ ...ajustes, intensidad })
         }
       />
 
@@ -302,6 +328,68 @@ function SelectorApariencia({
               <span className="block font-medium">{tx(opcion.nombre)}</span>
               <span className="text-tinta-suave block text-xs">
                 {elegida ? tx(textos.apariencia.elegida) : tx(opcion.nota)}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Carga sensorial (S15): un selector de pocas opciones. El estado va con palabra («Elegido»), no solo
+ * con el borde de color.
+ */
+function SelectorSensorial<V extends string>({
+  id,
+  titulo,
+  ayuda,
+  elegida,
+  opciones,
+  valor,
+  listo,
+  onCambiar,
+}: {
+  id: string;
+  titulo: Texto;
+  ayuda: Texto;
+  elegida: Texto;
+  opciones: { valor: V; nombre: Texto; nota: Texto }[];
+  valor: V;
+  listo: boolean;
+  onCambiar: (valor: V) => void;
+}) {
+  const tx = useT();
+  return (
+    <section className="bg-superficie shadow-tarjeta rounded-2xl p-5" data-testid={`ajuste-${id}`}>
+      <h2 className="font-medium" id={`${id}-titulo`}>
+        {tx(titulo)}
+      </h2>
+      <p className="text-tinta-suave mt-2 text-sm">{tx(ayuda)}</p>
+      <div
+        className="mt-4 flex flex-col gap-2 sm:flex-row"
+        role="group"
+        aria-labelledby={`${id}-titulo`}
+      >
+        {opciones.map((opcion) => {
+          const activa = valor === opcion.valor;
+          return (
+            <button
+              key={opcion.valor}
+              type="button"
+              aria-pressed={activa}
+              disabled={!listo}
+              onClick={() => onCambiar(opcion.valor)}
+              data-testid={`${id}-${opcion.valor}`}
+              className={[
+                "min-h-11 flex-1 rounded-xl border px-4 py-2 text-left text-sm",
+                activa ? "border-acento bg-acento-suave" : "border-borde bg-fondo",
+              ].join(" ")}
+            >
+              <span className="block font-medium">{tx(opcion.nombre)}</span>
+              <span className="text-tinta-suave block text-xs">
+                {activa ? tx(elegida) : tx(opcion.nota)}
               </span>
             </button>
           );

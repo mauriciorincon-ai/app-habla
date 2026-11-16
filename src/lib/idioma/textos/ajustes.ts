@@ -94,6 +94,31 @@ export const ajustes = {
       en: "Sunset colors, no meter and no goal. The balloon rises while their voice sounds and slowly comes down in the quiet. You can also turn it on inside the game, with one tap.",
     },
   },
+  sonidos: {
+    titulo: { es: "Sonidos de la app", en: "App sounds" },
+    ayuda: {
+      es: "El volumen de la voz propia de la app (la del aparato, cuando una palabra no tiene tu grabación). La voz de tu familia va aparte, con su propio interruptor.",
+      en: "The volume of the app's own voice (the device's voice, when a word has no recording from you). Your family's voice is separate, with its own switch.",
+    },
+    elegida: { es: "Elegido", en: "Chosen" },
+    opciones: {
+      normal: { nombre: { es: "Normal", en: "Regular" }, nota: { es: "Volumen completo", en: "Full volume" } },
+      suave: { nombre: { es: "Suave", en: "Soft" }, nota: { es: "A la mitad", en: "Half volume" } },
+      apagado: { nombre: { es: "Apagado", en: "Off" }, nota: { es: "Sin voz de la app", en: "No app voice" } },
+    },
+  },
+  intensidad: {
+    titulo: { es: "Intensidad de colores", en: "Colour intensity" },
+    ayuda: {
+      es: "Con «suave», los colores de la app se apagan un poco, en tu pantalla y en la del niño. La letra sigue leyéndose igual.",
+      en: "With “soft”, the app's colours are toned down a little, on your screen and the child's. Text stays just as readable.",
+    },
+    elegida: { es: "Elegido", en: "Chosen" },
+    opciones: {
+      normal: { nombre: { es: "Normal", en: "Regular" }, nota: { es: "Los colores de siempre", en: "The usual colours" } },
+      suave: { nombre: { es: "Suave", en: "Soft" }, nota: { es: "Colores más apagados", en: "Muted colours" } },
+    },
+  },
   apariencia: {
     titulo: { es: "Claro u oscuro", en: "Light or dark" },
     ayudaAntes: { es: "Cómo se ve ", en: "How " },

@@ -17,7 +17,7 @@
 
 The VISION → code matrix of 2026-11-15 found seven sub-promises half-kept. Three of them needed a decision
 that outlives the sprint; this ADR records those three. The other four (twin words inside the common frame,
-three recordable prompts, the calm toggle in Today and twin words, the surprises) are UI over existing engines
+three recordable invitations, the calm toggle in Today and twin words, the surprises) are UI over existing engines
 and live in the manual.
 
 ## Decision
