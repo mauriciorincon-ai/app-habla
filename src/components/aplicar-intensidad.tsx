@@ -9,9 +9,12 @@ import { useAjustes } from "@/components/estado-local";
 export function AplicarIntensidad() {
   const ajustes = useAjustes();
   const suave = ajustes?.intensidad === "suave";
+  const cargado = ajustes !== null;
   useEffect(() => {
+    // Before hydration the settings are still null: leave what the inline script already set.
+    if (!cargado) return;
     if (suave) document.documentElement.dataset.intensidad = "suave";
     else delete document.documentElement.dataset.intensidad;
-  }, [suave]);
+  }, [suave, cargado]);
   return null;
 }
