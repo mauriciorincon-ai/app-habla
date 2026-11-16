@@ -8,6 +8,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useHidratado } from "@/components/use-hidratado";
+import { useAjustes } from "@/components/estado-local";
+import { AvisoTope } from "@/components/juego/aviso-tope";
+import { useTopeAlTerminar } from "@/components/juego/use-tope-pantalla";
+import { topeValido } from "@/lib/pantalla/tope";
 import { fechaHoy } from "@/lib/fecha";
 import { pedirPersistencia } from "@/lib/banco-voz/almacen";
 import { useT } from "@/lib/idioma/estado";
@@ -269,6 +273,12 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
   const [confirmando, setConfirmando] = useState(false);
   const [falla, setFalla] = useState<"borrar" | "reproducir" | null>(null);
   const nombre = tx(videoteca.conducta[clip.conducta]);
+  // The daily screen cap counts the clips the child watches (S15, ADR-027). The clip loops while it
+  // plays; once the cap arrives it stops looping, plays to its end and only then the adult sees the notice.
+  const { pendiente, avisoMinutos, alTerminar, olvidarAviso } = useTopeAlTerminar({
+    viendo: url !== null,
+    topeMinutos: topeValido(useAjustes()?.topeMinutos),
+  });
 
   // El blob: es local; se suelta al cerrar o al desmontar.
   useEffect(() => {
@@ -282,6 +292,7 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
       setUrl(null);
       return;
     }
+    olvidarAviso();
     const blob = await obtenerClip(clip.id).catch(() => null);
     if (blob) setUrl(URL.createObjectURL(blob));
   };
@@ -315,8 +326,11 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
       {url ? (
         <video
           src={url}
-          loop
+          loop={!pendiente}
           autoPlay
+          onEnded={() => {
+            if (alTerminar()) setUrl(null);
+          }}
           playsInline
           controls
           controlsList="nodownload noremoteplayback"
@@ -326,6 +340,11 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
           className="mt-3 max-h-80 w-full rounded-xl bg-black"
           data-testid="clip-video"
         />
+      ) : null}
+      {avisoMinutos !== null && !url ? (
+        <div className="mt-3">
+          <AvisoTope minutos={avisoMinutos} />
+        </div>
       ) : null}
       {falla ? (
         <p role="alert" className="text-peligro mt-3 text-sm font-medium" data-testid="clip-falla">
