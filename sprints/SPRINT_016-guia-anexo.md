@@ -20,8 +20,8 @@ tipo: anexo del cierre
 | 6 | La voz de la familia | 13 |
 | 7 | Cuentos y videos de la familia | 7 |
 | 8 | El Estudio y el objetivo de la semana | 6 |
-| 9 | Cambias a English | 3 |
-| 10 | El rumbo y la pirámide, ya en English | 12 |
+| 9 | El rumbo y la pirámide | 11 |
+| 10 | Cambias a English | 4 |
 | 11 | Ajustes de la casa | 16 |
 | 12 | Paradas de estado global — al final, y cada una con su vuelta | 6 |
 | 13 | El kit de prueba y las convenciones (en el repo, opcional) | 2 |
@@ -45,21 +45,20 @@ tipo: anexo del cierre
 | T · Soplar, fuerte y suave, y las sesiones c | `v15-7` | 12 · Paradas de estado global |
 | T · Soplar, fuerte y suave, y las sesiones c | `v13-t1` | 3 · Los juegos de voz |
 | T · Soplar, fuerte y suave, y las sesiones c | `v12-t5`, `v15-5` | 11 · Ajustes de la casa |
-| T · Soplar, fuerte y suave, y las sesiones c | `v12-t6` | 10 · El rumbo y la pirámide, ya en English |
+| T · Soplar, fuerte y suave, y las sesiones c | `v12-t6` | 9 · El rumbo y la pirámide |
 | L · Palabras gemelas | `v3-l1`, `v3-l2`, `v3-l3`, `v3-l4`, `v3-l5` | 4 · Palabras gemelas y los turnos |
 | L · Palabras gemelas | `v3-l6` | 6 · La voz de la familia |
 | L · Palabras gemelas | `v15-1`, `v15-2` | 4 · Palabras gemelas y los turnos |
 | J · La voz de la familia: grabar tu voz | `v3-j1`, `v3-j2`, `v3-j3`, `v3-j4`, `v3-j5` | 6 · La voz de la familia |
 | J · La voz de la familia: grabar tu voz | `v3-j6` | fundido en `v2-e12` (parada 12) |
 | K · La voz de la familia dentro de los juego | `v3-k1`, `v3-k2`, `v3-k3`, `v3-k4`, `v3-k5`, `v15-3`, `v15-4` | 6 · La voz de la familia |
-| N · El rumbo | `v4-n2`, `v4-n3`, `v4-n4` | 10 · El rumbo y la pirámide, ya en English |
+| N · El rumbo | `v4-n2`, `v4-n3`, `v4-n4` | 9 · El rumbo y la pirámide |
 | O · El objetivo de la semana | `v4-o1`, `v4-o3`, `v4-o6`, `v4-o4`, `v4-o5` | 8 · El Estudio y el objetivo de la semana |
-| Q · La pirámide, en tu teléfono | `v6-q1`, `v6-q2`, `v6-q3`, `v6-q4`, `v6-q5`, `v6-q6`, `v6-q7` | 10 · El rumbo y la pirámide, ya en English |
+| Q · La pirámide, en tu teléfono | `v6-q1`, `v6-q2`, `v6-q3`, `v6-q4`, `v6-q5`, `v6-q6`, `v6-q7` | 9 · El rumbo y la pirámide |
 | H · Ajustes, honestidad y borrar datos | `v4-h6`, `v2-h1`, `v2-h2`, `v2-h3`, `v14-m1` | 11 · Ajustes de la casa |
 | H · Ajustes, honestidad y borrar datos | `v14-m2` | 7 · Cuentos y videos de la familia |
 | H · Ajustes, honestidad y borrar datos | `v2-h4`, `v2-h5`, `v2-h6` | 11 · Ajustes de la casa |
-| H · Ajustes, honestidad y borrar datos | `v7-h1`, `v7-h2`, `v8-h1` | 9 · Cambias a English |
-| H · Ajustes, honestidad y borrar datos | `v8-h2` | 10 · El rumbo y la pirámide, ya en English |
+| H · Ajustes, honestidad y borrar datos | `v7-h1`, `v7-h2`, `v8-h1`, `v8-h2` | 10 · Cambias a English |
 | H · Ajustes, honestidad y borrar datos | `v8-h3` | 7 · Cuentos y videos de la familia |
 | H · Ajustes, honestidad y borrar datos | `v8-h4` | fundido en `v2-h7` (parada 12) |
 | H · Ajustes, honestidad y borrar datos | `v8-h5` | 11 · Ajustes de la casa |
@@ -74,11 +73,12 @@ tipo: anexo del cierre
 | (nuevo) | `v16-1` | 11 · Ajustes de la casa (volver a Español) |
 | tablet | `v2-t1`…`v4-t11` | sin cambio: lista diferida al final |
 
-## Fundidos y nuevos
+## Fundidos, nuevos y cambiados
 
 - `v3-j6` (micrófono negado en el estudio) se fundió en `v2-e12`, que ahora cubre el juego y el estudio en una sola prueba de estado global.
 - `v8-h4` (borrar datos con un clip guardado) se fundió en `v2-h7`, el último paso: borrar datos también vacía la videoteca.
 - `v16-1` es nuevo: al terminar la parada de English se vuelve a Español desde Ajustes.
+- `v15-2` (la sorpresa) gana su «Esperado» de hueco propio: no tapa la tarjeta ni los botones y la pantalla no se mueve.
 
 ## Estado global, al final y con su vuelta
 
