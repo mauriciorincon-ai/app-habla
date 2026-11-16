@@ -61,3 +61,17 @@ bitácoras, ni en las citas (los títulos y algunas revistas nombran poblaciones
 - Cuando la lista de términos cambie, se regenera el fixture con `scripts/gen-sensibilidad-hashes.mjs`
   (la lista sigue en la planeadora); los scripts `.mjs` que importan `.ts` exigen Node ≥ 22.18.
 - El gate se documenta sin escribir jamás un término: esta ADR tampoco.
+
+## Amendment (2026-11-16, Sprint 016): the gate watches the whole repo
+
+The alternative rejected above («gate over the whole repo from day one») is now taken, because its
+precondition holds: the report reached 0 matches and 0 age-shaped lines across the repo after the S16
+rewrite (words changed, facts kept; the list was not touched).
+
+- `scripts/lib/sensibilidad.ts` computes `ALCANCE_GATE` with `alcanceGate()`: every tracked or new
+  non-ignored file with a text extension, read whole. The hand-kept lists and the marker cuts are gone.
+- Only three files stay out: `CLAUDE.md` (written by the planning house), the hash fixture and the lockfile.
+- The age guard runs over the same universe; a test fails if the universe drops below 400 files or
+  loses `sprints/`, `decisions/`, `docs/`, `src/`, `content/`, `tests/` or `scripts/`.
+- `scripts/sensibilidad-informe.mjs` reads the same universe and only reports file and line.
+- Demonstrated red with the list's test term in a sprint log (`scripts/demo-rojo.sh`), then restored.
