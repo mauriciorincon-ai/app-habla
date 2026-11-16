@@ -34,7 +34,7 @@ const OtraCasa = dynamic(() => import("./otra-casa").then((m) => m.OtraCasa), { 
 const Reconocedor = dynamic(() => import("./reconocedor").then((m) => m.Reconocedor), { ssr: false });
 
 /**
- * True once the placeholder is about to scroll into view (or, without IntersectionObserver, after a moment).
+ * True once the placeholder is about to scroll into view, or a moment after the first paint.
  * The heavy panels wait for it, so their code is not fetched before the first paint; the placeholder keeps
  * its height, so «Borrar mis datos» below never jumps while they load.
  */
@@ -43,11 +43,10 @@ function useCercaDeLaVista(ms = 1500): [(el: HTMLElement | null) => void, boolea
   const [el, setEl] = useState<HTMLElement | null>(null);
   useEffect(() => {
     if (listo || !el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      const id = window.setTimeout(() => setListo(true), ms);
-      return () => window.clearTimeout(id);
-    }
-    // The timer keeps the first-paint budget safe: the observer only fires once the user nears the panel.
+    // Whichever comes first: the placeholder nears the viewport, or a moment after the first paint. The
+    // timer keeps the panels reachable without scrolling; the reserved height keeps the page from jumping.
+    const id = window.setTimeout(() => setListo(true), ms);
+    if (typeof IntersectionObserver === "undefined") return () => window.clearTimeout(id);
     const io = new IntersectionObserver(
       (e) => {
         if (e.some((x) => x.isIntersecting)) setListo(true);
@@ -55,7 +54,10 @@ function useCercaDeLaVista(ms = 1500): [(el: HTMLElement | null) => void, boolea
       { rootMargin: "400px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      window.clearTimeout(id);
+      io.disconnect();
+    };
   }, [el, listo, ms]);
   return [setEl, listo];
 }
