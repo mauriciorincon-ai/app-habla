@@ -20,10 +20,14 @@ import type { JuegoSuMundo } from "@/lib/su-mundo/su-mundo";
 import { Protagonista } from "./protagonista";
 import { useSuMundo } from "./use-su-mundo";
 
-/** El sitio de la sorpresa: siempre presente en la pantalla del niño, con la altura de la tarjeta reservada. */
+/**
+ * El sitio de la sorpresa: siempre presente en la pantalla del niño, con la altura de la tarjeta reservada
+ * (también con una frase larga en un móvil estrecho). Es la región viva y existe desde el primer pintado:
+ * así un lector de pantalla anuncia la tarjeta cuando entra en ella.
+ */
 export function HuecoSorpresa({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-24" data-testid="hueco-sorpresa">
+    <div className="min-h-28" role="status" aria-live="polite" data-testid="hueco-sorpresa">
       {children}
     </div>
   );
@@ -57,8 +61,6 @@ export function Sorpresa({
   const { tema, texto } = sorpresaDelDia(protagonista, fechaHoy(), juego, idioma);
   return (
     <div
-      role="status"
-      aria-live="polite"
       data-testid="sorpresa"
       data-tema={tema}
       className="bg-superficie border-borde text-tinta pointer-events-none mx-auto flex w-full max-w-[26rem] items-center gap-3 rounded-2xl border-2 p-3 shadow-tarjeta"

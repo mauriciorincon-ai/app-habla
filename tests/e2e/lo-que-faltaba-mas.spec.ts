@@ -102,7 +102,8 @@ for (const idioma of ["es", "en"] as const) {
         await page.getByTestId("cambiar-turno").click();
       }
       await expect(sorpresa).toBeVisible({ timeout: 15_000 });
-      await expect(sorpresa).toHaveAttribute("role", "status");
+      // Su hueco es la región viva (existe desde el primer pintado; así se anuncia la tarjeta que entra).
+      await expect(page.getByTestId("hueco-sorpresa")).toHaveAttribute("role", "status");
     });
   });
 }

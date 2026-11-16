@@ -148,7 +148,8 @@ for (const idioma of ["es", "en"] as const) {
       }
       const sorpresa = page.getByTestId("sorpresa");
       await expect(sorpresa).toBeVisible();
-      await expect(sorpresa).toHaveAttribute("role", "status");
+      // Su hueco es la región viva (existe desde el primer pintado; así se anuncia la tarjeta que entra).
+      await expect(page.getByTestId("hueco-sorpresa")).toHaveAttribute("role", "status");
       // S16: vive en su hueco reservado, dentro del flujo: no tapa la tarjeta ni ningún botón del juego.
       const caja = (await sorpresa.boundingBox())!;
       const hueco = (await page.getByTestId("hueco-sorpresa").boundingBox())!;
