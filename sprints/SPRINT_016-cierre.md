@@ -5,7 +5,7 @@ hito: H-2
 opened: 2026-11-16
 closed: 2026-11-16
 branch: sprint-016/listo-para-tu-ensayo
-pr: "#PR"
+pr: "#29"
 ---
 - **Nombre / objetivo:** «Listo para tu ensayo» — repo público sin nada de la familia, documentos al día, la guía como UN recorrido y toda la app en inglés comprobada.
 - **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño. El ensayo general no se corre aquí (lo dijo la planeadora).
@@ -28,7 +28,7 @@ pr: "#PR"
   - **Privacidad:** rasgos y circunstancias de la familia en textos públicos (A1) · pagado · cda1559 y 40c7306 (se cambió la palabra y quedó el hecho técnico, más las líneas gemelas que la auditoría no listó); servidor con cwd en este repo (M6) · ver abajo.
   - **Frases caducadas:** cifras («35 pruebas ⭐», conteos) y letras viejas · pagado · 40c7306. Veredicto del auditor: «requiere ajustes» → todos pagados.
 - **Modelo por fase y desvío:** F1 Opus 5.5 (el activo, `/model opus`) · F2 Sonnet 5.5 · F3 Sonnet 5.5 · auditor Sonnet 5.5 high (subagente) · cierre Sonnet 5.5 (ver desviaciones). **Relevos:** 0. **`/compact` pedidos:** 2 (F1→F2, F2→F3).
-- **CI del PR (leída uno por uno):** CICHECKS
+- **CI del PR #29 (leída uno por uno, primera corrida sin rojos):** `quality` pass (1 m 38 s) · `e2e` pass (12 m 53 s) · `lighthouse` pass (9 m 3 s) · `un-pr-vivo` pass · Vercel pass. Tras este commit del cierre la CI corre de nuevo y se relee antes del STOP.
 - **Servidores al STOP:** puerto 3500 cerrado; `lsof` LISTEN con cwd en este repo: **1**, el `playwright test-server` del editor (pid 32529, de VS Code, puerto 56742, no lo abrí yo; no lo cerré: es tuyo). El de `app-nutri-kids` (pid 91870) no es de este repo.
 - **Gate de sensibilidad:** 0 coincidencias en lo que vigila (493 archivos).
 - **Recomendación / esfuerzo-beneficio:** merge; después `/design-sync` si quieres publicar las dos tarjetas nuevas. Alto beneficio, bajo costo: el repo queda listo para la purga de la historia.
