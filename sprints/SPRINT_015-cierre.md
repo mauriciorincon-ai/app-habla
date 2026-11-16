@@ -5,14 +5,15 @@ hito: H-2
 opened: 2026-11-15
 closed: 2026-11-15
 branch: sprint-015/lo-que-faltaba
-pr: "(ver el PR de esta rama)"
+pr: "#28"
 ---
 - **Nombre / objetivo:** «Lo que faltaba de verdad» — pagar las siete sub-promesas a medias del H-2 (matriz VISION → código del 2026-11-15).
 - **Resultado / estado:** construido y auditado, PR listo; el merge es del dueño.
-- **Tiempo:** estimado 3,6 h · real **2,3 h** (`horas-sprint.mjs`: 25 commits, 1 sesión, span 1,8 h; antes de este cierre) · diferencia −1,3 h (−36 %).
-- **Fases (horas):** F1 0,5 (precache generado, tope en cuentos y videoteca, voz del aparato, celebración, esquema, ADR-027) · F2 0,3 (marco común con Gemelas, calma, siete consignas, ajustes sensoriales, sorpresas) · F3 1,5 (e2e ES/EN, documentos, auditoría pagada, presupuesto).
+- **Tiempo:** estimado 3,6 h · real **2,6 h** (`horas-sprint.mjs`: 27 commits, 1 sesión, span 2,1 h; antes de este commit) · diferencia −1,0 h (−28 %).
+- **Fases (horas):** F1 0,5 (precache generado, tope en cuentos y videoteca, voz del aparato, celebración, esquema, ADR-027) · F2 0,3 (marco común con Gemelas, calma, siete consignas, ajustes sensoriales, sorpresas) · F3 1,8 (e2e ES/EN, documentos, auditoría pagada, presupuesto, arreglo de CI).
 - **Entregables:** `scripts/gen-precache.mjs` + `scripts/precache.mjs` + `public/sw.js` (caché por build); `src/lib/audio/{voz-aparato,sonido-palabra}.ts`; `src/lib/su-mundo/sorpresa.ts` + `components/juego/sorpresa.tsx`; `components/aplicar-intensidad.tsx`; `src/lib/idioma/textos/etapa-nombre.ts`; `decisions/027-what-was-missing.md`; e2e `lo-que-faltaba{,-casi,-mas}.spec.ts`; manual ES/EN, guía (siete pasos nuevos), BLUEPRINT, brochure y export.
 - **Evidencia:** unit 1103 de 1103 (62 archivos) · e2e 398 de 398 con `CI=1` (`next start`, incluye `csp` y `sin-red`) · lint y typecheck limpios · Lighthouse local de las 14 URL en verde (script ≤ 354 KB, CLS, LCP) · `cero-enlaces` limpio · `cmp` del núcleo = 0 · 0 PRs abiertos antes de abrir.
+- **CI del PR #28 (leída uno por uno):** `quality` pass · `e2e` pass · `lighthouse` pass · `un-pr-vivo` pass · Vercel pass. La primera corrida falló en `e2e` (el test del par de Gemelas en inglés dependía del par del día, y el reloj de la CI está en UTC) y en Vercel (el host arma el build distinto y el precache no hallaba el HTML de «/»); se reprodujo con `CI=1` y se pagó en 65361fd: test sin depender de la fecha + precache tolerante, que cae a todo `.next/static` con aviso. La causa exacta del armado de Vercel queda sin diagnosticar; el fallback no deja nada fuera del precache.
 - **Capturas leídas como imagen:** Gemelas con la sorpresa visible, móvil (Pixel 7) en claro y oscuro. El aviso fijo cubre a la vista el borde inferior de la tarjeta unos segundos, pero no capta toques; se dejó así y está dicho en `sorpresa.tsx`.
 - **Auditoría (Sonnet 5.5 high, solo lectura, matriz VISION re-corrida: 17 MVP + 4 roadmap):**
   - Alcance · pictogramas sin red (`images` optimizadas no entraban al precache): pagado · 656e154 · sorpresa que repetía frase dos días seguidos: pagado · 14bbc15 · aviso del tope perdido al salir antes: pagado · d166fc9. Con eso la matriz queda sin parciales.
