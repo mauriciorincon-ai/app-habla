@@ -24,7 +24,7 @@ export const NOMBRE_TECNICA: Record<Tecnica, string> = {
 
 /**
  * Etapas del habla (ADR 006, extiende ADR 005). Descritas por comportamiento observable,
- * jamás por jerga clínica. "palabras-sueltas" es el DEFAULT PERMANENTE de esta app;
+ * jamás por jerga de especialista. "palabras-sueltas" es el DEFAULT PERMANENTE de esta app;
  * "primeras-frases" solo se activa por elección explícita del padre.
  */
 export const ETAPAS = [
@@ -43,7 +43,7 @@ export const NOMBRE_ETAPA: Record<Etapa, string> = {
   "primeras-frases": "Primeras frases",
 };
 
-/** Cómo se ve cada etapa en la vida real — es lo que el padre reconoce, no un diagnóstico. */
+/** Cómo se ve cada etapa en la vida real — es lo que el padre reconoce, no una evaluación. */
 export const DESCRIPCION_ETAPA: Record<Etapa, string> = {
   "sonidos-e-intentos":
     "Todavía explora: hace sonidos, señala, lleva de la mano. Los intentos y los gestos son su forma de hablar.",

@@ -154,13 +154,13 @@ elimina cuando su feature deja de existir, y se declara en el historial del pie.
 
 Corriendo el bloque A en su computador, el usuario reportó que su falsete llega a **160–170 Hz**
 (cobertura >70 %, todo lo demás en orden). El `pitch-tracker` clamaba a **200–450 Hz fijos** ("F0
-de 4–6 años ≈ 250–400, §B.1"). Dos defectos, y el segundo es el grave:
+de la franja de la app ≈ 250–400, §B.1"). Dos defectos, y el segundo es el grave:
 
 1. **Co-uso roto (regla dura 5):** el guion del cohete le pide al PADRE que demuestre primero
    ("hazlo tú primero, exagerado y riéndote") — y con piso de 200 Hz su demostración **no movía
    nada**. La app le pedía algo que ella misma ignoraba.
-2. **Afirmábamos un número que nunca medimos:** el F0 real del niño no lo conocemos (la tablet
-   está de viaje). Hard-codear el rango de un paper, para un niño neurodivergente concreto, es
+2. **Afirmábamos un número que nunca medimos:** el F0 real de un niño concreto no se había
+   medido. Hard-codear el rango de un paper, sin haberlo medido, es
    justo el tipo de afirmación sin verificar que esta app prohíbe en todo lo demás.
 
 **Arreglo (no ensanchar el supuesto, sino eliminarlo):** el vuelo es **relativo a la voz que está
@@ -224,7 +224,7 @@ segundos seguidos, sin cortarse."_ Ahora cada número dice lo que de verdad se m
   más largo · la pausa de respirar no parte la racha · la racha en curso ya cuenta (no hay que
   callarse para que la app la reconozca).
 - **El modo calma no era el defecto** (funciona como se diseñó: sin meta, sin presión, se cierra
-  con "Ya jugamos"): fue el síntoma que destapó la mentira del contador.
+  con "Ya jugamos"): fue la señal que destapó la mentira del contador.
 
 ## Cuarto hallazgo del gate: el tema solo lo decidía el sistema (2026-07-12)
 

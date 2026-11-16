@@ -23,7 +23,7 @@ S1 (técnica citada §A.3 + explicación de 30 s + guion de una línea + activid
 anti-claims §D siguen bajo test.
 
 El padre elige la etapa en **Ajustes**, descrita por comportamiento observable ("dice palabras de
-a una"), nunca con jerga clínica. **"Primeras frases" jamás se activa sola** (e2e lo verifica).
+a una"), nunca con jerga de especialista. **"Primeras frases" jamás se activa sola** (e2e lo verifica).
 Cambiar de etapa **no borra nada**: el ciclo de cada etapa es independiente y el historial es uno
 solo. El progreso del S1 se **migra** (v1→v2), no se descarta.
 

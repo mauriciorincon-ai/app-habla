@@ -59,8 +59,8 @@ Hecha 2026-07-11 durante el plan:
   palabra↔objeto/actividad**. Varias cápsulas (sobre todo las de expansión/recast) asumían un
   niño que ya arma frases ("perro come" → "el perro está comiendo"): ejemplos inalcanzables
   HOY para esta familia. Se reescribieron las 14 cápsulas al nivel real: mismas 5 técnicas,
-  mismas fuentes (la evidencia de parent-implemented/modelado/focalizada es incluso más
-  directa en primeras palabras), ejemplos con palabras sueltas, intentos ("aba"→"¡agua!") y
+  mismas fuentes (la evidencia de implementada-por-los-padres/modelado/focalizada es incluso más
+  directa en primeras palabras), ejemplos con palabras sueltas, intentos ("agu"→"¡agua!") y
   gestos que también cuentan. El juego de voz no necesitó cambios: nunca exigió palabras
   (mide energía sostenida, no vocabulario).
 - **Roadmap derivado (S2+):** niveles por etapa del habla ("palabras sueltas" ← default

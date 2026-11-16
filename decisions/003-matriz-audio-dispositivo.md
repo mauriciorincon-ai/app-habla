@@ -5,7 +5,7 @@
 
 ## Context
 
-Risk #1 of the sprint is the audio pipeline on the real device: a 4–6 year old's voice must move
+Risk #1 of the sprint is the audio pipeline on the real device: a young child's voice must move
 a character with no perceptible lag, on a mid-range Android tablet, in a real (noisy) home. The
 research (§B.1) says an AudioWorklet processes 128-sample blocks (~2.9 ms at 44.1 kHz) with a
 30–100 ms round-trip on mobile — well under the 200 ms ceiling for visual feedback — but it does

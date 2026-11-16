@@ -118,7 +118,7 @@ La sección que la orden exige que estrene el plan. Cada riesgo se verificó con
 - **Rumbo:** `lib/rumbo/tendencias.ts` (agrega por semana: días con práctica —juego o cápsula—,
   palabras distintas, dibujos, inversiones, racha máx, marcadas por el padre; más reciente primero,
   semana floja = número sin adjetivo) + `lib/rumbo/hitos.ts` (primer día, primera palabra que TÚ
-  oíste, voz > 5 s, 10/25 palabras distintas, constancia 3/5 días). Cero clínica.
+  oíste, voz > 5 s, 10/25 palabras distintas, constancia 3/5 días). Cero jerga de especialista.
 - **Objetivo:** `lib/objetivo/alinear.ts` (`normalizar` + predicados + `contarAlineacion` con el
   caso honesto `vacio`) + `lib/objetivo/prioridad.ts` (`priorizarEstable`, identidad sin objetivo).
 - **Etiquetas (R8):** `ETIQUETAS_CAPSULA` (vocabulario controlado, sin colores) + `etiquetas` en
@@ -136,14 +136,14 @@ La sección que la orden exige que estrene el plan. Cada riesgo se verificó con
 - **Registro de sesiones (R1):** `CelebracionHonesta` escribe la sesión al montar (ref-guard vs.
   doble-efecto de StrictMode); palabra↔objeto aporta las palabras encendidas por **estado** (no
   ref-en-render, que el linter de React 19 prohíbe).
-- **`/rumbo`:** tendencias por semana + hitos + vacío honesto. Microcopy SIN vocabulario clínico
-  (ni negado: el design system dice "jamás diagnóstico/puntaje" — se quitó "sin puntajes/notas").
+- **`/rumbo`:** tendencias por semana + hitos + vacío honesto. Microcopy SIN vocabulario de especialista
+  (ni negado: el design system dice "jamás evaluación/puntaje" — se quitó "sin puntajes/notas").
 - **`/objetivo`:** editor con preview honesto + caso sin-matches + guardar/quitar; store reactivo
   `useObjetivo` (idiomático `useSyncExternalStore`, sin `setState`-en-efecto).
 - **Alineaciones:** mazo palabra↔objeto, rondas de gemelas y lote del estudio priorizan el objetivo
   (identidad sin objetivo). Header de Hoy + línea del objetivo activo. Iconos brújula + diana.
 - **e2e nuevos:** `rumbo.spec` (vacío · frase-vs-métrica con números inyectados · write-path por la
-  UI · grep anti-clínico) · `objetivo.spec` (animales alinea Hoy+mazo+lote · colores honesto ·
+  UI · grep anti-jerga) · `objetivo.spec` (animales alinea Hoy+mazo+lote · colores honesto ·
   quitar restaura identidad).
 - **Regla 9 (kit v1.7.3, estrenada):** corrida la suite e2e ENTERA de las pantallas tocadas en esta
   fase. Un solo rojo real: `etapas.spec` — el header más alto (2 filas) empujó el botón del
@@ -220,8 +220,8 @@ Lighthouse del PR cazó en vivo el Alto A1** — la CI hizo su trabajo.
   tras la celebración y tras guardar un objetivo por la UI, y asevera que `sesiones`/`objetivo`
   EXISTEN (la lista blanca ya no puede pasar en vacío).
 - **M2:** cada dato del rumbo tiene testid y el e2e ata número↔frase (un intercambio de etiquetas
-  ya no pasa verde). **M3:** grep anti-clínico igualado al vocabulario vetado de las cápsulas
-  (+puntuación, atraso, nivel, déficit, trastorno, "en N semanas"). **M4:** singular/plural en los
+  ya no pasa verde). **M3:** grep anti-jerga igualado al vocabulario vetado de las cápsulas
+  (+puntuación, atraso, nivel, y otras etiquetas vetadas, "en N semanas"). **M4:** singular/plural en los
   6 datos del rumbo ("1 palabra distinta", no "1 palabras"). **M5:** al guardar el objetivo el foco
   vuelve al input y la confirmación vive en una región `aria-live` permanente (el lector la
   anuncia). **M6:** units de `pares>0`, orden EXACTO de hitos y semanas que cruzan mes/año.
@@ -294,7 +294,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      4 iconos nuevos (trazo 1.5, viewBox 24, `currentColor`). Verificado: typecheck · lint · 209
      unit · **129 e2e** (incluido axe) · build. Guía v4: B3/B4/B5/B6/B9 → "Mejorado en S4" + H6 nueva.
 - **Bloque C (la etapa del habla) — 2026-07-19 · APROBADO 5/5, SIN AJUSTES.** El bloque más limpio
-  del gate: las tres etapas se describen por comportamiento observable, sin jerga ni diagnóstico;
+  del gate: las tres etapas se describen por comportamiento observable, sin jerga ni evaluación;
   "palabras sueltas" aparece elegida y recomendada sin haber tocado nada (ADR-005); "primeras
   frases" existe pero **jamás se activó sola** — hubo que elegirla a mano; la etapa y la cápsula
   sobreviven a la recarga.
@@ -596,7 +596,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     limpia ("perfecto sin inconveniente") — bloque K CERRADO.**
 - **Bloque L — 2026-08-04 · STOPPER del usuario en L1: "el juego me parece muy simplón, ese
   botón oí x palabra no me genera ninguna opinión positiva; ayúdame a potenciarlo con lo que
-  tenemos a mano".** Diagnóstico: al marcar "Oí «pato»" NO pasaba nada visible para el niño (la
+  tenemos a mano".** Causa: al marcar "Oí «pato»" NO pasaba nada visible para el niño (la
   ronda solo avanzaba — cero consecuencia, cero festejo) y los dos botones grandes del juicio
   estaban en plena vista (contra la lección del bloque G: el niño es perspicaz). Decisión con
   AskUserQuestion (2 preguntas): **"Como palabra↔objeto" + "Siguiente pareja" manual** — ambas
@@ -701,7 +701,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      candidata (sugerencias[0]), el primer toque de guardar NO graba: muestra
      `objetivo-confirmar` — "¿Quisiste decir «animales»?" con dos salidas honestas
      (`guardar-candidata` / `guardar-tal-cual`). El texto libre sigue siendo un derecho (la
-     terapeuta puede pedir algo que la app no tiene — caso O6 intacto); teclear resetea el paso.
+     familia puede querer algo que la app no tiene — caso O6 intacto); teclear resetea el paso.
   3. **La conexión campo→botón (O1).** Todo en UNA tarjeta `bg-superficie` (campo → sugerencias
      → preview → botón; las cajas internas pasaron a `bg-fondo` — token verificado, lección del
      fantasma `bg-alerta`) y el botón **nombra lo que guarda**: "Guardar «animales»" (truncado
@@ -784,7 +784,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
      manual con la línea.
 - **Bloque O (resultados O3–O6 + quinto remate) — 2026-08-07 · la tarjeta activa dice su estado.**
   O3, O4(dinosaurios) y O6 limpias. **Stopper de O5:** "guardé animales y palabra↔dibujo no me
-  los trajo — ¿para qué sirve el objetivo?". Diagnóstico: el mazo prioriza SOLO dentro de los
+  los trajo — ¿para qué sirve el objetivo?". Causa: el mazo prioriza SOLO dentro de los
   temas del niño (`palabra-objeto.tsx:67-79` — diseño honesto, ADR-005: el objetivo jamás mete
   contenido ajeno a su mundo); la causa más probable es que "animales" ya no está entre sus
   temas (estuvo moviendo Ajustes probando Transporte). El DEFECTO real de UX: la tarjeta
