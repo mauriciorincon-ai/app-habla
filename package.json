@@ -6,8 +6,8 @@
     "node": ">=22.18"
   },
   "scripts": {
-    "dev": "pnpm build:worklet && pnpm build:documentos && pnpm build:modelos && next dev -H 127.0.0.1 -p 3500",
-    "build": "pnpm build:worklet && pnpm build:documentos && pnpm build:modelos && next build",
+    "dev": "pnpm build:worklet && pnpm build:documentos && pnpm build:modelos && node scripts/gen-precache.mjs --stub && next dev -H 127.0.0.1 -p 3500",
+    "build": "pnpm build:worklet && pnpm build:documentos && pnpm build:modelos && next build && node scripts/gen-precache.mjs",
     "build:worklet": "tsc -p tsconfig.worklet.json",
     "build:documentos": "node scripts/copiar-documentos.mjs",
     "build:modelos": "node scripts/traer-modelos.mjs",
