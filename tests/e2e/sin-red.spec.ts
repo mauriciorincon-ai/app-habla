@@ -62,6 +62,42 @@ test("tras la primera visita a Hoy, cada ruta abre sin red", async ({
       ruta,
     ).toBeVisible();
   }
+  // The games also open WITH their pictures offline: the precache holds the very URL the game asks for.
+  const pictogramasFallidos: string[] = [];
+  page.on("requestfailed", (r) => {
+    if (r.failure()?.errorText.includes("ERR_ABORTED")) return;
+    if (
+      /\/pictogramas\/|\/_next\/image/.test(
+        new URL(r.url()).pathname + new URL(r.url()).search,
+      )
+    )
+      pictogramasFallidos.push(r.url());
+  });
+  for (const [ruta, listo] of [
+    ["/jugar/gemelas", "gemelas-ronda"],
+    ["/jugar/palabras", "palabra-del-picto"],
+  ] as const) {
+    await page.goto(ruta);
+    await page.getByTestId("empezar-juego").click();
+    await expect(page.getByTestId(listo), ruta).toBeVisible({
+      timeout: 20_000,
+    });
+    const imagenes = page.locator("main img");
+    await expect(imagenes.first(), ruta).toBeVisible();
+    await expect
+      .poll(
+        () =>
+          imagenes.evaluateAll((l) =>
+            (l as HTMLImageElement[]).every(
+              (i) => i.complete && i.naturalWidth > 0,
+            ),
+          ),
+        { message: `${ruta}: pictures painted offline` },
+      )
+      .toBe(true);
+  }
+  expect(pictogramasFallidos, "pictures missing offline").toEqual([]);
+
   expect(fallidos, "chunks missing offline").toEqual([]);
   expect(errores, "page errors offline").toEqual([]);
   await context.setOffline(false);

@@ -19,7 +19,7 @@
 //    Worker reads (the verified wasm and model). Sentry is inert without NEXT_PUBLIC_SENTRY_DSN (instrumentation-client.ts), so no ingest origin
 //    today; setting a DSN REQUIRES the owner to add its ingest origin here in the same change
 //    (tests/unit/csp.test.ts fails otherwise), because it breaks «no other origin».
-//  - img-src / media-src: pictograms are served from this origin (also through /_next/image), the videoteca
+//  - img-src / media-src: pictograms are served from this origin as they are (images are not optimized, so the offline precache holds them), the videoteca
 //    and the voice bank play blob: URLs, printables embed data: images.
 //  - font-src 'self': next/font self-hosts the Google fonts at build time (/_next/static/media).
 //  - object-src 'none', base-uri 'self', form-action 'self', frame-ancestors 'none': closed doors the app never uses.
