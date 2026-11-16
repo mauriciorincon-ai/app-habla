@@ -176,7 +176,7 @@ exige se cumplen todas:
 | 4   | **La orden del sprint de CIERRE (S4) declara el gate ⭐ ACUMULADO como OBLIGATORIO** | ⏳ **Requisito para la orden del S4** (la escribe la planeadora): debe cargar el gate ⭐ acumulado S1+S2+S3 como obligatorio — el gate del cierre **jamás** se difiere. |
 
 Lo que se difiere al S4 (gate acumulado, obligatorio allá): grabar la voz real en el estudio y
-oírla en los juegos, la aprobación visual de las pantallas nuevas, y —cuando regrese la tablet— la
+oírla en los juegos, la aprobación visual de las pantallas nuevas, y —cuando haya tablet— la
 validación de dispositivo (spike, 60 fps, PWA+offline, el tono con la voz DEL NIÑO, **el eco real
 del bucle**, gemelas con el niño) que cierra los ADR 003/007/010.
 
@@ -195,4 +195,4 @@ del bucle**, gemelas con el niño) que cierra los ADR 003/007/010.
 | Sentry                      | ⏳ defer aceptado (kit inerte sin DSN)          |
 | ARASAAC                     | ✅ sin cuenta: lote offline con atribución (+9) |
 | API LLM                     | N/A — cero IA en este sprint (**4.ª vez**)      |
-| _(hardware)_ Tablet Android | ⏳ de viaje — lista diferida acumulada S1+S2+S3 |
+| _(hardware)_ Tablet Android | ⏳ sin tablet — lista diferida acumulada S1+S2+S3 |

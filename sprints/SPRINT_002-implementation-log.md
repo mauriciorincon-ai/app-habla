@@ -2,7 +2,7 @@
 
 > Orden: `portafolio/habla/ordenes/SPRINT_002-orden.md` (planeadora, RO) · Plan aprobado por el
 > usuario 2026-07-12 (plan mode). Branch `sprint-002/cada-dia-mas` desde `main` (post-merge PR #1).
-> Gate: escritorio (la tablet sigue de viaje — lista diferida ACUMULADA S1+S2 en la guía).
+> Gate: escritorio (la tablet no está disponible — lista diferida ACUMULADA S1+S2 en la guía).
 
 ## Estado por fase
 

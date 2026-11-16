@@ -75,7 +75,7 @@ Ninguno.
   de `ALCANCE_GATE`, no. El gate de términos no lo puede ver (no son términos de la lista).
 - **Ajuste ejecutable:**
   1. `PROPUESTA-sprint-006-piramide.md:53`: borrar el paréntesis con la edad que sigue a «el hermano»
-     (queda «…Todo con la mamá; el hermano sigue siendo la «otra persona» hasta noviembre.»).
+     (queda «…Todo con la mamá; el hermano sigue siendo la «otra persona».»).
   2. `PROPUESTA-sprint-006-piramide.md:64`: reemplazar «para un niño de ‹rango› años» por «para un
      niño en la etapa de palabras sueltas».
   3. `SPRINT_005-summary.md:60`: borrar el paréntesis con la edad (queda «**La «otra persona» es el
@@ -426,7 +426,7 @@ brochure, export, documento generado, `content/fichas.ts` y el generador; más b
 | `MANUAL:322`                                                         | «lo que ya hace y lo que viene»                                                                                        | Vigente como descripción; ver B17                |
 | `MANUAL:329`                                                         | semáforo                                                                                                               | **Caducó el matiz** → M1                         |
 | `MANUAL:333`                                                         | «para verla en el momento»                                                                                             | **Parcialmente falsa** → B7                      |
-| `MANUAL:419-421`                                                     | «cuando el niño vuelva a la app… se decide»                                                                            | Vigente (plan, sin promesa de feature)           |
+| `MANUAL:419-421`                                                     | «con la observación en vivo se decide»                                                                            | Vigente (plan, sin promesa de feature)           |
 | `GUIA:159`                                                           | «Todo se hace en el computador»                                                                                        | **Falsa para el bloque Q** → B10                 |
 | `GUIA:183`                                                           | «Son 25»                                                                                                               | **Falsa (23)** → B10                             |
 | `GUIA:326, 340, 488, 602, 689, 703, 735, 771, 871`                   | copy de pruebas S1–S4                                                                                                  | Vigentes                                         |

@@ -146,7 +146,7 @@ no es un trámite al final: es el único que ve la app como la ve el usuario.
 
 ## Lo que falta para cerrar (acciones del usuario)
 
-> **Contexto sin cambios:** la tablet sigue de viaje. El gate es de **escritorio**, con
+> **Contexto sin cambios:** la tablet no está disponible. El gate es de **escritorio**, con
 > `docs/GUIA-DE-PRUEBA.html`. La lista diferida ahora **acumula S1 + S2**.
 
 1. ~~Correr la guía de prueba~~ **HECHO (2026-07-12).** Gate mínimo completo. Cobertura de tono
@@ -156,7 +156,7 @@ no es un trámite al final: es el único que ve la app como la ve el usuario.
    su casa falta. **No bloquea el merge** — si después quiere cambiar cápsulas, se cambian.
 3. **Gate visual de escritorio** sobre la preview (aprobó explícitamente los globos y el cohete).
 4. Mergear el PR y correr `/cierre-sprint habla` en la planeadora.
-5. **Al regreso de la tablet:** la lista diferida acumulada (spike en dispositivo, 60 fps de los
+5. **Cuando haya tablet:** la lista diferida acumulada (spike en dispositivo, 60 fps de los
    tres juegos, PWA + offline, **el tono con la voz DEL NIÑO**, sesión real con él, gate visual)
    → cierra los ADR 003 y 007 definitivamente.
 
@@ -168,4 +168,4 @@ no es un trámite al final: es el único que ve la app como la ve el usuario.
 | Sentry                      | ⏳ defer aceptado (kit inerte sin DSN)       |
 | ARASAAC                     | ✅ sin cuenta: lote offline con atribución   |
 | API LLM                     | N/A — cero IA en este sprint (3ª vez)        |
-| _(hardware)_ Tablet Android | ⏳ de viaje — lista diferida acumulada S1+S2 |
+| _(hardware)_ Tablet Android | ⏳ sin tablet — lista diferida acumulada S1+S2 |

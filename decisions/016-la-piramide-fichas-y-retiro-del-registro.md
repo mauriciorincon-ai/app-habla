@@ -30,7 +30,7 @@ en G-Investigación.
 2. **Origen trazable, y las 24 y las 50 se quedan como están.** `origen = { de, refs }` con
    `mirada:<id>` · `habla:<id>` · `anexo:<X-Yn>`. Un unit comprueba que cada ref apunta a una
    cápsula que existe, y que el mapa se ejecutó entero: cada una de las 74 tiene destino (una
-   ficha, o la lista de las que caen del documento con su razón). En noviembre, la app puede
+   ficha, o la lista de las que caen del documento con su razón). Tras la observación en vivo, la app puede
    reconciliar las dos bibliotecas sin adivinar.
 3. **Generador nuevo `gen-la-piramide.mjs`** → `docs/LA-PIRAMIDE.html`, servido en `/mirada`. El
    generador y el documento del S5 se eliminan (la historia los guarda). Cero JS salvo el modo
@@ -46,7 +46,7 @@ en G-Investigación.
 ## Alternativas descartadas
 
 - **Reescribir las 24 y las 50 en su sitio:** las 50 alimentan «Hoy» en la app y la app no cambia
-  hasta noviembre; tocar su contenido rompía esa promesa y perdía la trazabilidad.
+  en este paso; tocar su contenido rompía esa promesa y perdía la trazabilidad.
 - **Parametrizar el generador del S5:** el documento cambia de forma (ficha de actividad), de
   organización (grupos, no peldaños) y pierde el registro; un generador con dos formas no ayuda.
 - **Mantener el registro «por si acaso»:** una pieza que la mamá no opera es peso muerto y ruido en

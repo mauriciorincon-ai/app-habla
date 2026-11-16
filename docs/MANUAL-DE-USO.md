@@ -646,8 +646,8 @@ decirle solo lo que de verdad medimos.
 
 **¿Qué es "La pirámide, en casa" y por qué no está dentro de la app?**
 Es el documento de la mamá para jugar sin pantallas. Vive en la página `/mirada` de la app, pero es
-un documento, no un juego: él no lo usa, lo usa el adulto. Está aparte a propósito, para los meses
-sin pantallas; cuando el niño vuelva a la app, con la observación en vivo se decide qué fichas
+un documento, no un juego: él no lo usa, lo usa el adulto. Está aparte a propósito, para jugar
+sin pantallas; con la observación en vivo se decide qué fichas
 pasan a "Hoy".
 
 **¿Dónde quedó el registro diario?**

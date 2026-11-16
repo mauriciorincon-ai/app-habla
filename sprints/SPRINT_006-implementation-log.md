@@ -118,7 +118,7 @@
   Cada ficha en instrucción directa, con los favoritos del niño en observable, «Funcionó si» sin
   números ni conteos (el schema lo exige) y «Si no pasa» que siempre baja la exigencia. Dos
   decisiones de copy: el hermano va sin edad y sin «mayor»; y **papá no aparece en ninguna ficha**
-  (no está hasta noviembre), aunque un anexo lo nombraba en dos ejemplos.
+  (no es la otra persona), aunque un anexo lo nombraba en dos ejemplos.
 - 2026-09-27 · **F2.2 — El gate cazó tres líneas antes del commit.** El checker local (los mismos
   hashes que la CI) marcó una **sílaba de balbuceo** que, normalizada, coincide con un término de la
   lista (dos líneas; se cambió por otra sílaba) y el **nombre de una revista** en una cita (se citó

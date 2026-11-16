@@ -390,7 +390,7 @@ hitos 7→16, y los **seis remates del bloque O** — sugerencias vivas, la eñe
 ortografía ADR-014, los temas visibles, y la tarjeta activa con estados para daltonismo).
 Aprobación final del usuario: **"probé todo el bloque O, todo en orden y corriendo según lo
 esperado"** — todos los bloques del recorrido aprobados. La lista de tablet queda post-ciclo
-(de viaje; ADRs 003/007/010 al regresar — no gatea).
+(sin tablet; ADRs 003/007/010 cuando haya tablet — no gatea).
 
 ## Lo que falta para cerrar (acciones del usuario)
 
@@ -407,4 +407,4 @@ esperado"** — todos los bloques del recorrido aprobados. La lista de tablet qu
 | ARASAAC                     | ✅ sin cuenta: lote offline con atribución           |
 | Claude Design               | ✅ proyecto "Hablemos San — Design System" publicado |
 | API LLM                     | N/A — cero IA (**5.ª vez consecutiva**)              |
-| _(hardware)_ Tablet Android | ⏳ de viaje — lista post-ciclo (no gatea)            |
+| _(hardware)_ Tablet Android | ⏳ sin tablet — lista post-ciclo (no gatea)            |

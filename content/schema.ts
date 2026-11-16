@@ -446,7 +446,7 @@ export const BibliotecaContactoVisualSchema = z
 // juego. No son pisos: se trabajan todos a la vez. Cada ficha es una actividad en instrucción
 // directa (qué tener a la mano, qué hacer, qué decir, qué ver, cómo saber que funcionó y qué
 // hacer si no pasa). Las 50 cápsulas de habla de la app y las 24 del S5 NO cambian: son las
-// fuentes de las que estas fichas derivan, y `origen` lo deja trazable para noviembre.
+// fuentes de las que estas fichas derivan, y `origen` lo deja trazable para la observación en vivo.
 //
 // Todo lo que se lee aquí es COMPORTAMIENTO OBSERVABLE; el gate de sensibilidad lo vigila.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -598,7 +598,7 @@ export type ConQuienFicha = (typeof CON_QUIEN_FICHA)[number];
 
 /**
  * De dónde viene cada ficha (condición A de la orden del S6: trazable para reconciliar en
- * noviembre). `refs` usa tres prefijos: `mirada:<id>` (una de las 24 del S5), `habla:<id>` (una
+ * la observación en vivo). `refs` usa tres prefijos: `mirada:<id>` (una de las 24 del S5), `habla:<id>` (una
  * de las 50 de la app) y `anexo:<X-Yn>` (una actividad de la investigación privada del S6).
  *   de: "mirada" | "habla"  → la primera ref es esa cápsula; puede absorber otras.
  *   de: "nueva"             → la primera ref es un anexo.

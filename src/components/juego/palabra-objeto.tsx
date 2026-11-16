@@ -407,8 +407,8 @@ function JuegoListo({
           ) : null}
 
           {/* EL JUEZ ES EL PADRE (tesis del producto). La app no oye palabras; él sí está ahí.
-              Va AL FINAL y en voz baja (gate S4, bloque G): el niño es perspicaz y este control
-              no es suyo — fuera de su barrido visual (el dibujo y los botones grandes) y lejos
+              Va AL FINAL y en voz baja (gate S4, bloque G): este control es del adulto y
+              no del niño — fuera de su barrido visual (el dibujo y los botones grandes) y lejos
               de la zona del diálogo de permisos (el click fantasma). Sigue siendo de adulto:
               ≥44 px de alto. */}
           <button

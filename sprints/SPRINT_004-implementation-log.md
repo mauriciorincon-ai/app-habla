@@ -429,7 +429,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
     dibujo ya encendido el toque siempre vale, así los e2e y el uso real no cambian) +
     **reubicación** del botón. Causa raíz hipotetizada, no reproducida — si reaparece, se
     instrumenta (declarado en la guía G8: "repórtalo con los pasos exactos").
-  - **Botón del juez discreto (pedido: hijo perspicaz):** baja AL FINAL de la pantalla, bajo
+  - **Botón del juez discreto (pedido: control del adulto):** baja AL FINAL de la pantalla, bajo
     "Otro dibujo / Ya jugamos", texto pequeño `tinta-suave` subrayado punteado, ≥44 px (control
     de adulto). Fuera del barrido visual del niño y de la zona del diálogo de permisos.
   - **Encendido que se siente (pedido: más llamativo):** pop del marco (scale 1→1.06→1, 500 ms)
@@ -598,7 +598,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   botón oí x palabra no me genera ninguna opinión positiva; ayúdame a potenciarlo con lo que
   tenemos a mano".** Causa: al marcar "Oí «pato»" NO pasaba nada visible para el niño (la
   ronda solo avanzaba — cero consecuencia, cero festejo) y los dos botones grandes del juicio
-  estaban en plena vista (contra la lección del bloque G: el niño es perspicaz). Decisión con
+  estaban en plena vista (contra la lección del bloque G: ese control es del adulto). Decisión con
   AskUserQuestion (2 preguntas): **"Como palabra↔objeto" + "Siguiente pareja" manual** — ambas
   recomendadas, elegidas por el usuario. Remate SOLO con piezas existentes:
   1. **La tarjeta del dibujo ES el botón de oírla** (voz familiar; insignia de altavoz en la
@@ -837,7 +837,7 @@ e2e** · build verdes. Guía v4, manual y summary actualizados con el microcopy 
   ortografía general en dos colores, ADR-014 (3) · lo que Ajustes muestra alinea (4) · la
   tarjeta activa dice su estado (5) · estado con grano fino y colores para daltonismo (6).
   Con esto TODOS los bloques del recorrido del gate quedan aprobados (la lista de tablet sigue
-  diferida por viaje — ADRs 003/007/010 al regresar). **Siguiente paso: merge del PR #5 (solo
+  diferida por falta de tablet — ADRs 003/007/010 cuando haya tablet). **Siguiente paso: merge del PR #5 (solo
   a la orden explícita del usuario) → `/cierre-sprint habla` en la planeadora → H1 COMPLETO.**
 - **CI en rojo el día del cierre — lote de advisories upstream (2026-08-07).** El job `quality`
   cayó por `pnpm audit --audit-level high`: 26 advisories publicadas ese día (15 high) en
