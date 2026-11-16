@@ -21,8 +21,6 @@ import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { palabras as txp } from "@/lib/idioma/textos/palabras";
 import {
-  ajustesActuales,
-  guardarAjustesEnStore,
   useAjustes,
   usePerfil,
 } from "@/components/estado-local";
@@ -36,10 +34,13 @@ import { invitacionAmable, type Metrica } from "@/lib/session-flow";
 import type { Tema } from "@/lib/storage/temas";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
+import { useModoCalma } from "./use-modo-calma";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession } from "./use-voice-session";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { EscenarioPalabra } from "./escenario-palabra";
+import { AltavozConsigna } from "./altavoz-consigna";
+import { idConsigna, textoConsigna } from "@/lib/banco-voz/catalogo";
 import { useReconocedor } from "./use-reconocedor";
 import { MicSession } from "@/lib/voice/mic-session";
 import { quizasDijo } from "@/lib/reconocer/coincidencia";
@@ -210,11 +211,7 @@ function JuegoListo({
     if (fase === "esperando-voz") armadoDesdeRef.current = Date.now();
   }, [fase]);
 
-  function alternarCalma() {
-    const activo = !modoCalma;
-    cambiarCalma(activo);
-    guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
-  }
+  const { alternar: alternarCalma } = useModoCalma(cambiarCalma);
 
   /**
    * CUALQUIER vocalización enciende el dibujo (la llama el escenario cuando el medidor confirma
@@ -323,6 +320,16 @@ function JuegoListo({
 
       {actual.fase === "esperando-voz" || actual.fase === "jugando" ? (
         <section className="flex flex-col gap-5">
+          <div className="flex items-center justify-center gap-3">
+            <p className="text-tinta-suave text-center text-sm" data-testid="consigna-palabras">
+              {textoConsigna("palabras", idioma)}
+            </p>
+            <AltavozConsigna
+              voz={voz}
+              id={idConsigna("palabras", idioma)}
+              etiqueta={textoConsigna("palabras", idioma)}
+            />
+          </div>
           <div className="relative">
             <EscenarioPalabra
               picto={picto}

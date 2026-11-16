@@ -29,17 +29,21 @@ import {
 } from "@/lib/coach/apuntador";
 import { FranjaApuntador } from "./franja-apuntador";
 import { IndicadorTurno } from "./indicador-turno";
+import { Sorpresa } from "./sorpresa";
 import type { MedidasVivas } from "./use-voice-session";
 
-type Props = {
+type PropsComun = {
   sesion: Sesion;
-  medidas: MedidasVivas;
   /** Identifica el juego en los tests y en los estilos. */
-  nombre: "globo" | "soplar" | "fuerte-suave" | "cohete" | "palabras" | "vocales";
+  nombre:
+    | "globo"
+    | "soplar"
+    | "fuerte-suave"
+    | "cohete"
+    | "palabras"
+    | "vocales"
+    | "gemelas";
   onAlternarCalma: () => void;
-  onReintentarMic: () => void;
-  onRecalibrar: () => void;
-  onContinuarConRuido: () => void;
   /** "Salir" dentro del juego: de vuelta al GUION (gate S4) — el hook apaga el micrófono. */
   onSalir: () => void;
   /** El adulto marca el turno con un toque en su franja (S13, ADR-025). */
@@ -48,18 +52,27 @@ type Props = {
   children: ReactNode;
 };
 
-export function MarcoJuego({
+type Props = Omit<PropsComun, "children"> & {
+  medidas: MedidasVivas;
+  onReintentarMic: () => void;
+  onRecalibrar: () => void;
+  onContinuarConRuido: () => void;
+  children: ReactNode;
+};
+
+/**
+ * El marco COMÚN a los siete juegos (S15): la cáscara del niño, salir, el modo calma de un toque, el
+ * botón de turno con su apuntador, el tope de pantalla y el indicador. No sabe de micrófono: las
+ * palabras gemelas lo montan solas, y `MarcoJuego` le suma las fases del micrófono.
+ */
+export function MarcoComun({
   sesion,
-  medidas,
   nombre,
   onAlternarCalma,
-  onReintentarMic,
-  onRecalibrar,
-  onContinuarConRuido,
   onSalir,
   onCambiarTurno,
   children,
-}: Props) {
+}: PropsComun) {
   const tx = useT();
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
@@ -163,6 +176,25 @@ export function MarcoJuego({
         <LineaHoy minutos={minutosDeHoy()} />
       ) : null}
 
+      {children}
+      <Sorpresa juego={nombre} turnosNino={sesion.turnosNino} />
+    </div>
+    </>
+  );
+}
+
+export function MarcoJuego({
+  medidas,
+  onReintentarMic,
+  onRecalibrar,
+  onContinuarConRuido,
+  children,
+  ...comun
+}: Props) {
+  const tx = useT();
+  const { actual } = comun.sesion;
+  return (
+    <MarcoComun {...comun}>
       {actual.fase === "pidiendo-mic" ? (
         <section
           className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
@@ -249,7 +281,6 @@ export function MarcoJuego({
       ) : null}
 
       {children}
-    </div>
-    </>
+    </MarcoComun>
   );
 }

@@ -14,8 +14,6 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import {
-  ajustesActuales,
-  guardarAjustesEnStore,
   useAjustes,
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
@@ -27,6 +25,7 @@ import {
 import { useIdioma, useT } from "@/lib/idioma/estado";
 import { idConsigna } from "@/lib/banco-voz/catalogo";
 import { juegos } from "@/lib/idioma/textos/juegos";
+import { useModoCalma } from "./use-modo-calma";
 import { AltavozConsigna } from "./altavoz-consigna";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { EscenarioCohete } from "./escenario-cohete";
@@ -96,11 +95,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
       ? medidas.inversiones()
       : 0;
 
-  function alternarCalma() {
-    const activo = !modoCalma;
-    cambiarCalma(activo);
-    guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
-  }
+  const { alternar: alternarCalma } = useModoCalma(cambiarCalma);
 
   return (
     <MarcoJuego
