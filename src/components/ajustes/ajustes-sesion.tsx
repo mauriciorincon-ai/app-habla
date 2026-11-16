@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -18,9 +19,7 @@ import { suMundo } from "@/lib/idioma/textos/su-mundo";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
-import { OtraCasa } from "./otra-casa";
 import { TopeDiario } from "./tope-diario";
-import { Reconocedor } from "./reconocedor";
 import {
   AJUSTES_DEFECTO,
   INTENSIDADES,
@@ -29,10 +28,26 @@ import {
   type Perfil,
 } from "@/lib/storage/schemas";
 
+// Below the fold and heavy (the other-home package, the recognizer panel): their code is fetched a moment AFTER
+// the first paint (see `useTrasElPrimerPintado`), so the settings page stays inside the performance budget.
+const OtraCasa = dynamic(() => import("./otra-casa").then((m) => m.OtraCasa), { ssr: false });
+const Reconocedor = dynamic(() => import("./reconocedor").then((m) => m.Reconocedor), { ssr: false });
+
+/** True once the page has had time to paint; the heavy panels below the fold wait for it. */
+function useTrasElPrimerPintado(ms = 1500): boolean {
+  const [listo, setListo] = useState(false);
+  useEffect(() => {
+    const id = window.setTimeout(() => setListo(true), ms);
+    return () => window.clearTimeout(id);
+  }, [ms]);
+  return listo;
+}
+
 export function AjustesSesion() {
   const tx = useT();
   const guardados = useAjustes();
   const [confirmandoBorrado, setConfirmandoBorrado] = useState(false);
+  const tarde = useTrasElPrimerPintado();
 
   // El ajuste de animaciones se aplica en el <html> (el CSS lo honra igual que reduced-motion).
   useEffect(() => {
@@ -146,9 +161,9 @@ export function AjustesSesion() {
         }
       />
 
-      <Reconocedor />
+      {tarde ? <Reconocedor /> : null}
 
-      <OtraCasa />
+      {tarde ? <OtraCasa /> : null}
 
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">{tx(textos.borrar.titulo)}</h2>
