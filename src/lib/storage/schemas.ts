@@ -80,9 +80,14 @@ export const AjustesSchema = z.object({
   apuntador: z.boolean().catch(true),
   /**
    * The monthly-stories reminder (S14, ADR-026): the day the adult tapped «Not now» on its card in Today,
-   * so it hides until the next day. `null` = never postponed; `.catch(null)` migrates earlier settings.
+   * so it hides for 7 days. `null` = never postponed; `.catch(null)` migrates earlier settings.
    */
   recordatorioPospuesto: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().catch(null),
+  /**
+   * The reminder switch in Settings (S14, decision «1a»): on by default; off, the card never comes back.
+   * `.catch(true)` makes a setting saved without the key read «on», so nothing is lost.
+   */
+  recordatorioCuentos: z.boolean().catch(true),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
@@ -100,6 +105,7 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   topeMinutos: 10,
   apuntador: true,
   recordatorioPospuesto: null,
+  recordatorioCuentos: true,
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

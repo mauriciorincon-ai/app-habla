@@ -81,7 +81,7 @@ test("palabra↔objeto sigue a la meta: sin meta abre con un dibujo de sus temas
   expect(await primero()).toBe("rojo");
 });
 
-test("la tarjeta del recordatorio es del adulto: aparece sin lote, «Ahora no» la esconde hasta mañana, y es axe limpia", async ({
+test("la tarjeta del recordatorio es del adulto: aparece sin lote, «Ahora no» la esconde 7 días, el interruptor de Ajustes la apaga, y es axe limpia", async ({
   page,
 }) => {
   await page.clock.install({ time: new Date(`${HOY}T10:00:00`) });
@@ -101,10 +101,31 @@ test("la tarjeta del recordatorio es del adulto: aparece sin lote, «Ahora no» 
   await expect(page.getByTestId("capsula")).toBeVisible();
   await expect(page.getByTestId("recordatorio-cuentos")).toHaveCount(0);
 
-  // Mañana vuelve (la fecha es la perilla).
+  // Mañana y el día 6 sigue escondida; el día 7 vuelve (la fecha es la perilla).
   await page.clock.setFixedTime(new Date("2026-11-17T10:00:00"));
   await page.reload();
+  await expect(page.getByTestId("capsula")).toBeVisible();
+  await expect(page.getByTestId("recordatorio-cuentos")).toHaveCount(0);
+  await page.clock.setFixedTime(new Date("2026-11-22T10:00:00"));
+  await page.reload();
+  await expect(page.getByTestId("capsula")).toBeVisible();
+  await expect(page.getByTestId("recordatorio-cuentos")).toHaveCount(0);
+  await page.clock.setFixedTime(new Date("2026-11-23T10:00:00"));
+  await page.reload();
   await expect(page.getByTestId("recordatorio-cuentos")).toBeVisible();
+
+  // Apagado en Ajustes (símbolo + texto, no solo color), la tarjeta no vuelve.
+  await page.goto("/ajustes");
+  const sw = page.getByTestId("interruptor-recordatorio");
+  await expect(sw).toHaveAttribute("aria-checked", "true");
+  await expect(page.getByTestId("interruptor-recordatorio-estado")).toContainText("Encendido");
+  await sw.click();
+  await expect(sw).toHaveAttribute("aria-checked", "false");
+  await expect(page.getByTestId("interruptor-recordatorio-estado")).toContainText("Apagado");
+  await axeLimpio(page);
+  await page.goto("/");
+  await expect(page.getByTestId("capsula")).toBeVisible();
+  await expect(page.getByTestId("recordatorio-cuentos")).toHaveCount(0);
 });
 
 test("con un lote reciente no hay recordatorio; con el último de hace más de un mes, sí", async ({
