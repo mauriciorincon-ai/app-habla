@@ -63,6 +63,9 @@ describe("banco-voz: el catálogo grabable", () => {
       "Take a breath and blow: fooo",
       "Tiny voice… and big voice",
       "Make your voice sound: aaaaah",
+      "Pick a vowel and make its sound",
+      "Look at the picture and say whatever you like",
+      "Look at the two pictures. Say the one you like.",
     ]);
     expect(ids.every((id) => esDelIdioma(id, "en"))).toBe(true);
     expect(catalogo.every((i) => esDelIdioma(i.id, "es"))).toBe(true);

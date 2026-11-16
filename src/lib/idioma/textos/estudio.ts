@@ -51,6 +51,13 @@ export const estudio = {
     grabarMiVoz: { es: "Grabar mi voz", en: "Record my voice" },
     grabarMas: { es: "Grabar más", en: "Record more" },
   },
+  sinVozLocal: {
+    titulo: { es: "Este aparato no trae voz propia en este idioma", en: "This device has no built-in voice in this language" },
+    cuerpo: {
+      es: "Las palabras que no grabes quedarán mudas: todavía faltan {n} por grabar. Con tu voz suenan siempre.",
+      en: "Words you don't record will stay silent: {n} still to record. In your voice they always sound.",
+    },
+  },
   lista: {
     titulo: { es: "Lo que ya grabaste", en: "What you've already recorded" },
     delObjetivo: { es: "del objetivo de la semana", en: "part of this week's goal" },
