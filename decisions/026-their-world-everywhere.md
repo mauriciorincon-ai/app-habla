@@ -91,10 +91,13 @@ There were also two sources of interests: the profile themes and «Enjoys» in S
    - The profile has never been part of the other-home package, and `otra-casa.test` now proves that neither
      the themes nor «other things» travel.
 6. **The reminder is a pure rule.**
-   - `recordatorioCuentos(hoy, cuentos, pospuesto)` lives in `src/lib/bandeja/recordatorio.ts`.
+   - `recordatorioCuentos(hoy, cuentos, pospuesto, activo)` lives in `src/lib/bandeja/recordatorio.ts`.
    - It shows the card when no batch was ever imported, or when the last import is ≥ 30 days old (the
      order's own validity, `DIAS_DE_VIGENCIA`).
-   - «Not now» stores today in `ajustes.recordatorioPospuesto` and hides the card until tomorrow.
+   - «Not now» stores today in `ajustes.recordatorioPospuesto` and hides the card for 7 days
+     (`DIAS_DE_POSPUESTO`; owner decision «1a», 2026-11-15, amending the first one-day default).
+   - A Settings switch, «Remind me about this month's stories», is on by default; off, the card never
+     comes back. A setting saved without the key reads «on».
    - There is no notification API and no permission prompt.
 7. **The drawings stay off the shared bundle.** The six protagonist drawings are inline SVG components
    loaded with a dynamic `import()` per theme, so only the active theme's drawing ships with a game. The
@@ -106,7 +109,7 @@ There were also two sources of interests: the profile themes and «Enjoys» in S
   monthly stories and the printables. Gemelas prefers the goal's pairs, then the child's themes.
 - **The pyramid map no longer counts every capsule.** It was approved over the 74 capsules of S6, and the S14
   capsules live in Today, not in that document. `fichas.test` scopes the map to them.
-- **One more preference to manage.** The postponed-reminder day is a settings field. It travels nowhere,
+- **One more preference to manage.** The postponed-reminder day and the reminder switch are settings fields. It travels nowhere,
   like all settings.
 - **Words to model can be wrong for a child, so they stay advice to the adult.** They are never a target the
   app checks. Judging the word is still the adult's job (ADR-009).

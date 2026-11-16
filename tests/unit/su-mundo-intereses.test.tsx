@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { MAX_INTERESES } from "@/lib/bandeja/cuentos-del-mes";
 import { CUENTOS_VACIO, type CuentosGuardados } from "@/lib/cuentos/estado";
-import { diasEntre, recordatorioCuentos, ultimoLote } from "@/lib/bandeja/recordatorio";
+import { DIAS_DE_POSPUESTO, diasEntre, recordatorioCuentos, ultimoLote } from "@/lib/bandeja/recordatorio";
 import { interesesDe, moverIntereses, unirSinRepetir } from "@/lib/su-mundo/intereses";
 import {
   CLAVES,
@@ -12,6 +12,7 @@ import {
   leerPerfil,
   migrarInteresesAlPerfil,
 } from "@/lib/storage/local";
+import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
 import { AjustesSchema, PerfilSchema, type Perfil } from "@/lib/storage/schemas";
 
 // S14 (ADR-026): sus intereses en UN lugar (el perfil), la migración del «Le gusta» de Cuentos sin
@@ -111,9 +112,41 @@ describe("el recordatorio de los cuentos del mes (tarjeta del adulto en Hoy)", (
     expect(recordatorioCuentos("2026-11-16", lote("2026-10-18"))).toBeNull();
   });
 
-  it("«Ahora no» la esconde ese día y vuelve al siguiente", () => {
+  it("«Ahora no» la esconde 7 días: el día 0 y el 6 no aparece; el 7 vuelve", () => {
+    expect(DIAS_DE_POSPUESTO).toBe(7);
     expect(recordatorioCuentos("2026-11-16", CUENTOS_VACIO, "2026-11-16")).toBeNull();
-    expect(recordatorioCuentos("2026-11-17", CUENTOS_VACIO, "2026-11-16")).toEqual({ motivo: "nunca" });
+    expect(recordatorioCuentos("2026-11-22", CUENTOS_VACIO, "2026-11-16")).toBeNull();
+    expect(recordatorioCuentos("2026-11-23", CUENTOS_VACIO, "2026-11-16")).toEqual({ motivo: "nunca" });
+    // También esconde el «vencido», y cruza el fin de mes bien.
+    expect(recordatorioCuentos("2026-12-02", lote("2026-10-01"), "2026-11-28")).toBeNull();
+    expect(recordatorioCuentos("2026-12-05", lote("2026-10-01"), "2026-11-28")).toMatchObject({ motivo: "vencido" });
+  });
+
+  it("una fecha pospuesta futura (reloj corrido) no esconde la tarjeta", () => {
+    expect(recordatorioCuentos("2026-11-16", CUENTOS_VACIO, "2027-01-01")).toEqual({ motivo: "nunca" });
+  });
+
+  it("con el interruptor apagado no aparece nunca: ni «nunca» ni «vencido»", () => {
+    expect(recordatorioCuentos("2026-11-16", CUENTOS_VACIO, null, false)).toBeNull();
+    expect(recordatorioCuentos("2026-11-16", lote("2026-01-01"), null, false)).toBeNull();
+    expect(recordatorioCuentos("2026-11-16", CUENTOS_VACIO, null, true)).toEqual({ motivo: "nunca" });
+  });
+
+  it("el interruptor nace encendido y un ajuste guardado sin la clave lee «encendido»", () => {
+    expect(AjustesSchema.parse({}).recordatorioCuentos).toBe(true);
+    expect(AjustesSchema.parse({ recordatorioPospuesto: "2026-11-16" }).recordatorioCuentos).toBe(true);
+    expect(AjustesSchema.parse({ recordatorioCuentos: false }).recordatorioCuentos).toBe(false);
+    expect(AjustesSchema.parse({ recordatorioCuentos: "x" }).recordatorioCuentos).toBe(true);
+  });
+
+  it("el texto del interruptor está en los dos idiomas, con las mismas claves", () => {
+    const t = textosAjustes.recordatorioCuentos;
+    expect(Object.keys(t).sort()).toEqual(["apagado", "descripcion", "encendido", "titulo"]);
+    for (const v of Object.values(t)) {
+      expect(v.es.length).toBeGreaterThan(0);
+      expect(v.en.length).toBeGreaterThan(0);
+      expect(v.es).not.toBe(v.en);
+    }
   });
 
   it("el último lote es el más reciente, y los días cruzan meses y años bien", () => {

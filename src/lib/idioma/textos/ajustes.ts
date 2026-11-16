@@ -132,6 +132,18 @@ export const ajustes = {
       en: "One short line for you, above the game, at the right moment: when your turn starts, when their voice sounds, after a long quiet, and at the close. It shows for a few seconds and goes; calm mode turns it off.",
     },
   },
+  recordatorioCuentos: {
+    titulo: {
+      es: "Recordarme los cuentos del mes",
+      en: "Remind me about this month's stories",
+    },
+    descripcion: {
+      es: "Una tarjeta quieta en Hoy, solo para ti, cuando toca pedir el lote. «Ahora no» la esconde 7 días; apagado aquí, no vuelve.",
+      en: "A quiet card in Today, only for you, when it's time to order a batch. «Not now» hides it for 7 days; switched off here, it doesn't come back.",
+    },
+    encendido: { es: "Encendido", en: "On" },
+    apagado: { es: "Apagado", en: "Off" },
+  },
   voz: {
     titulo: { es: "La voz de la familia", en: "The family's voice" },
     texto: {
