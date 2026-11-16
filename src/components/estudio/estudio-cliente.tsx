@@ -209,7 +209,6 @@ function Gestion({
   const sinFaltantes = cobertura.porCategoria.find((c) => c.categoria === "palabra");
   return (
     <div className="flex flex-col gap-6">
-      <AvisoSinVozLocal faltan={sinFaltantes ? sinFaltantes.total - sinFaltantes.grabados : 0} />
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">{tx(estudio.gestion.conTuVozVas)}</h2>
         <div className="mt-4 flex flex-col gap-4" data-testid="cobertura">
@@ -314,6 +313,8 @@ function Gestion({
           {tx(imprimibles.entrada.abrir)}
         </Link>
       </section>
+      {/* Last, not first: it appears once the device voices are read, and must not push the page down. */}
+      <AvisoSinVozLocal faltan={sinFaltantes ? sinFaltantes.total - sinFaltantes.grabados : 0} />
     </div>
   );
 }

@@ -33,7 +33,7 @@ import { diasPracticados } from "@/lib/coach/daily";
 import { TextoCapsula } from "@/components/capsula-textos";
 import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
-import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
+import { etapaNombre } from "@/lib/idioma/textos/etapa-nombre";
 import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { hoy } from "@/lib/idioma/textos/hoy";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
@@ -115,7 +115,7 @@ export function HoyCliente() {
           {tx(hoy.etiqueta.tecnica)} {tx(nombreTecnica[capsula.tecnica])} ·{" "}
           {tx(hoy.etiqueta.etapa)}{" "}
           <span data-testid="etiqueta-etapa">
-            {tx(textosAjustes.etapa.nombre[capsula.etapa])}
+            {tx(etapaNombre[capsula.etapa])}
           </span>
         </p>
 

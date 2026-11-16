@@ -1,4 +1,5 @@
 import type { Catalogo } from "../index";
+import { etapaNombre } from "./etapa-nombre";
 
 // Ajustes y privacidad. Los nombres y las descripciones de las etapas (ADR 006) viven aquí, por
 // clave de etapa: `content/schema.ts` guarda la versión en español que usan los tests y las cápsulas.
@@ -24,11 +25,7 @@ export const ajustes = {
     leyenda: { es: "Etapa del habla", en: "Speech stage" },
     elegida: { es: "Elegida", en: "Selected" },
     recomendada: { es: "Recomendada", en: "Recommended" },
-    nombre: {
-      "sonidos-e-intentos": { es: "Sonidos e intentos", en: "Sounds and attempts" },
-      "palabras-sueltas": { es: "Palabras sueltas", en: "Single words" },
-      "primeras-frases": { es: "Primeras frases", en: "First phrases" },
-    },
+    nombre: etapaNombre,
     descripcion: {
       "sonidos-e-intentos": {
         es: "Todavía explora: hace sonidos, señala, lleva de la mano. Los intentos y los gestos son su forma de hablar.",
