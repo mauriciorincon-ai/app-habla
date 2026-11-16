@@ -234,3 +234,23 @@ niño), accesibles desde el encabezado de "Hoy" junto a Ajustes — con iconos p
 Un resplandor suave alrededor del dibujo cuando el reconocedor local cree que oyó la palabra de la ronda y el adulto
 encendió la animación (apagada de fábrica). Sin texto, `aria-hidden`, más tenue que la celebración que dispara el
 adulto, nunca cuenta; con «reducir animaciones» solo cambia la opacidad. Un fallo no muestra nada: jamás un «no».
+
+## La sorpresa del día, en su hueco (Sprint 15, corregida en el 16)
+
+Al tercer turno de él, el juego muestra una frase corta con el protagonista del niño (`components/juego/sorpresa.tsx`, `data-testid="sorpresa"`). Vive **dentro del flujo** del marco, en un hueco de altura reservada
+(`HuecoSorpresa`: `div.min-h-24`, `data-testid="hueco-sorpresa"`), así que ni tapa la tarjeta ni los botones ni mueve el layout al aparecer o irse. Tarjeta `bg-superficie` con borde `border-borde` de 2 px,
+`rounded-2xl`, `shadow-tarjeta`, `max-w-[26rem]` centrada, texto `font-display text-lg text-tinta`; `role="status"` + `aria-live="polite"`, `pointer-events-none` (jamás capta un toque) y visible unos segundos.
+Sin monedas, sin colección, sin «ganaste»: es una frase, no un premio. Se monta solo en la pantalla del niño (`esPantallaDelNino`).
+
+## Gemelas en el marco común (Sprint 15)
+
+`MarcoJuego` se parte en `MarcoComun` (franja de turnos, apuntador, modo calma, protagonista, tope de pantalla y sorpresa) y la variante con las fases del micrófono. Gemelas corre dentro de `MarcoComun`
+—no mide voz— y por eso hereda el indicador de turno, el modo calma y la sorpresa sin tener su propio andamio. Mismo orden en los siete juegos: guion del adulto → juego → cierre honesto.
+
+## Intensidad de colores «suave» y calma de un toque en Hoy (Sprint 15)
+
+- **Intensidad «suave»** (Ajustes → «Intensidad de colores»): `html[data-intensidad="suave"]` (en `globals.css`) atenúa **solo rellenos**: `--color-kid-peach #e8cbbd`, `--color-kid-sage #b3c2ad`,
+  `--color-kid-sky #ccd8db`, `--color-kid-yellow #ecdfbe` y `--celebracion` mezclada al 55 % con la superficie. **Ningún token de texto cambia** (el AA no se negocia; lo guarda `tests/unit/contraste.test.ts`).
+  `AplicarIntensidad` pone el atributo en `<html>`, así alcanza a los dos registros y a los siete juegos; antes de hidratar respeta lo que el script inline ya puso.
+- **Modo calma en Hoy** (`components/hoy/calma-hoy.tsx`, `data-testid="modo-calma-hoy"`): botón de píldora `min-h-11` (adulto ≥ 44 px), `aria-pressed`, ícono + texto («Modo calma activado» / «Modo calma»)
+  y borde `border-acento` cuando está activo —el estado no va solo por color—. El adulto lo prende ANTES de abrir un juego (regla dura 6: la calma es de un toque).

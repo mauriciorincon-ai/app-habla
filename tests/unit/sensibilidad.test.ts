@@ -1,19 +1,17 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   ALCANCE_GATE,
-  archivoDe,
+  EXCLUIDOS_GATE,
   N_MAX,
-  nombreDe,
   buscarCoincidencias,
   hashDeTermino,
+  lineasConEdad,
   normalizar,
-  recortar,
-  type Alcance,
 } from "../../scripts/lib/sensibilidad";
 
-// EL GATE DE SENSIBILIDAD (S5, ampliado en el S6). Este repo es público y la app es sobre un niño real: lo que se
+// EL GATE DE SENSIBILIDAD (S5; desde el S16 vigila TODO el repo). Este repo es público y la app es sobre un niño real: lo que se
 // publica del sprint no puede contener ninguno de los términos de la lista privada de la
 // planeadora. Aquí solo viven sus hashes (tests/fixtures/sensibilidad-hashes.json). Si hay una
 // coincidencia, el fallo dice archivo, línea y tamaño del n-grama — jamás el término.
@@ -25,17 +23,6 @@ const FIXTURE = JSON.parse(
   readFileSync(join(RAIZ, "tests", "fixtures", "sensibilidad-hashes.json"), "utf8"),
 ) as { hashes: string[]; terminos: number; n_max: number };
 const HASHES = new Set(FIXTURE.hashes);
-
-/** Lo único del alcance que puede no existir todavía: lo que el sprint escribe al cerrar. */
-const PENDIENTES_DEL_CIERRE = ["sprints/SPRINT_006-summary.md"];
-
-/** Los marcadores de los que depende un recorte: si uno desaparece, esa sección saldría del gate. */
-function marcadoresDe(alcance: Alcance): string[] {
-  if (typeof alcance === "string") return [];
-  if ("desde" in alcance) return [alcance.desde];
-  if ("excepto" in alcance) return [...alcance.excepto];
-  return [...alcance.entre];
-}
 
 describe("normalización (idéntica a la del generador de hashes)", () => {
   it("minúsculas, sin acentos, todo lo no alfanumérico es un espacio", () => {
@@ -49,19 +36,29 @@ describe("normalización (idéntica a la del generador de hashes)", () => {
     expect(buscarCoincidencias("nada\nla ZETA-uno pasó por aquí", set)).toEqual([{ linea: 2, n: 2 }]);
     expect(buscarCoincidencias("zeta dos uno", set)).toEqual([]);
   });
-  it("recortar por marcadores devuelve solo lo que está entre ellos", () => {
-    expect(recortar("a <!-- s5:inicio --> b <!-- s5:fin --> c", { archivo: "x", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] }).trim()).toBe("b");
-    expect(recortar("a MARCA b", { archivo: "x", desde: "MARCA" })).toBe("MARCA b");
+});
+
+describe("gate: el alcance es TODO el repo (S16)", () => {
+  const archivos = ALCANCE_GATE;
+  it("el universo no se vacía en silencio: cientos de archivos, con sprints, ADR, docs, código y pruebas", () => {
+    expect(archivos.length).toBeGreaterThan(400);
+    for (const dir of ["sprints/", "decisions/", "docs/", "src/", "content/", "tests/", "scripts/"]) {
+      expect(archivos.some((f) => f.startsWith(dir)), `el gate no ve ${dir}`).toBe(true);
+    }
+    expect(archivos).toContain("README.md");
+    // «Todo el repo» incluye lo que no es documento ni TypeScript: estilos, flujos de CI, scripts de shell.
+    for (const f of ["src/app/globals.css", ".github/workflows/ci.yml", "scripts/demo-rojo.sh", ".gitignore"]) {
+      expect(archivos, `el gate no ve ${f}`).toContain(f);
+    }
+    expect(archivos.some((f) => /\.(png|wav|ico)$/.test(f))).toBe(false);
   });
-  it("recortar con «excepto» devuelve todo MENOS lo que está entre los marcadores", () => {
-    const alcance = { archivo: "x", excepto: ["<!-- h:i -->", "<!-- h:f -->"] as [string, string] };
-    expect(recortar("a <!-- h:i --> b <!-- h:f --> c", alcance).replace(/\s+/g, " ").trim()).toBe("a c");
-    expect(recortar("a <!-- h:i --> b", alcance).trim()).toBe("a");
-    expect(recortar("sin marcadores", alcance)).toBe("sin marcadores");
+  it("cada archivo se vigila entero (sin recortes) y solo quedan fuera los tres excluidos", () => {
+    expect([...EXCLUIDOS_GATE].sort()).toEqual(["CLAUDE.md", "pnpm-lock.yaml", "tests/fixtures/sensibilidad-hashes.json"]);
+    for (const f of EXCLUIDOS_GATE) expect(archivos).not.toContain(f);
   });
 });
 
-describe("gate: cero coincidencias en lo que el sprint publica", () => {
+describe("gate: cero coincidencias en todo el repo", () => {
   it("el fixture de hashes existe y no está vacío", () => {
     expect(FIXTURE.terminos).toBeGreaterThan(50);
     expect(HASHES.size).toBe(FIXTURE.hashes.length);
@@ -71,43 +68,20 @@ describe("gate: cero coincidencias en lo que el sprint publica", () => {
     expect(FIXTURE.n_max).toBe(N_MAX);
   });
 
-  for (const alcance of ALCANCE_GATE) {
-    const archivo = archivoDe(alcance);
-    it(`${nombreDe(alcance)}`, () => {
-      const ruta = join(RAIZ, archivo);
-      if (!existsSync(ruta)) {
-        // Solo lo que el sprint escribe al cierre puede faltar: una ruta mal escrita no pasa en silencio.
-        expect(PENDIENTES_DEL_CIERRE, `el gate vigila un archivo que no existe: ${archivo}`).toContain(archivo);
-        return;
-      }
-      const completo = readFileSync(ruta, "utf8");
-      for (const marcador of marcadoresDe(alcance)) {
-        expect(completo, `falta el marcador «${marcador}» en ${archivo}: el gate no vería esa sección`).toContain(marcador);
-      }
-      const texto = recortar(completo, alcance);
-      const c = buscarCoincidencias(texto, HASHES);
+  for (const archivo of ALCANCE_GATE) {
+    it(archivo, () => {
+      const c = buscarCoincidencias(readFileSync(join(RAIZ, archivo), "utf8"), HASHES);
       const detalle = c.map((x) => `línea ${x.linea} (n-grama de ${x.n})`).join(" · ");
       expect(c, `término sensible en ${archivo}: ${detalle}`).toEqual([]);
     });
   }
 });
 
-// Condición B de la orden del S6: ni nombres, ni edades, ni condiciones. Los términos los caza el gate
-// de hashes; las EDADES no son términos, así que esta guardia las busca por forma («N años», «N–M
-// años», «el hermano (N», «tiene N años») en todo lo que el gate vigila.
-const EDAD = [
-  /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?años\b/i,
-  /hermano\s*\(\s*\d{1,2}/i,
-  /\btiene\s+\d{1,2}\s+años\b/i,
-  // S7: las mismas formas en inglés («N years», «N-year-old», «aged N», «brother (N»).
-  /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?[- ]?years?[- ]?(?:old)?\b/i,
-  /\bage[sd]?\s+\d{1,2}\b/i,
-  /\b(?:brother|sister)\s*\(\s*\d{1,2}/i,
-];
-
-describe("gate: ninguna edad escrita en lo que el sprint publica", () => {
+// Ni nombres, ni edades, ni condiciones. Los términos los caza el gate de hashes; las EDADES no son
+// términos, así que esta guardia las busca por forma (`EDAD` en scripts/lib/sensibilidad.ts) en todo el repo.
+describe("gate: ninguna edad escrita en todo el repo", () => {
   it("la guardia caza las formas de escribir una edad, y deja pasar los minutos", () => {
-    const tieneEdad = (l: string) => EDAD.some((r) => r.test(l));
+    const tieneEdad = (l: string) => lineasConEdad(l).length > 0;
     // Los ejemplos se arman por partes: escritos enteros, esta guardia cazaría su propio archivo.
     const A = "años";
     expect(tieneEdad(`para un niño de 4–5 ${A}`)).toBe(true);
@@ -123,15 +97,9 @@ describe("gate: ninguna edad escrita en lo que el sprint publica", () => {
     expect(tieneEdad("short moments — 5 to 30 minutes")).toBe(false);
   });
 
-  for (const alcance of ALCANCE_GATE) {
-    const archivo = archivoDe(alcance);
-    it(`sin edades: ${nombreDe(alcance)}`, () => {
-      const ruta = join(RAIZ, archivo);
-      if (!existsSync(ruta)) return; // el test de arriba ya exige que solo falten los del cierre
-      const lineas = recortar(readFileSync(ruta, "utf8"), alcance)
-        .split("\n")
-        .flatMap((l, i) => (EDAD.some((r) => r.test(l)) ? [i + 1] : []));
-      expect(lineas, `edad escrita en ${archivo} (líneas del recorte)`).toEqual([]);
+  for (const archivo of ALCANCE_GATE) {
+    it(`sin edades: ${archivo}`, () => {
+      expect(lineasConEdad(readFileSync(join(RAIZ, archivo), "utf8")), `edad escrita en ${archivo}`).toEqual([]);
     });
   }
 });

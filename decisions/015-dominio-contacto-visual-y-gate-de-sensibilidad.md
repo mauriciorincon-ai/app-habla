@@ -8,7 +8,7 @@
 
 ## Contexto
 
-Hasta noviembre el niño no tiene pantalla: la mamá trabaja a diario con un documento impreso o en
+El primer paso es sin pantalla: la mamá trabaja a diario con un documento impreso o en
 su teléfono, y quiere el contacto visual por encima del habla. El sprint produce **un documento**
 (`/mirada`) con cápsulas de otro dominio, generadas del contenido estructurado como las 50 de
 habla. Dos restricciones lo atraviesan: (1) las 50 cápsulas de habla y sus tests no se tocan; (2)
@@ -55,9 +55,25 @@ bitácoras, ni en las citas (los títulos y algunas revistas nombran poblaciones
 
 ## Consecuencias
 
-- El segundo paso (traer las cápsulas a «Hoy» en la app, tras la observación de noviembre)
+- El segundo paso (traer las cápsulas a «Hoy» en la app, tras la observación en vivo)
   consume `CapsulaDeDominio` sin cambiar el schema de habla. *(El contrato del registro que
   mencionaba esta línea se retiró con el registro en el Sprint 006 — ver ADR 016.)*
 - Cuando la lista de términos cambie, se regenera el fixture con `scripts/gen-sensibilidad-hashes.mjs`
   (la lista sigue en la planeadora); los scripts `.mjs` que importan `.ts` exigen Node ≥ 22.18.
 - El gate se documenta sin escribir jamás un término: esta ADR tampoco.
+
+## Amendment (2026-11-16, Sprint 016): the gate watches the whole repo
+
+The alternative rejected above («gate over the whole repo from day one») is now taken, because its
+precondition holds: the report reached 0 matches and 0 age-shaped lines across the repo after the S16
+rewrite (words changed, facts kept; the list was not touched).
+
+- `scripts/lib/sensibilidad.ts` computes `ALCANCE_GATE` with `alcanceGate()`: every tracked or new
+  non-ignored file, whatever its extension (styles, CI workflows, shell scripts, SVG included), read whole;
+  only binaries (images, audio, fonts) are skipped. The hand-kept lists and the marker cuts are gone.
+- Only three files stay out: `CLAUDE.md` (written by the planning house), the hash fixture and the lockfile.
+- The age guard runs over the same universe; a test fails if the universe drops below 400 files or
+  loses `sprints/`, `decisions/`, `docs/`, `src/`, `content/`, `tests/` or `scripts/`.
+- `scripts/sensibilidad-informe.mjs` reads the same universe and only reports file and line.
+- Demonstrated red with the list's test term appended to `.github/workflows/ci.yml` (a file the old
+  gate never saw): the test named the file and line and failed; restored, it passed. Nothing with the term was committed.

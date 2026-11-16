@@ -197,8 +197,7 @@
   arranca papá; esta la arranca él, que es el objetivo literal del sprint. Biblioteca en 24 (el
   máximo del schema). Catálogo regenerado, gate verde, capturas leídas, guía ajustada (24).
 - 2026-09-06 · **F2.5 — Corrección del usuario en el G-Contenido: la «otra persona» es el
-  HERMANO, no papá.** Papá no está con el niño hasta noviembre; en la casa están la mamá y el
-  hermano (hijo de la mamá). Las cinco cápsulas donde papá hacía la rutina pasan al hermano,
+  el hermano, no papá.** La otra persona de la rutina es el hermano. Las cinco cápsulas donde papá hacía la rutina pasan al hermano,
   guiado por la mamá en una frase (ids nuevos: `el-hermano-lo-copia`,
   `los-mismos-turnos-con-el-hermano`, `el-hermano-al-lado-un-turno-cada-uno`,
   `le-lleva-el-juego-al-hermano`, `las-mismas-cosquillas-con-el-hermano`); la descripción de la

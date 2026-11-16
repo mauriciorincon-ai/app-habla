@@ -3,7 +3,7 @@
 > Orden: `portafolio/habla/ordenes/SPRINT_003-orden.md` (planeadora, RO) · Plan aprobado por el
 > usuario 2026-07-18 (plan mode) · «construye» dado con modelo Opus 4.8 `[1m]`. Branch
 > `sprint-003/la-voz-de-la-familia` desde `main` (post-merge PR #2, S2 cerrado).
-> Gate: escritorio (la tablet sigue de viaje — lista diferida ACUMULADA S1+S2+S3 en la guía v3).
+> Gate: escritorio (la tablet no está disponible — lista diferida ACUMULADA S1+S2+S3 en la guía v3).
 
 ## Estado por fase
 

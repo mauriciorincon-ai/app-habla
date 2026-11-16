@@ -74,7 +74,7 @@ quedan en el aparato y lo que sale lo decide el adulto, cifrado.
 
 *C6 · Nothing about the family travels: not in the repo, not in generated files; the adult decides what leaves.*
 
-- **Habla:** [tests/unit/sensibilidad.test.ts:64](../../tests/unit/sensibilidad.test.ts) (gate) ·
+- **Habla:** [tests/unit/sensibilidad.test.ts:61](../../tests/unit/sensibilidad.test.ts) (gate) ·
   [tests/unit/privacidad-voice.test.ts:57](../../tests/unit/privacidad-voice.test.ts) (la voz no se guarda ni sale).
 - **Nutri-Kids:** su propia constitución; esta convención solo pide que lo declare igual.
 

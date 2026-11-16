@@ -14,6 +14,7 @@
 // no se cazarían).
 
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -64,105 +65,47 @@ export function buscarCoincidencias(
   return out;
 }
 
-/** Recorta un archivo a la parte que produjo este sprint, por marcadores. */
-export type Alcance =
-  | string
-  | { archivo: string; desde: string }
-  | { archivo: string; entre: [string, string] }
-  /** Todo el archivo MENOS lo que va entre los marcadores (p. ej. contenido previo al sprint embebido). */
-  | { archivo: string; excepto: [string, string] };
+/**
+ * LO QUE EL GATE VIGILA (falla el test), desde el S16: TODO el repo. Cada archivo versionado o nuevo (no
+ * ignorado) entra entero, de cualquier extensión salvo los binarios (imágenes, audio, fuentes), sin listas a mano ni recortes por marcador. Quedan fuera
+ * solo tres: `CLAUDE.md` (lo escribe la planeadora y nombra la lista), el fixture de hashes y el lockfile.
+ * El informe (`scripts/sensibilidad-informe.mjs`) recorre el mismo universo y solo reporta.
+ */
+export const BINARIOS_GATE = /\.(png|jpe?g|gif|webp|ico|wav|mp3|mp4|woff2?|pdf|zip|gz|tar|wasm)$/i;
+export const EXCLUIDOS_GATE = new Set(["CLAUDE.md", "tests/fixtures/sensibilidad-hashes.json", "pnpm-lock.yaml"]);
 
-export function recortar(texto: string, alcance: Alcance): string {
-  if (typeof alcance === "string") return texto;
-  if ("desde" in alcance) {
-    const i = texto.indexOf(alcance.desde);
-    return i === -1 ? "" : texto.slice(i);
-  }
-  if ("excepto" in alcance) {
-    const [ini, fin] = alcance.excepto;
-    let out = "";
-    let desde = 0;
-    for (;;) {
-      const i = texto.indexOf(ini, desde);
-      if (i === -1) break;
-      const j = texto.indexOf(fin, i + ini.length);
-      out += texto.slice(desde, i) + "\n";
-      if (j === -1) return out; // marcador sin cierre: lo que sigue no entra
-      desde = j + fin.length;
-    }
-    return out + texto.slice(desde);
-  }
-  const [ini, fin] = alcance.entre;
-  let out = "";
-  let desde = 0;
-  for (;;) {
-    const i = texto.indexOf(ini, desde);
-    if (i === -1) break;
-    const j = texto.indexOf(fin, i + ini.length);
-    if (j === -1) {
-      out += texto.slice(i + ini.length);
-      break;
-    }
-    out += texto.slice(i + ini.length, j) + "\n";
-    desde = j + fin.length;
-  }
-  return out;
+export function alcanceGate(raiz: string): string[] {
+  return execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], {
+    cwd: raiz,
+    encoding: "utf8",
+  })
+    .split("\n")
+    .filter((f) => f && !BINARIOS_GATE.test(f) && !EXCLUIDOS_GATE.has(f) && existsSync(join(raiz, f)))
+    .sort();
 }
 
-export function archivoDe(alcance: Alcance): string {
-  return typeof alcance === "string" ? alcance : alcance.archivo;
-}
+export const ALCANCE_GATE: string[] = alcanceGate(join(import.meta.dirname, "..", ".."));
 
 /**
- * LO QUE EL GATE VIGILA (falla el test): todo lo que los sprints del documento de la mamá
- * producen y publican — contenido, documento generado, scripts, tests, bitácoras, summaries,
- * auditoría, propuestas, ADR, y las secciones S5/S6 de la guía y el manual (entre marcadores).
- * CLAUDE.md queda fuera (lo dice la lista). Las 24 del S5 siguen vigiladas aunque ya no se
- * publiquen en el documento (son la fuente de las fichas y el repo es público). El resto del repo
- * —incluidas las 50 cápsulas de la app, que no se tocan— lo cubre el INFORME
- * (scripts/sensibilidad-informe.mjs), que solo reporta.
+ * Las EDADES no son términos de la lista: esta guardia las busca por forma («N años», «N–M años», «el
+ * hermano (N», «tiene N años» y sus formas en inglés) en el mismo universo del gate.
  */
-export const ALCANCE_GATE: Alcance[] = [
-  // S7: los lotes de limpieza (README · manual · guía · brochure) quedaron en 0 coincidencias, así que
-  // esos documentos entran ENTEROS (ya no solo los tramos s5/s6), junto con lo nuevo del sprint.
-  "README.md",
-  "docs/MANUAL-DE-USO.md",
-  "docs/MANUAL-DE-USO.en.md",
-  "docs/GUIA-DE-PRUEBA.html",
-  "docs/BROCHURE.html",
-  "docs/BLUEPRINT.html",
-  "docs/REGLAS-ANEXO.md",
-  "decisions/017-bilingual-es-en.md",
-  // S6 «La pirámide»
-  "content/fichas.ts",
-  "docs/LA-PIRAMIDE.html",
-  "scripts/gen-la-piramide.mjs",
-  "tests/unit/fichas.test.ts",
-  "tests/e2e/mirada.spec.ts",
-  "sprints/SPRINT_006-implementation-log.md",
-  "sprints/SPRINT_006-summary.md",
-  "sprints/SPRINT_006-auditoria.md",
-  "sprints/PROPUESTA-sprint-006-piramide.md",
-  "decisions/016-la-piramide-fichas-y-retiro-del-registro.md",
-  // S5 «Contacto visual» y lo compartido (el schema desde el dominio del S5 incluye el del S6)
-  { archivo: "content/schema.ts", desde: "DOMINIO «CONTACTO VISUAL»" },
-  "content/contacto-visual.ts",
-  "scripts/copiar-documentos.mjs",
-  "scripts/lib/catalogo-comun.mjs",
-  "scripts/lib/sensibilidad.ts",
-  "scripts/gen-sensibilidad-hashes.mjs",
-  "scripts/sensibilidad-informe.mjs",
-  "tests/unit/sensibilidad.test.ts",
-  "tests/unit/contacto-visual-schema.test.ts",
-  "sprints/SPRINT_005-implementation-log.md",
-  "sprints/SPRINT_005-summary.md",
-  "sprints/PROPUESTA-sprint-005-contacto-visual.md",
-  "decisions/015-dominio-contacto-visual-y-gate-de-sensibilidad.md",
+export const EDAD = [
+  /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?años\b/i,
+  /hermano\s*\(\s*\d{1,2}/i,
+  /\btiene\s+\d{1,2}\s+años\b/i,
+  /\b\d{1,2}\s*(?:[–-]\s*\d{1,2}\s*)?[- ]?years?[- ]?(?:old)?\b/i,
+  /\bage[sd]?\s+\d{1,2}\b/i,
+  /\b(?:brother|sister)\s*\(\s*\d{1,2}/i,
 ];
 
+export function lineasConEdad(texto: string): number[] {
+  return texto.split("\n").flatMap((l, i) => (EDAD.some((r) => r.test(l)) ? [i + 1] : []));
+}
+
 /**
- * S7 «dos idiomas»: todo lo que contiene el texto del adulto en los dos idiomas entra al gate. Son
- * directorios (los catálogos y las cápsulas en inglés crecen): cada archivo .ts/.tsx se vigila.
+ * S7 «dos idiomas»: los directorios con el texto del adulto en los dos idiomas. Ya los cubre el gate
+ * entero; los recorre `tests/unit/gate-idiomas.test.ts` (paridad y copy del inglés).
  */
 export const DIRS_IDIOMAS = ["src/lib/idioma", "content/capsulas-en", "content/fichas-en", "content/contacto-visual-en"];
 
@@ -179,112 +122,4 @@ export function archivosDeIdiomas(raiz: string): string[] {
   };
   DIRS_IDIOMAS.forEach(andar);
   return out;
-}
-
-// S8: el dato nuevo del inglés (etiquetas, pares, diccionarios y vocabulario del alineador) entra al gate.
-ALCANCE_GATE.push(
-  "content/pictogramas.ts",
-  "content/pares-gemelos.ts",
-  "src/lib/objetivo/palabras-es.ts",
-  "src/lib/objetivo/palabras-en.ts",
-  "src/lib/objetivo/etiquetas-en.ts",
-  "src/lib/objetivo/LICENCIA-diccionario.md",
-  "src/lib/banco-voz/catalogo.ts",
-  "scripts/gen-diccionario.mjs",
-  // F2: la videoteca y su copy entran al gate desde el primer día.
-  "src/lib/idioma/textos/videoteca.ts",
-  "src/lib/videoteca/reglas.ts",
-  "src/components/estudio/videoteca-cliente.tsx",
-);
-
-// S9 «cuentos de casa»: el resto del copy vigente (fuera de `sprints/`, que son bitácoras) quedó en 0 coincidencias
-// y entra al gate para que no vuelva a crecer.
-ALCANCE_GATE.push(
-  ".claude/skills/diseno-ui.md",
-  ".claude/skills/ia-embebida.md",
-  ".claude/skills/security-owasp.md",
-  "decisions/005-palabras-sueltas-primero.md",
-  "decisions/006-etapas-del-habla-como-motor.md",
-  "decisions/007-pitch-infantil-yin.md",
-  "decisions/009-el-padre-juzga-la-palabra.md",
-  "decisions/013-cohete-sin-fin.md",
-  "design-system.md",
-  "scripts/gen-iconos.mjs",
-  "src/app/spike/audio/page.tsx",
-  "src/components/ajustes/etapa-del-habla.tsx",
-  "src/components/iconos.tsx",
-  "src/components/juego/palabra-objeto.tsx",
-  "src/lib/rumbo/hitos.ts",
-  "src/lib/storage/local.ts",
-  "tests/e2e/rumbo.spec.ts",
-  "tests/unit/daily-coach.test.ts",
-  // S9: contacto visual en «Hoy» (el copy de los dos idiomas ya vive en src/lib/idioma, que se vigila entero).
-  "src/lib/coach/contacto-visual-hoy.ts",
-  "src/components/hoy/contacto-visual-hoy.tsx",
-  "src/components/ajustes/nivel-contacto-visual.tsx",
-  "tests/unit/contacto-visual-hoy.test.ts",
-  "tests/e2e/contacto-visual-hoy.spec.ts",
-  // S9: «Cuentos de casa» (ADR-019). La biblioteca, el lote de prueba y la skill de la bandeja se vigilan.
-  "content/cuentos.ts",
-  "decisions/019-stories-code-first.md",
-  "src/lib/cuentos/estado.ts",
-  "src/lib/bandeja/contrato.ts",
-  "src/lib/bandeja/cuentos-del-mes.ts",
-  "src/lib/bandeja/sensibilidad.ts",
-  "src/lib/bandeja/CONTRATO.lock",
-  "src/components/cuentos/cuentos-adulto.tsx",
-  "src/components/cuentos/cuentos-nino.tsx",
-  "src/components/cuentos/narrar-cuento.tsx",
-  "src/app/cuentos/page.tsx",
-  "src/app/estudio/cuentos/page.tsx",
-  ".claude/skills/bandeja.md",
-  "scripts/validar-lote-cuentos.mjs",
-  "tests/fixtures/lote-cuentos-prueba.json",
-  "tests/unit/bandeja.test.ts",
-  "tests/unit/cuentos.test.ts",
-  "tests/unit/privacidad-cuentos.test.ts",
-  "tests/unit/privado-ignorado.test.ts",
-  "tests/e2e/cuentos.spec.ts",
-);
-
-// S11 «¿Dijo la palabra?» (ADR-023): el reconocedor, su copy y sus pruebas entran al gate desde el primer día.
-ALCANCE_GATE.push(
-  "decisions/023-did-they-say-the-word.md",
-  "public/modelos/LICENCIA.md",
-  "scripts/modelos.json",
-  "scripts/traer-modelos.mjs",
-  "src/app/spike/reconocer/page.tsx",
-  "src/components/ajustes/reconocedor.tsx",
-  "src/components/juego/quizas-dijo.tsx",
-  "src/components/juego/use-reconocedor.ts",
-  "src/components/juego/gemelas.tsx",
-  "src/lib/reconocer/coincidencia.ts",
-  "src/lib/reconocer/conteo.ts",
-  "src/lib/reconocer/gramatica.ts",
-  "src/lib/reconocer/modelo.ts",
-  "src/lib/reconocer/preludio.ts",
-  "src/lib/reconocer/vocabulario.ts",
-  "src/lib/voice/escucha.ts",
-  "src/lib/voice/protocolo-vosk.ts",
-  "src/worklets/pcm-tap.ts",
-  "tests/e2e/fixtures/palabras/LICENCIA.md",
-  "tests/e2e/reconocedor.spec.ts",
-  "tests/e2e/reconocedor-en.spec.ts",
-  "tests/e2e/reconocedor-medida.spec.ts",
-  "tests/e2e/h2-en.spec.ts",
-  "tests/unit/reconocer.test.ts",
-  "tests/unit/conteo-reconocedor.test.ts",
-  "tests/unit/use-reconocedor.test.tsx",
-  "tests/unit/guia-cobertura.test.ts",
-  "docs/vision-funcionalidades.json",
-);
-
-ALCANCE_GATE.push(...archivosDeIdiomas(join(import.meta.dirname, "..", "..")), "tests/unit/idioma.test.ts", "tests/unit/gate-idiomas.test.ts");
-
-/** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
-export function nombreDe(alcance: Alcance): string {
-  if (typeof alcance === "string") return alcance;
-  if ("desde" in alcance) return `${alcance.archivo} (desde su marcador)`;
-  if ("excepto" in alcance) return `${alcance.archivo} (salvo ${alcance.excepto[0]})`;
-  return `${alcance.archivo} (${alcance.entre[0]})`;
 }

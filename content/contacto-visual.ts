@@ -14,7 +14,7 @@ import type { CapsulaContactoVisual, CapsulaContactoVisualEs } from "./schema";
  * Reglas que atraviesan todas: parten de lo que YA le saca la mirada · nadie le pide que mire ·
  * lo que sigue a la mirada es que el juego sigue · persona nueva O juego nuevo, nunca ambos ·
  * el nombre no se «gasta» · el semáforo (aparta la vista, se tapa la cara, se irrita → parar) ·
- * la «otra persona» es EL HERMANO: papá no está hasta noviembre (corrección del usuario, G-Contenido).
+ * la «otra persona» es un hermano o una hermana (corrección del usuario, G-Contenido).
  *
  * (Solo `import type` desde ./schema, como en capsulas.ts: el generador corre con Node
  * quitando tipos y un import de valor sin extensión no resuelve ahí.)

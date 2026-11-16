@@ -37,7 +37,7 @@ const NUEVAS = [
   "beso",
 ];
 // Descartadas tras revisión visual (gate S4): "rama" y "piso" dependen de una flecha didáctica
-// o de una escena abstracta — débiles para [omitido]; "pino" cayó con su par.
+// o de una escena abstracta — débiles para quien empieza a hablar; "pino" cayó con su par.
 
 const salida = resolve(
   dirname(fileURLToPath(import.meta.url)),

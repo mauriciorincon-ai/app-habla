@@ -12,7 +12,7 @@ el gate, el usuario escribió "medi" yendo hacia "medios" y la app no pudo ayuda
 «pedir» (lo único de la app a ≤2 letras) y el mensaje de "no está en el contenido". Su pedido:
 sugerir la palabra **bien escrita aunque la app no la tenga** — en un color distinto, para que
 se distinga "esto SÍ alinea juegos" de "esto es solo ortografía". El objetivo puede venir de las
-terapias del niño con palabras que la app aún no tiene (caso O6): merecen quedar bien escritas.
+terapias con palabras que la app aún no tiene (caso O6): merecen quedar bien escritas.
 
 ## Decisión
 

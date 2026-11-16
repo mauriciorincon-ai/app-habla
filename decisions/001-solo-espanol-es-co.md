@@ -6,7 +6,7 @@
 ## Context
 
 The pipeline's method defaults to bilingual apps (es/en). Hablemos San is a 100% personal app
-for one Spanish-speaking child ([omitido], Colombia) practicing speech at home with a
+for one Spanish-speaking child (just starting to talk, Colombia) practicing speech at home with a
 parent. Every string the child or parent sees is part of the therapeutic-adjacent practice
 material; an English surface has zero users and doubles the microcopy review burden (each
 capsule's wording must pass the anti-claims checklist and the warm es-CO tone gate).

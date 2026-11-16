@@ -59,8 +59,8 @@ Hecha 2026-07-11 durante el plan:
   palabra↔objeto/actividad**. Varias cápsulas (sobre todo las de expansión/recast) asumían un
   niño que ya arma frases ("perro come" → "el perro está comiendo"): ejemplos inalcanzables
   HOY para esta familia. Se reescribieron las 14 cápsulas al nivel real: mismas 5 técnicas,
-  mismas fuentes (la evidencia de [omitido]/modelado/focalizada es incluso más
-  directa en primeras palabras), ejemplos con palabras sueltas, intentos ("[omitido]"→"¡agua!") y
+  mismas fuentes (la evidencia de implementada-por-los-padres/modelado/focalizada es incluso más
+  directa en primeras palabras), ejemplos con palabras sueltas, intentos ("agu"→"¡agua!") y
   gestos que también cuentan. El juego de voz no necesitó cambios: nunca exigió palabras
   (mide energía sostenida, no vocabulario).
 - **Roadmap derivado (S2+):** niveles por etapa del habla ("palabras sueltas" ← default
@@ -74,7 +74,7 @@ Hecha 2026-07-11 durante el plan:
 
 - **`/spike/audio` NO se elimina antes del merge** (el plan lo pedía; decisión del cierre del
   gate 2026-07-12). Razón: la validación de la tablet quedó diferida y esa página es exactamente
-  la herramienta para hacerla cuando regrese (guía § Diferido, t1). Es una página diagnóstica
+  la herramienta para hacerla cuando haya tablet (guía § Diferido, t1). Es una página diagnóstica
   sin enlaces desde la UI, sin persistencia y con el mismo pipeline efímero del juego (cubierta
   por los candados de privacidad). Se elimina cuando el ADR 003 cierre su pata Android.
 
@@ -233,11 +233,11 @@ CSS servido). Se detectó verificando en el navegador, no confiando en el códig
 - **Entregable estándar nuevo: guía de prueba viva** (`docs/GUIA-DE-PRUEBA.html`) — se actualiza
   cada sprint (agrega/complementa/elimina). Regla 10 del CLAUDE.md. El usuario la llevará a la
   planeadora para que toda app del pipeline nazca con esa condición.
-- **La tablet Android no está disponible** (el niño viajó con la mamá y se la llevaron). TODAS
+- **La tablet Android no está disponible** (no hay tablet a mano). TODAS
   las pruebas del gate serán en computador/navegador. Impacto: las validaciones de tablet
   (spike en dispositivo, 60 fps, PWA Android, sesión con el niño, gate visual en tablet) quedan
   DIFERIDAS — listadas en la sección "Diferido" de la guía de prueba. El ADR 003 permanece en
-  "propuesto" hasta el regreso; el cierre del sprint con esta deuda declarada es decisión del
+  "propuesto" hasta tener tablet; el cierre del sprint con esta deuda declarada es decisión del
   usuario (la DoD pedía preview probada en la tablet real).
 
 ## Decisiones tomadas durante la construcción

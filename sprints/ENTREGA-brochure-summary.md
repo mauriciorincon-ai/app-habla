@@ -54,7 +54,7 @@ de Vercel, frágil). La copia en build es determinista, sin código de servidor,
 e2e y Vercel porque todos pasan por `pnpm build`.
 
 **Dirección de arte anclada a la app** (regla 9 de la orden). Tokens del molde reemplazados por la
-paleta "[omitido] cálida" del operador (cream/sage/ink) con su paleta `--oscuro-*` en tema oscuro;
+paleta "Calidez sobria" del operador (cream/sage/ink) con su paleta `--oscuro-*` en tema oscuro;
 radios 16/12; iconos SVG de trazo copiados de la app (**cero emojis** — el design system los
 prohíbe); chips mono en versalitas. **Sin `data-tema`**: `/conoce` vive fuera del storage de la
 app, así que el tema sigue solo al sistema.
@@ -148,7 +148,7 @@ Los dos hallazgos son **del molde v1.9.0**, no de habla — por eso van también
    del fundido. Ahora el titular **sube sin desvanecerse** y el fundido se lo queda la línea de
    apoyo, que no es candidata.
 
-## ⚠️ El gate visual RECHAZÓ la v1 — y el [omitido] es del molde
+## ⚠️ El gate visual RECHAZÓ la v1 — y la causa es del molde
 
 El usuario probó la v1 y la rechazó sin medias tintas: _"la parte inicial tiene un pequeño
 viso de lo que podría ser el diseño, pero hacia abajo todo mal"_. Tenía razón, y el hallazgo
@@ -180,7 +180,7 @@ técnica, riesgo de dirección de arte registrado y variante `reduced-motion` de
 
 ### Las 5 referencias que trajo el usuario — qué se tomó y qué NO
 
-Él aportó los [omitido] de 5 piezas de motionsites que le gustan. Se analizaron con el
+Él aportó las indicaciones de 5 piezas de motionsites que le gustan. Se analizaron con el
 protocolo del estudio (técnicas, no stacks — las 5 usan React/GSAP/Framer/vídeo remoto y
 este entregable es un archivo autocontenido que abre con doble clic):
 

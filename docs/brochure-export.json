@@ -12,20 +12,20 @@
     "enlaces.produccion": "null cuando la app no tiene URL pública. `razon` explica por qué, y es lo que la vitrina muestra en lugar del enlace. Nunca se rellena con un enlace de repositorio ni con una promesa."
   },
   "schema_version": "1.0.0",
-  "actualizado": "2026-11-15",
+  "actualizado": "2026-11-16",
   "app": {
     "slug": "habla",
     "nombre": "Hablemos San",
     "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 14,
+    "sprints_cerrados": 16,
     "version_repo": "0.1.0"
   },
   "promesa": {
     "tagline": "Su voz mueve el mundo: tu hijo juega hablando y tú diriges a su lado.",
     "intro": "Cada mañana, una respuesta concreta a «¿y hoy qué puedo hacer por mi hijo?»: la frase que puedes decirle y la actividad para hacer juntos. Y siete juegos —uno, experimental—, donde su voz hace volar un globo, su aire mueve un molino, su volumen sube una barra, su tono sube un cohete, enciende dibujos y ilumina el mapa de las vocales.",
-    "para_quien": "Para la mamá o el papá de un niño de 4 a [omitido] que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
+    "para_quien": "Para la mamá o el papá de un niño pequeño que está arrancando a hablar y ya va a sus terapias integrales del lenguaje. Es la práctica de casa entre una sesión y la siguiente: de 5 a 10 minutos al día, siempre de a dos. Acompaña sus terapias; jamás las reemplaza.",
     "diferencial": "La app solo afirma lo que de verdad midió: que hubo voz, cuánto duró y si el tono subió. El acierto de la palabra lo juzgas tú, que estabas ahí; si activas la segunda opinión del aparato, solo te dice «quizás», nunca «no», y jamás sola. La voz de tu hijo no se graba jamás, y hay pruebas automáticas que rompen el código si alguien intenta guardarla o enviarla. Y los juegos pueden sonar con tu propia voz, grabada una sola vez en el mismo aparato."
   },
   "funcionalidades": {
@@ -329,26 +329,26 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 1057,
+      "valor": 1788,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-15 sobre la rama del S14: 57 archivos, 1057 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S16: 62 archivos, 1788 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 350,
+      "valor": 406,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-15 sobre la rama del S14: 350 pruebas en verde."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-16 sobre la rama del S16: 406 pruebas en verde."
     },
     {
       "clave": "cobertura_lineas",
       "etiqueta": "Cobertura de líneas",
-      "valor": 95.67,
+      "valor": 95.93,
       "unidad": "%",
       "fuente": "medido",
-      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-15 sobre la rama del S14: 95,67 % de líneas."
+      "detalle": "v8 sobre los motores de src/lib (voz, cápsula diaria, hitos, objetivo, banco de voz, otra casa), según vitest.config.ts. Medida con `pnpm test` el 2026-11-16 sobre la rama del S16: 95,93 % de líneas."
     },
     {
       "clave": "capsulas",
@@ -417,10 +417,10 @@
     {
       "clave": "decisiones_registradas",
       "etiqueta": "Decisiones de arquitectura registradas",
-      "valor": 26,
+      "valor": 27,
       "unidad": "ADR",
       "fuente": "medido",
-      "detalle": "Archivos de decisions/ el 2026-11-15 sobre la rama del S14 (hasta el ADR-026)."
+      "detalle": "Archivos de decisions/ el 2026-11-16 sobre la rama del S16 (hasta el ADR-027)."
     }
   ],
   "stack": [

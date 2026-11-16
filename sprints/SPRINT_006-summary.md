@@ -226,7 +226,7 @@ y el **importador del registro** desaparecen con el registro (feature retirada, 
 - **La historia de `main` guarda una edad** (del hermano, en commits del S5). Reescribirla es
   decisión del usuario; no se recomienda por defecto. El commit de la rama con una edad no entra si el
   merge es **squash**, y la rama se borra al mergear.
-- **Observación de noviembre:** con el niño de vuelta en la app, se observa en vivo qué fichas pasan a
+- **Observación en vivo:** con el niño en la app, se observa qué fichas pasan a
   «Hoy» y cómo se reconcilian las dos bibliotecas (`origen` lo deja trazable).
 - **Las 3 decisiones abiertas de H2** (del summary del S4): ordinales · sincronización entre las dos
   casas · revisión de la regla dura 2 (la voz).

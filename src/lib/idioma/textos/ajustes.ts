@@ -161,7 +161,7 @@ export const ajustes = {
     },
     descripcion: {
       es: "Una tarjeta quieta en Hoy, solo para ti, cuando toca pedir el lote. «Ahora no» la esconde 7 días; apagado aquí, no vuelve.",
-      en: "A quiet card in Today, only for you, when it's time to order a batch. «Not now» hides it for 7 days; switched off here, it doesn't come back.",
+      en: "A quiet card in Today, only for you, when it's time to order a batch. “Not now” hides it for 7 days; switched off here, it doesn't come back.",
     },
     encendido: { es: "Encendido", en: "On" },
     apagado: { es: "Apagado", en: "Off" },

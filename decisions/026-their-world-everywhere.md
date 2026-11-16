@@ -98,7 +98,7 @@ There were also two sources of interests: the profile themes and «Enjoys» in S
      (`DIAS_DE_POSPUESTO`; owner decision «1a», 2026-11-15, amending the first one-day default).
    - A Settings switch, «Remind me about this month's stories», is on by default; off, the card never
      comes back. A setting saved without the key reads «on».
-   - There is no notification API and no permission [omitido].
+   - There is no notification API and no permission request.
 7. **The drawings stay off the shared bundle.** The six protagonist drawings are inline SVG components
    loaded with a dynamic `import()` per theme, so only the active theme's drawing ships with a game. The
    script budget stays ≤ 354 KB, which Lighthouse checks in CI.

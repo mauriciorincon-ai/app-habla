@@ -1,0 +1,39 @@
+<!-- @dsCard group="Juego (vista del niño)" name="La sorpresa del día, en su hueco" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>La sorpresa del día — Hablemos San</title>
+<style>
+  body { margin: 0; padding: 26px; background: #fff9ee; color: #2b3530; font-family: "Geist", system-ui, sans-serif; }
+  main { max-width: 520px; margin: 0 auto; display: grid; gap: 22px; }
+  h2 { font-family: "Instrument Serif", Georgia, serif; font-size: 28px; margin: 0 0 6px; font-weight: 400; }
+  .escena { border: 1px solid #ece4d2; border-radius: 16px; padding: 18px; background: #fffdf7; display: grid; gap: 14px; }
+  .tarjeta { border: 3px solid #ece4d2; border-radius: 24px; min-height: 120px; display: flex; align-items: center; justify-content: center; font-family: "Instrument Serif", Georgia, serif; font-size: 34px; background: #faf8f2; }
+  /* El hueco SIEMPRE ocupa su altura (min-h-24 = 96 px): la sorpresa entra y sale sin mover nada. */
+  .hueco { min-height: 96px; border: 1px dashed #c9c1ac; border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+  .sorpresa { width: 100%; max-width: 26rem; display: flex; align-items: center; gap: 12px; padding: 12px; border: 2px solid #ece4d2; border-radius: 16px; background: #faf8f2; box-shadow: 0 0 0 1px #ece4d2; }
+  .prota { width: 48px; height: 48px; border-radius: 50%; background: #ffe9dc; display: flex; align-items: center; justify-content: center; font-size: 26px; flex: none; }
+  .sorpresa p { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: 20px; }
+  .nota { font-size: 12px; color: #7a8079; max-width: 52ch; }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <h2>Al tercer turno de él</h2>
+    <div class="escena">
+      <div class="tarjeta" aria-hidden="true">dig · pig</div>
+      <div class="hueco">
+        <div class="sorpresa" role="status">
+          <span class="prota" aria-hidden="true">🐾</span>
+          <p>Unas patitas diminutas andan cerca.</p>
+        </div>
+      </div>
+    </div>
+    <p class="nota">Dentro del flujo, en un hueco de altura reservada: no tapa la tarjeta ni los botones y no mueve el diseño al aparecer. Sin monedas, sin colección; no capta toques.</p>
+  </section>
+</main>
+</body>
+</html>

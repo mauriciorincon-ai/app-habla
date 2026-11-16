@@ -11,7 +11,7 @@ ciclo: H2 (sprint 1 — bifurcación pedida por el usuario; el backlog planeado 
 
 > Primer corte de H2 de **Hablemos San**, nacido de una **bifurcación** del usuario (regla suya:
 > lo que llega fuera del camino estructurado se vuelve el siguiente sprint; lo planeado se corre).
-> Hasta mediados de noviembre el niño no tiene pantalla: la mamá trabaja a diario con un documento,
+> El primer paso es un documento sin pantalla: la mamá trabaja a diario con él,
 > y quiere el **contacto visual** por encima del habla. Este sprint produce **ese documento** —
 > `/mirada`, «Mirarse jugando» — con 24 cápsulas de un dominio nuevo, un registro que vive solo en
 > su teléfono, y un gate que garantiza que **ningún término sensible** sale a este repo público.
@@ -57,8 +57,8 @@ La cuadrícula impresa queda como respaldo en papel.
 
 ## Corrección del usuario en el G-Contenido
 
-**La «otra persona» es el hermano, no papá:** papá no está con el niño hasta noviembre;
-en la casa están la mamá y el hermano. Las cinco cápsulas donde papá hacía la rutina pasaron al
+**La «otra persona» es el hermano, no papá:** la otra persona de la rutina es el hermano.
+Las cinco cápsulas donde papá hacía la rutina pasaron al
 hermano, guiado por la mamá en una frase; la técnica 6, el nivel 5 y la portada dicen «el hermano,
 quien viva en la casa». «Enviar a papá» se queda: es el resumen que la mamá le manda a él.
 
@@ -115,7 +115,7 @@ que la enmienda superó el registro de tres toques. **Deuda declarada:** B1 · B
 - **B4 · Node ≥ 22.18** para los scripts `.mjs` que importan `.ts` (generador, hashes, informe):
   no documentado en `engines`; la CI no los corre. Pago: junto a B1.
 - **Importador del registro:** el JSON tiene contrato y e2e, y ningún lector en la app todavía.
-  Pago: el segundo paso, tras la observación de noviembre.
+  Pago: el segundo paso, tras la observación en vivo.
 - **111 coincidencias en 31 archivos previos al sprint** (informe de sensibilidad): vocabulario de
   salud en anti-claims de la app, skills del kit, el diccionario embebido, bitácoras viejas. Se
   revisan con el usuario, archivo por archivo, sin escribir términos. No bloquea.
@@ -134,7 +134,7 @@ que la enmienda superó el registro de tres toques. **Deuda declarada:** B1 · B
 
 - **Las 3 decisiones abiertas de H2** (del summary del S4, son del usuario): (a) ordinales en las
   etapas · (b) sincronización entre las dos casas · (c) revisión de la regla dura 2 (la voz).
-- **Observación de noviembre:** cuando el niño vuelva, se observa con la mamá qué peldaño ocurre
+- **Observación en vivo:** más adelante se observa con la mamá qué peldaño ocurre
   «la mayoría de las veces» y se decide el segundo paso (traer las cápsulas a «Hoy»; importar el
   JSON del registro).
 - **Blueprint:** `docs/BLUEPRINT.html` documenta la infraestructura del ciclo H1; el documento

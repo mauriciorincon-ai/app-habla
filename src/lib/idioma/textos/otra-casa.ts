@@ -73,7 +73,7 @@ export const otraCasa = {
     },
     objetivo: {
       es: "Objetivo de la semana: «{antes}» → «{despues}»",
-      en: "Goal of the week: «{antes}» → «{despues}»",
+      en: "Goal of the week: “{antes}” → “{despues}”",
     },
     sinObjetivo: { es: "ninguno", en: "none" },
     sesiones: { es: "Juegos practicados que se suman: {n}", en: "Games played that are added: {n}" },

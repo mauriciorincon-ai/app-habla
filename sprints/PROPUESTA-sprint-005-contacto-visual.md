@@ -17,11 +17,9 @@ estado: PENDIENTE de estructurar en la planeadora
 
 ## 1 · Por qué ahora (contexto dicho por el usuario)
 
-- La app **no ha dado los resultados esperados**, y probablemente no por culpa de la app: las
-  terapias del niño **limitaron muchísimo su contacto con pantallas** (cero pantallas por
-  indicación). El usuario no se rinde: el niño regresa a **mediados de noviembre de 2026** y ahí
-  lo observará **en vivo con la app** (qué toma su atención y qué no).
-- Hasta noviembre, **el caballo de batalla no es la app: es `docs/CATALOGO-CAPSULAS.html`**
+- El primer paso es **sin pantalla**: el usuario observará **en vivo con la app** más adelante
+  (qué toma su atención y qué no).
+- Mientras tanto, **el caballo de batalla no es la app: es `docs/CATALOGO-CAPSULAS.html`**
   (las 50 cápsulas de habla), que le pasará a la mamá para trabajarlas a diario.
 - La mamá quiere trabajar, **incluso por encima del habla, el contacto visual**. El usuario pide
   una investigación muy profunda y todas las cápsulas que la evidencia justifique, de alto
@@ -37,7 +35,7 @@ estado: PENDIENTE de estructurar en la planeadora
 **Pendiente sin estructurar (siguen abiertas, no entran aquí):**
 - Las 3 decisiones del usuario que anteceden a H2: ordinales en etapas · sincronización
   dos-casas · revisión de la regla dura 2 (voz a la nube).
-- La observación en vivo del niño con la app (**noviembre**) — insumo del sprint que venga después.
+- La observación en vivo del niño con la app (más adelante) — insumo del sprint que venga después.
 - La deuda del blueprint (protección de deployment sin documentar) y el interruptor del homepage
   de Vercel (solo falta descartar la UI).
 
@@ -124,7 +122,7 @@ personas, más momentos del día.
    **solo en el teléfono de la mamá** (localStorage, como las casillas de la guía de prueba) — sin
    cuentas, sin nube, sin backend. Un botón **«Enviar a papá»** arma un resumen de texto (qué se
    hizo esta semana, cómo estuvo la mirada, las notas) y abre el compartir del teléfono
-   (WhatsApp); y un **«Guardar registro»** exporta el JSON completo, que en noviembre se puede leer
+   (WhatsApp); y un **«Guardar registro»** exporta el JSON completo, que más adelante se puede leer
    —y, en el segundo paso, importar a la app— para el análisis en vivo. **Para que el guardado sea
    estable en un teléfono**, el documento debería servirse desde la app en una ruta propia (como
    el brochure en `/conoce`), no abrirse como archivo suelto: es un cambio mínimo (copia al build +
@@ -132,7 +130,7 @@ personas, más momentos del día.
    de vuelta. *Si al construir el registro no queda fácil de verdad, se descarta — es la condición
    del usuario.*
 5. **Lo que NO entra:** el contacto visual dentro de la app («Hoy» con dos dominios) — **segundo
-   paso**, después de observarlo en vivo en noviembre. Ninguna feature nueva del producto.
+   paso**, después de observarlo en vivo. Ninguna feature nueva del producto.
 
 ## 6 · Gates propuestos
 
@@ -167,7 +165,7 @@ del niño se persiste en ningún servidor, igual que la voz.
 
 ## 9 · Tiempo
 
-Hasta mediados de noviembre hay ~70 días. Para que la mamá tenga **~8 semanas de práctica real**,
+Para que la mamá tenga **~8 semanas de práctica real**,
 el documento debería estar en sus manos en **2 semanas**: investigación + G-Investigación en la
 primera; cápsulas + catálogo + registro + G-Contenido en la segunda. La app (segundo paso) espera
 a la observación en vivo.

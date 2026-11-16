@@ -433,8 +433,8 @@ function GemelasListo({
 
         {festejo === null ? (
           <div className="flex flex-col items-center gap-2">
-            {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el niño
-                es perspicaz — su fiesta está en los dibujos, no en estas teclas). */}
+            {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el control es
+                del adulto — su fiesta está en los dibujos, no en estas teclas). */}
             <p className="text-tinta-suave text-sm">{tx(g.cual)}</p>
             <div className="flex items-center gap-6">
               {(["a", "b"] as const).map((lado) => (
@@ -445,7 +445,9 @@ function GemelasListo({
                   data-testid={`marcar-${lado}`}
                   className="text-tinta-suave min-h-11 rounded-xl px-3 text-sm underline decoration-dotted underline-offset-4"
                 >
-                  «{par[lado].palabra}»
+                  {idioma === "en"
+                    ? `“${par[lado].palabra}”`
+                    : `«${par[lado].palabra}»`}
                 </button>
               ))}
             </div>

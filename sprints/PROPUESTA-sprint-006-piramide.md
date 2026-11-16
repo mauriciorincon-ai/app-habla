@@ -35,9 +35,9 @@ turnos de juego**.
 | D3 | **El registro diario se descarta.** La mamá no lo consideró factible y no lo va a usar. No hubo registros. | Sale del documento: formulario, panel, «Enviar a papá», «Guardar registro», cuadrícula impresa, contrato JSON y sus tests. La «medida» pasa a vivir **dentro de cada cápsula** («Funcionó si…», observable, sin puntaje). |
 
 Supuesto declarado (la planeadora o el usuario lo corrigen): **la app del niño sigue sin
-cambios hasta noviembre.** Sus 50 cápsulas de habla en `content/capsulas.ts` siguen alimentando
+cambios hasta la observación en vivo.** Sus 50 cápsulas de habla en `content/capsulas.ts` siguen alimentando
 «Hoy» tal cual; la biblioteca nueva vive en un archivo propio para el documento de la mamá. Qué
-hacer con las dos bibliotecas en la app es decisión de la observación de noviembre.
+hacer con las dos bibliotecas en la app es decisión de la observación en vivo.
 
 ## 3 · La línea de base nueva del niño, en observable (del informe, 2026-09-27)
 
@@ -50,8 +50,8 @@ hacer con las dos bibliotecas en la app es decisión de la observación de novie
 
 **Los favoritos del niño (para personalizar):** marchar e imitar movimientos grandes · «corre que
 te atrapo» · las cosquillas con su sonido propio · señalar y decir «tú» · «hola» y «chao» con la
-mano · las vocales. Todo con la mamá; el hermano sigue siendo la «otra persona» hasta
-noviembre.
+mano · las vocales. Todo con la mamá; el hermano sigue siendo la «otra persona».
+
 
 **Objetivo del sprint, en observable:** que él **imite acciones con objetos y sonidos** (no solo
 cuerpo), que **señale o muestre para compartir** algo con el adulto, y que un **turno de juego

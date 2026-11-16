@@ -2,7 +2,7 @@
 
 /*
  * Tokens de Hablemos San — fuente de verdad: design-system.md (raíz del repo).
- * Paleta dual "[omitido] cálida": operador (padre, light+dark) / niño (SIEMPRE clara).
+ * Paleta dual "Calidez sobria": operador (padre, light+dark) / niño (SIEMPRE clara).
  * Primitivos abajo; la UI consume SOLO la capa semántica (bg-fondo, text-tinta, ...).
  */
 @theme {

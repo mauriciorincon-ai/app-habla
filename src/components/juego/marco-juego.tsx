@@ -29,7 +29,7 @@ import {
 } from "@/lib/coach/apuntador";
 import { FranjaApuntador } from "./franja-apuntador";
 import { IndicadorTurno } from "./indicador-turno";
-import { Sorpresa } from "./sorpresa";
+import { HuecoSorpresa, Sorpresa } from "./sorpresa";
 import type { MedidasVivas } from "./use-voice-session";
 
 type PropsComun = {
@@ -177,7 +177,11 @@ export function MarcoComun({
       ) : null}
 
       {children}
-      <Sorpresa juego={nombre} turnosNino={sesion.turnosNino} />
+      {esPantallaDelNino ? (
+        <HuecoSorpresa>
+          <Sorpresa juego={nombre} turnosNino={sesion.turnosNino} />
+        </HuecoSorpresa>
+      ) : null}
     </div>
     </>
   );

@@ -137,10 +137,10 @@ S2+: biblioteca más grande y más novedosa (siempre palabras sueltas + técnica
 
 ## Lo que falta para cerrar (acciones del usuario)
 
-> **Cambio de contexto (2026-07-12):** la tablet Android viajó con el niño y la mamá — no está
+> **Cambio de contexto (2026-07-12):** la tablet Android no está
 > disponible. El gate se hace en **computador/navegador** siguiendo `docs/GUIA-DE-PRUEBA.html`
 > (entregable nuevo del sprint). Las validaciones de tablet quedan **DIFERIDAS y listadas** en la
-> sección final de esa guía; el ADR 003 permanece "propuesto" hasta el regreso.
+> sección final de esa guía; el ADR 003 permanece "propuesto" hasta tener tablet.
 
 1. ~~Importar el repo en Vercel~~ ✅ hecho (preview activa en la URL estable de la rama).
 2. ~~Correr la guía de prueba en el computador~~ ✅ **GATE DE ESCRITORIO COMPLETADO Y APROBADO
@@ -151,7 +151,7 @@ S2+: biblioteca más grande y más novedosa (siempre palabras sueltas + técnica
 4. Sentry: defer aceptado (no hace falta nada).
 5. **Mergear el PR #1** (ya está listo para revisión) y correr `/cierre-sprint habla` en la
    planeadora.
-6. **Al regreso de la tablet:** la lista diferida de la guía (spike en dispositivo, 60 fps, PWA
+6. **Cuando haya tablet:** la lista diferida de la guía (spike en dispositivo, 60 fps, PWA
    Android + offline, sesión con el niño, gate visual en tablet) → cierra el ADR 003
    definitivamente.
 

@@ -19,7 +19,7 @@
 | Acto             | Qué se hizo                                                                                                                                                                                    | Qué pasó                                                                                                                                                   |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **v1**           | Se estampó la plantilla BROCHURE del kit v1.9.0, fielmente: 4 capas, acordeón, fade-up, conteo                                                                                                 | **CI verde, Lighthouse 100 — y el usuario la RECHAZÓ**: «la parte inicial tiene un pequeño viso de lo que podría ser el diseño, pero hacia abajo todo mal» |
-| **[omitido]**  | Se leyó el harness del Estudio CINE completo antes de tocar código                                                                                                                             | El defecto era **del molde, no de la ejecución** (§3)                                                                                                      |
+| **Causa**        | Se leyó el harness del Estudio CINE completo antes de tocar código                                                                                                                             | El defecto era **del molde, no de la ejecución** (§3)                                                                                                      |
 | **Guion**        | Storyboard G-Guion: 8 escenas, gramática y técnica justificada por escena, clímax explícito, variante reduced-motion por escena                                                                | Aprobado por el usuario («guion aprobado») **antes de escribir una línea de HTML**                                                                         |
 | **v2**           | Rediseño CINE: motor vanilla (~60 líneas), hilo del globo, titular que se enfoca, iconos que se dibujan, escena nocturna para la privacidad                                                    | **«Está espectacular el resultado»** — y arrancaron las correcciones en frío                                                                               |
 | **v3–v6**        | Cuatro rondas de gate visual del usuario: 4 canchas jugando, acordeón que pasa páginas, 10 enlaces directos, acto del Estudio, apertura anunciada, regreso limpio, canchas armadas como la app | Cada ronda cazó defectos que **ninguna automatización veía** (§4)                                                                                          |
@@ -53,7 +53,7 @@ una clase de defecto que las demás no pueden ver**, y el molde hoy solo exige l
 
 ---
 
-## 3 · Por qué la v1 nació muerta ([omitido] del molde)
+## 3 · Por qué la v1 nació muerta (la causa está en el molde)
 
 **El molde v1.9.0 heredó la LEY del Estudio CINE y ninguna de sus TÉCNICAS.** Declara su
 ADN, cita las tres gramáticas — y al estamparse vetó G1 («pesa demasiado»), redujo G2 a un
@@ -175,7 +175,7 @@ la versión anterior** (la sonda del salto). «Mejoró» sin número es una opin
 ## 7 · Dónde vive cada evidencia
 
 - `sprints/ENTREGA-brochure-summary.md` — el summary completo: tabla de mapeo del conteo,
-  [omitido] del rechazo, análisis de las 5 referencias, feedback del molde, propuesta v2,
+  causa del rechazo, análisis de las 5 referencias, feedback del molde, propuesta v2,
   las cuatro rondas del gate, la auditoría.
 - `sprints/ENTREGA-brochure-storyboard.md` — el contrato G-Guion aprobado + la adenda con
   lo que cada ronda del gate sumó (el contrato se amplía, no se reescribe).

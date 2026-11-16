@@ -23,7 +23,7 @@ practicadas, dibujos encendidos, inversiones, la racha de voz más larga, lo que
 haber oído) + **hitos funcionales** ("su primer rato juntos", "la primera palabra que TÚ le oíste",
 "su voz sonó 5 segundos seguidos"). **Cero puntajes clínicos, cero %, cero plazos, cero culpa** — una semana
 floja es un número pequeño sin adjetivo; no hay rachas que castiguen. El microcopy se blindó contra
-TODO vocabulario [omitido], ni siquiera negado (el design system dice "jamás [omitido]/puntaje"),
+TODO vocabulario de especialista, ni siquiera negado (el design system dice "jamás evaluación/puntaje"),
 verificado por e2e (grep) y revisión. Vacío honesto: "todavía no hay nada que contar".
 **El riesgo R1 que cazó el plan:** los juegos de voz **no persistían ninguna métrica** — morían en
 la celebración. Se creó el registro versionado `habla:v1:sesiones` (cap 500), escrito UNA vez por
@@ -62,7 +62,7 @@ Detalle en las secciones de abajo.
 | **3. Observabilidad**   | ✅ (sin cambios) | Sentry inerte metadata-only. Las sesiones del Rumbo **nunca** llevan audio ni pitch — solo conteos (candado de contenido del e2e de privacidad lo verifica).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **4. Seguridad**        | ✅               | `pnpm audit --audit-level high` **limpio** (1 moderate transitivo conocido: `postcss` vía build, no explotable). Cero secrets (gitleaks en cada commit — **verificado en vivo**: un borrador de bitácora escribió la carnada contigua y el hook lo bloqueó). Lista blanca de claves de storage ampliada conscientemente (`sesiones`, `objetivo`) con el candado de contenido intacto.                                                                                                                                                                                                                                                                                                                                                               |
 | **5. Performance**      | ✅ (tras ajuste) | `/rumbo` y `/objetivo` son **estáticas** (prerender): **"/" no se toca**. **El gate de Lighthouse del PR cazó a `/objetivo` sobre el budget** (383 KB > 350 KB: el preview y `aplicarObjetivoAHoy` arrastraban los 3 bancos de contenido al bundle — la trampa que el S2 ya había cazado en los juegos). Corregido en la auditoría de cierre: contenido por `import()` dinámico al primer teclazo → **331 KB gzip** medido en prod local (~27 KB bajo el budget, al nivel de `/rumbo`). Budgets en **10 rutas**; `reproducirBlob` con revoke; cero dependencia runtime nueva.                                                                                                                                                                       |
-| **6. UX/A11y**          | ✅               | axe limpio en **10 rutas × 2 temas × 2 dispositivos** (+`/rumbo` +`/objetivo`) · toques del padre ≥44 px · sin límite de tiempo, sin game-over · microcopy 100 % es-CO, sin jerga [omitido] · el objetivo alinea dentro de la etapa (COGA: predecible, no salta).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **6. UX/A11y**          | ✅               | axe limpio en **10 rutas × 2 temas × 2 dispositivos** (+`/rumbo` +`/objetivo`) · toques del padre ≥44 px · sin límite de tiempo, sin game-over · microcopy 100 % es-CO, sin jerga de especialista · el objetivo alinea dentro de la etapa (COGA: predecible, no salta).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | **7. IA embebida**      | **N/A**          | Cero LLM, cero SDK — **quinta vez consecutiva**. La alineación objetivo→contenido es **mapeo determinista**, no un modelo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | **Manual de uso**       | ✅               | Secciones nuevas "El rumbo — cómo van, sin notas" y "Objetivo de la semana — la sintonía con la fonoaudióloga"; historial 004.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | **Guía de prueba viva** | ✅               | `docs/GUIA-DE-PRUEBA.html` **v4 acumulativa**: hereda las v3 ENTERAS (S3 pasa a regresión), agrega bloques N (rumbo) y O (objetivo) + 2 ítems de tablet, **recorrido del gate ⭐ ACUMULADO con tiempos**. Gate ⭐ = **25** (~40 min). Elimina: nada.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -114,7 +114,7 @@ completo):** los 2 Altos —`/objetivo` rompía el budget de script (el gate de 
 cazó: los bancos de contenido iban en el bundle; ahora cargan por `import()` al primer teclazo,
 383→331 KB) y el preview contaba contra los bancos completos (ahora cuenta **lo que el niño verá**
 con `lib/objetivo/alcance.ts` + tercer estado honesto "fuera de su alcance", prueba O6)— y los 6
-Medios (privacidad e2e post-escritura, número↔frase atado por testid, grep anti-[omitido] ampliado,
+Medios (privacidad e2e post-escritura, número↔frase atado por testid, grep anti-jerga ampliado,
 singular/plural del rumbo, foco+aria-live al guardar, units de pares/orden-de-hitos/cruce-de-año).
 Detalle completo con archivo:línea en la bitácora.
 
@@ -365,8 +365,8 @@ vivo. Las tres son de él; la planeadora solo las agenda.
 - **La sección «Riesgos de integración» del plan valió el sprint:** el supuesto de la orden ("los
   insumos del progreso ya existen") era falso — los juegos no persistían nada. Cazarlo EN EL CÓDIGO
   antes de construir evitó descubrir el hueco a mitad de F2.
-- **Honestidad como microcopy, hasta en la negación:** el grep anti-[omitido] cazó "sin puntajes" y
-  "no es un [omitido]" — mencionar la palabra, aun para negarla, planta el marco. Se reescribió a
+- **Honestidad como microcopy, hasta en la negación:** el grep anti-jerga cazó "sin puntajes" y
+  "no es una evaluación" — mencionar la palabra, aun para negarla, planta el marco. Se reescribió a
   positivo. El test de vocabulario vetado es más estricto que el humano.
 - **Identidad sin objetivo = la clave de no romper el pasado:** `priorizarEstable` con predicado
   falso devuelve la entrada intacta; por eso los e2e por semilla del S3 siguen verdes tal cual.
@@ -390,7 +390,7 @@ hitos 7→16, y los **seis remates del bloque O** — sugerencias vivas, la eñe
 ortografía ADR-014, los temas visibles, y la tarjeta activa con estados para daltonismo).
 Aprobación final del usuario: **"probé todo el bloque O, todo en orden y corriendo según lo
 esperado"** — todos los bloques del recorrido aprobados. La lista de tablet queda post-ciclo
-(de viaje; ADRs 003/007/010 al regresar — no gatea).
+(sin tablet; ADRs 003/007/010 cuando haya tablet — no gatea).
 
 ## Lo que falta para cerrar (acciones del usuario)
 
@@ -407,4 +407,4 @@ esperado"** — todos los bloques del recorrido aprobados. La lista de tablet qu
 | ARASAAC                     | ✅ sin cuenta: lote offline con atribución           |
 | Claude Design               | ✅ proyecto "Hablemos San — Design System" publicado |
 | API LLM                     | N/A — cero IA (**5.ª vez consecutiva**)              |
-| _(hardware)_ Tablet Android | ⏳ de viaje — lista post-ciclo (no gatea)            |
+| _(hardware)_ Tablet Android | ⏳ sin tablet — lista post-ciclo (no gatea)            |
