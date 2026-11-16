@@ -13,16 +13,27 @@ export const TURNOS_PARA_SORPRESA = 3;
 /** Cuánto se queda en pantalla antes de irse sola. */
 export const MS_SORPRESA_VISIBLE = 6000;
 
+/** Whole days since the epoch for a «YYYY-MM-DD» date (a date that does not parse still gives a number). */
+function diaDeLaFecha(fecha: string): number {
+  const [a, m, d] = fecha.split("-").map(Number);
+  const ms = Date.UTC(a, (m ?? 1) - 1, d ?? 1);
+  return Number.isFinite(ms) ? Math.floor(ms / 86_400_000) : fnv1a(fecha);
+}
+
+/**
+ * The day's surprise. It rotates by DAY NUMBER (offset by the game), so two consecutive days never give the
+ * same phrase of a theme, and different games differ the same day. The date is a knob (rule 23).
+ */
 export function sorpresaDelDia(
   tema: Tema | null,
   fecha: string,
   juego: string,
   idioma: Idioma,
 ): { tema: Tema; texto: string } {
-  const h = fnv1a(`${fecha}|${juego}`);
-  const elegido = tema ?? TEMAS[h % TEMAS.length];
+  const paso = diaDeLaFecha(fecha) + fnv1a(juego);
+  const elegido = tema ?? TEMAS[paso % TEMAS.length];
   const frases = SORPRESAS[elegido];
-  return { tema: elegido, texto: frases[Math.floor(h / TEMAS.length) % frases.length][idioma] };
+  return { tema: elegido, texto: frases[Math.floor(paso / (tema ? 1 : TEMAS.length)) % frases.length][idioma] };
 }
 
 /** ¿Se abre ahora? Solo al ALCANZAR el umbral (no al pasarlo), así sale una vez por partida. */

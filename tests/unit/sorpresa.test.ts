@@ -27,6 +27,20 @@ describe("sorpresa del día", () => {
     expect(new Set(juegos).size).toBeGreaterThan(1);
   });
 
+  it("dos días seguidos nunca repiten la frase de un tema, en ningún juego", () => {
+    const juegos = ["globo", "soplar", "fuerte-suave", "cohete", "vocales", "palabras", "gemelas"];
+    for (const tema of TEMAS) {
+      for (const juego of juegos) {
+        for (let dia = 0; dia < 90; dia++) {
+          const f = (n: number) => new Date(Date.UTC(2026, 0, 1 + n)).toISOString().slice(0, 10);
+          const hoy = sorpresaDelDia(tema, f(dia), juego, "es").texto;
+          const manana = sorpresaDelDia(tema, f(dia + 1), juego, "es").texto;
+          expect(manana, `${tema} ${juego} ${f(dia)}`).not.toBe(hoy);
+        }
+      }
+    }
+  });
+
   it("sin perfil elige un tema por fecha, y en inglés da la frase en inglés", () => {
     const s = sorpresaDelDia(null, "2026-11-15", "gemelas", "en");
     expect(TEMAS).toContain(s.tema);
