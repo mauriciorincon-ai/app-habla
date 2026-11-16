@@ -32,6 +32,12 @@ function vigilar(context: BrowserContext, violaciones: string[]): void {
       console.error(`CSP violation: ${e.violatedDirective} ${e.blockedURI}`),
     );
   });
+  // The device has no voices unless a spec simulates them (S15): the machine running the tests must not
+  // decide whether an unrecorded pictogram sounds. A spec that needs voices replaces `speechSynthesis`.
+  void context.addInitScript(() => {
+    if (typeof SpeechSynthesis !== "undefined")
+      SpeechSynthesis.prototype.getVoices = () => [];
+  });
   context.pages().forEach(mirar);
   context.on("page", mirar);
 }

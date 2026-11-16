@@ -21,8 +21,6 @@ import { useIdioma, useT } from "@/lib/idioma/estado";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { palabras as txp } from "@/lib/idioma/textos/palabras";
 import {
-  ajustesActuales,
-  guardarAjustesEnStore,
   useAjustes,
   usePerfil,
 } from "@/components/estado-local";
@@ -36,10 +34,13 @@ import { invitacionAmable, type Metrica } from "@/lib/session-flow";
 import type { Tema } from "@/lib/storage/temas";
 import { CelebracionHonesta } from "./celebracion-honesta";
 import { GuionCard } from "./guion-card";
+import { useModoCalma } from "./use-modo-calma";
 import { MarcoJuego } from "./marco-juego";
 import { useVoiceSession } from "./use-voice-session";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { EscenarioPalabra } from "./escenario-palabra";
+import { AltavozConsigna } from "./altavoz-consigna";
+import { idConsigna, textoConsigna } from "@/lib/banco-voz/catalogo";
 import { useReconocedor } from "./use-reconocedor";
 import { MicSession } from "@/lib/voice/mic-session";
 import { quizasDijo } from "@/lib/reconocer/coincidencia";
@@ -174,18 +175,23 @@ function JuegoListo({
     metricaActual,
   });
 
-  // La voz de la familia (O2): al sonar, pausa el medidor con `silenciar` para que su eco por los
-  // parlantes no cuente como voz del niño (guarda del bucle, ADR-010).
-  const voz = useVozFamiliar({ alSonar: silenciar });
-
-  const { actual, ajustes } = sesion;
-  const modoCalma = ajustes.modoCalma;
-
   const rec = useReconocedor({
     juego: "palabras",
     idioma,
     activo: reconocedorActivo,
   });
+  const { silenciar: silenciarReconocedor } = rec;
+  // La voz de la app (grabación de la familia o voz del aparato): al sonar, pausa el medidor Y el
+  // reconocedor para que su eco por los parlantes no cuente como voz del niño (guarda del bucle, ADR-010).
+  const voz = useVozFamiliar({
+    alSonar: (ms) => {
+      silenciar(ms);
+      silenciarReconocedor(ms);
+    },
+  });
+
+  const { actual, ajustes } = sesion;
+  const modoCalma = ajustes.modoCalma;
   const turnoDeEl = sesion.turno === "nino";
   // El reconocedor escucha el cuarto entero; en «tu turno» lo que oye es del adulto: ni «quizás», ni halo,
   // ni conteo (ADR-025). Al volver su turno, lo oído antes se olvida.
@@ -210,11 +216,7 @@ function JuegoListo({
     if (fase === "esperando-voz") armadoDesdeRef.current = Date.now();
   }, [fase]);
 
-  function alternarCalma() {
-    const activo = !modoCalma;
-    cambiarCalma(activo);
-    guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
-  }
+  const { alternar: alternarCalma } = useModoCalma(cambiarCalma);
 
   /**
    * CUALQUIER vocalización enciende el dibujo (la llama el escenario cuando el medidor confirma
@@ -323,6 +325,16 @@ function JuegoListo({
 
       {actual.fase === "esperando-voz" || actual.fase === "jugando" ? (
         <section className="flex flex-col gap-5">
+          <div className="flex items-center justify-center gap-3">
+            <p className="text-tinta-suave text-center text-sm" data-testid="consigna-palabras">
+              {textoConsigna("palabras", idioma)}
+            </p>
+            <AltavozConsigna
+              voz={voz}
+              id={idConsigna("palabras", idioma)}
+              etiqueta={textoConsigna("palabras", idioma)}
+            />
+          </div>
           <div className="relative">
             <EscenarioPalabra
               picto={picto}

@@ -102,8 +102,8 @@ export const tope = {
   ajustes: {
     titulo: { es: "Sesiones cortas", en: "Short sessions" },
     cuerpo: {
-      es: "Los juegos de voz cuentan los minutos de juego de hoy en este dispositivo. Al llegar al tope le aviso a usted una vez al día y el juego se cierra con calma, como «Salir». Nunca bloquea nada: si quieren seguir, siguen. El contador es local, de hoy, y no viaja al archivo de la otra casa.",
-      en: "Voice games count today's minutes of play on this device. When the cap is reached I tell you once a day and the game closes calmly, like “Exit”. It never blocks anything: if you want to keep going, you do. The counter is local, for today, and does not travel in the other-home file.",
+      es: "Los juegos, los cuentos y los videos de la familia cuentan los minutos de hoy en este dispositivo. Al llegar al tope le aviso a usted una vez al día y el juego se cierra con calma, como «Salir»; en un cuento o un video el aviso espera al final de la página o del clip. Nunca bloquea nada: si quieren seguir, siguen. El contador es local, de hoy, y no viaja al archivo de la otra casa.",
+      en: "Games, stories and family videos count today's minutes on this device. When the cap is reached I tell you once a day and the game closes calmly, like “Exit”; in a story or a video the notice waits for the end of the page or the clip. It never blocks anything: if you want to keep going, you do. The counter is local, for today, and does not travel in the other-home file.",
     },
     etiqueta: { es: "Tope de juego por día", en: "Daily play cap" },
     opcion: { es: "{n} minutos", en: "{n} minutes" },

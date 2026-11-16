@@ -78,16 +78,16 @@ test("grabar mi voz sube la cobertura del banco (flujo lote → aceptar)", async
 
 // Gate S4 (K5): cada grupo de la cobertura tiene su propia puerta al lote — llegar a las
 // consignas no puede exigir atravesar las 50 palabras.
-test("«Grabar» junto a Consignas del juego acota la tanda a las 4 consignas", async ({
+test("«Grabar» junto a Consignas del juego acota la tanda a las 7 consignas", async ({
   page,
 }) => {
   await page.goto("/estudio");
   await page.getByTestId("grabar-consigna").click();
 
   await expect(page.getByTestId("lote")).toBeVisible();
-  // Con el banco vacío la tanda son las 4 consignas (S12: sopla y fuerte-suave se suman a globo y cohete), y el contador dice de cuál grupo es.
+  // Con el banco vacío la tanda son las 7 consignas (S12: sopla y fuerte-suave; S15: vocales, palabras y gemelas), y el contador dice de cuál grupo es.
   await expect(page.getByTestId("progreso-lote")).toContainText(
-    "1 de 4 de esta tanda · Consignas del juego",
+    "1 de 7 de esta tanda · Consignas del juego",
   );
   await expect(page.getByTestId("item-texto")).toContainText(
     "Haz la voz de sirena",

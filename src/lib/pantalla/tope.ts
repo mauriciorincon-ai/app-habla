@@ -78,3 +78,20 @@ export function lineaHoyVisible(estado: EstadoPantalla, hoy: string, topeMinutos
   const e = delDia(estado, hoy);
   return e.avisado && e.ms >= topeMs(topeMinutos);
 }
+
+/**
+ * Stories and the video library (S15, ADR-027): when the cap arrives mid-page or mid-clip the notice
+ * WAITS for the page or the clip to end — never cuts a story in half. `pendiente` marks the wait;
+ * `minutos` is set when the unit ends and the adult sees the notice.
+ */
+export type EsperaAviso = { pendiente: boolean; minutos: number | null };
+export const SIN_ESPERA: EsperaAviso = { pendiente: false, minutos: null };
+
+export function topeLlego(espera: EsperaAviso): EsperaAviso {
+  return { ...espera, pendiente: true };
+}
+
+/** The page turned or the clip ended: a pending notice is shown now; otherwise nothing changes. */
+export function unidadTerminada(espera: EsperaAviso, minutos: number): EsperaAviso {
+  return espera.pendiente ? { pendiente: false, minutos } : espera;
+}

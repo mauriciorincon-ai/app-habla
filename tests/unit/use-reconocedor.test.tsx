@@ -123,4 +123,28 @@ describe("useReconocedor", () => {
     expect(result.current.oidoDe("perro")).toBeNull();
     expect(result.current.oido).toBeNull();
   });
+
+  it("el eco de la voz de la app no cuenta como lo que oyó del niño (guarda del bucle)", async () => {
+    const { result } = renderHook(() =>
+      useReconocedor({ juego: "palabras", idioma: "es", activo: true }),
+    );
+    act(() => {
+      void result.current.conectar(mic);
+    });
+    await act(async () => {
+      h.cargarResolve?.({ modelo: 1 });
+      await tick();
+      h.listaResolve?.();
+      await tick();
+    });
+    // The app's own voice is about to say a word for 5 s: whatever the engine hears meanwhile is the echo.
+    act(() => result.current.silenciar(5000));
+    act(() => h.alOir?.({ palabra: "gato", conf: 0.99 }));
+    expect(result.current.oido).toBeNull();
+    expect(result.current.oidoDe("gato")).toBeNull();
+    // The voice did not actually sound (blocked autoplay): the guard lifts and the child is heard again.
+    act(() => result.current.silenciar(0));
+    act(() => h.alOir?.({ palabra: "gato", conf: 0.8 }));
+    expect(result.current.oido).toEqual({ palabra: "gato", conf: 0.8 });
+  });
 });

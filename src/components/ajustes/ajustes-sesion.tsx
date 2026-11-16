@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -18,19 +19,54 @@ import { suMundo } from "@/lib/idioma/textos/su-mundo";
 import { ajustes as textos } from "@/lib/idioma/textos/ajustes";
 import { EtapaDelHabla } from "./etapa-del-habla";
 import { NivelContactoVisual } from "./nivel-contacto-visual";
-import { OtraCasa } from "./otra-casa";
 import { TopeDiario } from "./tope-diario";
-import { Reconocedor } from "./reconocedor";
 import {
   AJUSTES_DEFECTO,
+  INTENSIDADES,
+  SONIDOS,
   type Apariencia,
   type Perfil,
 } from "@/lib/storage/schemas";
+
+// Below the fold and heavy (the other-home package, the recognizer panel): their code is fetched a moment AFTER
+// the first paint (see `useCercaDeLaVista`), so the settings page stays inside the performance budget.
+const OtraCasa = dynamic(() => import("./otra-casa").then((m) => m.OtraCasa), { ssr: false });
+const Reconocedor = dynamic(() => import("./reconocedor").then((m) => m.Reconocedor), { ssr: false });
+
+/**
+ * True once the placeholder is about to scroll into view, or a moment after the first paint.
+ * The heavy panels wait for it, so their code is not fetched before the first paint; the placeholder keeps
+ * its height, so «Borrar mis datos» below never jumps while they load.
+ */
+function useCercaDeLaVista(ms = 1500): [(el: HTMLElement | null) => void, boolean] {
+  const [listo, setListo] = useState(false);
+  const [el, setEl] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (listo || !el) return;
+    // Whichever comes first: the placeholder nears the viewport, or a moment after the first paint. The
+    // timer keeps the panels reachable without scrolling; the reserved height keeps the page from jumping.
+    const id = window.setTimeout(() => setListo(true), ms);
+    if (typeof IntersectionObserver === "undefined") return () => window.clearTimeout(id);
+    const io = new IntersectionObserver(
+      (e) => {
+        if (e.some((x) => x.isIntersecting)) setListo(true);
+      },
+      { rootMargin: "400px" },
+    );
+    io.observe(el);
+    return () => {
+      window.clearTimeout(id);
+      io.disconnect();
+    };
+  }, [el, listo, ms]);
+  return [setEl, listo];
+}
 
 export function AjustesSesion() {
   const tx = useT();
   const guardados = useAjustes();
   const [confirmandoBorrado, setConfirmandoBorrado] = useState(false);
+  const [anclaPaneles, tarde] = useCercaDeLaVista();
 
   // El ajuste de animaciones se aplica en el <html> (el CSS lo honra igual que reduced-motion).
   useEffect(() => {
@@ -70,6 +106,30 @@ export function AjustesSesion() {
         listo={listo}
         onCambiar={(apariencia) =>
           guardarAjustesEnStore({ ...ajustes, apariencia })
+        }
+      />
+
+      <SelectorSensorial
+        id="sonidos"
+        titulo={textos.sonidos.titulo}
+        ayuda={textos.sonidos.ayuda}
+        elegida={textos.sonidos.elegida}
+        opciones={SONIDOS.map((v) => ({ valor: v, ...textos.sonidos.opciones[v] }))}
+        valor={ajustes.sonidos}
+        listo={listo}
+        onCambiar={(sonidos) => guardarAjustesEnStore({ ...ajustes, sonidos })}
+      />
+
+      <SelectorSensorial
+        id="intensidad"
+        titulo={textos.intensidad.titulo}
+        ayuda={textos.intensidad.ayuda}
+        elegida={textos.intensidad.elegida}
+        opciones={INTENSIDADES.map((v) => ({ valor: v, ...textos.intensidad.opciones[v] }))}
+        valor={ajustes.intensidad}
+        listo={listo}
+        onCambiar={(intensidad) =>
+          guardarAjustesEnStore({ ...ajustes, intensidad })
         }
       />
 
@@ -120,9 +180,15 @@ export function AjustesSesion() {
         }
       />
 
-      <Reconocedor />
-
-      <OtraCasa />
+      {/* Reserved height while the two heavy panels are not loaded: nothing below moves. */}
+      <div ref={anclaPaneles} className={tarde ? undefined : "min-h-[44rem]"}>
+        {tarde ? (
+          <div className="flex flex-col gap-4">
+            <Reconocedor />
+            <OtraCasa />
+          </div>
+        ) : null}
+      </div>
 
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">{tx(textos.borrar.titulo)}</h2>
@@ -302,6 +368,68 @@ function SelectorApariencia({
               <span className="block font-medium">{tx(opcion.nombre)}</span>
               <span className="text-tinta-suave block text-xs">
                 {elegida ? tx(textos.apariencia.elegida) : tx(opcion.nota)}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Carga sensorial (S15): un selector de pocas opciones. El estado va con palabra («Elegido»), no solo
+ * con el borde de color.
+ */
+function SelectorSensorial<V extends string>({
+  id,
+  titulo,
+  ayuda,
+  elegida,
+  opciones,
+  valor,
+  listo,
+  onCambiar,
+}: {
+  id: string;
+  titulo: Texto;
+  ayuda: Texto;
+  elegida: Texto;
+  opciones: { valor: V; nombre: Texto; nota: Texto }[];
+  valor: V;
+  listo: boolean;
+  onCambiar: (valor: V) => void;
+}) {
+  const tx = useT();
+  return (
+    <section className="bg-superficie shadow-tarjeta rounded-2xl p-5" data-testid={`ajuste-${id}`}>
+      <h2 className="font-medium" id={`${id}-titulo`}>
+        {tx(titulo)}
+      </h2>
+      <p className="text-tinta-suave mt-2 text-sm">{tx(ayuda)}</p>
+      <div
+        className="mt-4 flex flex-col gap-2 sm:flex-row"
+        role="group"
+        aria-labelledby={`${id}-titulo`}
+      >
+        {opciones.map((opcion) => {
+          const activa = valor === opcion.valor;
+          return (
+            <button
+              key={opcion.valor}
+              type="button"
+              aria-pressed={activa}
+              disabled={!listo}
+              onClick={() => onCambiar(opcion.valor)}
+              data-testid={`${id}-${opcion.valor}`}
+              className={[
+                "min-h-11 flex-1 rounded-xl border px-4 py-2 text-left text-sm",
+                activa ? "border-acento bg-acento-suave" : "border-borde bg-fondo",
+              ].join(" ")}
+            >
+              <span className="block font-medium">{tx(opcion.nombre)}</span>
+              <span className="text-tinta-suave block text-xs">
+                {activa ? tx(elegida) : tx(opcion.nota)}
               </span>
             </button>
           );

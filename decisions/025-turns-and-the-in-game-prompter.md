@@ -63,7 +63,7 @@ kept as the child's. The advice came before the moment it was useful, never at i
 - Twice the engine work per frame: the engines are scalar arithmetic on ~31 frames/s, well inside budget.
 - In the adult's turn the balloon rises with the voice but does not travel (travel is the child's seconds);
   the picture in «Palabras» glows but does not light up. Movement shows the model; achievement stays his.
-- Gemelas already alternate (he says, the adult marks): they only gain the same turn indicator.
+- Gemelas already alternate (he says, the adult marks): they only gain the same turn indicator. (Superseded in part by ADR-027 / S15: twin words now run in the common frame.)
 - Stored: `turnosNino` (a counter) in the session record, which travels in the other-home package with the
   sessions (a number, never audio), and `ajustes.apuntador`, a local setting that does not travel. «Delete
   my data» erases both.

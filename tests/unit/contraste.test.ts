@@ -198,3 +198,22 @@ describe("prompter strip and turn indicator contrast (AA)", () => {
     }
   });
 });
+
+describe("intensidad «suave» (S15): atenúa rellenos, nunca el texto", () => {
+  const i = css.indexOf('html[data-intensidad="suave"] {');
+  const bloque = css.slice(i, css.indexOf("\n}\n", i));
+
+  it("existe y no redeclara ningún token de texto ni de tinta", () => {
+    expect(i).toBeGreaterThan(-1);
+    expect(bloque).not.toMatch(/--tinta|--celebracion-texto|--sobre-acento|--aviso|--peligro|--exito|--info/);
+  });
+
+  it("la tinta del niño sigue en AA sobre los rellenos suaves", () => {
+    const tinta = primitivo("color-kid-ink");
+    for (const nombre of ["color-kid-peach", "color-kid-sage", "color-kid-sky", "color-kid-yellow"]) {
+      const m = bloque.match(new RegExp(`--${nombre}:\\s*(#[0-9a-fA-F]{6})`));
+      expect(m, nombre).not.toBeNull();
+      expect(razon(tinta, m![1])).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+});

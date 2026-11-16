@@ -19,7 +19,9 @@ import {
   BarrasVoz,
   Molino,
 } from "@/components/iconos";
-import { valorDeMetrica, type Metrica } from "@/lib/session-flow";
+import type { Metrica } from "@/lib/session-flow";
+import { claveCelebracion, huboAlgoQueContar } from "@/lib/banco-voz/celebracion";
+import { idCelebracion } from "@/lib/banco-voz/catalogo";
 import { construirSesion } from "@/lib/rumbo/sesion";
 import { fechaHoy } from "@/lib/fecha";
 import { registrarSesion } from "@/lib/storage/local";
@@ -30,6 +32,7 @@ import { juegos } from "@/lib/idioma/textos/juegos";
 import { vocales as vocalesTextos } from "@/lib/idioma/textos/vocales";
 import { fuerteSuave, soplar } from "@/lib/idioma/textos/voz-juegos";
 import { FormaVocal } from "./forma-vocal";
+import { useVozFamiliar } from "./use-voz-familiar";
 
 type Props = {
   metrica: Metrica;
@@ -53,14 +56,6 @@ function segundos(ms: number, idioma: Idioma): string {
   if (s >= 10) return s.toFixed(0);
   const un = s.toFixed(1);
   return idioma === "es" ? un.replace(".", ",") : un;
-}
-
-/** ¿El medidor alcanzó a escuchar algo de verdad? Es lo único que decide qué se puede afirmar. */
-function huboAlgoQueContar(metrica: Metrica): boolean {
-  if (metrica.tipo === "sostenido") return metrica.ms >= 300;
-  // Gemelas no tiene micrófono: "hubo algo" es que se jugó al menos una ronda.
-  if (metrica.tipo === "gemelas") return metrica.rondas >= 1;
-  return valorDeMetrica(metrica) >= 1;
 }
 
 /** Lo que SÍ pasó, dicho con el número real. Nada más — y nada menos. */
@@ -316,6 +311,19 @@ export function CelebracionHonesta({
     // deps vacías a propósito: se registra la métrica del montaje, una sola vez por intento.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // La frase honesta dicha con la voz de la familia, si está grabada (S15, ADR-027): «le salió», «dijo
+  // la palabra» o «casi», según lo medido en su turno. Una vez por celebración; sin grabación, silencio.
+  const idioma = useIdioma();
+  const voz = useVozFamiliar();
+  const clave = claveCelebracion(metrica);
+  const idFrase = clave ? idCelebracion(clave, idioma) : null;
+  const dicha = useRef(false);
+  useEffect(() => {
+    if (dicha.current || !idFrase || !voz.disponible(idFrase)) return;
+    dicha.current = true;
+    void voz.reproducir(idFrase);
+  }, [voz, idFrase]);
 
   return (
     <section

@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
   // móvil e intercepta taps en los e2e (visto en nutri-kids S1) — apagado por default.
   devIndicators: false,
 
+  // The pictograms are small PNGs already sized for the screen: serve them as they are, so the offline
+  // precache (scripts/gen-precache.mjs) holds the very URL the game asks for. Through /_next/image the
+  // browser would ask a variant nobody cached and the games would open without their pictures.
+  images: { unoptimized: true },
+
   // Documentos canónicos de docs/, copiados a public/ por build:documentos
   // (scripts/copiar-documentos.mjs) y servidos en URL limpia — el link que recibe la
   // familia no dice ".html":
