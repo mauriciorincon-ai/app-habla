@@ -293,6 +293,31 @@ for (const idioma of ["es", "en"] as const) {
       );
       await axeLimpio(page, "aviso de tope en cuentos");
     });
+
+    test("el tope pendiente no se pierde si sale del cuento con «volver»", async ({
+      page,
+    }) => {
+      const d = new Date();
+      const p = (n: number) => String(n).padStart(2, "0");
+      const hoy = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+      await page.addInitScript(
+        ({ fecha, ms }) =>
+          window.localStorage.setItem(
+            "habla:v1:pantalla",
+            JSON.stringify({ fecha, ms, avisado: false }),
+          ),
+        { fecha: hoy, ms: 10 * 60_000 - 2000 },
+      );
+      await page.goto("/cuentos");
+      await page
+        .locator('[data-testid="cuento-tarjeta"][data-cuento-id="el-paseo"]')
+        .click();
+      await page.waitForTimeout(4000);
+      await expect(page.getByTestId("aviso-tope")).toHaveCount(0);
+      await page.getByRole("button", { name: /los cuentos|the stories/i }).first().click();
+      await expect(page.getByTestId("cuento-lector")).toHaveCount(0);
+      await expect(page.getByTestId("aviso-tope")).toBeVisible();
+    });
   });
 }
 

@@ -150,7 +150,11 @@ export function CuentosNino() {
       <button
         type="button"
         className={CHIP_SALIDA + " w-fit"}
-        onClick={() => setAbierto(null)}
+        onClick={() => {
+          // Leaving early still ends the unit: a pending cap notice is never lost.
+          alTerminar();
+          setAbierto(null);
+        }}
       >
         {tx(cuentos.nino.volver)}
       </button>

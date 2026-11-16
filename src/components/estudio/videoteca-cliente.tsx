@@ -289,6 +289,8 @@ function Clip({ clip, onBorrado }: { clip: ClipMeta; onBorrado: () => void }) {
 
   const ver = async () => {
     if (url) {
+      // Closing early still ends the unit: a pending cap notice is never lost.
+      alTerminar();
       setUrl(null);
       return;
     }
