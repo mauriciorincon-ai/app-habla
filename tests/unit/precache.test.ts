@@ -95,3 +95,19 @@ describe("el service worker en tiempo de ejecución", () => {
       expect(guarda![1].split("|")).toContain(ext);
   });
 });
+
+describe("un anfitrión que acomoda el build distinto", () => {
+  it("con alFaltarHtml no rompe: lista la ruta y avisa cuál faltó; sin él, es un error", () => {
+    const faltaron: string[] = [];
+    const entrada = {
+      version: "B1",
+      htmlDeRuta: (ruta: string) => (ruta === "/" ? null : "<html></html>"),
+      leerChunk: () => null,
+      extras: [],
+    };
+    expect(() => listaPrecache(entrada)).toThrow(/no tiene HTML/);
+    const lista = listaPrecache({ ...entrada, alFaltarHtml: (r: string) => faltaron.push(r) });
+    expect(faltaron).toEqual(["/"]);
+    expect(lista.urls).toContain("/");
+  });
+});

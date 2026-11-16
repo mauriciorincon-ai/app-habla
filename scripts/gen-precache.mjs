@@ -21,10 +21,32 @@ const NEXT = join(RAIZ, ".next");
 const version = readFileSync(join(NEXT, "BUILD_ID"), "utf8").trim();
 
 function htmlDeRuta(ruta) {
-  const archivo = ruta === "/" ? "index.html" : `${ruta.slice(1)}.html`;
-  const p = join(NEXT, "server", "app", archivo);
-  return existsSync(p) ? readFileSync(p, "utf8") : null;
+  const candidatos =
+    ruta === "/"
+      ? ["index.html"]
+      : [`${ruta.slice(1)}.html`, join(ruta.slice(1), "index.html")];
+  for (const c of candidatos) {
+    const p = join(NEXT, "server", "app", c);
+    if (existsSync(p)) return readFileSync(p, "utf8");
+  }
+  return null;
 }
+
+/** Every hashed file under .next/static (js, css, fonts), as /_next/static/... URLs. */
+function todoLoEstatico(dir = join(NEXT, "static")) {
+  const fuera = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) fuera.push(...todoLoEstatico(p));
+    else if (/\.(?:js|css|woff2)$/.test(e.name))
+      fuera.push(`/_next/static/${p.slice(join(NEXT, "static").length + 1)}`);
+  }
+  return fuera;
+}
+
+// A host that lays the build out differently (the deploy platform) may not have a route's HTML where the
+// local build does. Then the build must not fail: the route is still listed and ALL hashed static files go in.
+const sinHtml = [];
 
 function leerChunk(url) {
   const p = join(NEXT, url.replace(/^\/_next\//, ""));
@@ -47,7 +69,14 @@ const lista = listaPrecache({
   version,
   htmlDeRuta,
   leerChunk,
+  alFaltarHtml: (ruta) => sinHtml.push(ruta),
   extras: [...worklets, ...modulos, ...pictogramas, ...iconos, "/manifest.webmanifest"],
 });
+if (sinHtml.length > 0) {
+  console.warn(`sw-precache: sin HTML en el build para ${sinHtml.join(", ")}; se precachea todo .next/static`);
+  const todo = new Set(lista.urls);
+  for (const u of todoLoEstatico()) todo.add(u);
+  lista.urls = [...todo].sort();
+}
 writeFileSync(SALIDA, scriptPrecache(lista));
 console.log(`sw-precache: ${lista.urls.length} archivos · versión ${version}`);

@@ -1,4 +1,5 @@
 import { AxeBuilder } from "@axe-core/playwright";
+import { PARES_GEMELOS } from "../../content/pares-gemelos";
 import { expect, test } from "./base";
 
 // EL IDIOMA (S7, ADR-017). Los demás e2e corren en español (locale es-CO); este cubre el inglés:
@@ -151,7 +152,9 @@ test("en inglés, una ronda de Gemelas trae un par de palabras inglesas y el pad
   const ronda = page.getByTestId("gemelas-ronda");
   await expect(ronda).toBeVisible();
   const texto = await ronda.innerText();
-  expect(texto).toMatch(/\b(hat|cat|house|mouse|mouth|bed|bell|bull|boat|boot|bone|cone|rock|sock|rain|train)\b/i);
+  // The pair of the day changes with the date (the CI clock is UTC): any pair written for English counts.
+  const inglesas = PARES_GEMELOS.filter((p) => p.contraste.startsWith("the ")).flatMap((p) => [p.a.palabra, p.b.palabra]);
+  expect(texto).toMatch(new RegExp(`\\b(${inglesas.join("|")})\\b`, "i"));
   expect(texto).not.toMatch(/\b(pato|gato|foca|boca)\b/i);
   await page.getByTestId("marcar-a").click();
   await ctx.close();

@@ -32,16 +32,24 @@ export function admisible(url) {
 /**
  * Builds the precache list.
  * @param {{ version: string, htmlDeRuta: (ruta: string) => string | null,
- *   leerChunk: (ruta: string) => string | null, extras: string[] }} entrada
+ *   leerChunk: (ruta: string) => string | null, extras: string[],
+ *   alFaltarHtml?: (ruta: string) => void }} entrada
+ *   `alFaltarHtml`: without it a route with no HTML in the build is an error; with it the route is
+ *   still listed and the caller decides how to cover its chunks (a host that lays the build out differently).
  * @returns {{ version: string, urls: string[] }}
  */
-export function listaPrecache({ version, htmlDeRuta, leerChunk, extras }) {
+export function listaPrecache({ version, htmlDeRuta, leerChunk, extras, alFaltarHtml }) {
   if (!version) throw new Error("precache: falta la versión del build");
   const urls = new Set();
   const pendientes = [];
   for (const ruta of RUTAS_SIN_RED) {
     const html = htmlDeRuta(ruta);
-    if (html === null) throw new Error(`precache: la ruta ${ruta} no tiene HTML en el build`);
+    if (html === null) {
+      if (!alFaltarHtml) throw new Error(`precache: la ruta ${ruta} no tiene HTML en el build`);
+      alFaltarHtml(ruta);
+      urls.add(ruta);
+      continue;
+    }
     urls.add(ruta);
     for (const m of html.match(ESTATICO) ?? []) pendientes.push(m);
   }
