@@ -29,25 +29,42 @@ import {
 } from "@/lib/storage/schemas";
 
 // Below the fold and heavy (the other-home package, the recognizer panel): their code is fetched a moment AFTER
-// the first paint (see `useTrasElPrimerPintado`), so the settings page stays inside the performance budget.
+// the first paint (see `useCercaDeLaVista`), so the settings page stays inside the performance budget.
 const OtraCasa = dynamic(() => import("./otra-casa").then((m) => m.OtraCasa), { ssr: false });
 const Reconocedor = dynamic(() => import("./reconocedor").then((m) => m.Reconocedor), { ssr: false });
 
-/** True once the page has had time to paint; the heavy panels below the fold wait for it. */
-function useTrasElPrimerPintado(ms = 1500): boolean {
+/**
+ * True once the placeholder is about to scroll into view (or, without IntersectionObserver, after a moment).
+ * The heavy panels wait for it, so their code is not fetched before the first paint; the placeholder keeps
+ * its height, so «Borrar mis datos» below never jumps while they load.
+ */
+function useCercaDeLaVista(ms = 1500): [(el: HTMLElement | null) => void, boolean] {
   const [listo, setListo] = useState(false);
+  const [el, setEl] = useState<HTMLElement | null>(null);
   useEffect(() => {
-    const id = window.setTimeout(() => setListo(true), ms);
-    return () => window.clearTimeout(id);
-  }, [ms]);
-  return listo;
+    if (listo || !el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      const id = window.setTimeout(() => setListo(true), ms);
+      return () => window.clearTimeout(id);
+    }
+    // The timer keeps the first-paint budget safe: the observer only fires once the user nears the panel.
+    const io = new IntersectionObserver(
+      (e) => {
+        if (e.some((x) => x.isIntersecting)) setListo(true);
+      },
+      { rootMargin: "400px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [el, listo, ms]);
+  return [setEl, listo];
 }
 
 export function AjustesSesion() {
   const tx = useT();
   const guardados = useAjustes();
   const [confirmandoBorrado, setConfirmandoBorrado] = useState(false);
-  const tarde = useTrasElPrimerPintado();
+  const [anclaPaneles, tarde] = useCercaDeLaVista();
 
   // El ajuste de animaciones se aplica en el <html> (el CSS lo honra igual que reduced-motion).
   useEffect(() => {
@@ -161,9 +178,15 @@ export function AjustesSesion() {
         }
       />
 
-      {tarde ? <Reconocedor /> : null}
-
-      {tarde ? <OtraCasa /> : null}
+      {/* Reserved height while the two heavy panels are not loaded: nothing below moves. */}
+      <div ref={anclaPaneles} className={tarde ? undefined : "min-h-[44rem]"}>
+        {tarde ? (
+          <div className="flex flex-col gap-4">
+            <Reconocedor />
+            <OtraCasa />
+          </div>
+        ) : null}
+      </div>
 
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
         <h2 className="font-medium">{tx(textos.borrar.titulo)}</h2>
