@@ -337,10 +337,10 @@
     {
       "clave": "pruebas_e2e",
       "etiqueta": "Pruebas end-to-end",
-      "valor": 350,
+      "valor": 406,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-15 sobre la rama del S14: 350 pruebas en verde."
+      "detalle": "Salida de `pnpm test:e2e` (Playwright, 6 proyectos, `CI=1`: build de producción y `next start`, con la Content-Security-Policy activa y cada prueba fallando ante una violación) el 2026-11-16 sobre la rama del S16: 406 pruebas en verde."
     },
     {
       "clave": "cobertura_lineas",
