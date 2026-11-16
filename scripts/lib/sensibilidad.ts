@@ -65,62 +65,13 @@ export function buscarCoincidencias(
   return out;
 }
 
-/** Recorta un archivo a la parte que produjo este sprint, por marcadores. */
-export type Alcance =
-  | string
-  | { archivo: string; desde: string }
-  | { archivo: string; entre: [string, string] }
-  /** Todo el archivo MENOS lo que va entre los marcadores (p. ej. contenido previo al sprint embebido). */
-  | { archivo: string; excepto: [string, string] };
-
-export function recortar(texto: string, alcance: Alcance): string {
-  if (typeof alcance === "string") return texto;
-  if ("desde" in alcance) {
-    const i = texto.indexOf(alcance.desde);
-    return i === -1 ? "" : texto.slice(i);
-  }
-  if ("excepto" in alcance) {
-    const [ini, fin] = alcance.excepto;
-    let out = "";
-    let desde = 0;
-    for (;;) {
-      const i = texto.indexOf(ini, desde);
-      if (i === -1) break;
-      const j = texto.indexOf(fin, i + ini.length);
-      out += texto.slice(desde, i) + "\n";
-      if (j === -1) return out; // marcador sin cierre: lo que sigue no entra
-      desde = j + fin.length;
-    }
-    return out + texto.slice(desde);
-  }
-  const [ini, fin] = alcance.entre;
-  let out = "";
-  let desde = 0;
-  for (;;) {
-    const i = texto.indexOf(ini, desde);
-    if (i === -1) break;
-    const j = texto.indexOf(fin, i + ini.length);
-    if (j === -1) {
-      out += texto.slice(i + ini.length);
-      break;
-    }
-    out += texto.slice(i + ini.length, j) + "\n";
-    desde = j + fin.length;
-  }
-  return out;
-}
-
-export function archivoDe(alcance: Alcance): string {
-  return typeof alcance === "string" ? alcance : alcance.archivo;
-}
-
 /**
  * LO QUE EL GATE VIGILA (falla el test), desde el S16: TODO el repo. Cada archivo versionado o nuevo (no
- * ignorado) con extensión de texto entra entero, sin listas a mano ni recortes por marcador. Quedan fuera
+ * ignorado) entra entero, de cualquier extensión salvo los binarios (imágenes, audio, fuentes), sin listas a mano ni recortes por marcador. Quedan fuera
  * solo tres: `CLAUDE.md` (lo escribe la planeadora y nombra la lista), el fixture de hashes y el lockfile.
  * El informe (`scripts/sensibilidad-informe.mjs`) recorre el mismo universo y solo reporta.
  */
-export const EXTENSIONES_GATE = /\.(md|html|ts|tsx|mjs|json|txt)$/;
+export const BINARIOS_GATE = /\.(png|jpe?g|gif|webp|ico|wav|mp3|mp4|woff2?|pdf|zip|gz|tar|wasm)$/i;
 export const EXCLUIDOS_GATE = new Set(["CLAUDE.md", "tests/fixtures/sensibilidad-hashes.json", "pnpm-lock.yaml"]);
 
 export function alcanceGate(raiz: string): string[] {
@@ -129,11 +80,11 @@ export function alcanceGate(raiz: string): string[] {
     encoding: "utf8",
   })
     .split("\n")
-    .filter((f) => f && EXTENSIONES_GATE.test(f) && !EXCLUIDOS_GATE.has(f) && existsSync(join(raiz, f)))
+    .filter((f) => f && !BINARIOS_GATE.test(f) && !EXCLUIDOS_GATE.has(f) && existsSync(join(raiz, f)))
     .sort();
 }
 
-export const ALCANCE_GATE: Alcance[] = alcanceGate(join(import.meta.dirname, "..", ".."));
+export const ALCANCE_GATE: string[] = alcanceGate(join(import.meta.dirname, "..", ".."));
 
 /**
  * Las EDADES no son términos de la lista: esta guardia las busca por forma («N años», «N–M años», «el
@@ -171,12 +122,4 @@ export function archivosDeIdiomas(raiz: string): string[] {
   };
   DIRS_IDIOMAS.forEach(andar);
   return out;
-}
-
-/** Nombre legible de un alcance, único aunque el archivo se vigile por varias secciones. */
-export function nombreDe(alcance: Alcance): string {
-  if (typeof alcance === "string") return alcance;
-  if ("desde" in alcance) return `${alcance.archivo} (desde su marcador)`;
-  if ("excepto" in alcance) return `${alcance.archivo} (salvo ${alcance.excepto[0]})`;
-  return `${alcance.archivo} (${alcance.entre[0]})`;
 }

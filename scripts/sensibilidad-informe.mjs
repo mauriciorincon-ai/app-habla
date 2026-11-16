@@ -5,12 +5,12 @@
 //   node scripts/sensibilidad-informe.mjs
 
 import { readFileSync } from "node:fs";
-import { ALCANCE_GATE, archivoDe, buscarCoincidencias, lineasConEdad } from "./lib/sensibilidad.ts";
+import { ALCANCE_GATE, buscarCoincidencias, lineasConEdad } from "./lib/sensibilidad.ts";
 
 const hashes = new Set(
   JSON.parse(readFileSync(new URL("../tests/fixtures/sensibilidad-hashes.json", import.meta.url), "utf8")).hashes,
 );
-const archivos = ALCANCE_GATE.map(archivoDe);
+const archivos = ALCANCE_GATE;
 
 let totalArchivos = 0;
 let totalCoincidencias = 0;

@@ -3,14 +3,12 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   ALCANCE_GATE,
-  archivoDe,
   EXCLUIDOS_GATE,
   N_MAX,
   buscarCoincidencias,
   hashDeTermino,
   lineasConEdad,
   normalizar,
-  recortar,
 } from "../../scripts/lib/sensibilidad";
 
 // EL GATE DE SENSIBILIDAD (S5; desde el S16 vigila TODO el repo). Este repo es público y la app es sobre un niño real: lo que se
@@ -38,29 +36,23 @@ describe("normalización (idéntica a la del generador de hashes)", () => {
     expect(buscarCoincidencias("nada\nla ZETA-uno pasó por aquí", set)).toEqual([{ linea: 2, n: 2 }]);
     expect(buscarCoincidencias("zeta dos uno", set)).toEqual([]);
   });
-  it("recortar por marcadores devuelve solo lo que está entre ellos", () => {
-    expect(recortar("a <!-- s5:inicio --> b <!-- s5:fin --> c", { archivo: "x", entre: ["<!-- s5:inicio -->", "<!-- s5:fin -->"] }).trim()).toBe("b");
-    expect(recortar("a MARCA b", { archivo: "x", desde: "MARCA" })).toBe("MARCA b");
-  });
-  it("recortar con «excepto» devuelve todo MENOS lo que está entre los marcadores", () => {
-    const alcance = { archivo: "x", excepto: ["<!-- h:i -->", "<!-- h:f -->"] as [string, string] };
-    expect(recortar("a <!-- h:i --> b <!-- h:f --> c", alcance).replace(/\s+/g, " ").trim()).toBe("a c");
-    expect(recortar("a <!-- h:i --> b", alcance).trim()).toBe("a");
-    expect(recortar("sin marcadores", alcance)).toBe("sin marcadores");
-  });
 });
 
 describe("gate: el alcance es TODO el repo (S16)", () => {
-  const archivos = ALCANCE_GATE.map(archivoDe);
+  const archivos = ALCANCE_GATE;
   it("el universo no se vacía en silencio: cientos de archivos, con sprints, ADR, docs, código y pruebas", () => {
     expect(archivos.length).toBeGreaterThan(400);
     for (const dir of ["sprints/", "decisions/", "docs/", "src/", "content/", "tests/", "scripts/"]) {
       expect(archivos.some((f) => f.startsWith(dir)), `el gate no ve ${dir}`).toBe(true);
     }
     expect(archivos).toContain("README.md");
+    // «Todo el repo» incluye lo que no es documento ni TypeScript: estilos, flujos de CI, scripts de shell.
+    for (const f of ["src/app/globals.css", ".github/workflows/ci.yml", "scripts/demo-rojo.sh", ".gitignore"]) {
+      expect(archivos, `el gate no ve ${f}`).toContain(f);
+    }
+    expect(archivos.some((f) => /\.(png|wav|ico)$/.test(f))).toBe(false);
   });
   it("cada archivo se vigila entero (sin recortes) y solo quedan fuera los tres excluidos", () => {
-    expect(ALCANCE_GATE.every((a) => typeof a === "string")).toBe(true);
     expect([...EXCLUIDOS_GATE].sort()).toEqual(["CLAUDE.md", "pnpm-lock.yaml", "tests/fixtures/sensibilidad-hashes.json"]);
     for (const f of EXCLUIDOS_GATE) expect(archivos).not.toContain(f);
   });
@@ -76,7 +68,7 @@ describe("gate: cero coincidencias en todo el repo", () => {
     expect(FIXTURE.n_max).toBe(N_MAX);
   });
 
-  for (const archivo of ALCANCE_GATE.map(archivoDe)) {
+  for (const archivo of ALCANCE_GATE) {
     it(archivo, () => {
       const c = buscarCoincidencias(readFileSync(join(RAIZ, archivo), "utf8"), HASHES);
       const detalle = c.map((x) => `línea ${x.linea} (n-grama de ${x.n})`).join(" · ");
@@ -105,7 +97,7 @@ describe("gate: ninguna edad escrita en todo el repo", () => {
     expect(tieneEdad("short moments — 5 to 30 minutes")).toBe(false);
   });
 
-  for (const archivo of ALCANCE_GATE.map(archivoDe)) {
+  for (const archivo of ALCANCE_GATE) {
     it(`sin edades: ${archivo}`, () => {
       expect(lineasConEdad(readFileSync(join(RAIZ, archivo), "utf8")), `edad escrita en ${archivo}`).toEqual([]);
     });
