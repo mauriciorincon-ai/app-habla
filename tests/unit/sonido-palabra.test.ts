@@ -136,6 +136,42 @@ describe("el adaptador de la voz del aparato", () => {
     if (original) Object.defineProperty(window, "speechSynthesis", original);
   });
 
+  it("el final de una frase cancelada no levanta la guarda de la que la reemplaza", () => {
+    const frases: { addEventListener: (t: string, f: () => void) => void; fin?: () => void }[] = [];
+    const speak = vi.fn();
+    vi.stubGlobal("speechSynthesis", {
+      getVoices: () => [LOCAL_ES],
+      speak,
+      cancel: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    });
+    class Frase {
+      voice: unknown = null;
+      lang = "";
+      volume = 1;
+      rate = 1;
+      fin?: () => void;
+      constructor(public text: string) {
+        frases.push(this);
+      }
+      addEventListener(tipo: string, f: () => void) {
+        if (tipo === "end") this.fin = f;
+      }
+    }
+    vi.stubGlobal("SpeechSynthesisUtterance", Frase);
+    const guarda = vi.fn();
+    decirConVozDelAparato("pato", "es", 1, guarda);
+    decirConVozDelAparato("gato", "es", 1, guarda);
+    guarda.mockClear();
+    // The first phrase was cancelled by the second: its late `end` must stay silent.
+    frases[0].fin?.();
+    expect(guarda).not.toHaveBeenCalled();
+    // The current phrase ending does lift the guard.
+    frases[1].fin?.();
+    expect(guarda).toHaveBeenCalledWith(0);
+  });
+
   it("sin voz local, o con volumen 0, no dice nada", () => {
     const speak = simular([RED_ES]);
     expect(decirConVozDelAparato("pato", "es", 1)).toBe(false);
