@@ -9,6 +9,7 @@ import type { Idioma } from "@/lib/idioma";
 import { abrirMotor, cargar } from "@/lib/reconocer/modelo";
 import { gramaticaDelJuego } from "@/lib/reconocer/vocabulario";
 import { registrarRonda } from "@/lib/reconocer/conteo";
+import { crearGuardaBucle } from "@/lib/voice/guarda-bucle";
 import { crearEscucha, type Escucha, type Oido } from "@/lib/voice/escucha";
 import type { MicSession } from "@/lib/voice/mic-session";
 
@@ -44,6 +45,12 @@ export type Reconocedor = {
   nuevaRonda: () => void;
   /** Counts the round in the local 2×2 (only while listening). */
   contar: (coincidio: boolean, adultoSi: boolean) => void;
+  /**
+   * The app's own voice (family recording or device voice) is about to sound for `ms`: what the engine
+   * hears until it ends (plus the echo tail) is NOT the child, so it is dropped (hard rule 3, ADR-010).
+   * `ms <= 0` lifts the guard.
+   */
+  silenciar: (ms: number) => void;
   desconectar: () => void;
 };
 
@@ -62,6 +69,7 @@ export function useReconocedor(o: {
   // Each connect/disconnect bumps this: an async connect that is no longer current cleans up after itself.
   const generacionRef = useRef(0);
   const estadoRef = useRef<EstadoReconocedor>("apagado");
+  const guardaRef = useRef(crearGuardaBucle());
 
   const poner = useCallback((e: EstadoReconocedor) => {
     estadoRef.current = e;
@@ -112,6 +120,8 @@ export function useReconocedor(o: {
           sampleRate: TASA_MODELO,
           tasaEntrada: tasa,
           alOir: (h) => {
+            // The app's own voice sounding (echo through the speakers) is never the child's.
+            if (guardaRef.current.activa(performance.now())) return;
             const previa = porPalabraRef.current.get(h.palabra);
             if (!previa || h.conf > previa.conf) {
               porPalabraRef.current.set(h.palabra, h);
@@ -146,6 +156,10 @@ export function useReconocedor(o: {
     [activo, idioma, juego, poner, desconectar],
   );
 
+  const silenciar = useCallback((ms: number) => {
+    guardaRef.current.silenciar(ms, performance.now());
+  }, []);
+
   const nuevaRonda = useCallback(() => {
     mejorRef.current = null;
     porPalabraRef.current = new Map();
@@ -160,5 +174,5 @@ export function useReconocedor(o: {
     if (estadoRef.current === "escuchando") registrarRonda(coincidio, adultoSi);
   }, []);
 
-  return { estado, oido, oidoDe, conectar, nuevaRonda, contar, desconectar };
+  return { estado, oido, oidoDe, conectar, nuevaRonda, contar, silenciar, desconectar };
 }

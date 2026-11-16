@@ -175,18 +175,23 @@ function JuegoListo({
     metricaActual,
   });
 
-  // La voz de la familia (O2): al sonar, pausa el medidor con `silenciar` para que su eco por los
-  // parlantes no cuente como voz del niño (guarda del bucle, ADR-010).
-  const voz = useVozFamiliar({ alSonar: silenciar });
-
-  const { actual, ajustes } = sesion;
-  const modoCalma = ajustes.modoCalma;
-
   const rec = useReconocedor({
     juego: "palabras",
     idioma,
     activo: reconocedorActivo,
   });
+  const { silenciar: silenciarReconocedor } = rec;
+  // La voz de la app (grabación de la familia o voz del aparato): al sonar, pausa el medidor Y el
+  // reconocedor para que su eco por los parlantes no cuente como voz del niño (guarda del bucle, ADR-010).
+  const voz = useVozFamiliar({
+    alSonar: (ms) => {
+      silenciar(ms);
+      silenciarReconocedor(ms);
+    },
+  });
+
+  const { actual, ajustes } = sesion;
+  const modoCalma = ajustes.modoCalma;
   const turnoDeEl = sesion.turno === "nino";
   // El reconocedor escucha el cuarto entero; en «tu turno» lo que oye es del adulto: ni «quizás», ni halo,
   // ni conteo (ADR-025). Al volver su turno, lo oído antes se olvida.

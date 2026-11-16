@@ -123,9 +123,6 @@ function GemelasListo({
   // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
   // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
   const [festejo, setFestejo] = useState<"a" | "b" | null>(null);
-  // La voz de la familia modela cada palabra del par. Gemelas no abre micrófono por sí sola (solo si el adulto toca «Escuchar», más abajo) → sin guarda de eco.
-  const voz = useVozFamiliar();
-
   // The recognizer (S11): Gemelas opens a microphone ONLY when the adult taps «Listen», and closes it
   // when the game leaves the playing phase. Nothing is stored; the adult's buttons still decide.
   const rec = useReconocedor({
@@ -133,6 +130,9 @@ function GemelasListo({
     idioma,
     activo: reconocedorActivo,
   });
+  // La voz de la app modela cada palabra del par. Gemelas no tiene medidor, pero si el adulto dejó el
+  // reconocedor escuchando, el eco de esa voz no cuenta como lo que oyó del niño.
+  const voz = useVozFamiliar({ alSonar: rec.silenciar });
   const micRef = useRef<MicSession | null>(null);
   const { desconectar } = rec;
   useEffect(() => {
