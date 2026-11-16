@@ -26,6 +26,6 @@ pr: "#28"
 - **Para el dueño:** la frase grabada de «casi» sonará con la voz de la familia, tal cual la grabaron.
 - **Decisiones:** ADR-027. **Deuda:** ninguna.
 - **Modelo por fase:** F1 Opus 5.5 · F2 y F3 Sonnet 5.5 · cierre Haiku 5.5 · auditor Sonnet high; Fable no usado. **Relevos:** 0. **`/compact`:** 2.
-- **Servidores:** `lsof` LISTEN en este repo: 0 (3500 cerrado; el resto no es de este repo).
+- **Servidores:** `lsof` LISTEN en este repo: 0 abiertos por el sprint (3500 cerrado). Solo queda el test-server de la extensión Playwright de VS Code (127.0.0.1, puerto efímero), que es del editor y no se cerró.
 - **Sensibilidad:** 0 coincidencias en lo que vigila (31 coincidencias previas fuera del alcance del gate, solo reportadas).
 - **Para mergear:** squash y borrar la rama; después `/cierre-sprint habla`.
