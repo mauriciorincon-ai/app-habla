@@ -19,7 +19,7 @@
     "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 15,
+    "sprints_cerrados": 16,
     "version_repo": "0.1.0"
   },
   "promesa": {
@@ -329,10 +329,10 @@
     {
       "clave": "pruebas_unitarias",
       "etiqueta": "Pruebas unitarias y de integración",
-      "valor": 1756,
+      "valor": 1788,
       "unidad": "pruebas",
       "fuente": "medido",
-      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S16: 62 archivos, 1756 pruebas, todas en verde."
+      "detalle": "Salida de `pnpm test` (vitest con cobertura) el 2026-11-16 sobre la rama del S16: 62 archivos, 1788 pruebas, todas en verde."
     },
     {
       "clave": "pruebas_e2e",
