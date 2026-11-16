@@ -7,7 +7,7 @@ export const reconocedor = {
     titulo: { es: "¿Dijo la palabra?", en: "Did they say the word?" },
     descripcion: {
       es: "Un reconocedor que escucha en este aparato y le sugiere a usted, en voz baja, «quizás dijo…». Usted sigue siendo quien juzga.",
-      en: "A recognizer that listens on this device and quietly suggests to you, «maybe they said…». You are still the one who judges.",
+      en: "A recognizer that listens on this device and quietly suggests to you, “maybe they said…”. You are still the one who judges.",
     },
     aviso: {
       es: "Al encenderlo se descarga el modelo de voz del idioma actual: unos 40 MB, una sola vez, desde esta misma app. El sonido no se guarda ni sale de aquí: el reconocedor lo oye en memoria y solo devuelve una palabra y qué tan seguro está.",
@@ -45,7 +45,7 @@ export const reconocedor = {
       },
       descripcion: {
         es: "Cuando el reconocedor cree que oyó la palabra, el dibujo brilla apenas. Sin texto, sin «bien» ni «mal», no cuenta nada y puede equivocarse.",
-        en: "When the recognizer thinks it heard the word, the picture glows a little. No text, no «right» or «wrong», it counts nothing and it can be wrong.",
+        en: "When the recognizer thinks it heard the word, the picture glows a little. No text, no “right” or “wrong”, it counts nothing and it can be wrong.",
       },
     },
     conteo: {
@@ -84,7 +84,7 @@ export const reconocedor = {
     },
   },
   juego: {
-    quizas: { es: "Quizás dijo «{palabra}»", en: "Maybe they said «{palabra}»" },
+    quizas: { es: "Quizás dijo «{palabra}»", en: "Maybe they said “{palabra}”" },
     escuchar: { es: "Escuchar con el reconocedor", en: "Listen with the recognizer" },
     escuchando: { es: "Escuchando en este aparato", en: "Listening on this device" },
     sinModelo: {

@@ -2,7 +2,7 @@ import { expect, test, type Page } from "./base";
 
 // «DID THEY SAY THE WORD?» in English (S11, ADR-023), through the UI with a fake microphone: `cat`, an adult
 // Lingua Libre volunteer (CC BY-SA 4.0, never the family; tests/e2e/fixtures/palabras/mic-en.wav).
-// Shows that the English model downloads, the adult's line reads «Maybe they said «cat»» only for that
+// Shows that the English model downloads, the adult's line reads “Maybe they said “cat”” only for that
 // round, and nothing is shown for another picture.
 
 const PALABRA = "cat";
@@ -18,7 +18,7 @@ async function encender(page: Page) {
 
 test.use({ locale: "en-US" });
 
-test("in English: the recognizer downloads and the adult sees «Maybe they said «cat»» only in that round", async ({
+test("in English: the recognizer downloads and the adult sees “Maybe they said “cat”” only in that round", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -39,7 +39,7 @@ test("in English: the recognizer downloads and the adult sees «Maybe they said 
 
   for (let i = 0; i < 40 && (await palabraVisible()) !== PALABRA; i++)
     await page.getByTestId("siguiente-picto").click();
-  await expect(page.getByTestId("quizas-dijo")).toContainText(`Maybe they said «${PALABRA}»`, {
+  await expect(page.getByTestId("quizas-dijo")).toContainText(`Maybe they said “${PALABRA}”`, {
     timeout: 30_000,
   });
 });
