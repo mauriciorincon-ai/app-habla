@@ -13,12 +13,27 @@ import { useAjustes } from "@/components/estado-local";
 import { listarIds, obtenerGrabacion } from "@/lib/banco-voz/almacen";
 import { resolverFuente } from "@/lib/audio/resolver";
 import { reproducirBlob } from "@/lib/audio/reproducir";
+import {
+  sonidoDePalabra,
+  volumenDe,
+  type FuenteSonido,
+  type VozAparato,
+} from "@/lib/audio/sonido-palabra";
+import { alCambiarVoces, decirConVozDelAparato, vocesDelAparato } from "@/lib/audio/voz-aparato";
+import { useIdioma } from "@/lib/idioma/estado";
 
 export type VozFamiliar = {
   /** ¿Este ítem tiene grabación Y el padre dejó activa la voz familiar? (decide si mostrar el altavoz). */
   disponible: (id: string) => boolean;
   /** Reproduce la grabación del ítem (no-op seguro si no aplica). Devuelve si de verdad sonó. */
   reproducir: (id: string) => Promise<boolean>;
+  /**
+   * El pictograma siempre suena (S15, ADR-027): ¿con qué sonaría esta palabra? La grabación gana; si no
+   * hay, la voz LOCAL del aparato; si tampoco, nada.
+   */
+  sonidoDe: (id: string) => FuenteSonido;
+  /** Dice la palabra con lo que `sonidoDe` decida. Devuelve la fuente que de verdad sonó. */
+  decirPalabra: (id: string, texto: string) => Promise<FuenteSonido>;
 };
 
 export function useVozFamiliar(opts?: {
@@ -32,6 +47,16 @@ export function useVozFamiliar(opts?: {
   const ajustes = useAjustes();
   // Default true: si el padre grabó su voz, que se oiga (coherente con AjustesSchema.vozFamiliar).
   const vozFamiliarActiva = ajustes?.vozFamiliar ?? true;
+  const sonidos = ajustes?.sonidos ?? "normal";
+  const idioma = useIdioma();
+
+  // Las voces del aparato llegan tarde en algunos navegadores: se releen cuando el sistema avisa.
+  const [voces, setVoces] = useState<VozAparato[]>([]);
+  useEffect(() => {
+    const leer = () => setVoces(vocesDelAparato());
+    leer();
+    return alCambiarVoces(leer);
+  }, []);
 
   // Qué ítems tienen grabación. Se carga una vez al montar el juego; el banco no cambia a mitad
   // de una sesión de juego (grabar es otra pantalla). Si IndexedDB falla al abrir (modo privado
@@ -100,5 +125,26 @@ export function useVozFamiliar(opts?: {
     [disponible],
   );
 
-  return { disponible, reproducir };
+  const sonidoDe = useCallback(
+    (id: string): FuenteSonido =>
+      sonidoDePalabra({ tieneGrabacion: ids.has(id), vozFamiliarActiva, voces, idioma, sonidos }),
+    [ids, vozFamiliarActiva, voces, idioma, sonidos],
+  );
+
+  const decirPalabra = useCallback(
+    async (id: string, texto: string): Promise<FuenteSonido> => {
+      const fuente = sonidoDe(id);
+      if (fuente === "grabacion") return (await reproducir(id)) ? "grabacion" : "nada";
+      if (fuente === "base") {
+        cancelarRef.current?.();
+        return decirConVozDelAparato(texto, idioma, volumenDe(sonidos), alSonarRef.current)
+          ? "base"
+          : "nada";
+      }
+      return "nada";
+    },
+    [sonidoDe, reproducir, idioma, sonidos],
+  );
+
+  return { disponible, reproducir, sonidoDe, decirPalabra };
 }
