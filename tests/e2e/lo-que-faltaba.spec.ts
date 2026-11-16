@@ -149,6 +149,18 @@ for (const idioma of ["es", "en"] as const) {
       const sorpresa = page.getByTestId("sorpresa");
       await expect(sorpresa).toBeVisible();
       await expect(sorpresa).toHaveAttribute("role", "status");
+      // S16: vive en su hueco reservado, dentro del flujo: no tapa la tarjeta ni ningún botón del juego.
+      const caja = (await sorpresa.boundingBox())!;
+      const hueco = (await page.getByTestId("hueco-sorpresa").boundingBox())!;
+      expect(caja.y).toBeGreaterThanOrEqual(hueco.y - 1);
+      expect(caja.y + caja.height).toBeLessThanOrEqual(hueco.y + hueco.height + 1);
+      const tapa = (b: { x: number; y: number; width: number; height: number }) =>
+        b.x < caja.x + caja.width && caja.x < b.x + b.width && b.y < caja.y + caja.height && caja.y < b.y + b.height;
+      const otros = [page.getByTestId("gemelas-ronda"), ...(await page.getByTestId("juego").getByRole("button").all())];
+      for (const o of otros) {
+        const b = await o.boundingBox();
+        if (b) expect(tapa(b), "la sorpresa tapa un control o la tarjeta").toBe(false);
+      }
       const texto = (await sorpresa.innerText()).trim();
       expect(texto.length).toBeGreaterThan(8);
       // Ni «no» ni aplauso ni contador: solo una escena.

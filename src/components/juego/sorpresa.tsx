@@ -2,12 +2,12 @@
 
 // LA SORPRESA (S15): una escena pequeña del tema de su mundo que aparece con los TURNOS del niño y se va
 // sola. No es un premio: sale al llegar a su tercer turno con voz medida (acierte o no), una vez por
-// partida, no se cuenta ni se guarda, y no hay monedas, fichas ni colección. Es un aviso fijo abajo, sin
-// animación (aparece y desaparece, así que «reducir animaciones» no cambia nada) y sin captar toques
-// (`pointer-events-none`): sale del flujo, así que no mueve el layout; en un móvil pequeño puede cubrir a
-// la vista el borde inferior unos segundos, pero los botones de abajo siguen recibiendo el toque.
+// partida, no se cuenta ni se guarda, y no hay monedas, fichas ni colección. Sin animación (aparece y
+// desaparece, así que «reducir animaciones» no cambia nada) y sin captar toques (`pointer-events-none`).
+// S16: vive EN EL FLUJO, dentro de un hueco de altura reservada que el marco pinta siempre en la pantalla
+// del niño (`HuecoSorpresa`): no tapa la tarjeta ni los botones, y al aparecer no mueve nada.
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { IconoBurbuja } from "@/components/iconos";
 import { fechaHoy } from "@/lib/fecha";
 import { useIdioma } from "@/lib/idioma/estado";
@@ -19,6 +19,15 @@ import {
 import type { JuegoSuMundo } from "@/lib/su-mundo/su-mundo";
 import { Protagonista } from "./protagonista";
 import { useSuMundo } from "./use-su-mundo";
+
+/** El sitio de la sorpresa: siempre presente en la pantalla del niño, con la altura de la tarjeta reservada. */
+export function HuecoSorpresa({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-24" data-testid="hueco-sorpresa">
+      {children}
+    </div>
+  );
+}
 
 export function Sorpresa({
   juego,
@@ -52,7 +61,7 @@ export function Sorpresa({
       aria-live="polite"
       data-testid="sorpresa"
       data-tema={tema}
-      className="bg-superficie border-borde text-tinta pointer-events-none fixed bottom-4 left-1/2 z-10 flex w-[min(92vw,26rem)] -translate-x-1/2 items-center gap-3 rounded-2xl border-2 p-3 shadow-tarjeta"
+      className="bg-superficie border-borde text-tinta pointer-events-none mx-auto flex w-full max-w-[26rem] items-center gap-3 rounded-2xl border-2 p-3 shadow-tarjeta"
     >
       {protagonista ? (
         <Protagonista juego={juego} className="size-12 shrink-0" />

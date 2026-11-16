@@ -24,7 +24,7 @@ const ANCLAS: Record<string, string> = {
   "tests/unit/gate-idiomas.test.ts:18": "PROHIBIDO_EN",
   "tests/unit/idioma.test.ts:21": "import.meta.glob",
   "tests/unit/privacidad-voice.test.ts:57": "regla dura 2",
-  "tests/unit/sensibilidad.test.ts:64": "gate: cero coincidencias",
+  "tests/unit/sensibilidad.test.ts:69": "gate: cero coincidencias",
 };
 
 describe("convenciones de la familia v0.1.0", () => {
