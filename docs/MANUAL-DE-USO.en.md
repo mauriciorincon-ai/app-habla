@@ -21,7 +21,7 @@ The screen is only the excuse to play together.
 
 1. Open the app in the browser of your tablet or phone (Chrome on Android works well).
 2. **Install it as an app** (optional, recommended): in the browser menu, choose "Add to home screen". It then
-   opens full screen and works offline.
+   opens full screen. **Offline:** after you open the app once with internet, Today, the seven games, Stories and Settings open even with no network (the optional recognizer and voice recordings are not kept in that copy).
 3. The first time, it asks two things: what your child is called at home (optional) and up to three topics they
    like. In **Settings** you can add **"Other things they love"** (up to eight, general words): the single place for their interests. **All of it stays on the device**; there are no accounts and no sign-up.
 4. Want to change the nickname or topics later? Go to **Settings → "Nickname and topics" → "Change nickname and
@@ -179,6 +179,8 @@ _foca_ and _boca_. These are called **minimal pairs**, and practising that contr
 line: **point at both, ask your child to say ONE**, then **mark the one you heard** on the discreet _"Which did you
 hear?"_ line at the bottom. (This game practises Spanish words; see the Language section.)
 
+**Twin words run inside the same frame as the other games:** at the top are the turn strip with its button and the prompter, the **calm mode** button, their companion and the spoken invitation ("Look at the two pictures. Say the one you like."). Their turn counts when you mark a word or tap "another".
+
 **How a round goes:**
 
 - **Touching a picture makes it sound in your voice** (if you recorded that word in the Studio; it carries a small
@@ -224,30 +226,29 @@ the only signal.
 
 ### Your family's voice — record your voice for the games
 
-The games can **sound with the voice of mom or dad** instead of staying silent. It is optional, and you manage it
+The games can **sound with the voice of mom or dad**. A word nobody recorded sounds with **the device's own voice**, only if the device has a voice that speaks without internet; if it has none, it stays silent and the Studio tells you how many words are left to record. Recording is optional, and you manage it
 from **Settings → "Your family's voice" → "Record my voice"** (or straight from the **Studio** screen).
 
 **How it works:**
 
-- The Studio shows you, one at a time, the **words and phrases** you can record (the words of the pictures, some
-  game invitations, and the honest celebrations). Tap **"Record"**, say the word, **listen to how it came out**, and
+- The Studio shows you, one at a time, the **words and phrases** you can record (the words of the pictures, the **seven** game invitations (balloon, siren, blowing, loud and soft, vowels, words and twins), and the honest celebrations). Tap **"Record"**, say the word, **listen to how it came out**, and
   **keep it** or **record it again**. A bar shows how much you have recorded. While you record, **another bar moves
   with your voice**: if it moves when you speak, you are being heard, so you never record blind. (That bar is only
   for looking; it saves nothing.) And when you play back any recording, **a small bar fills as the audio advances**,
   so you know it is playing and how much is left.
 - Under **"Your voice is on its way"** each group (Words · Game invitations · Celebrations) has its own **"Record"**
-  button. You can go straight to the group you want, for example recording the two invitations without going
+  button. You can go straight to the group you want, for example recording the seven invitations without going
   through all the words. The big button ("Record more") remains the usual guided route, which suggests first what
   helps your child most.
 - Under **"What you have recorded"**, recordings are grouped by those same three groups, numbered within each one,
   with **Play** (it sounds with its progress bar in the row) and **Delete** buttons. Delete asks for a **second
   tap**: the button turns red and says "Sure?", so a hurried finger does not erase anything by accident. If you
   change your mind, it disarms itself after a few seconds.
-- When there are recordings, "word and picture" and "word twins" show a **speaker button** (large, so your child can
-  tap it), and the word **plays by itself** when the picture appears. That way the name "lives in the thing", in a
+- "Word and picture" and "word twins" show a **speaker button** (large, so your child can
+  tap it), and the word **plays by itself** when the picture appears: with your recording if there is one and, if not, with the device voice (always the device's own voice, never one from the internet). That way the name "lives in the thing", in a
   voice your child knows.
 - **In the voice games too:** if you recorded the game invitations ("Make your voice sound: aaaaah",
-  "Make a siren voice: aaaAAAaaa", "Take a breath and blow: fooo" and "Tiny voice… and big voice"), a speaker appears under the title that says them in your voice. While your
+  "Make a siren voice: aaaAAAaaa", "Take a breath and blow: fooo", "Tiny voice… and big voice" and the three new ones for vowels, words and twins), a speaker appears next to the invitation, on the game screen, that says it in your voice. While your
   recorded voice is playing, **the game stands still**: the meter waits for your child's real voice, so the balloon
   never flies because of a recording.
 - You can **switch your family's voice off** with the _"Use your family's voice"_ switch **without deleting
@@ -511,8 +512,7 @@ picture's word. It gets things wrong, so it **never** decides anything: you keep
 
 ### Short sessions — the daily play cap (new · S12)
 
-In **Settings → "Short sessions"** you choose a **daily play cap between 5 and 10 minutes** (10 by default). The voice
-games count today's minutes of play **on this device**. When the cap is reached this happens, and only this:
+In **Settings → "Short sessions"** you choose a **daily play cap between 5 and 10 minutes** (10 by default). The games, **stories and family videos** count today's minutes **on this device**. In a story or a video the notice **waits for the end of the page or the clip**: it never cuts halfway. When the cap is reached this happens, and only this:
 
 - **The game closes calmly**, as if you had tapped "Exit" (the microphone turns off).
 - **You are told, never your child, once a day**: _"You've played as much as you planned today"_, with a clock and text.
@@ -525,7 +525,7 @@ other-home file and "Delete my data" wipes it.
 
 ### Turns and the prompter — playing as two, with one line for you (new · S13)
 
-Every microphone game (balloon, blowing, loud and soft, rocket, word and picture, vowels) is played **in turns**, and you set them:
+Every game (balloon, blowing, loud and soft, rocket, word and picture, vowels and twin words) is played **in turns**, and you set them:
 
 - Above the game there is a **thin strip** with one button: **"Hand the turn over"** or **"My turn"**. **One tap** changes the turn. The app **never guesses whose voice it hears**: you decide that.
 - **In their turn** (everything starts there, no tap needed) what their voice does **counts and is celebrated**. **In your turn** the drawing moves with your model so they can see it, but **nothing is counted for them**: no seconds, no blows, no changes, no picture lighting up.
@@ -538,7 +538,7 @@ None of this stores your voice or theirs: only **how many of their turns** there
 
 ### Their world everywhere — their topics and the goal, in every game (new · S14)
 
-- **The companion:** in balloon, blowing, loud and soft, rocket and vowels, a drawing of **one of their topics** (a dinosaur, a little car, a planet…) sits in a corner. It rotates by day and differs between games. **It only dresses the scene**: what is measured and when it celebrates do not change. With no topics, the scene is the usual one.
+- **The companion:** in balloon, blowing, loud and soft, rocket, vowels and twin words, a drawing of **one of their topics** (a dinosaur, a little car, a planet…) sits in a corner. It rotates by day and differs between games. **It only dresses the scene**: what is measured and when it celebrates do not change. With no topics, the scene is the usual one.
 - **Words to model:** with a weekly goal, the guide card says **"Model a word from their goal: …"** (up to four) and the prompter strip says **"You could say: …"** only in your turn. It is advice for you, never something the app checks or the child sees. With no goal, nothing shows.
 - **Word and picture, and Twin words:** the deck and the pairs put the goal's first, then their topics'.
 - **Colours and actions:** "colors" now exists (four capsules, four pictures) and "actions" reaches pictures and pairs (run/sun, dig/pig; in Spanish come/tome, toca/boca). A goal like "numbers" is still told plainly: no content, no pretending.
@@ -564,12 +564,17 @@ None of this stores your voice or theirs: only **how many of their turns** there
 One tap, in the game or in Settings, and the screen drops to dusk colours: **no meter, no goal, and no automatic
 celebration**. The balloon does not stop: it **rises while the voice sounds and settles slowly in silence**, like a
 real balloon, with no race and no finish line. The rocket does the same: it floats with the voice, with no goal. It
-helps when your child is overstimulated or when a game with a goal is too much. It is available in the voice games
-(balloon, blowing, loud and soft, rocket, word and picture and the vowel map).
+helps when your child is overstimulated or when a game with a goal is too much. It is in all seven games, and **also on Today**: a one-tap button to switch it on before opening a game, without going to Settings.
 
 There is also a setting to **reduce animation** (and if your system already asks for less motion, the app follows
 it without you touching anything). With it on, the word balloons, the milestone confetti, and the rocket's sky
 layer are not shown; the text still tells every achievement.
+
+### App sounds and Colour intensity — sensory load your way (new · S15)
+
+- **Settings → "App sounds":** _Regular_, _Soft_ (half volume) or _Off_. It governs **the device's own voice** (the one that says a picture nobody recorded) and there are no sound effects, because the voice games do not emit sound: its echo would come back through the microphone. **The family's voice is separate**, with its own switch.
+- **Settings → "Colour intensity":** _Regular_ or _Soft_. "Soft" lowers the fill colours of both screens, yours and your child's, **without touching the text**: it reads just as well. The state shows as "Selected" and a border, never by colour alone.
+- **Surprise of the day:** in any game, **on their third turn** a small scene from one of their topics ("A dino pokes its head out of the leaves.") shows for a few seconds and leaves by itself. It is not a prize: it comes whether or not it goes well, it is not counted or saved, and there are **no coins, tokens or collection**. It changes every day.
 
 ### Light or dark
 
@@ -681,3 +686,4 @@ and load only when you write a goal.
 | 012    | **"Their voice moves it all"**: two new games with no words, **Blowing** (counts blows of air) and **Loud and soft** (celebrates volume changes, never a "right" volume); the selector with seven games in a fixed order; **Short sessions**: a daily play cap (5 to 10 min, 10 by default) that closes the game calmly and tells the adult once, without blocking; the path adds blows, volume changes and two milestones. |
 | 013    | **"Together, for real"**: the six microphone games played in turns you set with one tap (in yours the drawing moves but nothing is counted for them), a turn indicator the child understands without reading, **Your prompter** (one line for you at the right moment, can be turned off) and "N turns of theirs" in the celebration and the Path. |
 | 014    | **"Their world everywhere"**: a companion from their topics in five games, words to model from the goal on the guide card and the prompter, "colors", more actions and bath capsules, "Other things they love" as the single home of their interests (Stories reads it) and a stories reminder card on Today (with its switch in Settings). |
+| 015    | **"What was missing"**: Twin words inside the common frame (turns, prompter, calm mode, companion and spoken invitation); seven recordable invitations; a picture nobody recorded sounds with the device's own voice (never from the internet); your voice celebrates ("it came out", "said the word", "almost"); the cap counts stories and videos and notices at the end; truly offline after the first visit; "App sounds", "Colour intensity" and calm mode on Today; the surprise of the day on their third turn. |

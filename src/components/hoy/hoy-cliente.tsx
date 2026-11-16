@@ -33,10 +33,11 @@ import { diasPracticados } from "@/lib/coach/daily";
 import { TextoCapsula } from "@/components/capsula-textos";
 import { useHidratado } from "@/components/use-hidratado";
 import { useT } from "@/lib/idioma/estado";
-import { ajustes as textosAjustes } from "@/lib/idioma/textos/ajustes";
+import { etapaNombre } from "@/lib/idioma/textos/etapa-nombre";
 import { nombreTecnica } from "@/lib/idioma/textos/nombres";
 import { hoy } from "@/lib/idioma/textos/hoy";
 import { cuentos } from "@/lib/idioma/textos/cuentos";
+import { CalmaHoy } from "./calma-hoy";
 import { ContactoVisualHoy } from "./contacto-visual-hoy";
 import { Onboarding } from "./onboarding";
 import { RecordatorioCuentos } from "./recordatorio-cuentos";
@@ -98,6 +99,7 @@ export function HoyCliente() {
         </Link>
       ) : null}
       <RecordatorioCuentos />
+      <CalmaHoy />
       <article
         className="bg-superficie shadow-tarjeta rounded-2xl p-6"
         data-testid="capsula"
@@ -113,7 +115,7 @@ export function HoyCliente() {
           {tx(hoy.etiqueta.tecnica)} {tx(nombreTecnica[capsula.tecnica])} ·{" "}
           {tx(hoy.etiqueta.etapa)}{" "}
           <span data-testid="etiqueta-etapa">
-            {tx(textosAjustes.etapa.nombre[capsula.etapa])}
+            {tx(etapaNombre[capsula.etapa])}
           </span>
         </p>
 

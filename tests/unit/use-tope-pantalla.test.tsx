@@ -3,7 +3,7 @@
 
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useTopePantalla } from "@/components/juego/use-tope-pantalla";
+import { useTopeAlTerminar, useTopePantalla } from "@/components/juego/use-tope-pantalla";
 import { claveFechaLocal } from "@/lib/fecha";
 import { guardarPantalla, leerPantalla } from "@/lib/pantalla/almacen";
 
@@ -70,5 +70,44 @@ describe("useTopePantalla", () => {
     expect(alAlcanzar).not.toHaveBeenCalled();
     expect(leerPantalla().fecha).toBe(HOY);
     expect(leerPantalla().avisado).toBe(false);
+  });
+});
+
+// S15 (ADR-027): stories and the video library count toward the same cap, but the notice waits for the
+// page or the clip to end — never in the middle.
+describe("useTopeAlTerminar: el aviso espera al fin de la página o del clip", () => {
+  it("al llegar el tope a mitad de página no avisa todavía; al pasar la página, sí, una vez", () => {
+    guardarPantalla({ fecha: HOY, ms: 5 * MIN - 2000, avisado: false });
+    const { result } = renderHook(() =>
+      useTopeAlTerminar({ viendo: true, topeMinutos: 5 }),
+    );
+    act(() => void vi.advanceTimersByTime(3000));
+    expect(result.current.pendiente).toBe(true);
+    expect(result.current.avisoMinutos).toBeNull();
+    let tocaAvisar = false;
+    act(() => {
+      tocaAvisar = result.current.alTerminar();
+    });
+    expect(tocaAvisar).toBe(true);
+    expect(result.current.pendiente).toBe(false);
+    expect(result.current.avisoMinutos).toBe(5);
+    // A new story starts: the notice already read goes away, and it never cuts again today.
+    act(() => result.current.olvidarAviso());
+    expect(result.current.avisoMinutos).toBeNull();
+    act(() => void vi.advanceTimersByTime(60_000));
+    expect(result.current.pendiente).toBe(false);
+  });
+
+  it("sin tope alcanzado, terminar una página no hace nada", () => {
+    const { result } = renderHook(() =>
+      useTopeAlTerminar({ viendo: true, topeMinutos: 10 }),
+    );
+    act(() => void vi.advanceTimersByTime(2000));
+    let tocaAvisar = true;
+    act(() => {
+      tocaAvisar = result.current.alTerminar();
+    });
+    expect(tocaAvisar).toBe(false);
+    expect(result.current.avisoMinutos).toBeNull();
   });
 });

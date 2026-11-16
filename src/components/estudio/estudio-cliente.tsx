@@ -38,6 +38,8 @@ import {
   IconoRegrabar,
 } from "@/components/iconos";
 import { useIdioma, useT } from "@/lib/idioma/estado";
+import { vozLocalPara } from "@/lib/audio/sonido-palabra";
+import { alCambiarVoces, vocesDelAparato } from "@/lib/audio/voz-aparato";
 import type { Texto } from "@/lib/idioma";
 import { estudio } from "@/lib/idioma/textos/estudio";
 import { videoteca } from "@/lib/idioma/textos/videoteca";
@@ -160,6 +162,32 @@ export function EstudioCliente() {
   );
 }
 
+/** Sin voz local en este idioma, el pictograma sin grabar queda mudo: se le dice al adulto qué grabar (S15). */
+function AvisoSinVozLocal({ faltan }: { faltan: number }) {
+  const tx = useT();
+  const idioma = useIdioma();
+  const [hay, setHay] = useState<boolean | null>(null);
+  useEffect(() => {
+    const leer = () => setHay(vozLocalPara(vocesDelAparato(), idioma) !== null);
+    leer();
+    return alCambiarVoces(leer);
+  }, [idioma]);
+  if (hay !== false || faltan <= 0) return null;
+  return (
+    <section
+      className="bg-superficie border-aviso flex gap-3 rounded-2xl border-2 p-4"
+      data-testid="aviso-sin-voz-local"
+      role="note"
+    >
+      <IconoAltavoz className="text-aviso h-6 w-6 shrink-0" />
+      <div>
+        <h2 className="font-medium">{tx(estudio.sinVozLocal.titulo)}</h2>
+        <p className="text-tinta-suave mt-1 text-sm">{tx(estudio.sinVozLocal.cuerpo, { n: faltan })}</p>
+      </div>
+    </section>
+  );
+}
+
 // ─── Vista: mi banco de voz (gestión) ──────────────────────────────────────────────────────────
 
 function Gestion({
@@ -178,6 +206,7 @@ function Gestion({
   const tx = useT();
   const grabadosItems = catalogo.filter((i) => grabados.has(i.id));
 
+  const sinFaltantes = cobertura.porCategoria.find((c) => c.categoria === "palabra");
   return (
     <div className="flex flex-col gap-6">
       <section className="bg-superficie shadow-tarjeta rounded-2xl p-5">
@@ -284,6 +313,8 @@ function Gestion({
           {tx(imprimibles.entrada.abrir)}
         </Link>
       </section>
+      {/* Last, not first: it appears once the device voices are read, and must not push the page down. */}
+      <AvisoSinVozLocal faltan={sinFaltantes ? sinFaltantes.total - sinFaltantes.grabados : 0} />
     </div>
   );
 }

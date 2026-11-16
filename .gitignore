@@ -38,3 +38,6 @@ privado/
 # Recognizer (S11, ADR-023): models and engine are fetched at build time with a pinned hash; never committed.
 public/modelos/*.zip
 public/vosk/
+
+# Precache list (S15, ADR-027): generated from the build output by scripts/gen-precache.mjs.
+public/sw-precache.js

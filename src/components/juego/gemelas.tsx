@@ -9,7 +9,14 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import { useAjustes } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
@@ -30,12 +37,19 @@ import {
   secuenciaDeRondas,
   type Marca,
 } from "@/lib/gemelas/rondas";
-import { topeValido } from "@/lib/pantalla/tope";
-import { AvisoTope, LineaHoy } from "./aviso-tope";
 import { CelebracionHonesta } from "./celebracion-honesta";
-import { IndicadorTurno } from "./indicador-turno";
 import { GuionCard } from "./guion-card";
-import { hayLineaHoy, minutosDeHoy, useTopePantalla } from "./use-tope-pantalla";
+import { MarcoComun } from "./marco-juego";
+import { useModoCalma } from "./use-modo-calma";
+import { AltavozConsigna } from "./altavoz-consigna";
+import { Protagonista } from "./protagonista";
+import { idConsigna, textoConsigna } from "@/lib/banco-voz/catalogo";
+import {
+  reducir,
+  sesionInicial,
+  type Sesion,
+  type Turno,
+} from "@/lib/session-flow";
 import { useVozFamiliar } from "./use-voz-familiar";
 import { useReconocedor } from "./use-reconocedor";
 import { QuizasDijo } from "./quizas-dijo";
@@ -58,7 +72,6 @@ export function Gemelas() {
       etapa={ajustes.etapa}
       reconocedorActivo={ajustes.reconocedor}
       animacionReconocedor={ajustes.reconocedor && ajustes.animacionReconocedor}
-      topeMinutos={topeValido(ajustes.topeMinutos)}
     />
   );
 }
@@ -67,11 +80,8 @@ function GemelasListo({
   etapa,
   reconocedorActivo,
   animacionReconocedor,
-  topeMinutos,
 }: {
   etapa: Etapa;
-  /** Sesiones cortas (S12): minutos de juego por día; al llegar, aviso al adulto y cierre calmo como «Salir». */
-  topeMinutos: number;
   /** «¿Dijo la palabra?» (S11): off by default; Gemelas has no microphone unless the adult asks. */
   reconocedorActivo: boolean;
   animacionReconocedor: boolean;
@@ -100,20 +110,19 @@ function GemelasListo({
 
   const [fase, setFase] = useState<Fase>("guion");
   const [indice, setIndice] = useState(0);
-  // Sesiones cortas (S12, ADR-024): corre mientras se juega; al tope, el aviso va al adulto y la ronda
-  // se cierra como «Salir» (vuelve al guion). Después del aviso no vuelve a cortar ese día.
-  const { avisoMinutos } = useTopePantalla({
-    jugando: fase === "jugando",
-    topeMinutos,
-    alAlcanzar: () => otraVez(),
-  });
+  // El tope de sesión (S12) lo lleva el marco común (S15): al llegar, cierra como «Salir».
+  // El turno (S13, ADR-025) es del reducer de siempre; gemelas no mide voz, así que «un turno de él»
+  // cuenta cuando el adulto JUZGA (marca una palabra o toca «otra»).
+  const [base, enviar] = useReducer(
+    reducir,
+    sesionInicial({ modoCalma: false }, "gemelas", null),
+  );
+  const [turnosNino, setTurnosNino] = useState(0);
+  const { activo: modoCalma, alternar: alternarCalma } = useModoCalma();
   const [marcas, setMarcas] = useState<Marca[]>([]);
   // El festejo de la ronda (gate S4, stopper L1): el lado que el padre marcó se ENCIENDE como en
   // palabra↔objeto — la palabra del niño tiene consecuencia visible. null = todavía eligiendo.
   const [festejo, setFestejo] = useState<"a" | "b" | null>(null);
-  // La voz de la familia modela cada palabra del par. Gemelas no abre micrófono por sí sola (solo si el adulto toca «Escuchar», más abajo) → sin guarda de eco.
-  const voz = useVozFamiliar();
-
   // The recognizer (S11): Gemelas opens a microphone ONLY when the adult taps «Listen», and closes it
   // when the game leaves the playing phase. Nothing is stored; the adult's buttons still decide.
   const rec = useReconocedor({
@@ -121,6 +130,9 @@ function GemelasListo({
     idioma,
     activo: reconocedorActivo,
   });
+  // La voz de la app modela cada palabra del par. Gemelas no tiene medidor, pero si el adulto dejó el
+  // reconocedor escuchando, el eco de esa voz no cuenta como lo que oyó del niño.
+  const voz = useVozFamiliar({ alSonar: rec.silenciar });
   const micRef = useRef<MicSession | null>(null);
   const { desconectar } = rec;
   useEffect(() => {
@@ -171,12 +183,9 @@ function GemelasListo({
         className="mx-auto flex max-w-md flex-col items-center gap-4 text-center"
         data-testid="gemelas-sin-pares"
       >
-        <h2 className="font-display text-3xl">
-          {tx(g.sinPares.titulo)}
-        </h2>
+        <h2 className="font-display text-3xl">{tx(g.sinPares.titulo)}</h2>
         <p className="text-tinta-suave">
-          {tx(g.sinPares.antes)}{" "}
-          <strong>{tx(txa.etapa.nombre[etapa])}</strong>
+          {tx(g.sinPares.antes)} <strong>{tx(txa.etapa.nombre[etapa])}</strong>
           {tx(g.sinPares.despues)}
         </p>
         <Link
@@ -199,7 +208,13 @@ function GemelasListo({
     { a: par.a.palabra, b: par.b.palabra },
   );
 
+  /** Un turno de él cuenta cuando el adulto juzga (marca o «otra»), y solo si era SU turno. */
+  function contarTurno() {
+    if (base.turno === "nino") setTurnosNino((n) => n + 1);
+  }
+
   function avanzar(marca: Marca) {
+    if (marca === null) contarTurno();
     // The local 2×2 (only if something happened): see rondaGemelas.
     const ronda = rondaGemelas(ladoQuizas, marca);
     if (ronda) rec.contar(ronda.coincidio, ronda.adultoSi);
@@ -224,217 +239,260 @@ function GemelasListo({
 
   /** El padre marcó cuál oyó: el dibujo festeja (se enciende + suena) ANTES de avanzar. */
   function marcar(lado: "a" | "b") {
+    contarTurno();
     setFestejo(lado);
     const id = idPalabra(par[lado].palabra, idioma);
-    if (voz.disponible(id)) void voz.reproducir(id);
+    void voz.decirPalabra(id, par[lado].palabra);
   }
 
   function otraVez() {
+    enviar({ tipo: "CAMBIAR_TURNO", turno: "nino" });
+    setTurnosNino(0);
     setMarcas([]);
     setIndice(0);
     setFestejo(null);
     setFase("guion");
   }
 
-  if (fase === "guion") {
-    return (
-      <div className="flex flex-col gap-6">
-        {avisoMinutos !== null ? (
-          <AvisoTope minutos={avisoMinutos} />
-        ) : hayLineaHoy(topeMinutos) ? (
-          <LineaHoy minutos={minutosDeHoy()} />
-        ) : null}
-        <GuionCard
-          etiqueta={tx(g.guion.etiqueta)}
-          guion={tx(g.guion.guion)}
-          nota={tx(g.guion.nota)}
-          onEmpezar={() => setFase("jugando")}
-          listo
-          juego="gemelas"
-        />
-      </div>
-    );
-  }
-
-  if (fase === "celebracion") {
-    return (
-      <CelebracionHonesta
-        metrica={metricaGemelas(marcas)}
-        onOtraVez={otraVez}
-        onTerminar={() => router.push("/jugar")}
-        etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}
-      />
-    );
-  }
-
-  const oidas = marcas.filter((m) => m !== null).length + (festejo ? 1 : 0);
-
-  return (
-    <section className="flex flex-col gap-6" data-testid="gemelas-ronda">
-      {/* La salida de la ronda (gate S4: gemelas no usa el marco de los juegos de voz y se había
-          quedado sin puerta): "Salir" vuelve al GUION y reinicia POR COMPLETO (regla del bloque
-          G) — el guion tiene su propio "← Juegos" hacia el selector. */}
-      <div className="flex items-center justify-between gap-3">
-        <button
-          type="button"
-          onClick={otraVez}
-          data-testid="salir-al-guion"
-          className="text-tinta-suave min-h-11 rounded-xl px-3 py-2 text-sm underline-offset-4 hover:underline"
-        >
-          {tx(g.salir)}
-        </button>
-        {/* Gemelas ya alternan (él dice, el adulto marca): solo gana el indicador de turno (S13). */}
-        <IndicadorTurno turno={festejo ? "adulto" : "nino"} />
-      </div>
-      <div className="text-center">
-        <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
-          {tx(g.ronda, { n: indice + 1, total: rondas.length })}
-        </p>
-        {/* El contador honesto de la sesión (patrón de palabra↔objeto): cuenta lo que el PADRE
-            marcó, jamás "aciertos". */}
-        <p className="text-tinta-suave mt-1 text-sm" data-testid="oidas">
-          {tx(g.oidas)}{" "}
-          <span className="font-sans font-semibold tabular-nums">{oidas}</span>
-        </p>
-      </div>
-
-      <div className="flex items-stretch justify-center gap-3 sm:gap-6">
-        {(["a", "b"] as const).map((lado) => {
-          const palabra = par[lado];
-          const grabada = voz.disponible(idPalabra(palabra.palabra, idioma));
-          const encendida = festejo === lado;
-          // La tarjeta del dibujo ES el botón de oírla (gate S4, L1): el niño toca el dibujo y
-          // suena con la voz de su familia — mismo lenguaje que palabra↔objeto. Tocar = oír,
-          // JAMÁS marca: el juicio sigue siendo solo del padre. Sin grabación, tarjeta quieta.
-          const tarjeta = (
-            <div
-              className={[
-                "bg-superficie ease-suave relative rounded-3xl border-4 p-3 transition-colors duration-[--dur-lenta] sm:p-5",
-                encendida
-                  ? "border-celebracion-fuerte encendido-pop"
-                  : "border-borde",
-              ].join(" ")}
-            >
-              <Image
-                src={`/pictogramas/${palabra.archivo}`}
-                alt={palabra.palabra}
-                width={500}
-                height={500}
-                loading="lazy"
-                className="h-32 w-32 object-contain sm:h-44 sm:w-44"
-              />
-              {grabada ? (
-                <span
-                  aria-hidden="true"
-                  className="border-acento text-acento bg-superficie absolute right-2 bottom-2 flex h-8 w-8 items-center justify-center rounded-full border-2"
-                >
-                  <IconoAltavoz className="h-4 w-4" />
-                </span>
-              ) : null}
-              {animacionReconocedor && ladoQuizas === lado && festejo === null ? (
-                <span
-                  aria-hidden="true"
-                  data-testid="halo-reconocedor"
-                  className="halo-reconocedor pointer-events-none absolute inset-0"
-                />
-              ) : null}
-              {encendida ? (
-                <span className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4" />
-              ) : null}
-            </div>
-          );
-          return (
-            <div key={lado} className="flex flex-1 flex-col items-center gap-3">
-              {grabada ? (
-                <button
-                  type="button"
-                  onClick={() =>
-                    void voz.reproducir(idPalabra(palabra.palabra, idioma))
-                  }
-                  data-testid={`altavoz-${lado}`}
-                  data-fuente-voz="familiar"
-                  aria-label={tx(g.oir, { palabra: palabra.palabra })}
-                  className="ease-suave transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
-                >
-                  {tarjeta}
-                </button>
-              ) : (
-                tarjeta
-              )}
-              <p className="font-display text-3xl sm:text-4xl">
-                {palabra.palabra}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      {reconocedorActivo ? (
-        <div className="flex flex-col items-center gap-2">
-          {rec.estado === "apagado" ? (
-            <button
-              type="button"
-              onClick={() => void escuchar()}
-              data-testid="escuchar-reconocedor"
-              className="border-borde text-tinta-suave min-h-11 rounded-xl border px-4 text-sm"
-            >
-              {tx(txr.juego.escuchar)}
-            </button>
-          ) : null}
-          <QuizasDijo
-            palabra={ladoQuizas ? par[ladoQuizas].palabra : null}
-            estado={sinMic ? "error" : rec.estado}
+  const faseSesion: Sesion["actual"] =
+    fase === "guion"
+      ? { fase: "guion" }
+      : fase === "jugando"
+        ? { fase: "jugando", pisoRuido: 0, metrica: metricaGemelas(marcas) }
+        : { fase: "celebracion", metrica: metricaGemelas(marcas) };
+  const sesion: Sesion = {
+    ...base,
+    turnosNino,
+    ajustes: { ...base.ajustes, modoCalma },
+    actual: faseSesion,
+  };
+  const cuerpo: ReactNode = (() => {
+    if (fase === "guion") {
+      return (
+        <div className="flex flex-col gap-6">
+          <GuionCard
+            etiqueta={tx(g.guion.etiqueta)}
+            guion={tx(g.guion.guion)}
+            nota={tx(g.guion.nota)}
+            onEmpezar={() => setFase("jugando")}
+            listo
+            juego="gemelas"
           />
         </div>
-      ) : null}
+      );
+    }
 
-      {festejo === null ? (
-        <div className="flex flex-col items-center gap-2">
-          {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el niño
-              es perspicaz — su fiesta está en los dibujos, no en estas teclas). */}
-          <p className="text-tinta-suave text-sm">{tx(g.cual)}</p>
-          <div className="flex items-center gap-6">
-            {(["a", "b"] as const).map((lado) => (
-              <button
-                key={lado}
-                type="button"
-                onClick={() => marcar(lado)}
-                data-testid={`marcar-${lado}`}
-                className="text-tinta-suave min-h-11 rounded-xl px-3 text-sm underline decoration-dotted underline-offset-4"
-              >
-                «{par[lado].palabra}»
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={() => avanzar(null)}
-            data-testid="saltar-ronda"
-            className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
-          >
-            {tx(g.saltar)}
-          </button>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-3">
-          {/* La noticia honesta: lo que TÚ marcaste, celebrado sin veredicto de la app. */}
+    if (fase === "celebracion") {
+      return (
+        <CelebracionHonesta
+          metrica={metricaGemelas(marcas)}
+          onOtraVez={otraVez}
+          onTerminar={() => router.push("/jugar")}
+          etiquetaTerminar={tx(juegos.comun.elegirOtroJuego)}
+        />
+      );
+    }
+
+    const oidas = marcas.filter((m) => m !== null).length + (festejo ? 1 : 0);
+
+    return (
+      <section className="flex flex-col gap-6" data-testid="gemelas-ronda">
+        {/* La consigna del juego, en la voz de la familia si la grabó (S15); jamás exige palabras. */}
+        <div className="flex items-center justify-center gap-3">
+          <Protagonista
+            juego="gemelas"
+            className="size-12 shrink-0 sm:size-14"
+          />
           <p
-            aria-live="polite"
-            data-testid="dijo"
-            className="font-display text-center text-2xl"
+            className="text-tinta-suave text-center text-sm"
+            data-testid="consigna-gemelas"
           >
-            {tx(g.dijo, { palabra: par[festejo].palabra })}
+            {textoConsigna("gemelas", idioma)}
           </p>
-          <button
-            type="button"
-            onClick={() => avanzar(festejo)}
-            data-testid="siguiente-pareja"
-            className="bg-acento text-sobre-acento min-h-14 rounded-xl px-8 text-lg font-medium"
-          >
-            {tx(g.siguiente)}
-          </button>
+          <AltavozConsigna
+            voz={voz}
+            id={idConsigna("gemelas", idioma)}
+            etiqueta={textoConsigna("gemelas", idioma)}
+          />
         </div>
-      )}
-    </section>
+        <div className="text-center">
+          <p className="text-tinta-suave text-sm" data-testid="progreso-rondas">
+            {tx(g.ronda, { n: indice + 1, total: rondas.length })}
+          </p>
+          {/* El contador honesto de la sesión (patrón de palabra↔objeto): cuenta lo que el PADRE
+              marcó, jamás "aciertos". */}
+          <p className="text-tinta-suave mt-1 text-sm" data-testid="oidas">
+            {tx(g.oidas)}{" "}
+            <span className="font-sans font-semibold tabular-nums">
+              {oidas}
+            </span>
+          </p>
+        </div>
+
+        <div className="flex items-stretch justify-center gap-3 sm:gap-6">
+          {(["a", "b"] as const).map((lado) => {
+            const palabra = par[lado];
+            // El pictograma siempre suena (S15, ADR-027): grabación de la familia, si no la voz local del aparato.
+            const fuente = voz.sonidoDe(idPalabra(palabra.palabra, idioma));
+            const grabada = fuente !== "nada";
+            const encendida = festejo === lado;
+            // La tarjeta del dibujo ES el botón de oírla (gate S4, L1): el niño toca el dibujo y
+            // suena con la voz de su familia — mismo lenguaje que palabra↔objeto. Tocar = oír,
+            // JAMÁS marca: el juicio sigue siendo solo del padre. Sin grabación, tarjeta quieta.
+            const tarjeta = (
+              <div
+                className={[
+                  "bg-superficie ease-suave relative rounded-3xl border-4 p-3 transition-colors duration-[--dur-lenta] sm:p-5",
+                  encendida
+                    ? "border-celebracion-fuerte encendido-pop"
+                    : "border-borde",
+                ].join(" ")}
+              >
+                <Image
+                  src={`/pictogramas/${palabra.archivo}`}
+                  alt={palabra.palabra}
+                  width={500}
+                  height={500}
+                  loading="lazy"
+                  className="h-32 w-32 object-contain sm:h-44 sm:w-44"
+                />
+                {grabada ? (
+                  <span
+                    aria-hidden="true"
+                    className="border-acento text-acento bg-superficie absolute right-2 bottom-2 flex h-8 w-8 items-center justify-center rounded-full border-2"
+                  >
+                    <IconoAltavoz className="h-4 w-4" />
+                  </span>
+                ) : null}
+                {animacionReconocedor &&
+                ladoQuizas === lado &&
+                festejo === null ? (
+                  <span
+                    aria-hidden="true"
+                    data-testid="halo-reconocedor"
+                    className="halo-reconocedor pointer-events-none absolute inset-0"
+                  />
+                ) : null}
+                {encendida ? (
+                  <span className="halo-encendido border-celebracion-fuerte pointer-events-none absolute inset-0 rounded-3xl border-4" />
+                ) : null}
+              </div>
+            );
+            return (
+              <div
+                key={lado}
+                className="flex flex-1 flex-col items-center gap-3"
+              >
+                {grabada ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      void voz.decirPalabra(
+                        idPalabra(palabra.palabra, idioma),
+                        palabra.palabra,
+                      )
+                    }
+                    data-testid={`altavoz-${lado}`}
+                    data-fuente-voz={
+                      fuente === "grabacion" ? "familiar" : "aparato"
+                    }
+                    aria-label={tx(g.oir, { palabra: palabra.palabra })}
+                    className="ease-suave transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
+                  >
+                    {tarjeta}
+                  </button>
+                ) : (
+                  tarjeta
+                )}
+                <p className="font-display text-3xl sm:text-4xl">
+                  {palabra.palabra}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+        {reconocedorActivo ? (
+          <div className="flex flex-col items-center gap-2">
+            {rec.estado === "apagado" ? (
+              <button
+                type="button"
+                onClick={() => void escuchar()}
+                data-testid="escuchar-reconocedor"
+                className="border-borde text-tinta-suave min-h-11 rounded-xl border px-4 text-sm"
+              >
+                {tx(txr.juego.escuchar)}
+              </button>
+            ) : null}
+            <QuizasDijo
+              palabra={ladoQuizas ? par[ladoQuizas].palabra : null}
+              estado={sinMic ? "error" : rec.estado}
+            />
+          </div>
+        ) : null}
+
+        {festejo === null ? (
+          <div className="flex flex-col items-center gap-2">
+            {/* La zona del PADRE, discreta (patrón del juez de palabra↔objeto, bloque G: el niño
+                es perspicaz — su fiesta está en los dibujos, no en estas teclas). */}
+            <p className="text-tinta-suave text-sm">{tx(g.cual)}</p>
+            <div className="flex items-center gap-6">
+              {(["a", "b"] as const).map((lado) => (
+                <button
+                  key={lado}
+                  type="button"
+                  onClick={() => marcar(lado)}
+                  data-testid={`marcar-${lado}`}
+                  className="text-tinta-suave min-h-11 rounded-xl px-3 text-sm underline decoration-dotted underline-offset-4"
+                >
+                  «{par[lado].palabra}»
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => avanzar(null)}
+              data-testid="saltar-ronda"
+              className="text-tinta-suave mx-auto min-h-11 text-sm underline-offset-4 hover:underline"
+            >
+              {tx(g.saltar)}
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-3">
+            {/* La noticia honesta: lo que TÚ marcaste, celebrado sin veredicto de la app. */}
+            <p
+              aria-live="polite"
+              data-testid="dijo"
+              className="font-display text-center text-2xl"
+            >
+              {tx(g.dijo, { palabra: par[festejo].palabra })}
+            </p>
+            <button
+              type="button"
+              onClick={() => avanzar(festejo)}
+              data-testid="siguiente-pareja"
+              className="bg-acento text-sobre-acento min-h-14 rounded-xl px-8 text-lg font-medium"
+            >
+              {tx(g.siguiente)}
+            </button>
+          </div>
+        )}
+      </section>
+    );
+  })();
+
+  return (
+    <MarcoComun
+      sesion={sesion}
+      nombre="gemelas"
+      onAlternarCalma={alternarCalma}
+      onSalir={otraVez}
+      onCambiarTurno={(turno: Turno) =>
+        enviar({ tipo: "CAMBIAR_TURNO", turno })
+      }
+    >
+      {cuerpo}
+    </MarcoComun>
   );
 }

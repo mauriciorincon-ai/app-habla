@@ -88,7 +88,19 @@ const CONSIGNAS: { clave: string; texto: Record<Idioma, string> }[] = [
   { clave: "fuerte-suave", texto: { es: "Voz chiquita… y voz grandota", en: "Tiny voice… and big voice" } },
   // suena en el globo
   { clave: "aaah", texto: { es: "Haz sonar tu voz: aaaaah", en: "Make your voice sound: aaaaah" } },
+  // S15: las tres que faltaban. Cada una suena en su pantalla real y el texto en pantalla es ESTE mismo.
+  // suena en el mapa de vocales
+  { clave: "vocales", texto: { es: "Elige una vocal y haz su sonido", en: "Pick a vowel and make its sound" } },
+  // suena en palabra↔objeto
+  { clave: "palabras", texto: { es: "Mira el dibujo y di lo que quieras", en: "Look at the picture and say whatever you like" } },
+  // suena en las palabras gemelas
+  { clave: "gemelas", texto: { es: "Mira los dos dibujos. Di el que quieras.", en: "Look at the two pictures. Say the one you like." } },
 ];
+
+/** El texto fijo de una consigna: la pantalla muestra EXACTAMENTE lo que la voz de la familia diría. */
+export function textoConsigna(clave: string, idioma: Idioma): string {
+  return CONSIGNAS.find((c) => c.clave === clave)?.texto[idioma] ?? "";
+}
 
 /** Celebraciones honestas SIN cifras (las que sí las llevan no son grabables — ADR/​manual). */
 const CELEBRACIONES: { clave: string; texto: Record<Idioma, string> }[] = [

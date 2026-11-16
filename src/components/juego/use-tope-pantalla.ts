@@ -8,7 +8,7 @@
 // `alAlcanzar`, que cierra el juego con calma, igual que «Salir». Después de ese aviso no vuelve a cortar:
 // el adulto decide si sigue. Nunca bloquea y jamás le habla al niño.
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fechaHoy } from "@/lib/fecha";
 import {
   acumular,
@@ -16,6 +16,10 @@ import {
   lineaHoyVisible,
   marcarAvisado,
   minutosJugados,
+  SIN_ESPERA,
+  topeLlego,
+  unidadTerminada,
+  type EsperaAviso,
 } from "@/lib/pantalla/tope";
 import { guardarPantalla, leerPantalla } from "@/lib/pantalla/almacen";
 
@@ -75,4 +79,35 @@ export function minutosDeHoy(): number {
 /** ¿Toca la línea «hoy ya jugaron N min» en el guion? (el aviso ya se vio hoy y el tope sigue alcanzado). */
 export function hayLineaHoy(topeMinutos: number): boolean {
   return lineaHoyVisible(leerPantalla(), fechaHoy(), topeMinutos);
+}
+
+/**
+ * The cap for what the child WATCHES (S15, ADR-027): stories and the video library count toward the
+ * same daily cap, but the notice waits for the page or the clip to end. `alTerminar()` is called at
+ * each page turn or clip end and returns true when the notice is due now (the caller then closes the
+ * story or the clip with calm, as «Salir» does).
+ */
+export function useTopeAlTerminar({
+  viendo,
+  topeMinutos,
+}: {
+  viendo: boolean;
+  topeMinutos: number;
+}): {
+  pendiente: boolean;
+  avisoMinutos: number | null;
+  alTerminar: () => boolean;
+  /** A new story or clip starts: the notice already read goes away (as a new game attempt does). */
+  olvidarAviso: () => void;
+} {
+  const [espera, setEspera] = useState<EsperaAviso>(SIN_ESPERA);
+  const alAlcanzar = useCallback(() => setEspera(topeLlego), []);
+  useTopePantalla({ jugando: viendo, topeMinutos, alAlcanzar });
+  const alTerminar = useCallback((): boolean => {
+    if (!espera.pendiente) return false;
+    setEspera((e) => unidadTerminada(e, minutosDeHoy()));
+    return true;
+  }, [espera.pendiente]);
+  const olvidarAviso = useCallback(() => setEspera((e) => (e.pendiente ? e : SIN_ESPERA)), []);
+  return { pendiente: espera.pendiente, avisoMinutos: espera.minutos, alTerminar, olvidarAviso };
 }

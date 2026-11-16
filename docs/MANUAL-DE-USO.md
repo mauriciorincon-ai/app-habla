@@ -20,7 +20,7 @@ interacción con usted; la pantalla es apenas la excusa para jugar juntos.
 
 1. Abra la app en el navegador de la tablet o el teléfono (Chrome en Android).
 2. **Instálela como app** (opcional pero recomendado): en el menú del navegador, "Añadir a la
-   pantalla de inicio". Así abre a pantalla completa y funciona sin conexión.
+   pantalla de inicio". Así abre a pantalla completa. **Sin conexión:** tras abrir la app una vez con internet, Hoy, los siete juegos, Cuentos y Ajustes abren aunque no haya red (el reconocedor opcional y las grabaciones de voz no se guardan en esa copia).
 3. La primera vez le pregunta dos cosas: cómo le dicen a su hijo en casa (opcional) y hasta tres
    temas que le gusten. En **Ajustes** puede sumar **«Otras cosas que le encantan»** (hasta ocho, palabras generales): es el único lugar donde se escriben sus intereses. **Todo eso se queda en el dispositivo**, no hay cuentas ni registro.
 4. ¿Quiere cambiar el apodo o los temas después? En **Ajustes → "Apodo y temas" → "Cambiar apodo
@@ -165,6 +165,8 @@ _gato_, _mano_ y _mono_, _foca_ y _boca_. Son las llamadas **parejas mínimas**:
 contraste ayuda a afinar el habla. Su guion: **señale los dos, pídale que diga UNO**, y luego
 **marque usted el que oyó** en la línea discreta _"¿Cuál oíste?"_ de abajo.
 
+**Gemelas va dentro del mismo marco que los demás juegos:** arriba tiene la franja de turnos con su botón y el apuntador, el botón de **modo calma**, su protagonista y la invitación hablada («Mira los dos dibujos. Di el que quieras.»). Su turno cuenta cuando usted marca una palabra o toca «otra».
+
 **Cómo se juega la ronda:**
 
 - **Tocar un dibujo lo hace sonar con su voz** (si grabó esa palabra en el Estudio; trae una
@@ -209,21 +211,21 @@ Un juego **en prueba**, y se lo dice en pantalla («Experimental · en prueba»)
 
 ### La voz de la familia — grabar tu voz para los juegos (nuevo)
 
-Los juegos pueden **sonar con la voz de mamá o papá** en vez de estar mudos. Es opcional, y lo
+Los juegos pueden **sonar con la voz de mamá o papá**. Una palabra que nadie grabó suena con **la voz del propio aparato**, solo si ese aparato trae una voz que habla sin internet; si no la trae, queda en silencio y el Estudio le avisa cuántas palabras faltan por grabar. Es opcional, y lo
 maneja usted desde **Ajustes → "La voz de la familia" → "Grabar mi voz"** (o directamente en la
 pantalla del **Estudio**).
 
 **Cómo funciona:**
 
 - El Estudio le va mostrando, de a una, las **palabras y frases** que puede grabar (las palabras de
-  los dibujos, algunas consignas del juego y las celebraciones honestas). Toca **"Grabar"**, dice
+  los dibujos, las **siete** consignas del juego (globo, sirena, soplar, fuerte y suave, vocales, palabras y gemelas) y las celebraciones honestas). Toca **"Grabar"**, dice
   la palabra, la **escucha cómo quedó** y la **guarda** o la **regraba**. Una barra le muestra
   cuánto lleva grabado. Mientras graba, **otra barra baila con su voz**: si se mueve cuando
   habla, le está oyendo bien — así nunca graba a ciegas. (Esa barra solo se mira: no guarda nada.)
   Y al escuchar cualquier grabación, **una barrita se va llenando con el avance del audio**: así
   sabe que sí está sonando y cuánto falta.
 - En **"Con tu voz vas"** cada grupo (Palabras · Consignas del juego · Celebraciones) tiene su
-  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las dos
+  propio botón **"Grabar"**: puede irse directo al grupo que quiera —por ejemplo, grabar las siete
   consignas sin pasar por todas las palabras—. El botón grande ("Grabar más") sigue siendo el
   recorrido guiado de siempre, que propone primero lo que más le sirve al niño.
 - En **"Lo que ya grabaste"** las grabaciones se agrupan por esos mismos tres grupos, numeradas
@@ -231,13 +233,10 @@ pantalla del **Estudio**).
   fila) y **Borrar**. Borrar pide un **segundo toque** —el botón se pone rojo con "¿Seguro?"—
   para que un dedo apurado no borre nada sin querer; si se arrepiente, en unos segundos se
   desarma solo.
-- Cuando hay grabaciones, en "palabra y dibujo" y en "palabras gemelas" aparece un **botón de
-  altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo. Así
+- En "palabra y dibujo" y en "palabras gemelas" aparece un **botón de altavoz** (grande, el niño lo puede tocar) y la palabra **suena sola** al aparecer el dibujo: con su grabación si la hay y, si no, con la voz del aparato (siempre una voz del propio aparato, nunca una de internet). Así
   el nombre "vive en la cosa" con una voz que el niño conoce.
 - **En los juegos de voz también:** si grabó las invitaciones del juego ("Haz sonar tu voz:
-  aaaaah", "Haz la voz de sirena: aaaAAAaaa", "Toma aire y sopla: fuuuu" y "Voz chiquita… y voz
-  grandota"), aparece un altavoz debajo del título que las dice
-  con su voz. Mientras su voz grabada suena, **el juego no se mueve**: el medidor espera a que
+  aaaaah", "Haz la voz de sirena: aaaAAAaaa", "Toma aire y sopla: fuuuu", "Voz chiquita… y voz grandota" y las tres nuevas de las vocales, las palabras y las gemelas), aparece un altavoz junto a la invitación, en la pantalla del juego, que la dice con su voz. Mientras su voz grabada suena, **el juego no se mueve**: el medidor espera a que
   hable el niño de verdad — así el globo no vuela con una grabación.
 - Puede **apagar** la voz de la familia con el interruptor _"Usar la voz de la familia"_ **sin
   borrar nada**, y volver a encenderla cuando quiera.
@@ -258,7 +257,7 @@ pantalla del **Estudio**).
 > Detalle honesto: la app graba **frases fijas**. La celebración final que dice un número —"¡Su voz
 > sonó 7,3 segundos!"— **no** se puede grabar con su voz, porque el número cambia cada vez; esas se
 > quedan en texto. Su voz suena en lo que siempre dice lo mismo (los nombres, "¡Le salió la voz!",
-> "¡Dijo la palabra!").
+> "¡Dijo la palabra!" y el «casi»). **Su voz también celebra:** al terminar suena la frase que ya grabó («le salió», «dijo la palabra» o «casi»), solo la que corresponde a lo que se midió en el turno de él.
 
 ### La etapa del habla — cómo elegirla (nuevo)
 
@@ -524,8 +523,7 @@ del dibujo. Se equivoca, y por eso **nunca** decide nada: usted sigue juzgando c
 
 ### Sesiones cortas — el tope de juego por día (nuevo · S12)
 
-En **Ajustes → "Sesiones cortas"** usted elige un **tope de juego por día, entre 5 y 10 minutos** (10 de fábrica). Los juegos de
-voz cuentan los minutos de juego de **hoy en este aparato**. Cuando se llega al tope pasa esto, y solo esto:
+En **Ajustes → "Sesiones cortas"** usted elige un **tope de juego por día, entre 5 y 10 minutos** (10 de fábrica). Los juegos, **los cuentos y los videos de la familia** cuentan los minutos de **hoy en este aparato**. En un cuento o un video el aviso **espera al final de la página o del clip**: nunca corta a la mitad. Cuando se llega al tope pasa esto, y solo esto:
 
 - **El juego se cierra con calma**, como si usted hubiera tocado «Salir» (el micrófono se apaga).
 - **Se le avisa a usted, nunca al niño, una sola vez al día**: _"Ya jugaron lo que habían pensado hoy"_, con un reloj y
@@ -538,12 +536,12 @@ El contador es **local y solo de hoy** (guarda la fecha y los minutos, nada más
 
 ### Turnos y apuntador — jugar de a dos, con una línea para usted (nuevo · S13)
 
-Cada juego de micrófono (globo, soplar, fuerte y suave, cohete, palabra y dibujo, vocales) se juega **por turnos**, y usted los marca:
+Cada juego (globo, soplar, fuerte y suave, cohete, palabra y dibujo, vocales y gemelas) se juega **por turnos**, y usted los marca:
 
 - Arriba del juego hay una **franja fina** con un botón: **«Pasarle el turno»** o **«Mi turno»**. **Un toque** cambia de turno. La app **nunca adivina de quién es una voz**: eso lo decide usted.
 - **En su turno** (así empieza todo, sin tocar nada) lo que su voz hace **cuenta y se celebra**. **En el turno de usted** el dibujo se mueve con su modelo para que él lo vea, pero **nada se le cuenta a él**: ni segundos, ni soplos, ni cambios, ni el dibujo que se enciende.
 - **Toque «Mi turno» antes de modelar.** La app no sabe de quién es la voz: si usted modela sin tocar, lo que suene cuenta como de él.
-- Él ve un **indicador de turno** que se entiende sin leer: una figura redonda con ondas y «Tu voz», o un ojo con «Mira y escucha». Palabras gemelas (donde él dice y usted marca) solo gana ese indicador.
+- Él ve un **indicador de turno** que se entiende sin leer: una figura redonda con ondas y «Tu voz», o un ojo con «Mira y escucha». En Palabras gemelas (donde él dice y usted marca) su turno cuenta cuando usted marca una palabra.
 - **Tu apuntador:** en la franja aparece, unos segundos, **una línea para usted** en el momento justo: cuando empieza su turno («modela despacio, una sola vez»), cuando él hizo voz («expande: repite lo que dijo y suma una palabra»), si hay un silencio largo («espera tres segundos»), y al cerrar («nombra lo que hicieron juntos»). **No se repite** en la sesión, habla siempre en positivo y cada línea se apoya en la misma técnica y fuente de las cápsulas. Se apaga en **Ajustes → «Tu apuntador»** y **el modo calma también la apaga** (el botón de turno se queda).
 - Al terminar, la celebración dice **«N turnos de él»**: solo cuenta los turnos de él en que su voz se midió. El Rumbo los suma por semana y un hito nuevo, **«Jugaron por turnos»**, llega con tres turnos suyos en un mismo juego.
 
@@ -551,7 +549,7 @@ Nada de esto guarda su voz ni la de él: solo se guarda **cuántos turnos de él
 
 ### Su mundo en todo — sus temas y la meta, en cada juego (nuevo · S14)
 
-- **El protagonista:** en globo, soplar, fuerte y suave, cohete y vocales aparece, en una esquina, un dibujo de **uno de sus temas** (un dinosaurio, un carrito, un planeta…). Rota con los días y cambia de un juego a otro. **Solo viste la escena**: no cambia lo que se mide ni cuándo se celebra. Sin temas, la escena es la de siempre.
+- **El protagonista:** en globo, soplar, fuerte y suave, cohete, vocales y gemelas aparece, en una esquina, un dibujo de **uno de sus temas** (un dinosaurio, un carrito, un planeta…). Rota con los días y cambia de un juego a otro. **Solo viste la escena**: no cambia lo que se mide ni cuándo se celebra. Sin temas, la escena es la de siempre.
 - **Palabras para modelar:** con una meta de la semana, la tarjeta de guion dice **«Modele una palabra de su meta: …»** (hasta cuatro) y la franja del apuntador dice **«Puede decir: …»** solo en el turno de usted. Es un consejo para usted, nunca algo que la app compruebe ni que el niño vea. Sin meta no aparece nada.
 - **Palabra y dibujo y Gemelas:** el mazo y las parejas ponen primero los de su meta y luego los de sus temas.
 - **Colores y acciones:** «colores» ya existe (cuatro cápsulas y cuatro dibujos) y «acciones» llega a dibujos y parejas (come/tome, toca/boca; en English run/sun, dig/pig). Una meta como «números» sigue diciéndose de frente: sin contenido, no se finge.
@@ -577,11 +575,17 @@ Un toque —en el juego o en Ajustes— y la pantalla baja a colores de atardece
 sin meta y sin celebración automática**. El globo no se detiene: **sube mientras su voz suena y
 baja despacito cuando hay silencio**, como un globo de verdad — sin carrera y sin llegada. El
 cohete hace lo mismo: flota con la voz, sin meta. Sirve cuando el niño está sobreestimulado o
-cuando el juego con meta le resulta demasiado. Está disponible en los juegos de voz (globo, soplar, fuerte y suave, cohete, palabra y dibujo y el mapa de las vocales).
+cuando el juego con meta le resulta demasiado. Está en los siete juegos, y **también en Hoy**: un botón de un toque para prenderlo antes de abrir un juego, sin ir a Ajustes.
 
 También hay un ajuste para **reducir animaciones** (y si su sistema ya pide menos movimiento, la
 app lo respeta sin que usted toque nada). Con él activado, los globos de la palabra, el confeti
 de los hitos y la capa de cielo del cohete no se muestran, el molino da saltos de un cuarto de vuelta en vez de girar suave y la barra salta de nivel — el texto sigue contando cada logro.
+
+### Sonidos de la app e Intensidad de colores — la carga sensorial a su medida (nuevo · S15)
+
+- **Ajustes → «Sonidos de la app»:** _Normal_, _Suave_ (la mitad del volumen) o _Apagado_. Gobierna **la voz propia del aparato** (la que dice un dibujo que nadie grabó) y no tiene efectos de sonido, porque los juegos de voz no emiten sonido: su eco volvería por el micrófono. **La voz de la familia va aparte**, con su propio interruptor.
+- **Ajustes → «Intensidad de colores»:** _Normal_ o _Suave_. «Suave» baja un poco los colores de relleno de las dos pantallas, la suya y la del niño, **sin tocar la letra**: se lee igual de bien. El estado se ve con un «Elegido» y un borde, nunca solo por color.
+- **Sorpresa del día:** en cualquier juego, **al tercer turno de él** aparece unos segundos una escena pequeña de uno de sus temas («Un dino asoma la cabeza entre las hojas.») y se va sola. No es un premio: sale acierte o no, no se cuenta, no se guarda y **no hay monedas, fichas ni colección**. Cambia cada día.
 
 ### Claro u oscuro
 
@@ -705,4 +709,5 @@ idioma, viven dentro de la app y se cargan solo cuando escribe un objetivo.
 | 012    | **«Su voz lo mueve todo»**: dos juegos nuevos sin palabras, **Soplar** (cuenta soplos de aire) y **Fuerte y suave** (celebra los cambios de volumen, nunca un volumen «correcto»); el selector con siete juegos en orden fijo; **Sesiones cortas**: un tope de juego por día (5 a 10 min, 10 de fábrica) que cierra el juego con calma y avisa una vez al adulto, sin bloquear; el rumbo suma soplos, cambios de volumen y dos hitos. |
 | 013    | **«Juntos de verdad»**: los seis juegos de micrófono por turnos que usted marca con un toque (en el suyo, el dibujo se mueve pero nada se le cuenta a él), un indicador de turno que el niño entiende sin leer, **Tu apuntador** (una línea para usted en el momento justo, apagable) y «N turnos de él» en la celebración y el Rumbo. |
 | 014    | **«Su mundo en todo»**: un protagonista de sus temas en cinco juegos, palabras para modelar de la meta en la tarjeta y el apuntador, «colores» y más acciones y cápsulas del baño, «Otras cosas que le encantan» como único lugar de sus intereses (Cuentos lo lee de ahí) y la tarjeta de recordatorio de cuentos en Hoy (con su interruptor en Ajustes). |
+| 015    | **«Lo que faltaba»**: Gemelas dentro del marco común (turnos, apuntador, modo calma, protagonista e invitación hablada); siete invitaciones que se graban; el dibujo sin grabar suena con la voz del propio aparato (nunca de internet); su voz celebra («le salió», «dijo la palabra», «casi»); el tope cuenta cuentos y videos y avisa al final; sin conexión de verdad tras la primera visita; «Sonidos de la app», «Intensidad de colores» y el modo calma en Hoy; la sorpresa del día al tercer turno de él. |
 <!-- s5:fin -->

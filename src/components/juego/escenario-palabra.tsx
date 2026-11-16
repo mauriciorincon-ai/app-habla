@@ -70,7 +70,9 @@ export function EscenarioPalabra({
   }, [picto.id, medidas]);
 
   const idNombre = idPalabra(palabra, idioma);
-  const nombreDisponible = voz.disponible(idNombre);
+  // El pictograma siempre suena (S15, ADR-027): la grabación de la familia, si no la voz LOCAL del aparato.
+  const fuenteNombre = voz.sonidoDe(idNombre);
+  const nombreDisponible = fuenteNombre !== "nada";
 
   // La voz se lee de un ref en los efectos: su identidad cambia al cargar el banco, y no queremos
   // re-disparar el autoplay por eso (solo por un dibujo nuevo).
@@ -83,7 +85,7 @@ export function EscenarioPalabra({
   // grabada). Modela el nombre para el niño; el altavoz lo repite cuando él quiera ("el nombre
   // vive en la cosa"). No-op silencioso si no hay grabación.
   useEffect(() => {
-    void vozRef.current.reproducir(idPalabra(palabra, idioma));
+    void vozRef.current.decirPalabra(idPalabra(palabra, idioma), palabra);
   }, [palabra, idioma]);
 
   // La frase honesta que ya se muestra en pantalla, dicha con la voz de la familia si está grabada.
@@ -187,10 +189,10 @@ export function EscenarioPalabra({
       {nombreDisponible ? (
         <button
           type="button"
-          onClick={() => void voz.reproducir(idNombre)}
+          onClick={() => void voz.decirPalabra(idNombre, palabra)}
           className="border-acento text-acento bg-superficie ease-suave flex min-h-16 min-w-16 items-center justify-center rounded-full border-2 transition-transform duration-[--dur-rapida] active:scale-95 motion-reduce:transition-none"
           data-testid="altavoz-palabra"
-          data-fuente-voz="familiar"
+          data-fuente-voz={fuenteNombre === "grabacion" ? "familiar" : "aparato"}
           aria-label={`Oír “${palabra}”`}
         >
           <IconoAltavoz className="h-8 w-8" />

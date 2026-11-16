@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { ActualizarLang } from "@/components/idioma/tx";
 import { RegistrarSW } from "@/components/pwa/registrar-sw";
+import { AplicarIntensidad } from "@/components/aplicar-intensidad";
 import { juntos, metadatos } from "@/lib/idioma/textos/metadatos";
 import "./globals.css";
 
@@ -41,7 +42,7 @@ export const viewport: Viewport = {
  * archivo aparte llegaría tarde). Si no hay elección guardada, no hace nada y manda el sistema.
  * Solo lee su propia clave de ajustes; nada de audio, nada de red (regla dura 2).
  */
-const APLICAR_TEMA = `try{var a=localStorage.getItem("habla:v1:ajustes");if(a){var t=JSON.parse(a).apariencia;if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t;}}catch(e){}`;
+const APLICAR_TEMA = `try{var a=localStorage.getItem("habla:v1:ajustes");if(a){var t=JSON.parse(a).apariencia;if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t;if(JSON.parse(a).intensidad==="suave")document.documentElement.dataset.intensidad="suave";}}catch(e){}`;
 
 /**
  * El idioma (S7) se fija en el mismo sitio y por la misma razón: antes de la primera pintura. Primero
@@ -69,6 +70,7 @@ export default function RootLayout({
         {children}
         <ActualizarLang />
         <RegistrarSW />
+        <AplicarIntensidad />
       </body>
     </html>
   );

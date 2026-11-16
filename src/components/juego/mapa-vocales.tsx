@@ -9,12 +9,14 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import {
-  ajustesActuales,
-  guardarAjustesEnStore,
   useAjustes,
 } from "@/components/estado-local";
 import { useHidratado } from "@/components/use-hidratado";
-import { useT } from "@/lib/idioma/estado";
+import { useIdioma, useT } from "@/lib/idioma/estado";
+import { idConsigna, textoConsigna } from "@/lib/banco-voz/catalogo";
+import { AltavozConsigna } from "./altavoz-consigna";
+import { useVozFamiliar } from "./use-voz-familiar";
+import { useModoCalma } from "./use-modo-calma";
 import { juegos } from "@/lib/idioma/textos/juegos";
 import { vocales as textos } from "@/lib/idioma/textos/vocales";
 import type { Metrica } from "@/lib/session-flow";
@@ -61,6 +63,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     volverAlGuion,
     cambiarTurno,
     cambiarCalma,
+    silenciar,
   } = useVoiceSession({
     modoCalmaInicial,
     tipoMetrica: "vocales",
@@ -68,6 +71,9 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
     metricaActual,
   });
 
+  // La consigna puede sonar en la voz de la familia; la guarda del bucle pausa el medidor (ADR-010).
+  const voz = useVozFamiliar({ alSonar: silenciar });
+  const idioma = useIdioma();
   const { actual, ajustes } = sesion;
   const modoCalma = ajustes.modoCalma;
   const jugando = actual.fase === "esperando-voz" || actual.fase === "jugando";
@@ -76,11 +82,7 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
   const zonas = jugando ? medidas.vocalesZonas() : 0;
   const cambios = jugando ? medidas.vocalesCambios() : 0;
 
-  function alternarCalma() {
-    const activo = !modoCalma;
-    cambiarCalma(activo);
-    guardarAjustesEnStore({ ...ajustesActuales(), modoCalma: activo });
-  }
+  const { alternar: alternarCalma } = useModoCalma(cambiarCalma);
 
   const sonido = (v: Vocal) => tx(textos.sonido[v]);
 
@@ -115,6 +117,16 @@ function JuegoListo({ modoCalmaInicial }: { modoCalmaInicial: boolean }) {
             <h2 className="font-display text-center text-3xl sm:text-4xl">
               {tx(ahora ? textos.escuchando : textos.invitacion)}
             </h2>
+          </div>
+          <div className="flex items-center justify-center gap-3">
+            <p className="text-tinta-suave text-center text-sm" data-testid="consigna-vocales">
+              {textoConsigna("vocales", idioma)}
+            </p>
+            <AltavozConsigna
+              voz={voz}
+              id={idConsigna("vocales", idioma)}
+              etiqueta={textoConsigna("vocales", idioma)}
+            />
           </div>
 
           {/* Las cinco zonas: letra + dibujo + color; la que suena queda grande y con su nombre. */}

@@ -19,7 +19,7 @@
     "ciclo": "H-2",
     "estado": "sellado",
     "sellado_en": "2026-08-08",
-    "sprints_cerrados": 12,
+    "sprints_cerrados": 14,
     "version_repo": "0.1.0"
   },
   "promesa": {
@@ -98,7 +98,7 @@
           {
             "id": "07",
             "nombre": "Palabras gemelas",
-            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego, por defecto, no usa el micrófono: quien escucha eres tú.",
+            "que_hace": "Tu hijo practica sonidos que se confunden, con parejas como pato y gato, en rondas sin respuesta incorrecta. Él dice una, tú marcas la que oíste y ese dibujo festeja. Este juego, por defecto, no usa el micrófono: quien escucha eres tú. Corre dentro del mismo marco que los demás juegos, con turnos, apuntador y modo calma.",
             "seccion_manual": "Los juegos de voz § 6"
           },
           {
@@ -136,7 +136,7 @@
           {
             "id": "11",
             "nombre": "Tu voz dentro de cada juego",
-            "que_hace": "Cuando una palabra o una consigna tiene tu grabación, los juegos la dicen con tu voz y aparece un altavoz que tu hijo puede tocar. Un interruptor en Ajustes la apaga sin borrar nada.",
+            "que_hace": "Cuando una palabra o una consigna tiene tu grabación, los juegos la dicen con tu voz y aparece un altavoz que tu hijo puede tocar; una palabra sin grabar suena con la voz del propio aparato, nunca con una de internet, y tu voz también celebra. Un interruptor en Ajustes la apaga sin borrar nada.",
             "seccion_manual": "La voz de la familia"
           },
           {
@@ -226,7 +226,7 @@
           {
             "id": "19",
             "nombre": "Modo calma",
-            "que_hace": "Cuando el momento pesa, un toque baja la pantalla a colores de atardecer, sin medidor, sin meta y sin celebración automática. Los juegos de voz solo responden a su voz, sin carrera ni llegada.",
+            "que_hace": "Cuando el momento pesa, un toque baja la pantalla a colores de atardecer, sin medidor, sin meta y sin celebración automática. Los juegos solo responden a su voz, sin carrera ni llegada; el botón también está en Hoy.",
             "seccion_manual": "Modo calma"
           },
           {
@@ -244,7 +244,7 @@
           {
             "id": "22",
             "nombre": "Se instala y funciona sin internet",
-            "que_hace": "La instalas en la tablet o el teléfono como una app más y abre a pantalla completa. Después de abrirla una vez funciona sin conexión, porque todo el contenido, dibujos incluidos, viaja dentro del aparato.",
+            "que_hace": "La instalas en la tablet o el teléfono como una app más y abre a pantalla completa. Después de abrirla una vez, Hoy, los siete juegos, Cuentos y Ajustes abren sin conexión, porque todo el contenido, dibujos incluidos, viaja dentro del aparato.",
             "seccion_manual": "Primeros pasos + FAQ"
           },
           {
@@ -256,7 +256,7 @@
           {
             "id": "33",
             "nombre": "Sesiones cortas: el tope de juego por día",
-            "que_hace": "Eliges un tope de juego por día, de 5 a 10 minutos (10 de fábrica). Al llegar, el juego se cierra con calma, como «Salir», y te avisa a ti, una sola vez al día; nunca bloquea nada ni dice «se acabó». El contador es local, de hoy, y no viaja al archivo de la otra casa.",
+            "que_hace": "Eliges un tope de juego por día, de 5 a 10 minutos (10 de fábrica). Al llegar, el juego se cierra con calma, como «Salir», y te avisa a ti, una sola vez al día; nunca bloquea nada ni dice «se acabó». Cuenta también cuentos y videos, y avisa al terminar la página o el clip. El contador es local, de hoy, y no viaja al archivo de la otra casa.",
             "seccion_manual": "Sesiones cortas — el tope de juego por día"
           },
           {

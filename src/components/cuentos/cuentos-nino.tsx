@@ -9,9 +9,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CUENTOS } from "@content/cuentos";
 import { useReproductor } from "@/components/use-reproductor";
+import { useHidratado } from "@/components/use-hidratado";
 import { listarIds, obtenerGrabacion } from "@/lib/banco-voz/almacen";
 import { esDeCuento, idCuento } from "@/lib/banco-voz/catalogo";
-import { useCuentos, usePerfil } from "@/components/estado-local";
+import { useAjustes, useCuentos, usePerfil } from "@/components/estado-local";
+import { AvisoTope, LineaHoy } from "@/components/juego/aviso-tope";
+import {
+  hayLineaHoy,
+  minutosDeHoy,
+  useTopeAlTerminar,
+} from "@/components/juego/use-tope-pantalla";
+import { topeValido } from "@/lib/pantalla/tope";
 import { interesesParaCuentos } from "@/lib/su-mundo/intereses";
 import { CUENTOS_VACIO, cuentosDelNino } from "@/lib/cuentos/estado";
 import { useIdioma, useT } from "@/lib/idioma/estado";
@@ -34,6 +42,14 @@ export function CuentosNino() {
   const [pagina, setPagina] = useState(0);
   const [conVoz, setConVoz] = useState(false);
   const { reproducir } = useReproductor();
+  // The daily screen cap counts what the child watches too (S15, ADR-027); the notice waits for
+  // the page to end, never cuts it.
+  const topeMinutos = topeValido(useAjustes()?.topeMinutos);
+  const hidratado = useHidratado();
+  const { avisoMinutos, alTerminar, olvidarAviso } = useTopeAlTerminar({
+    viendo: abierto !== null,
+    topeMinutos,
+  });
 
   useEffect(() => {
     listarIds()
@@ -56,6 +72,11 @@ export function CuentosNino() {
   };
 
   const ir = (n: number) => {
+    // The page just ended: if the cap arrived while reading, the story closes here, with calm.
+    if (alTerminar()) {
+      setAbierto(null);
+      return;
+    }
     setPagina(n);
     if (conVoz) sonar(n);
   };
@@ -76,6 +97,11 @@ export function CuentosNino() {
           {tx(cuentos.nino.salida)}
         </Link>
         <h1 className="font-display text-3xl">{tx(cuentos.nino.titulo)}</h1>
+        {avisoMinutos !== null ? (
+          <AvisoTope minutos={avisoMinutos} />
+        ) : hidratado && hayLineaHoy(topeMinutos) ? (
+          <LineaHoy minutos={minutosDeHoy()} />
+        ) : null}
         {guion}
         <ul className="grid gap-3 sm:grid-cols-2">
           {lista.map((c) => (
@@ -84,6 +110,7 @@ export function CuentosNino() {
                 type="button"
                 className="bg-superficie shadow-tarjeta flex min-h-20 w-full flex-col items-start justify-center rounded-2xl px-5 py-3 text-left"
                 onClick={() => {
+                  olvidarAviso();
                   setAbierto(c.id);
                   setPagina(0);
                   setConVoz(false);
@@ -123,7 +150,11 @@ export function CuentosNino() {
       <button
         type="button"
         className={CHIP_SALIDA + " w-fit"}
-        onClick={() => setAbierto(null)}
+        onClick={() => {
+          // Leaving early still ends the unit: a pending cap notice is never lost.
+          alTerminar();
+          setAbierto(null);
+        }}
       >
         {tx(cuentos.nino.volver)}
       </button>
@@ -207,7 +238,10 @@ export function CuentosNino() {
           <button
             type="button"
             className={PASO}
-            onClick={() => setAbierto(null)}
+            onClick={() => {
+              alTerminar();
+              setAbierto(null);
+            }}
             data-testid="cuento-fin"
           >
             {tx(cuentos.nino.otro)}
