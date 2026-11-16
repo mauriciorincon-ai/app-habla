@@ -88,9 +88,22 @@ export const AjustesSchema = z.object({
    * `.catch(true)` makes a setting saved without the key read «on», so nothing is lost.
    */
   recordatorioCuentos: z.boolean().catch(true),
+  /**
+   * «Sonidos de la app» (S15, ADR-027): the app's OWN audio — the device voice that says a pictogram
+   * nobody recorded and the volume of the celebration. «suave» halves it, «apagado» silences it. The
+   * family's recorded voice has its own switch (`vozFamiliar`). `.catch` migrates older settings.
+   */
+  sonidos: z.enum(["normal", "suave", "apagado"]).catch("normal"),
+  /** «Intensidad de colores» (S15, ADR-027): «suave» softens the palette of both registers. */
+  intensidad: z.enum(["normal", "suave"]).catch("normal"),
 });
 export type AjustesGuardados = z.infer<typeof AjustesSchema>;
 export type Apariencia = AjustesGuardados["apariencia"];
+/** The app's own sound level and the colour intensity (S15, ADR-027). */
+export type Sonidos = AjustesGuardados["sonidos"];
+export type Intensidad = AjustesGuardados["intensidad"];
+export const SONIDOS: readonly Sonidos[] = ["normal", "suave", "apagado"];
+export const INTENSIDADES: readonly Intensidad[] = ["normal", "suave"];
 
 export const AJUSTES_DEFECTO: AjustesGuardados = {
   modoCalma: false,
@@ -106,6 +119,8 @@ export const AJUSTES_DEFECTO: AjustesGuardados = {
   apuntador: true,
   recordatorioPospuesto: null,
   recordatorioCuentos: true,
+  sonidos: "normal",
+  intensidad: "normal",
 };
 
 /** Fecha local en formato YYYY-MM-DD (nunca UTC: en Colombia el día cambiaría a las 7 p. m.). */

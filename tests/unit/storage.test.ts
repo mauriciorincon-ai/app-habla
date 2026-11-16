@@ -79,6 +79,8 @@ describe("persistencia local (ADR 002)", () => {
       apuntador: true,
       recordatorioPospuesto: null,
       recordatorioCuentos: true,
+      sonidos: "apagado",
+      intensidad: "suave",
     });
     guardarProgreso({
       ...PROGRESO_INICIAL,
@@ -114,6 +116,9 @@ describe("persistencia local (ADR 002)", () => {
 
     const ajustes = leerAjustes();
     expect(ajustes.apariencia).toBe("sistema");
+    // S15: los ajustes guardados antes de «Sonidos» e «Intensidad» leen el default de siempre.
+    expect(ajustes.sonidos).toBe("normal");
+    expect(ajustes.intensidad).toBe("normal");
     // Y lo que el padre ya había elegido sigue intacto.
     expect(ajustes.modoCalma).toBe(true);
   });
