@@ -9,7 +9,7 @@ import { expect, test } from "./base";
 //      the English one (words both languages share, like «animal» or «color», never fail), minus a short
 //      allowlist of proper names. This is stronger than a hand-made word list: it uses the app's own two
 //      dictionaries (`src/lib/objetivo/palabras-{es,en}.ts`).
-//   2. axe finds nothing serious or critical (axe is never switched off).
+//   2. axe finds no WCAG 2.x A/AA violation, in the light and the dark theme (axe is never switched off).
 // Red demo (rule 15, a gate is shown failing): `ROJO_ES=1 pnpm test:e2e en-todas-las-pantallas` injects a
 // Spanish sentence into each screen and the spec must go red naming the route and the words.
 
@@ -122,13 +122,18 @@ test("las 17 pantallas y los dos documentos, en inglés: sin una palabra en espa
     const fugas = palabrasEnEspanol(texto);
     if (fugas.length) fugasPorRuta.push(`${ruta}: ${fugas.join(", ")}`);
 
-    const r = await new AxeBuilder({ page }).analyze();
-    for (const v of r.violations)
-      if (v.impact === "serious" || v.impact === "critical")
-        axePorRuta.push(`${ruta}: ${v.id}`);
+    // The repo's axe standard (tests/e2e/su-mundo-ayuda.ts): zero WCAG 2.x A/AA violations, both themes.
+    for (const esquema of ["light", "dark"] as const) {
+      await page.emulateMedia({ colorScheme: esquema });
+      const r = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      for (const v of r.violations) axePorRuta.push(`${ruta} (${esquema}): ${v.id}`);
+    }
+    await page.emulateMedia({ colorScheme: null });
   }
   expect(fugasPorRuta, "Spanish words on an English screen").toEqual([]);
-  expect(axePorRuta, "axe: serious or critical").toEqual([]);
+  expect(axePorRuta, "axe: WCAG 2.x A/AA, light and dark").toEqual([]);
   await ctx.close();
 });
 
@@ -159,12 +164,10 @@ for (const tema of ["claro", "oscuro"] as const) {
     const sorpresa = page.getByTestId("sorpresa");
     await expect(sorpresa).toBeVisible();
     expect(palabrasEnEspanol(await sorpresa.innerText())).toEqual([]);
-    const r = await new AxeBuilder({ page }).analyze();
-    expect(
-      r.violations
-        .filter((v) => v.impact === "serious" || v.impact === "critical")
-        .map((v) => v.id),
-    ).toEqual([]);
+    const r = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(r.violations.map((v) => v.id)).toEqual([]);
     await page.screenshot({
       path: `test-results/en-todas/sorpresa-${tema}-${test.info().project.name}.png`,
       fullPage: true,
