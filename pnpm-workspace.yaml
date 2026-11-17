@@ -19,7 +19,7 @@ ignoredBuiltDependencies:
 # Rangos con CARET a propósito: un ">=" abierto resuelve al latest global y puede saltar de
 # mayor (brace-expansion@1 → 5 rompió minimatch@3 en el primer intento).
 overrides:
-  "fast-uri@3": "^3.1.6"
+  "fast-uri@3": "^3.1.9"
   "sharp": "^0.35.5"
   "postcss@8": "^8.5.18"
   "brace-expansion@1": "^1.1.20"
@@ -36,3 +36,6 @@ overrides:
   # vite: suben sus candados y entran los de source-map-js y vite.
   "source-map-js@1": "^1.2.2"
   "vite": "^8.1.6"
+  # 2026-11-16 (S17): next sube a 16.4.6 (aviso medio de datos entre root params; Habla no usa use cache, se sube
+  # igual); fast-uri sube su candado a 3.1.9 (cinco avisos) y uuid@11 entra a 11.1.1.
+  "uuid@11": "^11.1.1"
